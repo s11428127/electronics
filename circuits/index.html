@@ -68,6 +68,52 @@
         <div class="outline-row done"><code>11.9</code><b>應用：功率量測與電費 <span style="color:var(--ink-3);font-weight:400">Applications</span></b><span class="dot"></span></div>
       </div>
       <p class="note key">整章的核心關係式只有一條：<b>S = P + jQ</b>。其他所有公式都是它的變形。先把功率三角形畫熟，這章的計算題就解了一半。</p>
+
+      <h3 style="font-size:16px;margin:30px 0 4px">整章公式是怎麼串起來的</h3>
+      <p class="lede">這章不是十幾條獨立公式，而是<strong>一條線推下來</strong>的。看懂這個順序，就不用硬背。</p>
+      <div class="derive">
+        <h4>從「電壓乘電流」到「電費單」</h4>
+        <ol>
+          <li>
+            <span class="d-eq">p(t) = v·i　→　積化和差　→　常數項 + 2ω 擺盪項</span>
+            <div class="why"><b>11.2</b> 發現功率天生就分成兩塊：一塊不動、一塊純擺盪。</div>
+          </li>
+          <li>
+            <span class="d-eq">取一週期平均 → 擺盪項歸零 → P = ½V<sub>m</sub>I<sub>m</sub>cos(θv−θi)</span>
+            <div class="why"><b>11.2</b> 那個「不動的一塊」就是平均功率 P。</div>
+          </li>
+          <li>
+            <span class="d-eq">定義 rms（能送出等量功率的等效直流）→ V<sub>rms</sub> = V<sub>m</sub>/√2</span>
+            <div class="why"><b>11.4</b> 為了甩掉那個礙眼的 ½，讓公式長得像直流。</div>
+          </li>
+          <li>
+            <span class="d-eq">P = V<sub>rms</sub>I<sub>rms</sub>cos(θv−θi) = S × pf</span>
+            <div class="why"><b>11.5</b> 把乘積拆成兩半各自命名：S 是視在功率、pf 是折扣率。</div>
+          </li>
+          <li>
+            <span class="d-eq">想把 P 變成某個複數的實部 → S = V<sub>rms</sub>I*<sub>rms</sub> = P + jQ</span>
+            <div class="why"><b>11.6</b> 順手掉出虛部 Q，四個量一次到齊 —— 這是全章的<b>制高點</b>。</div>
+          </li>
+          <li>
+            <span class="d-eq">KCL / KVL + 共軛的分配律 → S總 = ΣS<sub>i</sub></span>
+            <div class="why"><b>11.7</b> 因為 S 是向量，所以 P、Q 可加，但 |S| 不可加。</div>
+          </li>
+          <li>
+            <span class="d-eq">用電容的 −Q 抵銷電感的 +Q → C = P(tanθ₁−tanθ₂)/(ωV²<sub>rms</sub>)</span>
+            <div class="why"><b>11.8</b> Q 變小 → S 變小 → 線電流變小 → 線損 I²R 變小 → <b>電費變少</b>。</div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="howto">
+        <h4>拿到任何一題交流功率，先做這三件事</h4>
+        <ol>
+          <li><b>統一單位：振幅還是 rms？</b>這是最常見的失分點。看到 v(t) = V<sub>m</sub>cos(…) 就是振幅，要除 √2；電力題目講「120 V 電源」預設就是 rms。決定之後，公式該不該帶 ½ 就確定了。</li>
+          <li><b>把每個負載化成一對 (P, Q)。</b>不管題目給的是 pf、阻抗、還是 S 和角度，先轉成 P 和 Q。<br>
+            <code>Q = P·tanθ</code>　<code>P = S·cosθ</code>　<code>Q = S·sinθ</code>　<code>P = I²rms·R</code>　<code>Q = I²rms·X</code></li>
+          <li><b>確認 Q 的符號。</b>電感性（落後 lagging）<b>+</b>、電容性（超前 leading）<b>−</b>。符號一錯，後面全錯。</li>
+        </ol>
+      </div>
     </section>
 
     <!-- ══════════ 11.2 瞬時功率 ══════════ -->
@@ -76,7 +122,64 @@
       <h2>瞬時功率與平均功率</h2>
       <p class="lede"><span class="tm">瞬時功率<i>instantaneous power</i></span> p(t) = v(t)·i(t) 是「某一瞬間」吸收功率的速率。把它展開會發現它由<strong>一個固定值</strong>加上<strong>一個以 2ω 擺盪的弦波</strong>組成 —— 那個固定值就是<span class="tm">平均功率<i>average power</i></span> P。</p>
       <div class="eq">p(t) = ½V<em>m</em>I<em>m</em> cos(θv − θi) &nbsp;+&nbsp; ½V<em>m</em>I<em>m</em> cos(2ωt + θv + θi)</div>
-      <p class="note">左半是常數（不隨時間變），右半是弦波，取一週期平均後為零。所以 <b>P = ½V<sub>m</sub>I<sub>m</sub> cos(θv − θi)</b>。注意 p(t) 的頻率是電壓的<b>兩倍</b>，週期 T₀ = T/2。</p>
+      <div class="derive">
+        <h4>這條式子是怎麼來的？</h4>
+        <ol>
+          <li>
+            <span class="d-eq">p(t) = v(t)·i(t) = V<sub>m</sub>cos(ωt+θv) × I<sub>m</sub>cos(ωt+θi)</span>
+            <p>功率的定義就是「電壓 × 電流」。兩個都是弦波，所以現在卡在一個「cos 乘 cos」。</p>
+          </li>
+          <li>
+            <span class="d-eq">cos A · cos B = ½[ cos(A−B) + cos(A+B) ]</span>
+            <div class="why">用<b>積化和差</b>把乘法拆成加法。令 A = ωt+θv、B = ωt+θi，那麼：<br>
+              A − B = <b>θv − θi</b>（ωt 消掉了，變成常數！）<br>
+              A + B = <b>2ωt + θv + θi</b>（ωt 變兩倍）</div>
+          </li>
+          <li>
+            <span class="d-eq hi">p(t) = ½V<sub>m</sub>I<sub>m</sub>cos(θv−θi) + ½V<sub>m</sub>I<sub>m</sub>cos(2ωt+θv+θi)</span>
+            <p>代進去就得到兩項。<b>左項完全沒有 t</b>（是個定值），<b>右項是 2ω 的弦波</b>。整章的故事到這裡就定調了。</p>
+          </li>
+          <li>
+            <span class="d-eq">P = (1/T)∫₀ᵀ p(t) dt</span>
+            <div class="why">平均功率的定義：把 p(t) 在一個週期內積分再除以週期。接著逐項處理。</div>
+          </li>
+          <li>
+            <span class="d-eq">第一項：常數的平均 = 它自己 → 保留<br>第二項：弦波一週期的平均 = 0 → 消失</span>
+            <p>弦波在正半週的面積，剛好被下一個負半週抵銷掉，所以積分為零。這就是為什麼「會擺盪的那一半不算進平均功率」。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">P = ½V<sub>m</sub>I<sub>m</sub> cos(θv − θi)</span>
+            <p>剩下的就是答案。注意 cos(θv−θi) = cos(θi−θv)，所以<b>只有相位差的大小重要，誰減誰不影響</b>。</p>
+          </li>
+        </ol>
+      </div>
+
+      <p class="note">順帶一提，用相量也能算：½V·I* = ½V<sub>m</sub>I<sub>m</sub>∠(θv−θi) = ½V<sub>m</sub>I<sub>m</sub>[cos(θv−θi) + j·sin(θv−θi)]，取<b>實部</b>就是 P。所以 <b>P = ½Re[V·I*]</b> —— 這條在 11.6 會變成複功率的起點。</p>
+
+      <div class="example">
+        <div class="ex-head">例題 · 直接套公式</div>
+        <p class="ex-q">已知 <b>v(t) = 120 cos(377t + 45°) V</b>、<b>i(t) = 10 cos(377t − 10°) A</b>，求負載吸收的平均功率 P。</p>
+        <ol>
+          <li><b>Step 1　抓出四個數字。</b>V<sub>m</sub> = 120、I<sub>m</sub> = 10、θv = 45°、θi = −10°。</li>
+          <li><b>Step 2　算相位差。</b>
+            <span class="d-eq">θv − θi = 45° − (−10°) = 55°</span>
+            負的減負的，別漏掉那個負號 —— 這是最容易算錯的一步。</li>
+          <li><b>Step 3　代公式。</b>
+            <span class="d-eq">P = ½ × 120 × 10 × cos(55°) = 600 × 0.5736</span></li>
+        </ol>
+        <p class="ex-ans">P = 344.2 W（θv−θi = 55° &gt; 0 → 電流落後 → 電感性負載）</p>
+      </div>
+
+      <div class="example">
+        <div class="ex-head">例題 · 為什麼電感的平均功率是 0</div>
+        <p class="ex-q">純電感負載，電流落後電壓 90°。用同一條公式驗證 P = 0。</p>
+        <ol>
+          <li><b>Step 1</b>　θv − θi = +90°。</li>
+          <li><b>Step 2</b>　<span class="d-eq">P = ½V<sub>m</sub>I<sub>m</sub> cos(90°) = ½V<sub>m</sub>I<sub>m</sub> × 0 = 0</span></li>
+          <li><b>Step 3　物理意義。</b>此時 p(t) = ½V<sub>m</sub>I<sub>m</sub>cos(2ωt + θv + θi)，只剩下純擺盪項。前半週電感把能量存進磁場（p &gt; 0），後半週原封不動吐回電源（p &lt; 0），<b>正負面積完全相等</b>，淨消耗為零。</li>
+        </ol>
+        <p class="ex-ans">P = 0 W（上面的動畫按「純電感」就能看到正負面積對稱）</p>
+      </div>
 
       <div class="bench">
         <div class="bench-head"><h3>瞬時功率波形實驗室</h3><span class="spacer"></span><span class="tag">p(t) = v(t)·i(t)</span></div>
@@ -108,6 +211,16 @@
         <div class="msg" id="inst-note"></div>
       </div>
       <p class="note key">電阻<b>任何時刻</b>都在吸收功率（p(t) ≥ 0）；電感與電容的平均功率為 <b>0</b>，它們只是把能量借來還去。</p>
+
+      <div class="pitfall">
+        <h4>這一節最常被扣分的地方</h4>
+        <ul>
+          <li><span class="x">✗</span> 忘記那個 <b>½</b>。公式是 P = <b>½</b>V<sub>m</sub>I<sub>m</sub>cos θ，用的是<b>振幅</b>。若題目給的已經是 rms 值，才是 P = V<sub>rms</sub>I<sub>rms</sub>cos θ（沒有 ½）。<span class="o">先看清楚題目給的是振幅還是 rms。</span></li>
+          <li><span class="x">✗</span> 題目給 <b>sin</b> 卻直接當成 cos 代入。要先轉成 cos：<span class="d-eq">sin(x) = cos(x − 90°)</span>轉完再讀相角。</li>
+          <li><span class="x">✗</span> 以為 p(t) 的週期跟 v(t) 一樣。<b>p(t) 的角頻率是 2ω，週期只有一半</b>（T₀ = T/2）。</li>
+          <li><span class="x">✗</span> 看到 p(t) 有負的部分就說「負載在發電」。負區只代表<b>儲能元件把先前存的能量還給電源</b>，不是產生新能量。</li>
+        </ul>
+      </div>
     </section>
 
     <!-- ══════════ 11.3 最大功率轉移 ══════════ -->
@@ -116,6 +229,81 @@
       <h2>最大平均功率轉移</h2>
       <p class="lede">直流時的結論是 R<sub>L</sub> = R<sub>Th</sub>。交流時要多考慮電抗：先用 X<sub>L</sub> 把 X<sub>Th</sub> <strong>抵銷掉</strong>，再用 R<sub>L</sub> 去匹配 R<sub>Th</sub>。合起來就是<span class="tm">共軛匹配<i>conjugate matching</i></span>。</p>
       <div class="eq">Z<em>L</em> = Z<em>Th</em>*　（即 R<em>L</em> = R<em>Th</em>，X<em>L</em> = −X<em>Th</em>）　⟹　P<em>max</em> = |V<em>Th</em>|² / (8R<em>Th</em>)</div>
+
+      <div class="derive">
+        <h4>為什麼是「共軛」而不是「相等」？</h4>
+        <ol>
+          <li>
+            <span class="d-eq">I = V<sub>Th</sub> / (Z<sub>Th</sub> + Z<sub>L</sub>) = V<sub>Th</sub> / [(R<sub>Th</sub>+R<sub>L</sub>) + j(X<sub>Th</sub>+X<sub>L</sub>)]</span>
+            <p>先寫出迴路電流：電源電壓除以總阻抗，電阻與電抗分開寫。</p>
+          </li>
+          <li>
+            <span class="d-eq">P = ½|I|²R<sub>L</sub> = ½|V<sub>Th</sub>|²R<sub>L</sub> ÷ [(R<sub>Th</sub>+R<sub>L</sub>)² + (X<sub>Th</sub>+X<sub>L</sub>)²]</span>
+            <div class="why">負載吸收的平均功率。取 |I|² 時，分母的複數變成「實部平方 + 虛部平方」。現在 P 是 <b>R<sub>L</sub> 和 X<sub>L</sub> 兩個變數的函數</b>，要找它的極大值。</div>
+          </li>
+          <li>
+            <span class="d-eq">先看 X<sub>L</sub>：它只出現在分母的 (X<sub>Th</sub>+X<sub>L</sub>)² 裡</span>
+            <p>分母越小、P 越大。而 (X<sub>Th</sub>+X<sub>L</sub>)² 是平方，<b>最小值就是 0</b>。所以不必真的微分也看得出來：</p>
+            <span class="d-eq hi">X<sub>L</sub> = −X<sub>Th</sub>　（電抗互相抵銷，電路變成純電阻）</span>
+          </li>
+          <li>
+            <span class="d-eq">∂P/∂R<sub>L</sub> = 0　⟹　R<sub>L</sub> = √[ R²<sub>Th</sub> + (X<sub>Th</sub>+X<sub>L</sub>)² ]</span>
+            <div class="why">再對 R<sub>L</sub> 微分並令為零。這是通式，還沒代入上一步的結果。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">把 X<sub>L</sub> = −X<sub>Th</sub> 代進去 → 括號歸零 → R<sub>L</sub> = √(R²<sub>Th</sub>) = R<sub>Th</sub></span>
+            <p>兩個條件合起來寫成一個：<b>Z<sub>L</sub> = R<sub>Th</sub> − jX<sub>Th</sub> = Z<sub>Th</sub>*</b>。這就是「共軛」的由來 —— 實部照抄、虛部變號。</p>
+          </li>
+          <li>
+            <span class="d-eq">匹配後：Z<sub>Th</sub> + Z<sub>L</sub> = (R<sub>Th</sub>+R<sub>Th</sub>) + j(X<sub>Th</sub>−X<sub>Th</sub>) = 2R<sub>Th</sub><br>
+              ⟹ |I| = |V<sub>Th</sub>| / (2R<sub>Th</sub>)</span>
+            <div class="why">虛部完全消失，總阻抗只剩下 2R<sub>Th</sub>，是個純電阻。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">P<sub>max</sub> = ½|I|²R<sub>Th</sub> = ½ × |V<sub>Th</sub>|²/(4R²<sub>Th</sub>) × R<sub>Th</sub> = |V<sub>Th</sub>|² / (8R<sub>Th</sub>)</span>
+            <p>那個 <b>8</b> 就是這樣來的：½（振幅轉平均）× 4（分母的 2 平方）= 8。若題目給的 V<sub>Th</sub> 是 <b>rms 值</b>，就沒有那個 ½，變成 |V<sub>Th</sub>|²/(4R<sub>Th</sub>)。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="example">
+        <div class="ex-head">例題 · 標準共軛匹配</div>
+        <p class="ex-q">某電路的戴維寧等效為 <b>V<sub>Th</sub> = 10∠0° V（振幅）</b>、<b>Z<sub>Th</sub> = 4 + j3 Ω</b>。求可取得最大功率的 Z<sub>L</sub> 與該最大功率。</p>
+        <ol>
+          <li><b>Step 1　取共軛。</b>實部不動、虛部變號：
+            <span class="d-eq">Z<sub>L</sub> = Z<sub>Th</sub>* = 4 − j3 Ω</span></li>
+          <li><b>Step 2　確認虛部真的抵銷。</b>
+            <span class="d-eq">Z<sub>Th</sub> + Z<sub>L</sub> = (4+4) + j(3−3) = 8 Ω（純電阻）</span></li>
+          <li><b>Step 3　套 P<sub>max</sub> 公式。</b>
+            <span class="d-eq">P<sub>max</sub> = |V<sub>Th</sub>|²/(8R<sub>Th</sub>) = 10²/(8×4) = 100/32</span></li>
+        </ol>
+        <p class="ex-ans">Z<sub>L</sub> = 4 − j3 Ω，P<sub>max</sub> = 3.125 W</p>
+      </div>
+
+      <div class="example">
+        <div class="ex-head">例題 · 陷阱題：負載限定純電阻</div>
+        <p class="ex-q">同樣 Z<sub>Th</sub> = 4 + j3 Ω、V<sub>Th</sub> = 10 V（振幅），但題目規定<b>負載只能是一個電阻 R<sub>L</sub></b>。求 R<sub>L</sub> 與此時的 P。</p>
+        <ol>
+          <li><b>Step 1　注意條件變了。</b>X<sub>L</sub> 被強制為 0，虛部<b>無法</b>抵銷，所以不能用 R<sub>L</sub> = R<sub>Th</sub>。</li>
+          <li><b>Step 2　回到通式。</b>把 X<sub>L</sub> = 0 代入推導第 4 步：
+            <span class="d-eq">R<sub>L</sub> = √[R²<sub>Th</sub> + (X<sub>Th</sub>+0)²] = √(R²<sub>Th</sub> + X²<sub>Th</sub>) = |Z<sub>Th</sub>|</span></li>
+          <li><b>Step 3　算出數值。</b>
+            <span class="d-eq">R<sub>L</sub> = √(4² + 3²) = √25 = 5 Ω</span></li>
+          <li><b>Step 4　代回 P 的原式</b>（不能用 P<sub>max</sub> 公式，因為沒有共軛匹配）：
+            <span class="d-eq">P = ½ × 10² × 5 ÷ [(4+5)² + 3²] = 250 ÷ (81+9) = 250/90</span></li>
+        </ol>
+        <p class="ex-ans">R<sub>L</sub> = 5 Ω，P = 2.78 W（比共軛匹配的 3.125 W 少，合理）</p>
+      </div>
+
+      <div class="howto">
+        <h4>看到最大功率轉移題目</h4>
+        <ol>
+          <li><b>先問：負載可不可以有電抗？</b>可以 → <code>ZL = ZTh*</code>；只能純電阻 → <code>RL = |ZTh|</code>。這一步決定整題走向。</li>
+          <li><b>再問：V<sub>Th</sub> 給的是振幅還是 rms？</b>振幅 → <code>Pmax = |VTh|²/(8RTh)</code>；rms → <code>Pmax = |VTh|²/(4RTh)</code>。</li>
+          <li>若題目給的是原始電路而不是戴維寧等效，<b>先把負載拿掉</b>，求開路電壓 V<sub>Th</sub> 與從負載端看進去的 Z<sub>Th</sub>。</li>
+          <li>只有<b>共軛匹配</b>那一種情況才能用 P<sub>max</sub> 的簡化公式；其他情況一律回頭代 P = ½|I|²R<sub>L</sub>。</li>
+        </ol>
+      </div>
 
       <div class="bench">
         <div class="bench-head"><h3>阻抗匹配挑戰</h3><span class="spacer"></span>
@@ -151,6 +339,107 @@
       <p class="lede">為什麼台灣市電叫「110 V」但波峰其實有 155 V？因為那個 110 是<span class="tm">有效值<i>effective value</i></span>：<strong>能對同一個電阻送出相同平均功率的那個等效直流值</strong>。名字 root-mean-square 就是它的算法，倒著唸即可。</p>
       <div class="eq">X<em>rms</em> = √( (1/T) ∫₀ᵀ x²(t) dt )　←　先平方 square、再平均 mean、最後開根號 root</div>
 
+      <div class="derive">
+        <h4>有效值是怎麼被「定義」出來的</h4>
+        <ol>
+          <li>
+            <p><b>先設定情境。</b>兩個電路：一個接交流 i(t)、一個接直流 I<sub>eff</sub>，負載都是同一個電阻 R。問：I<sub>eff</sub> 要多大，才能讓兩邊<b>發出一樣多的熱</b>？</p>
+          </li>
+          <li>
+            <span class="d-eq">交流側：P = (1/T)∫₀ᵀ i²R dt = (R/T)∫₀ᵀ i² dt</span>
+            <div class="why">電阻的瞬時功率是 i²R，取一週期平均。R 是常數可以提到積分外面。</div>
+          </li>
+          <li>
+            <span class="d-eq">直流側：P = I²<sub>eff</sub> R</span>
+            <div class="why">直流不隨時間變，功率就是 I²R，不用積分。</div>
+          </li>
+          <li>
+            <span class="d-eq">令兩者相等：I²<sub>eff</sub> R = (R/T)∫₀ᵀ i² dt</span>
+            <p>R 兩邊消掉，剩下 I²<sub>eff</sub> = (1/T)∫i² dt，再開根號：</p>
+            <span class="d-eq hi">I<sub>eff</sub> = √( (1/T)∫₀ᵀ i² dt ) ≡ I<sub>rms</sub></span>
+            <p>倒著唸就是這條式子的英文名字：<b>r</b>oot（根號）→ <b>m</b>ean（1/T 積分取平均）→ <b>s</b>quare（i²）。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>弦波的 √2 是怎麼掉出來的</h4>
+        <ol>
+          <li>
+            <span class="d-eq">i(t) = I<sub>m</sub> cos ωt　⟹　I<sub>rms</sub> = √( (1/T)∫₀ᵀ I²<sub>m</sub>cos²ωt dt )</span>
+            <p>直接把弦波代進定義式。卡住的地方是 cos² 不好積。</p>
+          </li>
+          <li>
+            <span class="d-eq">cos²x = ½(1 + cos 2x)</span>
+            <div class="why">用<b>半角（降冪）公式</b>把平方拆掉。這一步是關鍵：cos² 積不動，但 ½ + ½cos2x 就很好積。</div>
+          </li>
+          <li>
+            <span class="d-eq">I<sub>rms</sub> = √( (I²<sub>m</sub>/T)∫₀ᵀ ½(1 + cos 2ωt) dt )</span>
+            <p>括號裡有兩塊：常數 ½ 的平均還是 ½；cos2ωt 是弦波，<b>一週期平均為 0</b>（跟 11.2 用的是同一個道理）。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">I<sub>rms</sub> = √( I²<sub>m</sub> × ½ ) = I<sub>m</sub>/√2 ≈ 0.707 I<sub>m</sub></span>
+            <p>所以 √2 的來源就是那個 <b>½</b>，而 ½ 來自 cos² 的降冪公式。<b>換一種波形，這個 ½ 就會變成別的數，√2 自然不成立。</b></p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>有了 rms，功率公式為什麼變乾淨了</h4>
+        <ol>
+          <li>
+            <span class="d-eq">P = ½V<sub>m</sub>I<sub>m</sub>cos(θv−θi)</span>
+            <div class="why">這是 11.2 推出來的結果，用的是振幅，前面拖著一個礙眼的 ½。</div>
+          </li>
+          <li>
+            <span class="d-eq">把 ½ 拆成 (1/√2)(1/√2)，各自配給 V<sub>m</sub> 和 I<sub>m</sub>：<br>
+              P = (V<sub>m</sub>/√2)(I<sub>m</sub>/√2)cos(θv−θi)</span>
+          </li>
+          <li>
+            <span class="d-eq hi">P = V<sub>rms</sub> I<sub>rms</sub> cos(θv − θi)</span>
+            <p>½ 消失了，長得跟直流的 P = VI 幾乎一樣 —— <b>這正是當初發明有效值的目的</b>。後面 11.5、11.6 的所有公式都是建立在 rms 上，所以電力工程講電壓電流時，<b>預設就是 rms</b>（台電的 110 V、220 V 都是 rms）。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="example">
+        <div class="ex-head">例題 · 非弦波的 rms（方波）</div>
+        <p class="ex-q">一個振幅 V<sub>m</sub> = 10 V 的<b>方波</b>，求它的 rms 值。</p>
+        <ol>
+          <li><b>Step 1　千萬別套 √2。</b>先回到定義式，不要背公式。</li>
+          <li><b>Step 2　平方看看。</b>方波的值只有 +10 和 −10 兩種，<b>平方後全部都是 100</b>，變成一條水平線。</li>
+          <li><b>Step 3　取平均。</b>常數 100 的平均還是 100。
+            <span class="d-eq">(1/T)∫₀ᵀ 100 dt = 100</span></li>
+          <li><b>Step 4　開根號。</b>
+            <span class="d-eq">V<sub>rms</sub> = √100 = 10 = V<sub>m</sub></span></li>
+        </ol>
+        <p class="ex-ans">V<sub>rms</sub> = 10 V = V<sub>m</sub>（方波的 rms 就是振幅本身，沒有任何折扣）</p>
+      </div>
+
+      <div class="example">
+        <div class="ex-head">例題 · 三角波 / 鋸齒波</div>
+        <p class="ex-q">振幅 V<sub>m</sub> 的鋸齒波，求 V<sub>rms</sub>。</p>
+        <ol>
+          <li><b>Step 1</b>　在一個週期內寫成 v(t) = V<sub>m</sub>·(2t/T − 1)，或更簡單地取上升段 v = V<sub>m</sub>t/T（t: 0→T）做單邊計算。</li>
+          <li><b>Step 2　平方再積分。</b>
+            <span class="d-eq">(1/T)∫₀ᵀ (V<sub>m</sub>t/T)² dt = (V²<sub>m</sub>/T³)∫₀ᵀ t² dt = (V²<sub>m</sub>/T³)(T³/3) = V²<sub>m</sub>/3</span>
+            關鍵在 ∫t² dt = t³/3，那個 <b>3</b> 就是 √3 的來源。</li>
+          <li><b>Step 3　開根號。</b>
+            <span class="d-eq">V<sub>rms</sub> = √(V²<sub>m</sub>/3) = V<sub>m</sub>/√3 ≈ 0.577 V<sub>m</sub></span></li>
+        </ol>
+        <p class="ex-ans">V<sub>rms</sub> = V<sub>m</sub>/√3 ≈ 0.577 V<sub>m</sub>（三角波同理，也是 √3）</p>
+      </div>
+
+      <div class="howto">
+        <h4>看到 rms 題目</h4>
+        <ol>
+          <li><b>先判斷波形。</b>是純弦波嗎？是 → 直接用 <code>Vm/√2</code>。不是 → 回定義式老實做三步驟。</li>
+          <li>波形是<b>分段</b>的（例如半波整流、脈衝），把一個週期<b>切成幾段分別積分再相加</b>，分母的 T 是<b>完整週期</b>，不是那一段的長度。</li>
+          <li>含直流偏壓的波形（V<sub>DC</sub> + 弦波）用：<code>Vrms = √(V²DC + V²ac,rms)</code>，兩部分的「平方」可以相加，但 rms 本身不能直接相加。</li>
+          <li>算完永遠檢查一下：<b>rms 一定介於 0 和波峰值之間</b>。算出比振幅還大就是錯了。</li>
+        </ol>
+      </div>
+
       <div class="bench">
         <div class="bench-head"><h3>rms 三步驟演示</h3>
           <div class="btn-row">
@@ -184,6 +473,59 @@
       <p class="lede">把 V<sub>rms</sub> 乘上 I<sub>rms</sub>「看起來」就該是功率，所以叫<span class="tm">視在功率<i>apparent power</i></span> S，單位是 VA。但真正被消耗的只有 S 的一部分，那個折扣率就是<span class="tm">功率因數<i>power factor</i></span>。</p>
       <div class="eq">S = V<em>rms</em>I<em>rms</em> (VA)　　pf = P/S = cos(θv − θi)　　P = S·pf (W)</div>
 
+      <div class="derive">
+        <h4>S 和 pf 是怎麼被「拆」出來的</h4>
+        <ol>
+          <li>
+            <span class="d-eq">P = V<sub>rms</sub> I<sub>rms</sub> cos(θv − θi)</span>
+            <div class="why">從 11.4 的結果出發。注意這是<b>兩個東西的乘積</b>：一個是 V<sub>rms</sub>I<sub>rms</sub>、一個是 cos(θv−θi)。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">S ≡ V<sub>rms</sub> I<sub>rms</sub>　　pf ≡ cos(θv − θi)</span>
+            <p>把它們各自取名字：前者叫<b>視在功率</b>、後者叫<b>功率因數</b>。於是 P = S × pf，也就是 <b>pf = P/S</b>。</p>
+          </li>
+          <li>
+            <p><b>為什麼叫「視在」？</b>因為在直流電路，功率就是電壓乘電流。到了交流，V<sub>rms</sub>I<sub>rms</sub>「看起來」也該是功率 —— 但實際上不是，真正被消耗的只有 P。所以它叫 apparent（表面上的），而且<b>刻意用 VA 而不是 W</b>當單位，就是為了提醒你「這不是真的瓦特」。</p>
+          </li>
+          <li>
+            <span class="d-eq">Z = V/I = (V<sub>m</sub>∠θv)/(I<sub>m</sub>∠θi) = (V<sub>m</sub>/I<sub>m</sub>)∠(θv − θi)</span>
+            <div class="why">複數相除：大小相除、<b>角度相減</b>。而相減出來的角度，剛好就是功因角。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">阻抗 Z 的角度　＝　功率因數角 (θv − θi)</span>
+            <p>這條在解題時超好用：<b>題目只給你 Z，你就已經知道 pf 了</b>，不必真的去算 v(t) 和 i(t) 的相位。例如 Z = 20 + j20 → 角度 45° → pf = cos45° = 0.707 落後。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="example">
+        <div class="ex-head">例題 · 從阻抗直接讀出功率因數</div>
+        <p class="ex-q">負載 <b>Z = 20 − j20 Ω</b>，接上 V<sub>rms</sub> = 120 V。求 pf、S、P。</p>
+        <ol>
+          <li><b>Step 1　算阻抗角。</b>
+            <span class="d-eq">θ = arctan(X/R) = arctan(−20/20) = arctan(−1) = −45°</span></li>
+          <li><b>Step 2　pf 就是它的 cos。</b>
+            <span class="d-eq">pf = cos(−45°) = 0.707</span>
+            X 是<b>負</b>的 → 電容性 → 電流<b>超前</b>電壓 → <b>leading</b>。</li>
+          <li><b>Step 3　算電流。</b>
+            <span class="d-eq">|Z| = √(20² + 20²) = 28.28 Ω　⟹　I<sub>rms</sub> = 120/28.28 = 4.243 A</span></li>
+          <li><b>Step 4　視在功率與實功率。</b>
+            <span class="d-eq">S = 120 × 4.243 = 509.1 VA<br>P = S × pf = 509.1 × 0.707 = 360 W</span>
+            也可以直接驗算：P = I²<sub>rms</sub>R = 4.243² × 20 = 360 W ✓</li>
+        </ol>
+        <p class="ex-ans">pf = 0.707 超前（leading），S = 509.1 VA，P = 360 W</p>
+      </div>
+
+      <div class="pitfall">
+        <h4>落後 / 超前最容易搞混</h4>
+        <ul>
+          <li><b>記憶口訣：看電流相對於電壓。</b>電流<b>落</b>在後面 → <b>lagging</b>（電感性，X &gt; 0，Q &gt; 0）；電流<b>跑</b>在前面 → <b>leading</b>（電容性，X &lt; 0，Q &lt; 0）。</li>
+          <li><span class="x">✗</span> 只寫「pf = 0.8」。<b>一定要註明 lagging 或 leading</b>，因為 cos(+36.87°) 和 cos(−36.87°) 都是 0.8，但一個是電感性、一個是電容性，後面算 Q 和做功因校正時會完全相反。</li>
+          <li><span class="x">✗</span> 把 pf 算成大於 1。pf = cos(角度)，<b>範圍永遠是 0 到 1</b>。算出 1.2 就是 P 和 S 弄反了。</li>
+          <li><b>電感「ELI」、電容「ICE」：</b>ELI → 電感(L)中電壓(E)領先電流(I)；ICE → 電容(C)中電流(I)領先電壓(E)。這是英文系教科書的標準口訣，考卷上很好用。</li>
+        </ul>
+      </div>
+
       <div class="bench">
         <div class="bench-head"><h3>相量圖與功率因數</h3><span class="spacer"></span>
           <div class="btn-row"><button class="btn" type="button" id="pf-spin">停止旋轉</button></div></div>
@@ -213,7 +555,96 @@
       <h2>複功率與功率三角形</h2>
       <p class="lede"><span class="tm">複功率<i>complex power</i></span> S 把這章所有資訊包成一個複數：<strong>實部是 P、虛部是 Q、大小是視在功率、相角的餘弦是功率因數</strong>。一個 S 在手，四個量全有。</p>
       <div class="eq">S = V<em>rms</em>·I*<em>rms</em> = P + jQ　　|S| = √(P² + Q²)　　S = I²<em>rms</em>Z = V²<em>rms</em>/Z*</div>
-      <p class="note"><b>注意那個星號。</b>必須取電流的共軛 I*，角度才會是 θv − θi。不取共軛會變成 θv + θi，整題就毀了。</p>
+      <div class="derive">
+        <h4>為什麼是 V·I*（而不是 V·I）</h4>
+        <ol>
+          <li>
+            <span class="d-eq">我們想要一個複數，它的<b>實部剛好是 P</b>。</span>
+            <div class="why">因為 P = V<sub>rms</sub>I<sub>rms</sub>cos(θv−θi)，而複數的實部長得就是「大小 × cos(角度)」。所以只要湊出一個「大小 = V<sub>rms</sub>I<sub>rms</sub>、角度 = θv−θi」的複數就行。</div>
+          </li>
+          <li>
+            <span class="d-eq">若用 V·I：　V<sub>rms</sub>∠θv × I<sub>rms</sub>∠θi = V<sub>rms</sub>I<sub>rms</sub>∠(θv <b>+</b> θi)　✗</span>
+            <p>複數相乘是<b>角度相加</b>，得到 θv + θi —— 這不是我們要的角度，實部也就不是 P。</p>
+          </li>
+          <li>
+            <span class="d-eq">若用 V·I*：　I* = I<sub>rms</sub>∠(<b>−</b>θi)<br>
+              V<sub>rms</sub>∠θv × I<sub>rms</sub>∠(−θi) = V<sub>rms</sub>I<sub>rms</sub>∠(θv <b>−</b> θi)　✓</span>
+            <p><b>取共軛就是把角度變號</b>，於是相乘時「加上一個負角度」＝「相減」。這就是那個星號存在的唯一理由。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">S = V<sub>rms</sub>I*<sub>rms</sub> = V<sub>rms</sub>I<sub>rms</sub>cos(θv−θi) + j·V<sub>rms</sub>I<sub>rms</sub>sin(θv−θi)</span>
+            <p>把極座標展開成直角座標（歐拉公式）。<b>實部正是 P</b>，虛部則是一個新東西。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">S = P + jQ　，其中 Q ≡ V<sub>rms</sub>I<sub>rms</sub>sin(θv−θi)</span>
+            <p>虛部取名叫<b>虛功率（reactive power）Q</b>，單位 VAR。它衡量的是「能量在電源與電感電容之間來回搬運的規模」—— 不被消耗，但真實存在、真的會佔用線路容量。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>另外兩條常用型：S = I²Z 與 S = V²/Z*</h4>
+        <ol>
+          <li>
+            <span class="d-eq">由 Z = V<sub>rms</sub>/I<sub>rms</sub> 得 V<sub>rms</sub> = Z·I<sub>rms</sub></span>
+            <div class="why">歐姆定律的相量版本，把 V 用 Z 和 I 表示。</div>
+          </li>
+          <li>
+            <span class="d-eq">S = V<sub>rms</sub>I*<sub>rms</sub> = (Z I<sub>rms</sub>)(I*<sub>rms</sub>) = Z·|I<sub>rms</sub>|²</span>
+            <p>因為 I·I* = |I|²（複數乘自己的共軛 = 大小平方，必為實數）。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">S = I²<sub>rms</sub>(R + jX) = I²<sub>rms</sub>R + j·I²<sub>rms</sub>X</span>
+            <p>對照 S = P + jQ 立刻得到兩條超實用的公式：</p>
+            <span class="d-eq hi">P = I²<sub>rms</sub>R　（只跟電阻有關）<br>Q = I²<sub>rms</sub>X　（只跟電抗有關）</span>
+            <div class="why">這解釋了為什麼<b>電阻決定 P、電抗決定 Q</b>。也直接證明純電感（R = 0）的 P = 0。</div>
+          </li>
+          <li>
+            <span class="d-eq">同理，由 I<sub>rms</sub> = V<sub>rms</sub>/Z 代入：<br>
+              S = V<sub>rms</sub>(V<sub>rms</sub>/Z)* = V²<sub>rms</sub>/Z*</span>
+            <p>分母要取 <b>Z*</b>，不是 Z —— 又是共軛，理由同上。</p>
+          </li>
+        </ol>
+      </div>
+
+      <p class="note"><b>四個量一次到手。</b>拿到 S = P + jQ 之後：實部 = P、虛部 = Q、大小 |S| = √(P²+Q²) = 視在功率、相角的 cos = 功率因數。這就是課本說「複功率包含了負載的所有功率資訊」的意思。</p>
+
+      <div class="example">
+        <div class="ex-head">例題 · 完整走一遍複功率</div>
+        <p class="ex-q">V<sub>rms</sub> = 100∠30° V，I<sub>rms</sub> = 5∠−10° A。求 S、P、Q、|S|、pf，並判斷負載性質。</p>
+        <ol>
+          <li><b>Step 1　取電流共軛。</b>角度變號：
+            <span class="d-eq">I*<sub>rms</sub> = 5∠+10° A</span></li>
+          <li><b>Step 2　相乘（大小相乘、角度相加）。</b>
+            <span class="d-eq">S = 100∠30° × 5∠10° = 500∠40° VA</span>
+            注意這個 40° 就是 θv − θi = 30° − (−10°) = 40° ✓</li>
+          <li><b>Step 3　化成直角座標。</b>
+            <span class="d-eq">P = 500 cos40° = 500 × 0.766 = 383.0 W<br>Q = 500 sin40° = 500 × 0.643 = 321.4 VAR</span></li>
+          <li><b>Step 4　讀出其餘的量。</b>
+            <span class="d-eq">|S| = 500 VA（就是相量的大小）<br>pf = cos40° = 0.766</span></li>
+          <li><b>Step 5　判性質。</b>Q &gt; 0 且 θ &gt; 0 → 電流落後電壓 → <b>電感性、pf 落後</b>。</li>
+        </ol>
+        <p class="ex-ans">S = 383 + j321.4 VA = 500∠40° VA；pf = 0.766 落後（lagging）</p>
+      </div>
+
+      <div class="howto">
+        <h4>複功率題目的通用流程</h4>
+        <ol>
+          <li><b>先統一成 rms。</b>題目若給振幅，先除以 √2；給 v(t)/i(t) 時間式，先轉成相量。</li>
+          <li><b>看題目給什麼，選對公式：</b>給 V 和 I → <code>S = V·I*</code>；給 I 和 Z → <code>S = I²rms·Z</code>；給 V 和 Z → <code>S = V²rms/Z*</code>。三條算出來一定一樣，挑最少步驟的那條。</li>
+          <li><b>算出 S 之後不要停。</b>P、Q、|S|、pf、負載性質這五個量通常題目會一起問，而它們全都可以從 S 直接讀出來。</li>
+          <li><b>檢查符號：</b>Q 的正負要跟負載性質一致（電感 +、電容 −）。不一致就是共軛取錯了。</li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>複功率的三個坑</h4>
+        <ul>
+          <li><span class="x">✗</span> <b>忘記取共軛</b>，算成 V·I。角度會從 θv−θi 變成 θv+θi，P 和 Q 全錯。</li>
+          <li><span class="x">✗</span> <b>用 S = V²/Z 而不是 V²/Z*。</b>分母那個共軛一樣不能少。</li>
+          <li><span class="x">✗</span> <b>把振幅當 rms 直接乘。</b>S = V·I* 這條式子的 V、I <b>必須是 rms</b>。如果手上是振幅，要嘛先除 √2，要嘛用 S = ½V<sub>m</sub>I*<sub>m</sub>（補上那個 ½）。</li>
+        </ul>
+      </div>
 
       <div class="bench">
         <div class="bench-head"><h3>功率三角形（可拖曳）</h3><span class="spacer"></span><span class="tag">S = P + jQ</span></div>
@@ -240,6 +671,92 @@
       <h2>交流功率守恆</h2>
       <p class="lede">不管負載是串聯還是並聯，<strong>電源送出的複功率 = 各負載吸收的複功率總和</strong>。但這裡藏著這一章最常被扣分的地方。</p>
       <div class="eq">S = S₁ + S₂ + ⋯ + S<em>N</em>　　P = ΣP<em>i</em>　　Q = ΣQ<em>i</em>　　但 |S| ≠ Σ|S<em>i</em>|</div>
+
+      <div class="derive">
+        <h4>並聯：為什麼複功率可以直接相加</h4>
+        <ol>
+          <li>
+            <span class="d-eq">KCL：I = I₁ + I₂</span>
+            <div class="why">並聯的話，各負載<b>電壓相同</b>、電流相加。這是唯一用到的電路定律。</div>
+          </li>
+          <li>
+            <span class="d-eq">取共軛：I* = (I₁ + I₂)* = I₁* + I₂*</span>
+            <p>共軛運算對加法是<b>可分配</b>的（(a+b)* = a* + b*），所以可以逐項取。</p>
+          </li>
+          <li>
+            <span class="d-eq">S = V·I* = V(I₁* + I₂*) = V·I₁* + V·I₂*</span>
+            <div class="why">把 V 乘進去分配。而 V·I₁* 正是負載 1 的複功率 S₁（因為並聯時它兩端的電壓就是 V）。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">S = S₁ + S₂</span>
+            <p>證畢。推廣到 N 個負載完全一樣。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>串聯：換一個定律，結論一樣</h4>
+        <ol>
+          <li>
+            <span class="d-eq">KVL：V = V₁ + V₂</span>
+            <div class="why">串聯的話，各負載<b>電流相同</b>、電壓相加。</div>
+          </li>
+          <li>
+            <span class="d-eq">S = V·I* = (V₁ + V₂)I* = V₁I* + V₂I*</span>
+          </li>
+          <li>
+            <span class="d-eq hi">S = S₁ + S₂</span>
+            <p>所以<b>不管串聯並聯，複功率永遠可以直接相加</b>。這就是「交流功率守恆」：電源送出的，等於所有負載吸收的總和。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>那為什麼視在功率 S 不能直接加？</h4>
+        <ol>
+          <li>
+            <p>因為 <b>S（複功率）是向量，|S|（視在功率）是長度</b>。可以相加的是向量，不是長度。</p>
+          </li>
+          <li>
+            <span class="d-eq">S = S₁ + S₂ = (P₁ + jQ₁) + (P₂ + jQ₂) = (P₁+P₂) + j(Q₁+Q₂)</span>
+            <p>向量相加 = 實部各自加、虛部各自加。所以 <b>P 可以加、Q 可以加</b>（它們是分量）。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">|S| = √[ (ΣP)² + (ΣQ)² ]　　≠　　Σ√(P<sub>i</sub>² + Q<sub>i</sub>²)</span>
+            <div class="why">這就像三角形的<b>兩邊之和大於第三邊</b>：把兩個方向不同的向量接起來，合成向量的長度會<b>短於</b>兩段長度相加。只有當所有 S<sub>i</sub> 方向完全相同（功因角都一樣）時，兩者才會相等。</div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="example">
+        <div class="ex-head">例題 · 親手算一次這個陷阱</div>
+        <p class="ex-q">兩個負載並聯：<b>負載 1：P₁ = 600 W、Q₁ = +800 VAR</b>（電感性）；<b>負載 2：P₂ = 900 W、Q₂ = −400 VAR</b>（電容性）。求總視在功率與總功因數。</p>
+        <ol>
+          <li><b>Step 1　P 直接加。</b>
+            <span class="d-eq">P總 = 600 + 900 = 1500 W</span></li>
+          <li><b>Step 2　Q 直接加（連符號一起加）。</b>
+            <span class="d-eq">Q總 = (+800) + (−400) = +400 VAR</span>
+            電容的 −400 把電感的 +800 抵銷掉一部分 —— 這其實就是功因校正的原理。</li>
+          <li><b>Step 3　最後才取大小。</b>
+            <span class="d-eq">|S總| = √(1500² + 400²) = √(2,250,000 + 160,000) = √2,410,000 = 1552.4 VA</span></li>
+          <li><b>Step 4　對照錯誤做法。</b>
+            <span class="d-eq">|S₁| = √(600²+800²) = 1000 VA　|S₂| = √(900²+400²) = 985.0 VA<br>Σ|S<sub>i</sub>| = 1985.0 VA　✗ 差了 432.6 VA</span></li>
+          <li><b>Step 5　總功因數。</b>
+            <span class="d-eq">pf = P總/|S總| = 1500/1552.4 = 0.966（Q總 &gt; 0 → 落後）</span></li>
+        </ol>
+        <p class="ex-ans">|S總| = 1552.4 VA，pf = 0.966 落後（不是 1985 VA！）</p>
+      </div>
+
+      <div class="howto">
+        <h4>多負載題目的標準流程</h4>
+        <ol>
+          <li><b>把每個負載都換算成 P<sub>i</sub> 和 Q<sub>i</sub>。</b>題目可能給 pf、給阻抗、給 S 和角度 —— 通通先轉成一對 (P, Q)。<br>
+            給 P 和 pf → <code>Q = P·tanθ</code>；給 S 和 pf → <code>P = S·pf</code>、<code>Q = S·sinθ</code>。</li>
+          <li><b>Q 的符號一定要對。</b>電感性（lagging）取 <b>+</b>，電容性（leading）取 <b>−</b>。符號錯了整題就錯。</li>
+          <li><b>分別加總</b>得到 P總、Q總。</li>
+          <li><b>最後才合成：</b><code>|S| = √(P總² + Q總²)</code>、<code>pf = P總/|S|</code>、<code>I = |S|/Vrms</code>。</li>
+        </ol>
+      </div>
 
       <div class="bench">
         <div class="bench-head"><h3>三個負載的功率相加</h3><span class="spacer"></span><span class="tag">向量相加，不是數值相加</span></div>
@@ -275,6 +792,92 @@
       <h2>功率因數校正</h2>
       <p class="lede">工廠的馬達幾乎都是電感性、功因偏低。<span class="tm">功因校正<i>power factor correction</i></span>就是在負載旁<strong>並聯一顆電容</strong>，用電容的 −Q 去抵銷電感的 +Q，讓功因接近 1。P 完全不變，但線電流會變小。</p>
       <div class="eq">Q<em>C</em> = Q₁ − Q₂ = P(tan θ₁ − tan θ₂)　　C = Q<em>C</em> / (ω·V²<em>rms</em>)</div>
+
+      <div class="derive">
+        <h4>電容值的公式是怎麼推出來的</h4>
+        <ol>
+          <li>
+            <span class="d-eq">校正前：P = S₁cos θ₁　⟹　Q₁ = S₁ sin θ₁ = P·tan θ₁</span>
+            <div class="why">從功率三角形。把 S₁ = P/cos θ₁ 代入 Q₁ = S₁ sin θ₁，得 Q₁ = P·(sinθ₁/cosθ₁) = P tan θ₁。<b>用 tan 的好處是只需要 P，不必先算 S。</b></div>
+          </li>
+          <li>
+            <span class="d-eq">校正後：P <b>不變</b>　⟹　Q₂ = P·tan θ₂</span>
+            <p>關鍵前提：理想電容的平均功率為零，所以<b>加電容不會改變 P</b>。功率三角形的底邊固定，只有高度（Q）變矮。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">Q<sub>C</sub> = Q₁ − Q₂ = P(tan θ₁ − tan θ₂)</span>
+            <p>電容需要「吃掉」的那一段虛功率，就是兩者之差。因為 θ₁ &gt; θ₂，所以這個值是正的。</p>
+          </li>
+          <li>
+            <span class="d-eq">另一邊，電容自己能提供多少 Q？<br>
+              Q<sub>C</sub> = V²<sub>rms</sub>/X<sub>C</sub>　，而 X<sub>C</sub> = 1/(ωC)</span>
+            <div class="why">用 11.6 推的 Q = V²<sub>rms</sub>/X。電容的電抗是 1/(ωC)，代進去：</div>
+            <span class="d-eq">Q<sub>C</sub> = V²<sub>rms</sub> ÷ [1/(ωC)] = ω C V²<sub>rms</sub></span>
+          </li>
+          <li>
+            <p><b>兩邊都是 Q<sub>C</sub>，令它們相等：</b></p>
+            <span class="d-eq hi">ω C V²<sub>rms</sub> = P(tan θ₁ − tan θ₂)<br>⟹　C = P(tan θ₁ − tan θ₂) / (ω V²<sub>rms</sub>)</span>
+            <p>注意 <b>ω = 2πf</b>，台灣市電 f = 60 Hz → ω = 377 rad/s。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="example">
+        <div class="ex-head">課本例題 11.15 · 完整計算</div>
+        <p class="ex-q">一個負載接在 <b>120 V (rms)、60 Hz</b> 電源上，吸收 <b>4 kW</b>，功因為 <b>0.8 落後</b>。求要把 pf 提升到 <b>0.95</b> 所需的並聯電容值。</p>
+        <ol>
+          <li><b>Step 1　求校正前的角度。</b>
+            <span class="d-eq">cos θ₁ = 0.8　⟹　θ₁ = cos⁻¹(0.8) = 36.87°</span></li>
+          <li><b>Step 2　求校正前的 S₁ 和 Q₁。</b>
+            <span class="d-eq">S₁ = P/cos θ₁ = 4000/0.8 = 5000 VA<br>Q₁ = S₁ sin θ₁ = 5000 × sin(36.87°) = 5000 × 0.6 = 3000 VAR</span>
+            （也可以直接用 Q₁ = P tanθ₁ = 4000 × 0.75 = 3000 VAR，同樣答案。）</li>
+          <li><b>Step 3　求目標角度與目標 Q₂。</b>
+            <span class="d-eq">cos θ₂ = 0.95　⟹　θ₂ = 18.19°<br>Q₂ = P tan θ₂ = 4000 × tan(18.19°) = 4000 × 0.3287 = 1314.4 VAR</span></li>
+          <li><b>Step 4　電容要提供的虛功率。</b>
+            <span class="d-eq">Q<sub>C</sub> = Q₁ − Q₂ = 3000 − 1314.4 = 1685.6 VAR</span></li>
+          <li><b>Step 5　換算成電容值。</b>
+            <span class="d-eq">ω = 2π × 60 = 377 rad/s　，V²<sub>rms</sub> = 120² = 14400<br>
+              C = 1685.6 / (377 × 14400) = 1685.6 / 5,428,800</span></li>
+        </ol>
+        <p class="ex-ans">C = 3.105×10⁻⁴ F = 310.5 µF</p>
+      </div>
+
+      <div class="derive">
+        <h4>順便看看線電流少了多少（這才是省錢的地方）</h4>
+        <ol>
+          <li>
+            <span class="d-eq">校正前：I₁ = S₁/V<sub>rms</sub> = 5000/120 = 41.7 A</span>
+          </li>
+          <li>
+            <span class="d-eq">校正後：S₂ = P/cos θ₂ = 4000/0.95 = 4210.5 VA<br>I₂ = 4210.5/120 = 35.1 A</span>
+          </li>
+          <li>
+            <span class="d-eq hi">電流減少 15.8%，而線損 I²R 減少 1 − (35.1/41.7)² = 29.1%</span>
+            <p>做了功因校正之後，<b>負載拿到的有用功率 P 一點都沒變（still 4 kW）</b>，但輸電線上白白損失的熱能少了將近三成。這就是電力公司要求工廠維持高功因、否則加收費用的原因。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="howto">
+        <h4>功因校正題目的四個步驟</h4>
+        <ol>
+          <li><b>θ₁ = cos⁻¹(pf₁)</b>，<b>θ₂ = cos⁻¹(pf₂)</b>。兩個角度先算出來放旁邊。</li>
+          <li><b>Q₁ = P tan θ₁</b>，<b>Q₂ = P tan θ₂</b>。記住 <b>P 全程不變</b>，這是整題的支點。</li>
+          <li><b>Q<sub>C</sub> = Q₁ − Q₂</b>。順序是「舊減新」，因為要變小。</li>
+          <li><b>C = Q<sub>C</sub>/(ωV²<sub>rms</sub>)</b>。ω 記得是 2πf，V 一定要用 rms。</li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>功因校正的常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> <b>tan 的順序寫反</b>成 (tan θ₂ − tan θ₁)，算出負的電容值。θ₁ 是比較差的功因、角度比較大，所以是<b>θ₁ 減 θ₂</b>。</li>
+          <li><span class="x">✗</span> <b>以為 P 會變。</b>加電容只改變 Q、S 和線電流，<b>P 永遠不變</b>。很多人會去重算 P，白做工還算錯。</li>
+          <li><span class="x">✗</span> <b>公式裡的 V 用成振幅。</b>必須是 V<sub>rms</sub>，而且要<b>平方</b>。</li>
+          <li><span class="x">✗</span> <b>忘記 ω = 2πf。</b>直接把 60 代進去當 ω，答案會差 6.28 倍。</li>
+          <li><b>反向情況：</b>若負載本來就是<b>電容性（超前）</b>，要並聯的是<b>電感</b>，公式變成 <span class="o">L = V²<sub>rms</sub>/(ω·Q<sub>L</sub>)</span>。</li>
+        </ul>
+      </div>
 
       <div class="bench">
         <div class="bench-head"><h3>功因校正計算器</h3><span class="spacer"></span>

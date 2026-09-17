@@ -526,3 +526,111 @@ a.subj:hover { border-color: var(--subj, var(--accent)); transform: translateY(-
   .gl-row code { grid-row: 1; grid-column: 2; }
   .home { padding-inline: 16px; }
 }
+
+/* ============================================================
+   教學元件：推導、例題、解題步驟、常見錯誤
+   ============================================================ */
+
+/* 行內算式：推導每一步用 */
+.d-eq {
+  display: block; font-family: var(--font-mono); font-size: 14px; line-height: 1.75;
+  color: var(--ink); background: var(--surface-2);
+  border-radius: 6px; padding: 9px 13px; margin: 6px 0;
+  overflow-x: auto; white-space: nowrap;
+}
+.d-eq.hi { background: color-mix(in srgb, var(--accent) 11%, var(--surface)); color: var(--ink); font-weight: 600; }
+
+/* ---------- 逐步推導 ---------- */
+.derive {
+  border: 1px solid var(--line); border-radius: 10px;
+  background: var(--surface); margin: 20px 0; overflow: hidden;
+}
+.derive > h4 {
+  margin: 0; padding: 12px 16px; font-size: 14.5px; font-weight: 600;
+  background: var(--surface-2); border-bottom: 1px solid var(--line-soft);
+  font-family: var(--font-display);
+}
+.derive > h4::before {
+  content: "推導"; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+  color: var(--accent); display: block; margin-bottom: 2px; font-weight: 500;
+}
+.derive ol { margin: 0; padding: 6px 16px 14px 38px; }
+.derive ol > li { margin: 14px 0; padding-left: 4px; }
+.derive ol > li::marker { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 700; }
+.derive p { margin: 5px 0 0; font-size: 13.5px; color: var(--ink-2); line-height: 1.7; }
+.derive .why {
+  font-size: 13px; color: var(--ink-2); margin-top: 6px;
+  padding-left: 11px; border-left: 2px solid var(--line);
+}
+.derive .why b { color: var(--ink); }
+
+/* ---------- 例題 ---------- */
+.example {
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  border-radius: 10px; background: var(--surface); margin: 20px 0; overflow: hidden;
+}
+.example > .ex-head {
+  padding: 11px 16px; background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+  border-bottom: 1px solid var(--line-soft);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+}
+.example .ex-q {
+  margin: 0; padding: 14px 16px; font-size: 14.5px; line-height: 1.75; color: var(--ink);
+  border-bottom: 1px dashed var(--line);
+}
+.example .ex-q b { color: var(--ink); }
+.example ol { margin: 0; padding: 12px 16px 6px 38px; }
+.example ol > li { margin: 12px 0; font-size: 13.5px; line-height: 1.7; color: var(--ink-2); }
+.example ol > li::marker { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
+.example ol > li > b:first-child { color: var(--ink); }
+.example .ex-ans {
+  margin: 0; padding: 12px 16px; background: color-mix(in srgb, var(--ok) 10%, var(--surface));
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--font-mono); font-size: 14px; color: var(--ok); font-weight: 600;
+}
+
+/* ---------- 解題步驟（SOP） ---------- */
+.howto {
+  border-left: 3px solid var(--accent); background: var(--surface-2);
+  border-radius: 0 9px 9px 0; padding: 14px 18px; margin: 20px 0;
+}
+.howto > h4 {
+  margin: 0 0 4px; font-size: 14.5px; font-family: var(--font-display); font-weight: 600;
+}
+.howto > h4::before {
+  content: "解題步驟"; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+  color: var(--accent); display: block; margin-bottom: 2px; font-weight: 500;
+}
+.howto ol { margin: 10px 0 0; padding-left: 20px; }
+.howto ol > li { margin: 8px 0; font-size: 13.5px; line-height: 1.7; color: var(--ink-2); }
+.howto ol > li b { color: var(--ink); }
+.howto code {
+  font-family: var(--font-mono); font-size: 12.5px;
+  background: var(--surface); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--line-soft);
+}
+
+/* ---------- 常見錯誤 ---------- */
+.pitfall {
+  border: 1px solid color-mix(in srgb, var(--bad) 32%, var(--line));
+  border-radius: 10px; background: color-mix(in srgb, var(--bad) 5%, var(--surface));
+  padding: 14px 18px; margin: 20px 0;
+}
+.pitfall > h4 {
+  margin: 0 0 8px; font-size: 14.5px; font-family: var(--font-display); font-weight: 600; color: var(--bad);
+}
+.pitfall > h4::before {
+  content: "常見錯誤"; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+  display: block; margin-bottom: 2px; font-weight: 500; opacity: .8;
+}
+.pitfall ul { margin: 0; padding-left: 18px; }
+.pitfall li { margin: 7px 0; font-size: 13.5px; line-height: 1.7; color: var(--ink-2); }
+.pitfall li b { color: var(--ink); }
+.pitfall .x { color: var(--bad); font-family: var(--font-mono); font-weight: 700; }
+.pitfall .o { color: var(--ok); font-family: var(--font-mono); font-weight: 700; }
+
+@media (max-width: 520px) {
+  .derive ol { padding-left: 30px; }
+  .example ol { padding-left: 30px; }
+  .d-eq { font-size: 13px; }
+}
