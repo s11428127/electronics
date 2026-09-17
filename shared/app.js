@@ -8,10 +8,12 @@
   /* ---------------- 主題色票 ---------------- */
   const TOKENS = ['ink', 'ink-2', 'ink-3', 'line', 'line-soft', 'surface', 'surface-2',
     'surface-3', 'electron', 'electron-w', 'hole', 'hole-w', 'ion-pos', 'ion-pos-w',
-    'ok', 'warn', 'bad', 'paper'];
+    'ok', 'warn', 'bad', 'paper', 'accent',
+    'p-real', 'p-real-w', 'q-react', 'q-react-w', 's-app', 's-app-w'];
   const C = {};
   function readTokens() {
-    const cs = getComputedStyle(document.documentElement);
+    /* 從 body 讀，科目主色（body[data-subject]）才會被算進來 */
+    const cs = getComputedStyle(document.body || document.documentElement);
     TOKENS.forEach(k => { C[k] = cs.getPropertyValue('--' + k).trim() || '#888'; });
   }
   readTokens();
@@ -97,7 +99,7 @@
 
   /* ---------------- 繪圖原語 ---------------- */
   function disc(ctx, x, y, r, fill, stroke) {
-    ctx.beginPath(); ctx.arc(x, y, r, 0, TAU);
+    ctx.beginPath(); ctx.arc(x, y, Math.max(0, r), 0, TAU);
     ctx.fillStyle = fill; ctx.fill();
     if (stroke) { ctx.lineWidth = 1.2; ctx.strokeStyle = stroke; ctx.stroke(); }
   }
@@ -108,7 +110,7 @@
     if ((r || 5) >= 6) ctx.fillText('−', x, y + 0.5);
   }
   function hole(ctx, x, y, r) {
-    r = r || 5;
+    r = Math.max(0, r || 5);
     ctx.beginPath(); ctx.arc(x, y, r, 0, TAU);
     ctx.fillStyle = C['hole-w']; ctx.fill();
     ctx.lineWidth = 1.6; ctx.strokeStyle = C.hole; ctx.setLineDash([2.6, 2.2]); ctx.stroke(); ctx.setLineDash([]);

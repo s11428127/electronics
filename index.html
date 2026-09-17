@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>電機系互動講義</title>
+<meta name="description" content="把電子學、電路學、工程數學的課堂投影片，改寫成可以動手操作的互動網頁教材。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="shared/app.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand"><b>電機系互動講義</b><span>2026 FALL</span></div>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="home">
+  <div class="home-hero">
+    <div class="eyebrow">Interactive lecture notes</div>
+    <h1>選一個科目開始</h1>
+    <p>每個觀念都做成可以拉、可以點、可以玩的互動模組，而不是一張靜態的投影片截圖。中文講解，重要名詞附英文。</p>
+  </div>
+
+  <div class="subjects">
+    <a class="subj" href="electronics/index.html" style="--subj:#2a55e0">
+      <span class="mark">EE</span>
+      <span class="body">
+        <b>電子學</b>
+        <span>Microelectronics · Neamen 4e</span>
+        <p>半導體材料、能帶與載子、二極體與 pn 接面。目前完成 CH1 PART 1：8 個互動模組＋10 題測驗。</p>
+      </span>
+      <span class="go">進入 →</span>
+    </a>
+
+    <a class="subj" href="circuits/index.html" style="--subj:#0f7a66">
+      <span class="mark">CT</span>
+      <span class="body">
+        <b>電路學</b>
+        <span>Fundamentals of Electric Circuits · Sadiku</span>
+        <p>交流功率分析：瞬時功率、rms、功率三角形、功因校正。目前完成 CH11：8 個互動模組＋15 題中英對照測驗。</p>
+      </span>
+      <span class="go">進入 →</span>
+    </a>
+
+    <div class="subj soon">
+      <span class="mark">EM</span>
+      <span class="body">
+        <b>工程數學</b>
+        <span>Engineering Mathematics</span>
+        <p>尚未開始。丟第一份講義過來就會長出跟前兩科一樣的結構。</p>
+      </span>
+      <span class="go">待上傳</span>
+    </div>
+  </div>
+
+  <p class="note key home-note">三個科目共用同一套設計與互動引擎，所以操作方式完全一致：<b>側邊欄選小節、滑桿改參數、讀數即時更新、最後做一次小測驗</b>。</p>
+  <p class="note src">教材依據各科課本整理，僅作為個人讀書輔助之用。</p>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('theme-btn');
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    var isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { var t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+</body>
+</html>

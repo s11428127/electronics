@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>交流功率分析</title>
+<meta name="description" content="電路學 CH11 互動講義：用可操作的波形、相量圖與功率三角形拆解交流功率分析。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body data-subject="circuits">
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="home-link" href="../index.html">← 主頁</a>
+    <div class="brand"><b>電路學互動講義</b><span>SADIKU · CH11</span></div>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH11 AC POWER</div>
+    <ol>
+      <li><a href="#map"><i>00</i>課程地圖</a></li>
+      <li><a href="#inst"><i>11.2</i>瞬時功率與平均功率</a></li>
+      <li><a href="#mpt"><i>11.3</i>最大平均功率轉移</a></li>
+      <li><a href="#rms"><i>11.4</i>有效值（rms）</a></li>
+      <li><a href="#pf"><i>11.5</i>視在功率與功率因數</a></li>
+      <li><a href="#tri"><i>11.6</i>複功率與功率三角形</a></li>
+      <li><a href="#cons"><i>11.7</i>交流功率守恆</a></li>
+      <li><a href="#pfc"><i>11.8</i>功率因數校正</a></li>
+      <li><a href="#app"><i>11.9</i>應用：瓦特計與電費</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <!-- ══════════ 首屏 ══════════ -->
+    <div class="hero">
+      <div class="eyebrow">Chapter 11 · AC Power Analysis · 課本 p.455–488</div>
+      <h1>交流功率分析</h1>
+      <p class="sub">整章只在回答一個問題：<strong>交流電路裡，功率到底跑去哪了？</strong>有一部分被電阻真的吃掉（實功率 P），另一部分只是在電源與電感電容之間來回擺盪（虛功率 Q）。8 個模組把這件事從波形一路帶到電費單。</p>
+      <div class="hero-meta">
+        <span class="chip">8 個互動模組</span>
+        <span class="chip">15 題中英對照測驗</span>
+        <span class="chip">名詞中英對照表</span>
+      </div>
+    </div>
+
+    <!-- ══════════ 課程地圖 ══════════ -->
+    <section class="sec" id="map">
+      <div class="eyebrow">Course map</div>
+      <h2>本章結構</h2>
+      <p class="lede">課本：Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 11。下面每一節都對應一個可操作的模組。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>11.1</code><b>導論 <span style="color:var(--ink-3);font-weight:400">Introduction</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.2</code><b>瞬時功率與平均功率 <span style="color:var(--ink-3);font-weight:400">Instantaneous and Average Power</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.3</code><b>最大平均功率轉移 <span style="color:var(--ink-3);font-weight:400">Maximum Average Power Transfer</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.4</code><b>有效值／均方根值 <span style="color:var(--ink-3);font-weight:400">Effective or RMS Value</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.5</code><b>視在功率與功率因數 <span style="color:var(--ink-3);font-weight:400">Apparent Power and Power Factor</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.6</code><b>複功率 <span style="color:var(--ink-3);font-weight:400">Complex Power</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.7</code><b>交流功率守恆 <span style="color:var(--ink-3);font-weight:400">Conservation of AC Power</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.8</code><b>功率因數校正 <span style="color:var(--ink-3);font-weight:400">Power Factor Correction</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.9</code><b>應用：功率量測與電費 <span style="color:var(--ink-3);font-weight:400">Applications</span></b><span class="dot"></span></div>
+      </div>
+      <p class="note key">整章的核心關係式只有一條：<b>S = P + jQ</b>。其他所有公式都是它的變形。先把功率三角形畫熟，這章的計算題就解了一半。</p>
+    </section>
+
+    <!-- ══════════ 11.2 瞬時功率 ══════════ -->
+    <section class="sec" id="inst">
+      <div class="eyebrow">11.2 · Instantaneous and Average Power</div>
+      <h2>瞬時功率與平均功率</h2>
+      <p class="lede"><span class="tm">瞬時功率<i>instantaneous power</i></span> p(t) = v(t)·i(t) 是「某一瞬間」吸收功率的速率。把它展開會發現它由<strong>一個固定值</strong>加上<strong>一個以 2ω 擺盪的弦波</strong>組成 —— 那個固定值就是<span class="tm">平均功率<i>average power</i></span> P。</p>
+      <div class="eq">p(t) = ½V<em>m</em>I<em>m</em> cos(θv − θi) &nbsp;+&nbsp; ½V<em>m</em>I<em>m</em> cos(2ωt + θv + θi)</div>
+      <p class="note">左半是常數（不隨時間變），右半是弦波，取一週期平均後為零。所以 <b>P = ½V<sub>m</sub>I<sub>m</sub> cos(θv − θi)</b>。注意 p(t) 的頻率是電壓的<b>兩倍</b>，週期 T₀ = T/2。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>瞬時功率波形實驗室</h3><span class="spacer"></span><span class="tag">p(t) = v(t)·i(t)</span></div>
+        <div class="stage-wrap"><canvas id="cv-inst" aria-label="瞬時功率波形，正區為吸收、負區為回送電源"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="inst-vm">電壓振幅 Vm<output for="inst-vm"></output></label>
+            <input type="range" id="inst-vm" min="2" max="16" step="1" value="10"></div>
+          <div class="ctrl"><label for="inst-im">電流振幅 Im<output for="inst-im"></output></label>
+            <input type="range" id="inst-im" min="1" max="8" step="1" value="4"></div>
+          <div class="ctrl"><label for="inst-thv">電壓相角 θv<output for="inst-thv"></output></label>
+            <input type="range" id="inst-thv" min="-90" max="90" step="5" value="0"></div>
+          <div class="ctrl"><label for="inst-thi">電流相角 θi<output for="inst-thi"></output></label>
+            <input type="range" id="inst-thi" min="-90" max="90" step="5" value="-45"></div>
+          <div class="ctrl" style="grid-column:span 2"><span class="lab">三個特例</span>
+            <div class="btn-row">
+              <button class="btn" type="button" data-inst="0,0">純電阻 θv=θi</button>
+              <button class="btn" type="button" data-inst="0,-90">純電感 落後90°</button>
+              <button class="btn" type="button" data-inst="0,90">純電容 超前90°</button>
+              <button class="btn" type="button" id="inst-play">暫停</button>
+            </div></div>
+        </div>
+        <dl class="readout">
+          <div><dt>相位差 θv−θi</dt><dd id="inst-d">—</dd></div>
+          <div><dt>平均功率 P</dt><dd id="inst-P" style="color:var(--p-real)">—</dd></div>
+          <div><dt>虛功率 Q</dt><dd id="inst-Q" style="color:var(--q-react)">—</dd></div>
+          <div><dt>功率因數</dt><dd id="inst-pf">—</dd></div>
+        </dl>
+        <div class="msg" id="inst-kind"></div>
+        <div class="msg" id="inst-note"></div>
+      </div>
+      <p class="note key">電阻<b>任何時刻</b>都在吸收功率（p(t) ≥ 0）；電感與電容的平均功率為 <b>0</b>，它們只是把能量借來還去。</p>
+    </section>
+
+    <!-- ══════════ 11.3 最大功率轉移 ══════════ -->
+    <section class="sec" id="mpt">
+      <div class="eyebrow">11.3 · Maximum Average Power Transfer</div>
+      <h2>最大平均功率轉移</h2>
+      <p class="lede">直流時的結論是 R<sub>L</sub> = R<sub>Th</sub>。交流時要多考慮電抗：先用 X<sub>L</sub> 把 X<sub>Th</sub> <strong>抵銷掉</strong>，再用 R<sub>L</sub> 去匹配 R<sub>Th</sub>。合起來就是<span class="tm">共軛匹配<i>conjugate matching</i></span>。</p>
+      <div class="eq">Z<em>L</em> = Z<em>Th</em>*　（即 R<em>L</em> = R<em>Th</em>，X<em>L</em> = −X<em>Th</em>）　⟹　P<em>max</em> = |V<em>Th</em>|² / (8R<em>Th</em>)</div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>阻抗匹配挑戰</h3><span class="spacer"></span>
+          <div class="btn-row">
+            <button class="btn" type="button" id="mpt-auto">直接套公式</button>
+            <button class="btn" type="button" id="mpt-new">換一題 ↺</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-mpt" aria-label="戴維寧等效電路與負載功率計"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="mpt-rl">負載電阻 RL<output for="mpt-rl"></output></label>
+            <input type="range" id="mpt-rl" min="0.5" max="16" step="0.5" value="8"></div>
+          <div class="ctrl"><label for="mpt-xl">負載電抗 XL<output for="mpt-xl"></output></label>
+            <input type="range" id="mpt-xl" min="-12" max="12" step="0.5" value="6"></div>
+          <div class="ctrl"><span class="lab">題目給定</span>
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--ink-2);line-height:1.7">
+              ZTh = <span id="mpt-zth">—</span><br>VTh = <span id="mpt-vth">—</span></div></div>
+        </div>
+        <dl class="readout">
+          <div><dt>目前 P</dt><dd id="mpt-P" style="color:var(--s-app)">—</dd></div>
+          <div><dt>理論 Pmax</dt><dd id="mpt-Pmax" style="color:var(--p-real)">—</dd></div>
+          <div><dt>達成率</dt><dd id="mpt-pct">—</dd></div>
+          <div><dt>應設定 ZL</dt><dd id="mpt-target" style="font-size:13px">—</dd></div>
+        </dl>
+        <div class="msg" id="mpt-msg"></div>
+      </div>
+      <p class="note key">若題目限定負載<b>只能是純電阻</b>（X<sub>L</sub> = 0），條件會變成 <b>R<sub>L</sub> = |Z<sub>Th</sub>| = √(R²<sub>Th</sub> + X²<sub>Th</sub>)</b>，不是 R<sub>Th</sub>。這是最常見的考點差異。</p>
+    </section>
+
+    <!-- ══════════ 11.4 RMS ══════════ -->
+    <section class="sec" id="rms">
+      <div class="eyebrow">11.4 · Effective or RMS Value</div>
+      <h2>有效值（均方根值 rms）</h2>
+      <p class="lede">為什麼台灣市電叫「110 V」但波峰其實有 155 V？因為那個 110 是<span class="tm">有效值<i>effective value</i></span>：<strong>能對同一個電阻送出相同平均功率的那個等效直流值</strong>。名字 root-mean-square 就是它的算法，倒著唸即可。</p>
+      <div class="eq">X<em>rms</em> = √( (1/T) ∫₀ᵀ x²(t) dt )　←　先平方 square、再平均 mean、最後開根號 root</div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>rms 三步驟演示</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-shape="sine">弦波</button>
+            <button class="btn" type="button" data-shape="square">方波</button>
+            <button class="btn" type="button" data-shape="tri">三角波</button>
+            <button class="btn" type="button" data-shape="saw">鋸齒波</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-rms" aria-label="rms 計算三步驟：平方、平均、開根號"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="rms-amp">振幅 Vm<output for="rms-amp"></output></label>
+            <input type="range" id="rms-amp" min="2" max="20" step="1" value="10"></div>
+          <div class="ctrl"><span class="lab">逐步演示</span>
+            <div class="btn-row"><button class="btn solid" type="button" id="rms-step">開始：平方 →</button></div></div>
+        </div>
+        <dl class="readout">
+          <div><dt>波形</dt><dd id="rms-shape" style="font-size:14px">—</dd></div>
+          <div><dt>振幅 Vm</dt><dd id="rms-am">—</dd></div>
+          <div><dt>Vrms</dt><dd id="rms-val" style="color:var(--p-real)">—</dd></div>
+          <div><dt>通式</dt><dd id="rms-formula" style="font-size:13px">—</dd></div>
+        </dl>
+      </div>
+      <p class="note key">V<sub>m</sub>/√2 <b>只對弦波成立</b>。方波的 rms 就是 V<sub>m</sub>、三角波與鋸齒波是 V<sub>m</sub>/√3。考試若給非弦波卻照套 √2，就會錯。</p>
+      <p class="note">有了 rms，交流的功率公式就跟直流長得一樣：<b>P = I²<sub>rms</sub>R = V<sub>rms</sub>I<sub>rms</sub>cos(θv−θi)</b>。這正是發明有效值的目的。</p>
+    </section>
+
+    <!-- ══════════ 11.5 功率因數 ══════════ -->
+    <section class="sec" id="pf">
+      <div class="eyebrow">11.5 · Apparent Power and Power Factor</div>
+      <h2>視在功率與功率因數</h2>
+      <p class="lede">把 V<sub>rms</sub> 乘上 I<sub>rms</sub>「看起來」就該是功率，所以叫<span class="tm">視在功率<i>apparent power</i></span> S，單位是 VA。但真正被消耗的只有 S 的一部分，那個折扣率就是<span class="tm">功率因數<i>power factor</i></span>。</p>
+      <div class="eq">S = V<em>rms</em>I<em>rms</em> (VA)　　pf = P/S = cos(θv − θi)　　P = S·pf (W)</div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>相量圖與功率因數</h3><span class="spacer"></span>
+          <div class="btn-row"><button class="btn" type="button" id="pf-spin">停止旋轉</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-pf" aria-label="電壓電流相量圖與 S、P、Q 比例條"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="pf-v">Vrms<output for="pf-v"></output></label>
+            <input type="range" id="pf-v" min="10" max="240" step="10" value="120"></div>
+          <div class="ctrl"><label for="pf-i">Irms<output for="pf-i"></output></label>
+            <input type="range" id="pf-i" min="1" max="20" step="1" value="5"></div>
+          <div class="ctrl"><label for="pf-th">相位差 θv−θi<output for="pf-th"></output></label>
+            <input type="range" id="pf-th" min="-89" max="89" step="1" value="37"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>S 視在功率</dt><dd id="pf-S" style="color:var(--s-app)">—</dd></div>
+          <div><dt>P 實功率</dt><dd id="pf-P" style="color:var(--p-real)">—</dd></div>
+          <div><dt>Q 虛功率</dt><dd id="pf-Q" style="color:var(--q-react)">—</dd></div>
+          <div><dt>功率因數</dt><dd id="pf-pf" style="font-size:13px">—</dd></div>
+        </dl>
+        <div class="msg" id="pf-note"></div>
+      </div>
+      <p class="note key">記憶法：<b>電流落後 → 電感性 → lagging</b>（馬達、冷氣）；<b>電流超前 → 電容性 → leading</b>。功率因數角 θv−θi 也等於<b>負載阻抗的角度</b>。</p>
+    </section>
+
+    <!-- ══════════ 11.6 複功率 ══════════ -->
+    <section class="sec" id="tri">
+      <div class="eyebrow">11.6 · Complex Power</div>
+      <h2>複功率與功率三角形</h2>
+      <p class="lede"><span class="tm">複功率<i>complex power</i></span> S 把這章所有資訊包成一個複數：<strong>實部是 P、虛部是 Q、大小是視在功率、相角的餘弦是功率因數</strong>。一個 S 在手，四個量全有。</p>
+      <div class="eq">S = V<em>rms</em>·I*<em>rms</em> = P + jQ　　|S| = √(P² + Q²)　　S = I²<em>rms</em>Z = V²<em>rms</em>/Z*</div>
+      <p class="note"><b>注意那個星號。</b>必須取電流的共軛 I*，角度才會是 θv − θi。不取共軛會變成 θv + θi，整題就毀了。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>功率三角形（可拖曳）</h3><span class="spacer"></span><span class="tag">S = P + jQ</span></div>
+        <div class="stage-wrap"><canvas id="cv-tri" aria-label="可拖曳的功率三角形，顯示 P、Q、S 與負載性質"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="tri-p">實功率 P<output for="tri-p"></output></label>
+            <input type="range" id="tri-p" min="0" max="1400" step="10" value="800"></div>
+          <div class="ctrl"><label for="tri-q">虛功率 Q<output for="tri-q"></output></label>
+            <input type="range" id="tri-q" min="-700" max="900" step="10" value="600"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>視在功率 |S|</dt><dd id="tri-S" style="color:var(--s-app)">—</dd></div>
+          <div><dt>功因角 θ</dt><dd id="tri-th">—</dd></div>
+          <div><dt>功率因數</dt><dd id="tri-pf" style="font-size:13px">—</dd></div>
+          <div><dt>負載性質</dt><dd id="tri-kind" style="font-size:13px">—</dd></div>
+        </dl>
+      </div>
+      <p class="note key">Q 的三種情況：<b>Q = 0</b> 純電阻（單位功因）；<b>Q &lt; 0</b> 電容性（超前）；<b>Q &gt; 0</b> 電感性（落後）。功率三角形跟<b>阻抗三角形（Z, R, X）</b>長得一模一樣，因為 S = I²<sub>rms</sub>Z。</p>
+    </section>
+
+    <!-- ══════════ 11.7 守恆 ══════════ -->
+    <section class="sec" id="cons">
+      <div class="eyebrow">11.7 · Conservation of AC Power</div>
+      <h2>交流功率守恆</h2>
+      <p class="lede">不管負載是串聯還是並聯，<strong>電源送出的複功率 = 各負載吸收的複功率總和</strong>。但這裡藏著這一章最常被扣分的地方。</p>
+      <div class="eq">S = S₁ + S₂ + ⋯ + S<em>N</em>　　P = ΣP<em>i</em>　　Q = ΣQ<em>i</em>　　但 |S| ≠ Σ|S<em>i</em>|</div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>三個負載的功率相加</h3><span class="spacer"></span><span class="tag">向量相加，不是數值相加</span></div>
+        <div class="stage-wrap"><canvas id="cv-cons" aria-label="三個複功率向量首尾相接，顯示總和"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="cons-p1">負載1 P₁<output for="cons-p1"></output></label>
+            <input type="range" id="cons-p1" min="0" max="1200" step="50" value="600"></div>
+          <div class="ctrl"><label for="cons-q1">負載1 Q₁<output for="cons-q1"></output></label>
+            <input type="range" id="cons-q1" min="-800" max="800" step="50" value="800"></div>
+          <div class="ctrl"><label for="cons-p2">負載2 P₂<output for="cons-p2"></output></label>
+            <input type="range" id="cons-p2" min="0" max="1200" step="50" value="900"></div>
+          <div class="ctrl"><label for="cons-q2">負載2 Q₂<output for="cons-q2"></output></label>
+            <input type="range" id="cons-q2" min="-800" max="800" step="50" value="-400"></div>
+          <div class="ctrl"><label for="cons-p3">負載3 P₃<output for="cons-p3"></output></label>
+            <input type="range" id="cons-p3" min="0" max="1200" step="50" value="400"></div>
+          <div class="ctrl"><label for="cons-q3">負載3 Q₃<output for="cons-q3"></output></label>
+            <input type="range" id="cons-q3" min="-800" max="800" step="50" value="300"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>P 總</dt><dd id="cons-P" style="color:var(--p-real)">—</dd></div>
+          <div><dt>Q 總</dt><dd id="cons-Q" style="color:var(--q-react)">—</dd></div>
+          <div><dt>|S 總| 正確答案</dt><dd id="cons-S" style="color:var(--s-app)">—</dd></div>
+          <div><dt>Σ|Sᵢ| 錯誤做法</dt><dd id="cons-sum" style="color:var(--bad)">—</dd></div>
+        </dl>
+        <div class="msg bad" id="cons-diff"></div>
+      </div>
+      <p class="note key">P 可以直接加、Q 可以直接加，<b>視在功率 S 不可以直接加</b>。正確做法永遠是：先各自加總 P 與 Q，最後才 |S| = √(P總² + Q總²)。</p>
+    </section>
+
+    <!-- ══════════ 11.8 功因校正 ══════════ -->
+    <section class="sec" id="pfc">
+      <div class="eyebrow">11.8 · Power Factor Correction</div>
+      <h2>功率因數校正</h2>
+      <p class="lede">工廠的馬達幾乎都是電感性、功因偏低。<span class="tm">功因校正<i>power factor correction</i></span>就是在負載旁<strong>並聯一顆電容</strong>，用電容的 −Q 去抵銷電感的 +Q，讓功因接近 1。P 完全不變，但線電流會變小。</p>
+      <div class="eq">Q<em>C</em> = Q₁ − Q₂ = P(tan θ₁ − tan θ₂)　　C = Q<em>C</em> / (ω·V²<em>rms</em>)</div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>功因校正計算器</h3><span class="spacer"></span>
+          <div class="btn-row"><button class="btn" type="button" id="pfc-book">課本例題 11.15</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-pfc" aria-label="功率三角形：校正前虛線、校正後實線，中間是電容抵銷的 QC"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="pfc-p">實功率 P<output for="pfc-p"></output></label>
+            <input type="range" id="pfc-p" min="500" max="10000" step="100" value="4000"></div>
+          <div class="ctrl"><label for="pfc-pf1">校正前 pf₁<output for="pfc-pf1"></output></label>
+            <input type="range" id="pfc-pf1" min="0.4" max="0.99" step="0.01" value="0.8"></div>
+          <div class="ctrl"><label for="pfc-pf2">目標 pf₂<output for="pfc-pf2"></output></label>
+            <input type="range" id="pfc-pf2" min="0.4" max="1" step="0.01" value="0.95"></div>
+          <div class="ctrl"><label for="pfc-v">Vrms<output for="pfc-v"></output></label>
+            <input type="range" id="pfc-v" min="100" max="240" step="10" value="120"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>θ₁ → θ₂</dt><dd style="font-size:13px"><span id="pfc-th1">—</span> → <span id="pfc-th2">—</span></dd></div>
+          <div><dt>Q₁ → Q₂</dt><dd style="font-size:13px"><span id="pfc-Q1">—</span> → <span id="pfc-Q2">—</span></dd></div>
+          <div><dt>電容要提供 QC</dt><dd id="pfc-QC" style="color:var(--s-app)">—</dd></div>
+          <div><dt>所需電容 C</dt><dd id="pfc-C" style="color:var(--p-real);font-size:15px">—</dd></div>
+          <div><dt>線電流 I₁ → I₂</dt><dd style="font-size:13px"><span id="pfc-I1">—</span> → <span id="pfc-I2" style="color:var(--p-real)">—</span></dd></div>
+          <div><dt>視在功率 S₁ → S₂</dt><dd style="font-size:13px"><span id="pfc-S1">—</span> → <span id="pfc-S2" style="color:var(--p-real)">—</span></dd></div>
+        </dl>
+        <div class="msg good" id="pfc-drop"></div>
+      </div>
+      <p class="note key">為什麼要做？電力公司對大電流收費更高，因為線損 <b>I²R</b> 是平方成長。功因從 0.8 拉到 0.95，同樣的 P 下線電流可以少掉約 16%，線損少掉約 29%。</p>
+      <p class="note">若負載本來就是<b>電容性</b>（超前功因），要並聯的就換成<b>電感</b>，公式改成 L = V²<sub>rms</sub> / (ω·Q<sub>L</sub>)。</p>
+    </section>
+
+    <!-- ══════════ 11.9 應用 ══════════ -->
+    <section class="sec" id="app">
+      <div class="eyebrow">11.9 · Applications</div>
+      <h2>應用：功率量測與電費</h2>
+      <p class="lede">三種儀器對應三種功率：<span class="tm">瓦特計<i>wattmeter</i></span>量 P、<span class="tm">乏計<i>varmeter</i></span>量 Q、<span class="tm">電表<i>kilowatt-hour meter</i></span>量用電度數。</p>
+      <div class="terms">
+        <div><b>電流線圈 current coil</b><span>阻抗極低（理想為 0）→ 串聯在負載上</span></div>
+        <div><b>電壓線圈 voltage coil</b><span>阻抗極高（理想為 ∞）→ 並聯在負載兩端</span></div>
+        <div><b>讀數</b><span>P = |Vrms||Irms| cos(θv − θi)</span></div>
+      </div>
+      <p class="note">因為電流線圈像短路、電壓線圈像開路，接上瓦特計<b>不會干擾原電路</b>，量到的才是真正的功率。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>電費計算器</h3><span class="spacer"></span><span class="tag">1 度 = 1 kWh</span></div>
+        <div class="controls">
+          <div class="ctrl"><label for="bill-kw">設備功率<output for="bill-kw"></output></label>
+            <input type="range" id="bill-kw" min="0.1" max="5" step="0.1" value="1.5"></div>
+          <div class="ctrl"><label for="bill-hrs">每天使用<output for="bill-hrs"></output></label>
+            <input type="range" id="bill-hrs" min="0.5" max="24" step="0.5" value="4"></div>
+          <div class="ctrl"><label for="bill-days">天數<output for="bill-days"></output></label>
+            <input type="range" id="bill-days" min="1" max="31" step="1" value="30"></div>
+          <div class="ctrl"><label for="bill-rate">電價<output for="bill-rate"></output></label>
+            <input type="range" id="bill-rate" min="1" max="8" step="0.1" value="3.5"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>用電度數</dt><dd id="bill-kwh" style="color:var(--s-app)">—</dd></div>
+          <div><dt>總電費</dt><dd id="bill-total" style="color:var(--p-real);font-size:18px">—</dd></div>
+          <div><dt>平均每天</dt><dd id="bill-day">—</dd></div>
+        </dl>
+        <div class="msg" id="bill-note"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 名詞對照 ══════════ -->
+    <section class="sec" id="glossary">
+      <div class="eyebrow">Glossary · 中英對照</div>
+      <h2>名詞中英對照表</h2>
+      <p class="lede">考卷上會出現的是右邊那欄。讀書用中文、寫題目認英文。</p>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>單位</code></div>
+        <div class="gl-row"><b>瞬時功率</b><span>instantaneous power, p(t)</span><code>W</code></div>
+        <div class="gl-row"><b>平均功率／實功率</b><span>average power / real power, P</span><code>W</code></div>
+        <div class="gl-row"><b>虛功率／無效功率</b><span>reactive power, Q</span><code>VAR</code></div>
+        <div class="gl-row"><b>視在功率</b><span>apparent power, S</span><code>VA</code></div>
+        <div class="gl-row"><b>複功率</b><span>complex power, S = P + jQ</span><code>VA</code></div>
+        <div class="gl-row"><b>功率因數</b><span>power factor, pf</span><code>—</code></div>
+        <div class="gl-row"><b>功因角</b><span>power factor angle, θv − θi</span><code>deg</code></div>
+        <div class="gl-row"><b>落後功因</b><span>lagging power factor（電感性）</span><code>Q &gt; 0</code></div>
+        <div class="gl-row"><b>超前功因</b><span>leading power factor（電容性）</span><code>Q &lt; 0</code></div>
+        <div class="gl-row"><b>有效值／均方根值</b><span>effective value / rms value</span><code>V, A</code></div>
+        <div class="gl-row"><b>功率三角形</b><span>power triangle</span><code>—</code></div>
+        <div class="gl-row"><b>功率因數校正</b><span>power factor correction</span><code>—</code></div>
+        <div class="gl-row"><b>最大功率轉移</b><span>maximum average power transfer</span><code>—</code></div>
+        <div class="gl-row"><b>共軛匹配</b><span>conjugate matching, ZL = ZTh*</span><code>Ω</code></div>
+        <div class="gl-row"><b>戴維寧等效</b><span>Thevenin equivalent</span><code>—</code></div>
+        <div class="gl-row"><b>瓦特計</b><span>wattmeter</span><code>量 P</code></div>
+        <div class="gl-row"><b>乏計</b><span>varmeter</span><code>量 Q</code></div>
+        <div class="gl-row"><b>電表（度數）</b><span>kilowatt-hour meter</span><code>kWh</code></div>
+        <div class="gl-row"><b>被動符號慣例</b><span>passive sign convention</span><code>—</code></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 測驗 ══════════ -->
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow">自我檢查</div>
+      <h2>觀念小測驗</h2>
+      <p class="lede">15 題，中英對照。題目下方那行英文就是考卷上會看到的講法。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Charles K. Alexander &amp; Matthew N. O. Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 11 AC Power Analysis（McGraw-Hill），課本 p.455–488。</p>
+      <p>所有數值皆依課本公式即時計算；波形與向量圖為觀念示意，比例經過調整以利觀察。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="assets/ch11.js"></script>
+</body>
+</html>

@@ -106,7 +106,7 @@
       shown += (target - shown) * Math.min(1, dt * 9);
       const cx = w / 2, cy = h / 2;
       const cfg = configOf(Z);
-      const rMax = Math.min(w, h) / 2 - 30;
+      const rMax = Math.max(30, Math.min(w, h) / 2 - 30);
       const r0 = Math.min(26, rMax * 0.22);
 
       /* 原子核 */

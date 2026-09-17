@@ -12,22 +12,26 @@
 | 科目 | 資料夾 | 狀態 |
 |------|--------|------|
 | 電子學 | [`electronics/`](electronics/) | CH1 PART 1 已完成（見 [進度表](electronics/docs/CONTENT_MAP.md)） |
-| 電路學 | `circuits/` | 尚未開始，等你丟第一份講義 |
+| 電路學 | [`circuits/`](circuits/) | CH11 交流功率分析已完成（見 [進度表](circuits/docs/CONTENT_MAP.md)） |
 | 工程數學 | `engineering-math/` | 尚未開始，等你丟第一份講義 |
 
 ## 結構
 
 ```
+index.html              主頁：科目選單（電子學 / 電路學 / 工程數學）
 shared/
   app.css               設計語彙：色票、字體、版面（跨科目共用）
   app.js                互動引擎：Canvas 舞台、主題切換、繪圖原語（跨科目共用）
 electronics/
   index.html            電子學首頁：課程地圖 + 各章互動模組
-  assets/chN.js          每章一個檔案
-  docs/CONTENT_MAP.md    章節分類與上傳進度
-circuits/                （之後）電路學，結構同上
-engineering-math/        （之後）工程數學，結構同上
+  assets/chN.js         每章一個檔案
+  docs/CONTENT_MAP.md   章節分類與上傳進度
+circuits/               電路學，結構同上
+engineering-math/       （之後）工程數學，結構同上
 ```
+
+每一科都有自己的主色，一進頁面就知道在哪一科：電子學藍、電路學墨綠。
+主色由 `<body data-subject="…">` 決定，chrome 一律吃 `--accent` token。
 
 ## 新增一個科目的規則
 
@@ -37,6 +41,12 @@ engineering-math/        （之後）工程數學，結構同上
    不要複製一份到科目資料夾裡——引擎改進時三科才能一起受益。
 3. 每個科目的 `index.html` 都是「這一科的完整地圖」：想統整某科重點，打開那個科目的網站就好，
    不用在多科內容裡面找。
+4. 在根目錄 `index.html` 的科目選單裡新增一張卡片，並指定該科主色 `style="--subj:#…"`。
+
+## 語言慣例
+
+講解一律中文；重要名詞用 `<span class="tm">中文<i>English</i></span>` 在中文右側附英文。
+測驗題中英對照（題幹中文、下方附英文原句，選項也中英並列），因為考試用英文、讀書用中文。
 
 ## 給下一個接手的人（含未來的我）
 
