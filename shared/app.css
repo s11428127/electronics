@@ -433,7 +433,6 @@ body[data-subject="math"] { --accent: #6a4bbc; }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) body[data-subject="circuits"] { --accent: #0f7a66; }
   :root:not([data-theme="dark"]) body[data-subject="math"] { --accent: #6a4bbc; }
-body[data-subject="math"] { --accent: #6a4bbc; }
 }
 :root[data-theme="dark"] body[data-subject="circuits"] { --accent: #46c2a5; }
 :root[data-theme="dark"] body[data-subject="math"] { --accent: #a992f0; }
