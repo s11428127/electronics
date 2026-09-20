@@ -427,11 +427,16 @@ em { font-style: italic; }
    科目主色：一進頁面就知道自己在哪一科
    ============================================================ */
 body[data-subject="circuits"] { --accent: #0f7a66; }
+body[data-subject="math"] { --accent: #6a4bbc; }
 :root:not([data-theme="light"]) body[data-subject="circuits"] { --accent: #46c2a5; }
+:root:not([data-theme="light"]) body[data-subject="math"] { --accent: #a992f0; }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) body[data-subject="circuits"] { --accent: #0f7a66; }
+  :root:not([data-theme="dark"]) body[data-subject="math"] { --accent: #6a4bbc; }
+body[data-subject="math"] { --accent: #6a4bbc; }
 }
 :root[data-theme="dark"] body[data-subject="circuits"] { --accent: #46c2a5; }
+:root[data-theme="dark"] body[data-subject="math"] { --accent: #a992f0; }
 
 /* ============================================================
    中英對照名詞：中文讀書、英文考試
@@ -633,4 +638,51 @@ a.subj:hover { border-color: var(--subj, var(--accent)); transform: translateY(-
   .derive ol { padding-left: 30px; }
   .example ol { padding-left: 30px; }
   .d-eq { font-size: 13px; }
+}
+
+/* ============================================================
+   工程數學專用元件
+   ============================================================ */
+
+/* 轉換對照表（可展開） */
+.pair-row { border: 1px solid var(--line); border-radius: 9px; margin-bottom: 8px; overflow: hidden; background: var(--surface); }
+.pair-row.on { border-color: color-mix(in srgb, var(--accent) 42%, var(--line)); }
+.pair-head {
+  width: 100%; display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr) auto;
+  gap: 12px; align-items: center; padding: 12px 15px; cursor: pointer;
+  background: none; border: 0; text-align: left; font-family: var(--font-mono); font-size: 13.5px; color: var(--ink);
+}
+.pair-head:hover { background: var(--surface-2); }
+.pair-row.on .pair-head { background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+.pair-head .pf { color: var(--p-real); font-weight: 600; }
+.pair-head .pF { color: var(--s-app); font-weight: 600; }
+.pair-head .arr { color: var(--accent); font-size: 11px; white-space: nowrap; }
+.pair-head .roc { font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+.pair-body { padding: 4px 15px 14px; border-top: 1px dashed var(--line); }
+
+/* 逐步推導的步驟卡 */
+.dv-steps { max-height: 340px; overflow-y: auto; padding: 4px 2px; }
+.dv-step { display: grid; grid-template-columns: 26px minmax(0,1fr); gap: 10px; margin: 10px 0; opacity: .58; }
+.dv-step.on { opacity: 1; }
+.dv-no {
+  width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--surface-3); color: var(--ink-2);
+  font-family: var(--font-mono); font-size: 11px; font-weight: 700; margin-top: 7px;
+}
+.dv-step.on .dv-no { background: var(--accent); color: var(--surface); }
+.dv-why { margin: 5px 0 0; font-size: 13px; line-height: 1.7; color: var(--ink-2); }
+
+/* 「為什麼是 −f(0)」四格對照 */
+.f0-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.f0-card { border: 1px solid var(--line); border-radius: 9px; padding: 12px 14px; background: var(--surface); }
+.f0-card.good { border-color: color-mix(in srgb, var(--ok) 38%, var(--line)); }
+.f0-card.bad { border-color: color-mix(in srgb, var(--bad) 38%, var(--line)); }
+.f0-t { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 7px; }
+.f0-verdict { margin-top: 8px; font-size: 13px; font-weight: 600; }
+.f0-card.good .f0-verdict { color: var(--ok); }
+.f0-card.bad .f0-verdict { color: var(--bad); }
+
+@media (max-width: 620px) {
+  .pair-head { grid-template-columns: minmax(0,1fr); gap: 5px; }
+  .pair-head .arr { display: none; }
 }

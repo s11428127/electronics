@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>拉普拉斯轉換</title>
+<meta name="description" content="工程數學互動講義：用可拖曳的複數平面、面積動畫與逐步推導，把拉普拉斯轉換從抽象變具體。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body data-subject="math">
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="home-link" href="../index.html">← 主頁</a>
+    <div class="brand"><b>工程數學互動講義</b><span>LAPLACE TRANSFORM</span></div>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">拉普拉斯轉換</div>
+    <ol>
+      <li><a href="#map"><i>00</i>這章在幹嘛</a></li>
+      <li><a href="#transform"><i>01</i>什麼是「轉換」</a></li>
+      <li><a href="#complex"><i>02</i>實變數 vs 複變數函數</a></li>
+      <li><a href="#why"><i>03</i>為什麼要乘 e⁻ˢᵗ</a></li>
+      <li><a href="#pairs"><i>04</i>基本轉換對照表</a></li>
+      <li><a href="#deriv"><i>05</i>微分性質的推導</a></li>
+      <li><a href="#f0"><i>06</i>為什麼多了 −f(0)</a></li>
+      <li><a href="#ode"><i>07</i>用 ℒ 解微分方程</a></li>
+      <li><a href="#check"><i>!</i>筆記勘誤</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">工程數學 · 大二上 · 9/17 ~ 9/20 課堂筆記</div>
+      <h1>拉普拉斯轉換</h1>
+      <p class="sub">這一章最難的不是計算，是<strong>「它到底在幹嘛」</strong>。一個長得莫名其妙的積分，為什麼能拿來解微分方程？下面 7 個模組會把每一個符號的來歷拆給你看 —— 先看得懂，再去算。</p>
+      <div class="hero-meta">
+        <span class="chip">7 個互動模組</span>
+        <span class="chip">12 題中英對照測驗</span>
+        <span class="chip h">2 處筆記勘誤</span>
+      </div>
+    </div>
+
+    <!-- ══════════ 導論 ══════════ -->
+    <section class="sec" id="map">
+      <div class="eyebrow">Big picture</div>
+      <h2>一句話說明這章在幹嘛</h2>
+      <p class="lede">微分方程很難解。但<strong>代數方程很好解</strong>。拉普拉斯轉換就是一條捷徑：把難解的微分方程<strong>搬到另一個世界</strong>（s 域），在那裡它會變成一次方程，解完再搬回來。</p>
+
+      <div class="derive">
+        <h4>整章的骨架就這四步</h4>
+        <ol>
+          <li>
+            <span class="d-eq">t 域：y′ + 3y = 0，y(0) = 2　← 微分方程，難</span>
+            <div class="why">直接在 t 域解，你得會分離變數、積分因子、特徵方程那一套。</div>
+          </li>
+          <li>
+            <span class="d-eq">做 ℒ：sY(s) − 2 + 3Y(s) = 0　← 微分不見了！</span>
+            <div class="why"><b>關鍵魔術：ℒ 把「微分」變成「乘以 s」。</b>而且初始值 y(0) 會自動被吃進式子裡。</div>
+          </li>
+          <li>
+            <span class="d-eq">s 域解代數：Y(s)(s+3) = 2　⟹　Y(s) = 2/(s+3)</span>
+            <div class="why">這一步是國中程度的移項。整章的價值就在這裡。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">做 ℒ⁻¹ 搬回來：y(t) = 2e⁻³ᵗ</span>
+            <div class="why">查表反轉換。繞這一大圈，只是為了避開在 t 域硬解微分方程。</div>
+          </li>
+        </ol>
+      </div>
+      <p class="note key">所以讀這章時，每看到一個新東西就問自己：<b>「這是為了讓那條捷徑走得通嗎？」</b>答案幾乎都是「是」。e⁻ˢᵗ 是為了讓積分收斂；−f(0) 是為了把初始條件帶進去；收斂區是為了保證這條捷徑存在。</p>
+    </section>
+
+    <!-- ══════════ 01 轉換 ══════════ -->
+    <section class="sec" id="transform">
+      <div class="eyebrow">01 · What is a Transform</div>
+      <h2>什麼是「轉換」</h2>
+      <p class="lede">筆記上那張 <code>A —T→ B，B = T(A)</code> 看起來很空泛，其實意思非常簡單：<strong>轉換就是一台機器</strong>。東西從 A 進去，變成另一種東西從 B 出來。重點是「<strong>進去的和出來的不是同一種東西</strong>」。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>轉換機器</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-mach="life">生活例子</button>
+            <button class="btn" type="button" data-mach="laplace">ℒ 拉普拉斯</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-machine" aria-label="轉換機器動畫：輸入經過機器變成輸出"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><span class="lab">點一個東西丟進機器</span>
+            <div class="btn-row" id="mach-btns"></div></div>
+        </div>
+        <div class="msg" id="mach-msg"></div>
+      </div>
+
+      <div class="derive">
+        <h4>把筆記那張圖填滿</h4>
+        <ol>
+          <li>
+            <span class="d-eq">A ——ℒ——▸ B　，　B = ℒ(A)</span>
+            <div class="why">筆記上 A、B 底下打了問號。答案是：</div>
+          </li>
+          <li>
+            <span class="d-eq hi">A = { f(t) | t ∈ ℝ }　實變數函數（real functions）</span>
+            <p>輸入是<b>以時間 t 為變數的實數函數</b>，例如 f(t) = cos 4t、f(t) = e⁻⁵ᵗ、f(t) = t²+t+1。這些你在微積分早就看熟了。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">B = { F(s) | s = σ + jω ∈ ℂ }　複變數函數（complex functions）</span>
+            <p>輸出是<b>以複數 s 為變數的函數</b>。注意 s 不是實數，它是 σ + jω 這種複數。所以下一節要先搞懂「複變數函數」是什麼。</p>
+          </li>
+        </ol>
+      </div>
+      <p class="note key">轉換的核心不是公式，而是<b>「換一個世界做事」</b>。就像把中文翻成英文去跟外國人溝通，講完再翻回中文 —— 語言不同，但講的是同一件事。</p>
+    </section>
+
+    <!-- ══════════ 02 複變數函數 ══════════ -->
+    <section class="sec" id="complex">
+      <div class="eyebrow">02 · Real vs Complex Functions</div>
+      <h2>實變數函數 vs 複變數函數</h2>
+      <p class="lede">這是筆記裡最容易卡住的地方，因為「複變數函數」聽起來很玄。其實它只是：<strong>把輸入從一個數字，換成一個「有兩個座標的點」</strong>。輸出也是一個點。所以它畫不出一般的函數圖形 —— 要用<strong>兩個平面</strong>來看。</p>
+
+      <div class="terms">
+        <div><b>實變數函數 real function</b><span>輸入一個實數 → 輸出一個實數。例：f(t) = cos 4t</span></div>
+        <div><b>實雙變數函數</b><span>輸入兩個實數 → 輸出一個實數。例：f(x,y) = x² + y²</span></div>
+        <div><b>複變數函數 complex function</b><span>輸入一個複數 → 輸出一個複數。例：f(z) = z² + 2</span></div>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>複變數函數視覺化（可拖曳）</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-cf="sq">f(z) = z² + 2</button>
+            <button class="btn" type="button" data-cf="exp">f(z) = e⁻ᶻ</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-cplx" aria-label="左右兩個複數平面，左邊拖曳點、右邊顯示函數值"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><span class="lab">拆解過程</span>
+            <div id="cplx-steps"></div></div>
+        </div>
+        <dl class="readout">
+          <div><dt>輸入 z</dt><dd id="cplx-z" style="font-size:14px;color:var(--p-real)">—</dd></div>
+          <div><dt>實部 Re</dt><dd id="cplx-re" style="color:var(--s-app)">—</dd></div>
+          <div><dt>虛部 Im</dt><dd id="cplx-im" style="color:var(--q-react)">—</dd></div>
+        </dl>
+      </div>
+
+      <div class="derive">
+        <h4>複變數函數怎麼拆成「實部 + 虛部」</h4>
+        <ol>
+          <li>
+            <span class="d-eq">f(z) = z² + 2，　z = x + iy</span>
+            <div class="why">先把 z 換成 x + iy，然後硬乘開。</div>
+          </li>
+          <li>
+            <span class="d-eq">(x+iy)² + 2 = x² + 2ixy + (iy)² + 2</span>
+            <p>注意 (iy)² = i²y² = <b>−y²</b>，因為 i² = −1。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">= (x² − y² + 2) + i(2xy)　⟹　Re = x²−y²+2，Im = 2xy</span>
+            <p>把「沒有 i 的」集中成實部，「有 i 的」集中成虛部。任何複變數函數都可以這樣拆成 <b>f(z) = u(x,y) + i·v(x,y)</b>，而 u、v 各自都是實雙變數函數 —— 所以筆記旁邊才會補充「實雙變數函數」。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>e⁻ᶻ 的拆解（這裡有一個很容易抄錯的負號）</h4>
+        <ol>
+          <li>
+            <span class="d-eq">e⁻ᶻ = e⁻⁽ˣ⁺ⁱʸ⁾ = e⁻ˣ · e⁻ⁱʸ</span>
+            <div class="why">指數相加 = 底數相乘，先把實數部分 e⁻ˣ 分出來（它是純實數，不影響 Re/Im 的分配）。</div>
+          </li>
+          <li>
+            <span class="d-eq">尤拉公式：e^(iθ) = cos θ + i·sin θ</span>
+            <div class="why">這是唯一要記的工具。現在要代入的是 θ = <b>−y</b>。</div>
+          </li>
+          <li>
+            <span class="d-eq">e⁻ⁱʸ = cos(−y) + i·sin(−y)</span>
+            <p>cos 是偶函數：cos(−y) = cos y。<br>sin 是奇函數：sin(−y) = <b>−</b>sin y。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">e⁻ⁱʸ = cos y − i·sin y　← 是減號</span>
+            <p>所以 <b>e⁻ᶻ = e⁻ˣcos y − i·e⁻ˣsin y</b>，也就是 Re = e⁻ˣcos y、<b>Im = −e⁻ˣsin y</b>。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>你的筆記這裡寫錯了</h4>
+        <ul>
+          <li><span class="x">✗</span> 筆記上寫 <b>e⁻ᶻ = e⁻ˣ(cos y <b>+</b> i sin y)</b>，這是<b>錯的</b>。</li>
+          <li><span class="o">✓</span> 正確是 <b>e⁻ᶻ = e⁻ˣ(cos y <b>−</b> i sin y)</b>，因此 <b>Im = −e⁻ˣ sin y</b>（筆記標的 Im = e⁻ˣ sin y 少了負號）。</li>
+          <li><b>怎麼一秒檢查：</b>取 x = 0、y = π/2，則 e⁻ᶻ = e^(−iπ/2) = <b>−i</b>。用正確版：cos(π/2) − i·sin(π/2) = 0 − i = −i ✓。用筆記版會得到 +i ✗。</li>
+          <li><b>記憶法：</b>指數上的 i 前面是什麼符號，sin 前面就是什麼符號。e^(<b>+</b>iθ) → cos θ <b>+</b> i sin θ；e^(<b>−</b>iθ) → cos θ <b>−</b> i sin θ。cos 永遠不變號。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 03 為什麼乘 e^-st ══════════ -->
+    <section class="sec" id="why">
+      <div class="eyebrow">03 · Why e⁻ˢᵗ</div>
+      <h2>為什麼公式長這樣：乘 e⁻ˢᵗ 再積分</h2>
+      <p class="lede">筆記上這個問題問得很好。答案分兩層：<strong>「積分」是為了把 t 消掉</strong>，<strong>「乘 e⁻ˢᵗ」是為了讓積分收斂、順便把 s 帶進來</strong>。下面這個模組把三條曲線疊給你看。</p>
+      <div class="eq">ℒ( f(t) ) = F(s) = ∫₀^∞ f(t) · e<em>⁻ˢᵗ</em> dt</div>
+
+      <div class="derive">
+        <h4>第一層：為什麼是「定積分」而不是不定積分</h4>
+        <ol>
+          <li>
+            <span class="d-eq">不定積分：∫ t² dt = ⅓t³ + C　← 結果還是一個「函數」（有 t）</span>
+            <div class="why">這正是筆記上那兩行小字的意思。不定積分之後 t 還在。</div>
+          </li>
+          <li>
+            <span class="d-eq">定積分：∫₁² t² dt = [⅓t³]₁² = 8/3 − 1/3 = 7/3　← 結果是一個「數字」（沒有 t）</span>
+            <div class="why">上下限一代，t 就被消掉了。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">∫₀^∞ f(t)e⁻ˢᵗ dt　⟹　t 被積掉，只剩下 s　⟹　F(s)</span>
+            <p>所以轉換之後，函數的變數<b>從 t 換成了 s</b>。這就是「換一個世界」在數學上的實際意思。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>第二層：為什麼偏偏是 e⁻ˢᵗ</h4>
+        <ol>
+          <li>
+            <p><b>理由一：它在 o.d.e. 裡本來就出現過。</b>常係數線性微分方程的解永遠長成 e^(λt) 的形式（λ = α + jβ 是複數）。而 s = σ + jω 也是複數 —— <b>同一種東西</b>。用 e⁻ˢᵗ 當探針，等於用 ODE 自己的語言去問它問題。</p>
+          </li>
+          <li>
+            <span class="d-eq">理由二：e⁻ˢᵗ 是「衰減因子」，負責把 f(t) 壓下去</span>
+            <div class="why">∫₀^∞ 的上限是無限大。如果被積函數不衰減，積分就發散、根本算不出數字。乘上 e⁻ˢᵗ 之後，只要 s 夠大就能把 f(t) 的成長壓過去。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">理由三：每換一個 s，就得到一個不同的面積 ⟹ 這些面積接起來就是 F(s)</span>
+            <p>這是最關鍵的一點。<b>F(s) 不是憑空出現的函數，它是「面積隨 s 變化」的紀錄</b>。下面的模組把 s 拉一拉就看得很清楚。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>三條曲線疊起來看</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-why="one">f = 1</button>
+            <button class="btn" type="button" data-why="t">f = t</button>
+            <button class="btn" type="button" data-why="exp2">f = e²ᵗ</button>
+            <button class="btn" type="button" data-why="expm">f = e⁻ᵗ</button>
+            <button class="btn" type="button" data-why="cos">f = cos3t</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-why" aria-label="三層圖：原函數、指數包絡、兩者乘積與其面積，右側為 F(s) 曲線"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="why-sr">拉動 s 看面積怎麼變<output for="why-sr"></output></label>
+            <input type="range" id="why-sr" min="0.2" max="8" step="0.05" value="3"></div>
+          <div class="ctrl"><span class="lab">公式解</span><span class="val">F(s) = <span id="why-formula">—</span></span></div>
+        </div>
+        <dl class="readout">
+          <div><dt>目前 s</dt><dd id="why-s">—</dd></div>
+          <div><dt>數值算的面積</dt><dd id="why-area" style="color:var(--s-app)">—</dd></div>
+          <div><dt>公式算的 F(s)</dt><dd id="why-exact" style="color:var(--accent)">—</dd></div>
+        </dl>
+        <div class="msg" id="why-msg"></div>
+      </div>
+
+      <p class="note key">試試看選 <b>f = e²ᵗ</b> 然後把 s 拉到 2 以下 —— 乘積會爆炸、面積變成無限大。這就是<b>收斂區（ROC）</b>：ℒ(e^(at)) = 1/(s−a) 只在 <b>s &gt; a</b> 時才存在。</p>
+    </section>
+
+    <!-- ══════════ 04 轉換表 ══════════ -->
+    <section class="sec" id="pairs">
+      <div class="eyebrow">04 · Transform Pairs</div>
+      <h2>基本轉換對照表</h2>
+      <p class="lede">這幾條要背，但<strong>背之前先看它怎麼積出來的</strong>。點開每一列就有完整過程 —— 其實全部都是同一招：把指數合併，然後代上下限。</p>
+      <div id="pair-list"></div>
+      <p class="note">最右邊那欄是<b>收斂區</b>，很多人抄表時會漏掉。考試若問「此轉換何時存在」，答案就在那裡。</p>
+      <p class="note key">cos 與 sin 那兩條不必硬背積分：用<b>尤拉公式拆成兩個指數</b>，再套 1/(s−a) 就好。這也是為什麼要先弄懂複數 —— 它讓三角函數和指數變成同一件事。</p>
+    </section>
+
+    <!-- ══════════ 05 微分性質 ══════════ -->
+    <section class="sec" id="deriv">
+      <div class="eyebrow">05 · Derivative Property</div>
+      <h2>微分性質：ℒ(f′) = sF(s) − f(0)</h2>
+      <p class="lede">這是整章<strong>最重要的一條</strong>，因為它就是「微分方程變代數方程」的那道門。筆記上先猜 ℒ(f′) = sF(s)（打了三個問號），推導完才發現後面還跟著一個 −f(0)。下面一步一步按給你看。</p>
+
+      <div class="note">
+        <b>先說筆記上那個表格的直覺：</b>在 o.d.e. 裡，若 f(t) = e^(st)，則 f′(t) = s·f(t)、f″(t) = s²·f(t) —— <b>微分就是乘 s</b>。
+        所以會猜 ℒ(f′) = sF(s)、ℒ(f″) = s²F(s)。方向是對的，但<b>漏掉了初始值</b>。
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>逐步推導</h3><span class="spacer"></span>
+          <span class="tag" id="deriv-count">1 / 9</span></div>
+        <div class="stage-wrap"><canvas id="cv-deriv" aria-label="t 域與 s 域的對應關係圖"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><span class="lab">操作</span>
+            <div class="btn-row">
+              <button class="btn solid" type="button" id="deriv-next">下一步 →</button>
+              <button class="btn" type="button" id="deriv-all">直接看完整推導</button>
+            </div></div>
+        </div>
+        <div class="dv-steps" id="deriv-steps" style="padding:8px 16px 14px"></div>
+      </div>
+
+      <div class="derive">
+        <h4>二階怎麼辦：ℒ(f″) = s²F(s) − s·f(0) − f′(0)</h4>
+        <ol>
+          <li>
+            <span class="d-eq">把 f″ 看成 (f′)′，對 f′ 套一次同一條性質：</span>
+            <span class="d-eq">ℒ(f″) = s·ℒ(f′) − f′(0)</span>
+            <div class="why">注意這裡減的是 <b>f′(0)</b>，因為現在被微分的對象是 f′。</div>
+          </li>
+          <li>
+            <span class="d-eq">ℒ(f′) 已經知道了 = sF(s) − f(0)，代進去：</span>
+            <span class="d-eq">= s[ sF(s) − f(0) ] − f′(0)</span>
+          </li>
+          <li>
+            <span class="d-eq hi">= s²F(s) − s·f(0) − f′(0)</span>
+            <p><b>注意 f(0) 前面帶著一個 s，f′(0) 沒有。</b>這個順序常被寫反 —— 記法：<b>階數越高的初始值，s 的次方越低</b>。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>筆記上的小筆誤</h4>
+        <ul>
+          <li>最下面那個藍框寫 <span class="x">f′(t) —ℒ→ sF(s) <b>=</b> f(0)</span>，中間應該是<b>減號</b>不是等號：<span class="o">f′(t) —ℒ→ sF(s) <b>−</b> f(0)</span>。上面的 Theorem 那行你寫對了，所以應該只是手寫的筆誤，但抄到考卷上會很傷。</li>
+          <li><b>lim(t→∞) e⁻ˢᵗf(t) = 0 不是白送的。</b>筆記寫「下次說明」是對的 —— 這需要 f(t) 是<b>指數階（exponential order）</b>，也就是存在 M、a 使 |f(t)| ≤ M·e^(at)，而且 s > a。若 f(t) 長得比任何指數都快（例如 e^(t²)），拉普拉斯轉換根本不存在。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 06 為什麼 -f(0) ══════════ -->
+    <section class="sec" id="f0">
+      <div class="eyebrow">06 · Why the −f(0)</div>
+      <h2>為什麼會多一個 −f(0)</h2>
+      <p class="lede">推導看懂了，但「為什麼非要有它不可」還是會卡。最快的辦法是<strong>直接用一個具體函數對算一次</strong>：漏掉它，答案就是錯的。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>漏掉 −f(0) 會怎樣</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-f0="e2t">f(t) = e²ᵗ　f(0)=1</button>
+            <button class="btn" type="button" data-f0="cos">f(t) = cos3t　f(0)=1</button>
+            <button class="btn" type="button" data-f0="t">f(t) = t　f(0)=0</button>
+          </div></div>
+        <div style="padding:16px" id="f0-out"></div>
+        <div class="msg" id="f0-msg"></div>
+      </div>
+
+      <div class="note key">−f(0) 的來源很具體：它來自<b>積分下限 t = 0</b>。分部積分產生的邊界項 [e⁻ˢᵗf(t)]₀^∞ 在 t = 0 那端留下 e⁰·f(0) = f(0)，前面帶著減號。<b>拉普拉斯積分從 0 開始，所以初始值一定會被帶進來</b> —— 這不是缺陷，這正是它能一次解決「微分方程 + 初始條件」的原因。</div>
+
+      <div class="howto">
+        <h4>用 ℒ 解 ODE 時的檢查點</h4>
+        <ol>
+          <li>每出現一個 <code>y′</code>，就寫 <code>sY(s) − y(0)</code>；每出現一個 <code>y″</code>，就寫 <code>s²Y(s) − s·y(0) − y′(0)</code>。<b>初始值永遠跟著微分項一起進場。</b></li>
+          <li>題目若沒給初始條件，就把 y(0) 留成符號不要自己設成 0。</li>
+          <li>整理成 <code>Y(s)·(某個多項式) = (其他東西)</code> 再移項，不要急著約分。</li>
+          <li>反轉換前先看分母：能不能湊成表上的 <code>1/(s−a)</code> 或 <code>ω/(s²+ω²)</code> 的形狀。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 07 解 ODE ══════════ -->
+    <section class="sec" id="ode">
+      <div class="eyebrow">07 · Solving ODEs</div>
+      <h2>用 ℒ 解微分方程：走完一整圈</h2>
+      <p class="lede">前面鋪陳的所有東西，都是為了這一頁。按「下一步」跟著走一遍，你會發現<strong>中間那段其實只是移項</strong>。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3 id="ode-title">—</h3><span class="spacer"></span>
+          <div class="btn-row">
+            <button class="btn" type="button" data-ode="a">題目 A</button>
+            <button class="btn" type="button" data-ode="b">題目 B</button>
+            <span class="tag" id="ode-count">1 / 6</span>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-ode" aria-label="解 ODE 的三步驟流程圖"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><span class="lab">操作</span>
+            <div class="btn-row"><button class="btn solid" type="button" id="ode-next">下一步 →</button></div></div>
+        </div>
+        <div class="dv-steps" id="ode-steps" style="padding:8px 16px 14px"></div>
+      </div>
+
+      <p class="note key">對照一下傳統解法：你要先猜通解 y = Ce^(−3t)，再代 y(0) = 2 求出 C = 2。用 ℒ 的話，<b>初始條件在轉換的當下就被吃進去了</b>，不需要事後補代。方程越複雜（高階、有外加輸入），這個優勢越明顯。</p>
+    </section>
+
+    <!-- ══════════ 勘誤 ══════════ -->
+    <section class="sec" id="check">
+      <div class="eyebrow">Errata · 筆記檢查結果</div>
+      <h2>你的筆記勘誤</h2>
+      <p class="lede">我把三頁筆記逐行驗算過。<strong>整體推導是正確的</strong>，尤其 ℒ(f′) 那段分部積分做得完全對。下面是需要改的地方。</p>
+
+      <div class="pitfall">
+        <h4>① 尤拉公式的符號（要改）</h4>
+        <ul>
+          <li>位置：第一頁「What is complex function?」的 <b>f(z) = e⁻ᶻ</b> 展開。</li>
+          <li>筆記寫：<span class="x">e⁻ᶻ = e⁻ˣ(cos y + i sin y)</span></li>
+          <li>應該是：<span class="o">e⁻ᶻ = e⁻ˣ(cos y − i sin y)</span>，所以 <b>Im = −e⁻ˣ sin y</b>。</li>
+          <li>驗證：取 x=0、y=π/2，e^(−iπ/2) 應該是 −i。正確版給 0 − i = −i ✓；筆記版給 +i ✗。</li>
+        </ul>
+      </div>
+
+      <div class="pitfall">
+        <h4>② Theorem 下方藍框的減號寫成等號（筆誤）</h4>
+        <ul>
+          <li>位置：最後一頁，Theorem 下面那個方框。</li>
+          <li>筆記寫：<span class="x">f′(t) —ℒ→ sF(s) = f(0)</span></li>
+          <li>應該是：<span class="o">f′(t) —ℒ→ sF(s) − f(0)</span></li>
+          <li>方框上一行的 Theorem 你寫對了（sℒ(f(t)) − f(0) = sF(s) − f(0)），所以判斷是手寫筆誤。</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <b>③ 請自己確認一下（手寫看不清楚）：</b>第二頁寫 <code>∫t²dt = ⅓t?+C</code>。
+        正確是 <b>∫t²dt = ⅓t³ + C</b>（次方要 +1）。如果你寫的是 t² 就要改成 t³。
+        下面那行 <code>∫₁² t²dt = ⅓t³|₁² = 7/3</code> 是<b>正確的</b>（8/3 − 1/3 = 7/3）。
+      </div>
+
+      <div class="note key">
+        <b>寫得好的地方：</b>
+        ℒ(f′) 的分部積分推導完全正確，包含 d(e⁻ˢᵗ) = −s·e⁻ˢᵗdt 那個關鍵代換、以及 t→0 時 e⁰ = 1 所以只剩 f(0)。
+        另外你在 lim(t→∞) 那項旁邊註明「下次說明」也很到位 —— 那一項要為 0 確實需要額外條件（指數階），不是理所當然。
+        表格裡先寫猜測值 sF(s) 再打三個問號、最後修正成 sF(s) − f(0)，這種記法很好，把「錯誤的直覺」也記下來了。
+      </div>
+    </section>
+
+    <!-- ══════════ 名詞 ══════════ -->
+    <section class="sec" id="glossary">
+      <div class="eyebrow">Glossary · 中英對照</div>
+      <h2>名詞中英對照表</h2>
+      <p class="lede">考卷上會出現的是右邊那欄。</p>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號</code></div>
+        <div class="gl-row"><b>拉普拉斯轉換</b><span>Laplace transform</span><code>ℒ</code></div>
+        <div class="gl-row"><b>反拉普拉斯轉換</b><span>inverse Laplace transform</span><code>ℒ⁻¹</code></div>
+        <div class="gl-row"><b>轉換</b><span>transform</span><code>T</code></div>
+        <div class="gl-row"><b>實變數函數</b><span>real function</span><code>f(t)</code></div>
+        <div class="gl-row"><b>複變數函數</b><span>complex function</span><code>F(s)</code></div>
+        <div class="gl-row"><b>實雙變數函數</b><span>real function of two variables</span><code>u(x,y)</code></div>
+        <div class="gl-row"><b>實部</b><span>real part</span><code>Re</code></div>
+        <div class="gl-row"><b>虛部</b><span>imaginary part</span><code>Im</code></div>
+        <div class="gl-row"><b>尤拉公式</b><span>Euler's formula</span><code>e^(iθ)</code></div>
+        <div class="gl-row"><b>分部積分</b><span>integration by parts</span><code>∫fdg</code></div>
+        <div class="gl-row"><b>定積分 / 不定積分</b><span>definite / indefinite integral</span><code>∫ₐᵇ / ∫</code></div>
+        <div class="gl-row"><b>常微分方程</b><span>ordinary differential equation (ODE)</span><code>o.d.e.</code></div>
+        <div class="gl-row"><b>初始值 / 初始條件</b><span>initial value / initial condition</span><code>f(0)</code></div>
+        <div class="gl-row"><b>收斂 / 發散</b><span>converge / diverge</span><code>—</code></div>
+        <div class="gl-row"><b>收斂區</b><span>region of convergence (ROC)</span><code>s &gt; a</code></div>
+        <div class="gl-row"><b>指數階</b><span>exponential order</span><code>|f| ≤ Me^(at)</code></div>
+        <div class="gl-row"><b>轉換對</b><span>transform pair</span><code>f(t) ↔ F(s)</code></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 測驗 ══════════ -->
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow">自我檢查</div>
+      <h2>觀念小測驗</h2>
+      <p class="lede">12 題，中英對照。題目下方那行英文就是考卷上會看到的講法。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：工程數學大二上課堂筆記（9/17 – 9/20，拉普拉斯轉換導論）。互動模組為觀念示意，比例經過調整以利觀察；數值面積以 Simpson 法即時計算，與公式解對照。</p>
+      <p>勘誤僅針對數學正確性，不代表老師板書原意；若與課堂說法不同，以老師為準並歡迎回報。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="assets/laplace.js"></script>
+</body>
+</html>
