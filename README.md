@@ -13,7 +13,7 @@
 |------|--------|------|
 | 電子學 | [`electronics/`](electronics/) | CH1 PART 1 已完成（見 [進度表](electronics/docs/CONTENT_MAP.md)） |
 | 電路學 | [`circuits/`](circuits/) | CH11 交流功率分析已完成（見 [進度表](circuits/docs/CONTENT_MAP.md)） |
-| 工程數學 | `engineering-math/` | 尚未開始，等你丟第一份講義 |
+| 工程數學 | [`engineering-math/`](engineering-math/) | 拉普拉斯轉換已完成（見 [進度表](engineering-math/docs/CONTENT_MAP.md)） |
 
 ## 結構
 
@@ -27,7 +27,7 @@ electronics/
   assets/chN.js         每章一個檔案
   docs/CONTENT_MAP.md   章節分類與上傳進度
 circuits/               電路學，結構同上
-engineering-math/       （之後）工程數學，結構同上
+engineering-math/       工程數學，結構同上
 ```
 
 每一科都有自己的主色，一進頁面就知道在哪一科：電子學藍、電路學墨綠。
