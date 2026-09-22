@@ -11,7 +11,7 @@
 
 | 科目 | 資料夾 | 狀態 |
 |------|--------|------|
-| 電子學 | [`electronics/`](electronics/) | CH1 PART 1 已完成（見 [進度表](electronics/docs/CONTENT_MAP.md)） |
+| 電子學 | [`electronics/`](electronics/) | CH1 PART 1、PART 2 已完成（見 [進度表](electronics/docs/CONTENT_MAP.md)） |
 | 電路學 | [`circuits/`](circuits/) | CH11 交流功率分析已完成（見 [進度表](circuits/docs/CONTENT_MAP.md)） |
 | 工程數學 | [`engineering-math/`](engineering-math/) | 拉普拉斯轉換已完成（見 [進度表](engineering-math/docs/CONTENT_MAP.md)） |
 
@@ -35,12 +35,13 @@ engineering-math/       工程數學，結構同上
 
 ## 新增一個科目的規則
 
-1. 新資料夾 `<subject>/`，裡面一個 `index.html`（課程地圖 + 該科的互動模組）、
-   `assets/`（每章一個 `chN.js`）、`docs/CONTENT_MAP.md`（章節分類與進度）。
+1. 新資料夾 `<subject>/`，裡面一個 `index.html`（**章節選單**）、每章一個 `<chapter>.html`、
+   `assets/`（每章一個 JS）、`docs/CONTENT_MAP.md`（章節分類與進度）。
 2. `index.html` 用相對路徑 `../shared/app.css`、`../shared/app.js` 引用共用引擎，
    不要複製一份到科目資料夾裡——引擎改進時三科才能一起受益。
-3. 每個科目的 `index.html` 都是「這一科的完整地圖」：想統整某科重點，打開那個科目的網站就好，
-   不用在多科內容裡面找。
+3. 每個科目的 `index.html` 是「這一科的章節選單」：想統整某科重點，打開那個科目進去就能
+   看到所有章節與進度，不用在多科內容裡面找。
+   章節頁的 topbar 用麵包屑 `.crumbs`（主頁 › 科目 › 章節）。
 4. 在根目錄 `index.html` 的科目選單裡新增一張卡片，並指定該科主色 `style="--subj:#…"`。
 
 ## 語言慣例

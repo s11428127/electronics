@@ -39,25 +39,40 @@
 
 ## 檔案結構
 
+三層導覽：**主頁（選科目）→ 科目首頁（選章節）→ 章節頁（實際內容）**。
+使用者抱怨過「點進去科目太亂」，所以**一章一頁**，不要把整科塞在同一頁。
+
 ```
-index.html              主頁：科目選單
-shared/app.css          設計語彙 + 所有教學元件（.derive .example .howto .pitfall .glossary .tm）
-shared/app.js           互動引擎，匯出 window.__EE
-<subject>/index.html    該科首頁：課程地圖 + 各章模組
-<subject>/assets/chN.js 每章一個檔案
-<subject>/docs/CONTENT_MAP.md  進度表
+index.html                    主頁：科目選單
+shared/app.css                設計語彙 + 所有教學元件
+shared/app.js                 互動引擎，匯出 window.__EE
+<subject>/index.html          科目首頁：**章節選單**（.chap 卡片 + .progress 進度）
+<subject>/<chapter>.html      章節內容頁（例：ch1-part1.html、ch11.html、laplace.html）
+<subject>/assets/<chapter>.js 每章一個 JS
+<subject>/docs/CONTENT_MAP.md 進度表
 ```
 
 - 科目主色用 `<body data-subject="…">`，chrome 一律吃 `--accent`。
   電子學 `#2a55e0` 藍｜電路學 `#0f7a66` 墨綠｜工程數學 `#6a4bbc` 紫。
 - 子頁用 `../shared/app.css`、`../shared/app.js`，**不要複製引擎**。
-- 每頁 topbar 要有 `<a class="home-link" href="../index.html">← 主頁</a>`。
+- 每頁 topbar 用**麵包屑**，不是單一的返回連結：
+  ```html
+  <nav class="crumbs" aria-label="所在位置">
+    <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>CH1 PART 2</b>
+  </nav>
+  ```
+- 新增章節時要同步更新該科 `index.html` 的章節卡片與 `.progress` 數字。
 
 ## 寫互動模組的注意事項
 
 - 用 `window.__EE` 的 `Stage(canvas, {ratio, minH, maxH, animate, draw})`；
   `animate:false` 的靜態圖用 `st.redraw()` 重畫。
 - **所有半徑／尺寸都要夾住下限**（`Math.max(0, r)`）。窄版面會算出負值讓 canvas 丟例外。
+- **粒子位置存 0~1 的比例，不要在 draw 裡用當下的 w 換算後存成像素。**
+  第一次 paint 時版面可能還沒算好（`clientWidth` 為 0 → w 被夾成 1），
+  這時換算出來的座標全部擠在一起，之後同速移動的粒子會永遠疊在同一點。
+- 箭頭與文字標籤要**畫在容器框內**並預留行高，否則會被裁掉或互相重疊；
+  同一列放兩組標示時分左右兩欄（例如 0.27 / 0.73 的位置）。
 - 畫布內容要**水平置中**、縱軸依實際資料範圍決定，不要留大片空白。
 - 顏色一律從 `C` 取（`C.accent`、`C['p-real']`…），不要寫死色碼，否則暗色模式會壞。
 - 第一眼（未互動時）就要有東西可看，不能是空畫布。

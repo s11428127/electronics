@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>半導體材料與性質</title>
+<meta name="description" content="電子學 CH1 PART 1 互動講義：用可操作的動畫拆解半導體材料、能帶、電洞移動與 N 型摻雜。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>CH1 PART 1</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH1 PART 1</div>
+    <ol>
+      <li><a href="#map"><i>00</i>課程地圖</a></li>
+      <li><a href="#signal"><i>01</i>訊號極性：AC / DC</a></li>
+      <li><a href="#atom"><i>02</i>原子殼層與價電子</a></li>
+      <li><a href="#bond"><i>03</i>離子鍵與共價鍵</a></li>
+      <li><a href="#lattice"><i>04</i>矽晶格與熱擾動</a></li>
+      <li><a href="#band"><i>05</i>能帶與禁止能隙</a></li>
+      <li><a href="#holemove"><i>06</i>電洞移動</a></li>
+      <li><a href="#ni"><i>07</i>本質載子濃度</a></li>
+      <li><a href="#dope"><i>08</i>N 型摻雜</a></li>
+      <li><a href="#quiz-sec"><i>09</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <!-- ══════════ 首屏 ══════════ -->
+    <div class="hero">
+      <div class="eyebrow">Chapter 1 · Part 1 · 投影片 p.1–30</div>
+      <h1>半導體材料與性質</h1>
+      <p class="sub">把這份講義拆成 8 個可以動手拉、點、玩的互動模組 —— 從一條共價鍵怎麼斷，到為什麼 n ≈ N<sub>d</sub>。每個模組都對應投影片上的某一頁。</p>
+      <div class="hero-meta">
+        <span class="chip e">電子 electron ⊖</span>
+        <span class="chip h">電洞 hole ⊕</span>
+        <span class="chip">8 個互動模組</span>
+        <span class="chip">10 題小測驗</span>
+      </div>
+    </div>
+
+    <!-- ══════════ 課程地圖 ══════════ -->
+    <section class="sec" id="map">
+      <div class="eyebrow">Course map</div>
+      <h2>章節分類與上傳進度</h2>
+      <p class="lede">依你講義封面的課本（Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4e）建立全書地圖。之後每丟一份檔案，就把對應的章節點亮。</p>
+
+      <h3 style="font-size:16px;margin:26px 0 4px">CH1 內部小節 —— 你這次丟的是哪一段</h3>
+      <div class="outline">
+        <div class="outline-row done"><code>1.1.1</code><b>本質半導體 Intrinsic Semiconductors</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>1.1.2</code><b>非本質半導體 Extrinsic（N 型起頭，P 型待續）</b><span class="dot"></span></div>
+        <div class="outline-row"><code>1.1.3</code><b>漂移電流與擴散電流 Drift &amp; Diffusion</b><span class="dot"></span></div>
+        <div class="outline-row"><code>1.1.4</code><b>過剩載子 Excess Carriers</b><span class="dot"></span></div>
+        <div class="outline-row"><code>1.2</code><b>pn 接面 The pn Junction</b><span class="dot"></span></div>
+        <div class="outline-row"><code>1.3</code><b>二極體電路：直流分析與模型</b><span class="dot"></span></div>
+        <div class="outline-row"><code>1.4</code><b>二極體電路：交流等效電路</b><span class="dot"></span></div>
+        <div class="outline-row"><code>1.5</code><b>其他二極體（蕭特基、齊納…）</b><span class="dot"></span></div>
+        <div class="outline-row"><code>1.6</code><b>設計應用：二極體溫度計</b><span class="dot"></span></div>
+      </div>
+      <p class="note"><b>這次涵蓋到哪：</b>投影片 p.1–30，止於 1.1.2 的 N 型半導體開頭（施體雜質）。P 型（受體 / 硼）、漂移與擴散電流、過剩載子都還沒出現 —— 下一份檔案接得上。</p>
+
+      <h3 style="font-size:16px;margin:30px 0 4px">全書 16 章</h3>
+      <div class="map">
+        <div class="map-row live"><span class="no">01</span><span class="ti"><b>半導體材料與二極體</b><span>Semiconductor Materials and Diodes</span></span><span class="stat on">PART 1 已上線</span></div>
+        <div class="map-row"><span class="no">02</span><span class="ti"><b>二極體電路</b><span>Diode Circuits</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">03</span><span class="ti"><b>場效電晶體 FET</b><span>The Field-Effect Transistor</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">04</span><span class="ti"><b>基本 FET 放大器</b><span>Basic FET Amplifiers</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">05</span><span class="ti"><b>雙極接面電晶體 BJT</b><span>The Bipolar Junction Transistor</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">06</span><span class="ti"><b>基本 BJT 放大器</b><span>Basic BJT Amplifiers</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">07</span><span class="ti"><b>頻率響應</b><span>Frequency Response</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">08</span><span class="ti"><b>輸出級與功率放大器</b><span>Output Stages and Power Amplifiers</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">09</span><span class="ti"><b>理想運算放大器與 Op-Amp 電路</b><span>Ideal Op-Amps and Op-Amp Circuits</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">10</span><span class="ti"><b>積體電路偏壓與主動負載</b><span>IC Biasing and Active Loads</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">11</span><span class="ti"><b>差動與多級放大器</b><span>Differential and Multistage Amplifiers</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">12</span><span class="ti"><b>回授與穩定度</b><span>Feedback and Stability</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">13</span><span class="ti"><b>運算放大器電路</b><span>Operational Amplifier Circuits</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">14</span><span class="ti"><b>運算放大器的非理想效應</b><span>Nonideal Effects in Op-Amp Circuits</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">15</span><span class="ti"><b>積體電路應用與設計</b><span>Applications and Design of ICs</span></span><span class="stat off">待上傳</span></div>
+        <div class="map-row"><span class="no">16</span><span class="ti"><b>數位電子學</b><span>Digital Electronics</span></span><span class="stat off">待上傳</span></div>
+      </div>
+      <p class="note src">章名依 Neamen 4e 原書目錄整理。如果老師的投影片切法跟課本不同，丟檔案時說一聲，我調整地圖。</p>
+    </section>
+
+    <!-- ══════════ 01 訊號 ══════════ -->
+    <section class="sec" id="signal">
+      <div class="eyebrow">01 · 投影片 p.3 · Notation</div>
+      <h2>訊號極性：AC、DC 與脈動直流</h2>
+      <p class="lede">分類的唯一判準是<strong>極性有沒有隨時間反轉</strong>，不是「波形平不平」。拉動下面兩根滑桿，看同一條式子 v(t) = V<sub>DC</sub> + V<sub>AC</sub>·sin(2πft) 怎麼在三種身分之間切換。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>訊號極性實驗室</h3><span class="spacer"></span><span class="tag">v(t) = Vdc + Vac·sin(2πft)</span></div>
+        <div class="stage-wrap"><canvas id="cv-signal" aria-label="電壓波形，藍色為正極性、朱色為負極性"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="sig-dc">直流準位 Vdc<output for="sig-dc"></output></label>
+            <input type="range" id="sig-dc" min="-5" max="5" step="0.1" value="3"></div>
+          <div class="ctrl"><label for="sig-ac">交流振幅 Vac<output for="sig-ac"></output></label>
+            <input type="range" id="sig-ac" min="0" max="5" step="0.1" value="1.5"></div>
+          <div class="ctrl"><label for="sig-f">頻率 f<output for="sig-f"></output></label>
+            <input type="range" id="sig-f" min="0.3" max="4" step="0.1" value="1.2"></div>
+          <div class="ctrl"><span class="lab">快速切換</span>
+            <div class="btn-row">
+              <button class="btn" type="button" data-sig="4,0">純 DC</button>
+              <button class="btn" type="button" data-sig="0,4">純 AC</button>
+              <button class="btn" type="button" data-sig="3,1.5">脈動 DC</button>
+            </div></div>
+        </div>
+        <dl class="readout">
+          <div><dt>判定</dt><dd id="sig-type" style="font-size:14px">—</dd></div>
+          <div><dt>最大值</dt><dd id="sig-vmax">—</dd></div>
+          <div><dt>最小值</dt><dd id="sig-vmin">—</dd></div>
+          <div><dt>極性</dt><dd id="sig-flip">—</dd></div>
+        </dl>
+        <div class="msg" id="sig-why"></div>
+      </div>
+      <p class="note key">交流（AC）的核心特徵是<b>極性隨時間變化</b>；直流（DC）則是<b>極性不隨時間變化</b>。含有交流成分但極性始終不變的，叫脈動直流（Pulsating DC）。</p>
+    </section>
+
+    <!-- ══════════ 02 原子 ══════════ -->
+    <section class="sec" id="atom">
+      <div class="eyebrow">02 · 投影片 p.4, 11–15 · 原子結構</div>
+      <h2>原子殼層、價電子與族數</h2>
+      <p class="lede">每層最多容納 2n² 個電子，<strong>最外層</strong>那一圈就是價電子 —— 它決定化學性質，也決定這顆原子在半導體裡扮演什麼角色。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>原子殼層建構器</h3><span class="spacer"></span><span class="tag">Z = 1 … 20</span></div>
+        <div class="stage-wrap"><canvas id="cv-atom" aria-label="原子殼層示意圖，最外層以藍色標示"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="at-z">原子序<output for="at-z"></output></label>
+            <input type="range" id="at-z" min="1" max="20" step="1" value="14"></div>
+          <div class="ctrl" style="grid-column:span 2"><span class="lab">課堂提到的元素</span>
+            <div class="btn-row">
+              <button class="btn" type="button" data-z="5">B 硼</button>
+              <button class="btn" type="button" data-z="6">C 碳</button>
+              <button class="btn" type="button" data-z="11">Na 鈉</button>
+              <button class="btn" type="button" data-z="14">Si 矽</button>
+              <button class="btn" type="button" data-z="15">P 磷</button>
+              <button class="btn" type="button" data-z="17">Cl 氯</button>
+              <button class="btn" type="button" data-z="18">Ar 氬</button>
+            </div></div>
+        </div>
+        <dl class="readout">
+          <div><dt>元素</dt><dd id="at-sym" style="font-size:15px">—</dd></div>
+          <div><dt>電子組態</dt><dd id="at-cfg" style="font-size:14px">—</dd></div>
+          <div><dt>價電子</dt><dd id="at-val" class="e">—</dd></div>
+          <div><dt>族別</dt><dd id="at-group">—</dd></div>
+        </dl>
+        <div class="msg" id="at-octet"></div>
+      </div>
+      <div class="terms">
+        <div><b>原子序 Atomic Number</b><span>核內質子數；中性原子時 = 電子數</span></div>
+        <div><b>價電子 Valence Electron</b><span>最外層電子，可與其他原子形成化學鍵</span></div>
+        <div><b>A 族族數</b><span>主族元素的族數 = 價電子數</span></div>
+      </div>
+      <p class="note">2n² 只是容量上限。實際排布不一定「填滿一層再填下一層」（過渡元素就會亂序），本模組對 Z ≤ 20 的主族元素採用 2 / 8 / 8 / 2 的實際排法，所以 Ar(18) = 2,8,8、K(19) = 2,8,8,1。</p>
+    </section>
+
+    <!-- ══════════ 03 化學鍵 ══════════ -->
+    <section class="sec" id="bond">
+      <div class="eyebrow">03 · 投影片 p.16–19 · 八隅體規則</div>
+      <h2>離子鍵與共價鍵</h2>
+      <p class="lede">原子想湊滿八隅體（octet）只有兩條路：<strong>得失電子</strong>變成離子互相吸引，或是<strong>共用電子</strong>。矽晶體走的是第二條。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>化學鍵實驗台</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-bond="ionic">離子鍵 Na + Cl</button>
+            <button class="btn" type="button" data-bond="cov">共價鍵 Si + Si</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-bond" aria-label="離子鍵與共價鍵的電子行為動畫"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><span class="lab">操作</span>
+            <div class="btn-row"><button class="btn solid" type="button" id="bond-go">轉移電子 →</button></div></div>
+          <div class="ctrl" style="grid-column:span 2"><span class="lab">發生了什麼</span>
+            <div id="bond-desc" style="font-size:13.5px;color:var(--ink-2);line-height:1.65"></div></div>
+        </div>
+      </div>
+      <p class="note key">離子<b>不具傳導性</b>；能幫助傳導的是自由電子與電洞。這個區別在講到 N 型半導體的 P⁺ 離子時會再出現一次。</p>
+    </section>
+
+    <!-- ══════════ 04 晶格 ══════════ -->
+    <section class="sec" id="lattice">
+      <div class="eyebrow">04 · 投影片 p.18–22 · 本質半導體</div>
+      <h2>矽晶格與熱擾動</h2>
+      <p class="lede">每個矽原子與 4 個鄰居各共用一對電子。T = 0 K 時所有鍵完整、沒有自由載子 —— 形同絕緣體。溫度一上來，鍵開始斷，<strong>電子與電洞永遠成對出現</strong>。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>晶格熱擾動</h3><span class="spacer"></span><span class="tag">2D 簡化示意</span></div>
+        <div class="stage-wrap"><canvas id="cv-lat" aria-label="矽晶格與熱擾動產生的電子電洞對"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="lat-temp">溫度 T<output for="lat-temp"></output></label>
+            <input type="range" id="lat-temp" min="0" max="650" step="10" value="300"></div>
+          <div class="ctrl"><span class="lab">操作</span>
+            <div class="btn-row"><button class="btn" type="button" id="lat-clear">全部復合（清空）</button></div></div>
+        </div>
+        <dl class="readout">
+          <div><dt>溫度</dt><dd id="lat-c">—</dd></div>
+          <div><dt>本質濃度 ni</dt><dd id="lat-ni" style="font-size:14px">—</dd></div>
+          <div><dt>電子 n</dt><dd id="lat-n" class="e" style="font-size:14px">—</dd></div>
+          <div><dt>電洞 p</dt><dd id="lat-p" class="h" style="font-size:14px">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">畫面上的斷鍵數量是<b>壓縮過的示意</b>（真實比例下 300 K 每 10¹² 個矽原子才有一個載子，畫不出來）。右邊的 ni 數字才是依公式算出的真實量級。</p>
+      <p class="note key">本質半導體中 n<sub>o</sub> = p<sub>o</sub> = n<sub>i</sub>，因為載子是「成對」產生的。</p>
+    </section>
+
+    <!-- ══════════ 05 能帶 ══════════ -->
+    <section class="sec" id="band">
+      <div class="eyebrow">05 · 投影片 p.20–21 · Energy Band</div>
+      <h2>能帶與禁止能隙</h2>
+      <p class="lede">價電子掙脫共價鍵，等於從<strong>價帶</strong>跳到<strong>導帶</strong>，中間那段電子不得存在的區間就是禁止能隙 E<sub>g</sub> = E<sub>c</sub> − E<sub>v</sub>。能隙多大，就決定了這塊材料是導體、半導體還是絕緣體。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>能帶圖</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-band="metal">導體</button>
+            <button class="btn" type="button" data-band="semi">半導體 (Si)</button>
+            <button class="btn" type="button" data-band="insul">絕緣體</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-band" aria-label="能帶圖：價帶、導帶與禁止能隙"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="band-egr">能隙 Eg<output for="band-egr"></output></label>
+            <input type="range" id="band-egr" min="0" max="6" step="0.02" value="1.12"></div>
+          <div class="ctrl"><label for="band-tr">溫度 T<output for="band-tr"></output></label>
+            <input type="range" id="band-tr" min="100" max="650" step="10" value="300"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>分類</dt><dd id="band-kind" style="font-size:15px">—</dd></div>
+          <div><dt>Eg</dt><dd id="band-eg">—</dd></div>
+          <div><dt>相對躍遷機率</dt><dd id="band-prob" style="font-size:14px">—</dd></div>
+        </dl>
+        <div class="msg" id="band-note"></div>
+      </div>
+      <p class="note key">能隙比較：<b>絕緣體 &gt; 半導體 &gt; 導體</b>。Si = 1.12 eV、Ge = 0.66 eV、GaAs = 1.42 eV，絕緣體約 3～6 eV。1 eV 是一個電子通過 1 V 電位差所獲得的能量。</p>
+    </section>
+
+    <!-- ══════════ 06 電洞 ══════════ -->
+    <section class="sec" id="holemove">
+      <div class="eyebrow">06 · 投影片 p.24 · Movement of Holes</div>
+      <h2>電洞移動 —— 一場電子接力</h2>
+      <p class="lede">電洞其實不會移動。真正在動的是價電子：它遞補進隔壁的空鍵，空缺的位置就換了地方，看起來像電洞在跑。<strong>點對那顆該跳的電子</strong>，把電洞推到底。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>電洞移動挑戰</h3><span class="spacer"></span>
+          <div class="btn-row">
+            <button class="btn" type="button" id="hole-flip">電場反向 ⇄</button>
+            <button class="btn" type="button" id="hole-reset">重來</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-hole" aria-label="電洞移動遊戲：點選正確的價電子"></canvas></div>
+        <dl class="readout">
+          <div><dt>電場 E</dt><dd id="hole-dir" style="font-size:15px">—</dd></div>
+          <div><dt>電子該往</dt><dd id="hole-edir" class="e" style="font-size:15px">—</dd></div>
+          <div><dt>答對</dt><dd id="hole-score">0 / 0</dd></div>
+          <div><dt>連續</dt><dd id="hole-streak">0 連對</dd></div>
+        </dl>
+        <div class="msg" id="hole-msg">點選電洞旁邊那顆該跳的電子。電子帶負電，受力 F = −qE。</div>
+      </div>
+      <p class="note key">1. 電洞移動方向 = <b>電流方向</b>（與電場同向）。2. 電洞與電子的<b>濃度</b>共同決定電流大小。</p>
+    </section>
+
+    <!-- ══════════ 07 ni ══════════ -->
+    <section class="sec" id="ni">
+      <div class="eyebrow">07 · 投影片 p.25–26 · 定量分析</div>
+      <h2>本質載子濃度 n<sub>i</sub>(T)</h2>
+      <p class="lede">這條式子是整章第一個要背的。它告訴你兩件事：<strong>同一材料</strong>下 n<sub>i</sub> 對溫度極度敏感；<strong>不同材料</strong>間則由能隙 E<sub>g</sub> 拉開數個數量級的差距。</p>
+      <div class="eq">n<em>i</em> = B · T<sup>3/2</sup> · exp( − E<em>g</em> / 2kT )　　k = 8.617×10⁻⁵ eV/K</div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>n<sub>i</sub> 計算器</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-mat="Si">Si 矽</button>
+            <button class="btn" type="button" data-mat="Ge">Ge 鍺</button>
+            <button class="btn" type="button" data-mat="GaAs">GaAs 砷化鎵</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-ni" aria-label="本質載子濃度對溫度的對數座標曲線"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="ni-temp">溫度 T<output for="ni-temp"></output></label>
+            <input type="range" id="ni-temp" min="200" max="650" step="5" value="300"></div>
+          <div class="ctrl"><span class="lab">材料常數</span>
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--ink-2);line-height:1.7">
+              Eg = <span id="ni-eg">—</span><br>B = <span id="ni-B">—</span></div></div>
+        </div>
+        <dl class="readout">
+          <div><dt>材料</dt><dd id="ni-mat" style="font-size:15px">—</dd></div>
+          <div><dt>攝氏溫度</dt><dd id="ni-Tc">—</dd></div>
+          <div><dt>ni</dt><dd id="ni-val" class="e" style="font-size:15px">—</dd></div>
+          <div><dt>相對 Si@300K</dt><dd id="ni-cmp" style="font-size:14px">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">公式的物理意義：<b>B 與 Eg</b> 是在比較「不同材料」；<b>T</b> 是在比較「同一材料的不同溫度」。K = °C + 273.15，所以 300 K ≈ 26.85 °C ≈ 室溫。課本對矽在 300 K 常用的近似值是 1.5×10¹⁰ cm⁻³；用表 1.3 的 B 直接代入會得到同數量級（約 10¹⁰）的結果。</p>
+      <p class="note key">矽原子密度約 5×10²² cm⁻³，而本質載子只有 10¹⁰ cm⁻³ —— 差了 12 個數量級。<b>這就是本質半導體導電度不高的原因。</b></p>
+    </section>
+
+    <!-- ══════════ 08 摻雜 ══════════ -->
+    <section class="sec" id="dope">
+      <div class="eyebrow">08 · 投影片 p.27–30 · Extrinsic (N-Type)</div>
+      <h2>N 型摻雜：施體雜質</h2>
+      <p class="lede">在矽裡摻入 5 價的磷（P）。四個價電子去補共價鍵，<strong>第五個沒地方去</strong>，輕輕一激發就跑到導帶成為自由電子；磷本身變成釘在晶格上的正離子 P⁺ —— 不動，也不導電。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>摻雜晶格（點一下 Si 換成 P）</h3><span class="spacer"></span><span class="tag">可點選</span></div>
+        <div class="stage-wrap"><canvas id="cv-dope" aria-label="可點選的矽晶格，點擊後換成磷原子"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><span class="lab">操作</span>
+            <div class="btn-row"><button class="btn" type="button" id="dope-clear">還原成純矽</button></div></div>
+          <div class="ctrl"><span class="lab">已摻雜</span><span class="val" id="dope-cnt">0 / 20</span></div>
+          <div class="ctrl"><span class="lab">產生的自由電子</span><span class="val" id="dope-free">0 個</span></div>
+        </div>
+      </div>
+
+      <div class="terms">
+        <div><b>施體 Donor</b><span>5A 族（P、As…）→ 提供電子 → n 型</span></div>
+        <div><b>多數載子</b><span>n 型中為電子（帶負電，故稱 N-type）</span></div>
+        <div><b>P⁺ 離子</b><span>固定不動、不具傳導性，與電洞不同</span></div>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>載子濃度定量：為什麼 n ≈ N<sub>d</sub></h3><span class="spacer"></span><span class="tag">n·p = ni²</span></div>
+        <div class="controls">
+          <div class="ctrl"><label for="ma-ndr">摻雜濃度 Nd<output for="ma-ndr"></output></label>
+            <input type="range" id="ma-ndr" min="8" max="19" step="0.25" value="16"></div>
+          <div class="ctrl"><label for="ma-tr">溫度 T<output for="ma-tr"></output></label>
+            <input type="range" id="ma-tr" min="200" max="650" step="10" value="300"></div>
+        </div>
+        <div class="bar" id="ma-bar" style="height:6px"><i style="width:50%"></i></div>
+        <dl class="readout">
+          <div><dt>Nd 施體濃度</dt><dd id="ma-nd" style="font-size:14px">—</dd></div>
+          <div><dt>ni 本質濃度</dt><dd id="ma-ni" style="font-size:14px">—</dd></div>
+          <div><dt>n 多數載子</dt><dd id="ma-n" class="e" style="font-size:14px">—</dd></div>
+          <div><dt>p 少數載子</dt><dd id="ma-p" class="h" style="font-size:14px">—</dd></div>
+        </dl>
+        <div class="msg" id="ma-concl"></div>
+      </div>
+      <p class="note key">質量作用定律 <b>n·p = n<sub>i</sub>²</b> 在熱平衡下恆成立。摻雜把電子拉高，電洞就被壓下去 —— 兩者乘積不變。這回答了投影片 p.29 那個問題：n 之所以「差不多等於」N<sub>d</sub> 而非「恰好等於」，是因為熱擾動仍貢獻了極少量的電子－電洞對。</p>
+      <p class="note">摻雜比例一般約 1 : 10⁸（每 10⁸ 個矽原子摻一個），而且 4 價摻 5 價，兩個電中性物質加在一起仍為電中性。每摻一個 P 就多一個自由電子 —— <b>摻雜可以大幅提高導電度</b>。</p>
+      <p class="note src">下一份講義接的是 P 型（受體 / 3 價硼 B）、漂移與擴散電流。</p>
+    </section>
+
+    <!-- ══════════ 09 測驗 ══════════ -->
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow">09 · 自我檢查</div>
+      <h2>觀念小測驗</h2>
+      <p class="lede">10 題，全部出自上面這 8 個模組。答錯會直接告訴你為什麼。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Donald A. Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4th ed.（McGraw-Hill），Chapter 1，2026 Fall 課程投影片 p.1–30。</p>
+      <p>互動模組為觀念示意，數量與比例經過壓縮以利觀察；定量數值皆依課本公式與表 1.3 參數即時計算。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="assets/ch1-part1.js"></script>
+</body>
+</html>
