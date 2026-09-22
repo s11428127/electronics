@@ -4,10 +4,13 @@
 
 ```
 engineering-math/
-  index.html            首頁：單元地圖 + 拉普拉斯轉換全部模組
+  index.html            科目首頁：**單元選單**
+  laplace.html          拉普拉斯轉換（9/17 – 9/20 筆記）
   assets/laplace.js     7 個互動模組 + 12 題中英對照測驗
   docs/CONTENT_MAP.md   單元分類、核心公式、筆記勘誤紀錄
 ```
+
+導覽是三層：**主頁（選科目）→ 工程數學首頁（選單元）→ 單元頁**。一個單元一頁。
 
 引擎共用根目錄的 [`shared/`](../shared/)，與電子學、電路學是同一套。
 
