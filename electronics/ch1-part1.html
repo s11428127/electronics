@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>半導體材料與性質</title>
 <meta name="description" content="電子學 CH1 PART 1 互動講義：用可操作的動畫拆解半導體材料、能帶、電洞移動與 N 型摻雜。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
@@ -277,6 +278,52 @@
       <p class="lede">這條式子是整章第一個要背的。它告訴你兩件事：<strong>同一材料</strong>下 n<sub>i</sub> 對溫度極度敏感；<strong>不同材料</strong>間則由能隙 E<sub>g</sub> 拉開數個<button class="tm" data-t="數量級">數量級</button>的差距。</p>
       <div class="eq">n<em>i</em> = B · T<sup>3/2</sup> · exp( − E<em>g</em> / 2kT )　　k = 8.617×10⁻⁵ eV/K</div>
 
+      <div class="derive">
+        <h4>那個 3/2 次方和 2kT 的「2」是怎麼來的</h4>
+        <ol>
+          <li>
+            <span class="d-eq">先問：一個電子要跳到導帶，機率有多大？</span>
+            <div class="why">熱擾動給的能量是隨機的。統計力學告訴我們，「湊到 E 這麼多能量」的機率大約正比於
+              <b>e<sup>−E/kT</sup></b>（波茲曼因子）。要跨過能隙就要湊到 E<sub>g</sub>，所以機率 ∝ e<sup>−Eg/kT</sup>。</div>
+          </li>
+          <li>
+            <span class="d-eq">再問：導帶裡有幾個「位子」可以坐？</span>
+            <div class="why">這叫<b>有效狀態密度</b> N<sub>c</sub>（導帶）與 N<sub>v</sub>（價帶）。
+              在三維空間數可用的量子態，結果是 <b>N<sub>c</sub>、N<sub>v</sub> ∝ T<sup>3/2</sup></b>。
+              這一步要用到量子力學，這門課先接受這個結果就好 —— 但記住<b>它們各帶一個 T<sup>3/2</sup></b>。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">n · p = N<sub>c</sub>N<sub>v</sub> · e<sup>−Eg/kT</sup></span>
+            <p>「有多少位子」乘上「坐得上去的機率」。<b>注意這個乘積裡完全沒有摻雜的影子</b> ——
+              它只跟材料（N<sub>c</sub>、N<sub>v</sub>、E<sub>g</sub>）和溫度 T 有關。這件事下一節會再用到。</p>
+          </li>
+          <li>
+            <span class="d-eq">本質半導體中電子電洞成對產生 ⟹ n = p = n<sub>i</sub>　⟹　n<sub>i</sub>² = N<sub>c</sub>N<sub>v</sub>e<sup>−Eg/kT</sup></span>
+            <div class="why">純矽裡每斷一條鍵就同時生一個電子和一個電洞，數量必然相等。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">開根號：n<sub>i</sub> = √(N<sub>c</sub>N<sub>v</sub>) · e<sup>−Eg/<b>2</b>kT</sup></span>
+            <p><b>找到了 —— 2kT 的那個「2」就是這個平方根。</b>
+              因為 √(e<sup>−Eg/kT</sup>) = e<sup>−Eg/2kT</sup>，指數被除以 2。
+              它不是什麼物理常數，純粹是「從 n<sub>i</sub>² 開根號回 n<sub>i</sub>」留下的痕跡。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">√(N<sub>c</sub>N<sub>v</sub>) ∝ √(T<sup>3/2</sup> · T<sup>3/2</sup>) = √(T³) = T<sup>3/2</sup>　⟹　令它 = B·T<sup>3/2</sup></span>
+            <p><b>3/2 次方也找到了。</b>N<sub>c</sub> 和 N<sub>v</sub> 各貢獻一個 T<sup>3/2</sup>，
+              相乘變 T³，開根號回到 T<sup>3/2</sup>。剩下跟溫度無關的常數全部打包成 <b>B</b>，
+              所以 B 只跟材料有關 —— 這就是課本表 1.3 每種材料有各自 B 值的原因。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">n<sub>i</sub> = B · T<sup>3/2</sup> · e<sup>−Eg/2kT</sup></span>
+            <p>兩個指數都有來歷了。<b>哪一項主導？</b>T<sup>3/2</sup> 是溫和的成長，
+              但 e<sup>−Eg/2kT</sup> 是指數級的暴衝 —— 溫度一升，指數項完勝，
+              所以 n<sub>i</sub> 對溫度才會那麼敏感。下面的例題可以把兩項拆開來看誰貢獻多少。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div id="ex-ni"></div>
+
       <div class="bench">
         <div class="bench-head"><h3>n<sub>i</sub> 計算器</h3>
           <div class="btn-row">
@@ -343,6 +390,64 @@
         </dl>
         <div class="msg" id="ma-concl"></div>
       </div>
+      <div class="derive">
+        <h4>證明：為什麼 n·p 永遠等於 n<sub>i</sub>²（跟摻多少無關）</h4>
+        <ol>
+          <li>
+            <span class="d-eq">上一節推到：n · p = N<sub>c</sub>N<sub>v</sub> · e<sup>−Eg/kT</sup></span>
+            <div class="why">關鍵在於觀察這個式子的<b>右邊</b>：N<sub>c</sub>、N<sub>v</sub> 是材料的狀態密度，
+              E<sub>g</sub> 是材料的能隙，k 是常數，T 是溫度。<b>沒有任何一項跟摻雜有關。</b></div>
+          </li>
+          <li>
+            <span class="d-eq hi">⟹ 在固定溫度下，n·p 是一個「定值」，摻多摻少都一樣</span>
+            <p>這就是整條定律的核心。摻雜會改變 n 和 p <b>各自</b>的值，但改不動它們的<b>乘積</b>。</p>
+          </li>
+          <li>
+            <span class="d-eq">那這個定值是多少？拿最簡單的情況去量：純矽（沒摻雜）</span>
+            <div class="why">純矽裡 n = p = n<sub>i</sub>，代進去得 n·p = n<sub>i</sub>²。
+              既然這個乘積是定值，<b>量到的這個 n<sub>i</sub>² 就是所有情況下的那個定值</b>。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">n · p = n<sub>i</sub>²　（熱平衡下恆成立）</span>
+            <p>證畢。一句話：<b>「乘積是材料的性質，不是摻雜的性質」</b>，
+              而我們拿純材料去量，量出來的那個值就叫 n<sub>i</sub>²。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>再證：為什麼是 n ≈ N<sub>d</sub> 而不是「恰好等於」</h4>
+        <ol>
+          <li>
+            <span class="d-eq">電中性條件：n = p + N<sub>d</sub></span>
+            <div class="why">整塊材料不帶電。負電荷只有自由電子 n；正電荷是電洞 p 加上施體離子
+              （每摻一個磷就留一個不動的 P⁺）。兩邊必須相等。</div>
+          </li>
+          <li>
+            <span class="d-eq">把 p = n<sub>i</sub>²/n 代進去：n = n<sub>i</sub>²/n + N<sub>d</sub></span>
+            <div class="why">用剛證完的質量作用定律，把兩個未知數降成一個。</div>
+          </li>
+          <li>
+            <span class="d-eq">兩邊乘 n 整理：n² − N<sub>d</sub>·n − n<sub>i</sub>² = 0　（一元二次式）</span>
+            <p>用公式解，取正根（濃度不可能是負的）：</p>
+            <span class="d-eq hi">n = N<sub>d</sub>/2 + √( (N<sub>d</sub>/2)² + n<sub>i</sub>² )</span>
+          </li>
+          <li>
+            <span class="d-eq">當 N<sub>d</sub> ≫ n<sub>i</sub>：根號裡的 n<sub>i</sub>² 相對 (N<sub>d</sub>/2)² 小到可以丟掉</span>
+            <div class="why">例如 N<sub>d</sub> = 10¹⁶、n<sub>i</sub> = 1.5×10¹⁰ 時，
+              (N<sub>d</sub>/2)² ≈ 2.5×10³¹ 而 n<sub>i</sub>² ≈ 2.25×10²⁰ —— 差 11 個數量級。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">n ≈ N<sub>d</sub>/2 + N<sub>d</sub>/2 = N<sub>d</sub></span>
+            <p><b>這就是「≈」而不是「=」的理由</b>：被丟掉的那個 n<sub>i</sub>² 正是熱擾動的貢獻。
+              它真的存在，只是小到可以忽略。<b>摻雜濃度越低，這個近似就越不準</b> ——
+              下面的例題把摻雜拉低就會看到它整個失效。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div id="ex-np"></div>
+
       <p class="note key">質量作用定律 <b>n·p = n<sub>i</sub>²</b> 在<button class="tm" data-t="熱平衡">熱平衡</button>下恆成立。摻雜把電子拉高，電洞就被壓下去 —— 兩者乘積不變。這回答了投影片 p.29 那個問題：n 之所以「差不多等於」N<sub>d</sub> 而非「恰好等於」，是因為熱擾動仍貢獻了極少量的電子－電洞對。</p>
       <p class="note">摻雜比例一般約 1 : 10⁸（每 10⁸ 個矽原子摻一個），而且 4 價摻 5 價，兩個<button class="tm" data-t="電中性">電中性</button>物質加在一起仍為<button class="tm" data-t="電中性">電中性</button>。每摻一個 P 就多一個自由電子 —— <b>摻雜可以大幅提高導電度</b>。</p>
       <p class="note src">下一份講義接的是 P 型（受體 / 3 價硼 B）、漂移與擴散電流。</p>

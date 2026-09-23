@@ -13,7 +13,7 @@
 |------|--------|------|
 | 電子學 | [`electronics/`](electronics/) | CH1 PART 1、PART 2 已完成（見 [進度表](electronics/docs/CONTENT_MAP.md)） |
 | 電路學 | [`circuits/`](circuits/) | CH11 交流功率分析已完成（見 [進度表](circuits/docs/CONTENT_MAP.md)） |
-| 工程數學 | [`engineering-math/`](engineering-math/) | 拉普拉斯轉換已完成（見 [進度表](engineering-math/docs/CONTENT_MAP.md)） |
+| 工程數學 | [`engineering-math/`](engineering-math/) | 拉普拉斯轉換、常係數 ODE 與特徵方程已完成（見 [進度表](engineering-math/docs/CONTENT_MAP.md)） |
 
 ## 結構
 
@@ -21,16 +21,18 @@
 index.html              主頁：科目選單（電子學 / 電路學 / 工程數學）
 shared/
   app.css               設計語彙：色票、字體、版面（跨科目共用）
-  app.js                互動引擎：Canvas 舞台、主題切換、繪圖原語（跨科目共用）
+  app.js                互動引擎：Canvas 舞台、主題切換、繪圖原語、可調數字例題（跨科目共用）
+  terms.js              專有名詞小字典：點一下名詞跳出白話解釋（跨科目共用）
 electronics/
-  index.html            電子學首頁：課程地圖 + 各章互動模組
-  assets/chN.js         每章一個檔案
+  index.html            電子學首頁：**章節選單**
+  <chapter>.html        章節內容頁（ch1-part1.html、ch1-part2.html…）
+  assets/<chapter>.js   每章一個檔案
   docs/CONTENT_MAP.md   章節分類與上傳進度
 circuits/               電路學，結構同上
 engineering-math/       工程數學，結構同上
 ```
 
-每一科都有自己的主色，一進頁面就知道在哪一科：電子學藍、電路學墨綠。
+每一科都有自己的主色，一進頁面就知道在哪一科：電子學藍、電路學墨綠、工程數學紫。
 主色由 `<body data-subject="…">` 決定，chrome 一律吃 `--accent` token。
 
 ## 新增一個科目的規則

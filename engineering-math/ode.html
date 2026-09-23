@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ODE 與特徵方程</title>
+<meta name="description" content="工程數學：把特徵根拖到複平面不同位置，立刻看到解的形狀怎麼變。含作業批改。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body data-subject="math">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">工程數學</a><span>›</span><b>ODE 與特徵方程</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">ODE 與特徵方程</div>
+    <ol>
+      <li><a href="#map"><i>00</i>一句話說完這單元</a></li>
+      <li><a href="#guess"><i>01</i>為什麼可以「猜」e^λt</a></li>
+      <li><a href="#rootmap"><i>02</i>根的位置 ↔ 解的長相</a></li>
+      <li><a href="#three"><i>03</i>三種根的對照</a></li>
+      <li><a href="#double"><i>04</i>重根為什麼多一個 t</a></li>
+      <li><a href="#complex"><i>05</i>複根為什麼變成 cos/sin</a></li>
+      <li><a href="#work"><i>06</i>完整解題（可改數字）</a></li>
+      <li><a href="#hw"><i>!</i>你的作業批改</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">工程數學 · 9/23 課堂 Exercise 1–3</div>
+      <h1>常係數 ODE 與特徵方程</h1>
+      <p class="sub">這單元抽象的地方在於：一堆 λ、C₁、C₂ 跑出來，但你看不到它們<strong>長什麼樣子</strong>。這頁的核心是一張圖 —— <strong>把 λ 拖到複平面的不同位置，右邊的解立刻改變形狀</strong>。看過一次就很難忘。</p>
+      <div class="hero-meta">
+        <span class="chip">3 個互動模組</span>
+        <span class="chip">可改數字的完整解題</span>
+        <span class="chip h">作業批改：1 題有錯</span>
+      </div>
+    </div>
+
+    <!-- ══════════ 導論 ══════════ -->
+    <section class="sec" id="map">
+      <div class="eyebrow">Big picture</div>
+      <h2>一句話說完這單元</h2>
+      <p class="lede"><strong>把<button class="tm" data-t="微分方程">微分方程</button>變成一個二次方程，解出兩個<button class="tm" data-t="特徵根">特徵根</button> λ，答案的形狀就決定了。</strong>剩下的只是用<button class="tm" data-t="初始條件">初始條件</button>把兩個係數算出來。</p>
+
+      <div class="derive">
+        <h4>整個流程只有四步</h4>
+        <ol>
+          <li>
+            <span class="d-eq">y″ + ay′ + by = 0　（<button class="tm" data-t="齊次">齊次</button>、<button class="tm" data-t="常係數">常係數</button>、二<button class="tm" data-t="階數">階</button>）</span>
+            <div class="why">未知的是一個<b>函數</b> y(t)，不是一個數字。這是它跟你熟悉的方程式最大的差別。</div>
+          </li>
+          <li>
+            <span class="d-eq">猜 y = e^(λt)　⟹　λ² + aλ + b = 0　（<button class="tm" data-t="特徵方程">特徵方程</button>，好解）</span>
+            <div class="why"><b>微分方程直接變成國中的一元二次方程。</b>這就是整個方法的價值。</div>
+          </li>
+          <li>
+            <span class="d-eq">解出 λ₁、λ₂　⟹　通解的「形狀」就定了</span>
+            <div class="why">兩根是相異實根、<button class="tm" data-t="重根">重根</button>、還是<button class="tm" data-t="共軛複根">共軛複根</button>，會給出三種不同形狀的解。由<button class="tm" data-t="判別式">判別式</button> D = a² − 4b 判斷。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">用 y(0)、y′(0) 解聯立，定出 C₁、C₂　⟹　唯一解</span>
+            <div class="why"><button class="tm" data-t="通解">通解</button>裡有兩個自由參數，剛好需要兩個初始條件把它們釘死，得到唯一的<button class="tm" data-t="特解">特解</button>。</div>
+          </li>
+        </ol>
+      </div>
+      <p class="note key">跟<a href="laplace.html">拉普拉斯轉換</a>的關係：兩者都是在解同一類問題。<b>特徵方程法</b>是先求通解再代初始條件；<b>拉普拉斯</b>則是把初始條件在轉換當下就吃進去。方程越複雜（高階、有外加輸入），拉普拉斯越占優勢。</p>
+    </section>
+
+    <!-- ══════════ 01 為什麼猜 e^λt ══════════ -->
+    <section class="sec" id="guess">
+      <div class="eyebrow">01 · 為什麼是這個猜法</div>
+      <h2>為什麼可以「猜」y = e<sup>λt</sup></h2>
+      <p class="lede">這不是亂猜，是<strong>式子的結構逼出來的</strong>。你的筆記上老師那段推理寫得很好，這裡把它講細一點。</p>
+
+      <div class="derive">
+        <h4>結構決定了答案只能長那樣</h4>
+        <ol>
+          <li>
+            <span class="d-eq">令 y(t) 是函數，y′(t) = h(t)，y″(t) = g(t)</span>
+            <div class="why">先承認它們是三個不同的函數，然後看方程在要求什麼。</div>
+          </li>
+          <li>
+            <span class="d-eq">方程說：g(t) + a·h(t) + b·y(t) = 0　對<b>所有</b> t 都成立</span>
+            <p>三個函數<b>線性組合後恆為零</b>，這是很強的限制 —— 它們必須是「同一種東西」的倍數，
+              否則不可能處處抵銷。</p>
+          </li>
+          <li>
+            <span class="d-eq">所以要找一種函數：<b>微分之後還是自己的倍數</b></span>
+            <div class="why">滿足這個性質的函數只有指數函數。這就是 e^(λt) 出場的理由 —— 不是猜，是唯一的候選。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">y = e^(λt)　⟹　y′ = λ·y　，　y″ = λ²·y</span>
+            <p>微分變成「乘 λ」。代回原式，每一項都有 y 可以提出來：</p>
+            <span class="d-eq hi">(λ² + aλ + b)·y = 0，而 y = e^(λt) ≠ 0　⟹　λ² + aλ + b = 0</span>
+          </li>
+        </ol>
+      </div>
+      <p class="note">注意 <b>e^(λt) 永遠不等於 0</b>（指數函數恆正），所以才能安心把它除掉。這一步在你的筆記上有寫 <code>y(t) ≠ 0</code>，很好，那不是廢話，是必要條件。</p>
+    </section>
+
+    <!-- ══════════ 02 根平面 ══════════ -->
+    <section class="sec" id="rootmap">
+      <div class="eyebrow">02 · 核心視覺化</div>
+      <h2>根的位置 ↔ 解的長相</h2>
+      <p class="lede">這是整個單元<strong>最值得記住的一張圖</strong>。左邊是 λ 在複平面上的位置，右邊是對應的解。<strong>拖曳左邊的根</strong>，右邊立刻跟著變形 —— 你會看到 λ 的「實部」管衰減、「虛部」管振盪。根全部落在左半平面時系統才<button class="tm" data-t="穩定">穩定</button>。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>特徵根實驗室（可拖曳）</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-root="distinct">相異實根</button>
+            <button class="btn" type="button" data-root="double">重根</button>
+            <button class="btn" type="button" data-root="complex">共軛複根</button>
+            <button class="btn" type="button" data-root="undamped">純振盪</button>
+            <button class="btn" type="button" data-root="unstable">發散</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-root" aria-label="左為 λ 複平面可拖曳，右為對應的解 y(t)"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="root-a">y′ 係數 a<output for="root-a"></output></label>
+            <input type="range" id="root-a" min="-4" max="8" step="0.1" value="3"></div>
+          <div class="ctrl"><label for="root-b">y 係數 b<output for="root-b"></output></label>
+            <input type="range" id="root-b" min="-4" max="16" step="0.1" value="2"></div>
+          <div class="ctrl"><label for="root-y0">初始值 y(0)<output for="root-y0"></output></label>
+            <input type="range" id="root-y0" min="-3" max="3" step="0.5" value="1"></div>
+          <div class="ctrl"><label for="root-v0">初始值 y′(0)<output for="root-v0"></output></label>
+            <input type="range" id="root-v0" min="-4" max="4" step="0.5" value="2"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>微分方程</dt><dd id="root-eq" style="font-size:13px">—</dd></div>
+          <div><dt>特徵方程</dt><dd id="root-char" style="font-size:13px">—</dd></div>
+          <div><dt>判別式 D</dt><dd id="root-D">—</dd></div>
+          <div><dt>根的類型</dt><dd id="root-kind" style="font-size:13px">—</dd></div>
+          <div><dt>特徵根</dt><dd id="root-lam" style="font-size:13px">—</dd></div>
+          <div><dt>通解形式</dt><dd id="root-form" style="font-size:12.5px">—</dd></div>
+          <div><dt>代入初始條件</dt><dd id="root-sol" style="font-size:12px;color:var(--accent)">—</dd></div>
+          <div><dt>行為</dt><dd id="root-stab" style="font-size:13px">—</dd></div>
+        </dl>
+        <div class="msg" id="root-msg"></div>
+      </div>
+
+      <div class="note key">
+        <b>兩條規律，看懂這張圖就夠了：</b>
+        <ul style="margin:8px 0 0;padding-left:18px">
+          <li><b>實部（左右位置）管「衰減或發散」</b> —— 在左半平面 → e^(負×t) → 衰減到 0；在右半平面 → 爆炸。</li>
+          <li><b>虛部（上下位置）管「振不振盪」</b> —— 虛部為 0 → 單調不回頭；虛部不為 0 → 來回振盪，虛部越大晃越快。</li>
+        </ul>
+      </div>
+      <p class="note">這張圖在後面的課會一直出現：控制系統的<b>穩定性</b>判斷、電路的<b>暫態響應</b>、訊號與系統的<b>極點</b>，講的都是同一件事 —— 根跑到右半平面就完蛋了。</p>
+    </section>
+
+    <!-- ══════════ 03 三種對照 ══════════ -->
+    <section class="sec" id="three">
+      <div class="eyebrow">03 · Exercise 2 的三小題</div>
+      <h2>三種根，三種形狀</h2>
+      <p class="lede">你作業 Exercise 2 的三小題剛好就是這三種情況。把它們疊在同一張圖上比較，差別一目了然。</p>
+
+      <div class="bench">
+        <div class="bench-head"><h3>三種情況疊圖</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-case="all">三條一起</button>
+            <button class="btn" type="button" data-case="distinct">相異實根</button>
+            <button class="btn" type="button" data-case="double">重根</button>
+            <button class="btn" type="button" data-case="complex">共軛複根</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-cases" aria-label="三種特徵根對應的解疊在同一張圖"></canvas></div>
+        <div class="msg" id="cases-msg"></div>
+      </div>
+
+      <div class="glossary">
+        <div class="gl-row" style="grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr)"><b>判別式</b><span>根</span><span>通解形式</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr)"><b>D &gt; 0</b><span>相異實根 λ₁ ≠ λ₂</span><span>y = C₁e^(λ₁t) + C₂e^(λ₂t)</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr)"><b>D = 0</b><span>重根 λ（只有一個）</span><span>y = (C₁ + C₂<b>t</b>)e^(λt)</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr)"><b>D &lt; 0</b><span>共軛複根 α ± βi</span><span>y = e^(αt)(A cos βt + B sin βt)</span></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 04 重根 ══════════ -->
+    <section class="sec" id="double">
+      <div class="eyebrow">04 · 最容易被當成「硬背」的地方</div>
+      <h2>重根為什麼要多一個 t</h2>
+      <p class="lede">大家都背過「重根要乘 t」，但為什麼？因為<strong>重根只給你一個解，不夠用</strong> —— 二階方程需要兩個<button class="tm" data-t="線性獨立">線性獨立</button>的解。</p>
+
+      <div class="derive">
+        <h4>缺一個解，所以要補一個</h4>
+        <ol>
+          <li>
+            <span class="d-eq">二階微分方程需要<b>兩個</b>線性獨立的解</span>
+            <div class="why">因為有兩個初始條件（y(0) 和 y′(0)）要滿足，就需要兩個自由係數 C₁、C₂。</div>
+          </li>
+          <li>
+            <span class="d-eq">相異實根時：e^(λ₁t) 和 e^(λ₂t) 是兩個不同的函數 ✓ 夠用</span>
+          </li>
+          <li>
+            <span class="d-eq">重根時：λ₁ = λ₂ = λ　⟹　兩個解變成同一個 e^(λt)　✗ 只有一個</span>
+            <p>C₁e^(λt) + C₂e^(λt) = (C₁+C₂)e^(λt)，兩個係數合併成一個，<b>自由度掉了一半</b>，
+              沒辦法同時滿足兩個初始條件。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">補上 t·e^(λt)　⟹　y = (C₁ + C₂t)e^(λt)</span>
+            <p>可以直接驗證它確實是解：令 y = t·e^(λt)，代入 y″ + ay′ + by（其中 a = −2λ、b = λ²），
+              展開後會完全抵銷為 0。而且它跟 e^(λt) <b>線性獨立</b>（一個有 t 一個沒有），自由度補回來了。</p>
+          </li>
+        </ol>
+      </div>
+      <p class="note">在上面的疊圖裡切到「重根」：曲線前期會被那個 <b>t</b> 稍微頂高一點，之後才被指數壓下去。
+        這就是 t·e^(λt) 的形狀 —— <b>先升後降</b>，跟純指數的單調下降不一樣。</p>
+    </section>
+
+    <!-- ══════════ 05 複根 ══════════ -->
+    <section class="sec" id="complex">
+      <div class="eyebrow">05 · 從複數回到實數</div>
+      <h2>共軛複根為什麼會變成 cos 和 sin</h2>
+      <p class="lede">根算出來是複數，但 y(t) 是<strong>實際存在的物理量</strong>，不可能是複數。<button class="tm" data-t="尤拉公式">尤拉公式</button>負責把它翻譯回實數。</p>
+
+      <div class="derive">
+        <h4>翻譯過程</h4>
+        <ol>
+          <li>
+            <span class="d-eq">λ = α ± βi　⟹　y = C₁e^((α+βi)t) + C₂e^((α−βi)t)</span>
+            <div class="why">兩個複根各給一個解。現在要把它整理成實數形式。</div>
+          </li>
+          <li>
+            <span class="d-eq">把共同的 e^(αt) 提出來：y = e^(αt)·[ C₁e^(iβt) + C₂e^(−iβt) ]</span>
+            <div class="why">指數相加 = 底數相乘，先分離出純實數的部分。</div>
+          </li>
+          <li>
+            <span class="d-eq">尤拉公式：e^(iθ) = cos θ + i sin θ，　e^(−iθ) = cos θ − i sin θ</span>
+            <p>代進去展開，<b>虛部在適當選 C₁、C₂ 時會互相抵銷</b>（因為 y 必須是實數）：</p>
+          </li>
+          <li>
+            <span class="d-eq hi">y = e^(αt)·( A cos βt + B sin βt )</span>
+            <p>結構非常好記：<b>α（實部）變成前面的指數包絡，β（虛部）變成裡面的振盪頻率。</b></p>
+          </li>
+          <li>
+            <span class="d-eq">物理意義：e^(αt) 是「振幅怎麼變」，cos/sin 是「怎麼晃」</span>
+            <div class="why">α &lt; 0 → 愈晃愈小（衰減振盪）；α = 0 → 永遠等幅晃（純振盪）；
+              α &gt; 0 → 愈晃愈大（發散振盪）。β 越大晃得越快。</div>
+          </li>
+        </ol>
+      </div>
+      <p class="note key">回到上面那張根平面圖：<b>共軛複根一定成對出現、對稱於實軸</b>。
+        往左拖（α 更負）→ 衰減更快；往上下拖（β 更大）→ 晃得更快。兩個效果互相獨立。</p>
+    </section>
+
+    <!-- ══════════ 06 完整解題 ══════════ -->
+    <section class="sec" id="work">
+      <div class="eyebrow">06 · 完整解題流程</div>
+      <h2>跟著走一遍（數字可以自己改）</h2>
+      <div id="ex-ode"></div>
+
+      <div class="howto">
+        <h4>解常係數齊次 ODE 的標準流程</h4>
+        <ol>
+          <li><b>寫特徵方程</b>：把 y″→λ²、y′→λ、y→1，直接照抄係數。</li>
+          <li><b>算判別式 D = a² − 4b</b>，決定是哪一種根 → 通解形式跟著決定。</li>
+          <li><b>寫通解</b>：<code>D>0 → C₁e^(λ₁t)+C₂e^(λ₂t)</code>；<code>D=0 → (C₁+C₂t)e^(λt)</code>；<code>D&lt;0 → e^(αt)(A cos βt+B sin βt)</code>。</li>
+          <li><b>微分一次</b>得 y′(t)，代入 y(0) 與 y′(0) 解兩元一次聯立。</li>
+          <li><b>驗算</b>：把 C 代回去，檢查 y(0) 和 y′(0) 對不對。這一步只要十秒，卻能救回整題。</li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>這單元最常見的錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> <b>解聯立時符號弄錯。</b>這是最高頻的失分點（你這次就是栽在這裡）。
+            y′ 的每一項都會多一個 λ 係數，代 0 進去時<b>負號很容易漏</b>。
+            <span class="o">✓</span> 解完<b>一定要代回去驗算</b>。</li>
+          <li><span class="x">✗</span> <b>重根忘記乘 t</b>，只寫 C₁e^(λt)。自由度不夠，一定滿足不了兩個初始條件。</li>
+          <li><span class="x">✗</span> <b>複根答案留著 i。</b>物理量是實數，要用尤拉公式整理成 cos/sin 形式。</li>
+          <li><span class="x">✗</span> <b>變數混用 x 和 t。</b>題目用 t 就整題用 t，不要中途變成 x。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 作業批改 ══════════ -->
+    <section class="sec" id="hw">
+      <div class="eyebrow">Homework · 你的作業批改</div>
+      <h2>你寫的作業：2 題全對、1 題算錯</h2>
+      <p class="lede">三張都逐行驗算過。<strong>Exercise 2 和 3 完全正確</strong>，Exercise 1 你自己那一段解聯立時符號錯了。</p>
+
+      <div class="pitfall">
+        <h4>Exercise 1（你自己解的那一段）：C₁、C₂ 算錯</h4>
+        <ul>
+          <li><b>題目：</b>y″ + 3y′ + 2y = 0，y(0) = y′(0) = 1</li>
+          <li><b>你的前半段完全正確：</b>特徵根 λ = −1, −2，通解 y = C₁e^(−2t) + C₂e^(−t) ✓</li>
+          <li><b>聯立式也列對了：</b>
+            <span class="d-eq">C₁ + C₂ = 1　　−2C₁ − C₂ = 1</span></li>
+          <li><span class="x">✗</span> 但你解出 <b>C₁ = 0、C₂ = 1</b>，答案寫成 y = e^(−t)。
+            代回去檢查：y′ = −e^(−t)，<b>y′(0) = −1 ≠ 1</b> ✗</li>
+          <li><span class="o">✓</span> 正確解法：兩式相加消去 C₂ →
+            <span class="d-eq">(C₁ + C₂) + (−2C₁ − C₂) = 1 + 1　⟹　−C₁ = 2　⟹　<b>C₁ = −2</b><br>
+              代回第一式：C₂ = 1 − (−2) = <b>3</b></span></li>
+          <li><span class="o">✓</span> <b>正確答案：y(t) = 3e^(−t) − 2e^(−2t)</b><br>
+            驗算：y(0) = 3 − 2 = 1 ✓　y′ = −3e^(−t) + 4e^(−2t)，y′(0) = −3 + 4 = 1 ✓</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <b>另外兩個小地方（不影響對錯，但要注意）：</b>
+        <ul style="margin:8px 0 0;padding-left:18px">
+          <li>你寫的特徵方程看起來是 <code>λ² + 2λ + 2 = 0</code>，但下一行分解成 (λ+2)(λ+1)，
+            那對應的是 <code>λ² + <b>3</b>λ + 2 = 0</code>。<b>請確認</b>是不是中間那個係數寫錯了
+            （分解與根都是對的，所以應該只是筆誤）。</li>
+          <li>題目用 t，你中途寫成 x（e^(−2x)）。同一題最好從頭到尾用同一個變數。</li>
+          <li>你抄的〈老師解〉那段，最後答案 <b>y(t) = 4e^(−t) − 3e^(−2t)</b> 是<b>正確</b>的
+            （那題的初始條件是 y(0)=1、y′(0)=2，跟你自己解的那題不同）。
+            但中間寫「C₁ = −3, C₂ = 4」與答案對不起來 —— 應該是 <b>C₁ = 4、C₂ = −3</b>，標籤寫反了。</li>
+        </ul>
+      </div>
+
+      <div class="note key">
+        <b>Exercise 2：三小題全對 ✓</b>
+        <ul style="margin:8px 0 0;padding-left:18px">
+          <li><b>1.</b> λ²+4λ+3 = 0 → (λ+1)(λ+3) = 0 → λ = −1, −3 → y = C₁e^(−t) + C₂e^(−3t) ✓</li>
+          <li><b>2.</b> λ²+4λ+4 = 0 → (λ+2)² = 0 → λ = −2（重根）→ y = C₁e^(−2t) + C₂te^(−2t) ✓
+            重根有記得補 t，很好。</li>
+          <li><b>3.</b> λ²+4λ+5 = 0 → (λ+2)²+1 = 0 → λ = −2 ± i →
+            y = e^(−2t)(A cos t + B sin t) ✓ 有用尤拉公式整理回實數形式，這步做得完整。</li>
+        </ul>
+      </div>
+
+      <div class="note key">
+        <b>Exercise 3：證明正確 ✓</b>
+        <p style="margin:8px 0 0">分部積分的方向、d(e^(−st)) = −s·e^(−st)dt 的代換、
+          邊界項在 t = 0 給出 f(0)，全部處理正確，最後收到 sF(s) − f(0) 也對。</p>
+        <p style="margin:8px 0 0"><b>唯一可以補強的地方：</b>你寫了 <code>lim(t→∞) e^(−st)f(t)</code> 但沒說它等於 0。
+          嚴謹一點應該補一句：<b>「當 f 為指數階且 s 夠大時，此項 → 0」</b>。
+          考試如果是「證明題」，漏掉這個條件可能被扣分。</p>
+      </div>
+
+      <p class="note src">批改僅針對數學正確性；若與老師的講法不同，以老師為準。</p>
+    </section>
+
+    <!-- ══════════ 名詞 ══════════ -->
+    <section class="sec" id="glossary">
+      <div class="eyebrow">Glossary · 中英對照</div>
+      <h2>名詞中英對照表</h2>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號</code></div>
+        <div class="gl-row"><b>常微分方程</b><span>ordinary differential equation (ODE)</span><code>o.d.e.</code></div>
+        <div class="gl-row"><b>齊次</b><span>homogeneous（等號右邊為 0）</span><code>= 0</code></div>
+        <div class="gl-row"><b>常係數</b><span>constant coefficients</span><code>a, b</code></div>
+        <div class="gl-row"><b>階數</b><span>order（最高微分次數）</span><code>y″ → 二階</code></div>
+        <div class="gl-row"><b>特徵方程</b><span>characteristic equation</span><code>λ²+aλ+b=0</code></div>
+        <div class="gl-row"><b>特徵根</b><span>characteristic root / eigenvalue</span><code>λ</code></div>
+        <div class="gl-row"><b>判別式</b><span>discriminant</span><code>D = a²−4b</code></div>
+        <div class="gl-row"><b>相異實根</b><span>distinct real roots</span><code>D &gt; 0</code></div>
+        <div class="gl-row"><b>重根</b><span>repeated / double root</span><code>D = 0</code></div>
+        <div class="gl-row"><b>共軛複根</b><span>complex conjugate roots</span><code>D &lt; 0</code></div>
+        <div class="gl-row"><b>通解</b><span>general solution</span><code>含 C₁, C₂</code></div>
+        <div class="gl-row"><b>特解</b><span>particular solution</span><code>C 已定</code></div>
+        <div class="gl-row"><b>初始條件</b><span>initial condition</span><code>y(0), y′(0)</code></div>
+        <div class="gl-row"><b>線性獨立</b><span>linearly independent</span><code>—</code></div>
+        <div class="gl-row"><b>尤拉公式</b><span>Euler's formula</span><code>e^(iθ)</code></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 測驗 ══════════ -->
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow">自我檢查</div>
+      <h2>觀念小測驗</h2>
+      <p class="lede">12 題，中英對照。題幹中文、下方附英文原句，選項也中英並列。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：工程數學大二上課堂筆記與 Exercise 1–3（9/23）。互動模組為觀念示意；所有解與係數皆即時計算。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="assets/ode.js"></script>
+</body>
+</html>

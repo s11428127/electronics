@@ -50,7 +50,8 @@
 
     function resize() {
       const cssW = Math.max(1, canvas.parentElement.clientWidth);
-      const cssH = clamp(Math.round(cssW * o.ratio), o.minH, o.maxH);
+      const ratio = typeof o.ratio === 'function' ? o.ratio(cssW) : o.ratio;
+      const cssH = clamp(Math.round(cssW * ratio), o.minH, o.maxH);
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = cssW; h = cssH;
       canvas.style.height = cssH + 'px';

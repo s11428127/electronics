@@ -7,7 +7,7 @@
 
 | 章 | 英文章名 | 中文 | 狀態 |
 |---|---------|------|------|
-| 1 | Semiconductor Materials and Diodes | 半導體材料與二極體 | **PART 1 已完成** |
+| 1 | Semiconductor Materials and Diodes | 半導體材料與二極體 | **PART 1、PART 2 已完成** |
 | 2 | Diode Circuits | 二極體電路 | 待上傳 |
 | 3 | The Field-Effect Transistor | 場效電晶體 FET | 待上傳 |
 | 4 | Basic FET Amplifiers | 基本 FET 放大器 | 待上傳 |
@@ -97,6 +97,20 @@ p 型          p₀ ≅ N_a ，n₀ = nᵢ²/N_a          （需 N_a ≫ nᵢ）
 已重算並確認正確：p.37 摻雜濃度、Example 1.2(a)(b)、p.44 J_n 兩次變號、
 Example 1.3（σ = 1.73、J = 173 A/cm²、A = 5.78×10⁻⁶ cm²）、
 p.53 擴散公式正負號、Example 1.4（187 A/cm²）。
+
+## CH1 PART 1 補充推導（後續加上）
+
+應要求補上三段完整推導，不只給結論公式：
+
+1. **ni 公式裡的 T^(3/2) 與 2kT 的「2」從哪來**：
+   N_c、N_v ∝ T^(3/2) → n·p = N_cN_v·e^(−Eg/kT) → nᵢ² 就是它 →
+   開根號後 e 的指數變成 −Eg/**2**kT、T^(3/2)·T^(3/2) 開根號回到 T^(3/2)，
+   其餘常數全部打包進 B。
+2. **n₀p₀ = nᵢ² 與摻雜量無關的證明**。
+3. **n₀ = N_d/2 + √((N_d/2)² + nᵢ²) → n₀ ≈ N_d 的完整推導與成立條件**。
+
+另加兩個可調數字的互動例題：`#ex-ni`（拉 T 與 Eg 看兩項各自的貢獻，附對數長條圖）、
+`#ex-np`（拉 N_d 與 T，顯示近似 n₀ ≈ N_d 的誤差百分比與何時失效）。
 
 ## 下一份檔案預期銜接
 

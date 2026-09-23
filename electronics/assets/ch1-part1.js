@@ -868,3 +868,134 @@
     try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   })();
 })();
+
+/* ============================================================
+   CH1 PART 1 可互動例題
+   ============================================================ */
+(function () {
+  'use strict';
+  const E = window.__EE;
+  const { C, label, labelCJK, arrow, disc, clamp, lerp, sci, sup, K_EV, liveExample } = E;
+  const fix = (x, n) => (Math.abs(x) < 5e-13 ? 0 : x).toFixed(n === undefined ? 2 : n).replace('-', '\u2212');
+  const MAT = { Si: { B: 5.23e15, Eg: 1.12 }, Ge: { B: 1.66e15, Eg: 0.66 }, GaAs: { B: 2.10e14, Eg: 1.42 } };
+
+  /* ── 例題：ni 的兩項各貢獻多少 ─────────────────────────── */
+  liveExample('#ex-ni', {
+    title: '例題 · 拆開來看：T^(3/2) 和 e^(−Eg/2kT) 誰主導',
+    ratio: 0.3, minH: 138, maxH: 152,
+    givens: [
+      { id: 'exni-T', label: '溫度 T', min: 200, max: 650, step: 5, value: 300,
+        fmt: v => v + ' K（' + (v - 273.15).toFixed(0) + ' °C）' },
+      { id: 'exni-Eg', label: '能隙 Eg', min: 0.5, max: 2.0, step: 0.02, value: 1.12,
+        fmt: v => v.toFixed(2) + ' eV' + (Math.abs(v - 1.12) < .01 ? '（矽）' : Math.abs(v - 0.66) < .01 ? '（鍺）' : Math.abs(v - 1.42) < .01 ? '（GaAs）' : '') }
+    ],
+    compute: g => {
+      const T = g['exni-T'], Eg = g['exni-Eg'], B = MAT.Si.B;
+      const powT = Math.pow(T, 1.5), expo = Math.exp(-Eg / (2 * K_EV * T));
+      const ni = B * powT * expo;
+      /* 以 300K 為基準，看兩項各自放大/縮小幾倍 */
+      const powRef = Math.pow(300, 1.5), expRef = Math.exp(-Eg / (2 * K_EV * 300));
+      return { T, Eg, B, powT, expo, ni, powGain: powT / powRef, expGain: expo / expRef,
+        niRef: B * powRef * expRef };
+    },
+    question: (g, r) => '矽的 B = 5.23×10¹⁵，能隙取 <b>' + r.Eg.toFixed(2) + ' eV</b>，求溫度 <b>' + r.T +
+      ' K</b> 時的本質載子濃度 n<sub>i</sub>，並看看公式裡兩項各自貢獻多少。' +
+      '<br><span style="font-size:13px;color:var(--ink-3)">↑ 拉溫度看哪一項在主導；拉能隙可以切換成鍺(0.66)或 GaAs(1.42)。</span>',
+    steps: (g, r) => [
+      { t: 'Step 1　算 T^(3/2) 這一項。',
+        note: '這是「導帶裡有幾個位子」的貢獻，隨溫度<b>溫和</b>成長：',
+        eq: 'T^(3/2) = ' + r.T + '^1.5 = ' + sci(r.powT, 3) },
+      { t: 'Step 2　算指數項 e^(−Eg/2kT)。',
+        note: '這是「電子湊得到能量跳過去」的機率。先算指數：',
+        eq: '−Eg/(2kT) = −' + r.Eg.toFixed(2) + ' ÷ (2 × 8.617×10⁻⁵ × ' + r.T + ') = ' +
+          fix(-r.Eg / (2 * K_EV * r.T), 2) + '　⟹　e^(…) = ' + sci(r.expo, 2) },
+      { t: 'Step 3　乘起來。',
+        eq: 'nᵢ = (5.23×10¹⁵)(' + sci(r.powT, 2) + ')(' + sci(r.expo, 2) + ') = ' + sci(r.ni, 2) + ' cm' + sup(-3) },
+      { t: 'Step 4　跟 300 K 比，看誰在主導。',
+        note: '從 300 K 變到 ' + r.T + ' K 時：',
+        eq: 'T^(3/2) 項變 ' + fix(r.powGain, 2) + ' 倍　　指數項變 ' + sci(r.expGain, 2) + ' 倍',
+        after: r.T === 300 ? '<span style="color:var(--ink-3)">（現在就是基準溫度，兩項都是 1 倍。把溫度拉開就看得出差距。）</span>'
+          : '<b style="color:var(--accent)">指數項的變化量是 T^(3/2) 項的 ' +
+            sci(Math.abs(Math.log(r.expGain) / Math.log(r.powGain)) > 0 ? r.expGain / r.powGain : 1, 1) +
+            ' 倍</b> —— ' + (r.T > 300
+              ? '溫度升高時指數項壓倒性地把 nᵢ 往上推。'
+              : '溫度降低時指數項也是壓倒性地把 nᵢ 往下拉。') }
+    ],
+    answer: (g, r) => 'nᵢ(' + r.T + ' K) = ' + sci(r.ni, 2) + ' cm' + sup(-3) +
+      (r.T === 300 ? '　（與課本常用的 1.5×10¹⁰ 同數量級）'
+        : '　（300 K 時是 ' + sci(r.niRef, 2) + '，差了 ' + sci(r.ni / r.niRef, 2) + ' 倍）'),
+    /* 兩條長條：看兩項相對 300K 的變化倍率（對數刻度） */
+    draw: (ctx, w, h, g, r) => {
+      /* 名稱放在長條「上方」而不是左邊：窄版面也不會被切掉 */
+      const narrow = w < 520;
+      const padL = 14, padR = 14, y0 = 32, bh = 18, rowH = 34;
+      const x0 = padL, x1 = Math.max(x0 + 40, w - padR);
+      const lo = -12, hi = 12, stepK = narrow ? 6 : 4;
+      const X = v => lerp(x0, x1, clamp((Math.log10(Math.max(v, 1e-30)) - lo) / (hi - lo), 0, 1));
+      const zero = X(1);
+      const top = y0 - 6, bot = y0 + rowH * 2 - (rowH - bh - 12) + 2;
+      ctx.strokeStyle = C['line-soft']; ctx.lineWidth = 1;
+      for (let k = lo; k <= hi; k += stepK) {
+        const px = X(Math.pow(10, k));
+        ctx.beginPath(); ctx.moveTo(px, top); ctx.lineTo(px, bot); ctx.stroke();
+        label(ctx, clamp(px, x0 + 16, x1 - 16), bot + 15,
+          k === 0 ? '×1' : '×10' + sup(k), C['ink-3'], 9);
+      }
+      ctx.strokeStyle = C['ink-3']; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.moveTo(zero, top); ctx.lineTo(zero, bot); ctx.stroke();
+      labelCJK(ctx, x0, 13, '相對 300 K 的變化倍率（對數刻度）', C['ink-3'], 10.5, 'left');
+
+      [['T^(3/2) 項', r.powGain, C['ion-pos']], ['e^(−Eg/2kT) 項', r.expGain, C.electron]].forEach(([nm, v, col], i) => {
+        const yTop = y0 + i * rowH;
+        const px = X(v);
+        labelCJK(ctx, x0, yTop, nm + '　×' + sci(v, 1), col, 11, 'left', '600');
+        ctx.fillStyle = col;
+        ctx.fillRect(Math.min(zero, px), yTop + 8, Math.max(2, Math.abs(px - zero)), bh);
+      });
+    }
+  });
+
+  /* ── 例題：質量作用定律 + 近似何時失效 ────────────────── */
+  liveExample('#ex-np', {
+    title: '例題 · n ≈ Nd 這個近似什麼時候會壞掉',
+    givens: [
+      { id: 'exnp-logNd', label: '施體濃度 Nd', min: 8, max: 18, step: 0.25, value: 16,
+        fmt: v => '10' + sup(v % 1 ? v.toFixed(2) : v) + ' cm' + sup(-3) },
+      { id: 'exnp-T', label: '溫度 T', min: 250, max: 600, step: 10, value: 300,
+        fmt: v => v + ' K' }
+    ],
+    compute: g => {
+      const T = g['exnp-T'];
+      const ni = MAT.Si.B * Math.pow(T, 1.5) * Math.exp(-MAT.Si.Eg / (2 * K_EV * T));
+      const Nd = Math.pow(10, g['exnp-logNd']);
+      const nExact = Nd / 2 + Math.sqrt(Nd * Nd / 4 + ni * ni);
+      const pExact = ni * ni / nExact;
+      const err = Math.abs(nExact - Nd) / nExact * 100;
+      return { T, ni, Nd, nExact, pExact, err, ratio: Nd / ni };
+    },
+    question: (g, r) => '矽在 <b>T = ' + r.T + ' K</b>（此時 nᵢ = ' + sci(r.ni, 2) + ' cm' + sup(-3) +
+      '），摻入施體至 <b>N<sub>d</sub> = ' + sci(r.Nd, 2) + ' cm' + sup(-3) +
+      '</b>。用完整解算電子濃度，並檢查 n ≈ N<sub>d</sub> 這個近似準不準。' +
+      '<br><span style="font-size:13px;color:var(--ink-3)">↑ 把摻雜濃度往左拉（或把溫度拉高讓 nᵢ 變大），看近似在哪裡開始壞掉。</span>',
+    steps: (g, r) => [
+      { t: 'Step 1　先看 Nd 跟 nᵢ 差多少。',
+        eq: 'Nd / nᵢ = ' + sci(r.Nd, 2) + ' ÷ ' + sci(r.ni, 2) + ' = ' + sci(r.ratio, 2) + ' 倍' },
+      { t: 'Step 2　用完整解（不偷懶）。',
+        note: '由電中性 + 質量作用定律推出來的二次式正根：',
+        eq: 'n = Nd/2 + √((Nd/2)² + nᵢ²) = ' + sci(r.nExact, 3) + ' cm' + sup(-3) },
+      { t: 'Step 3　跟近似值比。',
+        note: '近似說 n ≈ Nd = ' + sci(r.Nd, 3) + '，實際是 ' + sci(r.nExact, 3) + '：',
+        eq: '誤差 = ' + (r.err < 0.01 ? '< 0.01' : fix(r.err, 2)) + ' %',
+        after: r.err < 1
+          ? '<b style="color:var(--ok)">✓ 誤差小於 1%，近似完全可用</b>，考試直接寫 n ≈ Nd 沒問題。'
+          : r.err < 20
+          ? '<b style="color:var(--warn)">⚠ 誤差已經到 ' + fix(r.err, 1) + '%</b>，近似開始失準，最好用完整解。'
+          : '<b style="color:var(--bad)">✗ 誤差高達 ' + fix(r.err, 1) + '%，近似完全不能用</b>。此時摻雜濃度已經接近甚至低於 nᵢ，材料的行為向本質半導體靠攏。' },
+      { t: 'Step 4　少數載子與驗算。',
+        eq: 'p = nᵢ²/n = ' + sci(r.pExact, 3) + ' cm' + sup(-3) +
+          '　⟹　n·p = ' + sci(r.nExact * r.pExact, 3) + ' ≈ nᵢ² = ' + sci(r.ni * r.ni, 3) + ' ✓' }
+    ],
+    answer: (g, r) => 'n = ' + sci(r.nExact, 3) + ' cm' + sup(-3) + '　｜　p = ' + sci(r.pExact, 3) + ' cm' + sup(-3) +
+      '　｜　近似誤差 ' + (r.err < 0.01 ? '< 0.01' : fix(r.err, 2)) + ' %'
+  });
+})();
