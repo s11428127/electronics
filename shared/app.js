@@ -154,6 +154,138 @@
   }
   function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
 
+
+  /* ---------------- 專有名詞小字典 ---------------- */
+  /* 用法：<button class="tm" data-t="摻雜">摻雜<i>doping</i></button>
+     點一下跳出白話解釋。字典由 shared/terms.js 註冊。 */
+  const DICT = {};
+  let pop = null;
+
+  function closePop() { if (pop) { pop.remove(); pop = null; } }
+
+  function openPop(btn) {
+    closePop();
+    const key = btn.dataset.t;
+    const d = DICT[key];
+    if (!d) return;
+    pop = document.createElement('div');
+    pop.className = 'term-pop';
+    pop.setAttribute('role', 'dialog');
+    pop.innerHTML =
+      '<button class="tp-close" type="button" aria-label="關閉">✕</button>' +
+      '<h5>' + (d.zh || key) + '</h5>' +
+      (d.en ? '<div class="tp-en">' + d.en + '</div>' : '') +
+      '<div class="tp-plain">' + d.plain + '</div>' +
+      (d.unit ? '<span class="tp-unit">' + d.unit + '</span>' : '') +
+      (d.why ? '<div class="tp-why"><b>為什麼要有這個詞：</b>' + d.why + '</div>' : '');
+    document.body.appendChild(pop);
+    pop.querySelector('.tp-close').addEventListener('click', closePop);
+
+    /* 用頁面座標定位（不是視窗座標），這樣捲動時彈窗會跟著名詞一起走，
+       不必在 scroll 時把它關掉 —— 手機上輕輕一滑就消失會很難用。 */
+    const r = btn.getBoundingClientRect(), pr = pop.getBoundingClientRect();
+    const margin = 12, sx = window.scrollX, sy = window.scrollY;
+    let top = r.bottom + sy + 8;
+    if (r.bottom + pr.height + margin > window.innerHeight) {
+      top = Math.max(sy + margin, r.top + sy - pr.height - 8);
+    }
+    let left = r.left + sx + r.width / 2 - pr.width / 2;
+    left = clamp(left, sx + margin, Math.max(sx + margin, sx + window.innerWidth - pr.width - margin));
+    pop.style.top = top + 'px';
+    pop.style.left = left + 'px';
+  }
+
+  function registerTerms(map) {
+    Object.assign(DICT, map);
+    wireTerms();
+  }
+  function wireTerms() {
+    $$('button.tm[data-t]').forEach(b => {
+      if (b.dataset.wired) return;
+      b.dataset.wired = '1';
+      b.type = 'button';
+      b.addEventListener('click', e => { e.stopPropagation(); openPop(b); });
+    });
+    /* 舊寫法 <span class="tm"> 也自動升級成可點的按鈕 */
+    $$('span.tm[data-t]').forEach(sp => {
+      const b = document.createElement('button');
+      b.className = 'tm'; b.type = 'button';
+      b.dataset.t = sp.dataset.t; b.innerHTML = sp.innerHTML;
+      sp.replaceWith(b);
+    });
+    $$('button.tm[data-t]').forEach(b => {
+      if (b.dataset.wired) return;
+      b.dataset.wired = '1';
+      b.addEventListener('click', e => { e.stopPropagation(); openPop(b); });
+    });
+  }
+  document.addEventListener('click', e => { if (pop && !pop.contains(e.target)) closePop(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePop(); });
+  window.addEventListener('resize', closePop);
+
+  /* ---------------- 可互動例題 ---------------- */
+  /* 已知條件做成滑桿，每一步的算式與答案即時重算。 */
+  function liveExample(sel, cfg) {
+    const host = typeof sel === 'string' ? $(sel) : sel;
+    if (!host) return;
+    const state = {};
+    cfg.givens.forEach(g => { state[g.id] = g.value; });
+
+    host.classList.add('example', 'live');
+    host.innerHTML =
+      '<div class="ex-head"><span>' + cfg.title + '</span>' +
+        '<span class="ex-live-tag">可調數字</span>' +
+        '<button class="ex-reset" type="button">↺ 回到原題</button></div>' +
+      '<div class="ex-given"></div>' +
+      (cfg.draw ? '<div class="stage-wrap"><canvas></canvas></div>' : '') +
+      '<p class="ex-q"></p><ol></ol><p class="ex-ans"></p>';
+
+    const givenBox = host.querySelector('.ex-given');
+    cfg.givens.forEach(g => {
+      const d = document.createElement('div');
+      d.className = 'ctrl';
+      d.innerHTML = '<label for="' + g.id + '">' + g.label +
+        '<output for="' + g.id + '"></output></label>' +
+        '<input type="range" id="' + g.id + '" min="' + g.min + '" max="' + g.max +
+        '" step="' + g.step + '" value="' + g.value + '">';
+      givenBox.appendChild(d);
+    });
+
+    let stage = null;
+    if (cfg.draw) {
+      stage = Stage(host.querySelector('canvas'), {
+        animate: false, ratio: cfg.ratio || 0.28, minH: cfg.minH || 130, maxH: cfg.maxH || 190,
+        draw: (ctx, w, h) => cfg.draw(ctx, w, h, state, cfg.compute(state))
+      });
+    }
+
+    function render() {
+      const r = cfg.compute(state);
+      host.querySelector('.ex-q').innerHTML = cfg.question(state, r);
+      host.querySelector('ol').innerHTML = cfg.steps(state, r).map(st =>
+        '<li><b>' + st.t + '</b>' + (st.note ? ' ' + st.note : '') +
+        (st.eq ? '<span class="d-eq">' + st.eq + '</span>' : '') +
+        (st.after ? '<div style="margin-top:6px">' + st.after + '</div>' : '') + '</li>').join('');
+      host.querySelector('.ex-ans').innerHTML = cfg.answer(state, r);
+      if (stage) stage.redraw();
+      wireTerms();
+    }
+    cfg.givens.forEach(g => {
+      bindRange(g.id, g.fmt, v => { state[g.id] = v; render(); });
+    });
+    host.querySelector('.ex-reset').addEventListener('click', () => {
+      cfg.givens.forEach(g => {
+        const el = document.getElementById(g.id);
+        el.value = g.value; el.dispatchEvent(new Event('input'));
+      });
+    });
+    render();
+    return { render: render };
+  }
+
+  document.addEventListener('DOMContentLoaded', wireTerms);
+
   window.__EE = { C, Stage, disc, electron, hole, label, labelCJK, arrow, bindRange, setText,
-    clamp, lerp, sci, sup, K_EV, TAU, MONO, BODY, REDUCED, pointerPos, $, $$ };
+    clamp, lerp, sci, sup, K_EV, TAU, MONO, BODY, REDUCED, pointerPos, $, $$,
+    registerTerms, wireTerms, liveExample };
 })();

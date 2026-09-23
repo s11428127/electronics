@@ -760,3 +760,74 @@ a.chap:hover { border-color: var(--accent); transform: translateY(-1px); }
   .crumbs a:first-child { display: none; }
   .crumbs span:first-of-type { display: none; }
 }
+
+/* ============================================================
+   專有名詞：點一下看白話解釋
+   ============================================================ */
+button.tm {
+  font: inherit; font-weight: 600; color: var(--ink);
+  background: none; border: 0; padding: 0 1px; margin: 0;
+  cursor: help; border-bottom: 1.5px dotted var(--accent);
+  text-align: inherit; line-height: inherit;
+}
+button.tm:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 3px; }
+button.tm > i {
+  font-style: normal; font-family: var(--font-mono); font-weight: 400;
+  font-size: .82em; color: var(--ink-3); margin-left: .35em;
+}
+
+.term-pop {
+  position: absolute; z-index: 90; max-width: min(340px, calc(100vw - 32px));
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,.08), 0 16px 40px -12px rgba(0,0,0,.35);
+  padding: 14px 16px; font-size: 13.5px; line-height: 1.7; color: var(--ink-2);
+}
+.term-pop h5 {
+  margin: 0 0 2px; font-family: var(--font-display); font-size: 16px;
+  font-weight: 600; color: var(--ink);
+}
+.term-pop .tp-en {
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--accent);
+  letter-spacing: .02em; margin-bottom: 9px;
+}
+.term-pop .tp-plain { color: var(--ink); }
+.term-pop .tp-why {
+  margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--line);
+  font-size: 12.5px; color: var(--ink-2);
+}
+.term-pop .tp-why b { color: var(--ink); }
+.term-pop .tp-unit {
+  display: inline-block; margin-top: 9px; font-family: var(--font-mono);
+  font-size: 11.5px; color: var(--ink-3);
+  background: var(--surface-2); padding: 2px 8px; border-radius: 999px;
+}
+.term-pop .tp-close {
+  position: absolute; top: 8px; right: 9px; border: 0; background: none;
+  color: var(--ink-3); cursor: pointer; font-size: 15px; line-height: 1; padding: 3px 5px;
+}
+.term-pop .tp-close:hover { color: var(--ink); }
+
+/* ============================================================
+   可互動例題：已知條件可以改，每一步即時重算
+   ============================================================ */
+.example.live .ex-given {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 13px 22px; padding: 14px 16px;
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  border-bottom: 1px dashed var(--line);
+}
+.example.live .ex-given .ctrl > label { color: var(--ink-3); }
+.ex-live-tag {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em;
+  padding: 2px 7px; border-radius: 999px; margin-left: 8px;
+  background: var(--accent); color: var(--surface); font-weight: 600;
+}
+:root:not([data-theme="light"]) .ex-live-tag { color: #10131c; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .ex-live-tag { color: #fff; } }
+.example.live .stage-wrap { border-bottom: 1px dashed var(--line); }
+.example.live .ex-reset {
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-3);
+  background: none; border: 0; cursor: pointer; padding: 2px 6px; margin-left: auto;
+}
+.example.live .ex-reset:hover { color: var(--accent); }
+.example .ex-head { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }

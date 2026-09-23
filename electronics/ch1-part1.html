@@ -43,10 +43,10 @@
     <div class="hero">
       <div class="eyebrow">Chapter 1 · Part 1 · 投影片 p.1–30</div>
       <h1>半導體材料與性質</h1>
-      <p class="sub">把這份講義拆成 8 個可以動手拉、點、玩的互動模組 —— 從一條共價鍵怎麼斷，到為什麼 n ≈ N<sub>d</sub>。每個模組都對應投影片上的某一頁。</p>
+      <p class="sub">把這份講義拆成 8 個可以動手拉、點、玩的互動模組 —— 從一條<button class="tm" data-t="共價鍵">共價鍵</button>怎麼斷，到為什麼 n ≈ N<sub>d</sub>。每個模組都對應投影片上的某一頁。</p>
       <div class="hero-meta">
         <span class="chip e">電子 electron ⊖</span>
-        <span class="chip h">電洞 hole ⊕</span>
+        <span class="chip h"><button class="tm" data-t="電洞">電洞</button> hole ⊕</span>
         <span class="chip">8 個互動模組</span>
         <span class="chip">10 題小測驗</span>
       </div>
@@ -60,17 +60,17 @@
 
       <h3 style="font-size:16px;margin:26px 0 4px">CH1 內部小節 —— 你這次丟的是哪一段</h3>
       <div class="outline">
-        <div class="outline-row done"><code>1.1.1</code><b>本質半導體 Intrinsic Semiconductors</b><span class="dot"></span></div>
-        <div class="outline-row done"><code>1.1.2</code><b>非本質半導體 Extrinsic（N 型起頭，P 型待續）</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>1.1.1</code><b><button class="tm" data-t="本質半導體">本質半導體</button> Intrinsic Semiconductors</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>1.1.2</code><b>非<button class="tm" data-t="本質半導體">本質半導體</button> Extrinsic（N 型起頭，P 型待續）</b><span class="dot"></span></div>
         <div class="outline-row"><code>1.1.3</code><b>漂移電流與擴散電流 Drift &amp; Diffusion</b><span class="dot"></span></div>
-        <div class="outline-row"><code>1.1.4</code><b>過剩載子 Excess Carriers</b><span class="dot"></span></div>
+        <div class="outline-row"><code>1.1.4</code><b>過剩<button class="tm" data-t="載子">載子</button> Excess Carriers</b><span class="dot"></span></div>
         <div class="outline-row"><code>1.2</code><b>pn 接面 The pn Junction</b><span class="dot"></span></div>
         <div class="outline-row"><code>1.3</code><b>二極體電路：直流分析與模型</b><span class="dot"></span></div>
         <div class="outline-row"><code>1.4</code><b>二極體電路：交流等效電路</b><span class="dot"></span></div>
         <div class="outline-row"><code>1.5</code><b>其他二極體（蕭特基、齊納…）</b><span class="dot"></span></div>
         <div class="outline-row"><code>1.6</code><b>設計應用：二極體溫度計</b><span class="dot"></span></div>
       </div>
-      <p class="note"><b>這次涵蓋到哪：</b>投影片 p.1–30，止於 1.1.2 的 N 型半導體開頭（施體雜質）。P 型（受體 / 硼）、漂移與擴散電流、過剩載子都還沒出現 —— 下一份檔案接得上。</p>
+      <p class="note"><b>這次涵蓋到哪：</b>投影片 p.1–30，止於 1.1.2 的 N 型半導體開頭（<button class="tm" data-t="施體">施體</button>雜質）。P 型（受體 / 硼）、漂移與擴散電流、過剩<button class="tm" data-t="載子">載子</button>都還沒出現 —— 下一份檔案接得上。</p>
 
       <h3 style="font-size:16px;margin:30px 0 4px">全書 16 章</h3>
       <div class="map">
@@ -131,8 +131,8 @@
     <!-- ══════════ 02 原子 ══════════ -->
     <section class="sec" id="atom">
       <div class="eyebrow">02 · 投影片 p.4, 11–15 · 原子結構</div>
-      <h2>原子殼層、價電子與族數</h2>
-      <p class="lede">每層最多容納 2n² 個電子，<strong>最外層</strong>那一圈就是價電子 —— 它決定化學性質，也決定這顆原子在半導體裡扮演什麼角色。</p>
+      <h2>原子殼層、<button class="tm" data-t="價電子">價電子</button>與族數</h2>
+      <p class="lede">每層最多容納 2n² 個電子，<strong>最外層</strong>那一圈就是<button class="tm" data-t="價電子">價電子</button> —— 它決定化學性質，也決定這顆原子在半導體裡扮演什麼角色。</p>
 
       <div class="bench">
         <div class="bench-head"><h3>原子殼層建構器</h3><span class="spacer"></span><span class="tag">Z = 1 … 20</span></div>
@@ -170,7 +170,7 @@
     <!-- ══════════ 03 化學鍵 ══════════ -->
     <section class="sec" id="bond">
       <div class="eyebrow">03 · 投影片 p.16–19 · 八隅體規則</div>
-      <h2>離子鍵與共價鍵</h2>
+      <h2>離子鍵與<button class="tm" data-t="共價鍵">共價鍵</button></h2>
       <p class="lede">原子想湊滿八隅體（octet）只有兩條路：<strong>得失電子</strong>變成離子互相吸引，或是<strong>共用電子</strong>。矽晶體走的是第二條。</p>
 
       <div class="bench">
@@ -187,7 +187,7 @@
             <div id="bond-desc" style="font-size:13.5px;color:var(--ink-2);line-height:1.65"></div></div>
         </div>
       </div>
-      <p class="note key">離子<b>不具傳導性</b>；能幫助傳導的是自由電子與電洞。這個區別在講到 N 型半導體的 P⁺ 離子時會再出現一次。</p>
+      <p class="note key">離子<b>不具傳導性</b>；能幫助傳導的是自由電子與<button class="tm" data-t="電洞">電洞</button>。這個區別在講到 N 型半導體的 P⁺ 離子時會再出現一次。</p>
     </section>
 
     <!-- ══════════ 04 晶格 ══════════ -->
@@ -219,8 +219,8 @@
     <!-- ══════════ 05 能帶 ══════════ -->
     <section class="sec" id="band">
       <div class="eyebrow">05 · 投影片 p.20–21 · Energy Band</div>
-      <h2>能帶與禁止能隙</h2>
-      <p class="lede">價電子掙脫共價鍵，等於從<strong>價帶</strong>跳到<strong>導帶</strong>，中間那段電子不得存在的區間就是禁止能隙 E<sub>g</sub> = E<sub>c</sub> − E<sub>v</sub>。能隙多大，就決定了這塊材料是導體、半導體還是絕緣體。</p>
+      <h2>能帶與禁止<button class="tm" data-t="能隙">能隙</button></h2>
+      <p class="lede">價電子掙脫共價鍵，等於從<strong>價帶</strong>跳到<strong>導帶</strong>，中間那段電子不得存在的區間就是禁止<button class="tm" data-t="能隙">能隙</button> E<sub>g</sub> = E<sub>c</sub> − E<sub>v</sub>。能隙多大，就決定了這塊材料是導體、半導體還是絕緣體。</p>
 
       <div class="bench">
         <div class="bench-head"><h3>能帶圖</h3>
@@ -273,8 +273,8 @@
     <!-- ══════════ 07 ni ══════════ -->
     <section class="sec" id="ni">
       <div class="eyebrow">07 · 投影片 p.25–26 · 定量分析</div>
-      <h2>本質載子濃度 n<sub>i</sub>(T)</h2>
-      <p class="lede">這條式子是整章第一個要背的。它告訴你兩件事：<strong>同一材料</strong>下 n<sub>i</sub> 對溫度極度敏感；<strong>不同材料</strong>間則由能隙 E<sub>g</sub> 拉開數個數量級的差距。</p>
+      <h2><button class="tm" data-t="本質載子濃度">本質載子濃度</button> n<sub>i</sub>(T)</h2>
+      <p class="lede">這條式子是整章第一個要背的。它告訴你兩件事：<strong>同一材料</strong>下 n<sub>i</sub> 對溫度極度敏感；<strong>不同材料</strong>間則由能隙 E<sub>g</sub> 拉開數個<button class="tm" data-t="數量級">數量級</button>的差距。</p>
       <div class="eq">n<em>i</em> = B · T<sup>3/2</sup> · exp( − E<em>g</em> / 2kT )　　k = 8.617×10⁻⁵ eV/K</div>
 
       <div class="bench">
@@ -299,18 +299,18 @@
           <div><dt>相對 Si@300K</dt><dd id="ni-cmp" style="font-size:14px">—</dd></div>
         </dl>
       </div>
-      <p class="note">公式的物理意義：<b>B 與 Eg</b> 是在比較「不同材料」；<b>T</b> 是在比較「同一材料的不同溫度」。K = °C + 273.15，所以 300 K ≈ 26.85 °C ≈ 室溫。課本對矽在 300 K 常用的近似值是 1.5×10¹⁰ cm⁻³；用表 1.3 的 B 直接代入會得到同數量級（約 10¹⁰）的結果。</p>
+      <p class="note">公式的物理意義：<b>B 與 Eg</b> 是在比較「不同材料」；<b>T</b> 是在比較「同一材料的不同溫度」。K = °C + 273.15，所以 300 K ≈ 26.85 °C ≈ 室溫。課本對矽在 300 K 常用的近似值是 1.5×10¹⁰ cm⁻³；用表 1.3 的 B 直接代入會得到同<button class="tm" data-t="數量級">數量級</button>（約 10¹⁰）的結果。</p>
       <p class="note key">矽原子密度約 5×10²² cm⁻³，而本質載子只有 10¹⁰ cm⁻³ —— 差了 12 個數量級。<b>這就是本質半導體導電度不高的原因。</b></p>
     </section>
 
     <!-- ══════════ 08 摻雜 ══════════ -->
     <section class="sec" id="dope">
       <div class="eyebrow">08 · 投影片 p.27–30 · Extrinsic (N-Type)</div>
-      <h2>N 型摻雜：施體雜質</h2>
+      <h2>N 型<button class="tm" data-t="摻雜">摻雜</button>：<button class="tm" data-t="施體">施體</button>雜質</h2>
       <p class="lede">在矽裡摻入 5 價的磷（P）。四個價電子去補共價鍵，<strong>第五個沒地方去</strong>，輕輕一激發就跑到導帶成為自由電子；磷本身變成釘在晶格上的正離子 P⁺ —— 不動，也不導電。</p>
 
       <div class="bench">
-        <div class="bench-head"><h3>摻雜晶格（點一下 Si 換成 P）</h3><span class="spacer"></span><span class="tag">可點選</span></div>
+        <div class="bench-head"><h3><button class="tm" data-t="摻雜">摻雜</button>晶格（點一下 Si 換成 P）</h3><span class="spacer"></span><span class="tag">可點選</span></div>
         <div class="stage-wrap"><canvas id="cv-dope" aria-label="可點選的矽晶格，點擊後換成磷原子"></canvas></div>
         <div class="controls">
           <div class="ctrl"><span class="lab">操作</span>
@@ -322,7 +322,7 @@
 
       <div class="terms">
         <div><b>施體 Donor</b><span>5A 族（P、As…）→ 提供電子 → n 型</span></div>
-        <div><b>多數載子</b><span>n 型中為電子（帶負電，故稱 N-type）</span></div>
+        <div><b><button class="tm" data-t="多數載子">多數載子</button></b><span>n 型中為電子（帶負電，故稱 N-type）</span></div>
         <div><b>P⁺ 離子</b><span>固定不動、不具傳導性，與電洞不同</span></div>
       </div>
 
@@ -338,13 +338,13 @@
         <dl class="readout">
           <div><dt>Nd 施體濃度</dt><dd id="ma-nd" style="font-size:14px">—</dd></div>
           <div><dt>ni 本質濃度</dt><dd id="ma-ni" style="font-size:14px">—</dd></div>
-          <div><dt>n 多數載子</dt><dd id="ma-n" class="e" style="font-size:14px">—</dd></div>
+          <div><dt>n <button class="tm" data-t="多數載子">多數載子</button></dt><dd id="ma-n" class="e" style="font-size:14px">—</dd></div>
           <div><dt>p 少數載子</dt><dd id="ma-p" class="h" style="font-size:14px">—</dd></div>
         </dl>
         <div class="msg" id="ma-concl"></div>
       </div>
-      <p class="note key">質量作用定律 <b>n·p = n<sub>i</sub>²</b> 在熱平衡下恆成立。摻雜把電子拉高，電洞就被壓下去 —— 兩者乘積不變。這回答了投影片 p.29 那個問題：n 之所以「差不多等於」N<sub>d</sub> 而非「恰好等於」，是因為熱擾動仍貢獻了極少量的電子－電洞對。</p>
-      <p class="note">摻雜比例一般約 1 : 10⁸（每 10⁸ 個矽原子摻一個），而且 4 價摻 5 價，兩個電中性物質加在一起仍為電中性。每摻一個 P 就多一個自由電子 —— <b>摻雜可以大幅提高導電度</b>。</p>
+      <p class="note key">質量作用定律 <b>n·p = n<sub>i</sub>²</b> 在<button class="tm" data-t="熱平衡">熱平衡</button>下恆成立。摻雜把電子拉高，電洞就被壓下去 —— 兩者乘積不變。這回答了投影片 p.29 那個問題：n 之所以「差不多等於」N<sub>d</sub> 而非「恰好等於」，是因為熱擾動仍貢獻了極少量的電子－電洞對。</p>
+      <p class="note">摻雜比例一般約 1 : 10⁸（每 10⁸ 個矽原子摻一個），而且 4 價摻 5 價，兩個<button class="tm" data-t="電中性">電中性</button>物質加在一起仍為<button class="tm" data-t="電中性">電中性</button>。每摻一個 P 就多一個自由電子 —— <b>摻雜可以大幅提高導電度</b>。</p>
       <p class="note src">下一份講義接的是 P 型（受體 / 3 價硼 B）、漂移與擴散電流。</p>
     </section>
 
@@ -363,6 +363,7 @@
   </main>
 </div>
 <script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
 <script src="assets/ch1-part1.js"></script>
 </body>
 </html>

@@ -43,7 +43,7 @@
     <div class="hero">
       <div class="eyebrow">Chapter 1 · Part 2 · 投影片 p.31–55</div>
       <h1>P 型半導體與載子輸運</h1>
-      <p class="sub">PART 1 停在 N 型摻雜。這一段先把 <strong>P 型</strong>補完，然後進入整章真正的重頭戲：<strong>載子到底怎麼動、怎麼形成電流</strong>。答案只有兩個機制 —— 被電場推的<strong>漂移</strong>，和被濃度差推的<strong>擴散</strong>。</p>
+      <p class="sub">PART 1 停在 N 型<button class="tm" data-t="摻雜">摻雜</button>。這一段先把 <strong>P 型</strong>補完，然後進入整章真正的重頭戲：<strong>載子到底怎麼動、怎麼形成電流</strong>。答案只有兩個機制 —— 被電場推的<strong>漂移</strong>，和被濃度差推的<strong>擴散</strong>。</p>
       <div class="hero-meta">
         <span class="chip e">電子 electron ⊖</span>
         <span class="chip h">電洞 hole ⊕</span>
@@ -56,7 +56,7 @@
     <section class="sec" id="map">
       <div class="eyebrow">Big picture</div>
       <h2>這一段在講什麼</h2>
-      <p class="lede">用一句話串起來：<strong>摻雜決定有多少載子（濃度），電場和濃度梯度決定這些載子怎麼動（電流）</strong>。</p>
+      <p class="lede">用一句話串起來：<strong><button class="tm" data-t="摻雜">摻雜</button>決定有多少載子（濃度），電場和<button class="tm" data-t="濃度梯度">濃度梯度</button>決定這些載子怎麼動（電流）</strong>。</p>
       <div class="derive">
         <h4>四步驟骨架</h4>
         <ol>
@@ -65,16 +65,16 @@
             <div class="why"><b>1.1.2</b> PART 1 講完 n 型，這段補 p 型。兩者對稱。</div>
           </li>
           <li>
-            <span class="d-eq">n₀ · p₀ = nᵢ²　⟹　多數載子 ≈ 摻雜濃度，少數載子 = nᵢ²/摻雜濃度</span>
+            <span class="d-eq">n₀ · p₀ = nᵢ²　⟹　<button class="tm" data-t="多數載子">多數載子</button> ≈ 摻雜濃度，<button class="tm" data-t="少數載子">少數載子</button> = nᵢ²/摻雜濃度</span>
             <div class="why"><b>1.1.2 定量</b> 知道摻多少，就能算出兩種載子各有多少。</div>
           </li>
           <li>
             <span class="d-eq">J<sub>drift</sub> = e(n·μn + p·μp)E = σE</span>
-            <div class="why"><b>1.1.3</b> 加了電場，載子被推著跑 → 漂移電流。整理出來就是歐姆定律的微觀版。</div>
+            <div class="why"><b>1.1.3</b> 加了電場，載子被推著跑 → <button class="tm" data-t="漂移電流">漂移電流</button>。整理出來就是歐姆定律的微觀版。</div>
           </li>
           <li>
             <span class="d-eq hi">J<sub>diff</sub> = e·Dn·(dn/dx) − e·Dp·(dp/dx)</span>
-            <div class="why"><b>1.1.3</b> 就算沒有電場，只要濃度不均勻，載子也會自己跑 → 擴散電流。這是下一章 pn 接面的關鍵。</div>
+            <div class="why"><b>1.1.3</b> 就算沒有電場，只要濃度不均勻，載子也會自己跑 → <button class="tm" data-t="擴散電流">擴散電流</button>。這是下一章 pn 接面的關鍵。</div>
           </li>
         </ol>
       </div>
@@ -84,13 +84,13 @@
     <!-- ══════════ 01 P型 ══════════ -->
     <section class="sec" id="ptype">
       <div class="eyebrow">01 · 投影片 p.31–32 · Extrinsic (P-Type)</div>
-      <h2>P 型半導體：受體摻雜</h2>
-      <p class="lede">在矽裡摻入 3 價的硼（B）。硼只有 3 個價電子，要跟 4 個鄰居形成共價鍵<strong>就是少一個</strong>。鄰近矽的價電子跑來填補，原本那個位置就變成<span class="tm">電洞<i>hole</i></span> —— 硼因此被稱為<span class="tm">受體<i>acceptor</i></span>：它「接受」電子。</p>
+      <h2>P 型半導體：<button class="tm" data-t="受體">受體</button>摻雜</h2>
+      <p class="lede">在矽裡摻入 3 價的硼（B）。硼只有 3 個價電子，要跟 4 個鄰居形成共價鍵<strong>就是少一個</strong>。鄰近矽的價電子跑來填補，原本那個位置就變成<span class="tm">電洞<i>hole</i></span> —— 硼因此被稱為<span class="tm"><button class="tm" data-t="受體">受體</button><i>acceptor</i></span>：它「接受」電子。</p>
 
       <div class="bench">
         <div class="bench-head"><h3>N 型 / P 型 摻雜對照（點 Si 摻雜）</h3>
           <div class="btn-row">
-            <button class="btn" type="button" data-np="n">摻 P（5 價・施體）</button>
+            <button class="btn" type="button" data-np="n">摻 P（5 價・<button class="tm" data-t="施體">施體</button>）</button>
             <button class="btn" type="button" data-np="p">摻 B（3 價・受體）</button>
             <button class="btn" type="button" id="np-clear">還原純矽</button>
           </div></div>
@@ -100,8 +100,8 @@
           <div><dt>價數 / 族</dt><dd id="np-val" style="font-size:14px">—</dd></div>
           <div><dt>角色</dt><dd id="np-role" style="font-size:14px">—</dd></div>
           <div><dt>留下的離子</dt><dd id="np-ion" style="font-size:13px">—</dd></div>
-          <div><dt>多數載子</dt><dd id="np-major" style="font-size:14px">—</dd></div>
-          <div><dt>少數載子</dt><dd id="np-minor" style="font-size:14px">—</dd></div>
+          <div><dt><button class="tm" data-t="多數載子">多數載子</button></dt><dd id="np-major" style="font-size:14px">—</dd></div>
+          <div><dt><button class="tm" data-t="少數載子">少數載子</button></dt><dd id="np-minor" style="font-size:14px">—</dd></div>
           <div><dt>已摻雜</dt><dd id="np-cnt">—</dd></div>
         </dl>
         <div class="msg" id="np-why"></div>
@@ -130,12 +130,12 @@
         </ol>
       </div>
 
-      <p class="note key">名稱由來：p 型的 p 是 <b>positive</b>，因為多數載子電洞帶<b>正</b>電；n 型的 n 是 <b>negative</b>，多數載子電子帶<b>負</b>電。<b>不是指材料整體帶電</b> —— 兩者都是電中性的。</p>
+      <p class="note key">名稱由來：p 型的 p 是 <b>positive</b>，因為多數載子電洞帶<b>正</b>電；n 型的 n 是 <b>negative</b>，多數載子電子帶<b>負</b>電。<b>不是指材料整體帶電</b> —— 兩者都是<button class="tm" data-t="電中性">電中性</button>的。</p>
 
       <div class="pitfall">
         <h4>最常被搞混的三件事</h4>
         <ul>
-          <li><span class="x">✗</span> 「p 型半導體帶正電」。<span class="o">✓</span> <b>p 型是電中性的。</b>4 價的矽加 3 價的硼，兩個電中性物質加起來還是電中性。每個電洞（正）都有一個 B⁻ 離子（負）平衡。</li>
+          <li><span class="x">✗</span> 「p 型半導體帶正電」。<span class="o">✓</span> <b>p 型是<button class="tm" data-t="電中性">電中性</button>的。</b>4 價的矽加 3 價的硼，兩個電中性物質加起來還是電中性。每個電洞（正）都有一個 B⁻ 離子（負）平衡。</li>
           <li><span class="x">✗</span> 「B⁻ 離子帶負電，所以它會導負電流」。<span class="o">✓</span> <b>離子不能動，不導電。</b>導電的是電洞。PART 1 講離子鍵時就強調過這點。</li>
           <li><span class="x">✗</span> 「p 型裡沒有電子」。<span class="o">✓</span> 常溫下熱擾動仍會產生電子－電洞對，所以 p 型裡<b>還是有電子</b>，只是數量極少，稱為<b>少數載子</b>。</li>
         </ul>
@@ -149,7 +149,7 @@
       <div class="glossary">
         <div class="gl-row" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)"><b>項目</b><span>n 型 n-type</span><span>p 型 p-type</span></div>
         <div class="gl-row" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)"><b>摻雜 Doping</b><span>5 價・第 V 族（P、As）</span><span>3 價・第 III 族（B）</span></div>
-        <div class="gl-row" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)"><b>雜質角色</b><span>施體 donor（給電子）</span><span>受體 acceptor（收電子）</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)"><b>雜質角色</b><span><button class="tm" data-t="施體">施體</button> donor（給電子）</span><span>受體 acceptor（收電子）</span></div>
         <div class="gl-row" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)"><b>多數載子 Majority</b><span>電子 electrons</span><span>電洞 holes</span></div>
         <div class="gl-row" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)"><b>少數載子 Minority</b><span>電洞 holes</span><span>電子 electrons</span></div>
         <div class="gl-row" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)"><b>留下的離子</b><span>P⁺ 正離子（不動、不導電）</span><span>B⁻ 負離子（不動、不導電）</span></div>
@@ -158,14 +158,14 @@
       </div>
 
       <div class="derive">
-        <h4>觀念釐清：元素半導體 vs 化合物半導體（跟摻雜無關）</h4>
+        <h4>觀念釐清：<button class="tm" data-t="元素半導體">元素半導體</button> vs <button class="tm" data-t="化合物半導體">化合物半導體</button>（跟摻雜無關）</h4>
         <ol>
           <li>
-            <span class="d-eq">元素半導體 elemental：由<b>單一元素</b>組成，例如 Si、Ge</span>
+            <span class="d-eq"><button class="tm" data-t="元素半導體">元素半導體</button> elemental：由<b>單一元素</b>組成，例如 Si、Ge</span>
             <div class="why">4 價元素，週期表第 IV 族。</div>
           </li>
           <li>
-            <span class="d-eq">化合物半導體 compound：由<b>兩種以上元素化合</b>而成，例如 GaAs、InP</span>
+            <span class="d-eq"><button class="tm" data-t="化合物半導體">化合物半導體</button> compound：由<b>兩種以上元素化合</b>而成，例如 GaAs、InP</span>
             <div class="why">通常是 III 族 + V 族。<b>它本身就是那個材料</b>，不是摻出來的。</div>
           </li>
           <li>
@@ -175,33 +175,22 @@
         </ol>
       </div>
 
-      <div class="example">
-        <div class="ex-head">例題 · 摻雜濃度到底有多稀</div>
-        <p class="ex-q">一般摻雜比例為 <b>1 : 10⁸</b>，矽原子濃度為 <b>5×10²² cm⁻³</b>。求摻雜濃度，並與本質載子濃度 nᵢ = 1.5×10¹⁰ cm⁻³ 比較。</p>
-        <ol>
-          <li><b>Step 1　算摻雜濃度。</b>
-            <span class="d-eq">N = 5×10²² × 10⁻⁸ = 5×10¹⁴ cm⁻³</span></li>
-          <li><b>Step 2　跟本質濃度比。</b>
-            <span class="d-eq">5×10¹⁴ ÷ 1.5×10¹⁰ ≈ 3.3×10⁴ 倍</span></li>
-          <li><b>Step 3　下結論。</b>摻雜濃度比本質濃度大了<b>四個數量級以上</b>，所以摻雜矽的導電性完全由<b>摻雜</b>決定，本質載子 nᵢ 的貢獻可以忽略。</li>
-        </ol>
-        <p class="ex-ans">N = 5×10¹⁴ cm⁻³ ≫ nᵢ = 1.5×10¹⁰ cm⁻³</p>
-      </div>
+      <div id="ex-dilute"></div>
       <p class="note">有趣的是：即使只摻了「一億分之一」，載子濃度還是暴增了三萬倍。這就是為什麼半導體製程對<b>純度</b>要求那麼變態 —— 一點點雜質就足以改變整塊材料的電性。</p>
     </section>
 
     <!-- ══════════ 03 質量作用定律 ══════════ -->
     <section class="sec" id="mass">
       <div class="eyebrow">03 · 投影片 p.40–41 · 定量分析</div>
-      <h2>質量作用定律：算出兩種載子各有多少</h2>
+      <h2><button class="tm" data-t="質量作用定律">質量作用定律</button>：算出兩種載子各有多少</h2>
       <p class="lede">摻雜之後，電子和電洞各是多少？答案出奇地簡單，而且兩者是<strong>蹺蹺板關係</strong>：一個上去，另一個一定下來。</p>
-      <div class="eq">n<em>o</em> · p<em>o</em> = n<em>i</em>²　（熱平衡下恆成立，與摻雜量無關）</div>
+      <div class="eq">n<em>o</em> · p<em>o</em> = n<em>i</em>²　（<button class="tm" data-t="熱平衡">熱平衡</button>下恆成立，與摻雜量無關）</div>
 
       <div class="derive">
-        <h4>從質量作用定律推出兩條實用公式</h4>
+        <h4>從<button class="tm" data-t="質量作用定律">質量作用定律</button>推出兩條實用公式</h4>
         <ol>
           <li>
-            <p><b>前提：「熱平衡」。</b>意思是溫度穩定、沒有外加能量（沒有光照、沒有外加電場），
+            <p><b>前提：「<button class="tm" data-t="熱平衡">熱平衡</button>」。</b>意思是溫度穩定、沒有外加能量（沒有光照、沒有外加電場），
             載子的<b>產生率 = 復合率</b>。這個條件下乘積才是定值。</p>
           </li>
           <li>
@@ -246,24 +235,7 @@
         <div class="msg" id="mass-approx"></div>
       </div>
 
-      <div class="example">
-        <div class="ex-head">課本 Example 1.2 · 兩小題一起算</div>
-        <p class="ex-q">矽在 <b>T = 300 K</b>，nᵢ = 1.5×10¹⁰ cm⁻³。<br>
-          <b>(a)</b> 摻磷（phosphorus），N<sub>d</sub> = 10¹⁶ cm⁻³。<br>
-          <b>(b)</b> 摻硼（boron），N<sub>a</sub> = 5×10¹⁶ cm⁻³。<br>求兩者的熱平衡電子與電洞濃度。</p>
-        <ol>
-          <li><b>(a) Step 1　確認可以用近似。</b>N<sub>d</sub> = 10¹⁶ ≫ nᵢ = 1.5×10¹⁰ ✓（差六個數量級）</li>
-          <li><b>(a) Step 2　多數載子 ≈ 摻雜濃度。</b>
-            <span class="d-eq">n₀ ≅ N<sub>d</sub> = 10¹⁶ cm⁻³　（電子是多數載子）</span></li>
-          <li><b>(a) Step 3　少數載子用質量作用定律。</b>
-            <span class="d-eq">p₀ = nᵢ²/N<sub>d</sub> = (1.5×10¹⁰)² / 10¹⁶ = 2.25×10²⁰ / 10¹⁶ = 2.25×10⁴ cm⁻³</span></li>
-          <li><b>(b) Step 1　p 型，角色對調。</b>
-            <span class="d-eq">p₀ ≅ N<sub>a</sub> = 5×10¹⁶ cm⁻³　（電洞是多數載子）</span></li>
-          <li><b>(b) Step 2　少數載子。</b>
-            <span class="d-eq">n₀ = nᵢ²/N<sub>a</sub> = 2.25×10²⁰ / (5×10¹⁶) = 4.5×10³ cm⁻³</span></li>
-        </ol>
-        <p class="ex-ans">(a) n₀ = 10¹⁶、p₀ = 2.25×10⁴ cm⁻³　｜　(b) p₀ = 5×10¹⁶、n₀ = 4.5×10³ cm⁻³</p>
-      </div>
+      <div id="ex-conc"></div>
 
       <div class="howto">
         <h4>看到載子濃度題目</h4>
@@ -279,7 +251,7 @@
     <!-- ══════════ 04 漂移 ══════════ -->
     <section class="sec" id="drift">
       <div class="eyebrow">04 · 投影片 p.42–45 · Drift Current</div>
-      <h2>漂移電流：電場推著載子跑</h2>
+      <h2><button class="tm" data-t="漂移電流">漂移電流</button>：電場推著載子跑</h2>
       <p class="lede">載子會動，只有兩個原因：<strong>電場推</strong>（<span class="tm">漂移<i>drift</i></span>）或<strong>濃度差擠</strong>（<span class="tm">擴散<i>diffusion</i></span>）。這一節先講漂移 —— 而且有一個超容易搞混的點：<strong>電子和電洞跑的方向相反，電流方向卻相同</strong>。</p>
       <div class="eq">v<em>dn</em> = −μ<em>n</em>E　⟹　J<em>n</em> = e·n·μ<em>n</em>·E　　　v<em>dp</em> = +μ<em>p</em>E　⟹　J<em>p</em> = e·p·μ<em>p</em>·E</div>
 
@@ -288,12 +260,12 @@
         <ol>
           <li>
             <span class="d-eq">v<sub>dn</sub> = −μ<sub>n</sub>E</span>
-            <div class="why">電子帶負電，受力 F = −qE 與電場<b>反向</b>，所以漂移速度前面有負號。
-              μ<sub>n</sub> 叫<b>電子移動率（mobility）</b>，意思是「單位電場下能達到的漂移速度」，矽的 μ<sub>n</sub> ≈ 1350 cm²/(V·s)。</div>
+            <div class="why">電子帶負電，受力 F = −qE 與電場<b>反向</b>，所以<button class="tm" data-t="漂移速度">漂移速度</button>前面有負號。
+              μ<sub>n</sub> 叫<b>電子移動率（mobility）</b>，意思是「單位電場下能達到的<button class="tm" data-t="漂移速度">漂移速度</button>」，矽的 μ<sub>n</sub> ≈ 1350 cm²/(V·s)。</div>
           </li>
           <li>
             <span class="d-eq">J<sub>n</sub> = (電荷) × (濃度) × (速度) = (−e) · n · v<sub>dn</sub></span>
-            <p>電流密度 = 電荷密度 × 速度。電子的電荷是 <b>−e</b>，這是第二個負號。</p>
+            <p><button class="tm" data-t="電流密度">電流密度</button> = 電荷密度 × 速度。電子的電荷是 <b>−e</b>，這是第二個負號。</p>
           </li>
           <li>
             <span class="d-eq">J<sub>n</sub> = −e·n·(−μ<sub>n</sub>E)</span>
@@ -334,8 +306,8 @@
     <!-- ══════════ 05 導電度 ══════════ -->
     <section class="sec" id="sigma">
       <div class="eyebrow">05 · 投影片 p.49–51 · Conductivity</div>
-      <h2>總漂移電流、導電度與電阻率</h2>
-      <p class="lede">兩種載子的電流都與 E 同向，所以直接相加。整理之後會跑出一個<strong>只跟材料有關的係數</strong> —— 那就是<span class="tm">導電度<i>conductivity</i></span> σ。</p>
+      <h2>總漂移電流、<button class="tm" data-t="導電度">導電度</button>與<button class="tm" data-t="電阻率">電阻率</button></h2>
+      <p class="lede">兩種載子的電流都與 E 同向，所以直接相加。整理之後會跑出一個<strong>只跟材料有關的係數</strong> —— 那就是<span class="tm"><button class="tm" data-t="導電度">導電度</button><i>conductivity</i></span> σ。</p>
       <div class="eq">J = J<em>n</em> + J<em>p</em> = e(n·μ<em>n</em> + p·μ<em>p</em>)E ≡ σE = (1/ρ)E</div>
 
       <div class="derive">
@@ -351,7 +323,7 @@
           </li>
           <li>
             <span class="d-eq hi">σ ≡ e(n·μ<sub>n</sub> + p·μ<sub>p</sub>)　單位 (Ω·cm)⁻¹　⟹　J = σE</span>
-            <div class="why">給它一個名字叫導電度。倒數 <b>ρ = 1/σ</b> 叫<b>電阻率（resistivity）</b>，單位 Ω·cm。</div>
+            <div class="why">給它一個名字叫導電度。倒數 <b>ρ = 1/σ</b> 叫<b><button class="tm" data-t="電阻率">電阻率</button>（resistivity）</b>，單位 Ω·cm。</div>
           </li>
           <li>
             <span class="d-eq">J = (1/ρ)E　⟹　I/A = (1/ρ)(V/L)　⟹　V = I·(ρL/A) = I·R</span>
@@ -387,36 +359,18 @@
           <div><dt>電洞 p</dt><dd id="sig-p" class="h" style="font-size:13px">—</dd></div>
           <div><dt>導電度 σ</dt><dd id="sig-sigma" style="color:var(--ok);font-size:14px">—</dd></div>
           <div><dt>電阻率 ρ</dt><dd id="sig-rho" style="font-size:14px">—</dd></div>
-          <div><dt>電流密度 J</dt><dd id="sig-J" style="color:var(--ok);font-size:15px">—</dd></div>
+          <div><dt><button class="tm" data-t="電流密度">電流密度</button> J</dt><dd id="sig-J" style="color:var(--ok);font-size:15px">—</dd></div>
         </dl>
         <div class="msg" id="sig-area"></div>
       </div>
 
-      <div class="example">
-        <div class="ex-head">課本 Example 1.3 · 漂移電流密度</div>
-        <p class="ex-q">矽在 300 K，摻砷（arsenic）至 <b>N<sub>d</sub> = 8×10¹⁵ cm⁻³</b>。已知 μ<sub>n</sub> = 1350 cm²/V·s、μ<sub>p</sub> = 480 cm²/V·s，外加電場 <b>E = 100 V/cm</b>。求漂移電流密度。</p>
-        <ol>
-          <li><b>Step 1　算兩種載子濃度。</b>砷是 5 價 → n 型。
-            <span class="d-eq">n ≅ N<sub>d</sub> = 8×10¹⁵ cm⁻³<br>p = nᵢ²/N<sub>d</sub> = 2.25×10²⁰ / 8×10¹⁵ = 2.81×10⁴ cm⁻³</span></li>
-          <li><b>Step 2　比較兩項誰主導。</b>n 比 p 大了<b>11 個數量級</b>，所以
-            <span class="d-eq">σ = e·μ<sub>n</sub>·n + e·μ<sub>p</sub>·p ≅ e·μ<sub>n</sub>·n</span>
-            電洞項直接忽略（這就是上面那個互動模組的比例條在顯示的事）。</li>
-          <li><b>Step 3　代數字。</b>
-            <span class="d-eq">σ = (1.6×10⁻¹⁹)(1350)(8×10¹⁵) = 1.73 (Ω·cm)⁻¹</span></li>
-          <li><b>Step 4　算電流密度。</b>
-            <span class="d-eq">J = σE = (1.73)(100) = 173 A/cm²</span></li>
-          <li><b>Step 5　換算成實際電流。</b>實際元件截面積很小：若只流 1 mA，
-            <span class="d-eq">A = I/J = 10⁻³ / 173 = 5.78×10⁻⁶ cm²</span>
-            所以雖然電流密度高達好幾百 A/cm²，實際電流卻只有幾 mA。</li>
-        </ol>
-        <p class="ex-ans">σ = 1.73 (Ω·cm)⁻¹，J = 173 A/cm²</p>
-      </div>
+      <div id="ex-drift"></div>
     </section>
 
     <!-- ══════════ 06 擴散 ══════════ -->
     <section class="sec" id="diff">
       <div class="eyebrow">06 · 投影片 p.52–54 · Diffusion Current</div>
-      <h2>擴散電流：濃度不均也會產生電流</h2>
+      <h2><button class="tm" data-t="擴散電流">擴散電流</button>：濃度不均也會產生電流</h2>
       <p class="lede">就算<strong>完全沒有電場</strong>，只要載子分布不均勻，它們也會自己從濃的地方往稀的地方跑 —— 就像一滴墨水在水裡會自己散開。這種流動一樣構成電流。</p>
       <div class="eq">J<em>n</em> = +e·D<em>n</em>·(dn/dx)　　　J<em>p</em> = −e·D<em>p</em>·(dp/dx)</div>
 
@@ -439,7 +393,7 @@
             <p>所以當 dn/dx &gt; 0 時，J<sub>n</sub> 是<b>正</b>的 → 公式是 <b>J<sub>n</sub> = +e·D<sub>n</sub>·(dn/dx)</b>。<b>那個正號就是電子帶負電「再變號一次」的結果。</b></p>
           </li>
           <li>
-            <span class="d-eq">D<sub>n</sub>、D<sub>p</sub> 叫<b>擴散係數</b>（diffusion coefficient），矽：D<sub>n</sub> = 35、D<sub>p</sub> = 12 cm²/s</span>
+            <span class="d-eq">D<sub>n</sub>、D<sub>p</sub> 叫<b><button class="tm" data-t="擴散係數">擴散係數</button></b>（diffusion coefficient），矽：D<sub>n</sub> = 35、D<sub>p</sub> = 12 cm²/s</span>
             <div class="why">跟移動率一樣，電子的值比電洞大 —— 電子就是比較「靈活」。</div>
           </li>
         </ol>
@@ -453,11 +407,11 @@
           </div></div>
         <div class="stage-wrap"><canvas id="cv-diff" aria-label="濃度剖面與載子擴散方向、電流方向的對照"></canvas></div>
         <div class="controls">
-          <div class="ctrl" style="grid-column:1 / -1"><label for="diff-slope">濃度梯度方向<output for="diff-slope"></output></label>
+          <div class="ctrl" style="grid-column:1 / -1"><label for="diff-slope"><button class="tm" data-t="濃度梯度">濃度梯度</button>方向<output for="diff-slope"></output></label>
             <input type="range" id="diff-slope" min="-1" max="1" step="2" value="1"></div>
         </div>
         <dl class="readout">
-          <div><dt>擴散係數</dt><dd id="diff-D" style="font-size:14px">—</dd></div>
+          <div><dt><button class="tm" data-t="擴散係數">擴散係數</button></dt><dd id="diff-D" style="font-size:14px">—</dd></div>
           <div><dt>梯度</dt><dd id="diff-grad" style="font-size:12.5px">—</dd></div>
           <div><dt>公式</dt><dd id="diff-formula" style="font-size:13px">—</dd></div>
           <div><dt>電流正負</dt><dd id="diff-sign" style="color:var(--ok);font-size:14px">—</dd></div>
@@ -465,22 +419,8 @@
         <div class="msg" id="diff-note"></div>
       </div>
 
-      <div class="example">
-        <div class="ex-head">課本 Example 1.4 · 擴散電流密度</div>
-        <p class="ex-q">矽在 300 K，電子濃度從 <b>n = 10¹² cm⁻³</b> 線性變化到 <b>n = 10¹⁶ cm⁻³</b>，距離從 <b>x = 0</b> 到 <b>x = 3 μm</b>。已知 <b>D<sub>n</sub> = 35 cm²/s</b>，求電子擴散電流密度。</p>
-        <ol>
-          <li><b>Step 1　單位先統一。</b>3 μm = 3×10⁻⁴ cm。<b>這一步最常出錯</b> —— 濃度用 cm⁻³，長度就必須用 cm。</li>
-          <li><b>Step 2　線性變化 → 梯度用差分。</b>
-            <span class="d-eq">dn/dx ≈ Δn/Δx = (10¹² − 10¹⁶) / (0 − 3×10⁻⁴)</span>
-            分子分母都是「終點減起點」，順序要一致。兩個都是負的，相除得正。</li>
-          <li><b>Step 3　代公式。</b>
-            <span class="d-eq">J<sub>n</sub> = e·D<sub>n</sub>·(dn/dx) = (1.6×10⁻¹⁹)(35) × (−9.999×10¹⁵ / −3×10⁻⁴)</span></li>
-          <li><b>Step 4　算出來。</b>
-            <span class="d-eq">≈ (1.6×10⁻¹⁹)(35)(3.33×10¹⁹) = 187 A/cm²</span></li>
-        </ol>
-        <p class="ex-ans">J<sub>n</sub> = 187 A/cm²</p>
-      </div>
-      <p class="note key">注意這個數量級：<b>擴散電流密度也是幾百 A/cm²</b>，跟漂移電流同一等級。所以在 pn 接面裡，兩者可以互相抗衡達成平衡 —— 這是下一段的主角。</p>
+      <div id="ex-diff"></div>
+      <p class="note key">注意這個<button class="tm" data-t="數量級">數量級</button>：<b>擴散電流密度也是幾百 A/cm²</b>，跟漂移電流同一等級。所以在 pn 接面裡，兩者可以互相抗衡達成平衡 —— 這是下一段的主角。</p>
       <p class="note"><b>擴散電流密度可以是負的</b>，這只代表「淨流向與你假設的 +x 正方向相反」，不代表算錯。正負是<b>方向的定義問題</b>，取決於濃度梯度往哪邊。</p>
     </section>
 
@@ -509,7 +449,7 @@
         <ol>
           <li><b>題目有給「電場 E」或「外加電壓」嗎？</b>有 → 要算<b>漂移項</b>。</li>
           <li><b>題目有給「濃度隨位置變化」或「濃度梯度 dn/dx」嗎？</b>有 → 要算<b>擴散項</b>。</li>
-          <li><b>是 n 型還是 p 型？</b>多數載子那一項通常大好幾個數量級，<b>少數載子那項多半可以直接忽略</b>（像 Example 1.3 那樣）。</li>
+          <li><b>是 n 型還是 p 型？</b>多數載子那一項通常大好幾個<button class="tm" data-t="數量級">數量級</button>，<b>少數載子那項多半可以直接忽略</b>（像 Example 1.3 那樣）。</li>
           <li>課本原話：實務上<b>通常只有其中一種機制在某個區域佔主導</b>，所以不必四項都算。</li>
         </ol>
       </div>
@@ -532,7 +472,7 @@
       <p class="lede">這份 PART 2 我逐頁驗算過，<strong>所有公式推導與例題數字都正確</strong>（Example 1.2、1.3、1.4 我都重算過，結果完全相符）。有一個單位寫錯了，出現兩次。</p>
 
       <div class="pitfall">
-        <h4>① 載子移動率的單位寫成立方（出現兩次）</h4>
+        <h4>① <button class="tm" data-t="載子移動率">載子移動率</button>的單位寫成立方（出現兩次）</h4>
         <ul>
           <li>位置：投影片 <b>p.44</b>（電子）與 <b>p.45</b>（電洞）。</li>
           <li>講義寫：<span class="x">μ<sub>n</sub> = 1350 cm³/(V−sec)</span>、<span class="x">μ<sub>p</sub> = 480 cm³/(V−sec)</span></li>
@@ -578,7 +518,7 @@
         <div class="gl-row"><b>擴散電流</b><span>diffusion current（由濃度梯度造成）</span><code>A/cm²</code></div>
         <div class="gl-row"><b>電流密度</b><span>current density</span><code>J, A/cm²</code></div>
         <div class="gl-row"><b>漂移速度</b><span>drift velocity</span><code>v_d, cm/s</code></div>
-        <div class="gl-row"><b>載子移動率</b><span>mobility</span><code>μ, cm²/(V·s)</code></div>
+        <div class="gl-row"><b><button class="tm" data-t="載子移動率">載子移動率</button></b><span>mobility</span><code>μ, cm²/(V·s)</code></div>
         <div class="gl-row"><b>擴散係數</b><span>diffusion coefficient</span><code>D, cm²/s</code></div>
         <div class="gl-row"><b>濃度梯度</b><span>concentration gradient</span><code>dn/dx</code></div>
         <div class="gl-row"><b>導電度</b><span>conductivity</span><code>σ, (Ω·cm)⁻¹</code></div>
@@ -601,6 +541,7 @@
   </main>
 </div>
 <script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
 <script src="assets/ch1-part2.js"></script>
 </body>
 </html>

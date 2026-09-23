@@ -44,7 +44,7 @@
     <div class="hero">
       <div class="eyebrow">Chapter 11 · AC Power Analysis · 課本 p.455–488</div>
       <h1>交流功率分析</h1>
-      <p class="sub">整章只在回答一個問題：<strong>交流電路裡，功率到底跑去哪了？</strong>有一部分被電阻真的吃掉（實功率 P），另一部分只是在電源與電感電容之間來回擺盪（虛功率 Q）。8 個模組把這件事從波形一路帶到電費單。</p>
+      <p class="sub">整章只在回答一個問題：<strong>交流電路裡，功率到底跑去哪了？</strong>有一部分被電阻真的吃掉（<button class="tm" data-t="實功率">實功率</button> P），另一部分只是在電源與電感電容之間來回擺盪（<button class="tm" data-t="虛功率">虛功率</button> Q）。8 個模組把這件事從波形一路帶到電費單。</p>
       <div class="hero-meta">
         <span class="chip">8 個互動模組</span>
         <span class="chip">15 題中英對照測驗</span>
@@ -61,11 +61,11 @@
         <div class="outline-row done"><code>11.1</code><b>導論 <span style="color:var(--ink-3);font-weight:400">Introduction</span></b><span class="dot"></span></div>
         <div class="outline-row done"><code>11.2</code><b>瞬時功率與平均功率 <span style="color:var(--ink-3);font-weight:400">Instantaneous and Average Power</span></b><span class="dot"></span></div>
         <div class="outline-row done"><code>11.3</code><b>最大平均功率轉移 <span style="color:var(--ink-3);font-weight:400">Maximum Average Power Transfer</span></b><span class="dot"></span></div>
-        <div class="outline-row done"><code>11.4</code><b>有效值／均方根值 <span style="color:var(--ink-3);font-weight:400">Effective or RMS Value</span></b><span class="dot"></span></div>
-        <div class="outline-row done"><code>11.5</code><b>視在功率與功率因數 <span style="color:var(--ink-3);font-weight:400">Apparent Power and Power Factor</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.4</code><b><button class="tm" data-t="有效值">有效值</button>／均方根值 <span style="color:var(--ink-3);font-weight:400">Effective or RMS Value</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.5</code><b><button class="tm" data-t="視在功率">視在功率</button>與<button class="tm" data-t="功率因數">功率因數</button> <span style="color:var(--ink-3);font-weight:400">Apparent Power and Power Factor</span></b><span class="dot"></span></div>
         <div class="outline-row done"><code>11.6</code><b>複功率 <span style="color:var(--ink-3);font-weight:400">Complex Power</span></b><span class="dot"></span></div>
         <div class="outline-row done"><code>11.7</code><b>交流功率守恆 <span style="color:var(--ink-3);font-weight:400">Conservation of AC Power</span></b><span class="dot"></span></div>
-        <div class="outline-row done"><code>11.8</code><b>功率因數校正 <span style="color:var(--ink-3);font-weight:400">Power Factor Correction</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.8</code><b><button class="tm" data-t="功率因數">功率因數</button>校正 <span style="color:var(--ink-3);font-weight:400">Power Factor Correction</span></b><span class="dot"></span></div>
         <div class="outline-row done"><code>11.9</code><b>應用：功率量測與電費 <span style="color:var(--ink-3);font-weight:400">Applications</span></b><span class="dot"></span></div>
       </div>
       <p class="note key">整章的核心關係式只有一條：<b>S = P + jQ</b>。其他所有公式都是它的變形。先把功率三角形畫熟，這章的計算題就解了一半。</p>
@@ -89,7 +89,7 @@
           </li>
           <li>
             <span class="d-eq">P = V<sub>rms</sub>I<sub>rms</sub>cos(θv−θi) = S × pf</span>
-            <div class="why"><b>11.5</b> 把乘積拆成兩半各自命名：S 是視在功率、pf 是折扣率。</div>
+            <div class="why"><b>11.5</b> 把乘積拆成兩半各自命名：S 是<button class="tm" data-t="視在功率">視在功率</button>、pf 是折扣率。</div>
           </li>
           <li>
             <span class="d-eq">想把 P 變成某個複數的實部 → S = V<sub>rms</sub>I*<sub>rms</sub> = P + jQ</span>
@@ -121,7 +121,7 @@
     <section class="sec" id="inst">
       <div class="eyebrow">11.2 · Instantaneous and Average Power</div>
       <h2>瞬時功率與平均功率</h2>
-      <p class="lede"><span class="tm">瞬時功率<i>instantaneous power</i></span> p(t) = v(t)·i(t) 是「某一瞬間」吸收功率的速率。把它展開會發現它由<strong>一個固定值</strong>加上<strong>一個以 2ω 擺盪的弦波</strong>組成 —— 那個固定值就是<span class="tm">平均功率<i>average power</i></span> P。</p>
+      <p class="lede"><span class="tm" data-t="瞬時功率">瞬時功率<i>instantaneous power</i></span> p(t) = v(t)·i(t) 是「某一瞬間」吸收功率的速率。把它展開會發現它由<strong>一個固定值</strong>加上<strong>一個以 2ω 擺盪的弦波</strong>組成 —— 那個固定值就是<span class="tm" data-t="平均功率">平均功率<i>average power</i></span> P。</p>
       <div class="eq">p(t) = ½V<em>m</em>I<em>m</em> cos(θv − θi) &nbsp;+&nbsp; ½V<em>m</em>I<em>m</em> cos(2ωt + θv + θi)</div>
       <div class="derive">
         <h4>這條式子是怎麼來的？</h4>
@@ -205,7 +205,7 @@
         <dl class="readout">
           <div><dt>相位差 θv−θi</dt><dd id="inst-d">—</dd></div>
           <div><dt>平均功率 P</dt><dd id="inst-P" style="color:var(--p-real)">—</dd></div>
-          <div><dt>虛功率 Q</dt><dd id="inst-Q" style="color:var(--q-react)">—</dd></div>
+          <div><dt><button class="tm" data-t="虛功率">虛功率</button> Q</dt><dd id="inst-Q" style="color:var(--q-react)">—</dd></div>
           <div><dt>功率因數</dt><dd id="inst-pf">—</dd></div>
         </dl>
         <div class="msg" id="inst-kind"></div>
@@ -228,7 +228,7 @@
     <section class="sec" id="mpt">
       <div class="eyebrow">11.3 · Maximum Average Power Transfer</div>
       <h2>最大平均功率轉移</h2>
-      <p class="lede">直流時的結論是 R<sub>L</sub> = R<sub>Th</sub>。交流時要多考慮電抗：先用 X<sub>L</sub> 把 X<sub>Th</sub> <strong>抵銷掉</strong>，再用 R<sub>L</sub> 去匹配 R<sub>Th</sub>。合起來就是<span class="tm">共軛匹配<i>conjugate matching</i></span>。</p>
+      <p class="lede">直流時的結論是 R<sub>L</sub> = R<sub>Th</sub>。交流時要多考慮電抗：先用 X<sub>L</sub> 把 X<sub>Th</sub> <strong>抵銷掉</strong>，再用 R<sub>L</sub> 去匹配 R<sub>Th</sub>。合起來就是<span class="tm" data-t="共軛匹配">共軛匹配<i>conjugate matching</i></span>。</p>
       <div class="eq">Z<em>L</em> = Z<em>Th</em>*　（即 R<em>L</em> = R<em>Th</em>，X<em>L</em> = −X<em>Th</em>）　⟹　P<em>max</em> = |V<em>Th</em>|² / (8R<em>Th</em>)</div>
 
       <div class="derive">
@@ -336,8 +336,8 @@
     <!-- ══════════ 11.4 RMS ══════════ -->
     <section class="sec" id="rms">
       <div class="eyebrow">11.4 · Effective or RMS Value</div>
-      <h2>有效值（均方根值 rms）</h2>
-      <p class="lede">為什麼台灣市電叫「110 V」但波峰其實有 155 V？因為那個 110 是<span class="tm">有效值<i>effective value</i></span>：<strong>能對同一個電阻送出相同平均功率的那個等效直流值</strong>。名字 root-mean-square 就是它的算法，倒著唸即可。</p>
+      <h2><button class="tm" data-t="有效值">有效值</button>（均方根值 rms）</h2>
+      <p class="lede">為什麼台灣市電叫「110 V」但波峰其實有 155 V？因為那個 110 是<span class="tm" data-t="有效值">有效值<i>effective value</i></span>：<strong>能對同一個電阻送出相同平均功率的那個等效直流值</strong>。名字 root-mean-square 就是它的算法，倒著唸即可。</p>
       <div class="eq">X<em>rms</em> = √( (1/T) ∫₀ᵀ x²(t) dt )　←　先平方 square、再平均 mean、最後開根號 root</div>
 
       <div class="derive">
@@ -471,7 +471,7 @@
     <section class="sec" id="pf">
       <div class="eyebrow">11.5 · Apparent Power and Power Factor</div>
       <h2>視在功率與功率因數</h2>
-      <p class="lede">把 V<sub>rms</sub> 乘上 I<sub>rms</sub>「看起來」就該是功率，所以叫<span class="tm">視在功率<i>apparent power</i></span> S，單位是 VA。但真正被消耗的只有 S 的一部分，那個折扣率就是<span class="tm">功率因數<i>power factor</i></span>。</p>
+      <p class="lede">把 V<sub>rms</sub> 乘上 I<sub>rms</sub>「看起來」就該是功率，所以叫<span class="tm" data-t="視在功率">視在功率<i>apparent power</i></span> S，單位是 VA。但真正被消耗的只有 S 的一部分，那個折扣率就是<span class="tm" data-t="功率因數">功率因數<i>power factor</i></span>。</p>
       <div class="eq">S = V<em>rms</em>I<em>rms</em> (VA)　　pf = P/S = cos(θv − θi)　　P = S·pf (W)</div>
 
       <div class="derive">
@@ -510,7 +510,7 @@
             X 是<b>負</b>的 → 電容性 → 電流<b>超前</b>電壓 → <b>leading</b>。</li>
           <li><b>Step 3　算電流。</b>
             <span class="d-eq">|Z| = √(20² + 20²) = 28.28 Ω　⟹　I<sub>rms</sub> = 120/28.28 = 4.243 A</span></li>
-          <li><b>Step 4　視在功率與實功率。</b>
+          <li><b>Step 4　視在功率與<button class="tm" data-t="實功率">實功率</button>。</b>
             <span class="d-eq">S = 120 × 4.243 = 509.1 VA<br>P = S × pf = 509.1 × 0.707 = 360 W</span>
             也可以直接驗算：P = I²<sub>rms</sub>R = 4.243² × 20 = 360 W ✓</li>
         </ol>
@@ -554,7 +554,7 @@
     <section class="sec" id="tri">
       <div class="eyebrow">11.6 · Complex Power</div>
       <h2>複功率與功率三角形</h2>
-      <p class="lede"><span class="tm">複功率<i>complex power</i></span> S 把這章所有資訊包成一個複數：<strong>實部是 P、虛部是 Q、大小是視在功率、相角的餘弦是功率因數</strong>。一個 S 在手，四個量全有。</p>
+      <p class="lede"><span class="tm" data-t="複功率">複功率<i>complex power</i></span> S 把這章所有資訊包成一個複數：<strong>實部是 P、虛部是 Q、大小是視在功率、相角的餘弦是功率因數</strong>。一個 S 在手，四個量全有。</p>
       <div class="eq">S = V<em>rms</em>·I*<em>rms</em> = P + jQ　　|S| = √(P² + Q²)　　S = I²<em>rms</em>Z = V²<em>rms</em>/Z*</div>
       <div class="derive">
         <h4>為什麼是 V·I*（而不是 V·I）</h4>
@@ -791,7 +791,7 @@
     <section class="sec" id="pfc">
       <div class="eyebrow">11.8 · Power Factor Correction</div>
       <h2>功率因數校正</h2>
-      <p class="lede">工廠的馬達幾乎都是電感性、功因偏低。<span class="tm">功因校正<i>power factor correction</i></span>就是在負載旁<strong>並聯一顆電容</strong>，用電容的 −Q 去抵銷電感的 +Q，讓功因接近 1。P 完全不變，但線電流會變小。</p>
+      <p class="lede">工廠的馬達幾乎都是電感性、功因偏低。<span class="tm" data-t="功因校正">功因校正<i>power factor correction</i></span>就是在負載旁<strong>並聯一顆電容</strong>，用電容的 −Q 去抵銷電感的 +Q，讓功因接近 1。P 完全不變，但線電流會變小。</p>
       <div class="eq">Q<em>C</em> = Q₁ − Q₂ = P(tan θ₁ − tan θ₂)　　C = Q<em>C</em> / (ω·V²<em>rms</em>)</div>
 
       <div class="derive">
@@ -912,7 +912,7 @@
     <section class="sec" id="app">
       <div class="eyebrow">11.9 · Applications</div>
       <h2>應用：功率量測與電費</h2>
-      <p class="lede">三種儀器對應三種功率：<span class="tm">瓦特計<i>wattmeter</i></span>量 P、<span class="tm">乏計<i>varmeter</i></span>量 Q、<span class="tm">電表<i>kilowatt-hour meter</i></span>量用電度數。</p>
+      <p class="lede">三種儀器對應三種功率：<span class="tm" data-t="瓦特計">瓦特計<i>wattmeter</i></span>量 P、<span class="tm" data-t="乏計">乏計<i>varmeter</i></span>量 Q、<span class="tm" data-t="電表">電表<i>kilowatt-hour meter</i></span>量用電度數。</p>
       <div class="terms">
         <div><b>電流線圈 current coil</b><span>阻抗極低（理想為 0）→ 串聯在負載上</span></div>
         <div><b>電壓線圈 voltage coil</b><span>阻抗極高（理想為 ∞）→ 並聯在負載兩端</span></div>
@@ -985,6 +985,7 @@
   </main>
 </div>
 <script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
 <script src="assets/ch11.js"></script>
 </body>
 </html>

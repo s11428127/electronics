@@ -42,7 +42,7 @@
   <main>
     <div class="hero">
       <div class="eyebrow">工程數學 · 大二上 · 9/17 ~ 9/20 課堂筆記</div>
-      <h1>拉普拉斯轉換</h1>
+      <h1>拉普拉斯<button class="tm" data-t="轉換">轉換</button></h1>
       <p class="sub">這一章最難的不是計算，是<strong>「它到底在幹嘛」</strong>。一個長得莫名其妙的積分，為什麼能拿來解微分方程？下面 7 個模組會把每一個符號的來歷拆給你看 —— 先看得懂，再去算。</p>
       <div class="hero-meta">
         <span class="chip">7 個互動模組</span>
@@ -55,7 +55,7 @@
     <section class="sec" id="map">
       <div class="eyebrow">Big picture</div>
       <h2>一句話說明這章在幹嘛</h2>
-      <p class="lede">微分方程很難解。但<strong>代數方程很好解</strong>。拉普拉斯轉換就是一條捷徑：把難解的微分方程<strong>搬到另一個世界</strong>（s 域），在那裡它會變成一次方程，解完再搬回來。</p>
+      <p class="lede">微分方程很難解。但<strong>代數方程很好解</strong>。拉普拉斯<button class="tm" data-t="轉換">轉換</button>就是一條捷徑：把難解的微分方程<strong>搬到另一個世界</strong>（s 域），在那裡它會變成一次方程，解完再搬回來。</p>
 
       <div class="derive">
         <h4>整章的骨架就這四步</h4>
@@ -78,7 +78,7 @@
           </li>
         </ol>
       </div>
-      <p class="note key">所以讀這章時，每看到一個新東西就問自己：<b>「這是為了讓那條捷徑走得通嗎？」</b>答案幾乎都是「是」。e⁻ˢᵗ 是為了讓積分收斂；−f(0) 是為了把初始條件帶進去；收斂區是為了保證這條捷徑存在。</p>
+      <p class="note key">所以讀這章時，每看到一個新東西就問自己：<b>「這是為了讓那條捷徑走得通嗎？」</b>答案幾乎都是「是」。e⁻ˢᵗ 是為了讓積分收斂；−f(0) 是為了把初始條件帶進去；<button class="tm" data-t="收斂區">收斂區</button>是為了保證這條捷徑存在。</p>
     </section>
 
     <!-- ══════════ 01 轉換 ══════════ -->
@@ -267,7 +267,7 @@
         <div class="msg" id="why-msg"></div>
       </div>
 
-      <p class="note key">試試看選 <b>f = e²ᵗ</b> 然後把 s 拉到 2 以下 —— 乘積會爆炸、面積變成無限大。這就是<b>收斂區（ROC）</b>：ℒ(e^(at)) = 1/(s−a) 只在 <b>s &gt; a</b> 時才存在。</p>
+      <p class="note key">試試看選 <b>f = e²ᵗ</b> 然後把 s 拉到 2 以下 —— 乘積會爆炸、面積變成無限大。這就是<b><button class="tm" data-t="收斂區">收斂區</button>（ROC）</b>：ℒ(e^(at)) = 1/(s−a) 只在 <b>s &gt; a</b> 時才存在。</p>
     </section>
 
     <!-- ══════════ 04 轉換表 ══════════ -->
@@ -328,7 +328,7 @@
         <h4>筆記上的小筆誤</h4>
         <ul>
           <li>最下面那個藍框寫 <span class="x">f′(t) —ℒ→ sF(s) <b>=</b> f(0)</span>，中間應該是<b>減號</b>不是等號：<span class="o">f′(t) —ℒ→ sF(s) <b>−</b> f(0)</span>。上面的 Theorem 那行你寫對了，所以應該只是手寫的筆誤，但抄到考卷上會很傷。</li>
-          <li><b>lim(t→∞) e⁻ˢᵗf(t) = 0 不是白送的。</b>筆記寫「下次說明」是對的 —— 這需要 f(t) 是<b>指數階（exponential order）</b>，也就是存在 M、a 使 |f(t)| ≤ M·e^(at)，而且 s > a。若 f(t) 長得比任何指數都快（例如 e^(t²)），拉普拉斯轉換根本不存在。</li>
+          <li><b>lim(t→∞) e⁻ˢᵗf(t) = 0 不是白送的。</b>筆記寫「下次說明」是對的 —— 這需要 f(t) 是<b><button class="tm" data-t="指數階">指數階</button>（exponential order）</b>，也就是存在 M、a 使 |f(t)| ≤ M·e^(at)，而且 s > a。若 f(t) 長得比任何指數都快（例如 e^(t²)），拉普拉斯轉換根本不存在。</li>
         </ul>
       </div>
     </section>
@@ -422,7 +422,7 @@
       <div class="note key">
         <b>寫得好的地方：</b>
         ℒ(f′) 的分部積分推導完全正確，包含 d(e⁻ˢᵗ) = −s·e⁻ˢᵗdt 那個關鍵代換、以及 t→0 時 e⁰ = 1 所以只剩 f(0)。
-        另外你在 lim(t→∞) 那項旁邊註明「下次說明」也很到位 —— 那一項要為 0 確實需要額外條件（指數階），不是理所當然。
+        另外你在 lim(t→∞) 那項旁邊註明「下次說明」也很到位 —— 那一項要為 0 確實需要額外條件（<button class="tm" data-t="指數階">指數階</button>），不是理所當然。
         表格裡先寫猜測值 sF(s) 再打三個問號、最後修正成 sF(s) − f(0)，這種記法很好，把「錯誤的直覺」也記下來了。
       </div>
     </section>
@@ -469,6 +469,7 @@
   </main>
 </div>
 <script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
 <script src="assets/laplace.js"></script>
 </body>
 </html>

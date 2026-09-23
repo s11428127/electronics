@@ -621,3 +621,220 @@
   });
   try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 })();
+
+/* ============================================================
+   可互動例題：已知條件可以自己改，每一步即時重算
+   ============================================================ */
+(function () {
+  'use strict';
+  const E = window.__EE;
+  const { C, label, labelCJK, clamp, lerp, sci, sup, liveExample } = E;
+  const NI = 1.5e10, QE = 1.6e-19;
+  const fix = (x, n) => (Math.abs(x) < 5e-13 ? 0 : x).toFixed(n === undefined ? 2 : n);
+
+  /* ── 例題 A：摻雜濃度到底有多稀 ──────────────────────────── */
+  liveExample('#ex-dilute', {
+    title: '例題 · 摻雜濃度到底有多稀',
+    ratio: 0.3, minH: 150, maxH: 200,
+    givens: [
+      { id: 'exd-ratio', label: '摻雜比例 1 : 10^', min: 5, max: 11, step: 1, value: 8,
+        fmt: v => '1 : 10' + sup(v) },
+      { id: 'exd-nsi', label: '矽原子濃度', min: 21, max: 23, step: 0.1, value: 22.7,
+        fmt: v => fix(Math.pow(10, v - Math.floor(v)) , 1) + '×10' + sup(Math.floor(v)) + ' cm' + sup(-3) }
+    ],
+    compute: g => {
+      const nsi = Math.pow(10, g['exd-nsi']);
+      const N = nsi / Math.pow(10, g['exd-ratio']);
+      return { nsi: nsi, N: N, times: N / NI, decades: Math.log10(N / NI) };
+    },
+    question: (g, r) => '一般摻雜比例為 <b>1 : 10' + sup(g['exd-ratio']) + '</b>，矽原子濃度為 <b>' +
+      sci(r.nsi, 1) + ' cm' + sup(-3) + '</b>。求摻雜濃度，並與本質載子濃度 nᵢ = 1.5×10¹⁰ cm⁻³ 比較。' +
+      '<br><span style="font-size:13px;color:var(--ink-3)">↑ 上面的滑桿可以改這兩個數字，下面每一步會跟著重算。</span>',
+    steps: (g, r) => [
+      { t: 'Step 1　算摻雜濃度。',
+        note: '每 10' + sup(g['exd-ratio']) + ' 個矽原子摻 1 個雜質，所以把矽原子濃度除以 10' + sup(g['exd-ratio']) + '：',
+        eq: 'N = ' + sci(r.nsi, 1) + ' ÷ 10' + sup(g['exd-ratio']) + ' = ' + sci(r.N, 1) + ' cm' + sup(-3) },
+      { t: 'Step 2　跟本質濃度比。',
+        note: '看摻雜出來的載子比純矽自己產生的多幾倍：',
+        eq: sci(r.N, 1) + ' ÷ 1.5×10¹⁰ ≈ ' + sci(r.times, 1) + ' 倍' },
+      { t: 'Step 3　下結論。',
+        note: '兩者相差 <b>' + fix(r.decades, 1) + ' 個數量級</b>（也就是差 ' + fix(r.decades, 1) + ' 個 0）。' +
+          (r.decades >= 3
+            ? '摻雜濃度壓倒性地大，所以導電性<b>完全由摻雜決定</b>，本質載子 nᵢ 的貢獻可以直接忽略。'
+            : r.decades >= 1
+            ? '<b style="color:var(--warn)">差距沒那麼大了</b>，此時 nᵢ 的貢獻開始不能忽略，n₀ ≈ N_d 這個近似會失準。'
+            : '<b style="color:var(--bad)">摻雜濃度已經跟本質濃度差不多甚至更低</b>，這塊材料的行為會接近本質半導體，近似公式完全不能用。') }
+    ],
+    answer: (g, r) => 'N = ' + sci(r.N, 1) + ' cm' + sup(-3) +
+      (r.decades >= 1 ? ' ≫ ' : ' ~ ') + 'nᵢ = 1.5×10¹⁰ cm' + sup(-3) +
+      '　（差 ' + fix(r.decades, 1) + ' 個數量級）',
+    /* 對數尺規：把三個濃度畫在同一條線上，「差幾個 0」變成看得見的距離 */
+    draw: (ctx, w, h, g, r) => {
+      const padL = 20, padR = 20, y = h * 0.56;
+      const x0 = padL, x1 = w - padR;
+      const lo = 8, hi = 23;
+      const X = v => lerp(x0, x1, clamp((Math.log10(v) - lo) / (hi - lo), 0, 1));
+
+      ctx.strokeStyle = C.line; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+      ctx.strokeStyle = C['line-soft']; ctx.lineWidth = 1;
+      for (let k = lo; k <= hi; k++) {
+        const isBig = k % 5 === 0;
+        ctx.beginPath(); ctx.moveTo(X(Math.pow(10, k)), y - (isBig ? 7 : 4));
+        ctx.lineTo(X(Math.pow(10, k)), y + (isBig ? 7 : 4)); ctx.stroke();
+        if (isBig) label(ctx, X(Math.pow(10, k)), y + 18, '10' + sup(k), C['ink-3'], 9.5);
+      }
+      labelCJK(ctx, x0, 12, '每一格 = 差 10 倍（一個數量級）', C['ink-3'], 10.5, 'left');
+
+      const marks = [
+        [NI, '本質載子 nᵢ', C.warn, -1],
+        [r.N, '摻雜濃度 N', C.accent, 1],
+        [r.nsi, '矽原子', C['ink-2'], -1]
+      ];
+      marks.forEach(([v, nm, col, side]) => {
+        const px = X(v), py = y + side * 22;
+        ctx.strokeStyle = col; ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.moveTo(px, y); ctx.lineTo(px, py); ctx.stroke();
+        E.disc(ctx, px, y, 4.5, col);
+        const align = px > w - 90 ? 'right' : px < 90 ? 'left' : 'center';
+        labelCJK(ctx, px, py + side * 8, nm, col, 10.5, align, '600');
+      });
+
+      /* 兩點之間的距離就是差幾個數量級 */
+      const a = X(NI), b = X(r.N);
+      if (Math.abs(b - a) > 26) {
+        ctx.strokeStyle = C.accent; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+        ctx.beginPath(); ctx.moveTo(a, y - 34); ctx.lineTo(b, y - 34); ctx.stroke(); ctx.setLineDash([]);
+        label(ctx, (a + b) / 2, y - 42, '差 ' + fix(r.decades, 1) + ' 個數量級', C.accent, 10.5, 'center', '700');
+      }
+    }
+  });
+
+  /* ── 例題 B：載子濃度（課本 Example 1.2 的可調版）─────────── */
+  liveExample('#ex-conc', {
+    title: '例題 · 載子濃度（課本 Example 1.2）',
+    givens: [
+      { id: 'exc-logN', label: '摻雜濃度', min: 11, max: 19, step: 0.5, value: 16,
+        fmt: v => '10' + sup(v % 1 ? v.toFixed(1) : v) + ' cm' + sup(-3) },
+      { id: 'exc-type', label: '摻雜類型', min: 0, max: 1, step: 1, value: 0,
+        fmt: v => v === 0 ? 'n 型（摻磷 P，5 價）' : 'p 型（摻硼 B，3 價）' }
+    ],
+    compute: g => {
+      const N = Math.pow(10, g['exc-logN']);
+      const maj = N / 2 + Math.sqrt(N * N / 4 + NI * NI);
+      const min = NI * NI / maj;
+      const isN = g['exc-type'] === 0;
+      return { N: N, maj: maj, min: min, isN: isN,
+        n: isN ? maj : min, p: isN ? min : maj, ok: N > NI * 100 };
+    },
+    question: (g, r) => '矽在 <b>T = 300 K</b>（nᵢ = 1.5×10¹⁰ cm⁻³），摻入 <b>' +
+      (r.isN ? '磷 phosphorus' : '硼 boron') + '</b> 至濃度 <b>' +
+      (r.isN ? 'N_d' : 'N_a') + ' = ' + sci(r.N, 1) + ' cm' + sup(-3) +
+      '</b>。求熱平衡下的電子與電洞濃度。',
+    steps: (g, r) => [
+      { t: 'Step 1　確認可不可以用近似。',
+        note: r.ok
+          ? '摻雜濃度 ' + sci(r.N, 1) + ' 遠大於 nᵢ = 1.5×10¹⁰（差 ' +
+            fix(Math.log10(r.N / NI), 1) + ' 個數量級）✓ 可以用近似。'
+          : '<b style="color:var(--warn)">摻雜濃度只有 ' + sci(r.N, 1) +
+            '，沒有遠大於 nᵢ</b>，不能直接用近似，要解完整的二次式。' },
+      { t: 'Step 2　多數載子 ≈ 摻雜濃度。',
+        note: (r.isN ? '摻施體 → 電子' : '摻受體 → 電洞') + '是多數載子：',
+        eq: (r.isN ? 'n₀' : 'p₀') + (r.ok ? ' ≅ ' : ' = ') +
+          (r.ok ? sci(r.N, 2) : sci(r.maj, 2)) + ' cm' + sup(-3) +
+          (r.ok ? '' : '　← 用完整解 N/2 + √((N/2)² + nᵢ²)') },
+      { t: 'Step 3　少數載子用質量作用定律。',
+        note: '把 nᵢ² 除以多數載子濃度就得到：',
+        eq: (r.isN ? 'p₀' : 'n₀') + ' = nᵢ² ÷ ' + (r.isN ? 'n₀' : 'p₀') +
+          ' = 2.25×10²⁰ ÷ ' + sci(r.maj, 2) + ' = ' + sci(r.min, 2) + ' cm' + sup(-3) },
+      { t: 'Step 4　驗算。',
+        note: '兩者相乘應該回到 nᵢ²：',
+        eq: sci(r.maj, 2) + ' × ' + sci(r.min, 2) + ' = ' + sci(r.maj * r.min, 2) +
+          ' ≈ nᵢ² = 2.25×10²⁰ ✓' }
+    ],
+    answer: (g, r) => 'n₀ = ' + sci(r.n, 2) + ' cm' + sup(-3) + '　｜　p₀ = ' + sci(r.p, 2) + ' cm' + sup(-3) +
+      '　（多數載子是' + (r.isN ? '電子' : '電洞') + '，多了 ' + sci(r.maj / r.min, 1) + ' 倍）'
+  });
+
+  /* ── 例題 C：漂移電流密度（課本 Example 1.3 的可調版）────── */
+  liveExample('#ex-drift', {
+    title: '例題 · 漂移電流密度（課本 Example 1.3）',
+    givens: [
+      { id: 'exj-logN', label: '摻雜濃度 N_d', min: 13, max: 18, step: 0.1, value: 15.9,
+        fmt: v => sci(Math.pow(10, v), 1) + ' cm' + sup(-3) },
+      { id: 'exj-E', label: '外加電場 E', min: 10, max: 500, step: 10, value: 100,
+        fmt: v => v + ' V/cm' },
+      { id: 'exj-mun', label: '電子移動率 μn', min: 400, max: 1400, step: 50, value: 1350,
+        fmt: v => v + ' cm²/(V·s)' }
+    ],
+    compute: g => {
+      const N = Math.pow(10, g['exj-logN']);
+      const n = N / 2 + Math.sqrt(N * N / 4 + NI * NI), p = NI * NI / n;
+      const mun = g['exj-mun'], mup = 480;
+      const sn = QE * n * mun, sp = QE * p * mup, sigma = sn + sp;
+      return { N, n, p, mun, mup, sn, sp, sigma, rho: 1 / sigma,
+        J: sigma * g['exj-E'], E: g['exj-E'], area: 1e-3 / (sigma * g['exj-E']),
+        pct: sn / sigma * 100 };
+    },
+    question: (g, r) => '矽在 300 K 摻砷（arsenic，5 價）至 <b>N_d = ' + sci(r.N, 1) + ' cm' + sup(-3) +
+      '</b>。已知 μn = ' + r.mun + '、μp = 480 cm²/(V·s)，外加電場 <b>E = ' + r.E +
+      ' V/cm</b>。求漂移電流密度。',
+    steps: (g, r) => [
+      { t: 'Step 1　算兩種載子濃度。',
+        note: '砷是 5 價 → n 型，電子是多數載子：',
+        eq: 'n ≅ N_d = ' + sci(r.n, 2) + ' cm' + sup(-3) + '　　p = nᵢ²/N_d = ' + sci(r.p, 2) + ' cm' + sup(-3) },
+      { t: 'Step 2　比較兩項誰主導。',
+        note: '電子項佔了導電度的 <b>' + fix(r.pct, 4) + '%</b>' +
+          (r.pct > 99.9 ? '，電洞項可以直接忽略：' : '，兩項都要算：'),
+        eq: r.pct > 99.9 ? 'σ = e·μn·n + e·μp·p ≅ e·μn·n' : 'σ = e·μn·n + e·μp·p（兩項都留）' },
+      { t: 'Step 3　代數字算導電度。',
+        eq: 'σ = (1.6×10⁻¹⁹)(' + r.mun + ')(' + sci(r.n, 2) + ') = ' + fix(r.sigma, 3) + ' (Ω·cm)' + sup(-1) },
+      { t: 'Step 4　乘上電場得電流密度。',
+        eq: 'J = σE = (' + fix(r.sigma, 3) + ')(' + r.E + ') = ' + fix(r.J, 1) + ' A/cm²' },
+      { t: 'Step 5　換算成實際電流。',
+        note: '電流密度看起來很大，但實際元件截面積極小。若只流 1 mA：',
+        eq: 'A = I/J = 10⁻³ ÷ ' + fix(r.J, 1) + ' = ' + sci(r.area, 2) + ' cm²' }
+    ],
+    answer: (g, r) => 'σ = ' + fix(r.sigma, 3) + ' (Ω·cm)' + sup(-1) + '　｜　J = ' + fix(r.J, 1) + ' A/cm²' +
+      '　｜　ρ = ' + fix(r.rho, 3) + ' Ω·cm'
+  });
+
+  /* ── 例題 D：擴散電流密度（課本 Example 1.4 的可調版）────── */
+  liveExample('#ex-diff', {
+    title: '例題 · 擴散電流密度（課本 Example 1.4）',
+    givens: [
+      { id: 'exf-n1', label: '起點濃度 n(0)', min: 10, max: 15, step: 0.5, value: 12,
+        fmt: v => '10' + sup(v % 1 ? v.toFixed(1) : v) + ' cm' + sup(-3) },
+      { id: 'exf-n2', label: '終點濃度 n(L)', min: 14, max: 18, step: 0.5, value: 16,
+        fmt: v => '10' + sup(v % 1 ? v.toFixed(1) : v) + ' cm' + sup(-3) },
+      { id: 'exf-L', label: '距離 L', min: 0.5, max: 10, step: 0.5, value: 3,
+        fmt: v => v + ' μm' },
+      { id: 'exf-D', label: '擴散係數 Dn', min: 10, max: 40, step: 1, value: 35,
+        fmt: v => v + ' cm²/s' }
+    ],
+    compute: g => {
+      const n1 = Math.pow(10, g['exf-n1']), n2 = Math.pow(10, g['exf-n2']);
+      const Lcm = g['exf-L'] * 1e-4;
+      const grad = (n1 - n2) / (0 - Lcm);
+      return { n1, n2, Lcm, Lum: g['exf-L'], D: g['exf-D'], grad, J: QE * g['exf-D'] * grad };
+    },
+    question: (g, r) => '矽在 300 K，電子濃度從 <b>n = ' + sci(r.n1, 1) + ' cm' + sup(-3) +
+      '</b> 線性變化到 <b>n = ' + sci(r.n2, 1) + ' cm' + sup(-3) + '</b>，距離從 x = 0 到 <b>x = ' +
+      r.Lum + ' μm</b>。已知 <b>Dn = ' + r.D + ' cm²/s</b>，求電子擴散電流密度。',
+    steps: (g, r) => [
+      { t: 'Step 1　單位先統一。',
+        note: '濃度用 cm⁻³，長度就必須換成 cm。<b>這一步最常出錯：</b>',
+        eq: r.Lum + ' μm = ' + r.Lum + ' × 10⁻⁴ cm = ' + sci(r.Lcm, 1) + ' cm' },
+      { t: 'Step 2　線性變化 → 梯度用差分。',
+        note: '分子分母都用「終點減起點」，順序要一致：',
+        eq: 'dn/dx ≈ Δn/Δx = (' + sci(r.n1, 1) + ' − ' + sci(r.n2, 1) + ') ÷ (0 − ' + sci(r.Lcm, 1) + ') = ' + sci(r.grad, 2) + ' cm' + sup(-4) },
+      { t: 'Step 3　代擴散公式。',
+        note: '電子的擴散電流密度前面是<b>正號</b>：',
+        eq: 'Jn = e·Dn·(dn/dx) = (1.6×10⁻¹⁹)(' + r.D + ')(' + sci(r.grad, 2) + ')' },
+      { t: 'Step 4　算出來。',
+        note: '注意這個數量級跟漂移電流同一等級（幾百 A/cm²）：',
+        eq: 'Jn = ' + fix(r.J, 1) + ' A/cm²' }
+    ],
+    answer: (g, r) => 'Jn = ' + fix(r.J, 1) + ' A/cm²'
+  });
+})();
