@@ -12,7 +12,8 @@
 4. 依下面的「章節頁規格」寫內容。
 5. **驗證**：起 `npx http-server -p 8099 -s .`，用 Playwright 在 **320 / 390 / 680 / 1180** 四種
    寬度載入，確認：無 console 錯誤、無水平捲動、測驗可互動。
-6. commit + push 到指定分支，然後**重新發佈 artifact**（同一個 URL，用 art2 bundle）。
+6. commit + push 到指定分支，然後**重新發佈 artifact**（同一個 URL，用 art2 bundle；
+   `files` 要帶上所有頁面與 `notes/`，capabilities 見下方「手寫筆記的規矩」）。
 
 ## 章節頁規格（每一節都要有，缺一不可）
 
@@ -71,7 +72,24 @@ shared/app.js                 互動引擎，匯出 window.__EE
 <subject>/<chapter>.html      章節內容頁（例：ch1-part1.html、ch11.html、laplace.html）
 <subject>/assets/<chapter>.js 每章一個 JS
 <subject>/docs/CONTENT_MAP.md 進度表
+notes/                        手寫筆記（GoodNotes 式，給 iPad + Apple Pencil）
+  index.html                  書櫃；note.html 編輯器
+  assets/store.js             儲存：IndexedDB（本機）+ claude.ai 上的 db 同步（data/users/<id>）
+  assets/render.js            紙張與筆跡繪圖（編輯器與縮圖共用）
+  assets/ink.js               編輯器：筆／螢光筆／橡皮擦／套索、按住拉直線、縮放、講義並排
+  assets/library.js           書櫃；裡面的 CHAPTERS 清單是「可綁定的章節」
 ```
+
+### 手寫筆記的規矩
+
+- **新增章節時，要把它加進 `notes/assets/library.js` 的 `CHAPTERS`**，新增筆記本時才選得到。
+  （章節頁右上的「✎ 筆記」按鈕由 `shared/app.js` 自動產生，不用手動加。）
+- 章節頁被筆記頁用 iframe 嵌入時網址帶 `?embed=1`，`app.js` 會加上 `.embed` class 隱藏頂欄。
+- 筆跡座標一律存**頁面座標**（寬 1000、高 1414），不存像素。
+- 紙色與墨水色是「筆記內容」，定義在 `render.js`，**不跟網站明暗主題變**（例外於「顏色從 C 取」）；
+  介面 chrome 仍一律吃 app.css token。
+- 發佈 artifact 時要帶 `capabilities: {db:{}, user:{}, downloads:true}`，雲端同步與匯出才會動。
+  （宣告 db 之後 artifact 只能在組織內分享、不能公開。）
 
 - 科目主色用 `<body data-subject="…">`，chrome 一律吃 `--accent`。
   電子學 `#2a55e0` 藍｜電路學 `#0f7a66` 墨綠｜工程數學 `#6a4bbc` 紫。

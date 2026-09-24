@@ -290,3 +290,33 @@
     clamp, lerp, sci, sup, K_EV, TAU, MONO, BODY, REDUCED, pointerPos, $, $$,
     registerTerms, wireTerms, liveExample };
 })();
+
+/* ============================================================
+   章節頁右上角的「✎ 筆記」：打開這一章專屬的手寫筆記本
+   （筆記本不存在就自動建一本，綁定這一章，可以邊看講義邊寫）
+   ============================================================ */
+(function () {
+  'use strict';
+  const embed = /[?&]embed=1\b/.test(location.search);
+  if (embed) document.documentElement.classList.add('embed');
+  function addNotesButton() {
+    if (embed || !document.querySelector('.rail')) return;
+    const theme = document.getElementById('theme-btn');
+    if (!theme || document.getElementById('notes-btn')) return;
+    const parts = location.pathname.replace(/\.html$/, '').split('/').filter(Boolean);
+    if (parts.length < 2) return;
+    const key = parts.slice(-2).join('/');
+    const crumbs = document.querySelectorAll('.crumbs a, .crumbs b');
+    const subj = crumbs.length >= 2 ? crumbs[crumbs.length - 2].textContent.trim() : '';
+    const here = crumbs.length ? crumbs[crumbs.length - 1].textContent.trim() : document.title;
+    const title = (subj && subj !== '主頁' ? subj + ' · ' : '') + here;
+    const a = document.createElement('a');
+    a.id = 'notes-btn'; a.className = 'btn notes-btn';
+    a.href = '../notes/note.html#ch=' + encodeURIComponent(key) + '&t=' + encodeURIComponent(title);
+    a.innerHTML = '✎ <span>筆記</span>';
+    a.title = '打開這一章的手寫筆記（可以邊看講義邊寫）';
+    theme.parentNode.insertBefore(a, theme);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', addNotesButton);
+  else addNotesButton();
+})();

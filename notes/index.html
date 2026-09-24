@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>手寫筆記</title>
+<meta name="description" content="像 GoodNotes 一樣用 Apple Pencil 寫筆記，每一章都能開一本、邊看講義邊寫，自動存檔。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="assets/notes.css">
+</head>
+<body data-subject="notes">
+
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><b>手寫筆記</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="home" style="max-width:980px">
+  <div class="home-hero">
+    <div class="eyebrow">Handwritten notes · 給 iPad + Apple Pencil</div>
+    <h1>手寫筆記</h1>
+    <p>像 GoodNotes 一樣用筆寫：有壓感、套索、按住拉直線、多頁。每一章講義都可以開一本，<b>左邊看講義、右邊寫</b>。寫完不用按存檔。</p>
+  </div>
+
+  <dl class="save-state" aria-label="儲存狀態">
+    <div><dt>這台裝置</dt><dd id="st-local">檢查中…</dd></div>
+    <div><dt>雲端同步</dt><dd id="st-cloud">檢查中…</dd></div>
+    <div><dt>備份</dt><dd id="st-backup">—</dd></div>
+  </dl>
+
+  <div class="lib-actions">
+    <button class="btn solid" type="button" id="btn-new">＋ 新筆記本</button>
+    <span class="spacer"></span>
+    <button class="btn" type="button" id="btn-export">匯出備份</button>
+    <button class="btn" type="button" id="btn-import">匯入備份</button>
+    <input type="file" id="file-import" accept="application/json,.json" hidden>
+  </div>
+
+  <div class="chap-group">我的筆記本 · <span id="count">0</span> 本 · <span id="pages-count">0</span> 頁</div>
+  <div class="shelf" id="shelf"></div>
+  <p class="empty-shelf" id="empty">還沒有筆記本。按「＋ 新筆記本」，或在任何一章講義的右上角按「✎ 筆記」，會自動開一本綁定那一章的。</p>
+
+  <div class="chap-group">怎麼用</div>
+  <div class="howto">
+    <h4>跟 GoodNotes 差不多，幾個重點</h4>
+    <ol>
+      <li><b>筆寫字、手指捲動。</b>手掌放在螢幕上也不會亂畫。兩指捏合可以縮放。沒有觸控筆的話，在筆記裡按 ⚙ 打開「手指也能寫字」。</li>
+      <li><b>畫直線：畫完先別放開，停半秒。</b>線會自動拉直，接著移動筆尖只會改終點 —— 畫電路圖、座標軸很方便。</li>
+      <li><b>套索</b>把字圈起來：拖曳移動、複製、改顏色、刪除。</li>
+      <li><b>橡皮擦</b>預設整筆擦掉；⚙ 可以切成「只擦碰到的部分」。擦錯按 ↶ 復原。</li>
+      <li><b>⋯ 選單</b>：換這一頁的背景（方格／橫線／點格／空白）、換整本的紙色、匯出成 PNG、刪除頁面。</li>
+      <li><b>邊看講義邊寫：</b>從章節頁按「✎ 筆記」進來的筆記本，工具列會多一個「講義並排」。</li>
+    </ol>
+  </div>
+  <div class="pitfall">
+    <h4>資料存在哪裡？</h4>
+    <ul>
+      <li><span class="o">✓</span> 每一筆都會存在<b>這台裝置的瀏覽器</b>裡（離線也能寫）。在 claude.ai 上打開時，還會同步到只有你看得到的雲端空間，換裝置也看得到。</li>
+      <li><span class="x">✗</span> <b>清除 Safari 的網站資料、或用無痕模式</b>，本機那份就會消失。重要的筆記請定期按「匯出備份」存一份 .json，要還原時按「匯入備份」。</li>
+    </ul>
+  </div>
+</div>
+<div class="nb-toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/store.js"></script>
+<script src="assets/render.js"></script>
+<script src="assets/library.js"></script>
+</body>
+</html>

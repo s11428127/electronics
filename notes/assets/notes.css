@@ -1,0 +1,202 @@
+/* ============================================================
+   手寫筆記 —— 介面樣式（色票一律吃 shared/app.css 的 token）
+   紙張與墨水顏色屬於「筆記內容」，不跟網站明暗主題切換，定義在 ink.js 的 PAPER / INKS。
+   ============================================================ */
+
+/* 有 display 的元件（工具列按鈕、講義窗格…）也要吃得到 hidden 屬性 */
+[hidden] { display: none !important; }
+
+/* ---------- 書櫃（notes/index.html） ---------- */
+.lib-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 22px 0 6px; }
+.lib-actions .spacer { flex: 1; }
+.shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 16px; margin-top: 18px; }
+.book {
+  position: relative; display: flex; flex-direction: column; gap: 8px;
+  text-decoration: none; color: inherit; min-width: 0;
+}
+.book .cover {
+  aspect-ratio: 1000 / 1414; border-radius: 6px 10px 10px 6px; overflow: hidden;
+  border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--surface-2);
+  position: relative; transition: transform .15s ease, border-color .15s ease;
+}
+.book .cover::before {           /* 書背那條線，一眼看出是「一本」 */
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 7px;
+  background: color-mix(in srgb, var(--accent) 70%, transparent); z-index: 1;
+}
+.book .cover canvas { width: 100%; height: 100%; display: block; }
+a.book:hover .cover { transform: translateY(-2px); border-color: var(--accent); }
+.book b { font-family: var(--font-display); font-size: 15px; font-weight: 600; line-height: 1.35;
+  overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.book .meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+.book .chip-ch {
+  align-self: flex-start; font-family: var(--font-mono); font-size: 10.5px; color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 999px; padding: 1px 8px;
+  max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.book .more {
+  position: absolute; top: 8px; right: 8px; z-index: 2; width: 30px; height: 30px; border-radius: 8px;
+  border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 88%, transparent);
+  color: var(--ink-2); cursor: pointer; font-size: 16px; line-height: 1;
+}
+.book.new .cover {
+  display: grid; place-items: center; border-style: dashed; box-shadow: none;
+  background: transparent; color: var(--ink-3); font-size: 34px;
+}
+.book.new .cover::before { display: none; }
+button.book { border: 0; background: none; padding: 0; font: inherit; text-align: left; cursor: pointer; }
+.empty-shelf { color: var(--ink-3); font-size: 14px; }
+
+/* 儲存狀態 */
+.save-state {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px;
+  background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 10px; overflow: hidden; margin: 22px 0 0;
+}
+.save-state > div { background: var(--surface); padding: 12px 15px; font-size: 13px; color: var(--ink-2); line-height: 1.6; }
+.save-state dt { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 3px; }
+.save-state dd { margin: 0; }
+.save-state .ok { color: var(--ok); font-weight: 600; }
+.save-state .warn { color: var(--warn); font-weight: 600; }
+.save-state .bad { color: var(--bad); font-weight: 600; }
+
+/* 對話框（新增 / 重新命名） */
+.dlg {
+  position: absolute; z-index: 80; width: min(360px, calc(100vw - 32px));
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 18px 50px -20px rgba(0,0,0,.45); padding: 16px;
+}
+.dlg h4 { margin: 0 0 12px; font-size: 15px; }
+.dlg label { display: block; font-size: 12.5px; color: var(--ink-3); margin: 10px 0 5px; font-family: var(--font-mono); letter-spacing: .04em; }
+.dlg input[type="text"], .dlg select {
+  width: 100%; box-sizing: border-box; font: inherit; font-size: 15px; color: var(--ink);
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px;
+}
+.dlg .seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.dlg .row-end { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.dlg-scrim { position: fixed; inset: 0; z-index: 79; background: rgba(0,0,0,.18); }
+
+/* ---------- 編輯器（notes/note.html） ---------- */
+body.nb-app {
+  height: 100vh; height: 100dvh; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+body.nb-app .topbar { position: relative; top: 0; flex: none; }
+.nb-title {
+  font: inherit; font-family: var(--font-body); font-weight: 600; font-size: 13.5px; color: var(--ink);
+  background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 2px 6px;
+  min-width: 0; width: 100%; max-width: 280px; text-overflow: ellipsis;
+}
+.nb-title:hover, .nb-title:focus { border-color: var(--line); background: var(--surface); outline: none; }
+.sync-chip {
+  flex: none; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3);
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; white-space: nowrap;
+}
+.sync-chip.on { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); }
+.sync-chip.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 45%, var(--line)); }
+.sync-chip.bad { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 45%, var(--line)); }
+
+.nb-tools {
+  flex: none; display: flex; align-items: center; gap: 6px;
+  padding: 7px 12px; background: var(--surface); border-bottom: 1px solid var(--line);
+  overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.nb-tools::-webkit-scrollbar { display: none; }
+.nb-tools .sep { flex: none; width: 1px; height: 26px; background: var(--line); margin: 0 4px; }
+.nb-tools .spacer { flex: 1; min-width: 4px; }
+.tb {
+  flex: none; height: 38px; min-width: 38px; padding: 0 9px; border-radius: 9px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  background: transparent; border: 1px solid transparent; color: var(--ink-2);
+  font-family: var(--font-body); font-size: 12.5px; cursor: pointer; white-space: nowrap;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.tb:hover { background: var(--surface-2); }
+.tb[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 15%, var(--surface)); border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); color: var(--accent); }
+.tb:disabled { opacity: .35; cursor: default; background: transparent; }
+.tb svg { width: 20px; height: 20px; flex: none; }
+.tb .lbl { font-size: 12px; }
+.swatch {
+  flex: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; padding: 0;
+  border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line); touch-action: manipulation;
+}
+.swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); }
+.size-dot { flex: none; width: 34px; height: 34px; border-radius: 9px; border: 1px solid transparent; background: transparent;
+  display: grid; place-items: center; cursor: pointer; touch-action: manipulation; }
+.size-dot i { display: block; border-radius: 50%; background: var(--ink-2); }
+.size-dot[aria-pressed="true"] { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); background: color-mix(in srgb, var(--accent) 12%, var(--surface)); }
+.size-dot[aria-pressed="true"] i { background: var(--accent); }
+.pg-ind { flex: none; font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); min-width: 52px; text-align: center; }
+
+.nb-main { flex: 1; min-height: 0; display: flex; }
+.nb-ref { flex: 0 0 46%; min-width: 0; border-right: 1px solid var(--line); background: var(--paper); display: flex; flex-direction: column; }
+.nb-ref iframe { flex: 1; width: 100%; border: 0; background: var(--paper); }
+.nb-ref-head { flex: none; display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-3); }
+.nb-ref-head .spacer { flex: 1; }
+.nb-scroll {
+  flex: 1; min-width: 0; overflow: auto; background: var(--surface-3);
+  -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+}
+.nb-pages { padding: 18px 12px 80px; display: flex; flex-direction: column; align-items: center; gap: 18px; width: max-content; min-width: 100%; box-sizing: border-box; }
+.nb-page {
+  position: relative; flex: none; border-radius: 3px; overflow: visible;
+  box-shadow: 0 1px 2px rgba(0,0,0,.12), 0 10px 30px -18px rgba(0,0,0,.5);
+  touch-action: pan-x pan-y;               /* 手指捲動交給瀏覽器；筆由程式接手 */
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+}
+body.finger-draw .nb-page { touch-action: none; }
+.nb-page canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border-radius: 3px; }
+.nb-page .pg-no { position: absolute; right: 8px; bottom: -17px; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); }
+.nb-page.tool-eraser, .nb-page.tool-lasso { cursor: crosshair; }
+.nb-page.tool-pen, .nb-page.tool-hl { cursor: crosshair; }
+
+/* 套索選取後浮出來的小工具列 —— 放在頁面座標裡，捲動時跟著筆跡走 */
+.sel-bar {
+  position: absolute; z-index: 5; display: flex; gap: 4px; padding: 4px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  box-shadow: 0 10px 28px -14px rgba(0,0,0,.5); white-space: nowrap;
+}
+.sel-bar button { font: inherit; font-size: 12.5px; color: var(--ink); background: transparent; border: 0; border-radius: 7px; padding: 6px 10px; cursor: pointer; }
+.sel-bar button:hover { background: var(--surface-2); }
+.sel-bar .danger { color: var(--bad); }
+
+/* 下拉選單（頁面座標定位） */
+.nb-menu {
+  position: absolute; z-index: 70; min-width: 220px; max-width: calc(100vw - 24px);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 18px 50px -20px rgba(0,0,0,.5); padding: 6px;
+}
+.nb-menu h5 { margin: 8px 10px 4px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; color: var(--ink-3); font-weight: 500; text-transform: uppercase; }
+.nb-menu button {
+  display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
+  font: inherit; font-size: 14px; color: var(--ink); background: transparent; border: 0; border-radius: 8px; padding: 9px 10px; cursor: pointer;
+}
+.nb-menu button:hover { background: var(--surface-2); }
+.nb-menu button[aria-checked="true"]::after { content: "✓"; margin-left: auto; color: var(--accent); font-weight: 700; }
+.nb-menu .danger { color: var(--bad); }
+.nb-menu hr { border: 0; border-top: 1px solid var(--line-soft); margin: 5px 4px; }
+
+.nb-toast {
+  position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px);
+  z-index: 90; background: var(--ink); color: var(--paper); font-size: 13px; padding: 9px 14px; border-radius: 10px;
+  opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; max-width: calc(100vw - 32px); text-align: center;
+}
+.nb-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.nb-hint {
+  position: absolute; z-index: 4; left: 50%; top: 14px; transform: translateX(-50%);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow);
+  font-size: 13px; color: var(--ink-2); padding: 9px 12px; width: min(420px, calc(100% - 24px)); box-sizing: border-box; line-height: 1.6;
+}
+.nb-hint b { color: var(--ink); }
+.nb-hint button { margin-left: 6px; }
+
+@media (max-width: 560px) {
+  .nb-tools { padding: 6px 8px; gap: 4px; }
+  .tb .lbl { display: none; }
+  .nb-title { max-width: 150px; }
+  .sync-chip { display: none; }
+}
+
+/* 書櫃頁借用教學元件的外框，但標籤換成這裡的語意 */
+body[data-subject="notes"] .howto > h4::before { content: "操作"; }
+body[data-subject="notes"] .pitfall > h4::before { content: "注意"; }

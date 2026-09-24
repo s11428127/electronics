@@ -437,6 +437,25 @@ body[data-subject="math"] { --accent: #6a4bbc; }
 :root[data-theme="dark"] body[data-subject="circuits"] { --accent: #46c2a5; }
 :root[data-theme="dark"] body[data-subject="math"] { --accent: #a992f0; }
 
+/* 手寫筆記：琥珀色（鉛筆、紙張的聯想），不跟三個科目撞色 */
+body[data-subject="notes"] { --accent: #b45309; }
+:root:not([data-theme="light"]) body[data-subject="notes"] { --accent: #f0a24a; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) body[data-subject="notes"] { --accent: #b45309; }
+}
+:root[data-theme="dark"] body[data-subject="notes"] { --accent: #f0a24a; }
+
+/* 章節頁右上角的「✎ 筆記」按鈕 */
+a.btn.notes-btn {
+  display: inline-flex; align-items: center; gap: 4px; flex: none; text-decoration: none; white-space: nowrap;
+  font-family: var(--font-body); font-size: 12.5px; color: var(--ink); padding: 5px 11px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 7px;
+}
+a.btn.notes-btn:hover { border-color: var(--accent); color: var(--accent); }
+/* 被筆記頁用 iframe 嵌進去時，不需要自己的頂欄；章節列也就貼齊頂端 */
+.embed .topbar { display: none; }
+.embed .rail { top: 0; }
+
 /* ============================================================
    中英對照名詞：中文讀書、英文考試
    ============================================================ */

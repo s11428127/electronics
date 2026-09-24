@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>手寫筆記</title>
+<meta name="description" content="用 Apple Pencil 寫筆記：壓感、套索、直線、多頁，自動存檔。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="assets/notes.css">
+</head>
+<body data-subject="notes" class="nb-app">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置" style="flex:1">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">手寫筆記</a><span>›</span>
+      <input class="nb-title" id="nb-title" type="text" aria-label="筆記本名稱" value="">
+    </nav>
+    <span class="sync-chip" id="sync-chip">載入中…</span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="nb-tools" role="toolbar" aria-label="筆記工具">
+  <button class="tb" type="button" data-tool="pen" aria-pressed="true" title="筆（P）">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.2-4.6L16.6 4a2 2 0 012.8 0l.6.6a2 2 0 010 2.8L8.6 18.8z"/><path d="M14.5 6.1l3.4 3.4"/></svg><span class="lbl">筆</span></button>
+  <button class="tb" type="button" data-tool="hl" aria-pressed="false" title="螢光筆（H）">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14l-3 3v3h3l3-3"/><path d="M9 14l7.5-7.5a2 2 0 012.8 0l.2.2a2 2 0 010 2.8L12 17z"/><path d="M4 21h16" opacity=".45"/></svg><span class="lbl">螢光筆</span></button>
+  <button class="tb" type="button" data-tool="eraser" aria-pressed="false" title="橡皮擦（E）">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 20H20"/><path d="M4.6 14.6l8.8-8.8a2 2 0 012.8 0l3 3a2 2 0 010 2.8L12 18.8a4 4 0 01-5.6 0l-1.8-1.8a1.7 1.7 0 010-2.4z"/><path d="M9 10.2l5.8 5.8"/></svg><span class="lbl">橡皮擦</span></button>
+  <button class="tb" type="button" data-tool="lasso" aria-pressed="false" title="套索（L）">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="3 2.6"><path d="M12 4c4.8 0 8 2.4 8 5.4S16.8 15 12 15s-8-2.4-8-5.6S7.2 4 12 4z"/><path d="M7.5 14c-.8 1.6-.4 3.2 1 4.3s1 2.2-.3 2.7" stroke-dasharray="none"/></svg><span class="lbl">套索</span></button>
+  <span class="sep"></span>
+  <span id="swatches" style="display:flex;gap:6px;align-items:center;flex:none"></span>
+  <span id="sizes" style="display:flex;gap:2px;align-items:center;flex:none"></span>
+  <span class="sep"></span>
+  <button class="tb" type="button" id="t-undo" title="復原（⌘Z）" aria-label="復原" disabled>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/></svg></button>
+  <button class="tb" type="button" id="t-redo" title="重做（⇧⌘Z）" aria-label="重做" disabled>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14l5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 000 11H13"/></svg></button>
+  <span class="spacer"></span>
+  <button class="tb" type="button" id="t-ref" aria-pressed="false" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/><path d="M6 8h3M6 11h3M15 8h3"/></svg><span class="lbl">講義並排</span></button>
+  <button class="tb" type="button" id="t-zout" aria-label="縮小">−</button>
+  <button class="tb" type="button" id="z-ind" title="回到 100%" style="min-width:52px;font-family:var(--font-mono);font-size:12px">100%</button>
+  <button class="tb" type="button" id="t-zin" aria-label="放大">＋</button>
+  <span class="sep"></span>
+  <button class="tb" type="button" id="t-addpg" title="在後面新增一頁">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M12 10v7M8.5 13.5h7"/></svg><span class="lbl">加一頁</span></button>
+  <span class="pg-ind" id="pg-ind">1 / 1</span>
+  <button class="tb" type="button" id="t-page" aria-label="這一頁的設定" title="背景、紙色、匯出、刪除">
+    <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>
+  <button class="tb" type="button" id="t-set" aria-label="書寫設定" title="手指書寫、橡皮擦模式">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 01-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 010-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 014 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 010 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg></button>
+</div>
+
+<div class="nb-main">
+  <aside class="nb-ref" id="ref" hidden>
+    <div class="nb-ref-head"><span id="ref-title">講義</span><span class="spacer"></span>
+      <a id="ref-open" href="#" style="font-size:11.5px">整頁打開</a>
+      <button class="tb" type="button" id="ref-close" aria-label="關閉講義" style="height:28px;min-width:28px">✕</button></div>
+    <iframe title="對照的講義"></iframe>
+  </aside>
+  <div class="nb-scroll" id="scroller"><div class="nb-pages" id="pages"></div></div>
+</div>
+<div class="nb-toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/store.js"></script>
+<script src="assets/render.js"></script>
+<script src="assets/ink.js"></script>
+</body>
+</html>
