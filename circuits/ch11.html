@@ -10,8 +10,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
 </head>
-<body data-subject="circuits">
+<body data-subject="circuits" data-look="clean">
 <div class="topbar">
   <div class="topbar-in">
     <nav class="crumbs" aria-label="所在位置">
@@ -26,6 +27,7 @@
   <nav class="rail" aria-label="章節導覽">
     <div class="rail-title">CH11 AC POWER</div>
     <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
       <li><a href="#map"><i>00</i>課程地圖</a></li>
       <li><a href="#inst"><i>11.2</i>瞬時功率與平均功率</a></li>
       <li><a href="#mpt"><i>11.3</i>最大平均功率轉移</a></li>
@@ -53,10 +55,18 @@
       </div>
     </div>
 
+    <!-- ══════════ 故事模式 ══════════ -->
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>Story mode · 先看這段，再往下讀</div>
+      <h2>11 個畫面看懂這一章<span class="h2-en">THE STORY IN 11 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。<strong>先建立直覺</strong>，再往下讀推導、玩互動模組、看例題。</p>
+      <div id="story"></div>
+    </section>
+
     <!-- ══════════ 課程地圖 ══════════ -->
     <section class="sec" id="map">
       <div class="eyebrow">Course map</div>
-      <h2>本章結構</h2>
+      <h2>本章結構<span class="h2-en">COURSE MAP</span></h2>
       <p class="lede">課本：Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 11。下面每一節都對應一個可操作的模組。</p>
       <div class="outline">
         <div class="outline-row done"><code>11.1</code><b>導論 <span style="color:var(--ink-3);font-weight:400">Introduction</span></b><span class="dot"></span></div>
@@ -121,7 +131,7 @@
     <!-- ══════════ 11.2 瞬時功率 ══════════ -->
     <section class="sec" id="inst">
       <div class="eyebrow">11.2 · Instantaneous and Average Power</div>
-      <h2>瞬時功率與平均功率</h2>
+      <h2>瞬時功率與平均功率<span class="h2-en">INSTANTANEOUS &amp; AVERAGE POWER</span></h2>
       <p class="lede"><span class="tm" data-t="瞬時功率">瞬時功率<i>instantaneous power</i></span> p(t) = v(t)·i(t) 是「某一瞬間」吸收功率的速率。把它展開會發現它由<strong>一個固定值</strong>加上<strong>一個以 2ω 擺盪的弦波</strong>組成 —— 那個固定值就是<span class="tm" data-t="平均功率">平均功率<i>average power</i></span> P。</p>
       <div class="eq">p(t) = ½V<em>m</em>I<em>m</em> cos(θv − θi) &nbsp;+&nbsp; ½V<em>m</em>I<em>m</em> cos(2ωt + θv + θi)</div>
       <div class="derive">
@@ -228,7 +238,7 @@
     <!-- ══════════ 11.3 最大功率轉移 ══════════ -->
     <section class="sec" id="mpt">
       <div class="eyebrow">11.3 · Maximum Average Power Transfer</div>
-      <h2>最大平均功率轉移</h2>
+      <h2>最大平均功率轉移<span class="h2-en">MAXIMUM AVERAGE POWER TRANSFER</span></h2>
       <p class="lede">直流時的結論是 R<sub>L</sub> = R<sub>Th</sub>。交流時要多考慮電抗：先用 X<sub>L</sub> 把 X<sub>Th</sub> <strong>抵銷掉</strong>，再用 R<sub>L</sub> 去匹配 R<sub>Th</sub>。合起來就是<span class="tm" data-t="共軛匹配">共軛匹配<i>conjugate matching</i></span>。</p>
       <div class="eq">Z<em>L</em> = Z<em>Th</em>*　（即 R<em>L</em> = R<em>Th</em>，X<em>L</em> = −X<em>Th</em>）　⟹　P<em>max</em> = |V<em>Th</em>|² / (8R<em>Th</em>)</div>
 
@@ -337,7 +347,7 @@
     <!-- ══════════ 11.4 RMS ══════════ -->
     <section class="sec" id="rms">
       <div class="eyebrow">11.4 · Effective or RMS Value</div>
-      <h2><button class="tm" data-t="有效值">有效值</button>（均方根值 rms）</h2>
+      <h2><button class="tm" data-t="有效值">有效值</button>（均方根值 rms）<span class="h2-en">EFFECTIVE (RMS) VALUE</span></h2>
       <p class="lede">為什麼台灣市電叫「110 V」但波峰其實有 155 V？因為那個 110 是<span class="tm" data-t="有效值">有效值<i>effective value</i></span>：<strong>能對同一個電阻送出相同平均功率的那個等效直流值</strong>。名字 root-mean-square 就是它的算法，倒著唸即可。</p>
       <div class="eq">X<em>rms</em> = √( (1/T) ∫₀ᵀ x²(t) dt )　←　先平方 square、再平均 mean、最後開根號 root</div>
 
@@ -471,7 +481,7 @@
     <!-- ══════════ 11.5 功率因數 ══════════ -->
     <section class="sec" id="pf">
       <div class="eyebrow">11.5 · Apparent Power and Power Factor</div>
-      <h2>視在功率與功率因數</h2>
+      <h2>視在功率與功率因數<span class="h2-en">APPARENT POWER &amp; POWER FACTOR</span></h2>
       <p class="lede">把 V<sub>rms</sub> 乘上 I<sub>rms</sub>「看起來」就該是功率，所以叫<span class="tm" data-t="視在功率">視在功率<i>apparent power</i></span> S，單位是 VA。但真正被消耗的只有 S 的一部分，那個折扣率就是<span class="tm" data-t="功率因數">功率因數<i>power factor</i></span>。</p>
       <div class="eq">S = V<em>rms</em>I<em>rms</em> (VA)　　pf = P/S = cos(θv − θi)　　P = S·pf (W)</div>
 
@@ -554,7 +564,7 @@
     <!-- ══════════ 11.6 複功率 ══════════ -->
     <section class="sec" id="tri">
       <div class="eyebrow">11.6 · Complex Power</div>
-      <h2>複功率與功率三角形</h2>
+      <h2>複功率與功率三角形<span class="h2-en">COMPLEX POWER · POWER TRIANGLE</span></h2>
       <p class="lede"><span class="tm" data-t="複功率">複功率<i>complex power</i></span> S 把這章所有資訊包成一個複數：<strong>實部是 P、虛部是 Q、大小是視在功率、相角的餘弦是功率因數</strong>。一個 S 在手，四個量全有。</p>
       <div class="eq">S = V<em>rms</em>·I*<em>rms</em> = P + jQ　　|S| = √(P² + Q²)　　S = I²<em>rms</em>Z = V²<em>rms</em>/Z*</div>
       <div class="derive">
@@ -670,7 +680,7 @@
     <!-- ══════════ 11.7 守恆 ══════════ -->
     <section class="sec" id="cons">
       <div class="eyebrow">11.7 · Conservation of AC Power</div>
-      <h2>交流功率守恆</h2>
+      <h2>交流功率守恆<span class="h2-en">CONSERVATION OF AC POWER</span></h2>
       <p class="lede">不管負載是串聯還是並聯，<strong>電源送出的複功率 = 各負載吸收的複功率總和</strong>。但這裡藏著這一章最常被扣分的地方。</p>
       <div class="eq">S = S₁ + S₂ + ⋯ + S<em>N</em>　　P = ΣP<em>i</em>　　Q = ΣQ<em>i</em>　　但 |S| ≠ Σ|S<em>i</em>|</div>
 
@@ -791,7 +801,7 @@
     <!-- ══════════ 11.8 功因校正 ══════════ -->
     <section class="sec" id="pfc">
       <div class="eyebrow">11.8 · Power Factor Correction</div>
-      <h2>功率因數校正</h2>
+      <h2>功率因數校正<span class="h2-en">POWER FACTOR CORRECTION</span></h2>
       <p class="lede">工廠的馬達幾乎都是電感性、功因偏低。<span class="tm" data-t="功因校正">功因校正<i>power factor correction</i></span>就是在負載旁<strong>並聯一顆電容</strong>，用電容的 −Q 去抵銷電感的 +Q，讓功因接近 1。P 完全不變，但線電流會變小。</p>
       <div class="eq">Q<em>C</em> = Q₁ − Q₂ = P(tan θ₁ − tan θ₂)　　C = Q<em>C</em> / (ω·V²<em>rms</em>)</div>
 
@@ -912,7 +922,7 @@
     <!-- ══════════ 11.9 應用 ══════════ -->
     <section class="sec" id="app">
       <div class="eyebrow">11.9 · Applications</div>
-      <h2>應用：功率量測與電費</h2>
+      <h2>應用：功率量測與電費<span class="h2-en">POWER MEASUREMENT</span></h2>
       <p class="lede">三種儀器對應三種功率：<span class="tm" data-t="瓦特計">瓦特計<i>wattmeter</i></span>量 P、<span class="tm" data-t="乏計">乏計<i>varmeter</i></span>量 Q、<span class="tm" data-t="電表">電表<i>kilowatt-hour meter</i></span>量用電度數。</p>
       <div class="terms">
         <div><b>電流線圈 current coil</b><span>阻抗極低（理想為 0）→ 串聯在負載上</span></div>
@@ -945,7 +955,7 @@
     <!-- ══════════ 名詞對照 ══════════ -->
     <section class="sec" id="glossary">
       <div class="eyebrow">Glossary · 中英對照</div>
-      <h2>名詞中英對照表</h2>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
       <p class="lede">考卷上會出現的是右邊那欄。讀書用中文、寫題目認英文。</p>
       <div class="glossary">
         <div class="gl-row"><b>中文</b><span>English</span><code>單位</code></div>
@@ -974,7 +984,7 @@
     <!-- ══════════ 測驗 ══════════ -->
     <section class="sec" id="quiz-sec">
       <div class="eyebrow">自我檢查</div>
-      <h2>觀念小測驗</h2>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
       <p class="lede">15 題，中英對照。題目下方那行英文就是考卷上會看到的講法。</p>
       <div class="quiz" id="quiz"></div>
     </section>
@@ -988,5 +998,7 @@
 <script src="../shared/app.js"></script>
 <script src="../shared/terms.js"></script>
 <script src="assets/ch11.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch11-story.js"></script>
 </body>
 </html>

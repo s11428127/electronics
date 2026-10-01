@@ -4,14 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>P 型半導體與載子輸運</title>
-<meta name="description" content="電子學 CH1 PART 2 互動講義：受體摻雜、質量作用定律、漂移與擴散電流、導電度。">
+<meta name="description" content="電子學 CH1 PART 2 互動講義：受體摻雜、質量作用定律、電流密度、漂移與擴散電流、導電度、愛因斯坦關係、多出載子。">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
 </head>
-<body>
+<body data-subject="electronics" data-look="clean">
 <div class="topbar">
   <div class="topbar-in">
     <nav class="crumbs" aria-label="所在位置">
@@ -26,14 +27,18 @@
   <nav class="rail" aria-label="章節導覽">
     <div class="rail-title">CH1 PART 2</div>
     <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
       <li><a href="#map"><i>00</i>這段在講什麼</a></li>
       <li><a href="#ptype"><i>01</i>P 型半導體（受體）</a></li>
       <li><a href="#compare"><i>02</i>N 型 vs P 型總整理</a></li>
       <li><a href="#mass"><i>03</i>質量作用定律</a></li>
-      <li><a href="#drift"><i>04</i>漂移電流與方向</a></li>
-      <li><a href="#sigma"><i>05</i>導電度與電阻率</a></li>
-      <li><a href="#diff"><i>06</i>擴散電流</a></li>
-      <li><a href="#total"><i>07</i>總電流密度</a></li>
+      <li><a href="#ij"><i>04</i>電流 I 與電流密度 J</a></li>
+      <li><a href="#drift"><i>05</i>漂移電流與方向</a></li>
+      <li><a href="#sigma"><i>06</i>導電度與電阻率</a></li>
+      <li><a href="#diff"><i>07</i>擴散電流</a></li>
+      <li><a href="#total"><i>08</i>總電流密度</a></li>
+      <li><a href="#einstein"><i>09</i>愛因斯坦關係</a></li>
+      <li><a href="#excess"><i>10</i>多出載子</a></li>
       <li><a href="#check"><i>!</i>講義勘誤</a></li>
       <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
       <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
@@ -42,21 +47,31 @@
 
   <main>
     <div class="hero">
-      <div class="eyebrow">Chapter 1 · Part 2 · 投影片 p.31–55</div>
+      <div class="eyebrow">Chapter 1 · Part 2 · 投影片 p.31–55 ＋ PART 3 投影片 1-1～1-18</div>
       <h1>P 型半導體與載子輸運</h1>
       <p class="sub">PART 1 停在 N 型<button class="tm" data-t="摻雜">摻雜</button>。這一段先把 <strong>P 型</strong>補完，然後進入整章真正的重頭戲：<strong>載子到底怎麼動、怎麼形成電流</strong>。答案只有兩個機制 —— 被電場推的<strong>漂移</strong>，和被濃度差推的<strong>擴散</strong>。</p>
+      <p class="note">老師的 <b>PART 3 講義前 18 頁</b>（漂移／擴散改版、電流密度、愛因斯坦關係、多出載子）跟這一段是同一個主題，所以合併在這一頁；每一節標題旁的小標籤會寫它來自原講義的哪一個 PART。</p>
       <div class="hero-meta">
         <span class="chip e">電子 electron ⊖</span>
         <span class="chip h">電洞 hole ⊕</span>
-        <span class="chip">7 個互動模組</span>
-        <span class="chip">12 題中英對照測驗</span>
+        <span class="chip">13 個畫面的故事模式</span>
+        <span class="chip">11 個互動模組</span>
+        <span class="chip">16 題中英對照測驗</span>
       </div>
     </div>
 
+    <!-- ══════════ 故事模式 ══════════ -->
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 2 ＋ PART 3</span>Story mode · 先看這段，再往下讀</div>
+      <h2>13 個畫面看懂這一段<span class="h2-en">THE STORY IN 13 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。<strong>先建立直覺</strong>，再往下讀推導、玩互動模組、做例題。</p>
+      <div id="story"></div>
+    </section>
+
     <!-- ══════════ 導論 ══════════ -->
     <section class="sec" id="map">
-      <div class="eyebrow">Big picture</div>
-      <h2>這一段在講什麼</h2>
+      <div class="eyebrow"><span class="part-tag">原講義 PART 2</span>Big picture</div>
+      <h2>這一段在講什麼<span class="h2-en">THE BIG PICTURE</span></h2>
       <p class="lede">用一句話串起來：<strong><button class="tm" data-t="摻雜">摻雜</button>決定有多少載子（濃度），電場和<button class="tm" data-t="濃度梯度">濃度梯度</button>決定這些載子怎麼動（電流）</strong>。</p>
       <div class="derive">
         <h4>四步驟骨架</h4>
@@ -84,8 +99,8 @@
 
     <!-- ══════════ 01 P型 ══════════ -->
     <section class="sec" id="ptype">
-      <div class="eyebrow">01 · 投影片 p.31–32 · Extrinsic (P-Type)</div>
-      <h2>P 型半導體：<button class="tm" data-t="受體">受體</button>摻雜</h2>
+      <div class="eyebrow"><span class="part-tag">原講義 PART 2</span>01 · 投影片 p.31–32 · Extrinsic (P-Type)</div>
+      <h2>P 型半導體：<button class="tm" data-t="受體">受體</button>摻雜<span class="h2-en">P-TYPE · ACCEPTOR DOPING</span></h2>
       <p class="lede">在矽裡摻入 3 價的硼（B）。硼只有 3 個價電子，要跟 4 個鄰居形成共價鍵<strong>就是少一個</strong>。鄰近矽的價電子跑來填補，原本那個位置就變成<span class="tm">電洞<i>hole</i></span> —— 硼因此被稱為<span class="tm"><button class="tm" data-t="受體">受體</button><i>acceptor</i></span>：它「接受」電子。</p>
 
       <div class="bench">
@@ -145,8 +160,8 @@
 
     <!-- ══════════ 02 總整理 ══════════ -->
     <section class="sec" id="compare">
-      <div class="eyebrow">02 · 投影片 p.34–39 · Brief Summary</div>
-      <h2>N 型 vs P 型：一張表講完</h2>
+      <div class="eyebrow"><span class="part-tag">原講義 PART 2</span>02 · 投影片 p.34–39 · Brief Summary</div>
+      <h2>N 型 vs P 型：一張表講完<span class="h2-en">N-TYPE VS P-TYPE</span></h2>
       <div class="glossary">
         <div class="gl-row" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)"><b>項目</b><span>n 型 n-type</span><span>p 型 p-type</span></div>
         <div class="gl-row" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)"><b>摻雜 Doping</b><span>5 價・第 V 族（P、As）</span><span>3 價・第 III 族（B）</span></div>
@@ -182,8 +197,8 @@
 
     <!-- ══════════ 03 質量作用定律 ══════════ -->
     <section class="sec" id="mass">
-      <div class="eyebrow">03 · 投影片 p.40–41 · 定量分析</div>
-      <h2><button class="tm" data-t="質量作用定律">質量作用定律</button>：算出兩種載子各有多少</h2>
+      <div class="eyebrow"><span class="part-tag">原講義 PART 2</span>03 · 投影片 p.40–41 · 定量分析</div>
+      <h2><button class="tm" data-t="質量作用定律">質量作用定律</button>：算出兩種載子各有多少<span class="h2-en">LAW OF MASS ACTION</span></h2>
       <p class="lede">摻雜之後，電子和電洞各是多少？答案出奇地簡單，而且兩者是<strong>蹺蹺板關係</strong>：一個上去，另一個一定下來。</p>
       <div class="eq">n<em>o</em> · p<em>o</em> = n<em>i</em>²　（<button class="tm" data-t="熱平衡">熱平衡</button>下恆成立，與摻雜量無關）</div>
 
@@ -249,10 +264,78 @@
       </div>
     </section>
 
+    <!-- ══════════ 03b 電流 vs 電流密度（PART 3 新增）══════════ -->
+    <section class="sec" id="ij">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>投影片 1-1～1-5 · Current vs Current Density</div>
+      <h2>電流 I 與<button class="tm" data-t="電流密度">電流密度</button> J<span class="h2-en">CURRENT · CURRENT DENSITY</span></h2>
+      <p class="lede">接下來所有公式寫的都是 <strong>J</strong> 不是 I。差別只有一個：<strong>I 是整根管子每秒流過多少電荷，J 是「每一平方公分」每秒流過多少</strong>。J 跟元件做多大無關，只跟材料、載子和電場有關 —— 所以物理公式都用 J，最後要算實際電流再乘面積。</p>
+      <div class="eq">I = Q / t　　J = I / A = Q / (t·A)　　⟹　I = J · A</div>
+
+      <div class="derive">
+        <h4>漂移電流密度怎麼推出來（講義 1-3、1-4 的四步）</h4>
+        <ol>
+          <li>
+            <span class="d-eq">I = Q / t　（電流為定值時）</span>
+            <div class="why">從電流的定義出發：一段時間 t 內，通過截面的淨電荷 Q。</div>
+          </li>
+          <li>
+            <span class="d-eq">體積 V = A·L　⟹　電洞總數 = p·A·L　⟹　Q<sub>p</sub> = q·p·A·L</span>
+            <div class="why">拿一段長 L、截面 A 的半導體。p 是「每立方公分幾個電洞」，乘體積就是總數；每個帶 q，乘起來是總電荷。</div>
+          </li>
+          <li>
+            <span class="d-eq">v<sub>p</sub> = L / t　⟹　t = L / v<sub>p</sub></span>
+            <div class="why">這些電洞要全部通過右邊的截面，最遠的那顆得走完整段 L，花的時間就是 L 除以漂移速度。</div>
+          </li>
+          <li>
+            <span class="d-eq">I<sub>p</sub> = Q<sub>p</sub> / t = q·p·A·L ÷ (L / v<sub>p</sub>) = q·p·A·v<sub>p</sub></span>
+            <div class="why">代回第一步。<b>L 被消掉了</b> —— 電流跟你取多長的一段無關，這很合理。</div>
+          </li>
+          <li>
+            <span class="d-eq">J<sub>p</sub> = I<sub>p</sub> / A = q·p·v<sub>p</sub></span>
+            <div class="why">除以面積，<b>A 也消掉了</b>。這就是為什麼 J 才是「材料的性質」，I 不是。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">v<sub>p</sub> = μ<sub>p</sub>E　⟹　J<sub>p,drift</sub> = q·p·μ<sub>p</sub>·E　（同理 J<sub>n,drift</sub> = q·n·μ<sub>n</sub>·E）</span>
+            <p>代入漂移速度與移動率的關係，就得到下一節的漂移電流公式。講義寫 q、課本寫 e，<b>指的都是電荷量大小 1.6×10⁻¹⁹ C</b>。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>截面計數器：I 跟著面積變，J 不會</h3><span class="spacer"></span><span class="tag">I = J·A</span></div>
+        <div class="stage-wrap"><canvas id="cv-ij" aria-label="載子流過一根管子的截面，計算每秒通過的電荷"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="ij-p">載子濃度 p（相對）<output for="ij-p"></output></label>
+            <input type="range" id="ij-p" min="1" max="4" step="1" value="2"></div>
+          <div class="ctrl"><label for="ij-v">漂移速度 v（相對）<output for="ij-v"></output></label>
+            <input type="range" id="ij-v" min="1" max="4" step="1" value="2"></div>
+          <div class="ctrl"><label for="ij-a">截面積 A（相對）<output for="ij-a"></output></label>
+            <input type="range" id="ij-a" min="1" max="3" step="1" value="1"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>每秒通過截面</dt><dd id="ij-cnt">—</dd></div>
+          <div><dt>電流 I ∝ p·v·A</dt><dd id="ij-i">—</dd></div>
+          <div><dt>電流密度 J ∝ p·v</dt><dd id="ij-j" class="e">—</dd></div>
+        </dl>
+        <div class="msg" id="ij-msg"></div>
+      </div>
+
+      <div id="ex-ij"></div>
+
+      <div class="pitfall">
+        <h4>I 和 J 常見的錯</h4>
+        <ul>
+          <li><span class="x">✗</span> 把 J 當成電流直接報答案。<span class="o">J 的單位是 A/cm²</span>，要乘截面積才是安培。</li>
+          <li><span class="x">✗</span> 面積單位沒換。<span class="o">1 μm = 10⁻⁴ cm，所以 1 μm² = 10⁻⁸ cm²</span>（平方之後是 10⁻⁸，不是 10⁻⁴）。</li>
+          <li><span class="x">✗</span> 以為 J 很大電流就很大。半導體 J 動輒幾百 A/cm²，但元件截面只有幾十 μm 見方，實際電流只有<b>幾 mA</b>（講義 1-8、1-13 的 NOTE）。</li>
+        </ul>
+      </div>
+    </section>
+
     <!-- ══════════ 04 漂移 ══════════ -->
     <section class="sec" id="drift">
-      <div class="eyebrow">04 · 投影片 p.42–45 · Drift Current</div>
-      <h2><button class="tm" data-t="漂移電流">漂移電流</button>：電場推著載子跑</h2>
+      <div class="eyebrow"><span class="part-tag">原講義 PART 2 ＋ PART 3</span>05 · PART 2 p.42–45 · PART 3 1-6 · Drift Current</div>
+      <h2><button class="tm" data-t="漂移電流">漂移電流</button>：電場推著載子跑<span class="h2-en">DRIFT CURRENT</span></h2>
       <p class="lede">載子會動，只有兩個原因：<strong>電場推</strong>（<span class="tm">漂移<i>drift</i></span>）或<strong>濃度差擠</strong>（<span class="tm">擴散<i>diffusion</i></span>）。這一節先講漂移 —— 而且有一個超容易搞混的點：<strong>電子和電洞跑的方向相反，電流方向卻相同</strong>。</p>
       <div class="eq">v<em>dn</em> = −μ<em>n</em>E　⟹　J<em>n</em> = e·n·μ<em>n</em>·E　　　v<em>dp</em> = +μ<em>p</em>E　⟹　J<em>p</em> = e·p·μ<em>p</em>·E</div>
 
@@ -306,8 +389,8 @@
 
     <!-- ══════════ 05 導電度 ══════════ -->
     <section class="sec" id="sigma">
-      <div class="eyebrow">05 · 投影片 p.49–51 · Conductivity</div>
-      <h2>總漂移電流、<button class="tm" data-t="導電度">導電度</button>與<button class="tm" data-t="電阻率">電阻率</button></h2>
+      <div class="eyebrow"><span class="part-tag">原講義 PART 2 ＋ PART 3</span>06 · PART 2 p.49–51 · PART 3 1-6～1-8 · Conductivity</div>
+      <h2>總漂移電流、<button class="tm" data-t="導電度">導電度</button>與<button class="tm" data-t="電阻率">電阻率</button><span class="h2-en">CONDUCTIVITY · RESISTIVITY</span></h2>
       <p class="lede">兩種載子的電流都與 E 同向，所以直接相加。整理之後會跑出一個<strong>只跟材料有關的係數</strong> —— 那就是<span class="tm"><button class="tm" data-t="導電度">導電度</button><i>conductivity</i></span> σ。</p>
       <div class="eq">J = J<em>n</em> + J<em>p</em> = e(n·μ<em>n</em> + p·μ<em>p</em>)E ≡ σE = (1/ρ)E</div>
 
@@ -370,8 +453,8 @@
 
     <!-- ══════════ 06 擴散 ══════════ -->
     <section class="sec" id="diff">
-      <div class="eyebrow">06 · 投影片 p.52–54 · Diffusion Current</div>
-      <h2><button class="tm" data-t="擴散電流">擴散電流</button>：濃度不均也會產生電流</h2>
+      <div class="eyebrow"><span class="part-tag">原講義 PART 2 ＋ PART 3</span>07 · PART 2 p.52–54 · PART 3 1-9～1-13 · Diffusion Current</div>
+      <h2><button class="tm" data-t="擴散電流">擴散電流</button>：濃度不均也會產生電流<span class="h2-en">DIFFUSION CURRENT</span></h2>
       <p class="lede">就算<strong>完全沒有電場</strong>，只要載子分布不均勻，它們也會自己從濃的地方往稀的地方跑 —— 就像一滴墨水在水裡會自己散開。這種流動一樣構成電流。</p>
       <div class="eq">J<em>n</em> = +e·D<em>n</em>·(dn/dx)　　　J<em>p</em> = −e·D<em>p</em>·(dp/dx)</div>
 
@@ -420,6 +503,23 @@
         <div class="msg" id="diff-note"></div>
       </div>
 
+
+      <div class="bench" id="dprac">
+        <div class="bench-head"><h3>練習：擴散往哪跑、電流往哪流？（講義 1-11、1-12）</h3><span class="spacer"></span><span class="tag" id="dp-score">0 / 0</span></div>
+        <div class="stage-wrap"><canvas id="cv-dprac" aria-label="濃度對位置的圖，判斷擴散方向與電流方向"></canvas></div>
+        <div style="padding:12px 16px 4px;display:grid;gap:10px">
+          <div class="btn-row"><b style="font-size:13.5px;min-width:5.5em">① 載子往哪擴散</b>
+            <button class="btn" type="button" data-dp="flow" data-v="-1">← 往 −x</button>
+            <button class="btn" type="button" data-dp="flow" data-v="1">往 +x →</button></div>
+          <div class="btn-row"><b style="font-size:13.5px;min-width:5.5em">② 電流密度方向</b>
+            <button class="btn" type="button" data-dp="cur" data-v="-1">← 往 −x</button>
+            <button class="btn" type="button" data-dp="cur" data-v="1">往 +x →</button>
+            <span class="spacer" style="flex:1"></span>
+            <button class="btn solid" type="button" id="dp-next">換一題 ↻</button></div>
+        </div>
+        <div class="msg" id="dp-msg">先看圖：濃度往哪邊比較高？載子一定從高往低跑。</div>
+      </div>
+
       <div id="ex-diff"></div>
       <p class="note key">注意這個<button class="tm" data-t="數量級">數量級</button>：<b>擴散電流密度也是幾百 A/cm²</b>，跟漂移電流同一等級。所以在 pn 接面裡，兩者可以互相抗衡達成平衡 —— 這是下一段的主角。</p>
       <p class="note"><b>擴散電流密度可以是負的</b>，這只代表「淨流向與你假設的 +x 正方向相反」，不代表算錯。正負是<b>方向的定義問題</b>，取決於濃度梯度往哪邊。</p>
@@ -427,8 +527,8 @@
 
     <!-- ══════════ 07 總電流 ══════════ -->
     <section class="sec" id="total">
-      <div class="eyebrow">07 · 投影片 p.55 · Brief Summary</div>
-      <h2>總電流密度：四項全家福</h2>
+      <div class="eyebrow"><span class="part-tag">原講義 PART 2 ＋ PART 3</span>08 · PART 2 p.55 · PART 3 1-14～1-15 · Brief Summary</div>
+      <h2>總電流密度：四項全家福<span class="h2-en">TOTAL CURRENT DENSITY</span></h2>
       <p class="lede">兩種機制 × 兩種載子 = <strong>四項</strong>。把它們全部加起來，就是半導體裡電流的完整描述。</p>
       <div class="eq">J = e(n·μ<em>n</em> + p·μ<em>p</em>)E　+　e·D<em>n</em>·(dn/dx)　−　e·D<em>p</em>·(dp/dx)</div>
 
@@ -466,11 +566,133 @@
       </div>
     </section>
 
+    <!-- ══════════ 08 愛因斯坦關係（PART 3）══════════ -->
+    <section class="sec" id="einstein">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>投影片 1-16 · Einstein Relation</div>
+      <h2><button class="tm" data-t="愛因斯坦關係">愛因斯坦關係</button>：D 和 μ 其實是一家人<span class="h2-en">EINSTEIN RELATION</span></h2>
+      <p class="lede">擴散係數 D（濃度差推得多快）跟移動率 μ（電場推得多快）看起來是兩件事，但它們都取決於<strong>載子在晶格裡亂撞的難易程度</strong>。撞得少的載子，被電場推也跑得快、自己擴散也散得快。所以兩者的比值跟材料無關，<strong>只看溫度</strong>。</p>
+      <div class="eq">D<em>n</em> / μ<em>n</em> = D<em>p</em> / μ<em>p</em> = kT / e ≈ 0.026 V　（T = 300 K）</div>
+
+      <div class="derive">
+        <h4>為什麼比值剛好是 kT/e（講義只給結論，這裡補推導）</h4>
+        <ol>
+          <li>
+            <span class="d-eq">熱平衡、沒接電路 ⟹ 總電流 = 0：　e·n·μ<sub>n</sub>·E + e·D<sub>n</sub>·(dn/dx) = 0</span>
+            <div class="why">如果材料內部有電場、濃度也不均勻（pn 接面就是這樣），漂移跟擴散必須剛好抵消，否則沒接電池也會一直有電流。</div>
+          </li>
+          <li>
+            <span class="d-eq">熱平衡時 n(x) ∝ e<sup>eφ(x)/kT</sup>　⟹　dn/dx = n · (e/kT) · dφ/dx = −n · (e/kT) · E</span>
+            <div class="why">這是統計力學的波茲曼分布：電位 φ 越高的地方電子能量越低、越多。再用 E = −dφ/dx 把電位換成電場。</div>
+          </li>
+          <li>
+            <span class="d-eq">代回：　e·n·μ<sub>n</sub>·E − e·D<sub>n</sub>·n·(e/kT)·E = 0</span>
+            <div class="why">兩項都有 e·n·E，可以一起消掉。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">μ<sub>n</sub> = D<sub>n</sub> · e / kT　⟹　D<sub>n</sub> / μ<sub>n</sub> = kT / e</span>
+            <p>電洞用同樣步驟，得到同一個值。<b>驗算：</b>矽 D<sub>n</sub>/μ<sub>n</sub> = 35/1350 = 0.0259 V、D<sub>p</sub>/μ<sub>p</sub> = 12/480 = 0.025 V ✓</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>D ↔ μ 換算器</h3><span class="spacer"></span><span class="tag">D = μ · kT/e</span></div>
+        <div class="stage-wrap"><canvas id="cv-ein" aria-label="熱電壓 kT/e 隨溫度變化，以及換算出的擴散係數"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="ein-T">溫度 T<output for="ein-T"></output></label>
+            <input type="range" id="ein-T" min="200" max="500" step="5" value="300"></div>
+        </div>
+        <dl class="readout">
+          <div><dt><button class="tm" data-t="熱電壓">熱電壓</button> kT/e</dt><dd id="ein-vt">—</dd></div>
+          <div><dt>D<sub>n</sub>（μ<sub>n</sub> = 1350）</dt><dd id="ein-dn" class="e">—</dd></div>
+          <div><dt>D<sub>p</sub>（μ<sub>p</sub> = 480）</dt><dd id="ein-dp" class="h">—</dd></div>
+        </dl>
+      </div>
+
+      <div id="ex-ein"></div>
+
+      <p class="note key">講義的 NOTE（2）說得很對：<b>kT/e 這個數字等一下會換個名字再出現</b> —— 叫<button class="tm" data-t="熱電壓">熱電壓</button> V<sub>T</sub>，在 pn 接面的內建電壓、二極體方程式裡都會用到。公式長一樣，但這裡它是「D 跟 μ 的比值」，那裡它是「電壓的尺度」，物理意義不同。</p>
+      <div class="pitfall">
+        <h4>愛因斯坦關係的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 以為 D/μ 跟材料或摻雜有關。<span class="o">只跟溫度有關</span>，電子、電洞、矽、鍺都一樣。</li>
+          <li><span class="x">✗</span> 0.026 V 套到別的溫度。<span class="o">V<sub>T</sub> = kT/e 跟 T 成正比</span>，400 K 時是 0.0345 V。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 09 多出載子（PART 3）══════════ -->
+    <section class="sec" id="excess">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>投影片 1-17～1-18 · 1.1.4 Excess Carriers</div>
+      <h2><button class="tm" data-t="多出載子">多出載子</button>：打破熱平衡之後<span class="h2-en">EXCESS CARRIERS</span></h2>
+      <p class="lede">到目前為止所有東西都假設<button class="tm" data-t="熱平衡">熱平衡</button>：n₀p₀ = nᵢ²。可是只要<strong>照光、或外加電壓注入載子</strong>，就會多出一批電子和電洞，平衡被打破。把外因拿掉，它們會一對一對<button class="tm" data-t="復合">復合</button>消失，回到平衡 —— 平均能活多久，叫<button class="tm" data-t="生命週期">生命週期</button> τ。</p>
+      <div class="eq">n = n₀ + δn　　p = p₀ + δp　　熱平衡：n₀p₀ = nᵢ²　　有多出載子：n·p &gt; nᵢ²</div>
+
+      <div class="derive">
+        <h4>多出載子從哪來、往哪去</h4>
+        <ol>
+          <li>
+            <span class="d-eq">光子能量 ≥ E<sub>g</sub>　⟹　打斷共價鍵　⟹　δn = δp（成對產生）</span>
+            <div class="why">跟熱擾動一樣是「電子–電洞對」，只是能量改成光給的。一顆光子給一對，所以照光產生的電子和電洞一樣多。</div>
+          </li>
+          <li>
+            <span class="d-eq">n·p = (n₀ + δn)(p₀ + δp) = n₀p₀ + δ(n₀ + p₀) + δ² &gt; nᵢ²　（δn = δp = δ）</span>
+            <div class="why">展開後多出兩項正的東西，所以乘積一定比 nᵢ² 大 —— 這就是「破壞熱平衡」在數學上的樣子。</div>
+          </li>
+          <li>
+            <span class="d-eq">停止照光 ⟹ <button class="tm" data-t="復合">復合</button>：自由電子掉回價帶，填掉一個電洞</span>
+            <div class="why">每一次復合同時消滅一個電子、一個電洞，所以 δn 和 δp 一起變小，直到回到 n₀、p₀。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">δn(t) = δn(0) · e<sup>−t/τ</sup>　（課本延伸，講義只定義了 τ）</span>
+            <p>多出越多、復合得越快，所以是指數衰減。<b>τ 就是平均壽命</b>：過了一個 τ 剩 e⁻¹ ≈ 37%，三個 τ 剩 5%。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>照光實驗室</h3>
+          <div class="btn-row">
+            <button class="btn solid" type="button" id="exc-flash">⚡ 照一下光</button>
+            <button class="btn" type="button" id="exc-hold" aria-pressed="false">持續照光</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-exc" aria-label="照光產生電子電洞對、再復合消失，右邊畫出多出載子隨時間衰減"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="exc-tau">生命週期 τ（相對）<output for="exc-tau"></output></label>
+            <input type="range" id="exc-tau" min="0.5" max="3" step="0.25" value="1.25"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>多出的電子–電洞對</dt><dd id="exc-n">—</dd></div>
+          <div><dt>n·p 跟 nᵢ² 比</dt><dd id="exc-np" style="font-size:14px">—</dd></div>
+          <div><dt>狀態</dt><dd id="exc-st" style="font-size:13px">—</dd></div>
+        </dl>
+      </div>
+
+      <div id="ex-exc"></div>
+
+      <div class="howto">
+        <h4>多出載子的題目怎麼算</h4>
+        <ol>
+          <li>先用 PART 2 的方法算<b>熱平衡</b>的 n₀、p₀（多數 ≈ 摻雜濃度，少數 = nᵢ² / 多數）。</li>
+          <li>照光／注入產生 δ：<b>n = n₀ + δ、p = p₀ + δ</b>（成對產生，兩邊加一樣多）。</li>
+          <li>比較 δ 跟 n₀、p₀：<b>少數載子通常被改變好幾個數量級，多數載子幾乎不動</b>。</li>
+          <li>問「過一段時間剩多少」就用 δ(t) = δ(0)·e<sup>−t/τ</sup>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>多出載子的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 以為多出載子對多數載子影響很大。<span class="o">影響最大的是少數載子</span>：n 型裡 p₀ 只有 10⁴，多 10¹⁴ 就是暴增 10 個數量級；n₀ 本來就 10¹⁶，多 10¹⁴ 只差 1%。</li>
+          <li><span class="x">✗</span> 熱平衡被破壞就一定 n·p &gt; nᵢ²。<span class="o">多出載子的情況才是大於</span>；下一段的逆向偏壓是把載子「抽走」，那裡反而 n·p &lt; nᵢ²。嚴格講是 n·p ≠ nᵢ²。</li>
+        </ul>
+      </div>
+    </section>
+
     <!-- ══════════ 勘誤 ══════════ -->
     <section class="sec" id="check">
-      <div class="eyebrow">Errata · 講義檢查結果</div>
-      <h2>講義勘誤</h2>
-      <p class="lede">這份 PART 2 我逐頁驗算過，<strong>所有公式推導與例題數字都正確</strong>（Example 1.2、1.3、1.4 我都重算過，結果完全相符）。有一個單位寫錯了，出現兩次。</p>
+      <div class="eyebrow"><span class="part-tag">原講義 PART 2 ＋ PART 3</span>Errata · 講義檢查結果</div>
+      <h2>講義勘誤<span class="h2-en">ERRATA</span></h2>
+      <p class="lede">PART 2 與 PART 3 前 18 頁我都逐頁驗算過。這份 PART 2 ，<strong>所有公式推導與例題數字都正確</strong>（Example 1.2、1.3、1.4 我都重算過，結果完全相符）。有一個單位寫錯了，出現兩次。</p>
 
       <div class="pitfall">
         <h4>① <button class="tm" data-t="載子移動率">載子移動率</button>的單位寫成立方（出現兩次）</h4>
@@ -494,13 +716,38 @@
           <li>p.54 Example 1.4：J<sub>n</sub> = <b>187 A/cm²</b> ✓</li>
         </ul>
       </div>
+      <div class="pitfall">
+        <h4>② PART 3 投影片 1-17：英文拼錯（考英文要注意）</h4>
+        <ul>
+          <li>講義寫：<span class="x">多出電子（excess electron<b>ics</b>）</span></li>
+          <li>應該是：<span class="o">excess electron<b>s</b></span>。electronics 是「電子學」，electrons 才是「電子」。課本原句：<i>δn and δp are the excess electron and hole concentrations.</i></li>
+        </ul>
+      </div>
+      <div class="pitfall">
+        <h4>③ PART 3 投影片 1-17：「破壞熱平衡：n·p &gt; nᵢ²」只對一半</h4>
+        <ul>
+          <li>照光或順向注入產生<b>多出載子</b>時，確實 <span class="o">n·p &gt; nᵢ²</span>。</li>
+          <li>但下一段的<b>逆向偏壓</b>會把載子抽走，空乏區附近反而 <span class="o">n·p &lt; nᵢ²</span>。嚴格的寫法是：<b>熱平衡被破壞 ⟹ n·p ≠ nᵢ²</b>。不算錯，但考觀念題要小心。</li>
+        </ul>
+      </div>
+      <div class="note key">
+        <b>PART 3 前 18 頁驗算過、正確的部分：</b>
+        <ul style="margin:8px 0 0;padding-left:18px">
+          <li>1-4 漂移電流密度四步推導 J<sub>p</sub> = qpv<sub>p</sub> = qpμ<sub>p</sub>E ✓</li>
+          <li>1-7～1-8 Example 1.3：p = 2.81×10⁴、σ = 1.73、J = 173 A/cm²、1 mA 時 A = 5.78×10⁻⁶ cm² ✓</li>
+          <li>1-10～1-12 擴散方向四張圖 ✓（電子：dn/dx &gt; 0 往 −x 擴散、J<sub>n</sub> 往 +x；電洞：dp/dx &gt; 0 往 −x 擴散、J<sub>p</sub> 也往 −x）</li>
+          <li>1-13 Example 1.4：187 A/cm²；50 μm × 50 μm 時 I = 187 × 2.5×10⁻⁵ = <b>4.675 mA</b> ✓</li>
+          <li>1-16 愛因斯坦關係：35/1350 = 0.0259、12/480 = 0.025 ≈ kT/e ✓</li>
+        </ul>
+      </div>
+      <p class="note">小筆誤：PART 3 的 1-14、1-15 寫「<b>飄</b>移電流」，前面都寫「<b>漂</b>移」，是同一個東西（drift）。</p>
       <p class="note src">勘誤僅針對單位與數學正確性，不代表老師板書原意；若與課堂說法不同，以老師為準。</p>
     </section>
 
     <!-- ══════════ 名詞 ══════════ -->
     <section class="sec" id="glossary">
       <div class="eyebrow">Glossary · 中英對照</div>
-      <h2>名詞中英對照表</h2>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
       <p class="lede">考卷上會出現的是右邊那欄。</p>
       <div class="glossary">
         <div class="gl-row"><b>中文</b><span>English</span><code>符號/單位</code></div>
@@ -524,19 +771,27 @@
         <div class="gl-row"><b>濃度梯度</b><span>concentration gradient</span><code>dn/dx</code></div>
         <div class="gl-row"><b>導電度</b><span>conductivity</span><code>σ, (Ω·cm)⁻¹</code></div>
         <div class="gl-row"><b>電阻率</b><span>resistivity</span><code>ρ, Ω·cm</code></div>
+        <div class="gl-row"><b>電流</b><span>electric current</span><code>I, A</code></div>
+        <div class="gl-row"><b>截面積</b><span>cross-sectional area</span><code>A, cm²</code></div>
+        <div class="gl-row"><b>愛因斯坦關係</b><span>Einstein relation</span><code>D/μ = kT/e</code></div>
+        <div class="gl-row"><b>熱電壓</b><span>thermal voltage</span><code>V_T ≈ 26 mV</code></div>
+        <div class="gl-row"><b>多出載子</b><span>excess carriers</span><code>δn, δp</code></div>
+        <div class="gl-row"><b>電子–電洞復合</b><span>electron–hole recombination</span><code>—</code></div>
+        <div class="gl-row"><b>多出載子生命週期</b><span>excess carrier lifetime</span><code>τ</code></div>
+        <div class="gl-row"><b>穩態值</b><span>steady-state value</span><code>—</code></div>
       </div>
     </section>
 
     <!-- ══════════ 測驗 ══════════ -->
     <section class="sec" id="quiz-sec">
       <div class="eyebrow">自我檢查</div>
-      <h2>觀念小測驗</h2>
-      <p class="lede">12 題，中英對照。題目下方那行英文就是考卷上會看到的講法。</p>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">16 題，中英對照。題目下方那行英文就是考卷上會看到的講法。</p>
       <div class="quiz" id="quiz"></div>
     </section>
 
     <footer class="foot">
-      <p>教材依據：Donald A. Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4th ed.（McGraw-Hill），Chapter 1，2026 Fall 課程投影片 p.31–55。</p>
+      <p>教材依據：Donald A. Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4th ed.（McGraw-Hill），Chapter 1，2026 Fall 課程投影片 PART 2 p.31–55 與 PART 3 投影片 1-1～1-18。</p>
       <p>互動模組為觀念示意，數量與比例經過壓縮以利觀察；定量數值皆依課本公式即時計算。</p>
     </footer>
   </main>
@@ -544,5 +799,7 @@
 <script src="../shared/app.js"></script>
 <script src="../shared/terms.js"></script>
 <script src="assets/ch1-part2.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch1-part2-story.js"></script>
 </body>
 </html>

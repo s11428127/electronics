@@ -11,7 +11,7 @@
 
 | 科目 | 資料夾 | 狀態 |
 |------|--------|------|
-| 電子學 | [`electronics/`](electronics/) | CH1 PART 1、PART 2 已完成（見 [進度表](electronics/docs/CONTENT_MAP.md)） |
+| 電子學 | [`electronics/`](electronics/) | CH1 PART 1～4 已完成（見 [進度表](electronics/docs/CONTENT_MAP.md)） |
 | 電路學 | [`circuits/`](circuits/) | CH11 交流功率分析已完成（見 [進度表](circuits/docs/CONTENT_MAP.md)） |
 | 工程數學 | [`engineering-math/`](engineering-math/) | 拉普拉斯轉換、常係數 ODE 與特徵方程已完成（見 [進度表](engineering-math/docs/CONTENT_MAP.md)） |
 | 手寫筆記 | [`notes/`](notes/) | GoodNotes 式手寫筆記：Apple Pencil 壓感、套索、按住拉直線、多頁、自動存檔、講義並排 |
@@ -61,8 +61,8 @@ notes/                  手寫筆記：index.html 書櫃、note.html 編輯器�
 
 ## 故事模式（試做中）
 
-電子學 CH1 PART 1 開頭有一段仿解說動畫的「故事模式」：一次一個畫面、一句字幕，
-點一下或往左滑前進，可自動播放。引擎在 `shared/story.js`，劇本在 `electronics/assets/ch1-part1-story.js`。
+每一章開頭都有一段仿解說動畫的「故事模式」：一次一個畫面、一句字幕，
+點一下或往左滑前進，可自動播放。引擎在 `shared/story.js`，劇本在各科 `assets/<chapter>-story.js`。
 確認效果後再推廣到其他章節。
 
 ## 手寫筆記

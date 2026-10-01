@@ -439,7 +439,9 @@
           ['因為要畫兩條曲線', 'because two curves must be drawn']], a: 0,
       e: '階數 = 初始條件個數 = 任意常數個數。二階要 y(0) 與 y′(0)，所以必須有 C₁、C₂ 兩個自由度。若兩個解不獨立（例如重根沒補 t），實際上只剩一個自由度，就湊不出任意的初始條件。' }
   ];
-  let i = 0, score = 0, answered = false;
+  let i = 0, score = 0, answered = false, ord = [];
+  /* 選項順序每次打亂：題庫裡正解都寫在第一個，不打亂的話永遠是 A */
+  const shuffle = n => { const o = Array.from({ length: n }, (_, k) => k); for (let k = n - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [o[k], o[j]] = [o[j], o[k]]; } return o; };
 
   function render() {
     const q = Q[i];
@@ -455,7 +457,9 @@
       '<div class="quiz-foot"><span class="score">答對 ' + score + ' / ' + i + '</span><span class="spacer"></span>' +
         '<button class="btn" id="q-next" hidden>下一題 →</button></div>';
     const opts = host.querySelector('.opts');
-    q.o.forEach((pair, k) => {
+    ord = shuffle(q.o.length);
+    ord.forEach((src, k) => {
+      const pair = q.o[src];
       const b = document.createElement('button');
       b.className = 'opt'; b.type = 'button';
       b.innerHTML = '<i>' + 'ABCD'[k] + '</i><span>' + pair[0] + '<span class="en">' + pair[1] + '</span></span>';
@@ -467,12 +471,12 @@
   }
   function pick(k) {
     if (answered) return; answered = true;
-    const q = Q[i], btns = Array.prototype.slice.call(host.querySelectorAll('.opt'));
-    btns.forEach((b, idx) => { b.disabled = true; if (idx === q.a) b.classList.add('right'); });
-    if (k === q.a) score++; else btns[k].classList.add('wrong');
+    const q = Q[i], A = ord.indexOf(q.a), btns = Array.prototype.slice.call(host.querySelectorAll('.opt'));
+    btns.forEach((b, idx) => { b.disabled = true; if (idx === A) b.classList.add('right'); });
+    if (k === A) score++; else btns[k].classList.add('wrong');
     const ex = host.querySelector('.explain');
     ex.hidden = false;
-    ex.innerHTML = '<b>' + (k === q.a ? '答對了。' : '正確答案是 ' + 'ABCD'[q.a] + '。') + '</b> ' + q.e;
+    ex.innerHTML = '<b>' + (k === A ? '答對了。' : '正確答案是 ' + 'ABCD'[A] + '。') + '</b> ' + q.e;
     host.querySelector('.score').textContent = '答對 ' + score + ' / ' + (i + 1);
     const nx = host.querySelector('#q-next');
     nx.hidden = false; nx.textContent = i === Q.length - 1 ? '看結果 →' : '下一題 →';

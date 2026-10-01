@@ -110,12 +110,15 @@
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     if ((r || 5) >= 6) ctx.fillText('−', x, y + 0.5);
   }
+  /* 乾淨版（跟故事模式同一套）：電洞＝中空的虛線藍圈 */
+  const CLEAN = () => document.body && document.body.dataset.look === 'clean';
   function hole(ctx, x, y, r) {
     r = Math.max(0, r || 5);
+    const ring = CLEAN() ? C.accent : C.hole;
     ctx.beginPath(); ctx.arc(x, y, r, 0, TAU);
-    ctx.fillStyle = C['hole-w']; ctx.fill();
-    ctx.lineWidth = 1.6; ctx.strokeStyle = C.hole; ctx.setLineDash([2.6, 2.2]); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = C.hole; ctx.font = '700 ' + (r * 1.5) + 'px ' + MONO;
+    ctx.fillStyle = CLEAN() ? C.surface : C['hole-w']; ctx.fill();
+    ctx.lineWidth = 1.6; ctx.strokeStyle = ring; ctx.setLineDash([2.6, 2.2]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = ring; ctx.font = '700 ' + (r * 1.5) + 'px ' + MONO;
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     if (r >= 6) ctx.fillText('+', x, y + 0.5);
   }

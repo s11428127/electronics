@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>順向偏壓與二極體 I–V</title>
+<meta name="description" content="電子學 CH1 PART 4 互動講義：順向偏壓、少數載子注入、理想 I–V 關係、每 60 mV 一個數量級、理想二極體模型、溫度效應與二極體溫度計。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="electronics" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>CH1 PART 4</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH1 PART 4</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>這段在講什麼</a></li>
+      <li><a href="#fwd"><i>01</i>順向偏壓：把坡壓低</a></li>
+      <li><a href="#iv"><i>02</i>理想 I–V 關係</a></li>
+      <li><a href="#dec"><i>03</i>每 60 mV 變 10 倍</a></li>
+      <li><a href="#ideal"><i>04</i>理想二極體模型</a></li>
+      <li><a href="#temp"><i>05</i>溫度效應</a></li>
+      <li><a href="#thermo"><i>06</i>二極體溫度計</a></li>
+      <li><a href="#check"><i>!</i>講義勘誤</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>Chapter 1 · 1.2.3～1.2.5 · 1.6 · 投影片 1-38～1-54</div>
+      <h1>順向偏壓與二極體 I–V</h1>
+      <p class="sub">PART 3 把坡墊高，電流只剩 10⁻¹⁴ A。這一段反過來<strong>把坡壓低</strong>：電流會暴衝到 mA，而且<strong>電壓每多 60 mV，電流就變 10 倍</strong>。弄懂這條指數曲線，二極體為什麼「只讓電往一個方向走」就解開了 —— 順便還能拿它來量溫度。</p>
+      <div class="hero-meta">
+        <span class="chip">14 個畫面的故事模式</span>
+        <span class="chip">6 個互動模組</span>
+        <span class="chip">6 個可改數字例題</span>
+        <span class="chip">12 題中英對照測驗</span>
+      </div>
+      <p class="note">接續 <a href="ch1-part3.html">CH1 PART 3</a>（pn 接面熱平衡、逆偏、接面電容）。這一頁從 <b>1.2.3 順向偏壓</b>（投影片 1-38）開始，到 <b>1.6 二極體溫度計</b>（1-54）。</p>
+    </div>
+
+    <!-- ══════════ 故事模式 ══════════ -->
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>Story mode · 先看這段，再往下讀</div>
+      <h2>14 個畫面看懂這一段<span class="h2-en">THE STORY IN 14 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。<strong>先建立直覺</strong>，再往下讀推導、玩互動模組、做例題。</p>
+      <div id="story"></div>
+    </section>
+
+    <!-- ══════════ 導論 ══════════ -->
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>Big picture · 投影片 1-38～1-41</div>
+      <h2>這一段在講什麼<span class="h2-en">THE BIG PICTURE</span></h2>
+      <p class="lede">一句話：<strong>順偏把坡壓低 → 翻得過坡的載子「指數地」變多 → 電流 i<sub>D</sub> = I<sub>S</sub>(e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1)</strong>。後面所有東西（60 mV 一個數量級、理想二極體、溫度效應、溫度計）都是這條式子的推論。</p>
+      <div class="derive">
+        <h4>投影片 1-41 的三種狀態，一張表看完</h4>
+        <ol>
+          <li><span class="d-eq">熱平衡（v<sub>D</sub> = 0）：電場阻力 = 濃度驅力　⟹　總電流 = 0</span>
+            <div class="why">PART 3 的內容：擴散與漂移打平，動態平衡。</div></li>
+          <li><span class="d-eq">逆偏（v<sub>D</sub> &lt; 0）：淨電場變大、空乏區變寬（C<sub>j</sub> ↓）　⟹　i<sub>D</sub> ≈ −I<sub>S</sub>，像開關 OFF</span>
+            <div class="why">電場阻力 &gt; 濃度驅力，多數載子過不去；只剩少數載子造成的極小 I<sub>S</sub>。</div></li>
+          <li><span class="d-eq hi">順偏（v<sub>D</sub> &gt; 0）：淨電場變小、空乏區變窄　⟹　持續的順向電流 i<sub>D</sub>，像開關 ON（或 0.7 V 壓降）</span>
+            <div class="why">電場阻力 &lt; 濃度驅力，多數載子大量擴散過去。這一頁的主角。</div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 01 順偏 ══════════ -->
+    <section class="sec" id="fwd">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>01 · 投影片 1-38～1-40、1-43、1-45 · 1.2.3 Forward-Biased pn Junction</div>
+      <h2><button class="tm" data-t="順向偏壓">順向偏壓</button>：把坡壓低<span class="h2-en">FORWARD-BIASED PN JUNCTION</span></h2>
+      <p class="lede">P 接正、N 接負。外加電場跟內建電場<strong>反方向</strong>，坡從 V<sub>bi</sub> 降成 V<sub>bi</sub> − v<sub>D</sub>。濃度驅力贏過電場阻力，多數載子大量翻過去，到了對面就變成<button class="tm" data-t="少數載子注入">注入的少數載子</button>，一路擴散、一路復合 —— 這股擴散就是順向電流。</p>
+      <div class="eq">E<em>total</em> = Ē − E<em>A</em>（仍由 n 指向 p，但變小）　位障 V<em>bi</em> − v<em>D</em>　　邊緣少數載子：p<em>n</em>(0) = p<em>n0</em> · e<sup>v<em>D</em>/V<em>T</em></sup></div>
+
+      <div class="derive">
+        <h4>順偏時發生什麼事，一步一步</h4>
+        <ol>
+          <li>
+            <span class="d-eq">P 接 +、N 接 −　⟹　外加 E<sub>A</sub> 由 p 指向 n，跟 Ē 反向　⟹　E<sub>total</sub> = Ē − E<sub>A</sub></span>
+            <div class="why">投影片 1-38 (1)(2)。只要 v<sub>D</sub> &lt; V<sub>bi</sub>，E<sub>A</sub> &lt; Ē，淨電場<b>仍由 n 指向 p</b>，只是變弱了。</div>
+          </li>
+          <li>
+            <span class="d-eq">電池從兩端送進電子與電洞 ⟹ 空乏區邊緣的離子被「補回」成中性 ⟹ W ↓</span>
+            <div class="why">投影片 1-40：N 側的 P⁺ 收到電子變回中性的 N 型、P 側的 B⁻ 的多餘電子被拉走變回 P 型。露出來的離子少了，空乏區就窄了（W ∝ √(V<sub>bi</sub> − v<sub>D</sub>)）。</div>
+          </li>
+          <li>
+            <span class="d-eq">位障 V<sub>bi</sub> → V<sub>bi</sub> − v<sub>D</sub> ⟹ 濃度驅力 &gt; 電場阻力 ⟹ 多數載子持續擴散過接面</span>
+            <div class="why">投影片 1-38 (3)～(5)：P 區電洞擴散到 N 區、N 區電子擴散到 P 區。兩者造成的電流<b>同方向（P → N）</b>，合起來就是順向電流 i<sub>D</sub>。</div>
+          </li>
+          <li>
+            <span class="d-eq">翻得過坡的比例 ∝ e<sup>−(位障)/V<sub>T</sub></sup>　⟹　p<sub>n</sub>(0) = p<sub>n0</sub> · e<sup>v<sub>D</sub>/V<sub>T</sub></sup>（課本延伸）</span>
+            <div class="why">熱運動的載子，能量超過 E 的比例跟 e<sup>−E/kT</sup> 成正比（波茲曼分布）。坡從 V<sub>bi</sub> 降了 v<sub>D</sub>，翻得過去的就多了 e<sup>v<sub>D</sub>/V<sub>T</sub></sup> 倍 —— 所以 N 區邊緣的電洞從 p<sub>n0</sub> 暴增成 p<sub>n0</sub>e<sup>v<sub>D</sub>/V<sub>T</sub></sup>。講義沒寫這條，但它是「電流是指數」的根源。</div>
+          </li>
+          <li>
+            <span class="d-eq">邊走邊復合 ⟹ δp(x) = δp(0) · e<sup>−x/L<sub>p</sub></sup>，L<sub>p</sub> = √(D<sub>p</sub>τ<sub>p</sub>)</span>
+            <div class="why">投影片 1-43 Fig 1.16：注入的少數載子往中性區擴散，同時被多數載子復合掉（PART 2 的多出載子、生命週期），濃度隨距離<b>指數衰減</b>。L 叫<button class="tm" data-t="擴散長度">擴散長度</button>。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">少數載子的濃度梯度 ⟹ 擴散電流 ⟹ i<sub>D</sub> ∝ δp(0) + δn(0) ∝ (e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1)</span>
+            <p>投影片 1-45 的紅字：<b>多數載子跨過接面 → 變成對方的少數載子 → 形成濃度梯度 → 擴散電流</b>。梯度正比於邊緣的多出濃度，所以電流也帶著那個 e<sup>v<sub>D</sub>/V<sub>T</sub></sup>。下一節把它寫成正式的 I–V 公式。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>偏壓實驗室</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-fv="-2">逆偏 −2 V</button>
+            <button class="btn" type="button" data-fv="0">熱平衡 0 V</button>
+            <button class="btn" type="button" data-fv="0.6">順偏 0.6 V</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-fwd" aria-label="拉偏壓看空乏區寬度、多數載子跨越接面、注入少數載子的濃度分布"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="fw-v">外加電壓 v<sub>D</sub>（P 對 N）<output for="fw-v"></output></label>
+            <input type="range" id="fw-v" min="-2" max="0.68" step="0.01" value="0.6"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>位障 V_bi − v_D</dt><dd id="fw-b">—</dd></div>
+          <div><dt>空乏區寬度（相對熱平衡）</dt><dd id="fw-w">—</dd></div>
+          <div><dt>i_D（I_S = 10⁻¹⁴ A）</dt><dd id="fw-i" class="e" style="font-size:15px">—</dd></div>
+        </dl>
+        <div class="msg" id="fw-msg"></div>
+      </div>
+
+      <div id="ex-inj"></div>
+
+      <div class="howto">
+        <h4>判斷偏壓狀態、描述載子行為的標準流程</h4>
+        <ol>
+          <li>看 P 端（陽極）對 N 端（陰極）的電壓 v<sub>D</sub>：<b>正 = 順偏、負 = 逆偏</b>。</li>
+          <li>位障 = V<sub>bi</sub> − v<sub>D</sub>（逆偏時 v<sub>D</sub> = −V<sub>R</sub>，位障變成 V<sub>bi</sub> + V<sub>R</sub>）。</li>
+          <li>順偏：<b>多數載子</b>擴散過去 → 變成對面的<b>少數載子</b> → 邊緣濃度 × e<sup>v<sub>D</sub>/V<sub>T</sub></sup> → 指數衰減。</li>
+          <li>電流方向：電洞 P→N、電子 N→P，<b>兩者的電流都是 P → N</b>，相加。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>順偏最常搞混的地方</h4>
+        <ul>
+          <li><span class="x">✗</span> 順偏時淨電場反過來由 p 指向 n。<span class="o">只要 v<sub>D</sub> &lt; V<sub>bi</sub>，淨電場仍由 n 指向 p</span>，只是變小（投影片 1-38 (2)、Fig 1.15 說明）。</li>
+          <li><span class="x">✗</span> 順向電流主要是漂移電流。<span class="o">是擴散電流</span>：靠的是注入的少數載子的濃度梯度。</li>
+          <li><span class="x">✗</span> 電洞往右、電子往左，兩個電流抵消。<span class="o">電子帶負電，往左走 = 電流往右</span>，兩者相加。</li>
+          <li><span class="x">✗</span> 注入的少數載子會一直存在。<span class="o">一路被復合</span>，大約走幾個擴散長度 L 就幾乎沒了。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 02 I–V ══════════ -->
+    <section class="sec" id="iv">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>02 · 投影片 1-44、1-46、1-47 · 1.2.4 Ideal Current–Voltage Relationship</div>
+      <h2>理想 I–V 關係<span class="h2-en">IDEAL CURRENT–VOLTAGE RELATIONSHIP</span></h2>
+      <p class="lede">上一節得到「電流 ∝ e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1」。把比例常數叫做 I<sub>S</sub>，就是整個 CH1 最重要的一條式子。它一邊貼地、一邊往上暴衝 —— 這就是 pn 接面的<button class="tm" data-t="整流">整流</button>特性。</p>
+      <div class="eq">i<em>D</em> = I<em>S</em> ( e<sup>v<em>D</em> / nV<em>T</em></sup> − 1 )　　v<em>D</em> &gt; 0.1 V：i<em>D</em> ≈ I<em>S</em>e<sup>v<em>D</em>/nV<em>T</em></sup>　　v<em>D</em> &lt; 0：i<em>D</em> ≈ −I<em>S</em></div>
+
+      <div class="derive">
+        <h4>從「注入」到 I–V 公式</h4>
+        <ol>
+          <li>
+            <span class="d-eq">擴散電流 = e·D·(濃度梯度)，梯度 ≈ δ(0)/L　⟹　J<sub>p</sub> = eD<sub>p</sub>·δp(0)/L<sub>p</sub></span>
+            <div class="why">指數衰減 δp(0)e<sup>−x/L</sup> 在 x = 0 的斜率大小就是 δp(0)/L。PART 2 的擴散電流公式直接套。</div>
+          </li>
+          <li>
+            <span class="d-eq">δp(0) = p<sub>n</sub>(0) − p<sub>n0</sub> = p<sub>n0</sub>(e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1)</span>
+            <div class="why">上一節的注入公式減掉原本就有的 p<sub>n0</sub>。<b>「−1」就是從這裡來的</b>：v<sub>D</sub> = 0 時多出來的是 0，電流也是 0。</div>
+          </li>
+          <li>
+            <span class="d-eq">電洞 + 電子：i<sub>D</sub> = eA(D<sub>p</sub>p<sub>n0</sub>/L<sub>p</sub> + D<sub>n</sub>n<sub>p0</sub>/L<sub>n</sub>)·(e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1)</span>
+            <div class="why">兩種載子的擴散電流同方向，相加。括號前面那一大串全部是常數（課本延伸）。</div>
+          </li>
+          <li>
+            <span class="d-eq">令 I<sub>S</sub> = eA(D<sub>p</sub>p<sub>n0</sub>/L<sub>p</sub> + D<sub>n</sub>n<sub>p0</sub>/L<sub>n</sub>) ∝ nᵢ²　⟹　i<sub>D</sub> = I<sub>S</sub>(e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1)</span>
+            <div class="why">p<sub>n0</sub> = nᵢ²/N<sub>d</sub>、n<sub>p0</sub> = nᵢ²/N<sub>a</sub>，所以 I<sub>S</sub> 正比於 nᵢ² —— 矽約 10⁻¹⁸～10⁻¹² A 等級，極小。這也是第 5 節溫度效應的伏筆。</div>
+          </li>
+          <li>
+            <span class="d-eq">實際二極體：e<sup>v<sub>D</sub>/V<sub>T</sub></sup> → e<sup>v<sub>D</sub>/nV<sub>T</sub></sup>，1 ≤ n ≤ 2（<button class="tm" data-t="放射係數">放射係數</button>，未聲明取 n = 1）</span>
+            <div class="why">投影片 1-44 NOTE：空乏區裡的復合在低電流時影響大，n 接近 2；電流夠大時擴散主導，n 接近 1。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">兩個極限：v<sub>D</sub> ≫ V<sub>T</sub> ⟹ −1 可忽略；v<sub>D</sub> ≪ −V<sub>T</sub> ⟹ e<sup>…</sup> → 0，i<sub>D</sub> ≈ −I<sub>S</sub></span>
+            <p>v<sub>D</sub> = 0.1 V 時 e<sup>0.1/0.026</sup> ≈ 47，忽略 −1 的誤差約 2%；再大就更小。所以講義說「v<sub>D</sub> &gt; 0.1 V 時 i<sub>D</sub> ≈ I<sub>S</sub>e<sup>v<sub>D</sub>/nV<sub>T</sub></sup>」—— <b>這是數學近似成立的門檻，不是導通電壓</b>（投影片 1-47 的旁註）。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>I–V 曲線探索器</h3><span class="spacer"></span>
+          <button class="btn" type="button" id="iv-scale">切換：對數刻度</button></div>
+        <div class="stage-wrap"><canvas id="cv-iv" aria-label="二極體 I–V 曲線，可調 I_S、放射係數 n，並切換線性與對數刻度"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="iv-v">v<sub>D</sub><output for="iv-v"></output></label>
+            <input type="range" id="iv-v" min="-0.3" max="0.8" step="0.005" value="0.7"></div>
+          <div class="ctrl"><label for="iv-is">I<sub>S</sub><output for="iv-is"></output></label>
+            <input type="range" id="iv-is" min="-18" max="-12" step="1" value="-14"></div>
+          <div class="ctrl"><label for="iv-n">放射係數 n<output for="iv-n"></output></label>
+            <input type="range" id="iv-n" min="1" max="2" step="0.1" value="1"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>v_D / nV_T</dt><dd id="iv-x">—</dd></div>
+          <div><dt>i_D</dt><dd id="iv-i" class="e">—</dd></div>
+          <div><dt>忽略 −1 的誤差</dt><dd id="iv-err" style="font-size:14px">—</dd></div>
+        </dl>
+        <div class="msg" id="iv-msg"></div>
+      </div>
+
+      <div id="ex-17"></div>
+
+      <div class="howto">
+        <h4>算二極體電流的標準流程（照 Example 1.7）</h4>
+        <ol>
+          <li>確認 I<sub>S</sub>、n（沒說就是 1）、V<sub>T</sub>（300 K 用 0.026 V）。</li>
+          <li>算指數 v<sub>D</sub>/(nV<sub>T</sub>)，<b>v<sub>D</sub> 帶正負號</b>。</li>
+          <li>算 e 的次方，再減 1，乘 I<sub>S</sub>。</li>
+          <li>檢查：順偏大於約 0.1 V 時 −1 可略；逆偏時答案應該 ≈ −I<sub>S</sub>（負號 = 方向跟 i<sub>D</sub> 定義相反）。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>I–V 公式的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 逆偏時電流 = 0。<span class="o">是 −I<sub>S</sub></span>：極小但不是 0，負號代表方向（投影片 1-46）。</li>
+          <li><span class="x">✗</span> V<sub>T</sub> 代 26（mV）然後 v<sub>D</sub> 代 0.7（V）。<span class="o">單位要一致</span>：0.7 / 0.026 = 26.9，不是 0.7 / 26。</li>
+          <li><span class="x">✗</span> 「v<sub>D</sub> &gt; 0.1 V」是導通電壓。<span class="o">那只是 −1 可以忽略的門檻</span>；I<sub>S</sub> = 10⁻¹⁴ A 時，0.1 V 的電流還不到 1 pA。</li>
+          <li><span class="x">✗</span> n 越大電流越大。<span class="o">相反</span>：指數變成 v<sub>D</sub>/(nV<sub>T</sub>)，n 越大曲線越「緩」，同一電壓電流越小。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 03 60 mV ══════════ -->
+    <section class="sec" id="dec">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>03 · 投影片 1-48 · Figure 1.18</div>
+      <h2>每 60 mV 變 10 倍<span class="h2-en">ONE DECADE PER 60 mV</span></h2>
+      <p class="lede">指數函數的特色：<strong>電壓加一個固定量，電流就乘一個固定倍數</strong>。對二極體來說，這個「固定量」是 60 mV、「固定倍數」是 10。在對數座標上，I–V 曲線就變成一條直線（Fig 1.18）。</p>
+      <div class="eq">Δv<em>D</em> = nV<em>T</em> · ln( i<em>2</em> / i<em>1</em> )　　i<em>2</em>/i<em>1</em> = 10 ⟹ Δv<em>D</em> = V<em>T</em> ln 10 ≈ 60 mV（n = 1）</div>
+
+      <div class="derive">
+        <h4>60 mV 從哪來</h4>
+        <ol>
+          <li>
+            <span class="d-eq">順偏（v<sub>D</sub> &gt; 0.1 V）：i<sub>1</sub> = I<sub>S</sub>e<sup>v<sub>1</sub>/nV<sub>T</sub></sup>，i<sub>2</sub> = I<sub>S</sub>e<sup>v<sub>2</sub>/nV<sub>T</sub></sup></span>
+            <div class="why">−1 已經可以忽略（上一節）。</div>
+          </li>
+          <li>
+            <span class="d-eq">相除：i<sub>2</sub>/i<sub>1</sub> = e<sup>(v<sub>2</sub> − v<sub>1</sub>)/nV<sub>T</sub></sup></span>
+            <div class="why"><b>I<sub>S</sub> 消掉了</b>。這很重要：I<sub>S</sub> 很難準確知道（每顆二極體都不一樣），但比值關係跟它無關。</div>
+          </li>
+          <li>
+            <span class="d-eq">取 ln：v<sub>2</sub> − v<sub>1</sub> = nV<sub>T</sub>·ln(i<sub>2</sub>/i<sub>1</sub>)</span>
+            <div class="why">指數的反函數是 ln。這條式子比 i–v 公式本身更常用。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">i<sub>2</sub>/i<sub>1</sub> = 10、n = 1：Δv = 0.026 × ln 10 = 0.026 × 2.303 = 0.0599 V ≈ 60 mV</span>
+            <p>反過來說：電流變 2 倍只要 0.026 × ln 2 ≈ <b>18 mV</b>；變 100 倍要 120 mV。n = 2 的話全部加倍（每 120 mV 一個數量級）。這就是為什麼二極體導通後電壓「幾乎不動」—— 電流從 1 mA 到 10 mA，電壓才多 0.06 V。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>小遊戲：電流階梯</h3><span class="spacer"></span><span class="tag" id="dc-score">過關 0 / 5</span></div>
+        <div class="stage-wrap"><canvas id="cv-dec" aria-label="對數座標的二極體電流，每 60 mV 一階；把電壓調到目標電流"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="dc-v">v<sub>D</sub><output for="dc-v"></output></label>
+            <input type="range" id="dc-v" min="0.45" max="0.85" step="0.001" value="0.65"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>目標</dt><dd id="dc-goal" style="font-size:14px">—</dd></div>
+          <div><dt>Δv（相對起點）</dt><dd id="dc-dv">—</dd></div>
+          <div><dt>i / i_起點</dt><dd id="dc-ratio" class="e">—</dd></div>
+        </dl>
+        <div class="msg" id="dc-msg"></div>
+        <div class="btn-row" style="padding:0 16px 14px"><button class="btn" type="button" id="dc-next">換下一題 →</button></div>
+      </div>
+
+      <div id="ex-dec"></div>
+
+      <div class="pitfall">
+        <h4>60 mV 規則的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 電壓加倍，電流加倍。<span class="o">電流是指數</span>：加 60 mV 就 × 10，跟電壓的倍數無關。</li>
+          <li><span class="x">✗</span> 任何電壓都適用 60 mV 規則。<span class="o">只在順偏、−1 可忽略時</span>（v<sub>D</sub> ≳ 0.1 V）成立。</li>
+          <li><span class="x">✗</span> 用 log 不用 ln。<span class="o">Δv = nV<sub>T</sub>·ln(比值)</span>；用 log₁₀ 的話要寫成 2.303·nV<sub>T</sub>·log₁₀(比值)，也就是 60 mV × log₁₀(比值)。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 04 理想二極體 ══════════ -->
+    <section class="sec" id="ideal">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>04 · 投影片 1-48、1-49 · 1.2.5 pn Junction Diode</div>
+      <h2><button class="tm" data-t="理想二極體">理想二極體</button>模型<span class="h2-en">IDEAL DIODE MODEL</span></h2>
+      <p class="lede">指數公式很準，但解電路時很難用（v 跟 i 糾纏在 e 的次方裡）。工程上的做法是把那條曲線<strong>簡化成開關</strong>：逆偏 = 斷路（OFF）、順偏 = 短路（ON）。再精確一點，就讓它導通時固定掉 0.7 V。</p>
+      <div class="eq">v<em>D</em> &lt; 0：i<em>D</em> = 0（斷路，R<em>R</em> → ∞）　　導通：v<em>D</em> = 0（短路，R<em>F</em> = 0），i<em>D</em> 由外部電路決定</div>
+
+      <div class="derive">
+        <h4>為什麼可以這樣簡化</h4>
+        <ol>
+          <li>
+            <span class="d-eq">逆偏：|i<sub>D</sub>| = I<sub>S</sub> ≈ 10⁻¹⁴ A ≪ 電路裡的 mA　⟹　當成 0，斷路</span>
+            <div class="why">差了 11 個數量級，忽略它的誤差比電阻的誤差還小。R<sub>R</sub> = V<sub>R</sub>/I<sub>R</sub>，I<sub>R</sub> → 0 所以 R<sub>R</sub> → ∞。</div>
+          </li>
+          <li>
+            <span class="d-eq">順偏：每 60 mV 電流 × 10　⟹　mA 尺度上看，曲線幾乎是一道垂直的牆</span>
+            <div class="why">Fig 1.17 用 mA 當單位時，0.6 V 以前看起來是 0，過了之後幾乎垂直往上。</div>
+          </li>
+          <li>
+            <span class="d-eq">把牆放在 0 V ⟹ 理想二極體；把牆放在 0.7 V ⟹ 定電壓降模型（V<sub>γ</sub>，<button class="tm" data-t="導通電壓">導通電壓</button>）</span>
+            <div class="why">投影片 1-41：「二極體被 MODEL 成導通（類似開關 ON 或 0.7 V 壓降）」。電源電壓比 0.7 V 大很多時，兩種模型差不多。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">導通時 R<sub>F</sub> = V<sub>F</sub>/I<sub>F</sub> = 0 是因為 V<sub>F</sub> = 0，電流 I<sub>F</sub> = (V<sub>S</sub> − V<sub>γ</sub>)/R，<b>有限值</b></span>
+            <p>投影片 1-49 在 I<sub>F</sub> 旁標了「∞」—— 這是錯的（見勘誤 ①）。短路只代表二極體本身不擋電流，電流多大由電源和電阻決定（同一頁圖上也寫了「I<sub>SC</sub> 受電路的限制」）。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>三種模型比一比</h3><span class="spacer"></span><span class="tag">V_S — R — 二極體</span></div>
+        <div class="stage-wrap"><canvas id="cv-ideal" aria-label="電源、電阻、二極體串聯；I–V 圖上用負載線比較理想、0.7 V、指數三種模型"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="id-vs">電源 V<sub>S</sub><output for="id-vs"></output></label>
+            <input type="range" id="id-vs" min="-5" max="5" step="0.05" value="5"></div>
+          <div class="ctrl"><label for="id-r">電阻 R<output for="id-r"></output></label>
+            <input type="range" id="id-r" min="0.2" max="10" step="0.1" value="1"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>理想（牆在 0 V）</dt><dd id="id-i0">—</dd></div>
+          <div><dt>定電壓降 0.7 V</dt><dd id="id-i7">—</dd></div>
+          <div><dt>指數公式（真值）</dt><dd id="id-ie" class="e">—</dd></div>
+        </dl>
+        <div class="msg" id="id-msg"></div>
+      </div>
+
+      <div id="ex-ideal"></div>
+
+      <div class="howto">
+        <h4>用理想模型解二極體電路</h4>
+        <ol>
+          <li><b>先假設</b>二極體導通（短路，或 0.7 V 電池），算出 i<sub>D</sub>。</li>
+          <li>檢查 i<sub>D</sub> &gt; 0？是 → 假設成立。</li>
+          <li>否 → 改假設二極體 OFF（斷路，i<sub>D</sub> = 0），算出它兩端的電壓，應該 &lt; V<sub>γ</sub>。</li>
+          <li>需要更準（V<sub>S</sub> 跟 0.7 V 差不多時），再用指數公式疊代。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>理想模型的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 理想二極體導通時電流無限大。<span class="o">電流由外部電路決定</span>，例如 V<sub>S</sub>/R。</li>
+          <li><span class="x">✗</span> 0.7 V 模型永遠比理想模型好。<span class="o">V<sub>S</sub> ≫ 0.7 V 時兩者差不多</span>，用理想模型就夠；V<sub>S</sub> 小的時候才一定要扣 0.7 V。</li>
+          <li><span class="x">✗</span> 0.7 V 就是 V<sub>bi</sub>。<span class="o">不同的量</span>（PART 3 勘誤 ④）。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 05 溫度 ══════════ -->
+    <section class="sec" id="temp">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>05 · 投影片 1-50～1-53 · Temperature Effects</div>
+      <h2>溫度效應<span class="h2-en">TEMPERATURE EFFECTS</span></h2>
+      <p class="lede">i<sub>D</sub> = I<sub>S</sub>(e<sup>v<sub>D</sub>/nV<sub>T</sub></sup> − 1) 裡有兩個量跟溫度有關：V<sub>T</sub> = kT/e，和 I<sub>S</sub> ∝ nᵢ²。溫度一高，熱產生的載子變多，I<sub>S</sub> <strong>暴增</strong> —— 同樣的電流只要更小的電壓。曲線整條往左移。</p>
+      <div class="eq">固定 i<em>D</em>：dv<em>D</em>/dT ≈ −2 mV/°C　　I<em>S</em> ∝ nᵢ² ∝ T³e<sup>−E<em>g</em>/kT</sup>：每升 5 °C 約翻倍（實際逆偏電流約每 10 °C 翻倍）</div>
+
+      <div class="derive">
+        <h4>−2 mV/°C 從哪來</h4>
+        <ol>
+          <li>
+            <span class="d-eq">順偏：i<sub>D</sub> ≈ I<sub>S</sub>e<sup>v<sub>D</sub>/V<sub>T</sub></sup>　⟹　固定 i<sub>D</sub> 時 v<sub>D</sub> = V<sub>T</sub>·ln(i<sub>D</sub>/I<sub>S</sub>)</span>
+            <div class="why">溫度計、偏壓電路都是「電流固定、看電壓」，所以把式子解成 v<sub>D</sub>。</div>
+          </li>
+          <li>
+            <span class="d-eq">nᵢ = BT<sup>3/2</sup>e<sup>−E<sub>g</sub>/2kT</sup>（投影片 1-53）⟹ I<sub>S</sub> ∝ nᵢ² ∝ T³e<sup>−E<sub>g</sub>/kT</sup></span>
+            <div class="why">I<sub>S</sub> 是少數載子造成的，少數載子 = nᵢ²/N，所以 I<sub>S</sub> 跟著 nᵢ² 走。</div>
+          </li>
+          <li>
+            <span class="d-eq">300 K → 305 K：(305/300)³ × e<sup>(E<sub>g</sub>/k)(1/300 − 1/305)</sup> = 1.05 × e<sup>0.71</sup> ≈ 2.1 倍</span>
+            <div class="why">這就是講義「每增加 5 °C，I<sub>S</sub> 倍增」。e 的次方那項（能隙）是主角，T³ 只貢獻 5%。</div>
+          </li>
+          <li>
+            <span class="d-eq">T ↑：V<sub>T</sub> 線性變大（讓 v<sub>D</sub> ↑），I<sub>S</sub> 指數變大（讓 ln 變小、v<sub>D</sub> ↓）⟹ 後者贏</span>
+            <div class="why">投影片 1-51：「I<sub>S</sub> 的增加通常遠比 V<sub>T</sub> 的增加顯著」。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">對 T 微分：dv<sub>D</sub>/dT = (v<sub>D</sub> − E<sub>g</sub>/e − 3V<sub>T</sub>)/T ≈ (0.6 − 1.12 − 0.078)/300 ≈ −2.0 mV/K</span>
+            <p>把 I<sub>S</sub> = K·T³e<sup>−E<sub>g</sub>/kT</sup> 代進 v<sub>D</sub> = V<sub>T</sub>ln(i<sub>D</sub>/I<sub>S</sub>) 再對 T 微分（課本延伸）。結果跟講義的 <b>−2 mV/°C</b> 一致；實際數字依電流和元件在 −1.5～−2.5 mV/°C 之間。直覺：<b>越熱，載子越多，越「好過」</b>（類似電阻性較低）。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>溫度實驗室</h3><span class="spacer"></span><span class="tag">i_D 固定 1 mA</span></div>
+        <div class="stage-wrap"><canvas id="cv-temp" aria-label="不同溫度的 I–V 曲線，溫度越高曲線越往左"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="tp-t">溫度 T<output for="tp-t"></output></label>
+            <input type="range" id="tp-t" min="-25" max="125" step="1" value="75"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>I_S(T)</dt><dd id="tp-is">—</dd></div>
+          <div><dt>1 mA 時的 v_D</dt><dd id="tp-v" class="e">—</dd></div>
+          <div><dt>跟 27 °C 比</dt><dd id="tp-dv" style="font-size:14px">—</dd></div>
+        </dl>
+        <div class="msg" id="tp-msg"></div>
+      </div>
+
+      <div id="ex-temp"></div>
+
+      <div class="pitfall">
+        <h4>溫度效應的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> V<sub>T</sub> 變大，所以 v<sub>D</sub> 變大。<span class="o">I<sub>S</sub> 的指數增長贏過 V<sub>T</sub></span>，固定電流下 v<sub>D</sub> 變小。</li>
+          <li><span class="x">✗</span> 溫度升高，同一電壓下電流變小。<span class="o">變大</span>：曲線往左移，同一電壓對應的電流變多。</li>
+          <li><span class="x">✗</span> −2 mV/°C 是精確常數。<span class="o">是經驗值</span>，依電流與元件約 −1.5～−2.5 mV/°C（下一節溫度計算出來是 −1.75 mV/K）。</li>
+          <li><span class="x">✗</span> 鍺跟矽的 I<sub>S</sub> 差不多。<span class="o">鍺的能隙小（0.66 eV）</span>，nᵢ 大很多，I<sub>S</sub> 大好幾個數量級（投影片 1-53）。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 06 溫度計 ══════════ -->
+    <section class="sec" id="thermo">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>06 · 投影片 1-52、1-54 · 1.6 Design Application: Diode Thermometer</div>
+      <h2><button class="tm" data-t="二極體溫度計">二極體溫度計</button><span class="h2-en">DIODE THERMOMETER</span></h2>
+      <p class="lede">缺點反過來就是優點：既然 v<sub>D</sub> 會隨溫度乖乖地、幾乎線性地下降，那讓二極體流<strong>固定電流</strong>、量它的電壓，就能反推溫度。課本的電路只有一顆 15 V 電源、一顆 15 kΩ 電阻和一顆二極體。</p>
+      <div class="eq">I<em>D</em> ≈ (15 − 0.6) V / 15 kΩ ≈ 1 mA（近似固定）　⟹　V<em>D</em> ≈ 1.12 − 0.522 · (T / 300) V　⟺　T = 300 · (1.12 − V<em>D</em>) / 0.522 K</div>
+
+      <div class="derive">
+        <h4>Fig 1.48 那條直線怎麼來</h4>
+        <ol>
+          <li>
+            <span class="d-eq">I<sub>D</sub> = (15 − V<sub>D</sub>)/15k ≈ 0.96 mA，V<sub>D</sub> 只變 0.1 V，I<sub>D</sub> 只變 0.7%</span>
+            <div class="why">電源電壓遠大於 V<sub>D</sub>，所以這顆大電阻 + 大電源就是一個「近似定電流源」（投影片 1-52、1-54：I<sub>D</sub> 要保持 CONSTANT）。</div>
+          </li>
+          <li>
+            <span class="d-eq">V<sub>D</sub> = V<sub>T</sub>ln(I<sub>D</sub>/I<sub>S</sub>)，I<sub>S</sub> = K·T³·e<sup>−E<sub>g</sub>/kT</sup>　⟹　V<sub>D</sub> = E<sub>g</sub>/e − (kT/e)·ln(K·T³/I<sub>D</sub>)</span>
+            <div class="why">把 e<sup>−E<sub>g</sub>/kT</sup> 從 ln 裡拿出來，剛好變成常數 E<sub>g</sub>/e = 1.12 V（矽的能隙）。</div>
+          </li>
+          <li>
+            <span class="d-eq">ln(K·T³/I<sub>D</sub>) 隨 T 變得很慢 ⟹ 在 300 K 附近當常數 ⟹ V<sub>D</sub> ≈ 1.12 − c·T</span>
+            <div class="why">T³ 在 ln 裡面，溫度變 20% 它才變一點點。所以 V<sub>D</sub> 對 T 幾乎是直線（Fig 1.48 的 Linear relationship）。</div>
+          </li>
+          <li>
+            <span class="d-eq">用一個量測點校正：T = 300 K 時 V<sub>D</sub> = 0.598 V ⟹ c·300 = 1.12 − 0.598 = 0.522 V</span>
+            <div class="why">這就是課本的 V<sub>D</sub> = 1.12 − 0.522(T/300)。斜率 −0.522/300 = <b>−1.74 mV/K</b>（跟上一節的 −2 mV/°C 同一個等級）。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">驗算 Fig 1.48：T = 255.2 K（0 °F）→ 0.676 V；T = 310.8 K（100 °F）→ 0.579 V ✓</span>
+            <p>1.12 − 0.522 × 255.2/300 = 0.676；1.12 − 0.522 × 310.8/300 = 0.579。圖上三個數字全部吻合。<b>量到的電壓越小，代表溫度越高。</b></p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>小遊戲：讀溫度計</h3><span class="spacer"></span><span class="tag" id="th-score">答對 0 題</span></div>
+        <div class="stage-wrap"><canvas id="cv-thermo" aria-label="二極體溫度計：看電壓表讀數，猜現在幾度"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="th-g">你猜的溫度<output for="th-g"></output></label>
+            <input type="range" id="th-g" min="-30" max="130" step="1" value="27"></div>
+        </div>
+        <div class="btn-row" style="padding:0 16px 12px">
+          <button class="btn solid" type="button" id="th-check">對答案</button>
+          <button class="btn" type="button" id="th-new">換一個溫度 →</button>
+        </div>
+        <div class="msg" id="th-msg"></div>
+      </div>
+
+      <div id="ex-thermo"></div>
+
+      <div class="howto">
+        <h4>溫度計題目的標準流程</h4>
+        <ol>
+          <li>確認電流近似固定（大電源 + 大電阻），沒有的話先算 I<sub>D</sub>。</li>
+          <li>用校正點寫出直線：V<sub>D</sub> = V<sub>D0</sub> + 斜率 × (T − T<sub>0</sub>)，斜率約 −1.7～−2 mV/K。</li>
+          <li>量到的 V<sub>D</sub> 代回去解 T；<b>K 和 °C 差 273</b>，°F 要再換算。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>溫度計的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 電壓越高溫度越高。<span class="o">相反</span>：V<sub>D</sub> 越小代表越熱。</li>
+          <li><span class="x">✗</span> 電流不用固定。<span class="o">一定要固定</span>：電流變 10 倍電壓就差 60 mV，相當於 30 多度的誤差。</li>
+          <li><span class="x">✗</span> T 代攝氏。<span class="o">公式裡的 T 是絕對溫度 K</span>（300 K ≈ 27 °C）。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 勘誤 ══════════ -->
+    <section class="sec" id="check">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>Errata · 講義檢查結果</div>
+      <h2>講義勘誤<span class="h2-en">ERRATA</span></h2>
+      <p class="lede">PART 4 的 1-38～1-54 我逐頁驗算過。<strong>Example 1.7、60 mV 規則、溫度計 Fig 1.48 的數字全部正確</strong>，下面是要修正或要注意的地方。</p>
+
+      <div class="pitfall">
+        <h4>① 投影片 1-49：理想二極體導通時「I<sub>F</sub> → ∞」</h4>
+        <ul>
+          <li>講義在 R<sub>F</sub> = V<sub>F</sub>/I<sub>F</sub> = 0 Ω 的 I<sub>F</sub> 旁標了：<span class="x">∞</span></li>
+          <li>應該是：<span class="o">R<sub>F</sub> = 0 是因為 V<sub>F</sub> = 0</span>，I<sub>F</sub> 是由外部電路決定的有限值（同一頁圖上也寫了「I<sub>SC</sub>（受電路的限制）」）。</li>
+          <li>對照：下面逆偏那行 R<sub>R</sub> = V<sub>R</sub>/I<sub>R</sub> ≒ ∞、I<sub>R</sub> 旁標 0 —— 這個是對的。</li>
+        </ul>
+      </div>
+      <div class="pitfall">
+        <h4>② 投影片 1-42：Practice diode → practical diode（考英文要注意）</h4>
+        <ul>
+          <li>講義寫：<span class="x">實際二極體 (Practice diode)</span></li>
+          <li>應該是：<span class="o">practical diode</span>（或 real diode）。practice 是名詞「練習」，形容詞是 practical。</li>
+        </ul>
+      </div>
+      <div class="pitfall">
+        <h4>③ 投影片 1-44：「矽 I<sub>S</sub>：10⁻¹³～10⁻¹⁸ A」—— 請對照課本確認</h4>
+        <ul>
+          <li>我印象中 Neamen 課本寫的是 <b>10⁻¹⁸～10⁻¹² A</b>。不算錯（都是極小的數），但上限差了一個數量級，考填充題時以課本為準。</li>
+        </ul>
+      </div>
+      <div class="pitfall">
+        <h4>④ 投影片 1-44 NOTE：「低電流 n = 2、高電流 n = 1」—— 補充，不是錯</h4>
+        <ul>
+          <li>低電流時空乏區復合主導 → n ≈ 2；中等電流擴散主導 → n ≈ 1 ✓。</li>
+          <li>但電流<b>非常大</b>（大注入，注入的少數載子濃度跟摻雜同等級）時，n 又會往 2 走。講義的「高電流」指的是中等電流範圍。</li>
+        </ul>
+      </div>
+      <p class="note">用語：1-47「意指：數學近似等效，非 0.1 V 為導通電壓之意」這個旁註很重要，建議畫重點；1-50 的 −2 mV/°C 和 Fig 1.48 算出來的 −1.74 mV/K 不矛盾，前者是經驗法則、後者是課本這顆特定二極體在 1 mA 下的值。</p>
+
+      <div class="note key">
+        <b>驗算過、正確的部分：</b>
+        <ul style="margin:8px 0 0;padding-left:18px">
+          <li>1-38 順偏 E<sub>total</sub> = Ē − E<sub>A</sub>，淨電場仍由 n 指向 p ✓</li>
+          <li>1-43 Fig 1.16：注入的少數載子隨距離近似指數衰減，主因是復合 ✓</li>
+          <li>1-46 Example 1.7：10⁻¹⁴ × (e<sup>0.70/0.026</sup> − 1) = 10⁻¹⁴ × 4.93×10¹¹ = <b>4.93 mA</b>；v<sub>D</sub> = −0.70 V → <b>≈ −10⁻¹⁴ A</b> ✓</li>
+          <li>1-47 v<sub>D</sub> &gt; 0.1 V 時 −1 可忽略：e<sup>0.1/0.026</sup> = 46.8，誤差 2.1% ✓</li>
+          <li>1-48 每 60 mV 一個數量級：0.026 × ln 10 = <b>59.9 mV</b> ✓</li>
+          <li>1-53 每 5 °C I<sub>S</sub> 倍增：300 → 305 K 算出 × 2.1 ✓；nᵢ = BT<sup>3/2</sup>e<sup>−E<sub>g</sub>/2kT</sup> ✓</li>
+          <li>1-52/1-54 Fig 1.47：(15 − 0.6)/15 kΩ ≈ 0.96 mA ✓；Fig 1.48：V<sub>D</sub> = 1.12 − 0.522(T/300) 在 255.2 / 300 / 310.8 K 給出 0.676 / 0.598 / 0.579 V ✓</li>
+        </ul>
+      </div>
+      <p class="note src">勘誤僅針對數學、單位與用詞正確性；若與課堂說法不同，以老師為準。</p>
+    </section>
+
+    <!-- ══════════ 名詞 ══════════ -->
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <p class="lede">考卷上會出現的是右邊那欄。</p>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號/單位</code></div>
+        <div class="gl-row"><b>順向偏壓</b><span>forward bias</span><code>v_D &gt; 0</code></div>
+        <div class="gl-row"><b>順向電流</b><span>forward current</span><code>i_D</code></div>
+        <div class="gl-row"><b>淨電場</b><span>net electric field</span><code>E_total = Ē − E_A</code></div>
+        <div class="gl-row"><b>少數載子注入</b><span>minority carrier injection</span><code>p_n(0)</code></div>
+        <div class="gl-row"><b>多出電洞濃度</b><span>excess hole concentration</span><code>p_n(x) − p_n0</code></div>
+        <div class="gl-row"><b>擴散長度</b><span>diffusion length</span><code>L = √(Dτ)</code></div>
+        <div class="gl-row"><b>電流–電壓特性</b><span>current–voltage (I–V) characteristic</span><code>i_D–v_D</code></div>
+        <div class="gl-row"><b>逆向飽和電流</b><span>reverse-bias saturation current</span><code>I_S</code></div>
+        <div class="gl-row"><b>放射係數 / 理想因子</b><span>emission coefficient / ideality factor</span><code>n（1～2）</code></div>
+        <div class="gl-row"><b>熱電壓</b><span>thermal voltage</span><code>V_T = kT/e</code></div>
+        <div class="gl-row"><b>整流</b><span>rectifying / rectification</span><code>—</code></div>
+        <div class="gl-row"><b>整流器</b><span>rectifier</span><code>—</code></div>
+        <div class="gl-row"><b>pn 接面二極體</b><span>pn junction diode</span><code>—</code></div>
+        <div class="gl-row"><b>理想二極體</b><span>ideal diode</span><code>ON / OFF</code></div>
+        <div class="gl-row"><b>導通電壓（切入電壓）</b><span>cut-in / turn-on voltage</span><code>V_γ ≈ 0.7 V</code></div>
+        <div class="gl-row"><b>崩潰起始電壓</b><span>Zener knee voltage</span><code>V_ZK</code></div>
+        <div class="gl-row"><b>數量級</b><span>order of magnitude / decade</span><code>× 10</code></div>
+        <div class="gl-row"><b>溫度係數</b><span>temperature coefficient</span><code>≈ −2 mV/°C</code></div>
+        <div class="gl-row"><b>二極體溫度計</b><span>diode thermometer</span><code>—</code></div>
+        <div class="gl-row"><b>實際二極體</b><span>practical diode</span><code>—</code></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 測驗 ══════════ -->
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">12 題，中英對照，選項順序每次打亂。題目下方那行英文就是考卷上會看到的講法。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Donald A. Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4th ed.（McGraw-Hill），Chapter 1 §1.2.3～1.2.5、§1.6，2026 Fall 課程 PART 4 投影片 1-38～1-54。</p>
+      <p>互動模組為觀念示意，載子數量與尺寸經過壓縮以利觀察；定量數值皆依課本公式即時計算。注入公式 p<sub>n</sub>(0) = p<sub>n0</sub>e<sup>v<sub>D</sub>/V<sub>T</sub></sup>、I<sub>S</sub> 的組成與 dv<sub>D</sub>/dT 的微分為課本延伸，講義未列。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="assets/ch1-part4.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch1-part4-story.js"></script>
+</body>
+</html>

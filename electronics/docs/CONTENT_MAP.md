@@ -7,7 +7,7 @@
 
 | 章 | 英文章名 | 中文 | 狀態 |
 |---|---------|------|------|
-| 1 | Semiconductor Materials and Diodes | 半導體材料與二極體 | **PART 1、PART 2 已完成** |
+| 1 | Semiconductor Materials and Diodes | 半導體材料與二極體 | **PART 1～4 已完成** |
 | 2 | Diode Circuits | 二極體電路 | 待上傳 |
 | 3 | The Field-Effect Transistor | 場效電晶體 FET | 待上傳 |
 | 4 | Basic FET Amplifiers | 基本 FET 放大器 | 待上傳 |
@@ -31,12 +31,13 @@
 | 1.1.1 | Intrinsic Semiconductors 本質半導體 | ✅ CH1 PART 1 |
 | 1.1.2 | Extrinsic Semiconductors 非本質半導體 | ✅ N 型於 PART 1、P 型與定量分析於 PART 2 |
 | 1.1.3 | Drift and Diffusion Current 漂移與擴散電流 | ✅ CH1 PART 2 |
-| 1.1.4 | Excess Carriers 過剩載子 | 待上傳 |
-| 1.2 | The pn Junction pn 接面 | 待上傳 |
+| 1.1.4 | Excess Carriers 過剩載子 | ✅ CH1 PART 2（來自原講義 PART 3 前段） |
+| 1.2.1–1.2.2 | pn 接面熱平衡、逆向偏壓、接面電容 | ✅ CH1 PART 3 |
+| 1.2.3–1.2.5 | 順向偏壓、理想 I–V、pn 接面二極體、溫度效應 | ✅ CH1 PART 4 |
 | 1.3 | Diode Circuits: DC Analysis and Models | 待上傳 |
 | 1.4 | Diode Circuits: AC Equivalent Circuit | 待上傳 |
 | 1.5 | Other Diode Types（Schottky、Zener…） | 待上傳 |
-| 1.6 | Design Application: Diode Thermometer | 待上傳 |
+| 1.6 | Design Application: Diode Thermometer | ✅ CH1 PART 4（講義 1-54 的 NOTE） |
 
 ## CH1_PART1 逐頁對照（投影片 p.1–30）
 
@@ -141,3 +142,31 @@ p.53 擴散公式正負號、Example 1.4（187 A/cm²）。
 ## 下一份檔案預期銜接
 
 1.1.4 過剩載子（Excess Carriers）→ 1.2 pn 接面（The pn Junction）。
+
+
+## 原講義 PART 3／PART 4 的拆法（2026-10）
+
+老師的 PART 3 講義前 18 頁跟 PART 2 同主題，所以**併進 CH1 PART 2 頁**；網頁每一節標題旁的小標籤 `原講義 PART x` 標出來源。
+
+| 原講義 | 投影片 | 網頁位置 |
+|--------|--------|---------|
+| PART 3 | 1-1～1-15（漂移／擴散改版、I vs J、四步推導、擴散方向練習） | CH1 PART 2 §04、§05–§08 |
+| PART 3 | 1-16～1-18（愛因斯坦關係、多出載子） | CH1 PART 2 §09、§10 |
+| PART 3 | 1-19～1-27（接面形成、空乏區、V_bi、Example 1.5） | CH1 PART 3 §01、§02 |
+| PART 3 | 1-28～1-31（偏壓接法、逆偏、I_S） | CH1 PART 3 §03 |
+| PART 3 | 1-32～1-37（接面電容、Example 1.6、變容二極體） | CH1 PART 3 §04 |
+| PART 4 | 1-38～1-43、1-45（順偏、少數載子注入、Fig 1.16） | CH1 PART 4 §01 |
+| PART 4 | 1-44、1-46、1-47（理想 I–V、Example 1.7） | CH1 PART 4 §02 |
+| PART 4 | 1-48（60 mV／decade、Fig 1.18） | CH1 PART 4 §03 |
+| PART 4 | 1-48、1-49（理想二極體模型） | CH1 PART 4 §04 |
+| PART 4 | 1-50～1-53（溫度效應） | CH1 PART 4 §05 |
+| PART 4 | 1-52、1-54（二極體溫度計 Fig 1.47／1.48） | CH1 PART 4 §06 |
+
+### 勘誤摘要
+- PART 3 1-21：N 區只剩 P⊖ → **P⊕**
+- PART 3 1-25：build-in → **built-in**
+- PART 3 1-27：靜電流 → **淨電流**；「V_bi ≃ 0.7 V」與導通電壓混用（請確認）
+- PART 3 1-17：excess electronics → **electrons**；n·p > nᵢ² 嚴格應為 ≠
+- PART 4 1-49：理想二極體導通標 I_F → ∞ 錯，R_F = 0 是因為 V_F = 0
+- PART 4 1-42：Practice diode → **practical diode**
+- PART 4 1-44：矽 I_S 範圍 10⁻¹³～10⁻¹⁸ A（課本為 10⁻¹⁸～10⁻¹²，請確認）

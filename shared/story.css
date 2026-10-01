@@ -9,8 +9,8 @@
   --s-ink2: var(--ink-2);
   --s-ink3: var(--ink-3);
   --s-line: var(--line);
-  --s-acc: var(--electron);
-  --s-acc-w: color-mix(in srgb, var(--electron) 12%, var(--surface));
+  --s-acc: var(--accent);
+  --s-acc-w: color-mix(in srgb, var(--accent) 12%, var(--surface));
   --s-card: var(--surface);
   --s-bg1: color-mix(in srgb, var(--surface) 82%, var(--paper));
   --s-bg2: color-mix(in srgb, var(--surface-2) 80%, var(--paper));
@@ -210,3 +210,28 @@ body[data-look="clean"] .quiz {
   box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 14px 34px -22px rgba(0,0,0,.35);
 }
 body[data-look="clean"] .bench-head h3 { font-family: var(--font-body); font-weight: 700; }
+
+/* 原講義對照：每一節旁邊小小標「這是講義 PART 幾」 */
+.part-tag {
+  display: inline-block; vertical-align: 1px; margin-left: 8px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: .08em;
+  color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  border-radius: 999px; padding: 1px 8px; white-space: nowrap; text-transform: none;
+}
+.eyebrow .part-tag { margin-left: 0; margin-right: 8px; }
+
+/* 電子學乾淨版：跟故事模式一樣「墨色 + 一個藍」——
+   電子＝實心藍點、電洞＝虛線圈（畫在 app.js 的 hole()），
+   電洞、離子相關的線條與標籤改用墨色，不再用橘紅與琥珀。 */
+body[data-subject="electronics"][data-look="clean"] {
+  --hole: #3a3f4f; --hole-w: #eceef4; --ion-pos: #6b7186; --ion-pos-w: #eef0f5;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body[data-subject="electronics"][data-look="clean"] {
+    --hole: #cfd3df; --hole-w: #262b38; --ion-pos: #9aa0b4; --ion-pos-w: #232733;
+  }
+}
+:root[data-theme="dark"] body[data-subject="electronics"][data-look="clean"] {
+  --hole: #cfd3df; --hole-w: #262b38; --ion-pos: #9aa0b4; --ion-pos-w: #232733;
+}

@@ -745,7 +745,9 @@
           ['s 越小積分越容易收斂', 'smaller s makes convergence easier']], a: 0,
       e: 'f(t) = e^(2t) 時，乘積是 e^((2−s)t)；只有 s > 2 這個指數才是負的、積分才收斂。若 s ≤ 2，乘積不減反增，積分發散、F(s) 根本不存在。ROC 取決於 f(t) 成長得多快。' }
   ];
-  let i = 0, score = 0, answered = false;
+  let i = 0, score = 0, answered = false, ord = [];
+  /* 選項順序每次打亂：題庫裡正解都寫在第一個，不打亂的話永遠是 A */
+  const shuffle = n => { const o = Array.from({ length: n }, (_, k) => k); for (let k = n - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [o[k], o[j]] = [o[j], o[k]]; } return o; };
 
   function render() {
     const q = Q[i];
@@ -761,7 +763,9 @@
       '<div class="quiz-foot"><span class="score">答對 ' + score + ' / ' + i + '</span><span class="spacer"></span>' +
         '<button class="btn" id="q-next" hidden>下一題 →</button></div>';
     const opts = host.querySelector('.opts');
-    q.o.forEach((pair, k) => {
+    ord = shuffle(q.o.length);
+    ord.forEach((src, k) => {
+      const pair = q.o[src];
       const b = document.createElement('button');
       b.className = 'opt'; b.type = 'button';
       b.innerHTML = '<i>' + 'ABCD'[k] + '</i><span>' + pair[0] + '<span class="en">' + pair[1] + '</span></span>';
@@ -773,12 +777,12 @@
   }
   function pick(k) {
     if (answered) return; answered = true;
-    const q = Q[i], btns = Array.prototype.slice.call(host.querySelectorAll('.opt'));
-    btns.forEach((b, idx) => { b.disabled = true; if (idx === q.a) b.classList.add('right'); });
-    if (k === q.a) score++; else btns[k].classList.add('wrong');
+    const q = Q[i], A = ord.indexOf(q.a), btns = Array.prototype.slice.call(host.querySelectorAll('.opt'));
+    btns.forEach((b, idx) => { b.disabled = true; if (idx === A) b.classList.add('right'); });
+    if (k === A) score++; else btns[k].classList.add('wrong');
     const ex = host.querySelector('.explain');
     ex.hidden = false;
-    ex.innerHTML = '<b>' + (k === q.a ? '答對了。' : '正確答案是 ' + 'ABCD'[q.a] + '。') + '</b> ' + q.e;
+    ex.innerHTML = '<b>' + (k === A ? '答對了。' : '正確答案是 ' + 'ABCD'[A] + '。') + '</b> ' + q.e;
     host.querySelector('.score').textContent = '答對 ' + score + ' / ' + (i + 1);
     const nx = host.querySelector('#q-next');
     nx.hidden = false; nx.textContent = i === Q.length - 1 ? '看結果 →' : '下一題 →';

@@ -226,7 +226,7 @@ section.sec > .lede { color: var(--ink-2); max-width: 62ch; margin: 0 0 20px; }
   background: var(--surface-2);
 }
 .bench-head h3 { font-size: 15px; font-weight: 600; }
-.bench-head .tag { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.bench-head .tag { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: none; color: var(--ink-3); }
 .bench-head .spacer { flex: 1; }
 
 .stage-wrap { position: relative; background: var(--surface); }
@@ -239,7 +239,7 @@ section.sec > .lede { color: var(--ink-2); max-width: 62ch; margin: 0 0 20px; }
 }
 .ctrl { min-width: 0; }
 .ctrl > label, .ctrl > .lab {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+  display: flex; justify-content: flex-start; align-items: baseline; gap: 0;
   font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em;
   text-transform: uppercase; color: var(--ink-3); margin-bottom: 5px;
 }
@@ -284,7 +284,7 @@ button.btn[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 1
   border-top: 1px solid var(--line-soft);
 }
 .readout div { background: var(--surface); padding: 11px 14px; }
-.readout dt { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 3px; }
+.readout dt { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: none; color: var(--ink-3); margin: 0 0 3px; }
 .readout dd { margin: 0; font-family: var(--font-mono); font-size: 17px; font-variant-numeric: tabular-nums; color: var(--ink); }
 .readout dd small { font-size: 11.5px; color: var(--ink-3); margin-left: 3px; }
 .readout dd.e { color: var(--electron); }
@@ -850,3 +850,8 @@ button.tm > i {
 }
 .example.live .ex-reset:hover { color: var(--accent); }
 .example .ex-head { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+
+/* 標籤裡常有 μ、τ、δ、σ 這些希臘字母，全大寫會變成 M、T、Δ、Σ —— 意思就錯了，所以不轉大寫 */
+.ctrl label { text-transform: none; }
+/* 標籤裡有 <sub> 時不要被 space-between 拆開：數值靠右，其餘緊貼 */
+.ctrl > label > output, .ctrl > label > .val, .ctrl > .lab > output, .ctrl > .lab > .val { margin-left: auto; padding-left: 8px; }

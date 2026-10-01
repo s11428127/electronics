@@ -10,6 +10,8 @@
   const CHAPTERS = [
     ['electronics/ch1-part1', '電子學 · CH1 PART 1'],
     ['electronics/ch1-part2', '電子學 · CH1 PART 2'],
+    ['electronics/ch1-part3', '電子學 · CH1 PART 3 pn 接面'],
+    ['electronics/ch1-part4', '電子學 · CH1 PART 4 順偏與 I–V'],
     ['circuits/ch11', '電路學 · CH11 交流功率'],
     ['engineering-math/laplace', '工數 · 拉普拉斯轉換'],
     ['engineering-math/ode', '工數 · ODE 與特徵方程']
