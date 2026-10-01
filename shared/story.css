@@ -1,0 +1,212 @@
+/* ============================================================
+   故事模式（Story mode）—— 一次一個畫面、一句字幕
+   視覺語彙：淺色漸層底、正中央一張線條圖、只用「墨色 + 一個藍」、
+   上方中英標題卡、圖旁的小標籤、下方字幕。
+   顏色全部吃 app.css 的 token，所以明暗主題自動跟著換。
+   ============================================================ */
+.story {
+  --s-ink: var(--ink);
+  --s-ink2: var(--ink-2);
+  --s-ink3: var(--ink-3);
+  --s-line: var(--line);
+  --s-acc: var(--electron);
+  --s-acc-w: color-mix(in srgb, var(--electron) 12%, var(--surface));
+  --s-card: var(--surface);
+  --s-bg1: color-mix(in srgb, var(--surface) 82%, var(--paper));
+  --s-bg2: color-mix(in srgb, var(--surface-2) 80%, var(--paper));
+  position: relative; margin: 18px 0 8px; border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow);
+  outline: none;
+}
+.story:focus-visible { box-shadow: 0 0 0 2px var(--accent), var(--shadow); }
+
+/* ---------- 舞台 ---------- */
+.st-stage {
+  position: relative; aspect-ratio: 16 / 10; width: 100%;
+  background: radial-gradient(120% 90% at 30% 10%, var(--s-bg1), var(--s-bg2));
+  cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
+  touch-action: pan-y;               /* 上下捲頁面照常；左右滑交給故事 */
+}
+.st-art { position: absolute; inset: 0; display: grid; place-items: center; }
+.st-svg { width: 100%; height: 100%; display: block; overflow: visible; transition: opacity .28s ease; }
+.st-svg.leave { opacity: 0; }
+
+/* 上方標題卡：大字中文 + 藍色英文小字 */
+.st-title {
+  position: absolute; z-index: 2; top: 3.2%; left: 50%; transform: translateX(-50%);
+  background: var(--s-card); border-radius: 12px; padding: 7px 18px 6px; text-align: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 10px 26px -14px rgba(0,0,0,.35);
+  transition: opacity .3s ease, transform .3s ease; white-space: nowrap; max-width: 92%;
+}
+.st-title b { display: block; font-family: var(--font-body); font-weight: 700; font-size: clamp(15px, 2.6vw, 22px); color: var(--s-ink); letter-spacing: .02em; }
+.st-title i { display: block; font-style: normal; font-family: var(--font-mono); font-weight: 600; font-size: clamp(8.5px, 1.25vw, 11px); letter-spacing: .18em; color: var(--s-acc); margin-top: 1px; }
+.st-title.swap { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+
+/* 下方字幕 */
+.st-sub {
+  position: absolute; z-index: 2; left: 50%; bottom: 4.5%; transform: translateX(-50%);
+  width: max-content; max-width: 90%; text-align: center; pointer-events: none;
+}
+.st-sub span {
+  display: inline-block; background: rgba(40, 44, 52, .78); color: #fff;
+  font-family: var(--font-body); font-size: clamp(13px, 2.05vw, 17.5px); line-height: 1.55;
+  padding: 5px 12px; border-radius: 6px; transition: opacity .22s ease;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.st-sub span b { color: #9cc0ff; font-weight: 700; }
+.st-sub.swap span { opacity: 0; }
+
+.st-hint {
+  position: absolute; z-index: 3; right: 12px; top: 12px; font-family: var(--font-mono); font-size: 11px;
+  color: var(--s-ink3); background: var(--s-card); border: 1px solid var(--s-line); border-radius: 999px; padding: 3px 10px;
+  transition: opacity .4s ease; pointer-events: none;
+}
+.st-hint.gone { opacity: 0; }
+
+/* ---------- 控制列 ---------- */
+.st-bar {
+  display: flex; align-items: center; gap: 6px; padding: 8px 10px;
+  border-top: 1px solid var(--line-soft); background: var(--surface);
+}
+.st-bar button {
+  flex: none; height: 34px; min-width: 34px; padding: 0 10px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink-2);
+  font-family: var(--font-body); font-size: 13px; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  touch-action: manipulation;
+}
+.st-bar button:hover { background: var(--surface-2); }
+.st-bar button:disabled { opacity: .35; cursor: default; }
+.st-bar button[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); color: var(--accent); border-color: var(--accent); font-weight: 600; }
+.st-prog { flex: 1; min-width: 40px; display: flex; gap: 3px; height: 34px; align-items: center; cursor: pointer; }
+.st-prog i { position: relative; display: block; height: 5px; border-radius: 3px; background: var(--surface-3); overflow: hidden; }
+.st-prog i > u { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--accent); transition: width .3s ease; }
+.st-count { flex: none; font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-3); min-width: 48px; text-align: center; }
+.st-list {
+  position: absolute; z-index: 20; right: 10px; bottom: 56px; width: min(320px, calc(100% - 20px)); max-height: 70%; overflow: auto;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 50px -20px rgba(0,0,0,.5); padding: 6px;
+}
+.st-list button {
+  display: flex; width: 100%; gap: 10px; align-items: baseline; text-align: left; border: 0; background: transparent; cursor: pointer;
+  padding: 8px 10px; border-radius: 8px; font: inherit; font-size: 14px; color: var(--ink);
+}
+.st-list button:hover { background: var(--surface-2); }
+.st-list button i { font-style: normal; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); min-width: 20px; }
+.st-list button.on { color: var(--accent); font-weight: 600; }
+.st-list button small { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); letter-spacing: .06em; }
+
+/* 結尾畫面 */
+.st-end {
+  position: absolute; z-index: 4; inset: auto 0 16% 0; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  pointer-events: none; opacity: 0; transition: opacity .4s ease;
+}
+.st-end.show { opacity: 1; pointer-events: auto; }
+.st-end .btn { display: inline-flex; align-items: center; font-family: var(--font-body); font-size: 14px; padding: 9px 16px; border-radius: 9px; }
+.st-end a.btn { border: 1px solid var(--accent); background: var(--accent); color: #fff; font-weight: 600; }
+:root[data-theme="dark"] .st-end a.btn, :root:not([data-theme="light"]) .st-end a.btn { color: #0e1017; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .st-end a.btn { color: #fff; } }
+
+/* 全螢幕（用 CSS 做，iPad、嵌在 iframe 裡也能用） */
+.story.full {
+  position: fixed; inset: 0; z-index: 200; margin: 0; border-radius: 0; border: 0;
+  display: flex; flex-direction: column; background: var(--paper);
+}
+.story.full .st-stage { flex: 1; aspect-ratio: auto; min-height: 0; }
+body.st-lock { overflow: hidden; }
+
+/* ---------- 圖的元素（SVG） ---------- */
+.st-svg text { font-family: var(--font-body); }
+.st-svg .ln  { fill: none; stroke: var(--s-ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.st-svg .ln2 { fill: none; stroke: var(--s-line); stroke-width: 1.5; }
+.st-svg .lna { fill: none; stroke: var(--s-acc); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.st-svg .dsh { stroke-dasharray: 5 5; }
+.st-svg .e   { fill: var(--s-acc); }
+.st-svg .h   { fill: var(--s-card); stroke: var(--s-acc); stroke-width: 1.8; stroke-dasharray: 3 2.6; }
+.st-svg .at circle { fill: var(--s-ink); }
+.st-svg .at text { fill: var(--s-card); font-family: var(--font-mono); font-weight: 700; }
+.st-svg .at.p circle, .st-svg .at.b circle { fill: var(--s-card); stroke: var(--s-ink); stroke-width: 2.2; }
+.st-svg .at.p text, .st-svg .at.b text { fill: var(--s-ink); }
+.st-svg .ring { fill: none; stroke: var(--s-acc); stroke-width: 1.6; }
+.st-svg .ink  { fill: var(--s-ink); }
+.st-svg .ink2 { fill: var(--s-ink2); }
+.st-svg .ink3 { fill: var(--s-ink3); }
+.st-svg .acc  { fill: var(--s-acc); }
+.st-svg .card { fill: var(--s-card); }
+.st-svg .accw { fill: var(--s-acc-w); }
+.st-svg .bgw  { fill: var(--s-card); stroke: var(--s-ink); stroke-width: 1.6; }
+.st-svg .t   { fill: var(--s-ink); font-weight: 700; }
+.st-svg .tm  { fill: var(--s-ink2); }
+.st-svg .ts  { fill: var(--s-ink3); }
+.st-svg .ta  { fill: var(--s-acc); font-weight: 700; }
+.st-svg .mono { font-family: var(--font-mono); }
+.st-svg .chip rect { fill: var(--s-card); }
+.st-svg .chip .cdot { fill: var(--s-acc); }
+
+/* 有 data-k 的元素由引擎控制「出現 / 消失 / 移動」 */
+.st-svg [data-k] { transition: opacity .55s ease, transform .75s cubic-bezier(.3,.7,.2,1); transform-box: fill-box; transform-origin: center; }
+.st-svg.instant [data-k], .st-svg.instant [data-k] * { transition: none !important; }
+
+/* 持續動畫（加在 data-k 元素上，動畫作用在它的子元素，避免跟位移打架） */
+@keyframes st-jig { 0%,100% { transform: translate(0,0); } 25% { transform: translate(1.6px,-1.2px); } 50% { transform: translate(-1.4px,1.5px); } 75% { transform: translate(1.2px,1.3px); } }
+.st-svg .shake > * { animation: st-jig .32s linear infinite; transform-box: fill-box; }
+.st-svg .shake > *:nth-child(3n) { animation-duration: .27s; animation-delay: -.1s; }
+.st-svg .shake > *:nth-child(3n+1) { animation-duration: .36s; animation-delay: -.2s; }
+@keyframes st-pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+.st-svg .pulse > *, .st-svg circle.pulse { animation: st-pulse 1.1s ease-in-out infinite; }
+@keyframes st-run { from { transform: translateX(0); } to { transform: translateX(var(--run, 60px)); } }
+.st-svg .stream > * { animation: st-run 1.6s linear infinite; }
+.st-svg .stream > *:nth-child(2n) { animation-delay: -.8s; }
+.st-svg .stream > *:nth-child(3n) { animation-delay: -.4s; }
+/* 輸送帶：子元素等距排列、一起平移一個間距，看起來就是連續流動 */
+.st-svg .conv > * { animation: st-run 1.1s linear infinite; }
+@keyframes st-dash { to { stroke-dashoffset: -20; } }
+.st-svg .flow, .st-svg .flow > * { animation: st-dash .8s linear infinite; }
+@keyframes st-glow { 0%,100% { opacity: .15; } 50% { opacity: .55; } }
+.st-svg .glow { animation: st-glow 1.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .st-svg [data-k] { transition: none; }
+  .st-svg .shake > *, .st-svg .pulse > *, .st-svg circle.pulse, .st-svg .stream > *, .st-svg .conv > *, .st-svg .flow, .st-svg .flow > *, .st-svg .glow { animation: none; }
+}
+
+@media (max-width: 620px) {
+  /* 手機：圖放在標題與字幕之間，不讓字幕壓到圖 */
+  .st-stage { aspect-ratio: 4 / 4.4; }
+  .st-art { inset: 52px 0 74px 0; }
+  /* 窄螢幕標題卡很寬：提示改放在字幕上方，結尾按鈕也往上移，不蓋到字幕 */
+  .st-hint { top: auto; right: auto; left: 50%; bottom: calc(4.5% + 62px); transform: translateX(-50%); white-space: nowrap; }
+  .st-end { inset: auto 0 calc(4.5% + 66px) 0; }
+  .st-bar { padding: 7px 7px; gap: 4px; }
+  .st-bar .lbl { display: none; }
+  .st-count { min-width: 40px; font-size: 10.5px; }
+}
+
+/* ============================================================
+   「乾淨版」頁面外觀：跟故事模式同一套視覺語彙
+   只套在 <body data-look="clean"> 的頁面（目前：電子學 CH1 PART 1），
+   其他頁面不受影響，確認效果後再推廣。
+   ============================================================ */
+.h2-en {
+  display: block; font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+  letter-spacing: .16em; color: var(--accent); margin-top: 5px; line-height: 1.3;
+}
+body[data-look="clean"] {
+  background: linear-gradient(180deg, var(--paper) 0%, color-mix(in srgb, var(--surface-2) 55%, var(--paper)) 100%);
+  background-attachment: scroll;
+}
+body[data-look="clean"] .hero h1,
+body[data-look="clean"] section.sec > h2 { font-family: var(--font-body); font-weight: 700; letter-spacing: .01em; }
+body[data-look="clean"] section.sec > h2 {
+  display: inline-block; max-width: 100%; box-sizing: border-box;
+  background: var(--surface); padding: 10px 18px 9px; border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 10px 26px -16px rgba(0,0,0,.35);
+}
+body[data-look="clean"] .bench,
+body[data-look="clean"] .derive,
+body[data-look="clean"] .howto,
+body[data-look="clean"] .pitfall,
+body[data-look="clean"] .example,
+body[data-look="clean"] .quiz {
+  border-radius: 14px; border-color: var(--line-soft);
+  box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 14px 34px -22px rgba(0,0,0,.35);
+}
+body[data-look="clean"] .bench-head h3 { font-family: var(--font-body); font-weight: 700; }

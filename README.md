@@ -59,6 +59,12 @@ notes/                  手寫筆記：index.html 書櫃、note.html 編輯器�
 例題一律用 `__EE.liveExample()` 做成可調數字的版本：已知條件是滑桿，每一步的算式、
 結論與答案都即時重算，抽象的量再配一張跟著變的圖。
 
+## 故事模式（試做中）
+
+電子學 CH1 PART 1 開頭有一段仿解說動畫的「故事模式」：一次一個畫面、一句字幕，
+點一下或往左滑前進，可自動播放。引擎在 `shared/story.js`，劇本在 `electronics/assets/ch1-part1-story.js`。
+確認效果後再推廣到其他章節。
+
 ## 手寫筆記
 
 `notes/` 是給 iPad + Apple Pencil 用的手寫筆記：筆寫字、手指捲動、手掌不會誤觸；
