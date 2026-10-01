@@ -10,8 +10,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
 </head>
-<body data-subject="math">
+<body data-subject="math" data-look="clean">
 <div class="topbar">
   <div class="topbar-in">
     <nav class="crumbs" aria-label="所在位置">
@@ -26,6 +27,7 @@
   <nav class="rail" aria-label="章節導覽">
     <div class="rail-title">ODE 與特徵方程</div>
     <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
       <li><a href="#map"><i>00</i>一句話說完這單元</a></li>
       <li><a href="#guess"><i>01</i>為什麼可以「猜」e^λt</a></li>
       <li><a href="#rootmap"><i>02</i>根的位置 ↔ 解的長相</a></li>
@@ -51,10 +53,18 @@
       </div>
     </div>
 
+    <!-- ══════════ 故事模式 ══════════ -->
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · 先看這段，再往下讀</div>
+      <h2>9 個畫面看懂這一章<span class="h2-en">THE STORY IN 9 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。<strong>先建立直覺</strong>，再往下讀推導、玩互動模組、看例題。</p>
+      <div id="story"></div>
+    </section>
+
     <!-- ══════════ 導論 ══════════ -->
     <section class="sec" id="map">
       <div class="eyebrow">Big picture</div>
-      <h2>一句話說完這單元</h2>
+      <h2>一句話說完這單元<span class="h2-en">THE BIG PICTURE</span></h2>
       <p class="lede"><strong>把<button class="tm" data-t="微分方程">微分方程</button>變成一個二次方程，解出兩個<button class="tm" data-t="特徵根">特徵根</button> λ，答案的形狀就決定了。</strong>剩下的只是用<button class="tm" data-t="初始條件">初始條件</button>把兩個係數算出來。</p>
 
       <div class="derive">
@@ -84,7 +94,7 @@
     <!-- ══════════ 01 為什麼猜 e^λt ══════════ -->
     <section class="sec" id="guess">
       <div class="eyebrow">01 · 為什麼是這個猜法</div>
-      <h2>為什麼可以「猜」y = e<sup>λt</sup></h2>
+      <h2>為什麼可以「猜」y = e<sup>λt</sup><span class="h2-en">WHY GUESS e^(λt)</span></h2>
       <p class="lede">這不是亂猜，是<strong>式子的結構逼出來的</strong>。你的筆記上老師那段推理寫得很好，這裡把它講細一點。</p>
 
       <div class="derive">
@@ -116,7 +126,7 @@
     <!-- ══════════ 02 根平面 ══════════ -->
     <section class="sec" id="rootmap">
       <div class="eyebrow">02 · 核心視覺化</div>
-      <h2>根的位置 ↔ 解的長相</h2>
+      <h2>根的位置 ↔ 解的長相<span class="h2-en">ROOT LOCATION ↔ SOLUTION</span></h2>
       <p class="lede">這是整個單元<strong>最值得記住的一張圖</strong>。左邊是 λ 在複平面上的位置，右邊是對應的解。<strong>拖曳左邊的根</strong>，右邊立刻跟著變形 —— 你會看到 λ 的「實部」管衰減、「虛部」管振盪。根全部落在左半平面時系統才<button class="tm" data-t="穩定">穩定</button>。</p>
 
       <div class="bench">
@@ -165,7 +175,7 @@
     <!-- ══════════ 03 三種對照 ══════════ -->
     <section class="sec" id="three">
       <div class="eyebrow">03 · Exercise 2 的三小題</div>
-      <h2>三種根，三種形狀</h2>
+      <h2>三種根，三種形狀<span class="h2-en">THREE KINDS OF ROOTS</span></h2>
       <p class="lede">你作業 Exercise 2 的三小題剛好就是這三種情況。把它們疊在同一張圖上比較，差別一目了然。</p>
 
       <div class="bench">
@@ -191,7 +201,7 @@
     <!-- ══════════ 04 重根 ══════════ -->
     <section class="sec" id="double">
       <div class="eyebrow">04 · 最容易被當成「硬背」的地方</div>
-      <h2>重根為什麼要多一個 t</h2>
+      <h2>重根為什麼要多一個 t<span class="h2-en">REPEATED ROOT</span></h2>
       <p class="lede">大家都背過「重根要乘 t」，但為什麼？因為<strong>重根只給你一個解，不夠用</strong> —— 二階方程需要兩個<button class="tm" data-t="線性獨立">線性獨立</button>的解。</p>
 
       <div class="derive">
@@ -223,7 +233,7 @@
     <!-- ══════════ 05 複根 ══════════ -->
     <section class="sec" id="complex">
       <div class="eyebrow">05 · 從複數回到實數</div>
-      <h2>共軛複根為什麼會變成 cos 和 sin</h2>
+      <h2>共軛複根為什麼會變成 cos 和 sin<span class="h2-en">COMPLEX ROOTS → cos, sin</span></h2>
       <p class="lede">根算出來是複數，但 y(t) 是<strong>實際存在的物理量</strong>，不可能是複數。<button class="tm" data-t="尤拉公式">尤拉公式</button>負責把它翻譯回實數。</p>
 
       <div class="derive">
@@ -259,7 +269,7 @@
     <!-- ══════════ 06 完整解題 ══════════ -->
     <section class="sec" id="work">
       <div class="eyebrow">06 · 完整解題流程</div>
-      <h2>跟著走一遍（數字可以自己改）</h2>
+      <h2>跟著走一遍（數字可以自己改）<span class="h2-en">WORKED EXAMPLE</span></h2>
       <div id="ex-ode"></div>
 
       <div class="howto">
@@ -289,7 +299,7 @@
     <!-- ══════════ 作業批改 ══════════ -->
     <section class="sec" id="hw">
       <div class="eyebrow">Homework · 你的作業批改</div>
-      <h2>你寫的作業：2 題全對、1 題算錯</h2>
+      <h2>你寫的作業：2 題全對、1 題算錯<span class="h2-en">HOMEWORK CHECK</span></h2>
       <p class="lede">三張都逐行驗算過。<strong>Exercise 2 和 3 完全正確</strong>，Exercise 1 你自己那一段解聯立時符號錯了。</p>
 
       <div class="pitfall">
@@ -348,7 +358,7 @@
     <!-- ══════════ 名詞 ══════════ -->
     <section class="sec" id="glossary">
       <div class="eyebrow">Glossary · 中英對照</div>
-      <h2>名詞中英對照表</h2>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
       <div class="glossary">
         <div class="gl-row"><b>中文</b><span>English</span><code>符號</code></div>
         <div class="gl-row"><b>常微分方程</b><span>ordinary differential equation (ODE)</span><code>o.d.e.</code></div>
@@ -372,7 +382,7 @@
     <!-- ══════════ 測驗 ══════════ -->
     <section class="sec" id="quiz-sec">
       <div class="eyebrow">自我檢查</div>
-      <h2>觀念小測驗</h2>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
       <p class="lede">12 題，中英對照。題幹中文、下方附英文原句，選項也中英並列。</p>
       <div class="quiz" id="quiz"></div>
     </section>
@@ -385,5 +395,7 @@
 <script src="../shared/app.js"></script>
 <script src="../shared/terms.js"></script>
 <script src="assets/ode.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ode-story.js"></script>
 </body>
 </html>
