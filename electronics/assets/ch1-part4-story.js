@@ -2,6 +2,7 @@
    電子學 CH1 PART 4（投影片 1-38～1-54）—— 故事模式
    主線謎題：同一顆二極體，+0.70 V 有 4.93 mA，−0.70 V 只剩 10⁻¹⁴ A。為什麼只讓電往一個方向走？
    答案：順偏把坡壓低，翻得過去的多數載子「指數地」變多；逆偏只剩數量固定的少數載子。
+   寫法：照 PART 1 的節奏 —— 先複習擋板、看擋板變矮、看 0.7 V 門檻，再進公式。
    ============================================================ */
 (function () {
   'use strict';
@@ -61,6 +62,41 @@
     ]
   };
 
+
+  /* ════════════ 複習 PART 3：擋板 ════════════ */
+  const wallR = (key, hgt, op) => '<rect' + k(key) + ' x="314" y="' + (242 - hgt) + '" width="12" height="' + hgt + '" rx="3" class="acc" opacity="' + op + '"/>';
+  const SA = {
+    t: '先複習：中間有一塊擋板', en: 'RECAP · THE BARRIER',
+    svg: slabs('s') + g('hF', carriers('h', X0 + 10, XM - 64, 16, 3)) + g('eF', carriers('e', XM + 64, X1 - 10, 16, 7)) +
+      depl('dz', 58) + g('iP', ions([-48, -30, -12], '−')) + g('iN', ions([12, 30, 48], '+')) + wallR('wall', 124, 0.45) +
+      chip(320, 292, '空乏區的離子 → 內建電場 = 擋板', '擋住多數載子', 'cW', { fs: 13 }) +
+      chip(320, 292, 'PART 3：反著接 → 擋板更高 → 幾乎沒電流', '這一段：電池「順著」接', 'cR', { fs: 13, acc: true }),
+    steps: [
+      { sub: '先複習 PART 3：P 跟 N 接在一起，中間長出一條<b>空乏區</b>。', on: 's sLp sLn hF eF dz iP iN' },
+      { sub: '空乏區的離子形成<b>內建電場</b>，像一塊<b>擋板</b>，擋住想擠過去的多數載子。', on: 'wall cW' },
+      { sub: 'PART 3 是反著接，擋板<b>更高</b>，幾乎沒電流。這一段把電池<b>順著接</b>。', off: 'cW', on: 'cR' }
+    ]
+  };
+
+  /* ════════════ 順偏：擋板變矮 ════════════ */
+  const SB = {
+    t: '順著接：擋板變矮', en: 'FORWARD BIAS LOWERS THE BARRIER',
+    svg: slabs('s') + g('hF', carriers('h', X0 + 10, XM - 64, 16, 3)) + g('eF', carriers('e', XM + 64, X1 - 10, 16, 7)) +
+      depl('dz', 58) + g('iP', ions([-48, -30, -12], '−')) + g('iN', ions([12, 30, 48], '+')) +
+      wallR('wH', 124, 0.45) + wallR('wL', 40, 0.45) +
+      g('bat', '<path class="ln" style="fill:none" d="M90 210 V300 H300 M340 300 H550 V210"/>' +
+        '<line class="ln" x1="304" y1="286" x2="304" y2="314"/><line class="ln" x1="336" y1="292" x2="336" y2="308" style="stroke-width:3.4"/>' +
+        T(290, 284, '+', { fs: 16 }) + T(352, 288, '−', { fs: 16 })) +
+      g('Ein', arrow(372, 260, 268, 260, null, 'ln') + T(384, 260, '擋板：N → P', { cls: 't', fs: 12.5, a: 'start', dy: '.35em' })) +
+      g('Eex', arrow(268, 278, 372, 278, null, 'lna') + T(256, 278, '電池：P → N', { cls: 'ta', fs: 12.5, a: 'end', dy: '.35em' })),
+    steps: [
+      { sub: '<b>順向偏壓</b>：P 接正、N 接負。', on: 's sLp sLn hF eF dz iP iN wH bat' },
+      { sub: '擋板（內建電場）的方向是 N → P ——', on: 'Ein' },
+      { sub: '電池產生的電場剛好<b>反過來</b>：P → N。', on: 'Eex' },
+      { sub: '兩個一抵消，擋板就<b>變矮</b>了。', off: 'wH', on: 'wL' }
+    ]
+  };
+
   /* ════════════ 01 把坡壓低 ════════════ */
   const sCurve = top => {
     let d = 'M90 270 H250';
@@ -68,7 +104,7 @@
     return d + ' L550 ' + top;
   };
   const S1 = {
-    t: '順偏：把坡壓低', en: 'LOWERING THE BARRIER',
+    t: '換成坡來看', en: 'LOWERING THE BARRIER',
     svg: g('ax', arrow(70, 290, 70, 112, null, 'ln') + T(78, 114, '電位', { cls: 'tm', fs: 12, a: 'start' }) + T(150, 300, 'P 側', { cls: 'ts', fs: 12 }) + T(480, 300, 'N 側', { cls: 'ts', fs: 12 })) +
       '<path class="lna" style="stroke-width:3" d="' + sCurve(150) + '"' + k('cv') + '/>' +
       '<path class="lna" style="stroke-width:3" d="' + sCurve(222) + '"' + k('cv2') + '/>' +
@@ -78,8 +114,8 @@
       g('fE', arrow(390, 92, 270, 92, null, 'ln') + T(398, 92, 'Ē：內建電場（n → p）', { cls: 'tm', fs: 12, a: 'start', dy: '.35em' })) +
       g('fA', arrow(270, 116, 340, 116, null, 'lna') + T(348, 116, 'E_A：外加電場（p → n），比較弱', { cls: 'ta', fs: 12, a: 'start', dy: '.35em' })),
     steps: [
-      { sub: 'PART 3 的電位障：N 側比 P 側高 V<sub>bi</sub>，P 區的電洞要爬上這道坡才過得去。', on: 'ax cv vb ball' },
-      { sub: '順偏：P 接正、N 接負。外加電場 E<sub>A</sub> 跟內建電場 Ē <b>反方向</b>。', on: 'fE fA' },
+      { sub: '把擋板換成「坡」來看：原本坡高 V<sub>bi</sub>，P 區的電洞要爬上去才過得去。', on: 'ax cv vb ball' },
+      { sub: '外加電場 E<sub>A</sub> 跟內建電場 Ē <b>反方向</b>（剛剛那兩個箭頭）。', on: 'fE fA' },
       { sub: '淨電場 Ē − E<sub>A</sub> 變弱了（但還是由 n 指向 p），坡被壓低成 <b>V<sub>bi</sub> − v<sub>D</sub></b>。', op: { cv: 0.2 }, off: 'vb', on: 'cv2 vb2' },
       { sub: '坡變矮，很多電洞爬得過去了。', mv: { ball: [250, -44] } }
     ]
@@ -139,7 +175,8 @@
     steps: [
       { sub: '跨過去之後呢？電洞到了 N 區 —— 在那裡，電洞是<b>少數載子</b>。', on: 's sLp sLn dz2 iPi iNi hF eF inj' },
       { sub: '電子到了 P 區也一樣。這叫<b>少數載子注入</b>：接面邊緣的少數載子一下子多了好幾個數量級。', on: 'injE cInj' },
-      { sub: '坡每低 V<sub>T</sub> ≈ 26 mV，翻得過去的就多 e ≈ 2.7 倍 → 邊緣濃度 <b>p<sub>n</sub>(0) = p<sub>n0</sub>·e<sup>v<sub>D</sub>/V<sub>T</sub></sup></b>。', on: 'f' }
+      { sub: '一句話：<b>坡越低，衝過去的越多</b>，邊緣的少數載子就越多。' },
+      { sub: '寫成數學：坡每低 V<sub>T</sub> ≈ 26 mV，翻得過去的就多 e ≈ 2.7 倍 → 邊緣濃度 <b>p<sub>n</sub>(0) = p<sub>n0</sub>·e<sup>v<sub>D</sub>/V<sub>T</sub></sup></b>。', on: 'f' }
     ]
   };
 
@@ -164,6 +201,29 @@
       { sub: '往右越走越少，因為電洞一路被多數載子（電子）<b>復合</b>掉了。', on: 'rc', cls: { rc: 'pulse' } },
       { sub: '形狀是<b>指數衰減</b>。P 區注入的電子也一樣，左右對稱（Fig 1.16）。', on: 'cvL lL fx' },
       { sub: '有濃度差就有<b>擴散</b>：這條斜坡推著電洞繼續往右走 —— 這就是順向電流的真面目。', on: 'J' }
+    ]
+  };
+
+
+  /* ════════════ 門檻 0.7 V ════════════ */
+  const ROWS_C = [[0.3, 1.03e-9, '1 nA'], [0.5, 2.24e-6, '2 μA'], [0.6, 1.05e-4, '0.1 mA'], [0.7, 4.93e-3, '4.93 mA']];
+  let rowsC = '';
+  ROWS_C.forEach(([v, i, lab], n) => {
+    const y = 120 + n * 46, len = Math.max(2, 330 * i / 4.93e-3);
+    rowsC += g('r' + n, T(150, y, v.toFixed(1) + ' V', { cls: 't', fs: 15, a: 'end', dy: '.35em' }) +
+      '<rect x="170" y="' + (y - 11) + '" width="' + len.toFixed(1) + '" height="22" rx="4" class="acc"/>' +
+      T(170 + len + 10, y, lab, { cls: n === 3 ? 'ta' : 'tm', fs: 14, a: 'start', dy: '.35em' }));
+  });
+  const SC = {
+    t: '門檻電壓 0.7 V', en: 'THE 0.7 V THRESHOLD',
+    svg: rowsC + T(150, 96, '電壓', { cls: 'ts', fs: 12, a: 'end' }) + T(176, 96, '電流（長度照實際比例）', { cls: 'ts', fs: 12, a: 'start' }) +
+      chip(320, 310, '矽二極體的門檻電壓 ≈ 0.7 V', '過了門檻才算「打開」—— 但電流其實一直在指數成長', 'cT', { fs: 13, acc: true }),
+    steps: [
+      { sub: '實際接上去會看到什麼？電壓慢慢加：0.3 V —— 電流只有 1 nA，<b>幾乎看不到</b>。', on: 'r0' },
+      { sub: '0.5 V：2 μA，還是看不到。', on: 'r1' },
+      { sub: '0.6 V：0.1 mA，冒出一點點。', on: 'r2' },
+      { sub: '0.7 V：<b>4.93 mA</b>，突然暴增！多 0.1 V，電流變成將近 50 倍。', on: 'r3' },
+      { sub: '所以常說矽二極體的<b>門檻電壓約 0.7 V</b>：過了門檻才算「打開」。', on: 'cT' }
     ]
   };
 
@@ -266,7 +326,7 @@
   const S10 = {
     t: '溫度：越熱越好過', en: 'TEMPERATURE EFFECTS · FIG 1.20',
     svg: T(320, 98, fx(['i', 'D', ' = I', 'S', '(T) · ( e^(v', 'D', ' / V', 'T', '(T)) − 1 )']), { cls: 't', fs: 19, k: 'f' }) +
-      chip(320, 156, 'T ↑ → nᵢ ↑ → I_S ↑↑', '大約每 5 °C 翻一倍；V_T 只是線性變大', 'cIs', { fs: 13, acc: true }) +
+      chip(320, 156, '越熱 → 載子越多 → 越好推', 'T ↑ → nᵢ ↑ → I_S ↑↑', 'cIs', { fs: 13, acc: true }) +
       g('ax', '<path class="ln" d="M120 290 H570 M130 294 V112"/>' + T(576, 290, 'v_D', { cls: 'tm', fs: 12, a: 'start', dy: '.35em' })) +
       WX.map((x, i) => '<path class="' + (i === 2 ? 'lna' : 'ln') + '" style="stroke-width:' + (i === 2 ? 3 : 2) + ';fill:none" d="' + wall(x) + '"' + k('c' + i) + '/>' +
         T(x + 4, 140 - (i === 2 ? 0 : 0), ['T₀', 'T₁', 'T₂'][i], { cls: i === 2 ? 'ta' : 't', fs: 13, a: 'start', k: 'cl' + i })).join('') +
@@ -274,10 +334,10 @@
       g('dots', xI.map((x, i) => '<circle class="' + (i === 2 ? 'acc' : 'ink') + '" cx="' + x.toFixed(1) + '" cy="200" r="4.5"/>').join('')) +
       g('arr', arrow(xI[0] + 4, 222, xI[2] - 4, 222, null, 'lna') + T(xI[2] - 12, 244, 'v_D ↓　約 −2 mV/°C', { cls: 'ta', fs: 13, a: 'end' })),
     steps: [
-      { sub: '公式裡有兩個量跟溫度有關：V<sub>T</sub> = kT/e，和 I<sub>S</sub> ∝ nᵢ²。', on: 'f' },
-      { sub: '溫度升高，熱產生的載子變多，I<sub>S</sub> <b>暴增</b>：每 5 °C 大約翻一倍。這比 V<sub>T</sub> 的變化大得多。', on: 'cIs' },
-      { sub: '所以曲線整條<b>往左移</b>：T<sub>2</sub> &gt; T<sub>1</sub> &gt; T<sub>0</sub>（Fig 1.20）。', off: 'cIs', on: 'ax c0 cl0 c1 cl1 c2 cl2' },
-      { sub: '同樣的電流，越熱需要的電壓越小：大約 <b>−2 mV/°C</b>。', on: 'hl dots arr' }
+      { sub: '溫度也會影響二極體。天氣越熱，熱擾動產生的載子越多 ——', on: 'cIs' },
+      { sub: '同樣的電流，越熱就越「好推」，需要的電壓<b>越小</b>：整條曲線<b>往左移</b>（Fig 1.20）。', off: 'cIs', on: 'ax c0 cl0 c1 cl1 c2 cl2' },
+      { sub: '大約每升高 1 °C，電壓少 <b>2 mV</b>。', on: 'hl dots arr' },
+      { sub: '數學上：公式裡的 I<sub>S</sub> ∝ nᵢ²，每 5 °C 大約翻一倍，比 V<sub>T</sub> 的變化大得多。', on: 'f' }
     ]
   };
 
@@ -351,6 +411,6 @@
 
   window.__ch1p4Story = window.__Story('#story', {
     id: 'ch1-part4', title: 'CH1 PART 4 順向偏壓與二極體', after: '#map',
-    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13]
+    scenes: [S0, SA, SB, S1, S2, S3, S4, S5, SC, S6, S7, S8, S9, S10, S11, S12, S13]
   });
 })();

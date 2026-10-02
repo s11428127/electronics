@@ -1,5 +1,7 @@
 /* ============================================================
    電子學 CH1 PART 3（投影片 1-19～1-37）—— 故事模式
+   寫法：照 PART 1 的節奏 —— 前半只講直覺（擠過去、碰到抵消、留下離子、擋板、旋轉門），
+         「先整理一下」之後才加數字和公式。
    主線謎題：電池反接，1 V 跟 10 V 的電流都只有約 10⁻¹⁴ A，一動也不動。為什麼？
    答案：逆偏把位障墊高，多數載子過不去；剩下的電流只靠「數量固定」的少數載子。
    ============================================================ */
@@ -37,6 +39,13 @@
     (bare ? '' : T((X0 + XM) / 2, Y0 - 10, 'P 型', { cls: 't', fs: 14, k: key + 'Lp' }) + T((XM + X1) / 2, Y0 - 10, 'N 型', { cls: 't', fs: 14, k: key + 'Ln' }));
   const depl = (key, half) => '<rect' + k(key) + ' x="' + (XM - half) + '" y="' + Y0 + '" width="' + (2 * half) + '" height="' + (Y1 - Y0) + '" class="card" style="stroke:var(--s-ink);stroke-dasharray:5 4;stroke-width:1.2"/>';
 
+  const dim = keys => keys.split(' ').reduce((o, kk) => (o[kk] = 0.15, o), {});
+  const sCurve = top => {
+    let d = 'M90 270 H250';
+    for (let i = 0; i <= 30; i++) { const u = i / 30, y = 270 - (270 - top) * (u < 0.5 ? 2 * u * u : 1 - 2 * (1 - u) * (1 - u)); d += ' L' + (250 + u * 140).toFixed(1) + ' ' + y.toFixed(1); }
+    return d + ' L550 ' + top;
+  };
+
   /* ════════════ 00 謎題 ════════════ */
   function diode(x, y, key) {
     return g(key, '<rect class="bgw" x="' + (x - 70) + '" y="' + (y - 26) + '" width="70" height="52" rx="6"/>' +
@@ -51,83 +60,173 @@
         T(290, 262, '−', { fs: 18 }) + T(352, 254, '+', { fs: 18 })) +
       T(320, 326, 'V_R = 1 V', { cls: 't', fs: 15, k: 'v' }) +
       g('am', '<circle class="bgw" cx="490" cy="210" r="30"/>' + T(490, 210, 'A', { fs: 18, dy: '.35em' })) +
-      chip(150, 96, 'P 接負、N 接正', '逆向偏壓', 'cR', { fs: 12.5 }) +
+      chip(150, 96, 'P 接負、N 接正', '反著接 = 逆向偏壓', 'cR', { fs: 12.5 }) +
       T(448, 200, '電流', { cls: 'tm', fs: 12, a: 'end', k: 'iL' }) + T(448, 226, '≈ 10⁻¹⁴ A', { cls: 'ta', fs: 17, a: 'end', k: 'i' }) +
       T(320, 240, '?', { cls: 'ta', fs: 110, k: 'q' }),
     steps: [
-      { sub: '一顆 pn 接面，接上電池 —— 但是<b>反著接</b>：P 接負、N 接正。', on: 'd wire v cR' },
-      { sub: '接上電流錶：只有大約 <b>10⁻¹⁴ A</b>，比一兆分之一安培還小一百倍。', on: 'am iL i' },
-      { sub: '把電池加到 <b>10 V</b>，電壓變 10 倍 —— 電流還是 10⁻¹⁴ A，<b>一動也不動</b>。', txt: { v: 'V_R = 10 V' } },
-      { sub: '電壓加大、電流卻不變，歐姆定律好像失效了。要搞懂，得先看 P 型跟 N 型接在一起時發生什麼事。', op: { d: 0.15, wire: 0.15, v: 0.15, cR: 0.15, am: 0.15, iL: 0.15, i: 0.15 }, on: 'q' }
+      { sub: '一塊 P 型跟一塊 N 型黏在一起，就是一顆<b>二極體</b>。接上電池 —— 但是<b>反著接</b>。', on: 'd wire v cR' },
+      { sub: '電流錶幾乎不動：只有大約 <b>10⁻¹⁴ A</b>，一百兆分之一安培。', on: 'am iL i' },
+      { sub: '把電池加到 <b>10 V</b>，電壓變 10 倍 —— 電流<b>還是一樣</b>，一動也不動。', txt: { v: 'V_R = 10 V' } },
+      { sub: '電壓加大、電流卻不變，很奇怪。要搞懂，得先看 P 跟 N 黏在一起的時候，發生了什麼事。', op: dim('d wire v cR am iL i'), on: 'q' }
     ]
   };
 
-  /* ════════════ 01 接起來的瞬間 ════════════ */
+  /* ════════════ 01 兩塊材料 ════════════ */
+  const blockL = g('bl', '<rect class="bgw" x="' + (X0 - 30) + '" y="' + Y0 + '" width="' + (XM - X0) + '" height="' + (Y1 - Y0) + '" rx="8"/>' +
+    carriers('h', X0 - 20, XM - 40, 18, 3) + T((X0 + XM) / 2 - 30, Y0 - 10, 'P 型', { cls: 't', fs: 14 }));
+  const blockR = g('br', '<rect class="bgw" x="' + (XM + 30) + '" y="' + Y0 + '" width="' + (X1 - XM) + '" height="' + (Y1 - Y0) + '" rx="8"/>' +
+    carriers('e', XM + 40, X1 + 20, 18, 7) + T((XM + X1) / 2 + 30, Y0 - 10, 'N 型', { cls: 't', fs: 14 }));
   const S1 = {
-    t: '接起來的瞬間', en: 'JOINING P AND N',
-    svg: slabs('s') +
-      g('hF', carriers('h', X0 + 10, XM - 60, 16, 3)) + g('hN', carriers('h', XM - 58, XM - 10, 6, 5)) +
-      g('eF', carriers('e', XM + 60, X1 - 10, 16, 7)) + g('eN', carriers('e', XM + 10, XM + 58, 6, 9)) +
-      chip(205, 290, '電洞很多', 'P 區的多數載子', 'cp', { fs: 12.5 }) + chip(435, 290, '電子很多', 'N 區的多數載子', 'cn', { fs: 12.5 }) +
-      g('ar', arrow(250, 96, 390, 96, null, 'lna') + T(320, 86, '電洞 → N', { cls: 'ta', fs: 12 }) +
-        arrow(390, 268, 250, 268, null, 'ln') + T(320, 284, '電子 → P', { cls: 't', fs: 12 })),
+    t: '兩塊材料', en: 'P-TYPE AND N-TYPE',
+    svg: blockL + blockR +
+      chip(175, 290, '電洞很多', 'P 型的多數載子', 'cp', { fs: 12.5 }) + chip(465, 290, '電子很多', 'N 型的多數載子', 'cn', { fs: 12.5 }),
     steps: [
-      { sub: '左邊 P 型：電洞很多。右邊 N 型：電子很多。把它們接在一起。', on: 's sLp sLn hF hN eF eN cp cn' },
-      { sub: '一接上，<b>濃度差</b>就出現了：P 區電洞多、N 區電洞少 —— 就跟墨水一樣，開始擴散。', off: 'cp cn', on: 'ar' },
-      { sub: '接面附近的電洞往 N 跑、電子往 P 跑。', mv: { hN: [70, 0], eN: [-70, 0] } },
-      { sub: '跑過去的載子遇到對面的多數載子，就<b>復合</b>消失了。', off: 'hN eN' }
+      { sub: '先準備兩塊材料。左邊 <b>P 型</b>：裡面電洞很多。', on: 'bl cp' },
+      { sub: '右邊 <b>N 型</b>：裡面電子很多。兩塊都是電中性，各自安安靜靜。', on: 'br cn' },
+      { sub: '現在，把它們<b>黏在一起</b>。', off: 'cp cn', mv: { bl: [30, 0], br: [-30, 0] } }
     ]
   };
 
-  /* ════════════ 02 空乏區 ════════════ */
+  /* ════════════ 02 擠過去 ════════════ */
+  const base = bare => slabs('s', bare) + g('hF', carriers('h', X0 + 10, XM - 60, 16, 3)) + g('eF', carriers('e', XM + 60, X1 - 10, 16, 7));
   const S2 = {
-    t: '空乏區', en: 'DEPLETION REGION',
-    svg: slabs('s') + g('hF', carriers('h', X0 + 10, XM - 60, 16, 3)) + g('eF', carriers('e', XM + 60, X1 - 10, 16, 7)) +
-      g('gP', ions([-12, -30, -48], '−', true)) + g('gN', ions([12, 30, 48], '+', true)) +
-      depl('dz', 58) + g('iP', ions([-12, -30, -48], '−')) + g('iN', ions([12, 30, 48], '+')) +
-      chip(150, 292, 'B⁻ 受體離子', '固定、不會動', 'cB', { fs: 12.5 }) + chip(490, 292, 'P⁺ 施體離子', '固定、不會動', 'cP', { fs: 12.5 }) +
-      chip(320, 300, '空乏區（空間電荷區）', '沒有載子，只有離子', 'cD', { fs: 13, acc: true }),
+    t: '一接上：擠過去', en: 'DIFFUSION ACROSS THE JUNCTION',
+    svg: base() + g('hN', carriers('h', XM - 58, XM - 10, 6, 5)) + g('eN', carriers('e', XM + 10, XM + 58, 6, 9)) +
+      g('a1', arrow(250, 96, 390, 96, null, 'lna') + T(320, 86, '電洞 → N', { cls: 'ta', fs: 12 })) +
+      g('a2', arrow(390, 268, 250, 268, null, 'ln') + T(320, 286, '電子 → P', { cls: 't', fs: 12 })) +
+      chip(320, 318, '就是 PART 2 的「擠」（擴散）', '從擠的地方往空的地方跑', 'cD', { fs: 12.5, acc: true }),
     steps: [
-      { sub: '可是原子不會跑。每個硼本來就「配著」一個電洞、每個磷配著一個電子。', on: 's sLp sLn hF eF gP gN' },
-      { sub: '電洞走了，P 側接面附近就只剩下帶負電的 <b>B⁻</b>。', on: 'iP cB', off: 'gP' },
-      { sub: '電子走了，N 側只剩下帶正電的 <b>P⁺</b>。', on: 'iN cP', off: 'gN' },
-      { sub: '中間這條帶子沒有任何可以動的載子，只有固定的離子 —— 叫<b>空乏區</b>（又叫空間電荷區）。', on: 'dz', off: 'cB cP' },
-      { sub: '空乏區沒有載子，所以<b>不導電</b>。離子的唯一作用，是建立電場。', on: 'cD' }
+      { sub: '一接上，接面兩邊差很多：P 這邊擠滿電洞，N 那邊幾乎沒有電洞。', on: 's sLp sLn hF hN eF eN' },
+      { sub: '還記得 PART 2 的「<b>擠</b>」嗎？電洞自然往 N 那邊跑 ——', on: 'a1', mv: { hN: [70, 0] } },
+      { sub: '電子也一樣，往 P 那邊跑。', on: 'a2', mv: { eN: [-70, 0] } },
+      { sub: '這就是 PART 2 的<b>擴散</b>：不用任何人推，濃度差自己就會讓它們動。', on: 'cD' }
     ]
   };
 
-  /* ════════════ 03 內建電場 ════════════ */
+  /* ════════════ 03 碰到就抵消 ════════════ */
   const S3 = {
-    t: '內建電場', en: 'BUILT-IN ELECTRIC FIELD',
-    svg: slabs('s') + g('hF', carriers('h', X0 + 10, XM - 60, 16, 3)) + g('eF', carriers('e', XM + 60, X1 - 10, 16, 7)) +
-      depl('dz', 58) + g('iP', ions([-12, -30, -48], '−')) + g('iN', ions([12, 30, 48], '+')) +
-      g('E', arrow(372, 264, 268, 264, null, 'lna') + T(320, 282, '內建電場 E（n → p）', { cls: 'ta', fs: 12.5 })) +
-      g('hb', h(150, 296, null, 6.5) + arrow(160, 290, 205, 290, null, 'ln') + arrow(205, 306, 160, 306, null, 'lna')) +
-      chip(150, 334, '電洞想往右 → 被推回左', null, 'cH', { fs: 12 }) +
-      g('eb', e(490, 296, null, 6) + arrow(480, 290, 435, 290, null, 'ln') + arrow(435, 306, 480, 306, null, 'lna')) +
-      chip(490, 334, '電子想往左 → 被推回右', null, 'cE', { fs: 12 }),
+    t: '碰到就抵消', en: 'RECOMBINATION',
+    svg: base() + g('hX', carriers('h', XM + 12, XM + 60, 6, 5)) + g('eX', carriers('e', XM - 60, XM - 12, 6, 9)) +
+      g('f1', '<circle class="ring" cx="350" cy="160" r="14"/><circle class="ring" cx="372" cy="214" r="14"/><circle class="ring" cx="340" cy="232" r="12"/>') +
+      g('f2', '<circle class="ring" cx="290" cy="150" r="14"/><circle class="ring" cx="270" cy="206" r="14"/><circle class="ring" cx="298" cy="226" r="12"/>') +
+      chip(320, 300, '接面附近的載子越來越少', null, 'cL', { fs: 13, acc: true }),
     steps: [
-      { sub: '正離子在右、負離子在左。電場從正電荷指向負電荷 —— 所以是<b>由 n 指向 p</b>。', on: 's sLp sLn hF eF dz iP iN E' },
-      { sub: '電洞想往右擴散，可是電場把正電荷往左推 —— <b>擋住了</b>。', on: 'hb cH' },
-      { sub: '電子想往左擴散，電場把負電荷往右推 —— <b>也擋住了</b>。', on: 'eb cE' },
-      { sub: '擴散越多，離子越多，電場越強，擋得越用力。擴散<b>自己把自己停下來</b>。', off: 'hb eb cH cE' }
+      { sub: '跑到 N 區的電洞，一進去就撞上滿滿的電子 ——', on: 's sLp sLn hF eF hX' },
+      { sub: '一碰就抵消（<b>復合</b>），兩個一起不見了。', off: 'hX', on: 'f1', cls: { f1: 'pulse' } },
+      { sub: '跑到 P 區的電子也一樣，撞上電洞就一起消失。', off: 'f1', on: 'eX' },
+      { sub: '結果：接面附近能動的載子<b>越來越少</b>。', off: 'eX', on: 'f2 cL', cls: { f2: 'pulse' } }
     ]
   };
 
-  /* ════════════ 04 拉鋸戰 ════════════ */
+  /* ════════════ 04 留下來的離子 ════════════ */
   const S4 = {
-    t: '拉鋸戰：動態熱平衡', en: 'DYNAMIC EQUILIBRIUM',
+    t: '人走了，原子還在', en: 'FIXED IONS LEFT BEHIND',
+    svg: base() + g('gP', ions([-12, -30, -48], '−', true)) + g('gN', ions([12, 30, 48], '+', true)) +
+      g('iP', ions([-12, -30, -48], '−')) + g('iN', ions([12, 30, 48], '+')) +
+      chip(150, 292, 'B⁻：帶負電', '電洞走了 = 硼收了一個電子', 'cB', { fs: 12.5 }) + chip(490, 292, 'P⁺：帶正電', '磷的電子走了', 'cP', { fs: 12.5 }) +
+      chip(320, 88, '固定在晶格上，一動也不動', null, 'cFix', { fs: 13, acc: true }),
+    steps: [
+      { sub: '可是原子本身<b>不會跑</b>。接面附近的磷、硼都還留在原地。', on: 's sLp sLn hF eF gP gN' },
+      { sub: 'N 這邊的磷：它的電子跑掉了 → 留下帶<b>正電</b>的 <b>P⁺</b>。', off: 'gN', on: 'iN cP' },
+      { sub: 'P 這邊的硼：電洞跑掉了（等於硼收了一個電子）→ 留下帶<b>負電</b>的 <b>B⁻</b>。', off: 'gP', on: 'iP cB' },
+      { sub: '這些離子被固定在晶格上，<b>一動也不動</b>。', on: 'cFix', cls: { iP: 'pulse', iN: 'pulse' } }
+    ]
+  };
+
+  /* ════════════ 05 空乏區 ════════════ */
+  const S5 = {
+    t: '空乏區：空掉的一條', en: 'DEPLETION REGION',
+    svg: base() + depl('dz', 58) + g('iP', ions([-12, -30, -48], '−')) + g('iN', ions([12, 30, 48], '+')) +
+      chip(320, 300, '空乏區 depletion region', '只有固定的離子，沒有能動的載子', 'cD', { fs: 13, acc: true }) +
+      chip(320, 88, '沒有載子 → 不導電', '像河中間一段乾掉的河床', 'cN', { fs: 12.5 }),
+    steps: [
+      { sub: '看中間這一條：能動的載子全跑光了，只剩固定的離子。', on: 's sLp sLn hF eF iP iN dz' },
+      { sub: '「空乏」就是「空掉了」—— 這一條叫<b>空乏區</b>。', on: 'cD' },
+      { sub: '沒有載子，就<b>不導電</b>。像一條河中間，突然出現一段乾掉的河床。', on: 'cN' }
+    ]
+  };
+
+  /* ════════════ 06 內建電場＝擋板 ════════════ */
+  const wall = '<rect' + k('wall') + ' x="314" y="112" width="12" height="136" rx="3" class="acc" opacity=".45"/>';
+  const S6 = {
+    t: '內建電場：一塊擋板', en: 'BUILT-IN ELECTRIC FIELD',
+    svg: base() + depl('dz', 58) + g('iP', ions([-12, -30, -48], '−')) + g('iN', ions([12, 30, 48], '+')) + wall +
+      g('E', arrow(372, 268, 268, 268, null, 'lna') + T(320, 288, '電場：從 + 指向 −（N → P）', { cls: 'ta', fs: 12.5 })) +
+      chip(100, 90, '一邊 −', 'B⁻', 'cM', { fs: 12.5 }) + chip(540, 90, '一邊 +', 'P⁺', 'cPl', { fs: 12.5 }) +
+      chip(320, 322, '內建電場 = 一塊擋板', '立在接面中間', 'cW', { fs: 13, acc: true }),
+    steps: [
+      { sub: '空乏區的左邊是一排<b>負離子</b>、右邊是一排<b>正離子</b>。', on: 's sLp sLn hF eF dz iP iN cM cPl' },
+      { sub: '正負電荷之間會產生<b>電場</b>，方向從正指向負 —— 也就是<b>由 N 指向 P</b>。', on: 'E' },
+      { sub: '這叫<b>內建電場</b>。它就像一塊<b>擋板</b>，立在接面正中間。', on: 'wall cW' }
+    ]
+  };
+
+  /* ════════════ 07 擋板擋住誰 ════════════ */
+  const S7 = {
+    t: '擋板擋住誰？', en: 'THE FIELD PUSHES BACK',
+    svg: base(1) + depl('dz', 58) + g('iP', ions([-12, -30, -48], '−')) + g('iN', ions([12, 30, 48], '+')) + wall +
+      g('E', arrow(372, 268, 268, 268, null, 'lna')) +
+      g('hb', h(150, 82, null, 6.5) + arrow(162, 76, 212, 76, null, 'ln') + arrow(212, 90, 162, 90, null, 'lna')) +
+      T(150, 106, '電洞想過去 → 被推回來', { cls: 't', fs: 12, k: 'cH' }) +
+      g('eb', e(490, 82, null, 6) + arrow(478, 76, 428, 76, null, 'ln') + arrow(428, 90, 478, 90, null, 'lna')) +
+      T(490, 106, '電子想過去 → 被推回來', { cls: 't', fs: 12, k: 'cE' }) +
+      chip(320, 304, '擠過去越多 → 離子越多 → 擋板越高', '最後高到擠不過去為止', 'cG', { fs: 13, acc: true }),
+    steps: [
+      { sub: '電洞還想往右擠過去 —— 可是擋板（電場）把它<b>推回來</b>。', on: 's hF eF dz iP iN wall E hb cH' },
+      { sub: '電子想往左擠過去 —— <b>也被推回來</b>。', on: 'eb cE' },
+      { sub: '擠過去的越多 → 留下的離子越多 → 擋板越高。最後擋板高到<b>擠不過去</b>為止。', on: 'cG' }
+    ]
+  };
+
+  /* ════════════ 08 旋轉門：動態熱平衡 ════════════ */
+  const S8 = {
+    t: '兩邊一樣多：動態熱平衡', en: 'DYNAMIC EQUILIBRIUM',
     svg: slabs('s', 1) + g('hF', carriers('h', X0 + 10, XM - 60, 16, 3)) + g('eF', carriers('e', XM + 60, X1 - 10, 16, 7)) +
       depl('dz', 58) + g('iP', ions([-12, -30, -48], '−')) + g('iN', ions([12, 30, 48], '+')) +
-      g('dif', arrow(230, 92, 410, 92, null, 'ln') + T(420, 92, '擴散電流（多數載子）', { cls: 't', fs: 12.5, a: 'start', dy: '.35em' })) +
-      g('dri', arrow(410, 276, 230, 276, null, 'lna') + T(220, 276, '漂移電流（少數載子）', { cls: 'ta', fs: 12.5, a: 'end', dy: '.35em' })) +
+      g('dif', arrow(230, 92, 410, 92, null, 'ln') + T(420, 92, '擴散（翻過去的多數載子）', { cls: 't', fs: 12.5, a: 'start', dy: '.35em' })) +
+      g('dri', arrow(410, 276, 230, 276, null, 'lna') + T(220, 276, '漂移（被拉過去的少數載子）', { cls: 'ta', fs: 12.5, a: 'end', dy: '.35em' })) +
       g('mn', h(470, 200, null, 6) + arrow(462, 200, 380, 200, null, 'lna') + e(170, 160, null, 5.5) + arrow(178, 160, 262, 160, null, 'lna')) +
-      chip(320, 318, '|J_diff| = |J_drift|　總電流 = 0', '一直在流，只是剛好抵消', 'cEq', { fs: 13, acc: true }),
+      chip(320, 318, '兩股一樣大、方向相反 → 總電流 = 0', null, 'cEq', { fs: 13, acc: true }) +
+      chip(320, 318, '像兩邊人數一樣多的旋轉門', '一直有人在過，但兩邊人數不變', 'cDoor', { fs: 13, acc: true }),
     steps: [
-      { sub: '但擴散不會完全停：總有一些能量夠大的多數載子翻得過去 —— 這是<b>擴散電流</b>（P → N）。', on: 's hF eF dz iP iN dif', op: { hF: 0.3, eF: 0.3 } },
-      { sub: '同一個電場，對<b>少數載子</b>卻是順風：N 區零星的電洞、P 區零星的電子，一碰到就被掃過去。', on: 'mn' },
-      { sub: '這是<b>漂移電流</b>，方向 N → P，跟擴散電流相反。', on: 'dri' },
-      { sub: '兩股電流<b>大小相等、方向相反</b>，宏觀上總電流 = 0 —— 這叫<b>動態熱平衡</b>。', on: 'cEq' }
+      { sub: '擋板不是密不透風：偶爾有<b>能量特別大</b>的多數載子翻過去。這是<b>擴散電流</b>。', on: 's hF eF dz iP iN dif', op: { hF: 0.3, eF: 0.3 } },
+      { sub: '反過來，<b>少數載子</b>（N 區零星的電洞、P 區零星的電子）一碰到擋板，反而被電場<b>拉過去</b>。這是<b>漂移電流</b>。', on: 'mn dri' },
+      { sub: '兩股電流<b>一樣大、方向相反</b>，加起來總電流 = 0。', on: 'cEq' },
+      { sub: '像兩邊人數一樣多的旋轉門：一直有人在過，但兩邊人數不變。這叫<b>動態熱平衡</b>。', off: 'cEq', on: 'cDoor' }
+    ]
+  };
+
+  /* ════════════ 09 觀念整理 ════════════ */
+  const card = (x, key, title, l1, l2) => g(key, '<rect class="card" x="' + x + '" y="100" width="176" height="150" rx="14" filter="url(#st-sh)"/>' +
+    T(x + 88, 134, title, { cls: 'ta', fs: 17 }) + T(x + 88, 176, l1, { cls: 'tm', fs: 13 }) + T(x + 88, 204, l2, { cls: 'tm', fs: 13 }));
+  const S9 = {
+    t: '先整理一下', en: 'SO FAR',
+    svg: card(40, 'A', '空乏區', '載子跑光、只剩離子', '不導電') +
+      card(232, 'B', '內建電場', 'N → P，像一塊擋板', '擋住多數載子') +
+      card(424, 'C', '熱平衡', '擴散 = 漂移', '總電流 = 0') +
+      chip(320, 296, '觀念到這裡就齊了', '接下來：把「擋板多高」變成可以算的數字', 'cN', { fs: 13, acc: true }),
+    steps: [
+      { sub: '整理一下。P 跟 N 一接上，中間長出<b>空乏區</b>：載子跑光、只剩離子。', on: 'A' },
+      { sub: '離子產生<b>內建電場</b>，像擋板一樣擋住多數載子。', on: 'B' },
+      { sub: '擴散跟漂移打平，總電流 = 0，這是<b>熱平衡</b>。', on: 'C' },
+      { sub: '觀念就這三個。接下來加一點數學：擋板到底<b>多高</b>？', on: 'cN' }
+    ]
+  };
+
+  /* ════════════ 逆偏：擋板更高 ════════════ */
+  const SR = {
+    t: '逆偏：擋板更高', en: 'REVERSE BIAS RAISES THE BARRIER',
+    svg: g('ax', arrow(70, 290, 70, 96, null, 'ln') + T(78, 98, '電位', { cls: 'tm', fs: 12, a: 'start' }) + T(150, 300, 'P 側', { cls: 'ts', fs: 12 }) + T(480, 300, 'N 側', { cls: 'ts', fs: 12 })) +
+      '<path class="lna" style="stroke-width:3;fill:none" d="' + sCurve(170) + '"' + k('cv') + '/>' +
+      '<path class="lna" style="stroke-width:3;fill:none" d="' + sCurve(104) + '"' + k('cv2') + '/>' +
+      g('vb', '<path class="ln" d="M560 270 H585 M560 170 H585"/>' + arrow(578, 262, 578, 178, null, 'lna') + arrow(578, 178, 578, 262, null, 'lna') + T(570, 220, 'V_bi', { cls: 'ta', fs: 15, a: 'end' })) +
+      g('vb2', '<path class="ln" d="M560 270 H585 M560 104 H585"/>' + arrow(578, 262, 578, 112, null, 'lna') + arrow(578, 112, 578, 262, null, 'lna') + T(570, 190, 'V_bi + V_R', { cls: 'ta', fs: 15, a: 'end' })) +
+      g('ball', h(200, 258, null, 9)) +
+      chip(230, 150, '多數載子更爬不上去', '擴散電流 ≈ 0', 'cNo', { fs: 12.5, acc: true }),
+    steps: [
+      { sub: '這一段先看<b>逆偏</b>（P 接負、N 接正）。這是熱平衡時那道坡，高 V<sub>bi</sub>。', on: 'ax cv vb ball' },
+      { sub: '逆偏時，外加電場跟擋板<b>同方向</b> → 坡被墊得更高：<b>V<sub>bi</sub> + V<sub>R</sub></b>。', op: { cv: 0.2 }, off: 'vb', on: 'cv2 vb2' },
+      { sub: '多數載子更爬不上去了 —— 擴散電流幾乎是 <b>0</b>。', on: 'cNo' }
     ]
   };
 
@@ -135,7 +234,7 @@
   let curve5 = 'M90 270 L250 270';
   for (let i = 0; i <= 30; i++) { const u = i / 30, y = 270 - 130 * (u < 0.5 ? 2 * u * u : 1 - 2 * (1 - u) * (1 - u)); curve5 += ' L' + (250 + u * 140).toFixed(1) + ' ' + y.toFixed(1); }
   curve5 += ' L550 140';
-  const S5 = {
+  const P5 = {
     t: '電位障：一道坡', en: 'POTENTIAL BARRIER',
     svg: g('ax', arrow(70, 290, 70, 100, null, 'ln') + T(78, 100, '電位', { cls: 'tm', fs: 12, a: 'start' }) + T(150, 300, 'P 側', { cls: 'ts', fs: 12 }) + T(480, 300, 'N 側', { cls: 'ts', fs: 12 })) +
       '<path class="lna" style="stroke-width:3" d="' + curve5 + '"' + k('cv') + '/>' +
@@ -144,15 +243,15 @@
       chip(240, 126, '多數載子要翻過這道坡', '坡越高，擴散越難', 'cU', { fs: 12.5 }) +
       chip(450, 102, '矽：約 0.6～0.8 V', '內建電壓 built-in voltage', 'cV', { fs: 12.5 }),
     steps: [
-      { sub: '把空乏區兩側的電位畫出來：N 側比 P 側高出一截。這個電位差叫<b>內建電壓 V<sub>bi</sub></b>。', on: 'ax cv vb' },
-      { sub: '對 P 區的電洞來說，這就是一道<b>坡</b>：要擴散到 N 區，得先爬上去。', on: 'ball cU' },
+      { sub: '先把「擋板」換成一張圖：畫出兩側的<b>電位</b>，N 側比 P 側高出一截，像一道<b>坡</b>。', on: 'ax cv vb' },
+      { sub: '這個高度差叫<b>內建電壓 V<sub>bi</sub></b>。P 區的電洞要擴散到 N 區，得先爬上這道坡。', on: 'ball cU' },
       { sub: '大部分電洞爬不上去，只有少數能量夠大的翻得過去。', mv: { ball: [90, -60] } },
       { sub: '矽的 V<sub>bi</sub> 大約 0.6～0.8 V。注意：它是 <b>built</b>-in（內建的），不是 build-in。', mv: { ball: [0, 0] }, on: 'cV' }
     ]
   };
 
   /* ════════════ 06 ln 的威力 ════════════ */
-  const S6 = {
+  const P6 = {
     t: '內建電壓怎麼算', en: 'V_bi = V_T · ln(NaNd / nᵢ²)',
     svg: T(320, 112, 'V<tspan font-size="13" dy="5">bi</tspan><tspan dy="-5"> = V</tspan><tspan font-size="13" dy="5">T</tspan><tspan dy="-5"> · ln( N</tspan><tspan font-size="13" dy="5">a</tspan><tspan dy="-5">N</tspan><tspan font-size="13" dy="5">d</tspan><tspan dy="-5"> / n</tspan><tspan font-size="13" dy="5">i</tspan><tspan font-size="12" dy="-14">2</tspan><tspan dy="9"> )</tspan>', { cls: 't', fs: 25, k: 'f' }) +
       chip(320, 152, 'V_T = kT/e ≈ 26 mV（熱電壓）', '就是 PART 2 愛因斯坦關係的那個 kT/e', 'cVt', { fs: 12.5 }) +
@@ -160,7 +259,7 @@
       T(320, 238, '= 0.026 × 29.1 = 0.757 V', { cls: 'ta', fs: 22, k: 's2' }) +
       chip(320, 296, 'N_a 乘 10 倍 → V_bi 只多 60 mV', 'ln 把十幾個數量級壓成一個小數字', 'cLn', { fs: 13, acc: true }),
     steps: [
-      { sub: '坡有多高？只看兩件事：<b>兩邊摻多少</b>，和<b>溫度</b>。', on: 'f' },
+      { sub: '坡有多高？只跟兩件事有關：<b>兩邊摻多少</b>、<b>溫度</b>。寫成公式長這樣 ——', on: 'f' },
       { sub: 'V<sub>T</sub> = kT/e 叫<b>熱電壓</b>，室溫約 26 mV —— 就是上一段愛因斯坦關係裡的那個 kT/e。', on: 'cVt' },
       { sub: '代課本 Example 1.5：N<sub>a</sub> = 10¹⁶、N<sub>d</sub> = 10¹⁷ ——', off: 'cVt', on: 's1' },
       { sub: '得到 <b>0.757 V</b>。', on: 's2' },
@@ -178,7 +277,7 @@
       '<line class="ln" x1="' + (cx + (rev ? 6 : -6)) + '" y1="200" x2="' + (cx + (rev ? 6 : -6)) + '" y2="240"/>' +
       T(cx - 22, 202, rev ? '−' : '+', { fs: 16 }) + T(cx + 22, 202, rev ? '+' : '−', { fs: 16 }));
   }
-  const S7 = {
+  const P7 = {
     t: '順向還是逆向', en: 'FORWARD VS REVERSE BIAS',
     svg: circuit(170, 'fw', false) + circuit(470, 'rv', true) +
       T(170, 96, '順向偏壓', { cls: 'ta', fs: 15, k: 'fwL' }) + T(470, 96, '逆向偏壓', { cls: 't', fs: 15, k: 'rvL' }) +
@@ -186,7 +285,7 @@
       chip(470, 278, 'P 接 −、N 接 +', '外加電場跟內建電場「同向」', 'cR', { fs: 12.5 }) +
       chip(320, 318, '記法：P 接 Positive 就是順向', '這一段先看逆偏，順偏在 PART 4', 'cM', { fs: 12.5, acc: true }),
     steps: [
-      { sub: '現在外加電壓。接法只有兩種 ——', on: 'fw fwL rv rvL' },
+      { sub: '現在接上電池。接法只有兩種 ——', on: 'fw fwL rv rvL' },
       { sub: '<b>順向偏壓</b>：P 接正、N 接負。外加電場跟內建電場反方向，把坡<b>壓低</b>。', on: 'cF' },
       { sub: '<b>逆向偏壓</b>：P 接負、N 接正。外加電場跟內建電場同方向，把坡<b>墊高</b>。', on: 'cR' },
       { sub: '記法：<b>P 接 Positive 就是順向</b>。這一段先看逆偏，順偏留到 PART 4。', on: 'cM' }
@@ -194,7 +293,7 @@
   };
 
   /* ════════════ 08 逆偏：空乏區變寬 ════════════ */
-  const S8 = {
+  const P8 = {
     t: '逆偏：空乏區變寬', en: 'REVERSE BIAS · WIDER DEPLETION',
     svg: slabs('s', 1) + g('hF', carriers('h', X0 + 10, XM - 110, 14, 3)) + g('hM', carriers('h', XM - 108, XM - 62, 5, 13)) +
       g('eF', carriers('e', XM + 110, X1 - 10, 14, 7)) + g('eM', carriers('e', XM + 62, XM + 108, 5, 15)) +
@@ -205,7 +304,7 @@
       chip(150, 88, '位障：V_bi → V_bi + V_R', null, 'cB', { fs: 12.5 }) +
       chip(470, 88, 'W ∝ √(V_bi + V_R)', '越拉越難變寬', 'cW', { fs: 12.5 }),
     steps: [
-      { sub: '加上逆偏：外加電場 E<sub>A</sub> 跟內建電場 Ē 同方向，總電場<b>變強</b>。', on: 's hF hM eF eM dz iP iN E1' },
+      { sub: '坡變高，空乏區也跟著變：外加電場跟內建電場同方向，總電場<b>變強</b>。', on: 's hF hM eF eM dz iP iN E1' },
       { sub: '更強的電場把空乏區邊緣的電洞往左拉、電子往右拉 ——', off: 'E1', on: 'E2', mv: { hM: [-50, 0], eM: [50, 0] } },
       { sub: '露出更多離子，<b>空乏區變寬</b>。', off: 'hM eM dz', on: 'dz2 iP2 iN2' },
       { sub: '坡也從 V<sub>bi</sub> 墊高到 <b>V<sub>bi</sub> + V<sub>R</sub></b>。寬度跟它的平方根成正比，所以電壓越大越難再變寬。', on: 'cB cW' }
@@ -213,25 +312,27 @@
   };
 
   /* ════════════ 09 只剩少數載子 ════════════ */
-  const S9 = {
+  const P9 = {
     t: '只剩少數載子：I_S', en: 'REVERSE SATURATION CURRENT',
     svg: slabs('s', 1) + g('hF', carriers('h', X0 + 10, XM - 110, 14, 3)) + g('eF', carriers('e', XM + 110, X1 - 10, 14, 7)) +
       depl('dz2', 104) + g('iP', ions([-12, -30, -48, -66, -84], '−')) + g('iN', ions([12, 30, 48, 66, 84], '+')) +
       g('blk', h(196, 182, null, 7) + arrow(204, 182, 236, 182, null, 'ln') + T(196, 206, '過不去', { cls: 't', fs: 11.5 })) +
       h(450, 150, 'mh', 8) + e(190, 216, 'me', 7.5) +
       chip(320, 88, '少數載子：被電場「順風」帶過去', 'N 區的電洞、P 區的電子', 'cM', { fs: 12.5 }) +
-      chip(320, 296, 'i_D ≈ −I_S（矽約 10⁻¹⁴ A）', '數量受限於少數載子，跟 V_R 無關', 'cI', { fs: 13, acc: true }),
+      chip(320, 296, 'i_D ≈ −I_S（矽約 10⁻¹⁴ A）', '數量受限於少數載子，跟 V_R 無關', 'cI', { fs: 13, acc: true }) +
+      chip(320, 296, '像水塔只剩一點點水', '閘門開再大，流出來的也就那麼多', 'cW', { fs: 12.5 }),
     steps: [
       { sub: '坡太高了：P 區的電洞、N 區的電子（多數載子）<b>統統翻不過去</b>，擴散電流 ≈ 0。', on: 's hF eF dz2 iP iN blk' },
       { sub: '剩下的只有<b>少數載子</b>：N 區零星的電洞、P 區零星的電子。這個電場對它們是順風。', on: 'mh me cM' },
       { sub: '它們先擴散到空乏區邊緣，再被電場一掃就過去了。', mv: { mh: [-260, 0], me: [260, 0] } },
-      { sub: '少數載子本來就少得可憐，所以電流極小：這叫<b>逆向飽和電流 I<sub>S</sub></b>。', on: 'cI' }
+      { sub: '少數載子本來就少得可憐，所以電流極小：這叫<b>逆向飽和電流 I<sub>S</sub></b>。', on: 'cI' },
+      { sub: '像水塔裡只剩一點點水：閘門開再大，流出來的也就那麼多。電壓加大，I<sub>S</sub> <b>也不會變大</b>。', off: 'cI', on: 'cW' }
     ]
   };
 
   /* ════════════ 10 空乏區＝電容 ════════════ */
   const plate = (x, key) => '<rect' + (key ? k(key) : '') + ' x="' + (x - 4) + '" y="112" width="8" height="136" class="ink" rx="2"/>';
-  const S10 = {
+  const P10 = {
     t: '空乏區就是一顆電容', en: 'JUNCTION CAPACITANCE',
     svg: slabs('s') + depl('dz', 58) + g('iP', ions([-12, -30, -48], '−')) + g('iN', ions([12, 30, 48], '+')) +
       g('cap', plate(255, null) + plate(385, null) + '<rect x="262" y="118" width="116" height="124" class="accw" opacity=".6"/>' +
@@ -249,7 +350,7 @@
   /* ════════════ 11 C_j 公式 ════════════ */
   let cj = '';
   for (let i = 0; i <= 60; i++) { const v = i / 6, c = Math.pow(1 + v / 0.637, -0.5); cj += (i ? ' L' : 'M') + (120 + v * 40).toFixed(1) + ' ' + (290 - 160 * c).toFixed(1); }
-  const S11 = {
+  const P11 = {
     t: '接面電容 C_j', en: 'C_j = C_j0 (1 + V_R / V_bi)^−1/2',
     svg: T(320, 100, 'C<tspan font-size="13" dy="5">j</tspan><tspan dy="-5"> = C</tspan><tspan font-size="13" dy="5">j0</tspan><tspan dy="-5"> · (1 + V</tspan><tspan font-size="13" dy="5">R</tspan><tspan dy="-5"> / V</tspan><tspan font-size="13" dy="5">bi</tspan><tspan dy="-5">)</tspan><tspan font-size="13" dy="-12">−1/2</tspan>', { cls: 't', fs: 24, k: 'f' }) +
       g('ax', arrow(120, 290, 540, 290, null, 'ln') + arrow(120, 290, 120, 120, null, 'ln') + T(540, 306, 'V_R', { cls: 'ts', fs: 12 }) + T(128, 122, 'C_j', { cls: 'ts', fs: 12, a: 'start' })) +
@@ -269,7 +370,7 @@
   let dial = '';
   for (let v = 60; v <= 130; v += 10) dial += line(70 + (v - 60) * 7, 214, 70 + (v - 60) * 7, 226, null, 'ln') + T(70 + (v - 60) * 7, 244, String(v), { cls: 'ts mono', fs: 11 });
   const fX = f => 70 + (f - 60) * 7;
-  const S12 = {
+  const P12 = {
     t: '變容二極體：用電壓調頻率', en: 'VARACTOR DIODE',
     svg: T(320, 104, 'f = 1 / (2π√(L·C<tspan font-size="12" dy="4">j</tspan><tspan dy="-4">))</tspan>', { cls: 't', fs: 22, k: 'f' }) +
       g('dial', '<rect x="' + fX(88) + '" y="196" width="' + (fX(108) - fX(88)) + '" height="36" class="accw"/>' + dial + line(70, 214, 560, 214, null, 'ln') +
@@ -287,7 +388,7 @@
   };
 
   /* ════════════ 13 恍然大悟 ════════════ */
-  const S13 = {
+  const P13 = {
     t: '恍然大悟', en: 'THE ANSWER',
     svg: T(320, 220, '?', { cls: 'ta', fs: 110, k: 'q' }) +
       g('L', '<rect class="card" x="70" y="96" width="236" height="150" rx="14" filter="url(#st-sh)"/>' +
@@ -309,6 +410,6 @@
 
   window.__ch1p3Story = window.__Story('#story', {
     id: 'ch1-part3', title: 'CH1 PART 3 pn 接面', after: '#map',
-    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13]
+    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, P5, P6, P7, SR, P8, P9, P10, P11, P12, P13]
   });
 })();
