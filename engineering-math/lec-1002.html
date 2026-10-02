@@ -35,6 +35,10 @@
       <li><a href="#proof"><i>07</i>補充二：證明 ℒ(f′)</a></li>
       <li><a href="#limit"><i>08</i>證明那個極限是 0</a></li>
       <li><a href="#exist"><i>09</i>ℒ 什麼時候存在</a></li>
+      <li><a href="#basic"><i>10</i>基本函數：1、e<sup>at</sup></a></li>
+      <li><a href="#inv"><i>11</i>例題與 ℒ⁻¹</a></li>
+      <li><a href="#linear"><i>12</i>線性與疊加原理</a></li>
+      <li><a href="#cos"><i>13</i>ℒ(cos ωt)、ℒ(sin ωt)</a></li>
       <li><a href="#check"><i>!</i>勘誤總表</a></li>
       <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
       <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
@@ -45,17 +49,17 @@
     <div class="hero">
       <div class="eyebrow">工程數學 · 大二上 · 10/2 課堂板書整理</div>
       <h1>10/2 上課筆記</h1>
-      <p class="sub">把這堂課的 iPad 筆記和 4 張黑板照片<strong>照老師的順序</strong>重新寫成正確、看得清楚的版本。每一步都補上「為什麼這樣做」；板書沒寫完的地方我補完，並標上<b>「補」</b>。</p>
+      <p class="sub">把這堂課的 iPad 筆記和 15 張黑板照片<strong>照老師的順序</strong>重新寫成正確、看得清楚的版本。每一步都補上「為什麼這樣做」；板書沒寫完的地方我補完，並標上<b>「補」</b>。</p>
       <div class="hero-meta">
-        <span class="chip">9 節，照板書順序</span>
-        <span class="chip">3 個互動模組</span>
-        <span class="chip">8 題中英對照測驗</span>
-        <span class="chip h">4 處筆記勘誤</span>
+        <span class="chip">13 節，照板書順序</span>
+        <span class="chip">7 個互動模組</span>
+        <span class="chip">12 題中英對照測驗</span>
+        <span class="chip h">6 處筆記勘誤</span>
       </div>
     </div>
 
     <div class="note">
-      <b>這頁怎麼讀：</b>每一節的小標前面有 <span class="part-tag">照片 x</span>，告訴你這段來自哪一張（照片 1 = 你的 iPad 筆記，照片 2～5 = 黑板）。
+      <b>這頁怎麼讀：</b>每一節的小標前面有 <span class="part-tag">照片 x</span>，告訴你這段來自哪一張（照片 1 = 你的 iPad 筆記，照片 2～16 = 黑板）。
       綠底的 <code>d-eq</code> 是板書內容（已更正），下面那行灰字是我補的「為什麼」。
       跟這頁有關的觀念，在 <a href="laplace.html">拉普拉斯轉換</a> 與 <a href="ode.html">ODE 與特徵方程</a> 兩章有完整的動畫版。
     </div>
@@ -361,7 +365,7 @@
 
     <!-- ══════════ 09 存在條件 ══════════ -->
     <section class="sec" id="exist">
-      <div class="eyebrow"><span class="part-tag">照片 5 · 黑板</span>09 · Existence</div>
+      <div class="eyebrow"><span class="part-tag">照片 5、6 · 黑板</span>09 · Existence</div>
       <h2>拉普拉斯轉換什麼時候存在<span class="h2-en">EXISTENCE CONDITION</span></h2>
       <p class="lede">e<sup>−σt</sup> 像一個往下拉的力量，f(t) 是往上衝的力量。<strong>只要 e<sup>−σt</sup> 拉得贏，乘起來就趨近 0，ℒ 就存在</strong>。拉不拉得贏，看 f(t) 長得多快 —— 這就是<button class="tm" data-t="指數階">指數階</button>的意思。</p>
 
@@ -385,16 +389,17 @@
       </div>
 
       <div class="derive">
-        <h4>板書 Ex. 三題（第 1 題板書解到一半，後面是我補的）</h4>
+        <h4>板書 Ex. 三題（照片 6 的完整解）</h4>
         <ol>
           <li><span class="d-eq">1.　lim e<sup>−σt</sup>·t² = lim t² / e<sup>σt</sup> = lim 2t / (σe<sup>σt</sup>) = lim 2 / (σ²e<sup>σt</sup>) = 0　（σ &gt; 0）</span>
-            <div class="why">∞/∞ 型，用<button class="tm" data-t="羅必達法則">羅必達法則</button>上下各微分，做兩次 t² 就被微掉了，分母還是 ∞。</div></li>
-          <li><span class="d-eq">2.　lim e<sup>−σt</sup>·e<sup>2t</sup> = lim e<sup>(2−σ)t</sup> = 0（σ &gt; 2）；1（σ = 2）；∞（σ &lt; 2）</span>
-            <div class="why">指數合併，只看指數 (2 − σ) 的正負。所以 ℒ(e<sup>2t</sup>) = 1/(s−2) 只在 σ &gt; 2 時成立。</div></li>
-          <li><span class="d-eq">3.　lim e<sup>−σt</sup>·e<sup>t²</sup> = lim e<sup>t(t−σ)</sup> = ∞（不管 σ 多大）</span>
-            <div class="why">t 一超過 σ，指數就變正而且越來越大。e<sup>t²</sup> 的拉普拉斯轉換不存在。</div></li>
+            <div class="why">先看 lim t² = ∞，t² 往上衝。改寫成 ∞/∞ 型，用<button class="tm" data-t="羅必達法則">羅必達法則</button>上下各微分，做兩次 t² 就被微掉了，分母還是 ∞。板書結論：<b>ℒ(t²) 存在，σ &gt; 0</b>。</div></li>
+          <li><span class="d-eq">2.　lim e<sup>−σt</sup>·e<sup>2t</sup> = lim e<sup>2t</sup> / e<sup>σt</sup> = lim e<sup>−(σ−2)t</sup> = 0，σ &gt; 2</span>
+            <div class="why">指數合併，只看指數的正負：σ &gt; 2 時 −(σ−2) 是負的 → 0（σ = 2 時是 1、σ &lt; 2 時是 ∞）。板書結論：<b>ℒ(e<sup>2t</sup>) 存在，σ &gt; 2</b>。</div></li>
+          <li><span class="d-eq">3.　lim e<sup>−σt</sup>·e<sup>t²</sup> = lim e<sup>t²</sup> / e<sup>σt</sup> = lim e<sup>t²−σt</sup> = lim e<sup>t(t−σ)</sup> = ∞</span>
+            <div class="why">t 一超過 σ，指數就變正而且越來越大，不管 σ 多大。板書結論：<b>ℒ(e<sup>t²</sup>) 不存在</b>。</div></li>
         </ol>
       </div>
+      <div class="note"><b>請確認（照片 6）：</b>① 第 1 題第二次羅必達後分母應該是 <b>σ²</b>e<sup>σt</sup>（板書看起來只寫 σ，不影響答案 0）。② 第 3 題最後一行看起來像「= 0」，正確是 <b>= ∞</b>，旁邊的結論「ℒ(e<sup>t²</sup>) 不存在」是對的，應該是 ∞ 寫得像 0。</div>
 
       <div id="ex-lim"></div>
 
@@ -417,11 +422,321 @@
       </div>
     </section>
 
+    <!-- ══════════ 10 基本函數 ══════════ -->
+    <section class="sec" id="basic">
+      <div class="eyebrow"><span class="part-tag">照片 7、8、9 · 黑板</span>10 · Basic transforms</div>
+      <h2>基本函數的拉普拉斯轉換：u(t)、1、e<sup>at</sup><span class="h2-en">BASIC LAPLACE TRANSFORMS</span></h2>
+      <p class="lede">前面都在講「怎麼轉」和「什麼時候能轉」，這裡終於開始<strong>真的算</strong>。先算最簡單的兩個：常數 1 和指數 e<sup>at</sup>。它們是之後查表的地基 —— 幾乎所有題目最後都會拆成這幾塊。</p>
+
+      <div class="eq">ℒ(u(t)) = ℒ(1) = 1/s，σ &gt; 0　　ℒ(e<sup>at</sup>) = 1/(s − a)，σ &gt; a</div>
+
+      <div class="derive">
+        <h4>先認識 u(t)：<button class="tm" data-t="單位步階函數">單位步階函數</button>（照片 7 左）</h4>
+        <ol>
+          <li><span class="d-eq">u(t) = 1（t ≥ 0）；0（t &lt; 0）　　f(t) = 1（所有 t）</span>
+            <div class="why">u(t) 像一個開關：t = 0 那一刻打開，之後一直是 1；f(t) = 1 則是從頭到尾都是 1。</div></li>
+          <li><span class="d-eq">ℒ 只看 t ≥ 0 那一段　⇒　ℒ(u(t)) 跟 ℒ(1) 一定一樣</span>
+            <div class="why">積分從 0 積到 ∞，t &lt; 0 的部分根本不會被看到，而 t ≥ 0 時兩個函數都是 1。</div></li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>ℒ(u(t)) = ℒ(1)（照片 7 右）</h4>
+        <ol>
+          <li><span class="d-eq">ℒ(u(t)) = ∫₀<sup>∞</sup> u(t) e<sup>−st</sup> dt = ∫₀<sup>∞</sup> e<sup>−st</sup> dt，　ℒ(1) = ∫₀<sup>∞</sup> 1·e<sup>−st</sup> dt = ∫₀<sup>∞</sup> e<sup>−st</sup> dt</span>
+            <div class="why">定義直接代。t ≥ 0 時 u(t) = 1，兩個積分長得一模一樣。</div></li>
+          <li><span class="d-eq">= (1/(−s)) e<sup>−st</sup> |₀<sup>∞</sup></span>
+            <div class="why">e<sup>kt</sup> 的反導函數是 (1/k)e<sup>kt</sup>，這裡 k = −s。</div></li>
+          <li><span class="d-eq">= −(1/s) ( lim<sub>t→∞</sub> e<sup>−st</sup> − lim<sub>t→0</sub> e<sup>−st</sup> ) = −(1/s)(0 − 1)</span>
+            <div class="why">上限的極限是 0（老師標「待證」，下面證）；下限 e<sup>0</sup> = 1。</div></li>
+          <li><span class="d-eq">= 1/s　⇒　ℒ(u(t)) = ℒ(1) = 1/s，σ &gt; 0（s &gt; 0）</span>
+            <div class="why">負負得正。條件 σ &gt; 0 來自下面的證明。</div></li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>待證：lim<sub>t→∞</sub> |e<sup>−st</sup>| = 0（照片 8 左）</h4>
+        <ol>
+          <li><span class="d-eq">lim |e<sup>−st</sup>| = lim |e<sup>−(σ+jω)t</sup>| = lim |e<sup>−σt</sup>·e<sup>−jωt</sup>|</span>
+            <div class="why">跟第 08 節同一招：s 拆成實部、虛部。</div></li>
+          <li><span class="d-eq">= lim |e<sup>−σt</sup>(cos ωt − j sin ωt)| = lim e<sup>−σt</sup> |cos ωt − j sin ωt|</span>
+            <div class="why">尤拉公式；e<sup>−σt</sup> 是正的實數，可以直接拿出絕對值。</div></li>
+          <li><span class="d-eq">= lim e<sup>−σt</sup> √(cos²ωt + (−sin ωt)²) = lim e<sup>−σt</sup> = 0，　σ &gt; 0</span>
+            <div class="why">根號裡是 1。e<sup>−σt</sup> 要趨近 0，指數必須是負的 → σ &gt; 0。這就是收斂條件的來源。</div></li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>ℒ(e<sup>at</sup>)（照片 8 右）</h4>
+        <ol>
+          <li><span class="d-eq">ℒ(e<sup>at</sup>) = ∫₀<sup>∞</sup> e<sup>at</sup> e<sup>−st</sup> dt = ∫₀<sup>∞</sup> e<sup>−(s−a)t</sup> dt</span>
+            <div class="why">兩個指數合併：at − st = −(s − a)t。</div></li>
+          <li><span class="d-eq">= (1/(−(s−a))) e<sup>−(s−a)t</sup> |₀<sup>∞</sup></span>
+            <div class="why">跟上面一樣的反導函數，只是 s 換成 s − a。</div></li>
+          <li><span class="d-eq">= −(1/(s−a)) ( lim<sub>t→∞</sub> e<sup>−(s−a)t</sup> − lim<sub>t→0</sub> e<sup>−(s−a)t</sup> ) = −(1/(s−a))(0 − 1)</span>
+            <div class="why">上限 0（待證，照片 9）、下限 1。</div></li>
+          <li><span class="d-eq">= 1/(s − a)　⇒　ℒ(e<sup>at</sup>) = 1/(s − a)，σ &gt; a（s &gt; a）</span>
+            <div class="why">其實就是把 ℒ(1) = 1/s 的 s 換成 s − a。a = 0 時 e<sup>0</sup> = 1，剛好回到 1/s ✓。</div></li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>待證：lim<sub>t→∞</sub> |e<sup>−(s−a)t</sup>| = 0（照片 9）</h4>
+        <ol>
+          <li><span class="d-eq">lim |e<sup>−(s−a)t</sup>| = lim |e<sup>−(σ+jω−a)t</sup>| = lim |e<sup>−(σ−a)t</sup>·e<sup>−jωt</sup>|</span>
+            <div class="why">把 s − a 的實部 (σ − a) 和虛部 ω 分開。</div></li>
+          <li><span class="d-eq">= lim e<sup>−(σ−a)t</sup> √(cos²ωt + (−sin ωt)²) = lim e<sup>−(σ−a)t</sup> = 0，　σ &gt; a</span>
+            <div class="why">要衰減，指數要負：σ − a &gt; 0。收斂區從「σ &gt; 0」平移成「σ &gt; a」。</div></li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>s 平面的收斂區（拖曳 s 點）</h3></div>
+        <div class="stage-wrap"><canvas id="cv-roc" aria-label="左邊 s 平面，斜線區是收斂區；右邊是 e 的 −(σ−a)t 次方隨時間的樣子"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="roc-a">e<sup>at</sup> 的 a（a = 0 就是 u(t)、1）<output for="roc-a"></output></label>
+            <input type="range" id="roc-a" min="-2" max="2" step="0.5" value="0"></div>
+          <div class="ctrl"><label for="roc-s">s 的實部 σ<output for="roc-s"></output></label>
+            <input type="range" id="roc-s" min="-3" max="3" step="0.1" value="1"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>收斂區</dt><dd id="roc-r">—</dd></div>
+          <div><dt>σ − a</dt><dd id="roc-d">—</dd></div>
+          <div><dt>ℒ 存在？</dt><dd id="roc-ok">—</dd></div>
+        </dl>
+        <div class="msg">黑板上那張 s 平面的斜線區就是這個：<b>σ 在 a 的右邊</b>，e<sup>−(σ−a)t</sup> 才會衰減，ℒ 才存在。s 的虛部 ω 上下拖都沒差 —— 它只會讓 e<sup>−jωt</sup> 轉圈，長度永遠 1。</div>
+      </div>
+
+      <div class="glossary">
+        <div class="gl-row" style="grid-template-columns:minmax(0,.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.8fr)"><b>#</b><span>f(t)</span><span>F(s)</span><span>收斂條件</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.8fr)"><b>1</b><span>u(t) 或 1</span><span>1/s</span><span>σ &gt; 0</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.8fr)"><b>2</b><span>e<sup>at</sup></span><span>1/(s − a)</span><span>σ &gt; a</span></div>
+      </div>
+
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> ℒ(e<sup>at</sup>) 寫成 1/(s + a)。<span class="o">✓</span> e<sup>at</sup> → 1/(s <b>−</b> a)；e<sup>−at</sup> 才是 1/(s + a)。記法：a = 0 要回到 1/s，而且「分母等於 0 的地方」就是 s = a。</li>
+          <li><span class="x">✗</span> 忘了寫收斂條件。<span class="o">✓</span> 板書每一個都附了「σ &gt; 0」「σ &gt; a」，考試也要寫。</li>
+          <li><span class="x">✗</span> 反導函數漏掉 1/(−s)。<span class="o">✓</span> ∫e<sup>kt</sup>dt = (1/k)e<sup>kt</sup>，k 是負的，負號要留著跟後面的 (0 − 1) 相消。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 11 用線性算 ℒ、ℒ⁻¹ ══════════ -->
+    <section class="sec" id="inv">
+      <div class="eyebrow"><span class="part-tag">照片 10、11、12 · 黑板</span>11 · Examples &amp; inverse</div>
+      <h2>拆開來各自查表：ℒ 與 ℒ⁻¹ 的例題<span class="h2-en">EXAMPLES &amp; INVERSE TRANSFORM</span></h2>
+      <p class="lede">有了 1/s 和 1/(s − a) 兩張「查表卡」，遇到一長串加減的函數，就<strong>拆開、各自查表、再加回來</strong>。反過來從 F(s) 找回 f(t)，叫做<button class="tm" data-t="反拉普拉斯轉換">反拉普拉斯轉換</button> ℒ⁻¹。這一招能用，靠的是下一節要證明的「線性」—— 老師這裡先用、後面補證明（板書寫「後補」）。</p>
+
+      <div class="eq">f(t) ──ℒ──→ F(s)　　　f(t) ←──ℒ⁻¹── F(s)</div>
+
+      <div class="derive">
+        <h4>Ex. 1　ℒ(2u(t) + 4 + e<sup>2t</sup>)（照片 10）</h4>
+        <ol>
+          <li><span class="d-eq">= 2ℒ(u(t)) + 4ℒ(1) + ℒ(e<sup>2t</sup>)</span>
+            <div class="why">線性：加號拆開、常數提出去（後補證明，第 12 節）。</div></li>
+          <li><span class="d-eq">= 2/s + 4/s + 1/(s − 2)</span>
+            <div class="why">查表：ℒ(u) = ℒ(1) = 1/s；ℒ(e<sup>2t</sup>) 是 a = 2。</div></li>
+          <li><span class="d-eq">= 6/s + 1/(s − 2)</span>
+            <div class="why">同分母合併。收斂條件取兩個都成立的範圍：σ &gt; 0 且 σ &gt; 2 → <b>σ &gt; 2</b><span class="part-tag">補</span>。</div></li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>Ex. 2　ℒ(⅓u(t) − ¼e<sup>−t/5</sup>)（照片 10、11）</h4>
+        <ol>
+          <li><span class="d-eq">= ⅓ℒ(u(t)) − ¼ℒ(e<sup>−t/5</sup>)</span>
+            <div class="why">一樣拆開、常數提出。</div></li>
+          <li><span class="d-eq">= ⅓·(1/s) − ¼·1/(s + ⅕)</span>
+            <div class="why">e<sup>−t/5</sup> 的 a = −⅕，所以 s − a = s + ⅕。</div></li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>Ex.（ℒ⁻¹）1　ℒ⁻¹(2/s − 4/(s − 2))（照片 11）</h4>
+        <ol>
+          <li><span class="d-eq">= 2ℒ⁻¹(1/s) − 4ℒ⁻¹(1/(s − 2))</span>
+            <div class="why">ℒ⁻¹ 也是線性的：拆開、常數提出。目標是把每一塊湊成表上的樣子。</div></li>
+          <li><span class="d-eq">= 2u(t) − 4e<sup>2t</sup></span>
+            <div class="why">查表倒著用：1/s ← u(t)；1/(s − 2) ← e<sup>2t</sup>。</div></li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>Ex.（ℒ⁻¹）2　ℒ⁻¹(¼·(1/s) + 1/(s + 1) − 2/(s − ½))（照片 11）</h4>
+        <ol>
+          <li><span class="d-eq">= ¼ℒ⁻¹(1/s) + ℒ⁻¹(1/(s + 1)) − 2ℒ⁻¹(1/(s − ½))</span>
+            <div class="why">拆開。注意 s + 1 = s − (−1)，所以 a = −1。</div></li>
+          <li><span class="d-eq">= ¼u(t) + e<sup>−t</sup> − 2e<sup>t/2</sup></span>
+            <div class="why">1/(s + 1) ← e<sup>−t</sup>；1/(s − ½) ← e<sup>t/2</sup>。</div></li>
+        </ol>
+      </div>
+
+      <div id="ex-lin"></div>
+
+      <div class="derive">
+        <h4>Exercise 2（照片 12，板書只出題；答案是我補的）<span class="part-tag">補</span></h4>
+        <ol>
+          <li><span class="d-eq">1.　ℒ(4 + 2e<sup>−2t</sup> − ¼e<sup>(3/5)t</sup>) = 4/s + 2/(s + 2) − ¼·1/(s − 3/5)，σ &gt; 3/5</span>
+            <div class="why">三塊各自查表：4 → 4/s；e<sup>−2t</sup> 的 a = −2；e<sup>(3/5)t</sup> 的 a = 3/5。收斂區取最嚴的 σ &gt; 3/5。</div></li>
+          <li><span class="d-eq">2.　ℒ⁻¹( (½)/s − 3/(s + 5) + (5/4)·1/(s − 4/3) ) = ½u(t) − 3e<sup>−5t</sup> + (5/4)e<sup>(4/3)t</sup></span>
+            <div class="why">1/s ← u(t)；1/(s + 5) ← e<sup>−5t</sup>；1/(s − 4/3) ← e<sup>(4/3)t</sup>。</div></li>
+        </ol>
+      </div>
+      <div class="note"><b>請確認：</b>照片 12 第 1 題的指數我讀成 <b>(3/5)t</b>，第 2 題最後一項的分母讀成 <b>s − 4/3</b>。抄錯的話跟我說，答案會跟著改。</div>
+
+      <div class="howto">
+        <h4>ℒ⁻¹ 的標準流程</h4>
+        <ol>
+          <li>用線性把 F(s) <b>拆成一塊一塊</b>，常數提到 ℒ⁻¹ 外面。</li>
+          <li>每一塊湊成 <b>1/s</b> 或 <b>1/(s − a)</b> 的樣子（s + 3 要看成 s − (−3)）。</li>
+          <li>查表倒著翻：1/s → u(t)、1/(s − a) → e<sup>at</sup>，再把常數乘回去。</li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 1/(s + 1) 翻成 e<sup>t</sup>。<span class="o">✓</span> s + 1 = s − (−1)，a = −1 → <b>e<sup>−t</sup></b>。</li>
+          <li><span class="x">✗</span> 2/(s − ½) 翻成 e<sup>t/2</sup>，把 2 弄丟。<span class="o">✓</span> 常數先提出去：2·ℒ⁻¹(1/(s − ½)) = <b>2</b>e<sup>t/2</sup>。</li>
+          <li><span class="x">✗</span> 把 ℒ(2u + 4) 寫成 2/s + 4（常數沒轉換）。<span class="o">✓</span> 常數 4 = 4·1，<b>ℒ(4) = 4/s</b>。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 12 線性 ══════════ -->
+    <section class="sec" id="linear">
+      <div class="eyebrow"><span class="part-tag">照片 13、14、15 · 黑板</span>12 · Linearity</div>
+      <h2>線性（疊加原理），以及 ℒ 為什麼是線性的<span class="h2-en">LINEARITY · SUPERPOSITION</span></h2>
+      <p class="lede">上一節一直在「拆開來各自算」，這一節補上為什麼可以這樣做。<button class="tm" data-t="線性">線性</button>的意思很生活：<strong>果汁機打一顆蘋果得到一杯，打一根香蕉得到一杯；那「2 顆蘋果 + 3 根香蕉」一起打，就是 2 杯蘋果汁 + 3 杯香蕉汁</strong>，不會多出奇怪的東西。</p>
+
+      <div class="eq">若 T(x₁) = y₁、T(x₂) = y₂，則 T(ax₁ + bx₂) = ay₁ + by₂</div>
+
+      <div class="derive">
+        <h4>定義（照片 13）</h4>
+        <ol>
+          <li><span class="d-eq">A transform / operator T is called <b>linear</b> if T satisfies the principle of superposition（疊加原理）</span>
+            <div class="why">一個「轉換／運算子」T 就是一台機器：丟東西進去、吐東西出來。它若滿足疊加原理，就叫線性。</div></li>
+          <li><span class="d-eq">i.e.（that is）：if T(x₁) = y₁, T(x₂) = y₂, then T(ax₁ + bx₂) = ay₁ + by₂</span>
+            <div class="why">輸入先「放大再相加」，等於輸出各自「放大再相加」。順序對調結果一樣。</div></li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>疊加機（板書的方塊圖）</h3></div>
+        <div class="stage-wrap"><canvas id="cv-lin" aria-label="方塊圖：f 進 ℒ 出 F，g 進 ℒ 出 G，af+bg 進 ℒ 出 aF+bG"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="lin-a">係數 a<output for="lin-a"></output></label>
+            <input type="range" id="lin-a" min="-3" max="3" step="1" value="2"></div>
+          <div class="ctrl"><label for="lin-b">係數 b<output for="lin-b"></output></label>
+            <input type="range" id="lin-b" min="-3" max="3" step="1" value="3"></div>
+        </div>
+        <div class="msg">這裡拿 f(t) = 1、g(t) = e<sup>2t</sup> 當例子。調 a、b，最下面那一列的輸出永遠等於「上面兩列的輸出各乘 a、b 再相加」—— 這就是線性。</div>
+      </div>
+
+      <div class="derive">
+        <h4>Thm. Laplace Transform is linear（照片 14、15）</h4>
+        <ol>
+          <li><span class="d-eq">要證：ℒ(af(t) + bg(t)) = aF(s) + bG(s)</span>
+            <div class="why">把定義裡的 T 換成 ℒ、x 換成 f 和 g。</div></li>
+          <li><span class="d-eq">ℒ(af(t) + bg(t)) = ∫₀<sup>∞</sup> (af(t) + bg(t)) e<sup>−st</sup> dt</span>
+            <div class="why">定義：整坨丟進積分。</div></li>
+          <li><span class="d-eq">= ∫₀<sup>∞</sup> ( af(t)e<sup>−st</sup> + bg(t)e<sup>−st</sup> ) dt</span>
+            <div class="why">e<sup>−st</sup> 乘進括號（分配律）。</div></li>
+          <li><span class="d-eq">= ∫₀<sup>∞</sup> af(t)e<sup>−st</sup> dt + ∫₀<sup>∞</sup> bg(t)e<sup>−st</sup> dt</span>
+            <div class="why">積分本身就是線性的：和的積分 = 積分的和。</div></li>
+          <li><span class="d-eq">= a∫₀<sup>∞</sup> f(t)e<sup>−st</sup> dt + b∫₀<sup>∞</sup> g(t)e<sup>−st</sup> dt</span>
+            <div class="why">常數 a、b 跟 t 無關，可以提到積分外面。</div></li>
+          <li><span class="d-eq">= aF(s) + bG(s)　　Q.E.D.</span>
+            <div class="why">兩個積分正好就是 ℒ(f) = F(s)、ℒ(g) = G(s) 的定義。Q.E.D. = 證明完畢。</div></li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 以為乘法也能拆：ℒ(f·g) = F(s)·G(s)。<span class="o">✓</span> 線性只管<b>加法和乘常數</b>，兩個函數相乘<b>不能</b>這樣拆。</li>
+          <li><span class="x">✗</span> 常數被當成函數轉換：ℒ(3f) = ℒ(3)·ℒ(f)。<span class="o">✓</span> 常數直接提出去：<b>ℒ(3f) = 3F(s)</b>。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 13 cos、sin ══════════ -->
+    <section class="sec" id="cos">
+      <div class="eyebrow"><span class="part-tag">照片 15、16 · 黑板</span>13 · cos ωt &amp; sin ωt</div>
+      <h2>ℒ(cos ωt)：不要硬積分，用聰明的方法<span class="h2-en">THE SMART WAY</span></h2>
+      <p class="lede">直接算 ∫₀<sup>∞</sup> cos ωt·e<sup>−st</sup> dt 要分部積分兩次再移項，很煩（老師說「分部積分：不要做」）。聰明的方法是利用 cos 的特性：<strong>微分兩次會變回自己（乘上 −ω²）</strong>。再配合第 05 節的 ℒ(f″) 公式，一行代數就解出來。</p>
+
+      <div class="eq">ℒ(cos ωt) = s / (s² + ω²)　　ℒ(sin ωt) = ω / (s² + ω²)　（σ &gt; 0）</div>
+
+      <div class="derive">
+        <h4>板書推導（照片 15、16）</h4>
+        <ol>
+          <li><span class="d-eq">f(t) = cos ωt，　f(0) = 1</span>
+            <div class="why">先把初始值準備好，等一下 ℒ(f″) 公式要用。cos 0 = 1。</div></li>
+          <li><span class="d-eq">f′(t) = −ω sin ωt，　f′(0) = 0</span>
+            <div class="why">微分一次（連鎖律帶出 ω）。sin 0 = 0。</div></li>
+          <li><span class="d-eq">f″(t) = −ω² cos ωt = −ω² f(t)　…… (1)</span>
+            <div class="why">再微一次，又變回 cos，只是多了 −ω²。這就是「聰明」的關鍵。</div></li>
+          <li><span class="d-eq">對 (1) 取 ℒ：ℒ(f″(t)) = ℒ(−ω² f(t)) = −ω² ℒ(f(t)) = −ω² F(s)</span>
+            <div class="why">右邊用線性，把常數 −ω² 提出去。</div></li>
+          <li><span class="d-eq">s²F(s) − s f(0) − f′(0) = −ω² F(s)</span>
+            <div class="why">左邊用第 02 節的 ℒ(f″) 公式。</div></li>
+          <li><span class="d-eq">s²F(s) − s = −ω² F(s)</span>
+            <div class="why">代 f(0) = 1、f′(0) = 0。</div></li>
+          <li><span class="d-eq">(s² + ω²) F(s) = s　⇒　F(s) = ℒ(cos ωt) = s / (s² + ω²)</span>
+            <div class="why">F(s) 的項移到同一邊、提出來，再除過去。完全沒有積分。</div></li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>ℒ(sin ωt)：板書 To Sum Up 第 4 格是空的，同一招補完<span class="part-tag">補</span></h4>
+        <ol>
+          <li><span class="d-eq">g(t) = sin ωt，g(0) = 0；g′(t) = ω cos ωt，g′(0) = ω；g″(t) = −ω² g(t)</span>
+            <div class="why">sin 也是微兩次變回自己乘 −ω²，只是初始值換成 0 和 ω。</div></li>
+          <li><span class="d-eq">s²G(s) − s·0 − ω = −ω² G(s)　⇒　(s² + ω²) G(s) = ω</span>
+            <div class="why">兩邊取 ℒ，代初始值。</div></li>
+          <li><span class="d-eq">G(s) = ℒ(sin ωt) = ω / (s² + ω²)</span>
+            <div class="why">cos 的分子是 s、sin 的分子是 ω。收斂條件跟 1 一樣是 σ &gt; 0（cos、sin 不會長大）。</div></li>
+        </ol>
+      </div>
+
+      <div id="ex-cos"></div>
+
+      <div class="glossary">
+        <div class="gl-row" style="grid-template-columns:minmax(0,.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.8fr)"><b>#</b><span>f(t)</span><span>F(s)</span><span>收斂條件</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.8fr)"><b>1</b><span>u(t) 或 1</span><span>1/s</span><span>σ &gt; 0</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.8fr)"><b>2</b><span>e<sup>at</sup></span><span>1/(s − a)</span><span>σ &gt; a</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.8fr)"><b>3</b><span>cos ωt</span><span>s/(s² + ω²)</span><span>σ &gt; 0</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.8fr)"><b>4</b><span>sin ωt</span><span>ω/(s² + ω²)　<em>補</em></span><span>σ &gt; 0</span></div>
+      </div>
+
+      <div class="howto">
+        <h4>「聰明方法」的適用時機</h4>
+        <ol>
+          <li>看 f 微分幾次會不會<b>變回自己的倍數</b>（cos、sin、e<sup>at</sup> 都會）。</li>
+          <li>寫下那條關係式，例如 f″ = −ω²f，<b>兩邊取 ℒ</b>。</li>
+          <li>左邊用 ℒ(f⁽ⁿ⁾) 公式、代初始值；右邊用線性。</li>
+          <li>把 F(s) 移到同一邊解出來 —— 變成解一元一次方程。</li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> cos、sin 的分子搞反。<span class="o">✓</span> <b>cos → s</b>、<b>sin → ω</b>。檢查法：ω → 0 時 cos ωt → 1，s/s² = 1/s ✓。</li>
+          <li><span class="x">✗</span> 分母寫成 s² − ω²。<span class="o">✓</span> 是 <b>s² + ω²</b>（來自 −ω² 移項）。s² − ω² 是雙曲函數 cosh、sinh 的。</li>
+          <li><span class="x">✗</span> 初始值代錯：sin 的 g′(0) 寫成 1。<span class="o">✓</span> g′(t) = ω cos ωt，所以 <b>g′(0) = ω</b>。</li>
+        </ul>
+      </div>
+    </section>
+
     <!-- ══════════ 勘誤 ══════════ -->
     <section class="sec" id="check">
       <div class="eyebrow">Errata · 筆記檢查結果</div>
       <h2>勘誤總表<span class="h2-en">ERRATA</span></h2>
-      <p class="lede">iPad 筆記和黑板都逐行驗算過。黑板的推導整體是對的，主要是你抄的時候漏了平方、寫錯字母。</p>
+      <p class="lede">iPad 筆記和黑板都逐行驗算過。黑板的推導整體是對的，只有兩處小筆誤；iPad 筆記主要是漏了平方、寫錯字母。</p>
       <div class="pitfall">
         <h4>要改的</h4>
         <ul>
@@ -429,12 +744,16 @@
           <li><span class="x">✗</span> iPad 第 5 點：ℒ(f″) = sF(s) − … → <span class="o">✓</span> <b>s²F(s)</b> − s f(0) − f′(0)</li>
           <li><span class="x">✗</span> iPad 第 6 點：sℒ(f(t) − f(0)) → <span class="o">✓</span> <b>sℒ(f(t)) − f(0)</b>（請確認你的手寫）</li>
           <li><span class="x">✗</span> iPad 第 4 點 ①：C e<sup>λ₁t</sup> → <span class="o">✓</span> <b>C₁</b> e<sup>λ₁t</sup></li>
+          <li><span class="x">✗</span> 照片 15 板書：f′(ω) = −ω sin ωt → <span class="o">✓</span> <b>f′(t)</b>（筆誤，不影響結果）</li>
+          <li><span class="x">✗</span> 照片 13 板書：the <i>proposition</i> of superposition → <span class="o">✓</span> 一般寫 <b>principle</b> of superposition（疊加原理）（請確認是不是我看錯）</li>
         </ul>
       </div>
       <div class="note">
         <b>請確認（照片看不清楚）：</b>
         ① 照片 4 證明 ℒ(f′) 那段，s∫ 前面應該是 <b>+</b>（照片看起來像 −）。
-        ② 你的 iPad 筆記標題寫 <b>10/2</b>，訊息說 10/3；這頁先用 10/2，日期不對跟我說。
+        ② 照片 6 第 1 題分母應為 σ²e<sup>σt</sup>；第 3 題最後應為 = ∞（照片像 0）。
+        ③ 照片 12 Exercise 2 的 e<sup>(3/5)t</sup> 與 s − 4/3 是否抄對。
+        ④ 你的 iPad 筆記標題寫 <b>10/2</b>，訊息說 10/3；這頁先用 10/2，日期不對跟我說。
       </div>
     </section>
 
@@ -454,6 +773,13 @@
         <div class="gl-row"><b>羅必達法則</b><span>L'Hôpital's rule</span><code>∞/∞ → 上下微分</code></div>
         <div class="gl-row"><b>指數階</b><span>exponential order</span><code>|f| ≤ Me<sup>at</sup></code></div>
         <div class="gl-row"><b>存在條件</b><span>existence condition</span><code>σ &gt; a</code></div>
+        <div class="gl-row"><b>單位步階函數</b><span>unit step function</span><code>u(t)</code></div>
+        <div class="gl-row"><b>反拉普拉斯轉換</b><span>inverse Laplace transform</span><code>ℒ⁻¹(F) = f</code></div>
+        <div class="gl-row"><b>線性</b><span>linear / linearity</span><code>T(ax₁+bx₂) = ay₁+by₂</code></div>
+        <div class="gl-row"><b>疊加原理</b><span>principle of superposition</span><code>—</code></div>
+        <div class="gl-row"><b>運算子</b><span>operator</span><code>T</code></div>
+        <div class="gl-row"><b>收斂區</b><span>region of convergence</span><code>σ &gt; a</code></div>
+        <div class="gl-row"><b>證明完畢</b><span>Q.E.D.</span><code>∎</code></div>
         <div class="gl-row"><b>數學歸納法</b><span>mathematical induction</span><code>n → n+1</code></div>
       </div>
     </section>
@@ -462,12 +788,12 @@
     <section class="sec" id="quiz-sec">
       <div class="eyebrow">自我檢查</div>
       <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
-      <p class="lede">8 題，中英對照。題幹中文、下方附英文原句，選項也中英並列。</p>
+      <p class="lede">12 題，中英對照。題幹中文、下方附英文原句，選項也中英並列。</p>
       <div class="quiz" id="quiz"></div>
     </section>
 
     <footer class="foot">
-      <p>教材依據：工程數學 10/2 課堂板書（4 張黑板照片）與 iPad 筆記。標「補」的是板書沒寫完、我補上的部分。</p>
+      <p>教材依據：工程數學 10/2 課堂板書（15 張黑板照片）與 iPad 筆記。標「補」的是板書沒寫完、我補上的部分。</p>
     </footer>
   </main>
 </div>

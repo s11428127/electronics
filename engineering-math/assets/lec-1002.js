@@ -188,6 +188,201 @@
       }
     }
   });
+
+  /* ---------- s 平面收斂區 ---------- */
+  const cvR = document.getElementById('cv-roc');
+  if (cvR) {
+    let A = 0, SIG = 1, OM = 1.2, geo = null;
+    const stR = Stage(cvR, {
+      ratio: w => (w < 560 ? 1.05 : 0.45), minH: 300, maxH: 420, animate: false,
+      draw(ctx, w, h) {
+        const narrow = w < 560;
+        const pw = narrow ? w : w * 0.52, ph = narrow ? h * 0.56 : h;
+        const cx = pw / 2, cy = ph / 2, U = Math.max(1, Math.min(pw, ph) / 8.4);
+        geo = { cx, cy, U };
+        const X = v => cx + v * U, Y = v => cy - v * U;
+        /* 收斂區斜線 */
+        ctx.save(); ctx.beginPath(); ctx.rect(X(A), 8, Math.max(0, pw - 8 - X(A)), ph - 16); ctx.clip();
+        ctx.strokeStyle = C.accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 1.2;
+        for (let k = -ph; k < pw + ph; k += 12) { ctx.beginPath(); ctx.moveTo(k, ph); ctx.lineTo(k + ph, 0); ctx.stroke(); }
+        ctx.restore();
+        ctx.strokeStyle = C.line; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(10, cy); ctx.lineTo(pw - 10, cy); ctx.moveTo(cx, ph - 10); ctx.lineTo(cx, 10); ctx.stroke();
+        label(ctx, pw - 12, cy - 10, 'σ', C['ink-3'], 12, 'right');
+        label(ctx, cx + 8, 18, 'jω', C['ink-3'], 12, 'left');
+        ctx.strokeStyle = C.accent; ctx.lineWidth = 2; ctx.setLineDash([6, 4]);
+        ctx.beginPath(); ctx.moveTo(X(A), 10); ctx.lineTo(X(A), ph - 10); ctx.stroke(); ctx.setLineDash([]);
+        label(ctx, X(A) - 4, cy + 14, 'a = ' + fix(A, 1), C.accent, 11, 'right', '600');
+        labelCJK(ctx, pw - 14, ph - 18, '收斂區 σ > a', C.accent, 11, 'right', '600');
+        const ok = SIG > A;
+        disc(ctx, X(SIG), Y(OM), 7, ok ? C.ok : C.bad, C.paper);
+        label(ctx, X(SIG) + 10, Y(OM) - 10, 's', ok ? C.ok : C.bad, 13, 'left', '700');
+        /* 右（或下）：|e^(−(σ−a)t)| */
+        const ox = narrow ? 30 : pw + 34, oy = narrow ? ph + 22 : 26;
+        const gw = Math.max(1, (narrow ? w : w - pw) - (narrow ? 44 : 50)), gh = Math.max(1, (narrow ? h - ph : h) - (narrow ? 48 : 56));
+        ctx.strokeStyle = C.line; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox, oy + gh); ctx.lineTo(ox + gw, oy + gh); ctx.stroke();
+        label(ctx, ox - 6, oy + gh - gh / 2.5, '1', C['ink-3'], 10, 'right');
+        label(ctx, ox + gw, oy + gh + 12, 't', C['ink-3'], 10, 'right');
+        const d = SIG - A, T = 4, Ym = 2.5;
+        ctx.strokeStyle = ok ? C.ok : C.bad; ctx.lineWidth = 2.2; ctx.beginPath();
+        for (let i = 0; i <= 160; i++) {
+          const t = i / 160 * T, v = Math.exp(-d * t);
+          const px = ox + t / T * gw, py = oy + gh - clamp(v / Ym, 0, 1.02) * gh;
+          i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+          if (v > Ym * 1.02) break;
+        }
+        ctx.stroke();
+        labelCJK(ctx, ox + gw, oy + 6, '|e<sup>−(s−a)t</sup>| = e<sup>−(σ−a)t</sup>', C['ink-2'], 11, 'right', '600');
+        labelCJK(ctx, ox + gw, oy + 26, ok ? '衰減 → 0：ℒ 存在' : d === 0 ? '停在 1：ℒ 不存在' : '發散 → ∞：ℒ 不存在', ok ? C.ok : C.bad, 11, 'right', '600');
+      }
+    });
+    const syncR = () => {
+      const ok = SIG > A;
+      setText('roc-r', A === 0 ? 'σ > 0' : 'σ > ' + fix(A, 1));
+      setText('roc-d', fix(SIG - A, 1));
+      setText('roc-ok', ok ? '存在 ✓' : '不存在 ✗');
+      stR.redraw();
+    };
+    bindRange('roc-a', v => (v === 0 ? 'a = 0（u(t)、1）' : 'a = ' + fix(v, 1)), v => { A = v; syncR(); });
+    bindRange('roc-s', v => 'σ = ' + fix(v, 1), v => { SIG = v; syncR(); });
+    let dragR = false;
+    const atR = ev => {
+      if (!geo) return;
+      const p = pointerPos(cvR, ev);
+      const sg = clamp(Math.round((p.x - geo.cx) / geo.U * 10) / 10, -3, 3);
+      OM = clamp((geo.cy - p.y) / geo.U, -3.5, 3.5);
+      const el = document.getElementById('roc-s'); el.value = sg; el.dispatchEvent(new Event('input'));
+    };
+    cvR.addEventListener('pointerdown', ev => { dragR = true; cvR.setPointerCapture(ev.pointerId); atR(ev); });
+    cvR.addEventListener('pointermove', ev => { if (dragR) atR(ev); });
+    cvR.addEventListener('pointerup', () => { dragR = false; });
+    cvR.style.touchAction = 'none';
+  }
+
+  /* ---------- 線性例題：ℒ(A·u(t) + B + C·e^(at)) ---------- */
+  const num = v => String(Number.isInteger(v) ? v : +v.toFixed(2)).replace('-', MINUS);
+  const coef = (c, first) => (first ? (c < 0 ? MINUS : '') : (c < 0 ? ' ' + MINUS + ' ' : ' + ')) + (Math.abs(c) === 1 ? '' : num(Math.abs(c)));
+  const k1 = c => (c === 1 ? '' : c === -1 ? MINUS : num(c));
+  const sMa = a => (a === 0 ? 's' : a > 0 ? 's ' + MINUS + ' ' + num(a) : 's + ' + num(-a));
+  const eat = a => (a === 0 ? '1' : 'e<sup>' + (a === 1 ? '' : a === -1 ? MINUS : num(a)) + 't</sup>');
+  liveExample('#ex-lin', {
+    title: '例題 · 自己改係數：拆開、查表、加回來',
+    givens: [
+      { id: 'li-A', label: 'u(t) 的係數', min: -4, max: 4, step: 1, value: 2, fmt: v => num(v) },
+      { id: 'li-B', label: '常數項', min: -4, max: 4, step: 1, value: 4, fmt: v => num(v) },
+      { id: 'li-C', label: '指數項的係數', min: -4, max: 4, step: 1, value: 1, fmt: v => num(v) },
+      { id: 'li-a', label: '指數的 a', min: -3, max: 3, step: 0.5, value: 2, fmt: v => 'a = ' + num(v) }
+    ],
+    compute: g => {
+      const A = g['li-A'], B = g['li-B'], Cc = g['li-C'], a = g['li-a'];
+      const K = A + B;
+      const ft = [A ? coef(A, true) + 'u(t)' : '', B ? coef(B, !A) + (Math.abs(B) === 1 ? '1' : '') : '', Cc ? coef(Cc, !A && !B) + eat(a) : ''].join('') || '0';
+      let Fs = '';
+      if (a === 0) { const T = K + Cc; Fs = T ? coef(T, true) + (Math.abs(T) === 1 ? '1' : '') + '/s' : '0'; }
+      else { Fs = (K ? coef(K, true) + (Math.abs(K) === 1 ? '1' : '') + '/s' : '') + (Cc ? coef(Cc, !K) + (Math.abs(Cc) === 1 ? '1' : '') + '/(' + sMa(a) + ')' : ''); Fs = Fs || '0'; }
+      const roc = Cc && a > 0 ? a : 0;
+      let inv;
+      if (a === 0) { const T = K + Cc; inv = T ? coef(T, true) + 'u(t)' : '0'; }
+      else inv = ((K ? coef(K, true) + 'u(t)' : '') + (Cc ? coef(Cc, !K) + eat(a) : '')) || '0';
+      return { A, B, Cc, a, K, ft, Fs, roc, inv };
+    },
+    question: (g, r) => '求 ℒ(' + r.ft + ')，並寫出收斂條件。（預設值是板書 Ex. 1：ℒ(2u(t) + 4 + e<sup>2t</sup>)）',
+    steps: (g, r) => [
+      { t: 'Step 1　用線性拆開。', note: '加號拆開、係數提到 ℒ 外面。', eq: [r.A ? k1(r.A) + 'ℒ(u(t))' : '', r.B ? (r.A ? ' + ' : '') + k1(r.B) + 'ℒ(1)' : '', r.Cc ? ((r.A || r.B) ? ' + ' : '') + k1(r.Cc) + 'ℒ(' + eat(r.a) + ')' : ''].join('').replace(/\+ −/g, '− ') || '0' },
+      { t: 'Step 2　各自查表。', note: 'ℒ(u) = ℒ(1) = 1/s；ℒ(e<sup>at</sup>) = 1/(s − a)。' + (r.a === 0 ? '這題 a = 0，e<sup>0t</sup> = 1，指數項也變成 1/s。' : '這題 a = ' + num(r.a) + '，分母是 ' + sMa(r.a) + '。'),
+        eq: ((r.A ? num(r.A) + '/s' : '') + (r.B ? (r.A ? ' + ' : '') + num(r.B) + '/s' : '') + (r.Cc ? ((r.A || r.B) ? ' + ' : '') + num(r.Cc) + '/(' + sMa(r.a) + ')' : '')).replace(/\+ −/g, '− ') },
+      { t: 'Step 3　同類合併。', note: (r.A && r.B) ? 'u(t) 和常數 1 轉出來都是 1/s，係數相加：' + num(r.A) + ' + ' + num(r.B) + ' = ' + num(r.K) + '。' : '沒有可以合併的項。', eq: r.Fs },
+      { t: 'Step 4　收斂條件取「全部都成立」的範圍。', note: r.Cc && r.a > 0 ? '1/s 要 σ > 0，1/(' + sMa(r.a) + ') 要 σ > ' + num(r.a) + '，兩個都要成立 → 取比較嚴的 σ > ' + num(r.a) + '。' : r.Cc && r.a < 0 ? '1/(' + sMa(r.a) + ') 只要 σ > ' + num(r.a) + '，但 1/s 要 σ > 0，取比較嚴的 σ > 0。' : '只剩 1/s，σ > 0。' }
+    ],
+    answer: (g, r) => 'ℒ(' + r.ft + ') = ' + r.Fs + '，σ &gt; ' + num(r.roc) + '<br>反過來：ℒ⁻¹(' + r.Fs + ') = ' + r.inv + '（u(t) 和 1 在 t ≥ 0 一樣）',
+    ratio: 0.3, minH: 150, maxH: 200,
+    draw: (ctx, w, h, g, r) => {
+      const padL = 34, padR = 14, top = 34, bot = h - 22, T = r.a > 0 ? Math.min(2, 3 / r.a) : 2;
+      const W = Math.max(1, w - padL - padR);
+      const f = t => r.A + r.B + r.Cc * Math.exp(r.a * t);
+      let lo = 0, hi = 0;
+      for (let i = 0; i <= 100; i++) { const v = f(i / 100 * T); lo = Math.min(lo, v); hi = Math.max(hi, v); }
+      hi = Math.min(hi, 40); lo = Math.max(lo, -40);
+      if (hi - lo < 1) hi = lo + 1;
+      const X = t => padL + t / T * W, Y = v => bot - (clamp(v, lo, hi) - lo) / (hi - lo) * (bot - top);
+      ctx.strokeStyle = C.line; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(padL, top); ctx.lineTo(padL, bot); ctx.moveTo(padL, Y(0)); ctx.lineTo(w - padR, Y(0)); ctx.stroke();
+      label(ctx, padL - 6, Y(hi), num(Math.round(hi)), C['ink-3'], 10, 'right');
+      label(ctx, padL - 6, Y(0), '0', C['ink-3'], 10, 'right');
+      label(ctx, w - padR, Y(0) + 12, 't', C['ink-3'], 10, 'right');
+      ctx.strokeStyle = C.accent; ctx.lineWidth = 2.2; ctx.beginPath();
+      for (let i = 0; i <= 160; i++) { const t = i / 160 * T; i ? ctx.lineTo(X(t), Y(f(t))) : ctx.moveTo(X(t), Y(f(t))); }
+      ctx.stroke();
+      labelCJK(ctx, w - padR, 14, 'f(t) = ' + r.ft, C.accent, 12, 'right', '600');
+    }
+  });
+
+  /* ---------- 疊加機（方塊圖） ---------- */
+  const cvL = document.getElementById('cv-lin');
+  if (cvL) {
+    let a = 2, b = 3;
+    const stL = Stage(cvL, {
+      ratio: w => (w < 560 ? 0.75 : 0.34), minH: 220, maxH: 320, animate: false,
+      draw(ctx, w, h) {
+        const rows = [['f(t) = 1', '1/s'], ['g(t) = e<sup>2t</sup>', '1/(s − 2)'],
+          [num(a) + '·1 + ' + num(b) + 'e<sup>2t</sup>', num(a) + '/s + ' + num(b) + '/(s − 2)']];
+        const bw = Math.max(36, Math.min(70, w * 0.12)), bx = w / 2 - bw / 2, fs = w < 420 ? 11 : 13;
+        rows.forEach((r, i) => {
+          const y = h * (i === 2 ? 0.8 : 0.2 + i * 0.27), bh = 34;
+          ctx.strokeStyle = i === 2 ? C.accent : C['ink-2']; ctx.lineWidth = i === 2 ? 2 : 1.4;
+          ctx.strokeRect(bx, y - bh / 2, bw, bh);
+          labelCJK(ctx, w / 2, y, 'ℒ', i === 2 ? C.accent : C['ink'], 16, 'center', '700');
+          arrow(ctx, 8, y, bx - 4, y, C['ink-3'], 1.4);
+          arrow(ctx, bx + bw + 4, y, w - 8, y, C['ink-3'], 1.4);
+          labelCJK(ctx, (8 + bx) / 2, y - 14, r[0].replace(/\+ −/g, '− '), i === 2 ? C.accent : C['ink-2'], fs, 'center', '600');
+          labelCJK(ctx, (bx + bw + w) / 2, y - 14, r[1].replace(/\+ −/g, '− '), i === 2 ? C.accent : C['ink-2'], fs, 'center', '600');
+        });
+        ctx.strokeStyle = C.line; ctx.setLineDash([4, 4]); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(10, h * 0.62); ctx.lineTo(w - 10, h * 0.62); ctx.stroke(); ctx.setLineDash([]);
+        labelCJK(ctx, w / 2, h * 0.62 - 9, '輸入放大再相加 ⇒ 輸出也放大再相加', C['ink-3'], 11, 'center');
+      }
+    });
+    bindRange('lin-a', v => 'a = ' + num(v), v => { a = v; stL.redraw(); });
+    bindRange('lin-b', v => 'b = ' + num(v), v => { b = v; stL.redraw(); });
+  }
+
+  /* ---------- ℒ(cos ωt)、ℒ(sin ωt) ---------- */
+  liveExample('#ex-cos', {
+    title: '例題 · 聰明方法：選函數、改角頻率',
+    givens: [
+      { id: 'cs-k', label: '函數（1 = cos、2 = sin）', min: 1, max: 2, step: 1, value: 1, fmt: v => (v === 1 ? 'cos ωt' : 'sin ωt') },
+      { id: 'cs-w', label: '角頻率 ω', min: 0.5, max: 5, step: 0.5, value: 2, fmt: v => 'ω = ' + num(v) }
+    ],
+    compute: g => {
+      const c = g['cs-k'] === 1, w = g['cs-w'], w2 = w * w;
+      return { c, w, w2, fn: (c ? 'cos ' : 'sin ') + num(w) + 't', f0: c ? '1' : '0', d0: c ? '0' : num(w),
+        num: c ? 's' : num(w) };
+    },
+    question: (g, r) => '不用積分，求 ℒ(' + r.fn + ')。',
+    steps: (g, r) => [
+      { t: 'Step 1　準備初始值。', note: r.c ? 'cos 0 = 1；f′ = −' + num(r.w) + ' sin ' + num(r.w) + 't，f′(0) = 0。' : 'sin 0 = 0；f′ = ' + num(r.w) + ' cos ' + num(r.w) + 't，f′(0) = ' + num(r.w) + '。',
+        eq: 'f(0) = ' + r.f0 + '，f′(0) = ' + r.d0 },
+      { t: 'Step 2　微兩次會變回自己。', note: '這就是能用聰明方法的原因。', eq: 'f″(t) = −' + num(r.w2) + ' f(t)' },
+      { t: 'Step 3　兩邊取 ℒ。', note: '左邊用 ℒ(f″) 公式，右邊用線性。', eq: 's²F(s) − s·' + r.f0 + ' − ' + r.d0 + ' = −' + num(r.w2) + ' F(s)' },
+      { t: 'Step 4　F(s) 移到同一邊。', note: '一元一次方程。', eq: '(s² + ' + num(r.w2) + ') F(s) = ' + r.num },
+      { t: 'Step 5　檢查。', note: r.c ? 'ω 越小越接近常數 1，而 s/(s² + ω²) 在 ω → 0 時趨近 1/s = ℒ(1) ✓。' : 'ω 越小 sin ωt 越接近 0，ω/(s² + ω²) 也趨近 0 ✓。' }
+    ],
+    answer: (g, r) => 'ℒ(' + r.fn + ') = ' + r.num + ' / (s² + ' + num(r.w2) + ')，σ &gt; 0',
+    ratio: 0.26, minH: 130, maxH: 180,
+    draw: (ctx, w, h, g, r) => {
+      const padL = 26, padR = 12, mid = h / 2, amp = Math.max(0, h / 2 - 20), T = 2 * Math.PI;
+      const W = Math.max(1, w - padL - padR);
+      ctx.strokeStyle = C.line; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(padL, mid); ctx.lineTo(w - padR, mid); ctx.moveTo(padL, 8); ctx.lineTo(padL, h - 8); ctx.stroke();
+      label(ctx, padL - 6, mid - amp, '1', C['ink-3'], 10, 'right');
+      label(ctx, padL - 6, mid + amp, '−1', C['ink-3'], 10, 'right');
+      ctx.strokeStyle = C.accent; ctx.lineWidth = 2.2; ctx.beginPath();
+      for (let i = 0; i <= 300; i++) { const t = i / 300 * T, v = r.c ? Math.cos(r.w * t) : Math.sin(r.w * t); const x = padL + t / T * W, y = mid - v * amp; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+      ctx.stroke();
+      labelCJK(ctx, w - padR, 12, 'f(t) = ' + r.fn + '（0 ≤ t ≤ 2π）', C.accent, 11, 'right', '600');
+    }
+  });
 })();
 
 /* ============================================================
@@ -226,7 +421,20 @@
       e: '它永遠落在單位圓上，只會轉圈、不會變長變短。所以取絕對值時它直接變成 1，複數 s 的問題就只剩實部 σ。' },
     { zh: '下列哪一個函數的拉普拉斯轉換不存在？', en: 'Which function does NOT have a Laplace transform?',
       o: [['e<sup>t²</sup>', 'e<sup>t²</sup>'], ['t²', 't²'], ['e<sup>2t</sup>', 'e<sup>2t</sup>'], ['sin t', 'sin t']], a: 0,
-      e: 'e<sup>−σt</sup>·e<sup>t²</sup> = e<sup>t(t−σ)</sup>，t 超過 σ 之後指數變正，不管 σ 多大都 → ∞。t² 和 e<sup>2t</sup> 雖然也衝 ∞，但長得比某個指數慢，取夠大的 σ 就壓得住。' }
+      e: 'e<sup>−σt</sup>·e<sup>t²</sup> = e<sup>t(t−σ)</sup>，t 超過 σ 之後指數變正，不管 σ 多大都 → ∞。t² 和 e<sup>2t</sup> 雖然也衝 ∞，但長得比某個指數慢，取夠大的 σ 就壓得住。' },
+    { zh: 'ℒ(1) 和 ℒ(u(t)) 為什麼一樣？', en: 'Why are ℒ(1) and ℒ(u(t)) the same?',
+      o: [['因為 ℒ 只積 t ≥ 0，而 t ≥ 0 時兩者都等於 1', 'because ℒ only integrates over t ≥ 0, where both equal 1'],
+          ['因為 u(t) 永遠等於 1', 'because u(t) always equals 1'], ['因為兩者都是常數', 'because both are constants'], ['巧合', 'coincidence']], a: 0,
+      e: 'u(t) 在 t &lt; 0 是 0、1 在 t &lt; 0 是 1，兩者在負的時間不一樣；但積分從 0 開始，負的時間根本不會被看到，所以 ℒ 分不出它們，都是 1/s。' },
+    { zh: 'ℒ(e<sup>at</sup>) = 1/(s − a) 的收斂條件是？', en: 'What is the convergence condition for ℒ(e<sup>at</sup>) = 1/(s − a)?',
+      o: [['σ &gt; a', 'σ &gt; a'], ['σ &gt; 0', 'σ &gt; 0'], ['σ &lt; a', 'σ &lt; a'], ['ω &gt; a', 'ω &gt; a']], a: 0,
+      e: '|e<sup>−(s−a)t</sup>| = e<sup>−(σ−a)t</sup>，要趨近 0 指數必須是負的，所以 σ − a &gt; 0。s 平面上就是直線 σ = a 右邊那塊斜線區。虛部 ω 不影響。' },
+    { zh: 'ℒ⁻¹( 3/(s + 2) ) = ?', en: 'What is ℒ⁻¹( 3/(s + 2) )?',
+      o: [['3e<sup>−2t</sup>', '3e<sup>−2t</sup>'], ['3e<sup>2t</sup>', '3e<sup>2t</sup>'], ['e<sup>−2t</sup>', 'e<sup>−2t</sup>'], ['3u(t)', '3u(t)']], a: 0,
+      e: '常數 3 先提出去（線性）；s + 2 = s − (−2)，所以 a = −2，1/(s + 2) ← e<sup>−2t</sup>。答案 3e<sup>−2t</sup>。' },
+    { zh: '用「聰明方法」求 ℒ(cos ωt) 時，關鍵的那條關係式是？', en: 'In the "smart method" for ℒ(cos ωt), which key relation is used?',
+      o: [['f″(t) = −ω² f(t)', 'f″(t) = −ω² f(t)'], ['f′(t) = ω f(t)', 'f′(t) = ω f(t)'], ['f(t) = e<sup>jωt</sup>', 'f(t) = e<sup>jωt</sup>'], ['f″(t) = ω² f(t)', 'f″(t) = ω² f(t)']], a: 0,
+      e: 'cos 微兩次變回自己乘 −ω²。兩邊取 ℒ：s²F − s·1 − 0 = −ω²F，移項得 F = s/(s² + ω²)。完全不用分部積分。' }
   ];
   let i = 0, score = 0, answered = false, ord = [];
   /* 選項順序每次打亂：題庫裡正解都寫在第一個，不打亂的話永遠是 A */
