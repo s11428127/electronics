@@ -20,6 +20,15 @@
 | 11.9 | 應用：功率量測與電費 | Applications | ⑧ 電費計算器 + 瓦特計說明 |
 | 11.10 | 本章總結 | Summary | 名詞中英對照表 + 15 題測驗 |
 
+## CH11 課本例題與練習（`assets/ch11-ex.js`）
+
+- Example 11.1–11.18（照課本解法拆步驟）＋ Practice Problem 11.1–11.18（課本只給答案，詳解自己解、已用程式驗算）。
+- 放在 ch11.html 各小節最下面（`.exbook`）；頁首 `#sec-pick` 選小節後只顯示那一節。
+- Practice 每題有手寫板（`shared/pad.js`，筆跡存在該裝置的 localStorage）；提示／答案／詳解先遮住。
+- 電路圖用 `shared/schem.js` 重畫。
+- 課本筆誤：Example 11.16 的 S 實部 423.7 → 432.7；Example 11.12 的 Q 單位 kVA → kVAR；Practice 11.5 答案 51.47 W（精確 51.43 W）。
+- 章末 Problems 11.1–11.97 尚未整理。
+
 ## 本章核心公式
 
 ```

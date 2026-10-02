@@ -105,6 +105,18 @@
 - 考試範圍：範圍內的章節 hero 放 `✓ 考試範圍` chip；範圍終點放 `.scope-end` 提示框，之後的節 eyebrow 加 `<span class="scope-no">還沒教到</span>`；
   故事模式在終點插一個「⛳ 考試範圍到這裡」畫面。還沒教到的作業題先不放，在總複習頁列出來。
 
+## 課本例題（Example）與練習題（Practice Problem）
+
+- 使用者要求：**每一章的 Example 和 Practice Problem 都要整理**，放進章節頁的各小節最下面。
+  題庫一章一檔（例：`circuits/assets/ch11-ex.js` → `window.__CH11EX`），元件 `shared/exbook.js`：
+  `<div class="exbook" data-bank="__CH11EX" data-sec="11.2"></div>`。
+- Example：照課本解法拆成「做什麼 + 算式 + 為什麼」，按「看下一步」一步步打開。
+- Practice：題目＋**手寫板**（`shared/pad.js`，Apple Pencil；筆跡存在該裝置 localStorage）；提示／答案／詳解先遮住。
+  課本只給答案的，詳解自己解，**數值要用程式驗算**；跟課本答案有出入要寫 `note`。
+- 電路圖一律用 `shared/schem.js` 重畫（`r l c z vs is wm wave`），不要截課本圖。
+- 章節頁故事模式下方放「選小節」：`__EXB.picker(el, [{id, no, name, count}], {key, alwaysAll})`，選了只顯示那一節。
+- 章末 Problems 使用者還沒要求，先不做。
+
 ## 原講義 PART 標註
 
 老師的講義 PART 跟網頁的頁不一定一一對應（例：原講義 PART 3 前 18 頁跟 PART 2 同主題，併進 CH1 PART 2 頁）。

@@ -49,6 +49,7 @@
       <h1>交流功率分析</h1>
       <p class="sub">整章只在回答一個問題：<strong>交流電路裡，功率到底跑去哪了？</strong>有一部分被電阻真的吃掉（<button class="tm" data-t="實功率">實功率</button> P），另一部分只是在電源與電感電容之間來回擺盪（<button class="tm" data-t="虛功率">虛功率</button> Q）。8 個模組把這件事從波形一路帶到電費單。</p>
       <div class="hero-meta">
+        <span class="chip h">📘 課本 Example 18 題 ＋ Practice 18 題（附手寫板）</span>
         <span class="chip">8 個互動模組</span>
         <span class="chip">15 題中英對照測驗</span>
         <span class="chip">名詞中英對照表</span>
@@ -62,6 +63,8 @@
       <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。<strong>先建立直覺</strong>，再往下讀推導、玩互動模組、看例題。</p>
       <div id="story"></div>
     </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
 
     <!-- ══════════ 課程地圖 ══════════ -->
     <section class="sec" id="map">
@@ -233,6 +236,8 @@
           <li><span class="x">✗</span> 看到 p(t) 有負的部分就說「負載在發電」。負區只代表<b>儲能元件把先前存的能量還給電源</b>，不是產生新能量。</li>
         </ul>
       </div>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.2"></div>
     </section>
 
     <!-- ══════════ 11.3 最大功率轉移 ══════════ -->
@@ -342,6 +347,8 @@
         <div class="msg" id="mpt-msg"></div>
       </div>
       <p class="note key">若題目限定負載<b>只能是純電阻</b>（X<sub>L</sub> = 0），條件會變成 <b>R<sub>L</sub> = |Z<sub>Th</sub>| = √(R²<sub>Th</sub> + X²<sub>Th</sub>)</b>，不是 R<sub>Th</sub>。這是最常見的考點差異。</p>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.3"></div>
     </section>
 
     <!-- ══════════ 11.4 RMS ══════════ -->
@@ -476,6 +483,8 @@
       </div>
       <p class="note key">V<sub>m</sub>/√2 <b>只對弦波成立</b>。方波的 rms 就是 V<sub>m</sub>、三角波與鋸齒波是 V<sub>m</sub>/√3。考試若給非弦波卻照套 √2，就會錯。</p>
       <p class="note">有了 rms，交流的功率公式就跟直流長得一樣：<b>P = I²<sub>rms</sub>R = V<sub>rms</sub>I<sub>rms</sub>cos(θv−θi)</b>。這正是發明有效值的目的。</p>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.4"></div>
     </section>
 
     <!-- ══════════ 11.5 功率因數 ══════════ -->
@@ -559,6 +568,8 @@
         <div class="msg" id="pf-note"></div>
       </div>
       <p class="note key">記憶法：<b>電流落後 → 電感性 → lagging</b>（馬達、冷氣）；<b>電流超前 → 電容性 → leading</b>。功率因數角 θv−θi 也等於<b>負載阻抗的角度</b>。</p>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.5"></div>
     </section>
 
     <!-- ══════════ 11.6 複功率 ══════════ -->
@@ -675,6 +686,8 @@
         </dl>
       </div>
       <p class="note key">Q 的三種情況：<b>Q = 0</b> 純電阻（單位功因）；<b>Q &lt; 0</b> 電容性（超前）；<b>Q &gt; 0</b> 電感性（落後）。功率三角形跟<b>阻抗三角形（Z, R, X）</b>長得一模一樣，因為 S = I²<sub>rms</sub>Z。</p>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.6"></div>
     </section>
 
     <!-- ══════════ 11.7 守恆 ══════════ -->
@@ -796,6 +809,8 @@
         <div class="msg bad" id="cons-diff"></div>
       </div>
       <p class="note key">P 可以直接加、Q 可以直接加，<b>視在功率 S 不可以直接加</b>。正確做法永遠是：先各自加總 P 與 Q，最後才 |S| = √(P總² + Q總²)。</p>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.7"></div>
     </section>
 
     <!-- ══════════ 11.8 功因校正 ══════════ -->
@@ -917,6 +932,8 @@
       </div>
       <p class="note key">為什麼要做？電力公司對大電流收費更高，因為線損 <b>I²R</b> 是平方成長。功因從 0.8 拉到 0.95，同樣的 P 下線電流可以少掉約 16%，線損少掉約 29%。</p>
       <p class="note">若負載本來就是<b>電容性</b>（超前功因），要並聯的就換成<b>電感</b>，公式改成 L = V²<sub>rms</sub> / (ω·Q<sub>L</sub>)。</p>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.8"></div>
     </section>
 
     <!-- ══════════ 11.9 應用 ══════════ -->
@@ -950,6 +967,8 @@
         </dl>
         <div class="msg" id="bill-note"></div>
       </div>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.9"></div>
     </section>
 
     <!-- ══════════ 名詞對照 ══════════ -->
@@ -997,6 +1016,22 @@
 </div>
 <script src="../shared/app.js"></script>
 <script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="../shared/pad.js"></script>
+<script src="assets/ch11-ex.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'inst', no: '11.2', name: '瞬時與平均功率', count: '例 4 · 練 4' },
+  { id: 'mpt', no: '11.3', name: '最大功率轉移', count: '例 2 · 練 2' },
+  { id: 'rms', no: '11.4', name: '有效值 rms', count: '例 2 · 練 2' },
+  { id: 'pf', no: '11.5', name: '視在功率與 pf', count: '例 2 · 練 2' },
+  { id: 'tri', no: '11.6', name: '複功率', count: '例 2 · 練 2' },
+  { id: 'cons', no: '11.7', name: '功率守恆', count: '例 2 · 練 2' },
+  { id: 'pfc', no: '11.8', name: '功因校正', count: '例 1 · 練 1' },
+  { id: 'app', no: '11.9', name: '瓦特計與電費', count: '例 3 · 練 3' }
+], { key: 'ch11', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
 <script src="assets/ch11.js"></script>
 <script src="../shared/story.js"></script>
 <script src="assets/ch11-story.js"></script>
