@@ -409,8 +409,23 @@
     ]
   };
 
+
+  /* ════════════ ⛳ 10/5 考試範圍終點 ════════════ */
+  const SX = {
+    t: '⛳ 考試範圍到這裡', en: 'EXAM SCOPE ENDS HERE',
+    svg: g('fl', '<line class="ln" x1="200" y1="300" x2="200" y2="110" style="stroke-width:3"/>' +
+        '<path class="accw" d="M200 112 L300 135 L200 160 Z" style="stroke:var(--s-acc);stroke-width:1.5"/>') +
+      T(390, 150, '10/5 考到這裡', { cls: 'ta', fs: 24, k: 't1' }) +
+      chip(390, 210, '原講義 PART 4 第 8 頁', '順偏 → 多數載子跨過去 → 變少數載子 → 擴散電流', 'c1', { fs: 13 }) +
+      chip(390, 280, '後面還沒教', '60 mV、理想模型、溫度、溫度計', 'c2', { fs: 13 }),
+    steps: [
+      { sub: '<b>10/5 考試的範圍到這裡</b>：老師教到 PART 4 第 8 頁，二極體方程式在第 7 頁介紹過。', on: 'fl t1 c1' },
+      { sub: '後面的畫面（60 mV、理想模型、溫度）<b>還沒教到</b>，想先看可以繼續，考試不用準備。', on: 'c2' }
+    ]
+  };
+
   window.__ch1p4Story = window.__Story('#story', {
     id: 'ch1-part4', title: 'CH1 PART 4 順向偏壓與二極體', after: '#map',
-    scenes: [S0, SA, SB, S1, S2, S3, S4, S5, SC, S6, S7, S8, S9, S10, S11, S12, S13]
+    scenes: [S0, SA, SB, S1, S2, S3, S4, S5, SC, S6, S7, SX, S8, S9, S10, S11, S12, S13]
   });
 })();

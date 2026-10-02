@@ -37,6 +37,7 @@
       <li><a href="#holemove"><i>06</i>電洞移動</a></li>
       <li><a href="#ni"><i>07</i>本質載子濃度</a></li>
       <li><a href="#dope"><i>08</i>N 型摻雜</a></li>
+      <li><a href="#hw"><i>📝</i>HW1 作業題（會考）</a></li>
       <li><a href="#quiz-sec"><i>09</i>觀念小測驗</a></li>
     </ol>
   </nav>
@@ -48,6 +49,7 @@
       <h1>半導體材料與性質</h1>
       <p class="sub">把這份講義拆成 8 個可以動手拉、點、玩的互動模組 —— 從一條<button class="tm" data-t="共價鍵">共價鍵</button>怎麼斷，到為什麼 n ≈ N<sub>d</sub>。每個模組都對應投影片上的某一頁。</p>
       <div class="hero-meta">
+        <span class="chip h">✓ 10/5 考試範圍（整段都考）</span>
         <span class="chip e">電子 electron ⊖</span>
         <span class="chip h"><button class="tm" data-t="電洞">電洞</button> hole ⊕</span>
         <span class="chip">15 個畫面的故事模式</span>
@@ -204,7 +206,7 @@
 
     <!-- ══════════ 04 晶格 ══════════ -->
     <section class="sec" id="lattice">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 1</span>04 · 投影片 p.18–22 · 本質半導體</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q1">📝 HW1 第 1 題</a><span class="part-tag">原講義 PART 1</span>04 · 投影片 p.18–22 · 本質半導體</div>
       <h2>矽晶格與熱擾動<span class="h2-en">SILICON LATTICE · THERMAL AGITATION</span></h2>
       <p class="lede">每個矽原子與 4 個鄰居各共用一對電子。T = 0 K 時所有鍵完整、沒有自由載子 —— 形同絕緣體。溫度一上來，鍵開始斷，<strong>電子與電洞永遠成對出現</strong>。</p>
 
@@ -260,7 +262,7 @@
 
     <!-- ══════════ 06 電洞 ══════════ -->
     <section class="sec" id="holemove">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 1</span>06 · 投影片 p.24 · Movement of Holes</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q4">📝 HW1 第 4 題</a><span class="part-tag">原講義 PART 1</span>06 · 投影片 p.24 · Movement of Holes</div>
       <h2>電洞移動 —— 一場電子接力<span class="h2-en">MOVEMENT OF HOLES</span></h2>
       <p class="lede">電洞其實不會移動。真正在動的是價電子：它遞補進隔壁的空鍵，空缺的位置就換了地方，看起來像電洞在跑。<strong>點對那顆該跳的電子</strong>，把電洞推到底。</p>
 
@@ -363,7 +365,7 @@
 
     <!-- ══════════ 08 摻雜 ══════════ -->
     <section class="sec" id="dope">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 1</span>08 · 投影片 p.27–30 · Extrinsic (N-Type)</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q2">📝 HW1 第 2 題</a><span class="part-tag">原講義 PART 1</span>08 · 投影片 p.27–30 · Extrinsic (N-Type)</div>
       <h2>N 型<button class="tm" data-t="摻雜">摻雜</button>：<button class="tm" data-t="施體">施體</button>雜質<span class="h2-en">N-TYPE DOPING · DONOR IMPURITY</span></h2>
       <p class="lede">在矽裡摻入 5 價的磷（P）。四個價電子去補共價鍵，<strong>第五個沒地方去</strong>，輕輕一激發就跑到導帶成為自由電子；磷本身變成釘在晶格上的正離子 P⁺ —— 不動，也不導電。</p>
 
@@ -465,6 +467,13 @@
     </section>
 
     <!-- ══════════ 09 測驗 ══════════ -->
+    <section class="sec" id="hw">
+      <div class="eyebrow"><span class="scope-ok">10/5 考試範圍</span> Homework 1</div>
+      <h2>HW1 作業題與仿題<span class="h2-en">HOMEWORK 1</span></h2>
+      <p class="lede">考試會從作業出題。下面是這一段對應的<b>作業原題</b>（紫色標籤）＋每題 5 題<b>仿作業</b>（灰色標籤，自編練習）。先選答案再按「對答案」。全部題目集中在 <a href="hw1.html">HW1 考前總複習</a>。</p>
+      <div class="hw-list" data-hw="1,2,4"></div>
+    </section>
+
     <section class="sec" id="quiz-sec">
       <div class="eyebrow"><span class="part-tag">原講義 PART 1</span>09 · 自我檢查</div>
       <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
@@ -480,6 +489,8 @@
 </div>
 <script src="../shared/app.js"></script>
 <script src="../shared/terms.js"></script>
+<script src="assets/hw1-bank.js"></script>
+<script src="../shared/hw.js"></script>
 <script src="assets/ch1-part1.js"></script>
 <script src="../shared/story.js"></script>
 <script src="assets/ch1-part1-story.js"></script>

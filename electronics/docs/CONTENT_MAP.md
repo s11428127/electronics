@@ -170,3 +170,13 @@ p.53 擴散公式正負號、Example 1.4（187 A/cm²）。
 - PART 4 1-49：理想二極體導通標 I_F → ∞ 錯，R_F = 0 是因為 V_F = 0
 - PART 4 1-42：Practice diode → **practical diode**
 - PART 4 1-44：矽 I_S 範圍 10⁻¹³～10⁻¹⁸ A（課本為 10⁻¹⁸～10⁻¹²，請確認）
+
+
+## HW1（Issued 28/09/2026 · Due 17/10/2026）與 10/5 考試範圍
+
+- 考試範圍：CH1 PART 1 ～ PART 4 §01（原講義 PART 4 第 8 頁；第 7 頁已介紹 i<sub>D</sub> 公式，Example 1.7 未教）。
+- 題庫 `assets/hw1-bank.js`（作答元件 `shared/hw.js`）：第 1～10 題原題 ＋ 每題 5 題仿作業。總複習頁 `hw1.html`。
+- 對應：1→PART1 #lattice、2→#dope、4→#holemove；3→PART2 #ptype、5→#drift、6→#diff；7→PART3 #form、8→#vbi、9→#rev；10→PART4 #fwd。
+- 第 11 題（溫度，PART 4 p.13–16）、第 12 題（崩潰）尚未教到，先不放。
+- 第 4 題依講義 PART 1 p.24「其實電洞不會移動」：電洞不會自行移動、但會協助導通；離子不會移動、不會導通。
+- 課本 Problem 1.2、1.9、1.14、1.16、1.17、1.20、1.25、1.36、1.37 原文尚未取得。

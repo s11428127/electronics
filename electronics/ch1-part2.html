@@ -40,6 +40,7 @@
       <li><a href="#einstein"><i>09</i>愛因斯坦關係</a></li>
       <li><a href="#excess"><i>10</i>多出載子</a></li>
       <li><a href="#check"><i>!</i>講義勘誤</a></li>
+      <li><a href="#hw"><i>📝</i>HW1 作業題（會考）</a></li>
       <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
       <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
     </ol>
@@ -52,6 +53,7 @@
       <p class="sub">PART 1 停在 N 型<button class="tm" data-t="摻雜">摻雜</button>。這一段先把 <strong>P 型</strong>補完，然後進入整章真正的重頭戲：<strong>載子到底怎麼動、怎麼形成電流</strong>。答案只有兩個機制 —— 被電場推的<strong>漂移</strong>，和被濃度差推的<strong>擴散</strong>。</p>
       <p class="note">老師的 <b>PART 3 講義前 18 頁</b>（漂移／擴散改版、電流密度、愛因斯坦關係、多出載子）跟這一段是同一個主題，所以合併在這一頁；每一節標題旁的小標籤會寫它來自原講義的哪一個 PART。</p>
       <div class="hero-meta">
+        <span class="chip h">✓ 10/5 考試範圍（整段都考）</span>
         <span class="chip e">電子 electron ⊖</span>
         <span class="chip h">電洞 hole ⊕</span>
         <span class="chip">21 個畫面的故事模式</span>
@@ -99,7 +101,7 @@
 
     <!-- ══════════ 01 P型 ══════════ -->
     <section class="sec" id="ptype">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 2</span>01 · 投影片 p.31–32 · Extrinsic (P-Type)</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q3">📝 HW1 第 3 題</a><span class="part-tag">原講義 PART 2</span>01 · 投影片 p.31–32 · Extrinsic (P-Type)</div>
       <h2>P 型半導體：<button class="tm" data-t="受體">受體</button>摻雜<span class="h2-en">P-TYPE · ACCEPTOR DOPING</span></h2>
       <p class="lede">在矽裡摻入 3 價的硼（B）。硼只有 3 個價電子，要跟 4 個鄰居形成共價鍵<strong>就是少一個</strong>。鄰近矽的價電子跑來填補，原本那個位置就變成<span class="tm">電洞<i>hole</i></span> —— 硼因此被稱為<span class="tm"><button class="tm" data-t="受體">受體</button><i>acceptor</i></span>：它「接受」電子。</p>
 
@@ -334,7 +336,7 @@
 
     <!-- ══════════ 04 漂移 ══════════ -->
     <section class="sec" id="drift">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 2 ＋ PART 3</span>05 · PART 2 p.42–45 · PART 3 1-6 · Drift Current</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q5">📝 HW1 第 5 題</a><span class="part-tag">原講義 PART 2 ＋ PART 3</span>05 · PART 2 p.42–45 · PART 3 1-6 · Drift Current</div>
       <h2><button class="tm" data-t="漂移電流">漂移電流</button>：電場推著載子跑<span class="h2-en">DRIFT CURRENT</span></h2>
       <p class="lede">載子會動，只有兩個原因：<strong>電場推</strong>（<span class="tm">漂移<i>drift</i></span>）或<strong>濃度差擠</strong>（<span class="tm">擴散<i>diffusion</i></span>）。這一節先講漂移 —— 而且有一個超容易搞混的點：<strong>電子和電洞跑的方向相反，電流方向卻相同</strong>。</p>
       <div class="eq">v<em>dn</em> = −μ<em>n</em>E　⟹　J<em>n</em> = e·n·μ<em>n</em>·E　　　v<em>dp</em> = +μ<em>p</em>E　⟹　J<em>p</em> = e·p·μ<em>p</em>·E</div>
@@ -453,7 +455,7 @@
 
     <!-- ══════════ 06 擴散 ══════════ -->
     <section class="sec" id="diff">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 2 ＋ PART 3</span>07 · PART 2 p.52–54 · PART 3 1-9～1-13 · Diffusion Current</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q6">📝 HW1 第 6 題</a><span class="part-tag">原講義 PART 2 ＋ PART 3</span>07 · PART 2 p.52–54 · PART 3 1-9～1-13 · Diffusion Current</div>
       <h2><button class="tm" data-t="擴散電流">擴散電流</button>：濃度不均也會產生電流<span class="h2-en">DIFFUSION CURRENT</span></h2>
       <p class="lede">就算<strong>完全沒有電場</strong>，只要載子分布不均勻，它們也會自己從濃的地方往稀的地方跑 —— 就像一滴墨水在水裡會自己散開。這種流動一樣構成電流。</p>
       <div class="eq">J<em>n</em> = +e·D<em>n</em>·(dn/dx)　　　J<em>p</em> = −e·D<em>p</em>·(dp/dx)</div>
@@ -745,6 +747,13 @@
     </section>
 
     <!-- ══════════ 名詞 ══════════ -->
+    <section class="sec" id="hw">
+      <div class="eyebrow"><span class="scope-ok">10/5 考試範圍</span> Homework 1</div>
+      <h2>HW1 作業題與仿題<span class="h2-en">HOMEWORK 1</span></h2>
+      <p class="lede">考試會從作業出題。下面是這一段對應的<b>作業原題</b>（紫色標籤）＋每題 5 題<b>仿作業</b>（灰色標籤，自編練習）。先選答案再按「對答案」。全部題目集中在 <a href="hw1.html">HW1 考前總複習</a>。</p>
+      <div class="hw-list" data-hw="3,5,6"></div>
+    </section>
+
     <section class="sec" id="glossary">
       <div class="eyebrow">Glossary · 中英對照</div>
       <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
@@ -798,6 +807,8 @@
 </div>
 <script src="../shared/app.js"></script>
 <script src="../shared/terms.js"></script>
+<script src="assets/hw1-bank.js"></script>
+<script src="../shared/hw.js"></script>
 <script src="assets/ch1-part2.js"></script>
 <script src="../shared/story.js"></script>
 <script src="assets/ch1-part2-story.js"></script>

@@ -875,3 +875,37 @@ button.fix { display: inline-block; font: 600 10.5px/1 var(--font-body, inherit)
   color: var(--surface); background: var(--accent); border-radius: 99px; padding: 9px 16px; }
 .lec-links a:hover { filter: brightness(1.08); }
 @media (max-width: 480px) { .board { padding: 12px; } .board .bl { font-size: 12.5px; } }
+
+/* ---------- 作業題／仿作業題（shared/hw.js） ---------- */
+.hw-group { margin: 18px 0 26px; }
+.hw-card { border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px; background: var(--surface); padding: 14px 16px; margin: 12px 0; }
+.hw-card.is-sim { border-left-color: var(--line); }
+.hw-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+.hw-head b { font-size: 14.5px; color: var(--ink); }
+.hw-badge { display: inline-block; font-size: 11.5px; font-weight: 700; border-radius: 99px; padding: 3px 9px; }
+.hw-badge.hw { color: var(--surface); background: var(--accent); }
+.hw-badge.sim { color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line); }
+.hw-q { font-size: 15px; line-height: 2.1; color: var(--ink); }
+.hw-sel { font: inherit; font-size: 14px; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: 2px 4px; margin: 0 2px; max-width: 100%; }
+.hw-sel.ok { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 14%, var(--surface)); }
+.hw-sel.bad { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, var(--surface)); }
+.hw-right { color: var(--ok); font-weight: 700; font-size: 13.5px; margin: 0 4px; }
+.hw-right:empty { display: none; }
+.hw-free { display: inline-block; color: var(--ink-3); border-bottom: 1px dashed var(--ink-3); padding: 0 4px; margin: 0 2px; }
+.hw-free.shown { color: var(--ok); border-bottom-color: var(--ok); font-weight: 600; }
+.hw-fig { margin: 10px 0; color: var(--ink-2); }
+.hw-fig svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.hw-act { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
+.hw-link { font-size: 13px; }
+.hw-score { font-size: 13px; color: var(--ink-2); margin-left: auto; }
+.hw-ans { margin-top: 10px; font-size: 14px; line-height: 1.75; color: var(--ink-2); background: var(--surface-2); border-radius: 8px; padding: 10px 12px; }
+.hw-more { margin: 6px 0 0 6px; }
+.hw-more > summary { cursor: pointer; font-weight: 600; font-size: 14px; color: var(--accent); padding: 6px 0; }
+.hw-tag { display: inline-block; font-size: 11px; font-weight: 700; color: var(--surface); background: var(--accent); border-radius: 99px; padding: 2px 8px; margin-right: 8px; text-decoration: none; vertical-align: 1px; }
+.scope-end { margin: 28px 0; padding: 14px 16px; border: 2px dashed var(--warn); border-radius: 12px; background: color-mix(in srgb, var(--warn) 9%, var(--surface)); color: var(--ink); font-size: 14.5px; line-height: 1.7; }
+.scope-end b { color: var(--warn); }
+.scope-ok { display: inline-block; font-size: 12px; font-weight: 700; color: var(--ok); border: 1px solid var(--ok); border-radius: 99px; padding: 3px 9px; }
+.scope-no { display: inline-block; font-size: 11px; font-weight: 700; color: var(--ink-3); border: 1px solid var(--line); border-radius: 99px; padding: 2px 8px; margin-right: 8px; vertical-align: 1px; }
+/* eyebrow 裡多了作業／範圍標籤時，窄螢幕要能換行，不然整頁會被撐出水平捲動 */
+.eyebrow:has(.hw-tag), .eyebrow:has(.scope-no), .eyebrow:has(.scope-ok) { flex-wrap: wrap; row-gap: 6px; }
+.eyebrow .hw-tag, .eyebrow .scope-no, .eyebrow .scope-ok { letter-spacing: 0; text-transform: none; flex-shrink: 0; }

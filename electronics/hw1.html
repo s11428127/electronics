@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HW1 考前總複習</title>
+<meta name="description" content="電子學 HW1 考前總複習：範圍內作業原題 1–10 題與 50 題仿作業練習，先作答再對答案。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="electronics" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>HW1 考前總複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">HW1 考前總複習</div>
+    <ol>
+      <li><a href="#scope"><i>⛳</i>考試範圍</a></li>
+      <li><a href="#p1"><i>1</i>PART 1：第 1、2、4 題</a></li>
+      <li><a href="#p2"><i>2</i>PART 2：第 3、5、6 題</a></li>
+      <li><a href="#p3"><i>3</i>PART 3：第 7、8、9 題</a></li>
+      <li><a href="#p4"><i>4</i>PART 4：第 10 題</a></li>
+      <li><a href="#later"><i>✗</i>還沒教到：11、12</a></li>
+      <li><a href="#ref"><i>📖</i>課本參考題</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">電子學 · Homework #1 · Due 2026/10/17</div>
+      <h1>HW1 考前總複習</h1>
+      <p class="sub">10/5 考試會從作業出題。這頁把<strong>範圍內的作業原題（第 1～10 題）</strong>集中在一起，每題後面附 <strong>5 題仿作業</strong>換情境再練。空格是下拉選單：先選完，再按「對答案」看對錯和解釋；要自己寫的算式、原因，按了才會顯示參考答案。</p>
+      <div class="hero-meta">
+        <span class="chip h">📝 作業原題 10 題（紫色標籤）</span>
+        <span class="chip">仿作業 50 題（灰色標籤，自編）</span>
+        <span class="chip">每題都有「回到講解」連結</span>
+      </div>
+    </div>
+
+    <section class="sec" id="scope">
+      <div class="eyebrow">Scope</div>
+      <h2>考試範圍<span class="h2-en">EXAM SCOPE</span></h2>
+      <p class="lede">老師教到 <b>原講義 PART 4 第 8 頁</b>（順偏使多數載子跨越接面、成為少數載子、形成擴散電流）。作業第 11 題（溫度）、第 12 題（崩潰）在那之後，這次先不準備。</p>
+      <div class="glossary">
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>題號</b><span>主題</span><span>講解在哪</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>1</b><span>本質半導體、熱擾動</span><span><a href="ch1-part1.html#lattice">PART 1 矽晶格</a></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>2</b><span>摻磷：施體、N 型</span><span><a href="ch1-part1.html#dope">PART 1 N 型摻雜</a></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>3</b><span>摻硼：受體、P 型</span><span><a href="ch1-part2.html#ptype">PART 2 P 型</a></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>4</b><span>電洞、離子會不會動</span><span><a href="ch1-part1.html#holemove">PART 1 電洞移動</a></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>5</b><span>漂移：方向、J、σ</span><span><a href="ch1-part2.html#drift">PART 2 漂移電流</a></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>6</b><span>擴散：方向、J</span><span><a href="ch1-part2.html#diff">PART 2 擴散電流</a></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>7</b><span>接合前的載子濃度</span><span><a href="ch1-part3.html#form">PART 3 接面形成</a></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>8</b><span>熱平衡、空乏區、V<sub>bi</sub></span><span><a href="ch1-part3.html#vbi">PART 3 內建電壓</a></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>9</b><span>逆向偏壓、C<sub>j</sub>、I<sub>S</sub></span><span><a href="ch1-part3.html#rev">PART 3 逆向偏壓</a></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>10</b><span>順向偏壓、擴散電流</span><span><a href="ch1-part4.html#fwd">PART 4 順向偏壓</a></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>11</b><span>I–V 曲線的溫度效應</span><span>✗ 還沒教到</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.5fr) minmax(0,1.3fr) minmax(0,1fr)"><b>12</b><span>崩潰：累增、齊納</span><span>✗ 還沒教到</span></div>
+      </div>
+    </section>
+
+    <section class="sec" id="p1">
+      <div class="eyebrow"><span class="scope-ok">考試範圍</span> CH1 PART 1</div>
+      <h2>本質半導體、N 型、電洞移動<span class="h2-en">HW1 · Q1 Q2 Q4</span></h2>
+      <div class="hw-list" data-hw="1,2,4"></div>
+    </section>
+
+    <section class="sec" id="p2">
+      <div class="eyebrow"><span class="scope-ok">考試範圍</span> CH1 PART 2</div>
+      <h2>P 型、漂移、擴散<span class="h2-en">HW1 · Q3 Q5 Q6</span></h2>
+      <div class="hw-list" data-hw="3,5,6"></div>
+    </section>
+
+    <section class="sec" id="p3">
+      <div class="eyebrow"><span class="scope-ok">考試範圍</span> CH1 PART 3</div>
+      <h2>pn 接面、內建電壓、逆向偏壓<span class="h2-en">HW1 · Q7 Q8 Q9</span></h2>
+      <div class="hw-list" data-hw="7,8,9"></div>
+    </section>
+
+    <section class="sec" id="p4">
+      <div class="eyebrow"><span class="scope-ok">考試範圍</span> CH1 PART 4 §01</div>
+      <h2>順向偏壓<span class="h2-en">HW1 · Q10</span></h2>
+      <div class="hw-list" data-hw="10"></div>
+    </section>
+
+    <section class="sec" id="later">
+      <div class="eyebrow"><span class="scope-no">還沒教到</span> Not yet</div>
+      <h2>第 11、12 題：之後再練<span class="h2-en">NOT IN THIS EXAM</span></h2>
+      <p class="lede">這兩題的內容在講義 PART 4 第 8 頁之後，老師還沒教。等教到時，我再把它們（和仿題）加進來。</p>
+      <div class="note"><b>第 11 題：</b>二極體 v<sub>D</sub>–i<sub>D</sub> 特性曲線的溫度關係（順偏、逆偏的 T1～T4 排序、溫度越高電阻性如何）—— 對應 <a href="ch1-part4.html#temp">PART 4 §05 溫度效應</a>（PART 4 第 13～16 頁）。</div>
+      <div class="note"><b>第 12 題：</b>崩潰電壓、累增崩潰與齊納崩潰（摻雜高低、成因、需要的逆偏大小）—— 講義目前只在 PART 3 提到一句「崩潰現象」。</div>
+    </section>
+
+    <section class="sec" id="ref">
+      <div class="eyebrow">Reference</div>
+      <h2>作業附的課本參考題<span class="h2-en">REFERENCE PROBLEMS</span></h2>
+      <p class="lede">作業最後寫：<i>These basic and advanced problems will be the materials for our examinations.</i></p>
+      <div class="board">
+        <span class="bl tx"><b>PART I Basic：</b>All examples in Section 1.1 and 1.2.</span>
+        <span class="bl tx"><b>PART II Advanced：</b>Problem 1.2、1.9、1.14、1.16、1.17、1.20、1.25、1.36、1.37。</span>
+      </div>
+      <div class="note">Section 1.1、1.2 的例題（Example 1.1～1.7）已經做成各單元裡的可改數字例題。<b>Problem 1.2～1.37 的題目原文我手上沒有</b>，把課本那幾頁拍照傳給我，就能照同樣的方式加進來。</div>
+    </section>
+
+    <footer class="foot">
+      <p>題目來源：Electronics(I) Homework #1（Issued 28/09/2026）。標「作業原題」的是作業題目；標「仿作業」的是自編練習。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="assets/hw1-bank.js"></script>
+<script src="../shared/hw.js"></script>
+<script>
+/* 側欄捲動高亮 + 明暗主題切換 */
+(function () {
+  'use strict';
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } });
+  }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+</body>
+</html>

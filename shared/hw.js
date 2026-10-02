@@ -1,0 +1,87 @@
+/* ============================================================
+   作業題／仿作業題作答元件
+   用法：<div class="hw-list" data-bank="__HW1" data-hw="1,2,4" data-sims="1"></div>
+         題庫放在 window.__HW1 = { items: [...] }（例：electronics/assets/hw1-bank.js）
+   每一題：{ id, hw, kind:'hw'|'sim', title, q:'含 {0} {1} 空格的題幹', b:[空格…], ex:'解釋', fig, link }
+   空格：{ o:['選項',…], a: 正解 index }（下拉選單）或 { f:'參考答案' }（自己寫，按「對答案」才顯示）
+   作業原題的選項照作業原本的順序；仿作業的選項每次打亂（正解在題庫裡都寫第一個也沒關係）。
+   ============================================================ */
+(function () {
+  'use strict';
+  const shuffle = n => { const o = Array.from({ length: n }, (_, k) => k); for (let k = n - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [o[k], o[j]] = [o[j], o[k]]; } return o; };
+  const strip = s => String(s).replace(/<[^>]+>/g, '');
+
+  function card(it, bankName) {
+    const el = document.createElement('div');
+    el.className = 'hw-card ' + (it.kind === 'hw' ? 'is-hw' : 'is-sim');
+    el.id = 'hw-' + it.id;
+    const badge = it.kind === 'hw'
+      ? '<span class="hw-badge hw">📝 ' + bankName + ' 第 ' + it.hw + ' 題 · 作業原題</span>'
+      : '<span class="hw-badge sim">仿作業 ' + it.hw + '-' + it.n + ' · 自編練習</span>';
+    let html = it.q, blanks = [];
+    it.b.forEach((b, i) => {
+      let w;
+      if (b.o) {
+        const ord = it.kind === 'sim' ? shuffle(b.o.length) : b.o.map((_, k) => k);
+        w = '<select class="hw-sel" data-i="' + i + '" aria-label="第 ' + (i + 1) + ' 格"><option value="">（選）</option>' +
+          ord.map(k => '<option value="' + k + '">' + strip(b.o[k]) + '</option>').join('') + '</select>';
+      } else {
+        w = '<span class="hw-free" data-i="' + i + '">（' + (i + 1) + '）＿＿＿</span>';
+      }
+      blanks.push(b);
+      html = html.replace('{' + i + '}', w);
+    });
+    el.innerHTML = '<div class="hw-head">' + badge + (it.title ? '<b>' + it.title + '</b>' : '') + '</div>' +
+      '<div class="hw-q">' + html + '</div>' + (it.fig ? '<div class="hw-fig">' + it.fig + '</div>' : '') +
+      '<div class="hw-act"><button class="btn solid hw-check" type="button">對答案</button><button class="btn hw-reset" type="button">重做</button>' +
+      (it.link ? '<a class="hw-link" href="' + it.link + '">回到講解 →</a>' : '') + '<span class="hw-score"></span></div>' +
+      '<div class="hw-ans" hidden></div>';
+    const ans = el.querySelector('.hw-ans'), score = el.querySelector('.hw-score');
+    el.querySelector('.hw-check').addEventListener('click', () => {
+      let ok = 0, tot = 0;
+      el.querySelectorAll('.hw-sel').forEach(s => {
+        const b = blanks[+s.dataset.i]; tot++;
+        s.classList.remove('ok', 'bad');
+        const right = s.value !== '' && +s.value === b.a;
+        s.classList.add(right ? 'ok' : 'bad'); if (right) ok++;
+        let tip = s.nextElementSibling;
+        if (!tip || !tip.classList.contains('hw-right')) { tip = document.createElement('span'); tip.className = 'hw-right'; s.after(tip); }
+        tip.innerHTML = right ? '' : '→ ' + b.o[b.a];
+      });
+      el.querySelectorAll('.hw-free').forEach(f => { f.classList.add('shown'); f.innerHTML = '（' + (+f.dataset.i + 1) + '）' + blanks[+f.dataset.i].f; });
+      score.textContent = tot ? '選擇題對 ' + ok + ' / ' + tot + ' 格' : '';
+      ans.hidden = !it.ex; if (it.ex) ans.innerHTML = '<b>解釋：</b>' + it.ex;
+      if (window.__EE && window.__EE.wireTerms) window.__EE.wireTerms();
+    });
+    el.querySelector('.hw-reset').addEventListener('click', () => {
+      const fresh = card(it, bankName); el.replaceWith(fresh);
+    });
+    return el;
+  }
+
+  function mount(host) {
+    const bank = window[host.dataset.bank || '__HW1'];
+    if (!bank) return;
+    const nums = (host.dataset.hw || '').split(',').map(s => +s.trim()).filter(Boolean);
+    const withSims = host.dataset.sims !== '0';
+    nums.forEach(n => {
+      const orig = bank.items.filter(it => it.hw === n && it.kind === 'hw');
+      const sims = bank.items.filter(it => it.hw === n && it.kind === 'sim');
+      const grp = document.createElement('div');
+      grp.className = 'hw-group'; grp.id = 'hw-q' + n;
+      orig.forEach(it => grp.appendChild(card(it, bank.name)));
+      if (withSims && sims.length) {
+        const d = document.createElement('details');
+        d.className = 'hw-more';
+        d.innerHTML = '<summary>再練 ' + sims.length + ' 題（仿作業第 ' + n + ' 題，自編）</summary>';
+        sims.forEach(it => d.appendChild(card(it, bank.name)));
+        grp.appendChild(d);
+      }
+      host.appendChild(grp);
+    });
+  }
+
+  function init() { document.querySelectorAll('.hw-list').forEach(mount); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  window.__HW = { mount };
+})();

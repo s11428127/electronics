@@ -34,6 +34,7 @@
       <li><a href="#rev"><i>03</i>偏壓接法與逆向偏壓</a></li>
       <li><a href="#cj"><i>04</i>接面電容與變容二極體</a></li>
       <li><a href="#check"><i>!</i>講義勘誤</a></li>
+      <li><a href="#hw"><i>📝</i>HW1 作業題（會考）</a></li>
       <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
       <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
     </ol>
@@ -45,6 +46,7 @@
       <h1>pn 接面：熱平衡與逆向偏壓</h1>
       <p class="sub">把一塊 P 型和一塊 N 型接在一起，交界會自己長出一層<strong>沒有載子的空乏區</strong>和一道<strong>電位障</strong>。這一段講它怎麼形成、為什麼停得下來，以及反向加電壓時會發生什麼 —— 包括一個意外的副產品：<strong>可以用電壓調整的電容</strong>。</p>
       <div class="hero-meta">
+        <span class="chip h">✓ 10/5 考試範圍（整段都考）</span>
         <span class="chip">20 個畫面的故事模式</span>
         <span class="chip">5 個互動模組</span>
         <span class="chip">4 個可改數字例題</span>
@@ -83,7 +85,7 @@
 
     <!-- ══════════ 01 形成 ══════════ -->
     <section class="sec" id="form">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>01 · 投影片 1-20～1-24 · 1.2.1 The Equilibrium pn Junction</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q7">📝 HW1 第 7 題</a><span class="part-tag">原講義 PART 3</span>01 · 投影片 1-20～1-24 · 1.2.1 The Equilibrium pn Junction</div>
       <h2>pn 接面怎麼形成<span class="h2-en">FORMING THE JUNCTION</span></h2>
       <p class="lede">P 型那邊電洞很多、N 型那邊電子很多。一接起來，<strong>濃度差</strong>就會讓它們往對面擴散 —— 但每跑過去一個，就在原地留下一個不會動的離子。離子越積越多，電場越來越強，最後剛好擋住擴散。</p>
       <div class="eq">熱平衡：|J<em>diffusion</em>| = |J<em>drift</em>|　⟹　總電流 = 0</div>
@@ -148,7 +150,7 @@
 
     <!-- ══════════ 02 內建電壓 ══════════ -->
     <section class="sec" id="vbi">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>02 · 投影片 1-25～1-27 · Built-in Potential Barrier</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q8">📝 HW1 第 8 題</a><span class="part-tag">原講義 PART 3</span>02 · 投影片 1-25～1-27 · Built-in Potential Barrier</div>
       <h2><button class="tm" data-t="內建電壓">內建電壓</button> V<sub>bi</sub><span class="h2-en">BUILT-IN POTENTIAL BARRIER</span></h2>
       <p class="lede">空乏區的離子在接面兩側造成一個電位差，叫內建電壓（<b>built</b>-in，不是 build-in）。它就是多數載子要擴散過去必須翻過的那道「坡」。坡多高？只看兩邊摻多少、溫度多少。</p>
       <div class="eq">V<em>bi</em> = (kT/e) · ln( N<em>a</em>N<em>d</em> / nᵢ² ) = V<em>T</em> · ln( N<em>a</em>N<em>d</em> / nᵢ² )　　V<em>T</em> = kT/e ≈ 26 mV（300 K）</div>
@@ -221,7 +223,7 @@
 
     <!-- ══════════ 03 逆偏 ══════════ -->
     <section class="sec" id="rev">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>03 · 投影片 1-28～1-31 · 1.2.2 Reverse-Biased pn Junction</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q9">📝 HW1 第 9 題</a><span class="part-tag">原講義 PART 3</span>03 · 投影片 1-28～1-31 · 1.2.2 Reverse-Biased pn Junction</div>
       <h2>偏壓接法與<button class="tm" data-t="逆向偏壓">逆向偏壓</button><span class="h2-en">FORWARD / REVERSE BIAS · REVERSE-BIASED JUNCTION</span></h2>
       <p class="lede">外加電壓有兩種接法：<b>P 接正</b>是<button class="tm" data-t="順向偏壓">順向偏壓</button>（PART 4），<b>P 接負</b>是逆向偏壓。逆偏時外加電場跟內建電場<strong>同方向</strong>，坡被墊得更高 —— 多數載子完全過不去，只剩少數載子流過的一點點<button class="tm" data-t="逆向飽和電流">逆向飽和電流</button> I<sub>S</sub>。</p>
       <div class="eq">E<em>total</em> = Ē + E<em>A</em>　⟹　位障 V<em>bi</em> + V<em>R</em>，空乏區 W ↑　　i<em>D</em> ≈ −I<em>S</em>（矽 10⁻¹⁴ A 等級）</div>
@@ -404,6 +406,13 @@
     </section>
 
     <!-- ══════════ 名詞 ══════════ -->
+    <section class="sec" id="hw">
+      <div class="eyebrow"><span class="scope-ok">10/5 考試範圍</span> Homework 1</div>
+      <h2>HW1 作業題與仿題<span class="h2-en">HOMEWORK 1</span></h2>
+      <p class="lede">考試會從作業出題。下面是這一段對應的<b>作業原題</b>（紫色標籤）＋每題 5 題<b>仿作業</b>（灰色標籤，自編練習）。先選答案再按「對答案」。全部題目集中在 <a href="hw1.html">HW1 考前總複習</a>。</p>
+      <div class="hw-list" data-hw="7,8,9"></div>
+    </section>
+
     <section class="sec" id="glossary">
       <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>Glossary · 中英對照</div>
       <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
@@ -448,6 +457,8 @@
 </div>
 <script src="../shared/app.js"></script>
 <script src="../shared/terms.js"></script>
+<script src="assets/hw1-bank.js"></script>
+<script src="../shared/hw.js"></script>
 <script src="assets/ch1-part3.js"></script>
 <script src="../shared/story.js"></script>
 <script src="assets/ch1-part3-story.js"></script>
