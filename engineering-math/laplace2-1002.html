@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>10/2 上課筆記</title>
+<meta name="description" content="工程數學 10/2 課堂板書（拉普拉斯轉換 2）：照老師順序整理、更正筆誤，不加解釋。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="math" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">工程數學</a><span>›</span><a href="laplace2.html">拉普拉斯轉換 2</a><span>›</span><b>10/2 上課筆記</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">10/2 上課筆記</div>
+    <ol>
+      <li><a href="#n1"><i>1</i>Review</a></li>
+      <li><a href="#n2"><i>2</i>ℒ(f″)、ℒ(f‴)</a></li>
+      <li><a href="#n3"><i>3</i>To Sum Up：ℒ(f⁽ⁿ⁾)</a></li>
+      <li><a href="#n4"><i>4</i>補充</a></li>
+      <li><a href="#n5"><i>5</i>ℒ 存在的條件</a></li>
+      <li><a href="#n6"><i>6</i>基本函數的 ℒ</a></li>
+      <li><a href="#n7"><i>7</i>Ex. ℒ、ℒ⁻¹</a></li>
+      <li><a href="#n8"><i>8</i>Linear</a></li>
+      <li><a href="#n9"><i>9</i>cos、sin、tⁿ</a></li>
+      <li><a href="#n10"><i>10</i>Ex. 與 Exercise 3、4</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">工程數學 · 拉普拉斯轉換 2 · 上課筆記</div>
+      <h1>10/2 上課筆記</h1>
+      <p class="sub">老師板書照順序整理。<button class="fix" type="button" data-was="（示範）">更正</button> 是寫錯或看不清楚、已改成正確的地方，點一下看原本寫什麼；<span class="add">補</span> 是板書沒寫、我補上的。重點講解與故事模式在 <a href="laplace2.html">拉普拉斯轉換 2</a>。</p>
+    </div>
+
+    <!-- 1 -->
+    <section class="sec" id="n1">
+      <h2>1. Review<span class="h2-en">REVIEW</span></h2>
+      <div class="board">
+        <span class="bl">1. ℒ(f(t)) = F(s) = ∫₀<sup>∞</sup> f(t) e<sup>−st</sup> dt</span>
+        <span class="bl in">t ∈ ℝ，s = σ + jω ∈ ℂ</span>
+        <span class="bl">2. f(t) ──ℒ──→ F(s)</span>
+        <span class="bl in">real functions ──ℒ──→ complex function</span>
+        <span class="bl">3. s = σ + jω</span>
+        <span class="bl in">λ = α + jβ ∈ ℂ</span>
+        <span class="bl in">z = a + jb</span>
+        <span class="bl">4. y″ + 3y′ + 2y = 0　（o.d.e）</span>
+        <span class="bl in">↓　y(t) = e<sup>λt</sup></span>
+        <span class="bl in">↓　λ² + 3λ + 2 = 0　（a.e）</span>
+        <span class="bl in">① 相異實根 λ₁、λ₂：y(t) = C₁<button class="fix" type="button" data-was="C e^(λ₁t)（少了下標 1）">更正</button>e<sup>λ₁t</sup> + C₂e<sup>λ₂t</sup></span>
+        <span class="bl in">② 重根 λ₁ = λ₁：y(t) = C₁e<sup>λt</sup> + C₂te<sup>λt</sup></span>
+        <span class="bl in">③ 共軛複根 α ± jβ：y(t) = C₁e<sup>(α+jβ)t</sup> + C₂e<sup>(α−jβ)t</sup></span>
+        <span class="bl in">　　　　　　　　　　　= e<sup>αt</sup>(A cos βt + B sin βt)</span>
+        <span class="bl">5.　o.d.e　　　　　　｜　Laplace transform</span>
+        <span class="bl in">f(t) = e<sup>st</sup>　　　｜　ℒ(f(t)) = ∫₀<sup>∞</sup> f(t)e<sup>−st</sup> dt = F(s)<button class="fix" type="button" data-was="F(t)">更正</button></span>
+        <span class="bl in">f′(t) = s f(t)　　｜　ℒ(f′(t)) = sF(s) − f(0)</span>
+        <span class="bl in">f″(t) = s² f(t)　 ｜　ℒ(f″(t)) = s²F(s)<button class="fix" type="button" data-was="sF(s)（少了平方）">更正</button> − s f(0) − f′(0)</span>
+        <span class="bl">6. Thm</span>
+        <span class="bl in">ℒ(f′(t)) = sℒ(f(t)) − f(0)<button class="fix" type="button" data-was="sℒ(f(t) − f(0))（括號位置）">更正</button></span>
+        <span class="bl in">　　　　 = sF(s) − f(0)</span>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="sec" id="n2">
+      <h2>2. ℒ(f″)、ℒ(f‴)<span class="h2-en">HIGHER DERIVATIVES</span></h2>
+      <div class="board">
+        <h3>△ ℒ(f″(t)) = ?</h3>
+        <span class="bl">ℒ(f″(t)) = ℒ((f′(t))′)</span>
+        <span class="bl in">= sℒ(f′(t)) − f′(0)</span>
+        <span class="bl in">= s[sℒ(f(t)) − f(0)] − f′(0)</span>
+        <span class="bl in">= s²ℒ(f(t)) − s f(0) − f′(0)</span>
+        <span class="bl in">= s²F(s) − s f(0) − f′(0)</span>
+      </div>
+      <div class="board">
+        <h3>* Euler's formula</h3>
+        <span class="bl">e<sup>jθ</sup> = cos θ + j sin θ</span>
+        <span class="bl">e<sup>−jθ</sup> = cos(−θ) + j sin(−θ)</span>
+        <span class="bl in">= cos θ − j sin θ</span>
+        <span class="bl tx">（單位圓：e<sup>jθ</sup> = cos θ + j sin θ 在上、e<sup>−jθ</sup> = cos θ − j sin θ 在下，半徑 1）</span>
+      </div>
+      <div class="board">
+        <h3>* ℒ(f‴(t)) = ?</h3>
+        <span class="bl">ℒ(f‴(t)) = ℒ((f″(t))′)</span>
+        <span class="bl in">= sℒ(f″(t)) − f″(0)</span>
+        <span class="bl in">= s(s²F(s) − s f(0) − f′(0)) − f″(0)</span>
+        <span class="bl in">= s³F(s) − s²f(0) − s f′(0) − f″(0)</span>
+      </div>
+      <div class="board">
+        <h3>Exercise 1</h3>
+        <span class="bl">1. ℒ(f⁽⁵⁾(t)) = ?</span>
+        <span class="bl">2. ℒ(f⁽⁷⁾(t)) = ?</span>
+        <hr>
+        <span class="bl"><span class="add">補</span>1. = s⁵F(s) − s⁴f(0) − s³f′(0) − s²f″(0) − s f‴(0) − f⁽⁴⁾(0)</span>
+        <span class="bl"><span class="add">補</span>2. = s⁷F(s) − s⁶f(0) − s⁵f′(0) − s⁴f″(0) − s³f‴(0) − s²f⁽⁴⁾(0) − s f⁽⁵⁾(0) − f⁽⁶⁾(0)</span>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="sec" id="n3">
+      <h2>3. To Sum Up：ℒ(f⁽ⁿ⁾)<span class="h2-en">TO SUM UP</span></h2>
+      <div class="board">
+        <span class="bl">1. ℒ(f′(t)) = sF(s) − f(0)</span>
+        <span class="bl">2. ℒ(f″(t)) = s²F(s) − s f(0) − f′(0)</span>
+        <span class="bl">3. ℒ(f‴(t)) = s³F(s) − s²f(0) − s f′(0) − f″(0)</span>
+        <span class="bl">4. ℒ(f⁽⁴⁾(t)) = s⁴F(s) − s³f(0) − s²f′(0) − s f″(0) − f‴(0)</span>
+        <span class="bl">5. ℒ(f⁽ⁿ⁾(t)) = sⁿF(s) − s<sup>n−1</sup>f(0) − s<sup>n−2</sup>f′(0) − … − s f<sup>(n−2)</sup>(0) − f<sup>(n−1)</sup>(0)</span>
+      </div>
+      <div class="board">
+        <h3>Ex.</h3>
+        <span class="bl">1. ℒ(f⁽⁶⁾(t)) = ?</span>
+        <span class="bl">2. ℒ(f⁽¹⁰⁾(t)) = ?</span>
+        <h3>Sol.</h3>
+        <span class="bl">1. ℒ(f⁽⁶⁾(t)) = s⁶F(s) − s⁵f(0) − s⁴f′(0) − s³f″(0) − s²f⁽³⁾(0) − s f⁽⁴⁾(0) − f⁽⁵⁾(0)</span>
+        <span class="bl">2. ℒ(f⁽¹⁰⁾(t)) = s¹⁰F(s) − s⁹f(0) − s⁸f′(0) − s⁷f″(0) − s⁶f⁽³⁾(0) − s⁵f⁽⁴⁾(0)</span>
+        <span class="bl in">− s⁴f⁽⁵⁾(0) − s³f⁽⁶⁾(0) − s²f⁽⁷⁾(0) − s f⁽⁸⁾(0) − f⁽⁹⁾(0)</span>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="sec" id="n4">
+      <h2>4. 補充<span class="h2-en">SUPPLEMENT</span></h2>
+      <div class="board">
+        <h3>1. 共軛複根 λ = α ± jβ</h3>
+        <span class="bl">y(t) = C₁e<sup>(α+jβ)t</sup> + C₂e<sup>(α−jβ)t</sup></span>
+        <span class="bl in">= C₁e<sup>αt</sup>·e<sup>jβt</sup> + C₂e<sup>αt</sup>·e<sup>−jβt</sup></span>
+        <span class="bl in">= e<sup>αt</sup>(C₁e<sup>jβt</sup> + C₂e<sup>−jβt</sup>)</span>
+        <span class="bl in">= e<sup>αt</sup>[C₁(cos βt + j sin βt) + C₂(cos βt − j sin βt)]</span>
+        <span class="bl in">= e<sup>αt</sup>[(C₁ + C₂) cos βt + j(C₁ − C₂) sin βt]　　A = C₁ + C₂，B = j(C₁ − C₂)</span>
+        <span class="bl in">= e<sup>αt</sup>(A cos βt + B sin βt)</span>
+        <span class="bl">* e<sup>jθ</sup> = cos θ + j sin θ</span>
+        <span class="bl">* e<sup>−jθ</sup> = cos θ − j sin θ</span>
+      </div>
+      <div class="board">
+        <h3>2. ℒ(f′(t))</h3>
+        <span class="bl">ℒ(f′(t)) = ∫₀<sup>∞</sup> f′(t) e<sup>−st</sup> dt</span>
+        <span class="bl in">= ∫₀<sup>∞</sup> (df(t)/dt) e<sup>−st</sup> dt</span>
+        <span class="bl in">= ∫₀<sup>∞</sup> df(t)·e<sup>−st</sup> = ∫₀<sup>∞</sup> e<sup>−st</sup> df(t)</span>
+        <span class="bl in">= e<sup>−st</sup> f(t) |₀<sup>∞</sup> − ∫₀<sup>∞</sup> f(t) d(e<sup>−st</sup>)　　d(e<sup>−st</sup>) = (−s)e<sup>−st</sup> dt</span>
+        <span class="bl in">= lim<sub>t→∞</sub> e<sup>−st</sup> f(t) − lim<sub>t→0</sub> e<sup>−st</sup> f(t) +<button class="fix" type="button" data-was="−（照片看起來是減號）">更正</button> s∫₀<sup>∞</sup> f(t) e<sup>−st</sup> dt</span>
+        <span class="bl in">　（第一項待證 = 0；第二項 = f(0)；積分 = ℒ(f(t))）</span>
+        <span class="bl in">= sF(s) − f(0)</span>
+        <span class="bl">* ∫ f(t) dg(t) = f(t)g(t) − ∫ g(t) df(t)</span>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="sec" id="n5">
+      <h2>5. ℒ(f(t)) 存在的條件<span class="h2-en">EXISTENCE</span></h2>
+      <div class="board">
+        <h3>* 證明 lim<sub>t→∞</sub> e<sup>−st</sup> f(t) = 0　（* s = σ + jω）</h3>
+        <span class="bl">lim<sub>t→∞</sub> |e<sup>−st</sup> f(t)| = lim<sub>t→∞</sub> |e<sup>−(σ+jω)t</sup> f(t)|</span>
+        <span class="bl in">= lim<sub>t→∞</sub> |e<sup>−σt</sup> e<sup>−jωt</sup> f(t)| = lim<sub>t→∞</sub> |e<sup>−σt</sup> f(t)| |e<sup>−jωt</sup>|</span>
+        <span class="bl in">= lim<sub>t→∞</sub> |e<sup>−σt</sup> f(t)| |cos ωt − j sin ωt|</span>
+        <span class="bl in">= lim<sub>t→∞</sub> |e<sup>−σt</sup> f(t)| √((cos ωt)² + (−sin ωt)²)　　（根號 = 1）</span>
+        <span class="bl in">= lim<sub>t→∞</sub> |e<sup>−σt</sup> f(t)| = 0</span>
+      </div>
+      <div class="board">
+        <h3>* ℒ(f(t)) 存在的條件</h3>
+        <span class="bl">lim<sub>t→∞</sub> f(t) e<sup>−σt</sup> = 0，σ &gt; a，a ∈ ℝ</span>
+        <h3>* lim<sub>t→∞</sub> f(t) e<sup>−σt</sup> =</h3>
+        <span class="bl in">0，lim<sub>t→∞</sub> f(t) &lt; ∞</span>
+        <span class="bl in">0，lim<sub>t→∞</sub> f(t) = ∞</span>
+        <span class="bl in">∞，lim<sub>t→∞</sub> f(t) = ∞</span>
+        <h3>Q. 什麼條件下</h3>
+        <span class="bl">① lim<sub>t→∞</sub> f(t)e<sup>−σt</sup> = 0，lim<sub>t→∞</sub> f(t) = ∞</span>
+        <span class="bl">② lim<sub>t→∞</sub> f(t)e<sup>−σt</sup> = ∞，lim<sub>t→∞</sub> f(t) = ∞</span>
+        <span class="bl tx"><span class="add">補</span>① f(t) 長得不比某個 e<sup>at</sup> 快（例：t²、e<sup>2t</sup>），取 σ &gt; a 即可；② f(t) 比任何 e<sup>at</sup> 都快（例：e<sup>t²</sup>）。</span>
+      </div>
+      <div class="board">
+        <h3>Ex.</h3>
+        <span class="bl">1. lim<sub>t→∞</sub> e<sup>−σt</sup>·t² = ?　　lim<sub>t→∞</sub> t² = ∞</span>
+        <span class="bl">2. lim<sub>t→∞</sub> e<sup>−σt</sup>·e<sup>2t</sup> = ?　　lim<sub>t→∞</sub> e<sup>2t</sup> = ∞</span>
+        <span class="bl">3. lim<sub>t→∞</sub> e<sup>−σt</sup>·e<sup>t²</sup> = ?　　lim<sub>t→∞</sub> e<sup>t²</sup> = ∞</span>
+        <h3>Sol.</h3>
+        <span class="bl">1. lim<sub>t→∞</sub> e<sup>−σt</sup> t² = lim<sub>t→∞</sub> t² / e<sup>σt</sup> = lim<sub>t→∞</sub> 2t / (σe<sup>σt</sup>) = lim<sub>t→∞</sub> 2 / (σ²<button class="fix" type="button" data-was="σ（少了平方）">更正</button>e<sup>σt</sup>) = 0，σ &gt; 0</span>
+        <span class="bl in">* ℒ(t²) 存在，σ &gt; 0</span>
+        <span class="bl">2. lim<sub>t→∞</sub> e<sup>−σt</sup> e<sup>2t</sup> = lim<sub>t→∞</sub> e<sup>2t</sup> / e<sup>σt</sup> = lim<sub>t→∞</sub> e<sup>−(σ−2)t</sup> = 0，σ &gt; 2</span>
+        <span class="bl in">* ℒ(e<sup>2t</sup>) 存在，σ &gt; 2</span>
+        <span class="bl">3. lim<sub>t→∞</sub> e<sup>−σt</sup> e<sup>t²</sup> = lim<sub>t→∞</sub> e<sup>t²</sup> / e<sup>σt</sup> = lim<sub>t→∞</sub> e<sup>t²−σt</sup> = lim<sub>t→∞</sub> e<sup>t(t−σ)</sup> = ∞<button class="fix" type="button" data-was="= 0（照片看起來像 0）">更正</button></span>
+        <span class="bl in">* ℒ(e<sup>t²</sup>) 不存在</span>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="sec" id="n6">
+      <h2>6. 基本函數的 Laplace Transform<span class="h2-en">BASIC FUNCTIONS</span></h2>
+      <div class="board">
+        <h3>1. f(t) = u(t) 或 f(t) = 1</h3>
+        <span class="bl">* u(t) = 1，t ≥ 0；0，t &lt; 0</span>
+        <span class="bl">* f(t) = 1</span>
+        <span class="bl">ℒ(u(t)) = ?　ℒ(1) = ?</span>
+        <hr>
+        <span class="bl">ℒ(u(t)) = ∫₀<sup>∞</sup> u(t) e<sup>−st</sup> dt = ∫₀<sup>∞</sup> e<sup>−st</sup> dt</span>
+        <span class="bl">ℒ(1) = ∫₀<sup>∞</sup> 1·e<sup>−st</sup> dt = ∫₀<sup>∞</sup> e<sup>−st</sup> dt</span>
+        <span class="bl">⇒ ℒ(u(t)) = ℒ(1) = ∫₀<sup>∞</sup> e<sup>−st</sup> dt</span>
+        <span class="bl in">= (1/(−s)) e<sup>−st</sup> |₀<sup>∞</sup> = −(1/s)( lim<sub>t→∞</sub> e<sup>−st</sup> − lim<sub>t→0</sub> e<sup>−st</sup> )　（第一項待證 = 0，第二項 = 1）</span>
+        <span class="bl in">= 1/s</span>
+        <span class="bl">⇒ ℒ(u(t)) = ℒ(1) = 1/s，σ &gt; 0 / s &gt; 0　（s-plane：σ &gt; 0 的區域）</span>
+      </div>
+      <div class="board">
+        <h3>* 證明 lim<sub>t→∞</sub> |e<sup>−st</sup>| = 0</h3>
+        <span class="bl">lim<sub>t→∞</sub> |e<sup>−st</sup>| = lim<sub>t→∞</sub> |e<sup>−(σ+jω)t</sup>|</span>
+        <span class="bl in">= lim<sub>t→∞</sub> |e<sup>−σt</sup> e<sup>−jωt</sup>| = lim<sub>t→∞</sub> |e<sup>−σt</sup>(cos ωt − j sin ωt)|</span>
+        <span class="bl in">= lim<sub>t→∞</sub> e<sup>−σt</sup> |cos ωt − j sin ωt|</span>
+        <span class="bl in">= lim<sub>t→∞</sub> e<sup>−σt</sup> √((cos ωt)² + (−sin ωt)²)</span>
+        <span class="bl in">= lim<sub>t→∞</sub> e<sup>−σt</sup> = 0，σ &gt; 0</span>
+      </div>
+      <div class="board">
+        <h3>2. ℒ(e<sup>at</sup>) = ?</h3>
+        <span class="bl">ℒ(e<sup>at</sup>) = ∫₀<sup>∞</sup> e<sup>at</sup> e<sup>−st</sup> dt = ∫₀<sup>∞</sup> e<sup>−(s−a)t</sup> dt</span>
+        <span class="bl in">= (1/(−(s−a))) e<sup>−(s−a)t</sup> |₀<sup>∞</sup></span>
+        <span class="bl in">= (−1/(s−a)) ( lim<sub>t→∞</sub> e<sup>−(s−a)t</sup> − lim<sub>t→0</sub> e<sup>−(s−a)t</sup> )　（第一項待證 = 0，第二項 = 1）</span>
+        <span class="bl in">= 1/(s−a)</span>
+        <span class="bl">⇒ ℒ(e<sup>at</sup>) = 1/(s−a)，σ &gt; a / s &gt; a　（s-plane：σ &gt; a 的區域）</span>
+      </div>
+      <div class="board">
+        <h3>* 證明 lim<sub>t→∞</sub> |e<sup>−(s−a)t</sup>| = 0</h3>
+        <span class="bl">lim<sub>t→∞</sub> |e<sup>−(s−a)t</sup>| = lim<sub>t→∞</sub> |e<sup>−(σ+jω−a)t</sup>|</span>
+        <span class="bl in">= lim<sub>t→∞</sub> |e<sup>−(σ−a)t</sup>·e<sup>−jωt</sup>|</span>
+        <span class="bl in">= lim<sub>t→∞</sub> |e<sup>−(σ−a)t</sup>(cos ωt − j sin ωt)|</span>
+        <span class="bl in">= lim<sub>t→∞</sub> e<sup>−(σ−a)t</sup> √((cos ωt)² + (−sin ωt)²)</span>
+        <span class="bl in">= lim<sub>t→∞</sub> e<sup>−(σ−a)t</sup> = 0，σ &gt; a / s &gt; a</span>
+      </div>
+      <div class="board">
+        <h3>To Sum Up</h3>
+        <span class="bl">f(t) ──ℒ──→ F(s)</span>
+        <span class="bl">1. u(t) / 1 ──ℒ──→ 1/s，s &gt; 0</span>
+        <span class="bl">2. e<sup>at</sup> ──ℒ──→ 1/(s−a)，s &gt; a</span>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="sec" id="n7">
+      <h2>7. Ex.：ℒ 與 ℒ⁻¹<span class="h2-en">EXAMPLES</span></h2>
+      <div class="board">
+        <h3>Ex.</h3>
+        <span class="bl">1. ℒ(2u(t) + 4 + e<sup>2t</sup>)</span>
+        <span class="bl">2. ℒ(⅓u(t) − ¼e<sup>−t/5</sup>)</span>
+        <h3>Sol.</h3>
+        <span class="bl">1. ℒ(2u(t) + 4 + e<sup>2t</sup>)　（後補：線性）</span>
+        <span class="bl in">= 2ℒ(u(t)) + 4ℒ(1) + ℒ(e<sup>2t</sup>)</span>
+        <span class="bl in">= 2/s + 4/s + 1/(s−2)</span>
+        <span class="bl in">= 6/s + 1/(s−2)</span>
+        <span class="bl">2. ℒ(⅓u(t) − ¼e<sup>−t/5</sup>)</span>
+        <span class="bl in">= ⅓ℒ(u(t)) − ¼ℒ(e<sup>−t/5</sup>)</span>
+        <span class="bl in">= ⅓·(1/s) − ¼·1/(s + ⅕)</span>
+      </div>
+      <div class="board">
+        <h3>* ℒ：Laplace Transform　ℒ⁻¹：Inverse Laplace Transform</h3>
+        <span class="bl">f(t) ──ℒ──→ F(s)</span>
+        <span class="bl">f(t) ←──ℒ⁻¹── F(s)</span>
+      </div>
+      <div class="board">
+        <h3>Ex.</h3>
+        <span class="bl">1. ℒ⁻¹(2/s − 4/(s−2))</span>
+        <span class="bl">2. ℒ⁻¹(¼·(1/s) + 1/(s+1) − 2/(s−½))</span>
+        <h3>Sol.</h3>
+        <span class="bl">1. ℒ⁻¹(2/s − 4/(s−2)) = 2ℒ⁻¹(1/s) − 4ℒ⁻¹(1/(s−2))</span>
+        <span class="bl in">= 2u(t) − 4e<sup>2t</sup></span>
+        <span class="bl">2. ℒ⁻¹(¼·(1/s) + 1/(s+1) − 2/(s−½)) = ¼ℒ⁻¹(1/s) + ℒ⁻¹(1/(s+1)) − 2ℒ⁻¹(1/(s−½))</span>
+        <span class="bl in">= ¼u(t) + e<sup>−t</sup> − 2e<sup>t/2</sup></span>
+      </div>
+      <div class="board">
+        <h3>Exercise 2</h3>
+        <span class="bl">1. ℒ(4 + 2e<sup>−2t</sup> − ¼e<sup>(3/5)t</sup>)</span>
+        <span class="bl">2. ℒ⁻¹(½·(1/s) − 3/(s+5) + (5/4)·1/(s − 4/5))</span>
+        <hr>
+        <span class="bl"><span class="add">補</span>1. = 4/s + 2/(s+2) − ¼·1/(s − 3/5)</span>
+        <span class="bl"><span class="add">補</span>2. = ½u(t) − 3e<sup>−5t</sup> + (5/4)e<sup>(4/5)t</sup></span>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="sec" id="n8">
+      <h2>8. Linear<span class="h2-en">LINEARITY</span></h2>
+      <div class="board">
+        <span class="bl tx">△ A transform / operator T is called <b>linear</b>, if T satisfies the principle<button class="fix" type="button" data-was="proposition">更正</button> of superposition（疊加原理），i.e.（that is）</span>
+        <span class="bl">if T(x₁) = y₁，T(x₂) = y₂</span>
+        <span class="bl">then T(ax₁ + bx₂) = ay₁ + by₂</span>
+        <span class="bl tx">* if　x₁ → [T] → y₁，x₂ → [T] → y₂</span>
+        <span class="bl tx">　then　ax₁ + bx₂ → [T] → ay₁ + by₂</span>
+      </div>
+      <div class="board">
+        <h3>Thm. Laplace Transform is linear</h3>
+        <span class="bl">pf. ℒ(af(t) + bg(t)) = aF(s) + bG(s)</span>
+        <span class="bl tx">ps：f(t) → [ℒ] → F(s)，g(t) → [ℒ] → G(s) ⇒ af + bg → [ℒ] → aF(s) + bG(s)</span>
+        <hr>
+        <span class="bl">ℒ(af(t) + bg(t))</span>
+        <span class="bl in">= ∫₀<sup>∞</sup> (af(t) + bg(t)) e<sup>−st</sup> dt</span>
+        <span class="bl in">= ∫₀<sup>∞</sup> (af(t)e<sup>−st</sup> + bg(t)e<sup>−st</sup>) dt</span>
+        <span class="bl in">= ∫₀<sup>∞</sup> af(t)e<sup>−st</sup> dt + ∫₀<sup>∞</sup> bg(t)e<sup>−st</sup> dt</span>
+        <span class="bl in">= a∫₀<sup>∞</sup> f(t)e<sup>−st</sup> dt + b∫₀<sup>∞</sup> g(t)e<sup>−st</sup> dt　　（ℒ(f(t)) = F(s)，ℒ(g(t)) = G(s)）</span>
+        <span class="bl in">= aF(s) + bG(s)　Q.E.D.</span>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="sec" id="n9">
+      <h2>9. ℒ(cos ωt)、ℒ(sin ωt)、ℒ(tⁿ)<span class="h2-en">COS · SIN · tⁿ</span></h2>
+      <div class="board">
+        <h3>△ ℒ(cos ωt) = ?　ℒ(sin ωt) = ?</h3>
+        <span class="bl">1. ℒ(cos ωt) = ∫₀<sup>∞</sup> cos ωt e<sup>−st</sup> dt　　分部積分：不要做</span>
+        <span class="bl">* 用聰明的方法</span>
+        <span class="bl in">f(t) = cos ωt，f(0) = 1</span>
+        <span class="bl in">f′(t)<button class="fix" type="button" data-was="f′(ω)">更正</button> = −ω sin ωt，f′(0) = 0</span>
+        <span class="bl in">f″(t) = −ω² cos ωt = −ω² f(t)　——(1)</span>
+        <span class="bl">對 (1) 取 ℒ</span>
+        <span class="bl in">ℒ(f″(t)) = ℒ(−ω² f(t)) = −ω² ℒ(f(t)) = −ω² F(s)</span>
+        <span class="bl in">⇒ s²F(s) − s f(0) − f′(0) = −ω² F(s)</span>
+        <span class="bl in">s²F(s) − s = −ω² F(s)</span>
+        <span class="bl in">(s² + ω²) F(s) = s</span>
+        <span class="bl in">⇒ F(s) = ℒ(cos ωt) = s / (s² + ω²)</span>
+      </div>
+      <div class="board">
+        <h3>2. ℒ(sin ωt) = ∫₀<sup>∞</sup> sin ωt e<sup>−st</sup> dt　　分部積分，不做</h3>
+        <span class="bl">* 用聰明的方法</span>
+        <span class="bl in">f(t) = sin ωt，f(0) = 0</span>
+        <span class="bl in">f′(t) = ω cos ωt，f′(0) = ω</span>
+        <span class="bl in">f″(t) = −ω² sin ωt = −ω² f(t)　——(2)</span>
+        <span class="bl">對 (2) 取 ℒ</span>
+        <span class="bl in">ℒ(f″(t)) = ℒ(−ω² f(t)) = −ω² ℒ(f(t))</span>
+        <span class="bl in">s²F(s) − s f(0) − f′(0) = −ω² F(s)</span>
+        <span class="bl in">s²F(s) − ω = −ω² F(s)</span>
+        <span class="bl in">(s² + ω²) F(s) = ω</span>
+        <span class="bl in">F(s) = ℒ(sin ωt) = ω / (s² + ω²<button class="fix" type="button" data-was="s² + ω（少了平方）">更正</button>)</span>
+      </div>
+      <div class="board">
+        <h3>△ ℒ(tⁿ) = ?</h3>
+        <span class="bl">ℒ(tⁿ) = ∫₀<sup>∞</sup> tⁿ e<sup>−st</sup> dt　　n 次分部積分，不做</span>
+        <span class="bl">* 用聰明的方法</span>
+        <span class="bl in">f(t) = tⁿ，f(0) = 0</span>
+        <span class="bl in">f⁽¹⁾(t) = n t<sup>n−1</sup>，f⁽¹⁾(0) = 0</span>
+        <span class="bl in">f⁽²⁾(t) = n(n−1) t<sup>n−2</sup>，f⁽²⁾(0) = 0</span>
+        <span class="bl in">⋮</span>
+        <span class="bl in">f<sup>(n−1)</sup>(t) = n(n−1)⋯2 t，f<sup>(n−1)</sup>(0) = 0</span>
+        <span class="bl in">f⁽ⁿ⁾(t) = n(n−1)(n−2)⋯2×1 = n!　——(3)</span>
+        <span class="bl">對 (3) 取 ℒ</span>
+        <span class="bl in">ℒ(f⁽ⁿ⁾(t)) = ℒ(n!) = n!ℒ(1) = n!/s</span>
+        <span class="bl in">sⁿF(s) − s<sup>n−1</sup>f(0) − s<sup>n−2</sup>f⁽¹⁾(0) − ⋯ − f<sup>(n−1)</sup>(0)<button class="fix" type="button" data-was="sⁿF(s) − f(0) − f⁽¹⁾(0) − … − f⁽ⁿ⁻¹⁾(0)（少寫 s 的次方；這些項都是 0，答案不變）">更正</button> = n!/s　（f(0) ~ f<sup>(n−1)</sup>(0) 都是 0）</span>
+        <span class="bl in">sⁿF(s) = n!/s</span>
+        <span class="bl in">F(s) = ℒ(tⁿ) = n! / s<sup>n+1</sup></span>
+      </div>
+      <div class="board">
+        <h3>To Sum Up</h3>
+        <span class="bl">f(t) ──ℒ──→ F(s)</span>
+        <span class="bl">1. u(t) / 1 ──ℒ──→ 1/s，s &gt; 0 / σ &gt; 0</span>
+        <span class="bl">2. e<sup>at</sup> ──ℒ──→ 1/(s−a)，s &gt; a / σ &gt; a</span>
+        <span class="bl">3. cos ωt ──ℒ──→ s/(s² + ω²)</span>
+        <span class="bl">4. sin ωt ──ℒ──→ ω/(s² + ω²)</span>
+        <span class="bl">5. tⁿ ──ℒ──→ n!/s<sup>n+1</sup></span>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="sec" id="n10">
+      <h2>10. Ex. 與 Exercise 3、4<span class="h2-en">EXAMPLES · EXERCISES</span></h2>
+      <div class="board">
+        <h3>Ex.</h3>
+        <span class="bl">1. ℒ(3cos 4t + ⅕ sin ¼t)</span>
+        <span class="bl">2. ℒ(4u(t) + ⅓e<sup>−3t</sup> + 5t⁴)</span>
+        <span class="bl">3. ℒ(½ − 4e<sup>5t</sup> + 3cos ⅓t − 5 sin 7t + 7t⁷)</span>
+        <h3>Sol.</h3>
+        <span class="bl">1. ℒ(3cos 4t + ⅕ sin ¼t)</span>
+        <span class="bl in">= 3ℒ(cos 4t) + ⅕ℒ(sin ¼t)</span>
+        <span class="bl in">= 3s/(s² + 16) + (1/20)·1/(s² + 1/16)</span>
+        <span class="bl">2. ℒ(4u(t) + ⅓e<sup>−3t</sup> + 5t⁴)</span>
+        <span class="bl in">= 4ℒ(u(t)) + ⅓ℒ(e<sup>−3t</sup>) + 5ℒ(t⁴)</span>
+        <span class="bl in">= 4/s + ⅓·1/(s+3)<button class="fix" type="button" data-was="⅓e³ᵗ（照片看起來是這樣）">更正</button> + 5!/s⁵</span>
+        <span class="bl">3. ℒ(½ − 4e<sup>5t</sup> + 3cos ⅓t − 5 sin 7t + 7t⁷)</span>
+        <span class="bl in">= ½ℒ(1) − 4ℒ(e<sup>5t</sup>) + 3ℒ(cos ⅓t) − 5ℒ(sin 7t) + 7ℒ(t⁷)</span>
+        <span class="bl in">= ½·(1/s) − 4/(s−5) + 3s/(s² + 1/9) − 35/(s² + 49) + 7×7!/s⁸</span>
+      </div>
+      <div class="board">
+        <h3>Ex.</h3>
+        <span class="bl">1. ℒ⁻¹((2s+1)/(s²+4) + 2/s⁷)</span>
+        <span class="bl">2. ℒ⁻¹(1/s + ⅓·1/(s−5) + (5s+1)/(s²+2))</span>
+        <span class="bl">3. ℒ⁻¹((4s−2)/(s²+7) + ½·1/s⁶)</span>
+        <h3>Sol.</h3>
+        <span class="bl">1. ℒ⁻¹((2s+1)/(s²+4) + 2/s⁷)</span>
+        <span class="bl in">= 2ℒ⁻¹(s/(s²+4)) + ½ℒ⁻¹(2/(s²+4)) + 2·(1/6!)ℒ⁻¹(6!/s⁷)</span>
+        <span class="bl in">= 2cos 2t + ½ sin 2t + (2/6!) t⁶</span>
+        <span class="bl">2. ℒ⁻¹(1/s + ⅓·1/(s−5) + (5s+1)/(s²+2))</span>
+        <span class="bl in">= ℒ⁻¹(1/s) + ⅓ℒ⁻¹(1/(s−5)) + 5ℒ⁻¹(s/(s²+2)) + (1/√2)ℒ⁻¹(√2/(s²+2))</span>
+        <span class="bl in">= u(t) + ⅓e<sup>5t</sup> + 5cos √2t + (1/√2) sin √2t</span>
+        <span class="bl">3. ℒ⁻¹((4s−2)/(s²+7) + ½·1/s⁶)</span>
+        <span class="bl in">= 4ℒ⁻¹(s/(s²+7)) − 2·(1/√7)ℒ⁻¹(√7/(s²+7)) + ½·(1/5!)ℒ⁻¹(5!/s⁶)</span>
+        <span class="bl in">= 4cos √7t − (2/√7) sin √7t + 1/(2×5!) t⁵</span>
+      </div>
+      <div class="board">
+        <h3>Exercise 3</h3>
+        <span class="bl">1. ℒ(4 + ½e<sup>−3t</sup> + 2cos ½t)</span>
+        <span class="bl">2. ℒ(½ + 4cos 4t − 3 sin(t/2) + 5t³)</span>
+        <hr>
+        <span class="bl"><span class="add">補</span>1. = 4/s + ½·1/(s+3) + 2s/(s² + ¼)</span>
+        <span class="bl"><span class="add">補</span>2. = ½·(1/s) + 4s/(s² + 16) − (3/2)/(s² + ¼) + 30/s⁴</span>
+      </div>
+      <div class="board">
+        <h3>Exercise 4</h3>
+        <span class="bl">1. ℒ⁻¹(2/(s+5) + (−2s−3)/(s²+5))</span>
+        <span class="bl">2. ℒ⁻¹(4/s + (2s+1)/(s²+3) + 2/s⁹)</span>
+        <hr>
+        <span class="bl"><span class="add">補</span>1. = 2e<sup>−5t</sup> − 2cos √5t − (3/√5) sin √5t</span>
+        <span class="bl"><span class="add">補</span>2. = 4u(t) + 2cos √3t + (1/√3) sin √3t + (2/8!) t⁸</span>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p>來源：10/2 工程數學課堂板書與 iPad 筆記。重點講解、互動與故事模式請看 <a href="laplace2.html">拉普拉斯轉換 2</a>。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script>
+/* 側欄捲動高亮 + 明暗主題切換 */
+(function () {
+  'use strict';
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } });
+  }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+</body>
+</html>

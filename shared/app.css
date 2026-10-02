@@ -855,3 +855,23 @@ button.tm > i {
 .ctrl label { text-transform: none; }
 /* 標籤裡有 <sub> 時不要被 space-between 拆開：數值靠右，其餘緊貼 */
 .ctrl > label > output, .ctrl > label > .val, .ctrl > .lab > output, .ctrl > .lab > .val { margin-left: auto; padding-left: 8px; }
+
+/* ---------- 上課筆記（純板書）：.board 一塊板書、.bl 一行、.fix 更正標記、.add「補」 ---------- */
+.board { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 14px 16px; margin: 14px 0; }
+.board > h3 { font-size: 15px; font-weight: 700; margin: 0 0 8px; color: var(--ink); }
+.board .bl { display: block; font-family: var(--font-mono); font-size: 14px; line-height: 1.85; color: var(--ink); overflow-x: auto; white-space: nowrap; }
+.board .bl.in { padding-left: 1.6em; }
+.board .bl.tx { font-family: inherit; white-space: normal; }
+.board .bl + h3 { margin-top: 14px; }
+.board hr { border: 0; border-top: 1px dashed var(--line); margin: 12px 0; }
+button.fix { display: inline-block; font: 600 10.5px/1 var(--font-body, inherit); color: var(--warn); background: transparent;
+  border: 1px solid var(--warn); border-radius: 99px; padding: 3px 7px; margin: 0 4px; vertical-align: 2px; cursor: pointer; }
+.fix-was { display: block; width: max-content; max-width: 100%; margin-left: 1.6em; font: 12px/1.5 var(--font-body, inherit); color: var(--ink-2);
+  background: var(--surface-2); border-left: 3px solid var(--warn); border-radius: 4px; padding: 3px 9px; margin: 2px 0 6px; white-space: normal; }
+.add { display: inline-block; font: 600 10.5px/1 var(--font-body, inherit); color: var(--accent); border: 1px solid var(--accent);
+  border-radius: 99px; padding: 3px 7px; margin: 0 4px; vertical-align: 2px; }
+.lec-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+.lec-links a { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 600; font-size: 14px;
+  color: var(--surface); background: var(--accent); border-radius: 99px; padding: 9px 16px; }
+.lec-links a:hover { filter: brightness(1.08); }
+@media (max-width: 480px) { .board { padding: 12px; } .board .bl { font-size: 12.5px; } }

@@ -235,6 +235,16 @@
       b.addEventListener('click', e => { e.stopPropagation(); openPop(b); });
     });
   }
+  /* 上課筆記的「更正」標記：點一下在旁邊顯示原本寫的是什麼，再點一下收起來 */
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('button.fix[data-was]');
+    if (!b) return;
+    if (b._was) { b._was.remove(); b._was = null; return; }
+    const sp = document.createElement('span');
+    sp.className = 'fix-was'; sp.innerHTML = '原本寫：' + b.dataset.was;
+    (b.closest('.bl') || b).after(sp);   /* 放在那一行下面，不塞進會橫向捲動的行裡 */
+    b._was = sp;
+  });
   document.addEventListener('click', e => { if (pop && !pop.contains(e.target)) closePop(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePop(); });
   window.addEventListener('resize', closePop);

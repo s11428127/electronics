@@ -1,6 +1,6 @@
 /* ============================================================
-   工程數學 — 10/2 上課筆記
-   互動：單位圓（尤拉公式）、ℒ(f⁽ⁿ⁾) 展開器、存在條件的極限比賽
+   工程數學 — 拉普拉斯轉換 2（10/2 課堂）
+   互動：ℒ(f⁽ⁿ⁾) 展開器、單位圓、極限比賽、s 平面收斂區、改係數例題、疊加機、cos/sin 聰明方法、ℒ⁻¹ 湊表
    ============================================================ */
 (function () {
   'use strict';
@@ -383,6 +383,44 @@
       labelCJK(ctx, w - padR, 12, 'f(t) = ' + r.fn + '（0 ≤ t ≤ 2π）', C.accent, 11, 'right', '600');
     }
   });
+
+  /* ---------- ℒ⁻¹ 湊表：(As + B)/(s² + ω²) + C/s^(n+1) ---------- */
+  const FACT = [1, 1, 2, 6, 24, 120, 720, 5040, 40320];
+  const rootTxt = k => { const r = Math.sqrt(k); return Number.isInteger(r) ? String(r) : '√' + k; };
+  liveExample('#ex-inv', {
+    title: '例題 · ℒ⁻¹ 湊表：自己改分子、分母',
+    givens: [
+      { id: 'iv-A', label: '分子 s 的係數 A', min: -4, max: 4, step: 1, value: 2, fmt: v => 'A = ' + num(v) },
+      { id: 'iv-B', label: '分子常數 B', min: -4, max: 4, step: 1, value: 1, fmt: v => 'B = ' + num(v) },
+      { id: 'iv-w', label: '分母 s² + ω² 的 ω²', min: 1, max: 9, step: 1, value: 4, fmt: v => 'ω² = ' + v },
+      { id: 'iv-C', label: '第二項分子 C', min: 0, max: 4, step: 1, value: 2, fmt: v => 'C = ' + v },
+      { id: 'iv-n', label: '第二項分母 s 的次方', min: 1, max: 9, step: 1, value: 7, fmt: v => 's 的 ' + v + ' 次方' }
+    ],
+    compute: g => {
+      const A = g['iv-A'], B = g['iv-B'], w2 = g['iv-w'], C = g['iv-C'], p = g['iv-n'], n = p - 1;
+      const w = rootTxt(w2), wInt = Number.isInteger(Math.sqrt(w2));
+      const sp = p === 1 ? 's' : 's<sup>' + p + '</sup>';
+      const num1 = (A ? (A === 1 ? '' : A === -1 ? MINUS : num(A)) + 's' : '') + (B ? (A ? (B < 0 ? ' ' + MINUS + ' ' : ' + ') + num(Math.abs(B)) : num(B)) : '') || '0';
+      const Fs = '(' + num1 + ')/(s² + ' + w2 + ')' + (C ? ' + ' + C + '/' + sp : '');
+      const parts = [];
+      if (A) parts.push(coef(A, !parts.length) + 'cos ' + w + 't');
+      if (B) { const bw = wInt ? B / Math.sqrt(w2) : null;
+        parts.push(bw !== null ? coef(bw, !parts.length) + 'sin ' + w + 't' : (B < 0 ? (parts.length ? ' ' + MINUS + ' ' : MINUS) : (parts.length ? ' + ' : '')) + '(' + num(Math.abs(B)) + '/' + w + ') sin ' + w + 't'); }
+      if (C) { const tn = n === 0 ? 'u(t)' : n === 1 ? 't' : 't<sup>' + n + '</sup>';
+        parts.push((parts.length ? ' + ' : '') + (n <= 1 ? (C === 1 ? '' : C) : '(' + C + '/' + n + '!) ') + tn); }
+      return { A, B, w2, w, C, p, n, sp, Fs, ans: parts.join('') || '0' };
+    },
+    question: (g, r) => '求 ℒ⁻¹( ' + r.Fs + ' )。（預設值是板書 Ex. 1）',
+    steps: (g, r) => [
+      { t: 'Step 1　分子拆成「s 的部分」和「常數部分」。', note: 's 的部分要配 cos，常數部分要配 sin。',
+        eq: (r.A ? num(r.A) + '·s/(s² + ' + r.w2 + ')' : '') + (r.B ? (r.A ? ' + ' : '') + num(r.B) + '·1/(s² + ' + r.w2 + ')' : '') + (r.C ? ' + ' + r.C + '·1/' + r.sp : '') },
+      { t: 'Step 2　找 ω。', note: 'ω² = ' + r.w2 + ' → ω = ' + r.w + (Number.isInteger(Math.sqrt(r.w2)) ? '。' : '（開不盡就留根號）。'),
+        eq: 'cos ' + r.w + 't ← s/(s² + ' + r.w2 + ')，sin ' + r.w + 't ← ' + r.w + '/(s² + ' + r.w2 + ')' },
+      { t: 'Step 3　sin 缺 ω 就補 ω。', note: r.B ? '表上 sin 的分子要是 ω = ' + r.w + '，所以 1/(s² + ' + r.w2 + ') = (1/' + r.w + ')·' + r.w + '/(s² + ' + r.w2 + ')。' : '這題沒有常數部分，不用補。' },
+      { t: 'Step 4　1/s 的次方要補階乘。', note: r.C ? '1/' + r.sp + ' 對應 n = ' + r.n + '（次方減 1），表上是 ' + r.n + '!/' + r.sp + '，所以乘 ' + r.n + '! 再除 ' + r.n + '!' + (r.n <= 1 ? '（' + r.n + '! = 1，不用補）' : '') + '。' : 'C = 0，沒有這一項。' }
+    ],
+    answer: (g, r) => 'ℒ⁻¹( ' + r.Fs + ' ) = ' + r.ans
+  });
 })();
 
 /* ============================================================
@@ -408,10 +446,6 @@
     { zh: 'e<sup>−jθ</sup> 等於什麼？', en: 'What is e<sup>−jθ</sup> equal to?',
       o: [['cos θ − j sin θ', 'cos θ − j sin θ'], ['−cos θ − j sin θ', '−cos θ − j sin θ'], ['cos θ + j sin θ', 'cos θ + j sin θ'], ['sin θ − j cos θ', 'sin θ − j cos θ']], a: 0,
       e: 'e<sup>−jθ</sup> = cos(−θ) + j sin(−θ)。cos 是偶函數不變號，sin 是奇函數要變號，所以是 cos θ − j sin θ。在單位圓上就是 e<sup>jθ</sup> 上下翻過來的那一點。' },
-    { zh: '共軛複根 α ± jβ 的解 e<sup>αt</sup>(A cos βt + B sin βt) 中，A、B 跟 C₁、C₂ 的關係是？', en: 'For roots α ± jβ, how are A, B related to C₁, C₂ in y = e<sup>αt</sup>(A cos βt + B sin βt)?',
-      o: [['A = C₁ + C₂，B = j(C₁ − C₂)', 'A = C₁ + C₂, B = j(C₁ − C₂)'], ['A = C₁ − C₂，B = C₁ + C₂', 'A = C₁ − C₂, B = C₁ + C₂'],
-          ['A = C₁C₂，B = C₁/C₂', 'A = C₁C₂, B = C₁/C₂'], ['A = j(C₁ + C₂)，B = C₁ − C₂', 'A = j(C₁ + C₂), B = C₁ − C₂']], a: 0,
-      e: '用尤拉公式展開後，cos 的係數是 C₁ + C₂，sin 的係數是 j(C₁ − C₂)。C₁、C₂ 互為共軛時，A、B 都是實數。' },
     { zh: '證明 ℒ(f′) 時用到的積分技巧是什麼？', en: 'Which integration technique is used to prove ℒ(f′) = sF(s) − f(0)?',
       o: [['分部積分', 'integration by parts'], ['變數變換', 'substitution'], ['部分分式', 'partial fractions'], ['三角代換', 'trigonometric substitution']], a: 0,
       e: '∫₀<sup>∞</sup> e<sup>−st</sup> df(t) = e<sup>−st</sup>f(t)|₀<sup>∞</sup> − ∫₀<sup>∞</sup> f(t) d(e<sup>−st</sup>)。把對 f′ 的積分換成對 f 的積分，後者就是 F(s)。' },
@@ -434,7 +468,16 @@
       e: '常數 3 先提出去（線性）；s + 2 = s − (−2)，所以 a = −2，1/(s + 2) ← e<sup>−2t</sup>。答案 3e<sup>−2t</sup>。' },
     { zh: '用「聰明方法」求 ℒ(cos ωt) 時，關鍵的那條關係式是？', en: 'In the "smart method" for ℒ(cos ωt), which key relation is used?',
       o: [['f″(t) = −ω² f(t)', 'f″(t) = −ω² f(t)'], ['f′(t) = ω f(t)', 'f′(t) = ω f(t)'], ['f(t) = e<sup>jωt</sup>', 'f(t) = e<sup>jωt</sup>'], ['f″(t) = ω² f(t)', 'f″(t) = ω² f(t)']], a: 0,
-      e: 'cos 微兩次變回自己乘 −ω²。兩邊取 ℒ：s²F − s·1 − 0 = −ω²F，移項得 F = s/(s² + ω²)。完全不用分部積分。' }
+      e: 'cos 微兩次變回自己乘 −ω²。兩邊取 ℒ：s²F − s·1 − 0 = −ω²F，移項得 F = s/(s² + ω²)。完全不用分部積分。' },
+    { zh: 'ℒ(t³) = ?', en: 'What is ℒ(t³)?',
+      o: [['6/s⁴', '6/s⁴'], ['3/s⁴', '3/s⁴'], ['6/s³', '6/s³'], ['1/s³', '1/s³']], a: 0,
+      e: 'ℒ(tⁿ) = n!/s<sup>n+1</sup>，n = 3：3! = 6，分母次方 3 + 1 = 4。用聰明方法：t³ 微 3 次變成常數 6，取 ℒ 得 s³F(s) = 6/s。' },
+    { zh: 'ℒ⁻¹( 1/(s² + 9) ) = ?', en: 'What is ℒ⁻¹( 1/(s² + 9) )?',
+      o: [['⅓ sin 3t', '⅓ sin 3t'], ['sin 3t', 'sin 3t'], ['cos 3t', 'cos 3t'], ['⅑ sin 9t', '⅑ sin 9t']], a: 0,
+      e: 'ω² = 9 → ω = 3。表上 sin 3t ↔ 3/(s² + 9)，分子缺 3，所以 1/(s² + 9) = ⅓·3/(s² + 9) → ⅓ sin 3t。' },
+    { zh: 'ℒ⁻¹( 1/s⁵ ) = ?', en: 'What is ℒ⁻¹( 1/s⁵ )?',
+      o: [['t⁴/4!', 't⁴/4!'], ['t⁵/5!', 't⁵/5!'], ['t⁴', 't⁴'], ['4!·t⁴', '4!·t⁴']], a: 0,
+      e: '1/s<sup>n+1</sup> 的 n 比分母次方少 1，所以 n = 4。表上 t⁴ ↔ 4!/s⁵，分子缺 4!，所以 1/s⁵ → t⁴/4!。' }
   ];
   let i = 0, score = 0, answered = false, ord = [];
   /* 選項順序每次打亂：題庫裡正解都寫在第一個，不打亂的話永遠是 A */
@@ -483,7 +526,7 @@
     const pct = Math.round(score / Q.length * 100);
     const verdict = pct >= 90 ? '這堂課的東西你都抓到了。'
       : pct >= 70 ? '主幹抓到了。答錯的回去看對應那一節的推導。'
-      : '建議從第 02 節 ℒ(f″) 開始重看一次，後面全部都是同一招。';
+      : '建議先重看故事模式，再從第 05 節「拆開查表」和第 07 節的總表練起。';
     host.innerHTML =
       '<div class="bar"><i style="width:100%"></i></div>' +
       '<div class="quiz-body" style="padding-bottom:18px">' +
