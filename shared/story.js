@@ -29,8 +29,11 @@
     for (const ch of String(s).replace(/<[^>]+>/g, '')) w += ch.charCodeAt(0) > 0x2e80 ? fs : fs * 0.6;
     return w;
   }
+  /* <sup>…</sup> → SVG 上標；後面接一個零寬字元把基線拉回來（空的 tspan 的 dy 不會生效） */
+  const supSvg = (s, fs) => String(s).replace(/<sup>(.*?)<\/sup>/g, (m, x) =>
+    '<tspan font-size="' + (fs * 0.7).toFixed(1) + '" dy="' + (-fs * 0.4).toFixed(1) + '">' + x + '</tspan><tspan dy="' + (fs * 0.4).toFixed(1) + '">\u200B</tspan>');
   const D = {
-    textW,
+    textW, supSvg,
     e: (x, y, key, r) => '<circle class="e" cx="' + x + '" cy="' + y + '" r="' + (r || 5) + '"' + k(key) + '/>',
     h: (x, y, key, r) => '<circle class="h" cx="' + x + '" cy="' + y + '" r="' + (r || 5.5) + '"' + k(key) + '/>',
     atom: (x, y, sym, key, r, cls) => {
@@ -42,7 +45,7 @@
     text: (x, y, s, opt) => {
       opt = opt || {};
       return '<text x="' + x + '" y="' + y + '" class="' + (opt.cls || 't') + '" font-size="' + (opt.fs || 14) + '" text-anchor="' + (opt.a || 'middle') + '"' +
-        (opt.dy ? ' dy="' + opt.dy + '"' : '') + k(opt.k) + '>' + s + '</text>';
+        (opt.dy ? ' dy="' + opt.dy + '"' : '') + k(opt.k) + '>' + supSvg(s, opt.fs || 14) + '</text>';
     },
     arrow: (x1, y1, x2, y2, key, cls) => {
       const a = Math.atan2(y2 - y1, x2 - x1), L = 8;
@@ -58,8 +61,8 @@
       const x0 = opt.a === 'left' ? x : opt.a === 'right' ? x - w : x - w / 2, y0 = y - h / 2;
       return '<g class="chip"' + k(key) + '><rect x="' + x0 + '" y="' + y0 + '" width="' + w + '" height="' + h + '" rx="8" filter="url(#st-sh)"/>' +
         '<circle class="cdot" cx="' + (x0 + 12) + '" cy="' + (y0 + (sub ? fs * 0.62 + 7 : h / 2)) + '" r="2.6"/>' +
-        '<text class="t" x="' + (x0 + 20) + '" y="' + (y0 + fs + (sub ? 5 : 3)) + '" font-size="' + fs + '"' + (opt.acc ? ' style="fill:var(--s-acc)"' : '') + '>' + title + '</text>' +
-        (sub ? '<text class="ts" x="' + (x0 + 20) + '" y="' + (y0 + fs + fs2 + 9) + '" font-size="' + fs2 + '">' + sub + '</text>' : '') + '</g>';
+        '<text class="t" x="' + (x0 + 20) + '" y="' + (y0 + fs + (sub ? 5 : 3)) + '" font-size="' + fs + '"' + (opt.acc ? ' style="fill:var(--s-acc)"' : '') + '>' + supSvg(title, fs) + '</text>' +
+        (sub ? '<text class="ts" x="' + (x0 + 20) + '" y="' + (y0 + fs + fs2 + 9) + '" font-size="' + fs2 + '">' + supSvg(sub, fs2) + '</text>' : '') + '</g>';
     },
     /* 2D 晶格：cols × rows 個原子，間距 d；每條鍵上兩顆共用電子
        整組的 key：p-a 原子、p-b 鍵、p-e 鍵上電子。
@@ -186,9 +189,9 @@
     }
     function setTitle(s) {
       const b = titleEl.querySelector('b'), i = titleEl.querySelector('i');
-      if (b.textContent === s.t) return;
+      if (b.innerHTML === s.t) return;
       titleEl.classList.add('swap');
-      setTimeout(() => { b.textContent = s.t; i.textContent = s.en || ''; titleEl.classList.remove('swap'); }, REDUCED ? 0 : 200);
+      setTimeout(() => { b.innerHTML = s.t; i.innerHTML = s.en || ''; titleEl.classList.remove('swap'); }, REDUCED ? 0 : 200);
     }
     function render(prevSc, prevSt) {
       const s = scenes[sc];
@@ -309,7 +312,7 @@
       const box = document.createElement('div');
       box.className = 'st-list'; box.setAttribute('role', 'menu');
       box.innerHTML = '<button type="button" data-i="0" data-j="0"><i>↺</i>從頭開始</button>' +
-        scenes.map((s, i) => '<button type="button" data-i="' + i + '" data-j="0" class="' + (i === sc ? 'on' : '') + '"><i>' + String(i + 1).padStart(2, '0') + '</i>' + esc(s.t) + '<small>' + esc(s.en || '') + '</small></button>').join('');
+        scenes.map((s, i) => '<button type="button" data-i="' + i + '" data-j="0" class="' + (i === sc ? 'on' : '') + '"><i>' + String(i + 1).padStart(2, '0') + '</i>' + s.t + '<small>' + (s.en || '') + '</small></button>').join('');
       box.addEventListener('click', e => {
         const b = e.target.closest('button'); if (!b) return;
         e.stopPropagation(); box.remove(); go(+b.dataset.i, +b.dataset.j);

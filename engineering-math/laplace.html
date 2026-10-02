@@ -188,7 +188,7 @@
             <div class="why">指數相加 = 底數相乘，先把實數部分 e⁻ˣ 分出來（它是純實數，不影響 Re/Im 的分配）。</div>
           </li>
           <li>
-            <span class="d-eq">尤拉公式：e^(iθ) = cos θ + i·sin θ</span>
+            <span class="d-eq">尤拉公式：e<sup>iθ</sup> = cos θ + i·sin θ</span>
             <div class="why">這是唯一要記的工具。現在要代入的是 θ = <b>−y</b>。</div>
           </li>
           <li>
@@ -207,8 +207,8 @@
         <ul>
           <li><span class="x">✗</span> 筆記上寫 <b>e⁻ᶻ = e⁻ˣ(cos y <b>+</b> i sin y)</b>，這是<b>錯的</b>。</li>
           <li><span class="o">✓</span> 正確是 <b>e⁻ᶻ = e⁻ˣ(cos y <b>−</b> i sin y)</b>，因此 <b>Im = −e⁻ˣ sin y</b>（筆記標的 Im = e⁻ˣ sin y 少了負號）。</li>
-          <li><b>怎麼一秒檢查：</b>取 x = 0、y = π/2，則 e⁻ᶻ = e^(−iπ/2) = <b>−i</b>。用正確版：cos(π/2) − i·sin(π/2) = 0 − i = −i ✓。用筆記版會得到 +i ✗。</li>
-          <li><b>記憶法：</b>指數上的 i 前面是什麼符號，sin 前面就是什麼符號。e^(<b>+</b>iθ) → cos θ <b>+</b> i sin θ；e^(<b>−</b>iθ) → cos θ <b>−</b> i sin θ。cos 永遠不變號。</li>
+          <li><b>怎麼一秒檢查：</b>取 x = 0、y = π/2，則 e⁻ᶻ = e<sup>−iπ/2</sup> = <b>−i</b>。用正確版：cos(π/2) − i·sin(π/2) = 0 − i = −i ✓。用筆記版會得到 +i ✗。</li>
+          <li><b>記憶法：</b>指數上的 i 前面是什麼符號，sin 前面就是什麼符號。e<sup><b>+</b>iθ</sup> → cos θ <b>+</b> i sin θ；e<sup><b>−</b>iθ</sup> → cos θ <b>−</b> i sin θ。cos 永遠不變號。</li>
         </ul>
       </div>
     </section>
@@ -216,9 +216,9 @@
     <!-- ══════════ 03 為什麼乘 e^-st ══════════ -->
     <section class="sec" id="why">
       <div class="eyebrow">03 · Why e⁻ˢᵗ</div>
-      <h2>為什麼公式長這樣：乘 e⁻ˢᵗ 再積分<span class="h2-en">WHY MULTIPLY BY e^(−st) AND INTEGRATE</span></h2>
+      <h2>為什麼公式長這樣：乘 e⁻ˢᵗ 再積分<span class="h2-en">WHY MULTIPLY BY e<sup>−st</sup> AND INTEGRATE</span></h2>
       <p class="lede">筆記上這個問題問得很好。答案分兩層：<strong>「積分」是為了把 t 消掉</strong>，<strong>「乘 e⁻ˢᵗ」是為了讓積分收斂、順便把 s 帶進來</strong>。下面這個模組把三條曲線疊給你看。</p>
-      <div class="eq">ℒ( f(t) ) = F(s) = ∫₀^∞ f(t) · e<em>⁻ˢᵗ</em> dt</div>
+      <div class="eq">ℒ( f(t) ) = F(s) = ∫₀<sup>∞</sup> f(t) · e<em>⁻ˢᵗ</em> dt</div>
 
       <div class="derive">
         <h4>第一層：為什麼是「定積分」而不是不定積分</h4>
@@ -232,7 +232,7 @@
             <div class="why">上下限一代，t 就被消掉了。</div>
           </li>
           <li>
-            <span class="d-eq hi">∫₀^∞ f(t)e⁻ˢᵗ dt　⟹　t 被積掉，只剩下 s　⟹　F(s)</span>
+            <span class="d-eq hi">∫₀<sup>∞</sup> f(t)e⁻ˢᵗ dt　⟹　t 被積掉，只剩下 s　⟹　F(s)</span>
             <p>所以轉換之後，函數的變數<b>從 t 換成了 s</b>。這就是「換一個世界」在數學上的實際意思。</p>
           </li>
         </ol>
@@ -242,11 +242,11 @@
         <h4>第二層：為什麼偏偏是 e⁻ˢᵗ</h4>
         <ol>
           <li>
-            <p><b>理由一：它在 o.d.e. 裡本來就出現過。</b>常係數線性微分方程的解永遠長成 e^(λt) 的形式（λ = α + jβ 是複數）。而 s = σ + jω 也是複數 —— <b>同一種東西</b>。用 e⁻ˢᵗ 當探針，等於用 ODE 自己的語言去問它問題。</p>
+            <p><b>理由一：它在 o.d.e. 裡本來就出現過。</b>常係數線性微分方程的解永遠長成 e<sup>λt</sup> 的形式（λ = α + jβ 是複數）。而 s = σ + jω 也是複數 —— <b>同一種東西</b>。用 e⁻ˢᵗ 當探針，等於用 ODE 自己的語言去問它問題。</p>
           </li>
           <li>
             <span class="d-eq">理由二：e⁻ˢᵗ 是「衰減因子」，負責把 f(t) 壓下去</span>
-            <div class="why">∫₀^∞ 的上限是無限大。如果被積函數不衰減，積分就發散、根本算不出數字。乘上 e⁻ˢᵗ 之後，只要 s 夠大就能把 f(t) 的成長壓過去。</div>
+            <div class="why">∫₀<sup>∞</sup> 的上限是無限大。如果被積函數不衰減，積分就發散、根本算不出數字。乘上 e⁻ˢᵗ 之後，只要 s 夠大就能把 f(t) 的成長壓過去。</div>
           </li>
           <li>
             <span class="d-eq hi">理由三：每換一個 s，就得到一個不同的面積 ⟹ 這些面積接起來就是 F(s)</span>
@@ -278,7 +278,7 @@
         <div class="msg" id="why-msg"></div>
       </div>
 
-      <p class="note key">試試看選 <b>f = e²ᵗ</b> 然後把 s 拉到 2 以下 —— 乘積會爆炸、面積變成無限大。這就是<b><button class="tm" data-t="收斂區">收斂區</button>（ROC）</b>：ℒ(e^(at)) = 1/(s−a) 只在 <b>s &gt; a</b> 時才存在。</p>
+      <p class="note key">試試看選 <b>f = e²ᵗ</b> 然後把 s 拉到 2 以下 —— 乘積會爆炸、面積變成無限大。這就是<b><button class="tm" data-t="收斂區">收斂區</button>（ROC）</b>：ℒ(e<sup>at</sup>) = 1/(s−a) 只在 <b>s &gt; a</b> 時才存在。</p>
     </section>
 
     <!-- ══════════ 04 轉換表 ══════════ -->
@@ -298,7 +298,7 @@
       <p class="lede">這是整章<strong>最重要的一條</strong>，因為它就是「微分方程變代數方程」的那道門。筆記上先猜 ℒ(f′) = sF(s)（打了三個問號），推導完才發現後面還跟著一個 −f(0)。下面一步一步按給你看。</p>
 
       <div class="note">
-        <b>先說筆記上那個表格的直覺：</b>在 o.d.e. 裡，若 f(t) = e^(st)，則 f′(t) = s·f(t)、f″(t) = s²·f(t) —— <b>微分就是乘 s</b>。
+        <b>先說筆記上那個表格的直覺：</b>在 o.d.e. 裡，若 f(t) = e<sup>st</sup>，則 f′(t) = s·f(t)、f″(t) = s²·f(t) —— <b>微分就是乘 s</b>。
         所以會猜 ℒ(f′) = sF(s)、ℒ(f″) = s²F(s)。方向是對的，但<b>漏掉了初始值</b>。
       </div>
 
@@ -339,7 +339,7 @@
         <h4>筆記上的小筆誤</h4>
         <ul>
           <li>最下面那個藍框寫 <span class="x">f′(t) —ℒ→ sF(s) <b>=</b> f(0)</span>，中間應該是<b>減號</b>不是等號：<span class="o">f′(t) —ℒ→ sF(s) <b>−</b> f(0)</span>。上面的 Theorem 那行你寫對了，所以應該只是手寫的筆誤，但抄到考卷上會很傷。</li>
-          <li><b>lim(t→∞) e⁻ˢᵗf(t) = 0 不是白送的。</b>筆記寫「下次說明」是對的 —— 這需要 f(t) 是<b><button class="tm" data-t="指數階">指數階</button>（exponential order）</b>，也就是存在 M、a 使 |f(t)| ≤ M·e^(at)，而且 s > a。若 f(t) 長得比任何指數都快（例如 e^(t²)），拉普拉斯轉換根本不存在。</li>
+          <li><b>lim(t→∞) e⁻ˢᵗf(t) = 0 不是白送的。</b>筆記寫「下次說明」是對的 —— 這需要 f(t) 是<b><button class="tm" data-t="指數階">指數階</button>（exponential order）</b>，也就是存在 M、a 使 |f(t)| ≤ M·e<sup>at</sup>，而且 s > a。若 f(t) 長得比任何指數都快（例如 e<sup>t²</sup>），拉普拉斯轉換根本不存在。</li>
         </ul>
       </div>
     </section>
@@ -361,7 +361,7 @@
         <div class="msg" id="f0-msg"></div>
       </div>
 
-      <div class="note key">−f(0) 的來源很具體：它來自<b>積分下限 t = 0</b>。分部積分產生的邊界項 [e⁻ˢᵗf(t)]₀^∞ 在 t = 0 那端留下 e⁰·f(0) = f(0)，前面帶著減號。<b>拉普拉斯積分從 0 開始，所以初始值一定會被帶進來</b> —— 這不是缺陷，這正是它能一次解決「微分方程 + 初始條件」的原因。</div>
+      <div class="note key">−f(0) 的來源很具體：它來自<b>積分下限 t = 0</b>。分部積分產生的邊界項 [e⁻ˢᵗf(t)]₀<sup>∞</sup> 在 t = 0 那端留下 e⁰·f(0) = f(0)，前面帶著減號。<b>拉普拉斯積分從 0 開始，所以初始值一定會被帶進來</b> —— 這不是缺陷，這正是它能一次解決「微分方程 + 初始條件」的原因。</div>
 
       <div class="howto">
         <h4>用 ℒ 解 ODE 時的檢查點</h4>
@@ -395,7 +395,7 @@
         <div class="dv-steps" id="ode-steps" style="padding:8px 16px 14px"></div>
       </div>
 
-      <p class="note key">對照一下傳統解法：你要先猜通解 y = Ce^(−3t)，再代 y(0) = 2 求出 C = 2。用 ℒ 的話，<b>初始條件在轉換的當下就被吃進去了</b>，不需要事後補代。方程越複雜（高階、有外加輸入），這個優勢越明顯。</p>
+      <p class="note key">對照一下傳統解法：你要先猜通解 y = Ce<sup>−3t</sup>，再代 y(0) = 2 求出 C = 2。用 ℒ 的話，<b>初始條件在轉換的當下就被吃進去了</b>，不需要事後補代。方程越複雜（高階、有外加輸入），這個優勢越明顯。</p>
     </section>
 
     <!-- ══════════ 勘誤 ══════════ -->
@@ -410,7 +410,7 @@
           <li>位置：第一頁「What is complex function?」的 <b>f(z) = e⁻ᶻ</b> 展開。</li>
           <li>筆記寫：<span class="x">e⁻ᶻ = e⁻ˣ(cos y + i sin y)</span></li>
           <li>應該是：<span class="o">e⁻ᶻ = e⁻ˣ(cos y − i sin y)</span>，所以 <b>Im = −e⁻ˣ sin y</b>。</li>
-          <li>驗證：取 x=0、y=π/2，e^(−iπ/2) 應該是 −i。正確版給 0 − i = −i ✓；筆記版給 +i ✗。</li>
+          <li>驗證：取 x=0、y=π/2，e<sup>−iπ/2</sup> 應該是 −i。正確版給 0 − i = −i ✓；筆記版給 +i ✗。</li>
         </ul>
       </div>
 
@@ -453,14 +453,14 @@
         <div class="gl-row"><b>實雙變數函數</b><span>real function of two variables</span><code>u(x,y)</code></div>
         <div class="gl-row"><b>實部</b><span>real part</span><code>Re</code></div>
         <div class="gl-row"><b>虛部</b><span>imaginary part</span><code>Im</code></div>
-        <div class="gl-row"><b>尤拉公式</b><span>Euler's formula</span><code>e^(iθ)</code></div>
+        <div class="gl-row"><b>尤拉公式</b><span>Euler's formula</span><code>e<sup>iθ</sup></code></div>
         <div class="gl-row"><b>分部積分</b><span>integration by parts</span><code>∫fdg</code></div>
         <div class="gl-row"><b>定積分 / 不定積分</b><span>definite / indefinite integral</span><code>∫ₐᵇ / ∫</code></div>
         <div class="gl-row"><b>常微分方程</b><span>ordinary differential equation (ODE)</span><code>o.d.e.</code></div>
         <div class="gl-row"><b>初始值 / 初始條件</b><span>initial value / initial condition</span><code>f(0)</code></div>
         <div class="gl-row"><b>收斂 / 發散</b><span>converge / diverge</span><code>—</code></div>
         <div class="gl-row"><b>收斂區</b><span>region of convergence (ROC)</span><code>s &gt; a</code></div>
-        <div class="gl-row"><b>指數階</b><span>exponential order</span><code>|f| ≤ Me^(at)</code></div>
+        <div class="gl-row"><b>指數階</b><span>exponential order</span><code>|f| ≤ Me<sup>at</sup></code></div>
         <div class="gl-row"><b>轉換對</b><span>transform pair</span><code>f(t) ↔ F(s)</code></div>
       </div>
     </section>

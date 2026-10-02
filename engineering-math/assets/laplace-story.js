@@ -3,7 +3,7 @@
    寫法：照電子學 CH1 PART 1 的節奏 —— 先講「微分是什麼、微分方程在問什麼、為什麼要繞路」，
          用對數、翻譯機當比喻；「先整理一下」之後才看積分公式，最後才推導 ℒ(f′) = sF(s) − f(0)。
    主線謎題：一個量 y 一開始是 2，減少的速度 = 3 × 它自己（y′ + 3y = 0，y(0) = 2）。y 長什麼樣子？
-   答案：拉普拉斯轉換把「微分」翻譯成「乘以 s」，整題變成一次方程，解完查表換回來：y = 2e^(−3t)。
+   答案：拉普拉斯轉換把「微分」翻譯成「乘以 s」，整題變成一次方程，解完查表換回來：y = 2e<sup>−3t</sup>。
    ============================================================ */
 (function () {
   'use strict';
@@ -125,7 +125,7 @@
     svg: box(150, 140, 210, 50, '微分方程（難）', 'b1', false, 14) +
       box(490, 140, 230, 50, '一次方程（國中程度）', 'b2', true, 14) +
       box(490, 262, 210, 50, 'Y = 2 / (s + 3)', 'b3', true, 15) +
-      box(150, 262, 210, 50, 'y = 2e^(−3t)', 'b4', false, 15) +
+      box(150, 262, 210, 50, 'y = 2e<sup>−3t</sup>', 'b4', false, 15) +
       g('a1', arrow(258, 140, 372, 140, null, 'lna') + T(315, 128, 'ℒ（轉換）', { cls: 'ta', fs: 13 })) +
       g('a2', arrow(490, 168, 490, 234, null, 'lna') + T(500, 201, '移項', { cls: 'ta', fs: 13, a: 'start', dy: '.35em' })) +
       g('a3', arrow(382, 262, 258, 262, null, 'lna') + T(320, 250, 'ℒ⁻¹（查表換回來）', { cls: 'ta', fs: 13 })) +
@@ -176,10 +176,10 @@
 
   /* ════════════ 08 機器的說明書 ════════════ */
   const S8 = {
-    t: '機器的說明書', en: 'F(s) = ∫ f(t) e^(−st) dt',
-    svg: T(140, 140, 'F(s) =', { cls: 't', fs: 26, k: 'pF' }) + T(232, 140, '∫₀^∞', { cls: 't', fs: 26, k: 'pI' }) +
+    t: '機器的說明書', en: 'F(s) = ∫ f(t) e<sup>−st</sup> dt',
+    svg: T(140, 140, 'F(s) =', { cls: 't', fs: 26, k: 'pF' }) + T(232, 140, '∫₀<sup>∞</sup>', { cls: 't', fs: 26, k: 'pI' }) +
       T(310, 140, 'f(t)', { cls: 't', fs: 26, k: 'pf' }) + T(352, 140, '·', { cls: 't', fs: 26, k: 'pd' }) +
-      T(420, 140, 'e^(−st)', { cls: 't', fs: 26, k: 'pe' }) + T(500, 140, 'dt', { cls: 't', fs: 26, k: 'pt' }) +
+      T(420, 140, 'e<sup>−st</sup>', { cls: 't', fs: 26, k: 'pe' }) + T(500, 140, 'dt', { cls: 't', fs: 26, k: 'pt' }) +
       g('h1', '<rect x="282" y="112" width="56" height="40" rx="6" class="acc" opacity=".14"/>' + T(310, 186, '① 放進去的函數', { cls: 'ta', fs: 13 })) +
       g('h2', '<rect x="372" y="112" width="96" height="40" rx="6" class="acc" opacity=".14"/>' + T(420, 214, '② 乘上一條往下掉的曲線', { cls: 'ta', fs: 13 })) +
       g('h3', '<rect x="200" y="106" width="64" height="48" rx="6" class="acc" opacity=".14"/><rect x="484" y="112" width="36" height="40" rx="6" class="acc" opacity=".14"/>' +
@@ -195,10 +195,10 @@
     ]
   };
 
-  /* ════════════ 09 e^(−st) 長什麼樣 ════════════ */
+  /* ════════════ 09 e<sup>−st</sup> 長什麼樣 ════════════ */
   const X9 = t => 90 + t * 96, Y9 = v => 290 - 160 * v;
   const S9 = {
-    t: 'e^(−st)：一條往下掉的曲線', en: 'WHAT e^(−st) LOOKS LIKE',
+    t: 'e<sup>−st</sup>：一條往下掉的曲線', en: 'WHAT e<sup>−st</sup> LOOKS LIKE',
     svg: axes(90, 290, 490, 180, 'ax', 't', null) +
       T(80, Y9(1), '1', { cls: 'tm', fs: 13, a: 'end', dy: '.35em', k: 'one' }) +
       path(P(x => Y9(Math.exp(-0.5 * (x - 90) / 96)), 90, 570, 120), 'ln', 'c05', 'stroke-width:2.2') + T(560, Y9(Math.exp(-0.5 * 4.9)) - 12, 's = 0.5', { cls: 't', fs: 13, a: 'end', k: 'l05' }) +
@@ -222,7 +222,7 @@
     svg: axes(90, 290, 490, 180, 'ax', 't', null) +
       path('M90 ' + Y9(1) + ' H570', 'ln', 'c1', 'stroke-width:2.4') + T(560, Y9(1) - 10, 'f(t) = 1', { cls: 't', fs: 13, a: 'end', k: 'l1' }) +
       '<path class="acc" opacity=".22" d="' + area1 + '"' + k('area') + '/>' +
-      path(P(x => Y9(Math.exp(-(x - 90) / 96)), 90, 570, 120), 'lna', 'c2', 'stroke-width:2.8') + T(170, 196, '乘上 e^(−st) 之後', { cls: 'ta', fs: 13, a: 'start', k: 'l2' }) +
+      path(P(x => Y9(Math.exp(-(x - 90) / 96)), 90, 570, 120), 'lna', 'c2', 'stroke-width:2.8') + T(170, 196, '乘上 e<sup>−st</sup> 之後', { cls: 'ta', fs: 13, a: 'start', k: 'l2' }) +
       T(330, 256, '面積 = 1/s = 1', { cls: 'ta', fs: 16, k: 'res' }) +
       '<path class="acc" opacity=".35" d="' + area2 + '"' + k('area2') + '/>' +
       path(P(x => Y9(Math.exp(-2 * (x - 90) / 96)), 90, 570, 120), 'lna', 'c3', 'stroke-width:2;stroke-dasharray:6 4') +
@@ -238,7 +238,7 @@
   /* ════════════ 11 s 是什麼 ════════════ */
   const S11 = {
     t: 's 到底是什麼？', en: 'WHAT IS s',
-    svg: T(320, 112, 'F(s) 裡的 s ＝ e^(−st) 裡決定「掉多快」的那個數', { cls: 't', fs: 16, k: 'a' }) +
+    svg: T(320, 112, 'F(s) 裡的 s ＝ e<sup>−st</sup> 裡決定「掉多快」的那個數', { cls: 't', fs: 16, k: 'a' }) +
       g('sp', arrow(380, 290, 590, 290, null, 'ln') + arrow(410, 316, 410, 160, null, 'ln') + T(594, 290, 'σ', { cls: 'tm', fs: 14, a: 'start', dy: '.35em' }) + T(418, 166, 'jω', { cls: 'tm', fs: 14, a: 'start' }) +
         '<path class="ln dsh" d="M520 290 V210 M410 210 H520"/><circle class="acc" cx="520" cy="210" r="6"/>' + T(528, 200, 's = σ + jω', { cls: 'ta', fs: 13, a: 'start' })) +
       T(200, 196, '課本：s 是一個複數', { cls: 'tm', fs: 14, k: 'b' }) + T(200, 220, '（平面上的一個點）', { cls: 'ts', fs: 12.5, k: 'b2' }) +
@@ -255,9 +255,9 @@
   const S12 = {
     t: '查表用的對照表', en: 'TABLE OF TRANSFORMS',
     svg: T(250, 100, 'f(t)', { cls: 'tm', fs: 13, a: 'end' }) + T(390, 100, 'F(s)', { cls: 'tm', fs: 13, a: 'start' }) +
-      trow(130, '1', '1 / s', 'r1') + trow(166, 't', '1 / s²', 'r2') + trow(202, 'e^(at)', '1 / (s − a)', 'r3') +
+      trow(130, '1', '1 / s', 'r1') + trow(166, 't', '1 / s²', 'r2') + trow(202, 'e<sup>at</sup>', '1 / (s − a)', 'r3') +
       trow(238, 'sin ωt', 'ω / (s² + ω²)', 'r4') + trow(274, 'cos ωt', 's / (s² + ω²)', 'r5') +
-      chip(320, 316, '全部用同一招算出來', '乘 e^(−st)、算面積 —— 看懂一條就等於看懂全部', 'c', { fs: 13, acc: true }),
+      chip(320, 316, '全部用同一招算出來', '乘 e<sup>−st</sup>、算面積 —— 看懂一條就等於看懂全部', 'c', { fs: 13, acc: true }),
     steps: [
       { sub: '剛剛算出來的就是對照表第一列：<b>1 → 1/s</b>。', on: 'r1' },
       { sub: '其他常用的函數也這樣算好，排成一張<b>對照表</b>。最後「搬回來」就是查這張表。', on: 'r2 r3 r4 r5' },
@@ -269,10 +269,10 @@
   const S13 = {
     t: '關鍵：指數函數微分後還是自己', en: 'THE KEY PROPERTY',
     svg: T(320, 112, '指數函數微分後，還是自己 × 一個數', { cls: 't', fs: 18, k: 'a' }) +
-      T(320, 160, '( e^(2t) )′ = 2 · e^(2t)', { cls: 't', fs: 18, k: 'b1' }) +
-      T(320, 196, '( e^(−3t) )′ = −3 · e^(−3t)', { cls: 't', fs: 18, k: 'b2' }) +
-      T(320, 240, '( e^(−st) )′ = −s · e^(−st)', { cls: 'ta', fs: 22, k: 'b3' }) +
-      chip(320, 300, '微分一次，就吐出一個 s', '機器裡剛好有 e^(−st) → 「微分」會被翻譯成「乘以 s」', 'c', { fs: 13, acc: true }),
+      T(320, 160, '( e<sup>2t</sup> )′ = 2 · e<sup>2t</sup>', { cls: 't', fs: 18, k: 'b1' }) +
+      T(320, 196, '( e<sup>−3t</sup> )′ = −3 · e<sup>−3t</sup>', { cls: 't', fs: 18, k: 'b2' }) +
+      T(320, 240, '( e<sup>−st</sup> )′ = −s · e<sup>−st</sup>', { cls: 'ta', fs: 22, k: 'b3' }) +
+      chip(320, 300, '微分一次，就吐出一個 s', '機器裡剛好有 e<sup>−st</sup> → 「微分」會被翻譯成「乘以 s」', 'c', { fs: 13, acc: true }),
     steps: [
       { sub: '為什麼 ℒ 能把微分變成乘法？關鍵是指數函數的一個性質：<b>微分後還是自己，只多乘一個數</b>。', on: 'a' },
       { sub: '例：e<sup>2t</sup> 微分 → 2·e<sup>2t</sup>；e<sup>−3t</sup> 微分 → −3·e<sup>−3t</sup>。', on: 'b1 b2' },
@@ -285,12 +285,12 @@
   const line14 = (y, s, key, cls) => T(320, y, s, { cls: cls || 't', fs: 16, k: key });
   const S14 = {
     t: '再深一點：ℒ(f′) 的推導', en: 'ℒ(f′) = sF(s) − f(0)',
-    svg: line14(108, 'ℒ(f′) = ∫₀^∞ f′(t) · e^(−st) dt', 'l1') +
+    svg: line14(108, 'ℒ(f′) = ∫₀<sup>∞</sup> f′(t) · e<sup>−st</sup> dt', 'l1') +
       line14(150, '分部積分：∫ u dv = uv − ∫ v du', 'l2', 'tm') +
-      line14(192, '= [ f(t)·e^(−st) ]₀^∞ − ∫₀^∞ f(t) · (−s e^(−st)) dt', 'l3') +
-      line14(234, '= ( 0 − f(0) ) + s · ∫₀^∞ f(t) e^(−st) dt', 'l4') +
+      line14(192, '= [ f(t)·e<sup>−st</sup> ]₀<sup>∞</sup> − ∫₀<sup>∞</sup> f(t) · (−s e<sup>−st</sup>) dt', 'l3') +
+      line14(234, '= ( 0 − f(0) ) + s · ∫₀<sup>∞</sup> f(t) e<sup>−st</sup> dt', 'l4') +
       T(320, 282, 'ℒ(f′) = s·F(s) − f(0)', { cls: 'ta', fs: 22, k: 'l5' }) +
-      chip(150, 316, 'e^(−st) 微分吐出 −s', '負負得正，s 提到外面', 'c1', { fs: 12, acc: true }) +
+      chip(150, 316, 'e<sup>−st</sup> 微分吐出 −s', '負負得正，s 提到外面', 'c1', { fs: 12, acc: true }) +
       chip(490, 316, '邊界項留下 −f(0)', '初始條件自動被帶進來', 'c2', { fs: 12 }),
     steps: [
       { sub: '把剛剛的直覺寫成數學。照說明書，把 f′ 放進機器。', on: 'l1' },
@@ -324,8 +324,8 @@
       T(120, 142, '① 兩邊放進機器', { cls: 'tm', fs: 13, a: 'start', k: 's1' }) + T(560, 142, '[ sY − y(0) ] + 3Y = 0', { cls: 'ta', fs: 16, a: 'end', k: 'e1' }) +
       T(120, 182, '② 代 y(0) = 2', { cls: 'tm', fs: 13, a: 'start', k: 's2' }) + T(560, 182, 'sY − 2 + 3Y = 0', { cls: 'ta', fs: 16, a: 'end', k: 'e2' }) +
       T(120, 222, '③ 國中移項', { cls: 'tm', fs: 13, a: 'start', k: 's3' }) + T(560, 222, '(s + 3) Y = 2　⟹　Y = 2 / (s + 3)', { cls: 'ta', fs: 16, a: 'end', k: 'e3' }) +
-      T(120, 262, '④ 查表 1/(s − a)', { cls: 'tm', fs: 13, a: 'start', k: 's4' }) + T(560, 262, 'a = −3　⟹　y = 2e^(−3t)', { cls: 'ta', fs: 16, a: 'end', k: 'e4' }) +
-      chip(320, 310, '驗算：y(0) = 2 ✓　y′ = −6e^(−3t) = −3y ✓', '沒有積分、沒有猜，只有加減乘除和查表', 'c', { fs: 13, acc: true }),
+      T(120, 262, '④ 查表 1/(s − a)', { cls: 'tm', fs: 13, a: 'start', k: 's4' }) + T(560, 262, 'a = −3　⟹　y = 2e<sup>−3t</sup>', { cls: 'ta', fs: 16, a: 'end', k: 'e4' }) +
+      chip(320, 310, '驗算：y(0) = 2 ✓　y′ = −6e<sup>−3t</sup> = −3y ✓', '沒有積分、沒有猜，只有加減乘除和查表', 'c', { fs: 13, acc: true }),
     steps: [
       { sub: '回到開頭那題：<b>y′ + 3y = 0，y(0) = 2</b>。', on: 'q0' },
       { sub: '① 兩邊放進機器：y′ 變成 sY − y(0)，y 變成 Y。', on: 's1 e1' },
@@ -341,12 +341,12 @@
     t: '恍然大悟', en: 'THE ANSWER',
     svg: T(320, 220, '?', { cls: 'ta', fs: 110, k: 'q' }) +
       g('L', '<rect class="card" x="70" y="96" width="236" height="150" rx="14" filter="url(#st-sh)"/>' +
-        T(188, 124, '為什麼會變簡單', { fs: 16, cls: 'ta' }) + T(188, 156, 'e^(−st) 微分會吐出 s', { cls: 'tm', fs: 13 }) +
+        T(188, 124, '為什麼會變簡單', { fs: 16, cls: 'ta' }) + T(188, 156, 'e<sup>−st</sup> 微分會吐出 s', { cls: 'tm', fs: 13 }) +
         T(188, 182, '微分 → 乘以 s', { cls: 'tm', fs: 13 }) + T(188, 222, 'ℒ(y′) = sY − y(0)', { cls: 'ta', fs: 15 })) +
       g('R', '<rect class="card" x="334" y="96" width="236" height="150" rx="14" filter="url(#st-sh)"/>' +
         T(452, 124, '答案', { fs: 16 }) + T(452, 156, '繞到 s 世界移項', { cls: 'tm', fs: 13 }) +
-        T(452, 182, '再查表搬回來', { cls: 'tm', fs: 13 }) + T(452, 222, 'y = 2e^(−3t)', { cls: 't', fs: 16 })) +
-      chip(320, 282, '謎題解開了 ✓', '一開始是 2、越大掉越快的那條曲線，就是 2e^(−3t)', 'ans', { fs: 13, acc: true }) +
+        T(452, 182, '再查表搬回來', { cls: 'tm', fs: 13 }) + T(452, 222, 'y = 2e<sup>−3t</sup>', { cls: 't', fs: 16 })) +
+      chip(320, 282, '謎題解開了 ✓', '一開始是 2、越大掉越快的那條曲線，就是 2e<sup>−3t</sup>', 'ans', { fs: 13, acc: true }) +
       chip(320, 282, '下一個單元：二階 ODE 與特徵方程', '同樣是把微分變成「乘一個數」，只是換一招', 'next', { fs: 13 }),
     steps: [
       { sub: '回到開頭：一開始是 2、減少的速度 = 3 × 自己，y 長什麼樣子？', on: 'q' },

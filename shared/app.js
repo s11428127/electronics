@@ -122,17 +122,29 @@
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     if (r >= 6) ctx.fillText('+', x, y + 0.5);
   }
+  /* 文字裡的 <sup>…</sup> 畫成上標（次方一律這樣寫，不用 ^） */
+  function richText(ctx, x, y, text, size, fam, weight, align) {
+    const parts = String(text).split(/<sup>|<\/sup>/);
+    if (parts.length === 1) { ctx.textAlign = align; ctx.fillText(text, x, y); return; }
+    const fN = weight + ' ' + size + 'px ' + fam, fS = weight + ' ' + Math.round(size * 0.72) + 'px ' + fam;
+    let W = 0;
+    parts.forEach((p, i) => { ctx.font = i % 2 ? fS : fN; W += ctx.measureText(p).width; });
+    let cx = align === 'center' ? x - W / 2 : align === 'right' ? x - W : x;
+    ctx.textAlign = 'left';
+    parts.forEach((p, i) => { ctx.font = i % 2 ? fS : fN; ctx.fillText(p, cx, i % 2 ? y - size * 0.38 : y); cx += ctx.measureText(p).width; });
+    ctx.font = fN;
+  }
   function label(ctx, x, y, text, color, size, align, weight) {
     ctx.fillStyle = color || C['ink-3'];
     ctx.font = (weight || '500') + ' ' + (size || 11) + 'px ' + MONO;
-    ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(text, x, y);
+    ctx.textBaseline = 'middle';
+    richText(ctx, x, y, text, size || 11, MONO, weight || '500', align || 'center');
   }
   function labelCJK(ctx, x, y, text, color, size, align, weight) {
     ctx.fillStyle = color || C['ink-2'];
     ctx.font = (weight || '500') + ' ' + (size || 12) + 'px ' + BODY;
-    ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(text, x, y);
+    ctx.textBaseline = 'middle';
+    richText(ctx, x, y, text, size || 12, BODY, weight || '500', align || 'center');
   }
   function arrow(ctx, x1, y1, x2, y2, color, width) {
     const a = Math.atan2(y2 - y1, x2 - x1), hd = 6.5;
@@ -156,7 +168,7 @@
     sync();
     return el;
   }
-  function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
+  function setText(id, v) { const el = document.getElementById(id); if (el) { if (/<sup>/.test(v)) el.innerHTML = v; else el.textContent = v; } }
 
 
   /* ---------------- 專有名詞小字典 ---------------- */

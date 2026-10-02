@@ -96,7 +96,7 @@
       box.innerHTML = '';
       S.items.forEach((pair, i) => {
         const b = document.createElement('button');
-        b.className = 'btn'; b.type = 'button'; b.textContent = pair[0];
+        b.className = 'btn'; b.type = 'button'; b.innerHTML = pair[0];
         b.setAttribute('aria-pressed', String(i === sel));
         b.addEventListener('click', () => pick(i));
         box.appendChild(b);
@@ -230,8 +230,8 @@
   })();
 
   /* ══════════════════════════════════════════════════════════
-     ③ 為什麼要乘 e^(−st) 再積分 —— 整章最重要的直覺
-     F(s) = ∫₀^∞ f(t)·e^(−st) dt　＝　乘積曲線下的面積
+     ③ 為什麼要乘 e<sup>−st</sup> 再積分 —— 整章最重要的直覺
+     F(s) = ∫₀<sup>∞</sup> f(t)·e<sup>−st</sup> dt　＝　乘積曲線下的面積
      ══════════════════════════════════════════════════════════ */
   (function whyEst() {
     const cv = document.getElementById('cv-why'); if (!cv) return;
@@ -288,8 +288,8 @@
       }
 
       row(0, '① f(t) 原函數', FS[key].f, C['p-real'], null);
-      row(1, '② e^(−st) 衰減包絡　s = ' + fix(s, 2), t => Math.exp(-s * t), C['q-react'], null);
-      row(2, '③ 乘積 f(t)·e^(−st)　← 這塊面積就是 F(s)',
+      row(1, '② e<sup>−st</sup> 衰減包絡　s = ' + fix(s, 2), t => Math.exp(-s * t), C['q-react'], null);
+      row(2, '③ 乘積 f(t)·e<sup>−st</sup>　← 這塊面積就是 F(s)',
         t => FS[key].f(t) * Math.exp(-s * t), C['s-app'],
         diverge ? 'rgba(200,60,40,.18)' : C['s-app-w']);
       label(ctx, x1, h - 10, 't →', C['ink-3'], 10, 'right');
@@ -333,7 +333,7 @@
         setText('why-area', '發散 ∞');
         setText('why-exact', '不存在');
         el.className = 'msg bad';
-        el.textContent = '✗ s = ' + fix(s, 2) + ' 太小了：f(t) 長得比 e^(−st) 衰減得還快，'
+        el.innerHTML = '✗ s = ' + fix(s, 2) + ' 太小了：f(t) 長得比 e<sup>−st</sup> 衰減得還快，'
           + '乘積不但沒有變小反而爆炸，積分發散、F(s) 不存在。'
           + '這個函數必須 s > ' + fix(F.min, 0) + ' 才收斂 —— 這就是「收斂區（ROC）」的意思。';
       } else {
@@ -370,27 +370,27 @@
     const host = document.getElementById('pair-list'); if (!host) return;
     const P = [
       { f: 'f(t) = 1', Fs: 'F(s) = 1/s', roc: 's > 0',
-        steps: ['∫₀^∞ 1 · e^(−st) dt',
-                '= [ −(1/s)·e^(−st) ]₀^∞',
-                '= 0 − ( −1/s )　（t→∞ 時 e^(−st)→0，需要 s > 0）',
+        steps: ['∫₀<sup>∞</sup> 1 · e<sup>−st</sup> dt',
+                '= [ −(1/s)·e<sup>−st</sup> ]₀<sup>∞</sup>',
+                '= 0 − ( −1/s )　（t→∞ 時 e<sup>−st</sup>→0，需要 s > 0）',
                 '= 1/s'] },
       { f: 'f(t) = t', Fs: 'F(s) = 1/s²', roc: 's > 0',
-        steps: ['∫₀^∞ t · e^(−st) dt　← 用分部積分，取 u = t、dv = e^(−st)dt',
-                '= [ −(t/s)e^(−st) ]₀^∞ + (1/s)∫₀^∞ e^(−st) dt',
+        steps: ['∫₀<sup>∞</sup> t · e<sup>−st</sup> dt　← 用分部積分，取 u = t、dv = e<sup>−st</sup>dt',
+                '= [ −(t/s)e<sup>−st</sup> ]₀<sup>∞</sup> + (1/s)∫₀<sup>∞</sup> e<sup>−st</sup> dt',
                 '第一項在 t→∞ 與 t=0 都是 0',
                 '= (1/s) · (1/s) = 1/s²'] },
-      { f: 'f(t) = e^(at)', Fs: 'F(s) = 1/(s−a)', roc: 's > a',
-        steps: ['∫₀^∞ e^(at) · e^(−st) dt = ∫₀^∞ e^(−(s−a)t) dt',
+      { f: 'f(t) = e<sup>at</sup>', Fs: 'F(s) = 1/(s−a)', roc: 's > a',
+        steps: ['∫₀<sup>∞</sup> e<sup>at</sup> · e<sup>−st</sup> dt = ∫₀<sup>∞</sup> e<sup>−(s−a)t</sup> dt',
                 '兩個指數合併：指數相加',
-                '= [ −1/(s−a) · e^(−(s−a)t) ]₀^∞',
+                '= [ −1/(s−a) · e<sup>−(s−a)t</sup> ]₀<sup>∞</sup>',
                 '= 0 − ( −1/(s−a) ) = 1/(s−a)　（要 s > a 才收斂）'] },
       { f: 'f(t) = cos ωt', Fs: 'F(s) = s/(s²+ω²)', roc: 's > 0',
-        steps: ['用尤拉公式：cos ωt = (e^(jωt) + e^(−jωt)) / 2',
-                '= ½[ ℒ(e^(jωt)) + ℒ(e^(−jωt)) ]',
+        steps: ['用尤拉公式：cos ωt = (e<sup>jωt</sup> + e<sup>−jωt</sup>) / 2',
+                '= ½[ ℒ(e<sup>jωt</sup>) + ℒ(e<sup>−jωt</sup>) ]',
                 '= ½[ 1/(s−jω) + 1/(s+jω) ]　← 直接套上一條的結果',
                 '通分：= ½ · 2s/(s²+ω²) = s/(s²+ω²)'] },
       { f: 'f(t) = sin ωt', Fs: 'F(s) = ω/(s²+ω²)', roc: 's > 0',
-        steps: ['sin ωt = (e^(jωt) − e^(−jωt)) / (2j)',
+        steps: ['sin ωt = (e<sup>jωt</sup> − e<sup>−jωt</sup>) / (2j)',
                 '= (1/2j)[ 1/(s−jω) − 1/(s+jω) ]',
                 '= (1/2j) · 2jω/(s²+ω²)',
                 '= ω/(s²+ω²)'] }
@@ -425,20 +425,20 @@
     let step = 0;
 
     const STEPS = [
-      { eq: 'ℒ( f′(t) ) = ∫₀^∞ f′(t) · e^(−st) dt',
+      { eq: 'ℒ( f′(t) ) = ∫₀<sup>∞</sup> f′(t) · e<sup>−st</sup> dt',
         why: '從定義開始：要轉換的對象換成 f′(t)，其他照抄。' },
-      { eq: '= ∫₀^∞ e^(−st) · df(t)',
+      { eq: '= ∫₀<sup>∞</sup> e<sup>−st</sup> · df(t)',
         why: '因為 f′(t)dt = df(t)。這樣寫是為了湊出分部積分的形狀。' },
       { eq: '分部積分：∫ f dg = f·g − ∫ g df',
-        why: '取 f ← e^(−st)、g ← f(t)。這是整個推導唯一的技巧。' },
-      { eq: '= [ e^(−st)·f(t) ]₀^∞ − ∫₀^∞ f(t) · d(e^(−st))',
-        why: '套進去。注意後面那項還留著一個 d(e^(−st)) 要處理。' },
-      { eq: 'd(e^(−st))/dt = −s·e^(−st)　⟹　d(e^(−st)) = −s·e^(−st) dt',
+        why: '取 f ← e<sup>−st</sup>、g ← f(t)。這是整個推導唯一的技巧。' },
+      { eq: '= [ e<sup>−st</sup>·f(t) ]₀<sup>∞</sup> − ∫₀<sup>∞</sup> f(t) · d(e<sup>−st</sup>)',
+        why: '套進去。注意後面那項還留著一個 d(e<sup>−st</sup>) 要處理。' },
+      { eq: 'd(e<sup>−st</sup>)/dt = −s·e<sup>−st</sup>　⟹　d(e<sup>−st</sup>) = −s·e<sup>−st</sup> dt',
         why: '把微分算出來。關鍵：跑出一個常數 −s，它等一下會被提到積分外面。' },
-      { eq: '= [ e^(−st)f(t) ]₀^∞ + s∫₀^∞ f(t)e^(−st) dt',
+      { eq: '= [ e<sup>−st</sup>f(t) ]₀<sup>∞</sup> + s∫₀<sup>∞</sup> f(t)e<sup>−st</sup> dt',
         why: '負負得正，而且 s 是常數可以提出來。右邊那個積分你已經認得了。' },
-      { eq: '邊界項：lim(t→∞) e^(−st)f(t) = 0，　lim(t→0) e^(−st)f(t) = 1·f(0) = f(0)',
-        why: 't→0 時 e⁰ = 1，所以只剩 f(0)。t→∞ 那項要為 0，需要 f 不能長得比 e^(st) 還快（指數階條件）。' },
+      { eq: '邊界項：lim(t→∞) e<sup>−st</sup>f(t) = 0，　lim(t→0) e<sup>−st</sup>f(t) = 1·f(0) = f(0)',
+        why: 't→0 時 e⁰ = 1，所以只剩 f(0)。t→∞ 那項要為 0，需要 f 不能長得比 e<sup>st</sup> 還快（指數階條件）。' },
       { eq: '= ( 0 − f(0) ) + s·F(s)',
         why: '把兩個邊界值代進去。那個 −f(0) 就是這樣冒出來的 —— 它來自積分的下限 t = 0。' },
       { eq: 'ℒ( f′(t) ) = s·F(s) − f(0)',
@@ -579,17 +579,17 @@
              { box: 2, eq: "ℒ: [ sY(s) − y(0) ] + 3Y(s) = 0", why: '兩邊同時做 ℒ。微分項用 ℒ(y′) = sY(s) − y(0)，初始值就在這裡進來。' },
              { box: 2, eq: "sY(s) − 2 + 3Y(s) = 0", why: '代入 y(0) = 2。到這裡已經沒有微分了，只剩代數。' },
              { box: 2, eq: "Y(s)(s + 3) = 2　⟹　Y(s) = 2/(s+3)", why: '像國中解方程一樣把 Y(s) 移項解出來。這就是 ℒ 的威力：微分方程變成一次方程。' },
-             { box: 3, eq: "ℒ⁻¹: y(t) = 2·e^(−3t)", why: '查表反轉換：1/(s−a) ↔ e^(at)，這裡 a = −3，前面的係數 2 直接跟著走。' },
-             { box: 3, eq: "驗算：y(0) = 2 ✓　y′ = −6e^(−3t)，y′+3y = −6e^(−3t)+6e^(−3t) = 0 ✓", why: '代回原式確認。養成驗算的習慣，這一步只要十秒。' }
-           ], ans: 'y(t) = 2e^(−3t)', fn: t => 2 * Math.exp(-3 * t) },
+             { box: 3, eq: "ℒ⁻¹: y(t) = 2·e<sup>−3t</sup>", why: '查表反轉換：1/(s−a) ↔ e<sup>at</sup>，這裡 a = −3，前面的係數 2 直接跟著走。' },
+             { box: 3, eq: "驗算：y(0) = 2 ✓　y′ = −6e<sup>−3t</sup>，y′+3y = −6e<sup>−3t</sup>+6e<sup>−3t</sup> = 0 ✓", why: '代回原式確認。養成驗算的習慣，這一步只要十秒。' }
+           ], ans: 'y(t) = 2e<sup>−3t</sup>', fn: t => 2 * Math.exp(-3 * t) },
       b: { title: "y′ − 2y = 0,　y(0) = 1",
            steps: [
              { box: 1, eq: "y′ − 2y = 0,　y(0) = 1", why: '這次是正的指數，注意符號。' },
              { box: 2, eq: "ℒ: sY(s) − 1 − 2Y(s) = 0", why: '同樣代 ℒ(y′) = sY(s) − y(0)，y(0) = 1。' },
-             { box: 2, eq: "Y(s)(s − 2) = 1　⟹　Y(s) = 1/(s−2)", why: '整理。分母出現 (s−2)，等一下反轉換會對應到 e^(2t)。' },
-             { box: 3, eq: "ℒ⁻¹: y(t) = e^(2t)", why: '1/(s−a) ↔ e^(at)，這裡 a = +2。' },
+             { box: 2, eq: "Y(s)(s − 2) = 1　⟹　Y(s) = 1/(s−2)", why: '整理。分母出現 (s−2)，等一下反轉換會對應到 e<sup>2t</sup>。' },
+             { box: 3, eq: "ℒ⁻¹: y(t) = e<sup>2t</sup>", why: '1/(s−a) ↔ e<sup>at</sup>，這裡 a = +2。' },
              { box: 3, eq: "注意：F(s) = 1/(s−2) 的收斂區是 s > 2", why: '解會發散（t→∞ 時爆掉），這也反映在收斂區的限制上。' }
-           ], ans: 'y(t) = e^(2t)', fn: t => Math.exp(2 * t) }
+           ], ans: 'y(t) = e<sup>2t</sup>', fn: t => Math.exp(2 * t) }
     };
 
     const st = Stage(cv, { animate: false, ratio: 0.44, minH: 220, maxH: 290, draw(ctx, w, h) {
@@ -659,9 +659,9 @@
   const Q = [
     { zh: '拉普拉斯轉換的定義是什麼？',
       en: 'What is the definition of the Laplace transform?',
-      o: [['∫₀^∞ f(t)e^(−st) dt', '∫₀^∞ f(t)e^(−st) dt'], ['∫₀^∞ f(t)e^(st) dt', '∫₀^∞ f(t)e^(st) dt'],
-          ['∫₋∞^∞ f(t)e^(−st) dt', '∫₋∞^∞ f(t)e^(−st) dt'], ['∫₀^∞ f(t)e^(−t) dt', '∫₀^∞ f(t)e^(−t) dt']], a: 0,
-      e: 'ℒ(f(t)) = F(s) = ∫₀^∞ f(t)e^(−st)dt。三個重點：指數是「負」的 st（要讓它衰減才收斂）、積分下限是 0（所以 f(0) 才會在微分性質中冒出來）、積分變數是 t（積完之後 t 消失，只剩 s）。' },
+      o: [['∫₀<sup>∞</sup> f(t)e<sup>−st</sup> dt', '∫₀<sup>∞</sup> f(t)e<sup>−st</sup> dt'], ['∫₀<sup>∞</sup> f(t)e<sup>st</sup> dt', '∫₀<sup>∞</sup> f(t)e<sup>st</sup> dt'],
+          ['∫₋∞<sup>∞</sup> f(t)e<sup>−st</sup> dt', '∫₋∞<sup>∞</sup> f(t)e<sup>−st</sup> dt'], ['∫₀<sup>∞</sup> f(t)e<sup>−t</sup> dt', '∫₀<sup>∞</sup> f(t)e<sup>−t</sup> dt']], a: 0,
+      e: 'ℒ(f(t)) = F(s) = ∫₀<sup>∞</sup> f(t)e<sup>−st</sup>dt。三個重點：指數是「負」的 st（要讓它衰減才收斂）、積分下限是 0（所以 f(0) 才會在微分性質中冒出來）、積分變數是 t（積完之後 t 消失，只剩 s）。' },
 
     { zh: 'ℒ 把哪一種函數轉換成哪一種函數？',
       en: 'The Laplace transform maps which kind of function to which?',
@@ -671,31 +671,31 @@
           ['複變數函數 → 複變數函數', 'complex function → complex function']], a: 0,
       e: '定義域是 { f(t) | t ∈ ℝ }（實變數函數），值域是 { F(s) | s = σ + jω ∈ ℂ }（複變數函數）。這就是筆記上 A --ℒ--> B 那張圖的意思：轉換就是把一個集合的東西送到另一個集合。' },
 
-    { zh: '為什麼被積函數要乘上 e^(−st)？',
-      en: 'Why is the integrand multiplied by e^(−st)?',
+    { zh: '為什麼被積函數要乘上 e<sup>−st</sup>？',
+      en: 'Why is the integrand multiplied by e<sup>−st</sup>?',
       o: [['讓積分有機會收斂，並且讓每個 s 對應一個數值', 'to make the integral converge and map each s to a number'],
           ['為了讓答案變成實數', 'to make the answer real'],
           ['因為 e 是自然對數的底', 'because e is the base of natural log'],
           ['純粹是歷史習慣', 'purely historical convention']], a: 0,
-      e: 'e^(−st) 是一個衰減因子，把 f(t) 壓下去讓 ∫₀^∞ 有機會收斂；同時 e^(λt) 本來就是常係數 ODE 的解的形式，所以用它當「探針」特別自然。換一個 s，面積就不同 —— 掃過所有 s 就描出整條 F(s)。' },
+      e: 'e<sup>−st</sup> 是一個衰減因子，把 f(t) 壓下去讓 ∫₀<sup>∞</sup> 有機會收斂；同時 e<sup>λt</sup> 本來就是常係數 ODE 的解的形式，所以用它當「探針」特別自然。換一個 s，面積就不同 —— 掃過所有 s 就描出整條 F(s)。' },
 
-    { zh: 'e^(at) 的拉普拉斯轉換與其收斂條件為何？',
-      en: 'What is the Laplace transform of e^(at) and its condition of convergence?',
+    { zh: 'e<sup>at</sup> 的拉普拉斯轉換與其收斂條件為何？',
+      en: 'What is the Laplace transform of e<sup>at</sup> and its condition of convergence?',
       o: [['1/(s−a)，須 s > a', '1/(s−a), requires s > a'], ['1/(s+a)，須 s > a', '1/(s+a), requires s > a'],
           ['1/(s−a)，無條件', '1/(s−a), no condition'], ['a/(s²+a²)，須 s > 0', 'a/(s²+a²), requires s > 0']], a: 0,
-      e: '∫₀^∞ e^(at)e^(−st)dt = ∫₀^∞ e^(−(s−a)t)dt = 1/(s−a)。指數必須是負的才會在 t→∞ 時趨近 0，所以需要 s − a > 0，即 s > a。這個範圍叫收斂區（ROC）。' },
+      e: '∫₀<sup>∞</sup> e<sup>at</sup>e<sup>−st</sup>dt = ∫₀<sup>∞</sup> e<sup>−(s−a)t</sup>dt = 1/(s−a)。指數必須是負的才會在 t→∞ 時趨近 0，所以需要 s − a > 0，即 s > a。這個範圍叫收斂區（ROC）。' },
 
     { zh: 'ℒ(f′(t)) 等於什麼？',
       en: 'What does ℒ(f′(t)) equal?',
       o: [['sF(s) − f(0)', 'sF(s) − f(0)'], ['sF(s)', 'sF(s)'],
           ['sF(s) + f(0)', 'sF(s) + f(0)'], ['F(s)/s', 'F(s)/s']], a: 0,
-      e: '用分部積分推出來：邊界項 [e^(−st)f(t)]₀^∞ 給出 0 − f(0) = −f(0)，剩下的積分給出 sF(s)。那個 −f(0) 來自積分下限 t = 0，不是可以省略的裝飾。' },
+      e: '用分部積分推出來：邊界項 [e<sup>−st</sup>f(t)]₀<sup>∞</sup> 給出 0 − f(0) = −f(0)，剩下的積分給出 sF(s)。那個 −f(0) 來自積分下限 t = 0，不是可以省略的裝飾。' },
 
     { zh: '在推導 ℒ(f′) 時，用到的核心技巧是什麼？',
       en: 'What is the key technique used in deriving ℒ(f′)?',
       o: [['分部積分', 'integration by parts'], ['變數變換', 'change of variables'],
           ['部分分式', 'partial fractions'], ['泰勒展開', 'Taylor expansion']], a: 0,
-      e: '∫ f dg = fg − ∫ g df，取 f ← e^(−st)、g ← f(t)。分部積分把「對 f′ 積分」轉成「對 f 積分」，這樣右邊才會出現 F(s) 本身。' },
+      e: '∫ f dg = fg − ∫ g df，取 f ← e<sup>−st</sup>、g ← f(t)。分部積分把「對 f′ 積分」轉成「對 f 積分」，這樣右邊才會出現 F(s) 本身。' },
 
     { zh: 'ℒ(f″(t)) 等於什麼？',
       en: 'What does ℒ(f″(t)) equal?',
@@ -711,15 +711,15 @@
           ['一定會錯', 'the answer is always wrong'],
           ['會差一個常數 1', 'the answer differs by a constant 1'],
           ['積分會發散', 'the integral diverges']], a: 0,
-      e: 'f(0) = 0 時 sF(s) − 0 = sF(s)，剛好一樣。但只要初始值不為零（例如 f(t) = e^(2t)，f(0) = 1）就會錯。不能養成漏寫的習慣。' },
+      e: 'f(0) = 0 時 sF(s) − 0 = sF(s)，剛好一樣。但只要初始值不為零（例如 f(t) = e<sup>2t</sup>，f(0) = 1）就會錯。不能養成漏寫的習慣。' },
 
-    { zh: '複數 z = x + iy，則 e^(−z) 的展開為何？',
-      en: 'For a complex number z = x + iy, what is the expansion of e^(−z)?',
-      o: [['e⁻ˣ(cos y − i sin y)', 'e^(−x)(cos y − i sin y)'],
-          ['e⁻ˣ(cos y + i sin y)', 'e^(−x)(cos y + i sin y)'],
-          ['e⁻ˣ(sin y − i cos y)', 'e^(−x)(sin y − i cos y)'],
-          ['eˣ(cos y + i sin y)', 'e^(x)(cos y + i sin y)']], a: 0,
-      e: 'e^(−z) = e^(−x−iy) = e^(−x)·e^(−iy)。尤拉公式 e^(iθ) = cos θ + i sin θ，代 θ = −y 得 e^(−iy) = cos(−y) + i sin(−y) = cos y − i sin y。所以是**減號**：Re = e^(−x)cos y，Im = −e^(−x)sin y。這個負號很容易抄錯。' },
+    { zh: '複數 z = x + iy，則 e<sup>−z</sup> 的展開為何？',
+      en: 'For a complex number z = x + iy, what is the expansion of e<sup>−z</sup>?',
+      o: [['e⁻ˣ(cos y − i sin y)', 'e<sup>−x</sup>(cos y − i sin y)'],
+          ['e⁻ˣ(cos y + i sin y)', 'e<sup>−x</sup>(cos y + i sin y)'],
+          ['e⁻ˣ(sin y − i cos y)', 'e<sup>−x</sup>(sin y − i cos y)'],
+          ['eˣ(cos y + i sin y)', 'e<sup>x</sup>(cos y + i sin y)']], a: 0,
+      e: 'e<sup>−z</sup> = e<sup>−x−iy</sup> = e<sup>−x</sup>·e<sup>−iy</sup>。尤拉公式 e<sup>iθ</sup> = cos θ + i sin θ，代 θ = −y 得 e<sup>−iy</sup> = cos(−y) + i sin(−y) = cos y − i sin y。所以是**減號**：Re = e<sup>−x</sup>cos y，Im = −e<sup>−x</sup>sin y。這個負號很容易抄錯。' },
 
     { zh: '用拉普拉斯解 ODE 的核心好處是什麼？',
       en: 'What is the main advantage of solving an ODE with the Laplace transform?',
@@ -735,15 +735,15 @@
           ['sY(s) + 2 + 3Y(s) = 0', 'sY(s) + 2 + 3Y(s) = 0'],
           ['sY(s) + 3Y(s) = 0', 'sY(s) + 3Y(s) = 0'],
           ['s²Y(s) − 2 + 3Y(s) = 0', 's²Y(s) − 2 + 3Y(s) = 0']], a: 0,
-      e: 'ℒ(y′) = sY(s) − y(0) = sY(s) − 2，ℒ(3y) = 3Y(s)，ℒ(0) = 0。整理得 Y(s)(s+3) = 2 → Y(s) = 2/(s+3) → y(t) = 2e^(−3t)。' },
+      e: 'ℒ(y′) = sY(s) − y(0) = sY(s) − 2，ℒ(3y) = 3Y(s)，ℒ(0) = 0。整理得 Y(s)(s+3) = 2 → Y(s) = 2/(s+3) → y(t) = 2e<sup>−3t</sup>。' },
 
     { zh: '關於收斂區（ROC），下列敘述何者正確？',
       en: 'Which statement about the region of convergence (ROC) is correct?',
-      o: [['s 必須夠大，e^(−st) 才壓得住 f(t) 的成長', 's must be large enough for e^(−st) to dominate the growth of f(t)'],
+      o: [['s 必須夠大，e<sup>−st</sup> 才壓得住 f(t) 的成長', 's must be large enough for e<sup>−st</sup> to dominate the growth of f(t)'],
           ['所有函數的 ROC 都是 s > 0', 'the ROC is always s > 0'],
           ['ROC 與 f(t) 無關', 'the ROC does not depend on f(t)'],
           ['s 越小積分越容易收斂', 'smaller s makes convergence easier']], a: 0,
-      e: 'f(t) = e^(2t) 時，乘積是 e^((2−s)t)；只有 s > 2 這個指數才是負的、積分才收斂。若 s ≤ 2，乘積不減反增，積分發散、F(s) 根本不存在。ROC 取決於 f(t) 成長得多快。' }
+      e: 'f(t) = e<sup>2t</sup> 時，乘積是 e<sup>(2−s)t</sup>；只有 s > 2 這個指數才是負的、積分才收斂。若 s ≤ 2，乘積不減反增，積分發散、F(s) 根本不存在。ROC 取決於 f(t) 成長得多快。' }
   ];
   let i = 0, score = 0, answered = false, ord = [];
   /* 選項順序每次打亂：題庫裡正解都寫在第一個，不打亂的話永遠是 A */
@@ -792,7 +792,7 @@
     const pct = Math.round(score / Q.length * 100);
     const verdict = pct >= 90 ? '拉普拉斯的觀念已經很穩，可以往反轉換與部分分式前進了。'
       : pct >= 70 ? '主幹抓到了，把答錯的那幾題回去把對應的互動模組再玩一次。'
-      : '建議從「為什麼要乘 e^(−st)」與「微分性質推導」兩個模組重新走一遍，那是這章的地基。';
+      : '建議從「為什麼要乘 e<sup>−st</sup>」與「微分性質推導」兩個模組重新走一遍，那是這章的地基。';
     host.innerHTML =
       '<div class="bar"><i style="width:100%"></i></div>' +
       '<div class="quiz-body" style="padding-bottom:18px">' +

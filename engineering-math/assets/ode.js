@@ -10,7 +10,7 @@
     clamp, lerp, TAU, liveExample } = E;
   const MINUS = '\u2212';
   const fix = (x, n) => (Math.abs(x) < 5e-13 ? 0 : x).toFixed(n === undefined ? 2 : n).replace('-', MINUS);
-  /* 把 [係數, 'e^(…)'] 的列表串成「3.00e^(−t) − 2.00e^(−2t)」，不會出現「+ −」 */
+  /* 把 [係數, 'e<sup>…</sup>'] 的列表串成「3.00e<sup>−t</sup> − 2.00e<sup>−2t</sup>」，不會出現「+ −」 */
   function terms(list) {
     let out = '';
     list.forEach(([c, tail], i) => {
@@ -185,19 +185,19 @@
         ? 'λ = ' + fix(R.re) + ' ± ' + fix(R.im) + 'i'
         : 'λ₁ = ' + fix(R.l1) + '　λ₂ = ' + fix(R.l2));
       setText('root-form', R.kind === 'real'
-        ? 'y = C₁e^(λ₁t) + C₂e^(λ₂t)'
-        : R.kind === 'double' ? 'y = (C₁ + C₂t)e^(λt)'
-        : 'y = e^(αt)(A cos βt + B sin βt)');
+        ? 'y = C₁e<sup>λ₁t</sup> + C₂e<sup>λ₂t</sup>'
+        : R.kind === 'double' ? 'y = (C₁ + C₂t)e<sup>λt</sup>'
+        : 'y = e<sup>αt</sup>(A cos βt + B sin βt)');
       setText('root-sol', 'y = ' + (R.kind === 'real'
-        ? terms([[S.C1, 'e^(' + fix(R.l1) + 't)'], [S.C2, 'e^(' + fix(R.l2) + 't)']])
-        : R.kind === 'double' ? '(' + terms([[S.C1, ''], [S.C2, 't']]) + ')e^(' + fix(R.re) + 't)'
-        : 'e^(' + fix(R.re) + 't)(' + terms([[S.C1, ' cos ' + fix(R.im) + 't'], [S.C2, ' sin ' + fix(R.im) + 't']]) + ')'));
+        ? terms([[S.C1, 'e<sup>' + fix(R.l1) + 't</sup>'], [S.C2, 'e<sup>' + fix(R.l2) + 't</sup>']])
+        : R.kind === 'double' ? '(' + terms([[S.C1, ''], [S.C2, 't']]) + ')e<sup>' + fix(R.re) + 't</sup>'
+        : 'e<sup>' + fix(R.re) + 't</sup>(' + terms([[S.C1, ' cos ' + fix(R.im) + 't'], [S.C2, ' sin ' + fix(R.im) + 't']]) + ')'));
       const reMax = R.kind === 'complex' ? R.re : Math.max(R.l1, R.l2);
       setText('root-stab', reMax < -1e-9 ? '衰減（穩定）' : reMax > 1e-9 ? '發散（不穩定）' : '不衰減也不發散（臨界）');
       setHTML('root-msg', reMax < -1e-9
-        ? '所有根都在<b>左半平面</b>（實部為負）→ e^(負數×t) 隨時間趨近 0 → 解會衰減。'
+        ? '所有根都在<b>左半平面</b>（實部為負）→ e<sup>負數×t</sup> 隨時間趨近 0 → 解會衰減。'
         : reMax > 1e-9
-        ? '有根在<b>右半平面</b>（實部為正）→ e^(正數×t) 爆炸成長 → 解會發散。'
+        ? '有根在<b>右半平面</b>（實部為正）→ e<sup>正數×t</sup> 爆炸成長 → 解會發散。'
         : '根落在<b>虛軸上</b>（實部為 0）→ 不衰減也不發散，是純振盪或常數。');
       st.redraw();
     }
@@ -219,9 +219,9 @@
     const cv = document.getElementById('cv-cases'); if (!cv) return;
     let show = 'all';
     const CASES = [
-      { key: 'distinct', a: 4, b: 3, name: '相異實根', form: 'C₁e^(−t) + C₂e^(−3t)', col: () => C['p-real'] },
-      { key: 'double', a: 4, b: 4, name: '重根', form: '(C₁ + C₂t)e^(−2t)', col: () => C['q-react'] },
-      { key: 'complex', a: 4, b: 5, name: '共軛複根', form: 'e^(−2t)(A cos t + B sin t)', col: () => C['s-app'] }
+      { key: 'distinct', a: 4, b: 3, name: '相異實根', form: 'C₁e<sup>−t</sup> + C₂e<sup>−3t</sup>', col: () => C['p-real'] },
+      { key: 'double', a: 4, b: 4, name: '重根', form: '(C₁ + C₂t)e<sup>−2t</sup>', col: () => C['q-react'] },
+      { key: 'complex', a: 4, b: 5, name: '共軛複根', form: 'e<sup>−2t</sup>(A cos t + B sin t)', col: () => C['s-app'] }
     ];
 
     const st = Stage(cv, { animate: false, ratio: 0.44, minH: 230, maxH: 300, draw(ctx, w, h) {
@@ -270,7 +270,7 @@
       const info = {
         all: '三條一起看：都會衰減（根的實部都是負的），但衰減的「姿態」完全不同。',
         distinct: '兩個不同的實根 → 兩個純指數相加，單調衰減，不會過頭。',
-        double: '重根只給一個解 e^(λt)，湊不出兩個獨立解，所以要補一個 <b>t·e^(λt)</b>。前期那個 t 會把曲線頂起來一點，之後才被指數壓下去。',
+        double: '重根只給一個解 e<sup>λt</sup>，湊不出兩個獨立解，所以要補一個 <b>t·e<sup>λt</sup></b>。前期那個 t 會把曲線頂起來一點，之後才被指數壓下去。',
         complex: '實部負 → 振幅衰減；虛部 → 來回振盪。兩者疊起來就是「愈晃愈小」的衰減振盪。'
       };
       setHTML('cases-msg', info[show]);
@@ -299,9 +299,9 @@
     steps: (g, r) => {
       const a = g['exo-a'], b = g['exo-b'], R = r.R, D = a * a - 4 * b;
       const out = [
-        { t: 'Step 1　猜 y = e^(λt)。',
+        { t: 'Step 1　猜 y = e<sup>λt</sup>。',
           note: '因為 y、y′、y″ 必須是「同一種函數」才可能相加為零，指數函數微分後還是自己：',
-          eq: "y = e^(λt)　⟹　y′ = λe^(λt) = λy　，　y″ = λ²e^(λt) = λ²y" },
+          eq: "y = e<sup>λt</sup>　⟹　y′ = λe<sup>λt</sup> = λy　，　y″ = λ²e<sup>λt</sup> = λ²y" },
         { t: 'Step 2　代回原式，把 y 提出來。',
           eq: '(λ² ' + (a >= 0 ? '+ ' : '− ') + Math.abs(a) + 'λ ' + (b >= 0 ? '+ ' : '− ') + Math.abs(b) +
             ')·y = 0　，因為 y ≠ 0 ⟹ 括號必須為 0' },
@@ -313,13 +313,13 @@
               : 'λ₁ = ' + fix(R.l1) + '，λ₂ = ' + fix(R.l2)) },
         { t: 'Step 4　寫出通解。',
           note: R.kind === 'double'
-            ? '重根只給一個 e^(λt)，<b>要再補一個 t·e^(λt)</b> 才湊得出兩個獨立解：'
+            ? '重根只給一個 e<sup>λt</sup>，<b>要再補一個 t·e<sup>λt</sup></b> 才湊得出兩個獨立解：'
             : R.kind === 'complex'
             ? '用尤拉公式把兩個複指數併成實數形式（α 是實部、β 是虛部）：'
             : '兩個相異實根各給一個獨立解，直接線性組合：',
-          eq: R.kind === 'real' ? 'y = C₁e^(' + fix(R.l1) + 't) + C₂e^(' + fix(R.l2) + 't)'
-            : R.kind === 'double' ? 'y = (C₁ + C₂t)e^(' + fix(R.re) + 't)'
-            : 'y = e^(' + fix(R.re) + 't)(A cos ' + fix(R.im) + 't + B sin ' + fix(R.im) + 't)' },
+          eq: R.kind === 'real' ? 'y = C₁e<sup>' + fix(R.l1) + 't</sup> + C₂e<sup>' + fix(R.l2) + 't</sup>'
+            : R.kind === 'double' ? 'y = (C₁ + C₂t)e<sup>' + fix(R.re) + 't</sup>'
+            : 'y = e<sup>' + fix(R.re) + 't</sup>(A cos ' + fix(R.im) + 't + B sin ' + fix(R.im) + 't)' },
         { t: 'Step 5　用初始條件定係數。',
           note: '代 y(0) = ' + g['exo-y0'] + ' 與 y′(0) = ' + g['exo-v0'] + ' 解聯立：',
           eq: (R.kind === 'complex' ? 'A = ' + fix(r.C1) + '　B = ' + fix(r.C2)
@@ -333,9 +333,9 @@
     answer: (g, r) => {
       const R = r.R;
       return 'y(t) = ' + (R.kind === 'real'
-        ? terms([[r.C1, 'e^(' + fix(R.l1) + 't)'], [r.C2, 'e^(' + fix(R.l2) + 't)']])
-        : R.kind === 'double' ? '(' + terms([[r.C1, ''], [r.C2, 't']]) + ')e^(' + fix(R.re) + 't)'
-        : 'e^(' + fix(R.re) + 't)(' + terms([[r.C1, ' cos ' + fix(R.im) + 't'], [r.C2, ' sin ' + fix(R.im) + 't']]) + ')');
+        ? terms([[r.C1, 'e<sup>' + fix(R.l1) + 't</sup>'], [r.C2, 'e<sup>' + fix(R.l2) + 't</sup>']])
+        : R.kind === 'double' ? '(' + terms([[r.C1, ''], [r.C2, 't']]) + ')e<sup>' + fix(R.re) + 't</sup>'
+        : 'e<sup>' + fix(R.re) + 't</sup>(' + terms([[r.C1, ' cos ' + fix(R.im) + 't'], [r.C2, ' sin ' + fix(R.im) + 't']]) + ')');
     }
   });
 })();
@@ -347,12 +347,12 @@
   'use strict';
   const host = document.getElementById('quiz'); if (!host) return;
   const Q = [
-    { zh: '解常係數線性齊次 ODE 時，為什麼一開始要猜 y = e^(λt)？',
-      en: 'Why do we start by guessing y = e^(λt) for a linear homogeneous ODE with constant coefficients?',
-      o: [['因為 e^(λt) 微分之後還是自己的倍數，y、y′、y″ 才可能相消', 'because differentiating e^(λt) returns a multiple of itself, so y, y′, y″ can cancel'],
+    { zh: '解常係數線性齊次 ODE 時，為什麼一開始要猜 y = e<sup>λt</sup>？',
+      en: 'Why do we start by guessing y = e<sup>λt</sup> for a linear homogeneous ODE with constant coefficients?',
+      o: [['因為 e<sup>λt</sup> 微分之後還是自己的倍數，y、y′、y″ 才可能相消', 'because differentiating e<sup>λt</sup> returns a multiple of itself, so y, y′, y″ can cancel'],
           ['因為 e 是自然對數的底', 'because e is the base of the natural logarithm'],
           ['因為課本規定', 'because the textbook says so'],
-          ['因為 e^(λt) 一定會收斂', 'because e^(λt) always converges']], a: 0,
+          ['因為 e<sup>λt</sup> 一定會收斂', 'because e<sup>λt</sup> always converges']], a: 0,
       e: 'ay″ + by′ + cy = 0 要成立，三項必須是「同一種函數」才有機會加起來為零。指數函數微分之後只是乘上 λ：y′ = λy、y″ = λ²y，所以整式可以提出 y，剩下純粹關於 λ 的多項式。換成 sin、多項式都做不到這件事。' },
 
     { zh: 'y″ + 3y′ + 2y = 0 的特徵方程是什麼？',
@@ -371,27 +371,27 @@
 
     { zh: '相異實根 λ₁、λ₂ 時，通解長什麼樣子？',
       en: 'For distinct real roots λ₁, λ₂, what is the general solution?',
-      o: [['y = C₁e^(λ₁t) + C₂e^(λ₂t)', 'y = C₁e^(λ₁t) + C₂e^(λ₂t)'],
-          ['y = (C₁ + C₂t)e^(λ₁t)', 'y = (C₁ + C₂t)e^(λ₁t)'],
+      o: [['y = C₁e<sup>λ₁t</sup> + C₂e<sup>λ₂t</sup>', 'y = C₁e<sup>λ₁t</sup> + C₂e<sup>λ₂t</sup>'],
+          ['y = (C₁ + C₂t)e<sup>λ₁t</sup>', 'y = (C₁ + C₂t)e<sup>λ₁t</sup>'],
           ['y = C₁cos λ₁t + C₂sin λ₂t', 'y = C₁cos λ₁t + C₂sin λ₂t'],
-          ['y = C₁e^(λ₁t)·C₂e^(λ₂t)', 'y = C₁e^(λ₁t)·C₂e^(λ₂t)']], a: 0,
+          ['y = C₁e<sup>λ₁t</sup>·C₂e<sup>λ₂t</sup>', 'y = C₁e<sup>λ₁t</sup>·C₂e<sup>λ₂t</sup>']], a: 0,
       e: '兩個相異根各給一個線性獨立的解，通解就是它們的線性組合（相加，不是相乘）。二階方程需要兩個獨立解、兩個任意常數，才能同時滿足 y(0) 與 y′(0) 兩個條件。' },
 
-    { zh: '重根（D = 0）時為什麼要多補一個 t·e^(λt)？',
-      en: 'For a repeated root (D = 0), why do we add t·e^(λt)?',
+    { zh: '重根（D = 0）時為什麼要多補一個 t·e<sup>λt</sup>？',
+      en: 'For a repeated root (D = 0), why do we add t·e<sup>λt</sup>?',
       o: [['因為只有一個根只給一個解，另一個獨立解必須靠乘上 t 產生', 'one root gives only one solution; multiplying by t produces the second independent one'],
           ['因為這樣比較好看', 'because it looks nicer'],
           ['因為 t 可以讓解收斂', 'because t makes the solution converge'],
           ['因為重根的解一定發散', 'because repeated-root solutions always diverge']], a: 0,
-      e: '二階方程一定要兩個線性獨立解。重根時 e^(λ₁t) 與 e^(λ₂t) 變成同一個函數，C₁e^(λt) + C₂e^(λt) = (C₁+C₂)e^(λt) 其實只有一個常數，湊不出兩個初始條件。把 e^(λt) 乘上 t 得到的 te^(λt) 恰好也滿足原式，且與 e^(λt) 獨立。' },
+      e: '二階方程一定要兩個線性獨立解。重根時 e<sup>λ₁t</sup> 與 e<sup>λ₂t</sup> 變成同一個函數，C₁e<sup>λt</sup> + C₂e<sup>λt</sup> = (C₁+C₂)e<sup>λt</sup> 其實只有一個常數，湊不出兩個初始條件。把 e<sup>λt</sup> 乘上 t 得到的 te<sup>λt</sup> 恰好也滿足原式，且與 e<sup>λt</sup> 獨立。' },
 
     { zh: '共軛複根 λ = α ± βi 對應的實數形式通解是什麼？',
       en: 'For complex conjugate roots λ = α ± βi, what is the real-form general solution?',
-      o: [['y = e^(αt)(A cos βt + B sin βt)', 'y = e^(αt)(A cos βt + B sin βt)'],
-          ['y = e^(βt)(A cos αt + B sin αt)', 'y = e^(βt)(A cos αt + B sin αt)'],
+      o: [['y = e<sup>αt</sup>(A cos βt + B sin βt)', 'y = e<sup>αt</sup>(A cos βt + B sin βt)'],
+          ['y = e<sup>βt</sup>(A cos αt + B sin αt)', 'y = e<sup>βt</sup>(A cos αt + B sin αt)'],
           ['y = A cos αt + B sin βt', 'y = A cos αt + B sin βt'],
-          ['y = (A + Bt)e^(αt)', 'y = (A + Bt)e^(αt)']], a: 0,
-      e: '用尤拉公式 e^(iβt) = cos βt + i sin βt 把兩個複指數併起來：<b>實部 α 管包絡線（衰減或發散的速度），虛部 β 管振盪的快慢</b>。α 與 β 的角色千萬不要對調。' },
+          ['y = (A + Bt)e<sup>αt</sup>', 'y = (A + Bt)e<sup>αt</sup>']], a: 0,
+      e: '用尤拉公式 e<sup>iβt</sup> = cos βt + i sin βt 把兩個複指數併起來：<b>實部 α 管包絡線（衰減或發散的速度），虛部 β 管振盪的快慢</b>。α 與 β 的角色千萬不要對調。' },
 
     { zh: '解 y(t) 會隨 t → ∞ 衰減到 0 的條件是什麼？',
       en: 'What condition makes y(t) decay to 0 as t → ∞?',
@@ -399,7 +399,7 @@
           ['判別式 D < 0', 'the discriminant D < 0'],
           ['所有根都是實數', 'all roots are real'],
           ['初始條件為 0', 'the initial conditions are zero']], a: 0,
-      e: '解的每一項都帶著 e^(λt)（或 e^(αt)）。只要有任何一個根的實部 ≥ 0，那一項就不會消失。這正是互動模組裡「左半平面＝穩定」那條線的意思：複平面上把 λ 拖到虛軸右邊，解立刻炸開。' },
+      e: '解的每一項都帶著 e<sup>λt</sup>（或 e<sup>αt</sup>）。只要有任何一個根的實部 ≥ 0，那一項就不會消失。這正是互動模組裡「左半平面＝穩定」那條線的意思：複平面上把 λ 拖到虛軸右邊，解立刻炸開。' },
 
     { zh: 'λ = ±2i（純虛根）時，解的行為是什麼？',
       en: 'For purely imaginary roots λ = ±2i, how does the solution behave?',
@@ -407,21 +407,21 @@
           ['指數衰減', 'decays exponentially'],
           ['指數發散', 'grows exponentially'],
           ['固定為常數', 'stays constant']], a: 0,
-      e: 'α = 0 所以包絡線 e^(0·t) = 1，振幅不變；β = 2 決定振盪角頻率。物理上對應「無阻尼」的 LC 振盪或無摩擦彈簧。' },
+      e: 'α = 0 所以包絡線 e<sup>0·t</sup> = 1，振幅不變；β = 2 決定振盪角頻率。物理上對應「無阻尼」的 LC 振盪或無摩擦彈簧。' },
 
     { zh: 'y″ + 4y′ + 4y = 0 的解是什麼？',
       en: 'What is the solution of y″ + 4y′ + 4y = 0?',
-      o: [['y = (C₁ + C₂t)e^(−2t)', 'y = (C₁ + C₂t)e^(−2t)'],
-          ['y = C₁e^(−2t) + C₂e^(2t)', 'y = C₁e^(−2t) + C₂e^(2t)'],
-          ['y = e^(−2t)(A cos 2t + B sin 2t)', 'y = e^(−2t)(A cos 2t + B sin 2t)'],
-          ['y = C₁e^(−4t) + C₂e^(−t)', 'y = C₁e^(−4t) + C₂e^(−t)']], a: 0,
-      e: 'λ² + 4λ + 4 = (λ+2)² = 0 → λ = −2（重根），D = 16 − 16 = 0。重根要補 t：y = (C₁ + C₂t)e^(−2t)。' },
+      o: [['y = (C₁ + C₂t)e<sup>−2t</sup>', 'y = (C₁ + C₂t)e<sup>−2t</sup>'],
+          ['y = C₁e<sup>−2t</sup> + C₂e<sup>2t</sup>', 'y = C₁e<sup>−2t</sup> + C₂e<sup>2t</sup>'],
+          ['y = e<sup>−2t</sup>(A cos 2t + B sin 2t)', 'y = e<sup>−2t</sup>(A cos 2t + B sin 2t)'],
+          ['y = C₁e<sup>−4t</sup> + C₂e<sup>−t</sup>', 'y = C₁e<sup>−4t</sup> + C₂e<sup>−t</sup>']], a: 0,
+      e: 'λ² + 4λ + 4 = (λ+2)² = 0 → λ = −2（重根），D = 16 − 16 = 0。重根要補 t：y = (C₁ + C₂t)e<sup>−2t</sup>。' },
 
-    { zh: '已知 y″ + 3y′ + 2y = 0、y(0) = 1、y′(0) = 1，C₁、C₂ 為何（設 y = C₁e^(−t) + C₂e^(−2t)）？',
-      en: 'For y″ + 3y′ + 2y = 0 with y(0) = 1, y′(0) = 1, find C₁, C₂ where y = C₁e^(−t) + C₂e^(−2t).',
+    { zh: '已知 y″ + 3y′ + 2y = 0、y(0) = 1、y′(0) = 1，C₁、C₂ 為何（設 y = C₁e<sup>−t</sup> + C₂e<sup>−2t</sup>）？',
+      en: 'For y″ + 3y′ + 2y = 0 with y(0) = 1, y′(0) = 1, find C₁, C₂ where y = C₁e<sup>−t</sup> + C₂e<sup>−2t</sup>.',
       o: [['C₁ = 3，C₂ = −2', 'C₁ = 3, C₂ = −2'], ['C₁ = 0，C₂ = 1', 'C₁ = 0, C₂ = 1'],
           ['C₁ = 1，C₂ = 0', 'C₁ = 1, C₂ = 0'], ['C₁ = −2，C₂ = 3', 'C₁ = −2, C₂ = 3']], a: 0,
-      e: '聯立 C₁ + C₂ = 1 與 −C₁ − 2C₂ = 1。第一式乘 2 再相加：C₁ = 3，代回得 C₂ = −2。驗算：y(0) = 3 − 2 = 1 ✓，y′(0) = −3 + 4 = 1 ✓。<b>這題就是作業 Exercise 1，答案是 y = 3e^(−t) − 2e^(−2t)。</b>寫成 y = e^(−x) 的話 y′(0) = −1，不合。' },
+      e: '聯立 C₁ + C₂ = 1 與 −C₁ − 2C₂ = 1。第一式乘 2 再相加：C₁ = 3，代回得 C₂ = −2。驗算：y(0) = 3 − 2 = 1 ✓，y′(0) = −3 + 4 = 1 ✓。<b>這題就是作業 Exercise 1，答案是 y = 3e<sup>−t</sup> − 2e<sup>−2t</sup>。</b>寫成 y = e<sup>−x</sup> 的話 y′(0) = −1，不合。' },
 
     { zh: '求出 C₁、C₂ 之後，最後一定要做什麼？',
       en: 'After finding C₁ and C₂, what must you always do?',
@@ -486,7 +486,7 @@
     const pct = Math.round(score / Q.length * 100);
     const verdict = pct >= 90 ? '特徵方程這套流程你已經跑得很順，可以往非齊次（undetermined coefficients）前進了。'
       : pct >= 70 ? '主幹抓到了。答錯的那幾題回去把「根的位置 ↔ 解的形狀」那個模組再拖幾次。'
-      : '建議從「為什麼猜 e^(λt)」與「根的位置決定解的形狀」兩節重新走一遍，那是這章的地基。';
+      : '建議從「為什麼猜 e<sup>λt</sup>」與「根的位置決定解的形狀」兩節重新走一遍，那是這章的地基。';
     host.innerHTML =
       '<div class="bar"><i style="width:100%"></i></div>' +
       '<div class="quiz-body" style="padding-bottom:18px">' +

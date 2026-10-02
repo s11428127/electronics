@@ -29,7 +29,7 @@
     <ol>
       <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
       <li><a href="#map"><i>00</i>一句話說完這單元</a></li>
-      <li><a href="#guess"><i>01</i>為什麼可以「猜」e^λt</a></li>
+      <li><a href="#guess"><i>01</i>為什麼可以「猜」e<sup>λt</sup></a></li>
       <li><a href="#rootmap"><i>02</i>根的位置 ↔ 解的長相</a></li>
       <li><a href="#three"><i>03</i>三種根的對照</a></li>
       <li><a href="#double"><i>04</i>重根為什麼多一個 t</a></li>
@@ -75,7 +75,7 @@
             <div class="why">未知的是一個<b>函數</b> y(t)，不是一個數字。這是它跟你熟悉的方程式最大的差別。</div>
           </li>
           <li>
-            <span class="d-eq">猜 y = e^(λt)　⟹　λ² + aλ + b = 0　（<button class="tm" data-t="特徵方程">特徵方程</button>，好解）</span>
+            <span class="d-eq">猜 y = e<sup>λt</sup>　⟹　λ² + aλ + b = 0　（<button class="tm" data-t="特徵方程">特徵方程</button>，好解）</span>
             <div class="why"><b>微分方程直接變成國中的一元二次方程。</b>這就是整個方法的價值。</div>
           </li>
           <li>
@@ -94,7 +94,7 @@
     <!-- ══════════ 01 為什麼猜 e^λt ══════════ -->
     <section class="sec" id="guess">
       <div class="eyebrow">01 · 為什麼是這個猜法</div>
-      <h2>為什麼可以「猜」y = e<sup>λt</sup><span class="h2-en">WHY GUESS e^(λt)</span></h2>
+      <h2>為什麼可以「猜」y = e<sup>λt</sup><span class="h2-en">WHY GUESS e<sup>λt</sup></span></h2>
       <p class="lede">這不是亂猜，是<strong>式子的結構逼出來的</strong>。你的筆記上老師那段推理寫得很好，這裡把它講細一點。</p>
 
       <div class="derive">
@@ -111,16 +111,16 @@
           </li>
           <li>
             <span class="d-eq">所以要找一種函數：<b>微分之後還是自己的倍數</b></span>
-            <div class="why">滿足這個性質的函數只有指數函數。這就是 e^(λt) 出場的理由 —— 不是猜，是唯一的候選。</div>
+            <div class="why">滿足這個性質的函數只有指數函數。這就是 e<sup>λt</sup> 出場的理由 —— 不是猜，是唯一的候選。</div>
           </li>
           <li>
-            <span class="d-eq hi">y = e^(λt)　⟹　y′ = λ·y　，　y″ = λ²·y</span>
+            <span class="d-eq hi">y = e<sup>λt</sup>　⟹　y′ = λ·y　，　y″ = λ²·y</span>
             <p>微分變成「乘 λ」。代回原式，每一項都有 y 可以提出來：</p>
-            <span class="d-eq hi">(λ² + aλ + b)·y = 0，而 y = e^(λt) ≠ 0　⟹　λ² + aλ + b = 0</span>
+            <span class="d-eq hi">(λ² + aλ + b)·y = 0，而 y = e<sup>λt</sup> ≠ 0　⟹　λ² + aλ + b = 0</span>
           </li>
         </ol>
       </div>
-      <p class="note">注意 <b>e^(λt) 永遠不等於 0</b>（指數函數恆正），所以才能安心把它除掉。這一步在你的筆記上有寫 <code>y(t) ≠ 0</code>，很好，那不是廢話，是必要條件。</p>
+      <p class="note">注意 <b>e<sup>λt</sup> 永遠不等於 0</b>（指數函數恆正），所以才能安心把它除掉。這一步在你的筆記上有寫 <code>y(t) ≠ 0</code>，很好，那不是廢話，是必要條件。</p>
     </section>
 
     <!-- ══════════ 02 根平面 ══════════ -->
@@ -165,7 +165,7 @@
       <div class="note key">
         <b>兩條規律，看懂這張圖就夠了：</b>
         <ul style="margin:8px 0 0;padding-left:18px">
-          <li><b>實部（左右位置）管「衰減或發散」</b> —— 在左半平面 → e^(負×t) → 衰減到 0；在右半平面 → 爆炸。</li>
+          <li><b>實部（左右位置）管「衰減或發散」</b> —— 在左半平面 → e<sup>負×t</sup> → 衰減到 0；在右半平面 → 爆炸。</li>
           <li><b>虛部（上下位置）管「振不振盪」</b> —— 虛部為 0 → 單調不回頭；虛部不為 0 → 來回振盪，虛部越大晃越快。</li>
         </ul>
       </div>
@@ -192,9 +192,9 @@
 
       <div class="glossary">
         <div class="gl-row" style="grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr)"><b>判別式</b><span>根</span><span>通解形式</span></div>
-        <div class="gl-row" style="grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr)"><b>D &gt; 0</b><span>相異實根 λ₁ ≠ λ₂</span><span>y = C₁e^(λ₁t) + C₂e^(λ₂t)</span></div>
-        <div class="gl-row" style="grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr)"><b>D = 0</b><span>重根 λ（只有一個）</span><span>y = (C₁ + C₂<b>t</b>)e^(λt)</span></div>
-        <div class="gl-row" style="grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr)"><b>D &lt; 0</b><span>共軛複根 α ± βi</span><span>y = e^(αt)(A cos βt + B sin βt)</span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr)"><b>D &gt; 0</b><span>相異實根 λ₁ ≠ λ₂</span><span>y = C₁e<sup>λ₁t</sup> + C₂e<sup>λ₂t</sup></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr)"><b>D = 0</b><span>重根 λ（只有一個）</span><span>y = (C₁ + C₂<b>t</b>)e<sup>λt</sup></span></div>
+        <div class="gl-row" style="grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr)"><b>D &lt; 0</b><span>共軛複根 α ± βi</span><span>y = e<sup>αt</sup>(A cos βt + B sin βt)</span></div>
       </div>
     </section>
 
@@ -212,22 +212,22 @@
             <div class="why">因為有兩個初始條件（y(0) 和 y′(0)）要滿足，就需要兩個自由係數 C₁、C₂。</div>
           </li>
           <li>
-            <span class="d-eq">相異實根時：e^(λ₁t) 和 e^(λ₂t) 是兩個不同的函數 ✓ 夠用</span>
+            <span class="d-eq">相異實根時：e<sup>λ₁t</sup> 和 e<sup>λ₂t</sup> 是兩個不同的函數 ✓ 夠用</span>
           </li>
           <li>
-            <span class="d-eq">重根時：λ₁ = λ₂ = λ　⟹　兩個解變成同一個 e^(λt)　✗ 只有一個</span>
-            <p>C₁e^(λt) + C₂e^(λt) = (C₁+C₂)e^(λt)，兩個係數合併成一個，<b>自由度掉了一半</b>，
+            <span class="d-eq">重根時：λ₁ = λ₂ = λ　⟹　兩個解變成同一個 e<sup>λt</sup>　✗ 只有一個</span>
+            <p>C₁e<sup>λt</sup> + C₂e<sup>λt</sup> = (C₁+C₂)e<sup>λt</sup>，兩個係數合併成一個，<b>自由度掉了一半</b>，
               沒辦法同時滿足兩個初始條件。</p>
           </li>
           <li>
-            <span class="d-eq hi">補上 t·e^(λt)　⟹　y = (C₁ + C₂t)e^(λt)</span>
-            <p>可以直接驗證它確實是解：令 y = t·e^(λt)，代入 y″ + ay′ + by（其中 a = −2λ、b = λ²），
-              展開後會完全抵銷為 0。而且它跟 e^(λt) <b>線性獨立</b>（一個有 t 一個沒有），自由度補回來了。</p>
+            <span class="d-eq hi">補上 t·e<sup>λt</sup>　⟹　y = (C₁ + C₂t)e<sup>λt</sup></span>
+            <p>可以直接驗證它確實是解：令 y = t·e<sup>λt</sup>，代入 y″ + ay′ + by（其中 a = −2λ、b = λ²），
+              展開後會完全抵銷為 0。而且它跟 e<sup>λt</sup> <b>線性獨立</b>（一個有 t 一個沒有），自由度補回來了。</p>
           </li>
         </ol>
       </div>
       <p class="note">在上面的疊圖裡切到「重根」：曲線前期會被那個 <b>t</b> 稍微頂高一點，之後才被指數壓下去。
-        這就是 t·e^(λt) 的形狀 —— <b>先升後降</b>，跟純指數的單調下降不一樣。</p>
+        這就是 t·e<sup>λt</sup> 的形狀 —— <b>先升後降</b>，跟純指數的單調下降不一樣。</p>
     </section>
 
     <!-- ══════════ 05 複根 ══════════ -->
@@ -240,23 +240,23 @@
         <h4>翻譯過程</h4>
         <ol>
           <li>
-            <span class="d-eq">λ = α ± βi　⟹　y = C₁e^((α+βi)t) + C₂e^((α−βi)t)</span>
+            <span class="d-eq">λ = α ± βi　⟹　y = C₁e<sup>(α+βi)t</sup> + C₂e<sup>(α−βi)t</sup></span>
             <div class="why">兩個複根各給一個解。現在要把它整理成實數形式。</div>
           </li>
           <li>
-            <span class="d-eq">把共同的 e^(αt) 提出來：y = e^(αt)·[ C₁e^(iβt) + C₂e^(−iβt) ]</span>
+            <span class="d-eq">把共同的 e<sup>αt</sup> 提出來：y = e<sup>αt</sup>·[ C₁e<sup>iβt</sup> + C₂e<sup>−iβt</sup> ]</span>
             <div class="why">指數相加 = 底數相乘，先分離出純實數的部分。</div>
           </li>
           <li>
-            <span class="d-eq">尤拉公式：e^(iθ) = cos θ + i sin θ，　e^(−iθ) = cos θ − i sin θ</span>
+            <span class="d-eq">尤拉公式：e<sup>iθ</sup> = cos θ + i sin θ，　e<sup>−iθ</sup> = cos θ − i sin θ</span>
             <p>代進去展開，<b>虛部在適當選 C₁、C₂ 時會互相抵銷</b>（因為 y 必須是實數）：</p>
           </li>
           <li>
-            <span class="d-eq hi">y = e^(αt)·( A cos βt + B sin βt )</span>
+            <span class="d-eq hi">y = e<sup>αt</sup>·( A cos βt + B sin βt )</span>
             <p>結構非常好記：<b>α（實部）變成前面的指數包絡，β（虛部）變成裡面的振盪頻率。</b></p>
           </li>
           <li>
-            <span class="d-eq">物理意義：e^(αt) 是「振幅怎麼變」，cos/sin 是「怎麼晃」</span>
+            <span class="d-eq">物理意義：e<sup>αt</sup> 是「振幅怎麼變」，cos/sin 是「怎麼晃」</span>
             <div class="why">α &lt; 0 → 愈晃愈小（衰減振盪）；α = 0 → 永遠等幅晃（純振盪）；
               α &gt; 0 → 愈晃愈大（發散振盪）。β 越大晃得越快。</div>
           </li>
@@ -277,7 +277,7 @@
         <ol>
           <li><b>寫特徵方程</b>：把 y″→λ²、y′→λ、y→1，直接照抄係數。</li>
           <li><b>算判別式 D = a² − 4b</b>，決定是哪一種根 → 通解形式跟著決定。</li>
-          <li><b>寫通解</b>：<code>D>0 → C₁e^(λ₁t)+C₂e^(λ₂t)</code>；<code>D=0 → (C₁+C₂t)e^(λt)</code>；<code>D&lt;0 → e^(αt)(A cos βt+B sin βt)</code>。</li>
+          <li><b>寫通解</b>：<code>D>0 → C₁e<sup>λ₁t</sup>+C₂e<sup>λ₂t</sup></code>；<code>D=0 → (C₁+C₂t)e<sup>λt</sup></code>；<code>D&lt;0 → e<sup>αt</sup>(A cos βt+B sin βt)</code>。</li>
           <li><b>微分一次</b>得 y′(t)，代入 y(0) 與 y′(0) 解兩元一次聯立。</li>
           <li><b>驗算</b>：把 C 代回去，檢查 y(0) 和 y′(0) 對不對。這一步只要十秒，卻能救回整題。</li>
         </ol>
@@ -289,7 +289,7 @@
           <li><span class="x">✗</span> <b>解聯立時符號弄錯。</b>這是最高頻的失分點（你這次就是栽在這裡）。
             y′ 的每一項都會多一個 λ 係數，代 0 進去時<b>負號很容易漏</b>。
             <span class="o">✓</span> 解完<b>一定要代回去驗算</b>。</li>
-          <li><span class="x">✗</span> <b>重根忘記乘 t</b>，只寫 C₁e^(λt)。自由度不夠，一定滿足不了兩個初始條件。</li>
+          <li><span class="x">✗</span> <b>重根忘記乘 t</b>，只寫 C₁e<sup>λt</sup>。自由度不夠，一定滿足不了兩個初始條件。</li>
           <li><span class="x">✗</span> <b>複根答案留著 i。</b>物理量是實數，要用尤拉公式整理成 cos/sin 形式。</li>
           <li><span class="x">✗</span> <b>變數混用 x 和 t。</b>題目用 t 就整題用 t，不要中途變成 x。</li>
         </ul>
@@ -306,16 +306,16 @@
         <h4>Exercise 1（你自己解的那一段）：C₁、C₂ 算錯</h4>
         <ul>
           <li><b>題目：</b>y″ + 3y′ + 2y = 0，y(0) = y′(0) = 1</li>
-          <li><b>你的前半段完全正確：</b>特徵根 λ = −1, −2，通解 y = C₁e^(−2t) + C₂e^(−t) ✓</li>
+          <li><b>你的前半段完全正確：</b>特徵根 λ = −1, −2，通解 y = C₁e<sup>−2t</sup> + C₂e<sup>−t</sup> ✓</li>
           <li><b>聯立式也列對了：</b>
             <span class="d-eq">C₁ + C₂ = 1　　−2C₁ − C₂ = 1</span></li>
-          <li><span class="x">✗</span> 但你解出 <b>C₁ = 0、C₂ = 1</b>，答案寫成 y = e^(−t)。
-            代回去檢查：y′ = −e^(−t)，<b>y′(0) = −1 ≠ 1</b> ✗</li>
+          <li><span class="x">✗</span> 但你解出 <b>C₁ = 0、C₂ = 1</b>，答案寫成 y = e<sup>−t</sup>。
+            代回去檢查：y′ = −e<sup>−t</sup>，<b>y′(0) = −1 ≠ 1</b> ✗</li>
           <li><span class="o">✓</span> 正確解法：兩式相加消去 C₂ →
             <span class="d-eq">(C₁ + C₂) + (−2C₁ − C₂) = 1 + 1　⟹　−C₁ = 2　⟹　<b>C₁ = −2</b><br>
               代回第一式：C₂ = 1 − (−2) = <b>3</b></span></li>
-          <li><span class="o">✓</span> <b>正確答案：y(t) = 3e^(−t) − 2e^(−2t)</b><br>
-            驗算：y(0) = 3 − 2 = 1 ✓　y′ = −3e^(−t) + 4e^(−2t)，y′(0) = −3 + 4 = 1 ✓</li>
+          <li><span class="o">✓</span> <b>正確答案：y(t) = 3e<sup>−t</sup> − 2e<sup>−2t</sup></b><br>
+            驗算：y(0) = 3 − 2 = 1 ✓　y′ = −3e<sup>−t</sup> + 4e<sup>−2t</sup>，y′(0) = −3 + 4 = 1 ✓</li>
         </ul>
       </div>
 
@@ -325,8 +325,8 @@
           <li>你寫的特徵方程看起來是 <code>λ² + 2λ + 2 = 0</code>，但下一行分解成 (λ+2)(λ+1)，
             那對應的是 <code>λ² + <b>3</b>λ + 2 = 0</code>。<b>請確認</b>是不是中間那個係數寫錯了
             （分解與根都是對的，所以應該只是筆誤）。</li>
-          <li>題目用 t，你中途寫成 x（e^(−2x)）。同一題最好從頭到尾用同一個變數。</li>
-          <li>你抄的〈老師解〉那段，最後答案 <b>y(t) = 4e^(−t) − 3e^(−2t)</b> 是<b>正確</b>的
+          <li>題目用 t，你中途寫成 x（e<sup>−2x</sup>）。同一題最好從頭到尾用同一個變數。</li>
+          <li>你抄的〈老師解〉那段，最後答案 <b>y(t) = 4e<sup>−t</sup> − 3e<sup>−2t</sup></b> 是<b>正確</b>的
             （那題的初始條件是 y(0)=1、y′(0)=2，跟你自己解的那題不同）。
             但中間寫「C₁ = −3, C₂ = 4」與答案對不起來 —— 應該是 <b>C₁ = 4、C₂ = −3</b>，標籤寫反了。</li>
         </ul>
@@ -335,19 +335,19 @@
       <div class="note key">
         <b>Exercise 2：三小題全對 ✓</b>
         <ul style="margin:8px 0 0;padding-left:18px">
-          <li><b>1.</b> λ²+4λ+3 = 0 → (λ+1)(λ+3) = 0 → λ = −1, −3 → y = C₁e^(−t) + C₂e^(−3t) ✓</li>
-          <li><b>2.</b> λ²+4λ+4 = 0 → (λ+2)² = 0 → λ = −2（重根）→ y = C₁e^(−2t) + C₂te^(−2t) ✓
+          <li><b>1.</b> λ²+4λ+3 = 0 → (λ+1)(λ+3) = 0 → λ = −1, −3 → y = C₁e<sup>−t</sup> + C₂e<sup>−3t</sup> ✓</li>
+          <li><b>2.</b> λ²+4λ+4 = 0 → (λ+2)² = 0 → λ = −2（重根）→ y = C₁e<sup>−2t</sup> + C₂te<sup>−2t</sup> ✓
             重根有記得補 t，很好。</li>
           <li><b>3.</b> λ²+4λ+5 = 0 → (λ+2)²+1 = 0 → λ = −2 ± i →
-            y = e^(−2t)(A cos t + B sin t) ✓ 有用尤拉公式整理回實數形式，這步做得完整。</li>
+            y = e<sup>−2t</sup>(A cos t + B sin t) ✓ 有用尤拉公式整理回實數形式，這步做得完整。</li>
         </ul>
       </div>
 
       <div class="note key">
         <b>Exercise 3：證明正確 ✓</b>
-        <p style="margin:8px 0 0">分部積分的方向、d(e^(−st)) = −s·e^(−st)dt 的代換、
+        <p style="margin:8px 0 0">分部積分的方向、d(e<sup>−st</sup>) = −s·e<sup>−st</sup>dt 的代換、
           邊界項在 t = 0 給出 f(0)，全部處理正確，最後收到 sF(s) − f(0) 也對。</p>
-        <p style="margin:8px 0 0"><b>唯一可以補強的地方：</b>你寫了 <code>lim(t→∞) e^(−st)f(t)</code> 但沒說它等於 0。
+        <p style="margin:8px 0 0"><b>唯一可以補強的地方：</b>你寫了 <code>lim(t→∞) e<sup>−st</sup>f(t)</code> 但沒說它等於 0。
           嚴謹一點應該補一句：<b>「當 f 為指數階且 s 夠大時，此項 → 0」</b>。
           考試如果是「證明題」，漏掉這個條件可能被扣分。</p>
       </div>
@@ -375,7 +375,7 @@
         <div class="gl-row"><b>特解</b><span>particular solution</span><code>C 已定</code></div>
         <div class="gl-row"><b>初始條件</b><span>initial condition</span><code>y(0), y′(0)</code></div>
         <div class="gl-row"><b>線性獨立</b><span>linearly independent</span><code>—</code></div>
-        <div class="gl-row"><b>尤拉公式</b><span>Euler's formula</span><code>e^(iθ)</code></div>
+        <div class="gl-row"><b>尤拉公式</b><span>Euler's formula</span><code>e<sup>iθ</sup></code></div>
       </div>
     </section>
 
