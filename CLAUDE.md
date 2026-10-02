@@ -94,7 +94,7 @@
 - 講解**一律中文**（繁體）。
 - **畫面上不要出現 `^`**（使用者看不懂 `e^(2t)`）：次方一律寫 `<sup>…</sup>`，例 `e<sup>2t</sup>`、`∫₀<sup>∞</sup>`。
   HTML 直接用；canvas 的 `label`/`labelCJK` 會自動畫上標；故事模式 `text()`/`chip()`/標題會自動轉 SVG 上標；
-  JS 塞進 DOM 的字串要用 `innerHTML`（或 `setText`）不要用 `textContent`。工數已全換，電子學與 `terms.js` 尚未換。
+  JS 塞進 DOM 的字串要用 `innerHTML`（或 `setText`）不要用 `textContent`。工數與 `terms.js` 已全換，電子學尚未換。
 - **專有名詞要可以點開看白話解釋**（使用者抱怨過「專有名詞不好理解」）：
   寫成 `<button class="tm" data-t="數量級">數量級</button>`，
   解釋統一註冊在 `shared/terms.js`，每一條要有：

@@ -14,7 +14,8 @@
     ['electronics/ch1-part4', '電子學 · CH1 PART 4 順偏與 I–V'],
     ['circuits/ch11', '電路學 · CH11 交流功率'],
     ['engineering-math/laplace', '工數 · 拉普拉斯轉換'],
-    ['engineering-math/ode', '工數 · ODE 與特徵方程']
+    ['engineering-math/ode', '工數 · ODE 與特徵方程'],
+    ['engineering-math/lec-1002', '工數 · 10/2 上課筆記']
   ];
 
   function ago(t) {
