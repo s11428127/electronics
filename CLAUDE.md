@@ -161,7 +161,8 @@
 
 ## 原講義 PART 標註
 
-老師的講義 PART 跟網頁的頁不一定一一對應（例：原講義 PART 3 前 18 頁跟 PART 2 同主題，併進 CH1 PART 2 頁）。
+老師的講義 PART 跟網頁的頁不一定一一對應（例：原講義 PART 3 前 15 頁跟 PART 2 同主題，併進 CH1 PART 2 頁；1-16～1-18 使用者要放回 PART 3）。
+**同一份原講義的內容，原則上放在對應的網頁 PART**；要跨 PART 合併前先問使用者。
 **每一節的 eyebrow 前面加 `<span class="part-tag">原講義 PART x</span>`**，讓使用者知道這段來自哪份講義；
 對照表寫在該科 `docs/CONTENT_MAP.md`。
 

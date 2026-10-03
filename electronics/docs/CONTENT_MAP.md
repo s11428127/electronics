@@ -31,7 +31,8 @@
 | 1.1.1 | Intrinsic Semiconductors 本質半導體 | ✅ CH1 PART 1 |
 | 1.1.2 | Extrinsic Semiconductors 非本質半導體 | ✅ N 型於 PART 1、P 型與定量分析於 PART 2 |
 | 1.1.3 | Drift and Diffusion Current 漂移與擴散電流 | ✅ CH1 PART 2 |
-| 1.1.4 | Excess Carriers 過剩載子 | ✅ CH1 PART 2（來自原講義 PART 3 前段） |
+| 1.1.3（後段） | Einstein Relation 愛因斯坦關係 | ✅ CH1 PART 3 開頭（原講義 PART 3 投影片 1-16） |
+| 1.1.4 | Excess Carriers 過剩載子 | ✅ CH1 PART 3 開頭（原講義 PART 3 投影片 1-17～1-18） |
 | 1.2.1–1.2.2 | pn 接面熱平衡、逆向偏壓、接面電容 | ✅ CH1 PART 3 |
 | 1.2.3–1.2.5 | 順向偏壓、理想 I–V、pn 接面二極體、溫度效應 | ✅ CH1 PART 4 |
 | 1.3 | Diode Circuits: DC Analysis and Models | 待上傳 |
@@ -146,15 +147,15 @@ p.53 擴散公式正負號、Example 1.4（187 A/cm²）。
 
 ## 原講義 PART 3／PART 4 的拆法（2026-10）
 
-老師的 PART 3 講義前 18 頁跟 PART 2 同主題，所以**併進 CH1 PART 2 頁**；網頁每一節標題旁的小標籤 `原講義 PART x` 標出來源。
+老師的 PART 3 講義前 15 頁（電流密度、漂移／擴散）跟 PART 2 同主題，所以**併進 CH1 PART 2 頁**；1-16～1-18（愛因斯坦關係、多出載子）10/3 依使用者要求放回 **CH1 PART 3 頁開頭**（故事模式開頭也補了 7 個畫面）。網頁每一節標題旁的小標籤 `原講義 PART x` 標出來源。
 
 | 原講義 | 投影片 | 網頁位置 |
 |--------|--------|---------|
 | PART 3 | 1-1～1-15（漂移／擴散改版、I vs J、四步推導、擴散方向練習） | CH1 PART 2 §04、§05–§08 |
-| PART 3 | 1-16～1-18（愛因斯坦關係、多出載子） | CH1 PART 2 §09、§10 |
-| PART 3 | 1-19～1-27（接面形成、空乏區、V_bi、Example 1.5） | CH1 PART 3 §01、§02 |
-| PART 3 | 1-28～1-31（偏壓接法、逆偏、I_S） | CH1 PART 3 §03 |
-| PART 3 | 1-32～1-37（接面電容、Example 1.6、變容二極體） | CH1 PART 3 §04 |
+| PART 3 | 1-16～1-18（愛因斯坦關係、多出載子） | CH1 PART 3 §01、§02 |
+| PART 3 | 1-19～1-27（接面形成、空乏區、V_bi、Example 1.5） | CH1 PART 3 §03、§04 |
+| PART 3 | 1-28～1-31（偏壓接法、逆偏、I_S） | CH1 PART 3 §05 |
+| PART 3 | 1-32～1-37（接面電容、Example 1.6、變容二極體） | CH1 PART 3 §06 |
 | PART 4 | 1-38～1-43、1-45（順偏、少數載子注入、Fig 1.16） | CH1 PART 4 §01 |
 | PART 4 | 1-44、1-46、1-47（理想 I–V、Example 1.7） | CH1 PART 4 §02 |
 | PART 4 | 1-48（60 mV／decade、Fig 1.18） | CH1 PART 4 §03 |

@@ -1,6 +1,6 @@
 /* ============================================================
-   電子學 CH1 PART 3 — pn 接面：熱平衡、內建電壓、逆向偏壓、接面電容
-   Neamen 4e, Ch.1 §1.2.1–1.2.2；課程 PART 3 投影片 1-19～1-37
+   電子學 CH1 PART 3 — 愛因斯坦關係、多出載子、pn 接面：熱平衡、內建電壓、逆向偏壓、接面電容
+   Neamen 4e, Ch.1 §1.1.3–1.1.4（後段）、§1.2.1–1.2.2；課程 PART 3 投影片 1-16～1-37
    ============================================================ */
 (function () {
   'use strict';
@@ -461,6 +461,30 @@
   'use strict';
   const host = document.getElementById('quiz'); if (!host) return;
   const Q = [
+    { zh: '愛因斯坦關係 D/μ 等於什麼？',
+      en: 'According to the Einstein relation, D/μ equals what?',
+      o: [['kT/e，室溫約 0.026 V', 'kT/e, about 0.026 V at room temperature'],
+          ['e/kT', 'e/kT'],
+          ['依材料而定的常數', 'a material-dependent constant'],
+          ['nᵢ²', 'nᵢ²']], a: 0,
+      e: 'Dn/μn = Dp/μp = kT/e。比值只跟溫度有關，跟材料、摻雜都無關。矽：35/1350 ≈ 12/480 ≈ 0.026 V。這個 kT/e 之後會以「熱電壓 V_T」的名字出現在 pn 接面與二極體方程式。' },
+
+    { zh: '照光在 n 型矽中產生多出的電子–電洞對後，哪一種載子的濃度「相對變化」最大？',
+      en: 'After light generates excess electron–hole pairs in n-type silicon, which carrier changes the most in relative terms?',
+      o: [['少數載子（電洞）', 'the minority carriers (holes)'],
+          ['多數載子（電子）', 'the majority carriers (electrons)'],
+          ['兩者相對變化一樣', 'both change by the same relative amount'],
+          ['都不變', 'neither changes']], a: 0,
+      e: '電子和電洞增加的「量」一樣（成對產生），但 n 型裡 p₀ 只有約 10⁴ cm⁻³，多 10¹⁴ 就是暴增 10 個數量級；n₀ 本來就約 10¹⁶，多 10¹⁴ 只差 1%。所以多出載子主要影響少數載子。' },
+
+    { zh: '多出載子生命週期 τ 指的是什麼？',
+      en: 'What does the excess carrier lifetime τ refer to?',
+      o: [['多出的電子與電洞在復合前平均存活的時間', 'the average time excess carriers exist before recombining'],
+          ['載子跑過整塊半導體所需的時間', 'the time for a carrier to cross the semiconductor'],
+          ['熱平衡建立所需的時間', 'the time needed to establish thermal equilibrium from zero'],
+          ['照光的持續時間', 'the duration of illumination']], a: 0,
+      e: '多出載子會透過電子–電洞復合消失，回到穩態值。復合前平均能活多久就是 τ。多出量大致按 δ(t) = δ(0)·e<sup>−t/τ</sup> 衰減：過一個 τ 剩約 37%。' },
+
     { zh: 'P 型與 N 型剛接觸的瞬間，首先發生什麼？',
       en: 'At the instant the p- and n-regions are joined, what happens first?',
       o: [['濃度差使電洞往 N 擴散、電子往 P 擴散', 'holes diffuse into n and electrons into p due to the concentration gradient'],
@@ -617,4 +641,176 @@
     try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
   });
   try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+
+/* ============================================================
+   PART 3 投影片 1-16～1-18：愛因斯坦關係、多出載子
+   （原本放在 CH1 PART 2 頁，10/3 依原講義分法搬到這一頁開頭）
+   ============================================================ */
+(function () {
+  'use strict';
+  const E = window.__EE;
+  const { C, Stage, disc, electron, hole, label, labelCJK, bindRange, setText,
+    clamp, lerp, sci, sup, TAU, K_EV, liveExample } = E;
+  const fix = (x, n) => (Math.abs(x) < 5e-13 ? 0 : x).toFixed(n === undefined ? 2 : n).replace('-', '−');
+  const NI = 1.5e10;
+
+  /* ── ⑦ 愛因斯坦關係換算器 ──────────────────────────────── */
+  (function einstein() {
+    const cv = document.getElementById('cv-ein'); if (!cv) return;
+    let T = 300;
+    const st = Stage(cv, { animate: false, ratio: 0.34, minH: 180, maxH: 240, draw(ctx, w, h) {
+      const x0 = w * 0.12, x1 = w * 0.94, y0 = h * 0.12, y1 = h * 0.78;
+      const X = t => lerp(x0, x1, (t - 200) / 300), Y = v => lerp(y1, y0, (v - 0.015) / (0.045 - 0.015));
+      ctx.strokeStyle = C.line; ctx.lineWidth = 1;
+      [0.02, 0.03, 0.04].forEach(v => { ctx.beginPath(); ctx.moveTo(x0, Y(v)); ctx.lineTo(x1, Y(v)); ctx.stroke();
+        label(ctx, x0 - 6, Y(v), (v * 1000).toFixed(0) + ' mV', C['ink-3'], 10, 'right'); });
+      [200, 300, 400, 500].forEach(t => label(ctx, X(t), y1 + 14, t + ' K', C['ink-3'], 10));
+      ctx.strokeStyle = C.accent; ctx.lineWidth = 2.4;
+      ctx.beginPath(); ctx.moveTo(X(200), Y(K_EV * 200)); ctx.lineTo(X(500), Y(K_EV * 500)); ctx.stroke();
+      const vt = K_EV * T;
+      ctx.setLineDash([4, 4]); ctx.strokeStyle = C['ink-3']; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(X(T), y1); ctx.lineTo(X(T), Y(vt)); ctx.lineTo(x0, Y(vt)); ctx.stroke(); ctx.setLineDash([]);
+      disc(ctx, X(T), Y(vt), 6, C.accent, C.surface);
+      labelCJK(ctx, X(T) + (T < 260 ? 12 : -12), Y(vt) + (T < 260 ? 16 : -16), 'kT/e = ' + (vt * 1000).toFixed(1) + ' mV', C.accent, 12, T < 260 ? 'left' : 'right', '700');
+      labelCJK(ctx, x1, h * 0.94, 'kT/e 跟絕對溫度成正比（一條過原點的直線）', C['ink-3'], 11, 'right');
+    }});
+    bindRange('ein-T', x => x + ' K（' + (x - 273.15).toFixed(0) + ' °C）', x => {
+      T = x; const vt = K_EV * T;
+      setText('ein-vt', (vt * 1000).toFixed(1) + ' mV');
+      setText('ein-dn', (1350 * vt).toFixed(1) + ' cm²/s');
+      setText('ein-dp', (480 * vt).toFixed(1) + ' cm²/s');
+      st.redraw();
+    });
+  })();
+
+  /* ── ⑧ 照光實驗室：產生 → 復合 ──────────────────────────── */
+  (function excess() {
+    const cv = document.getElementById('cv-exc'); if (!cv) return;
+    let tau = 1.25, holdOn = false, pairs = [], flashes = [], hist = [], clock = 0, sample = 0, genAcc = 0;
+    const UNIT = 2e12;          /* 一對 = 2×10¹² cm⁻³（示意） */
+    const N0 = 1e16, P0 = NI * NI / 1e16;
+    const majority = [];
+    for (let i = 0; i < 46; i++) majority.push({ x: Math.random(), y: Math.random(), ph: Math.random() * TAU });
+    function addPair() {
+      const x = 0.08 + Math.random() * 0.84, y = 0.12 + Math.random() * 0.76;
+      pairs.push({ x, y, hx: x + (Math.random() - 0.5) * 0.12, hy: y + (Math.random() - 0.5) * 0.2,
+        life: -Math.log(1 - Math.random()) * tau, age: 0 });
+    }
+    const st = Stage(cv, { ratio: 0.4, minH: 220, maxH: 300, draw(ctx, w, h, dt) {
+      clock += dt;
+      if (holdOn) { genAcc += dt * 9; while (genAcc >= 1) { addPair(); genAcc -= 1; } }
+      const bx0 = w * 0.03, bx1 = w * 0.55, by0 = h * 0.14, by1 = h * 0.86;
+      const BX = r => lerp(bx0 + 8, bx1 - 8, r), BY = r => lerp(by0 + 8, by1 - 8, r);
+      ctx.fillStyle = C['electron-w']; ctx.globalAlpha = 0.35; ctx.fillRect(bx0, by0, bx1 - bx0, by1 - by0); ctx.globalAlpha = 1;
+      ctx.strokeStyle = C.line; ctx.lineWidth = 1.2; ctx.strokeRect(bx0, by0, bx1 - bx0, by1 - by0);
+      labelCJK(ctx, bx0, by0 - 10, 'n 型矽（多數載子：電子）', C['ink-2'], 11.5, 'left', '600');
+      majority.forEach(m => { m.ph += dt * 2; disc(ctx, BX(m.x) + Math.sin(m.ph) * 2, BY(m.y) + Math.cos(m.ph * 1.3) * 2, 2.3, C['ink-3']); });
+      /* 光 */
+      if (holdOn) {
+        ctx.save(); ctx.globalAlpha = 0.18 + 0.08 * Math.sin(clock * 6); ctx.fillStyle = C.warn;
+        ctx.fillRect(bx0, by0, bx1 - bx0, 6); ctx.restore();
+      }
+      for (let i = pairs.length - 1; i >= 0; i--) {
+        const q = pairs[i]; q.age += dt;
+        if (q.age >= q.life) { flashes.push({ x: (q.x + q.hx) / 2, y: (q.y + q.hy) / 2, a: 0 }); pairs.splice(i, 1); continue; }
+        const k = clamp((q.age - (q.life - 0.35)) / 0.35, 0, 1);       /* 最後 0.35 秒電子靠過去 */
+        const ex = lerp(q.x, q.hx, k), ey = lerp(q.y, q.hy, k);
+        hole(ctx, BX(q.hx), BY(clamp(q.hy, 0, 1)), 4.6);
+        electron(ctx, BX(ex), BY(clamp(ey, 0, 1)), 4.4);
+      }
+      for (let i = flashes.length - 1; i >= 0; i--) {
+        const f = flashes[i]; f.a += dt;
+        if (f.a > 0.5) { flashes.splice(i, 1); continue; }
+        ctx.save(); ctx.globalAlpha = 1 - f.a / 0.5; ctx.strokeStyle = C.accent; ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.arc(BX(f.x), BY(clamp(f.y, 0, 1)), Math.max(0, 4 + f.a * 26), 0, TAU); ctx.stroke(); ctx.restore();
+      }
+      /* 右：δ(t) 歷史 */
+      sample += dt;
+      if (sample > 0.1) { sample = 0; hist.push(pairs.length); if (hist.length > 100) hist.shift(); }
+      const gx0 = w * 0.62, gx1 = w * 0.97, gy0 = h * 0.18, gy1 = h * 0.8;
+      let mx = 8; hist.forEach(v => { if (v > mx) mx = v; });
+      ctx.strokeStyle = C['ink-3']; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(gx0, gy0); ctx.lineTo(gx0, gy1); ctx.lineTo(gx1, gy1); ctx.stroke();
+      labelCJK(ctx, gx0, gy0 - 12, '多出的電子–電洞對 δ', C['ink-2'], 11.5, 'left', '600');
+      labelCJK(ctx, gx1, gy1 + 13, '時間 →（最近 10 秒）', C['ink-3'], 10.5, 'right');
+      ctx.strokeStyle = C.accent; ctx.lineWidth = 2.2; ctx.beginPath();
+      hist.forEach((v, i) => { const x = lerp(gx0, gx1, i / 99), y = lerp(gy1, gy0 + 6, v / mx); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+      ctx.stroke();
+      /* 讀數 */
+      if (((clock * 10) | 0) % 2 === 0) {
+        const d = pairs.length * UNIT, ratio = (N0 + d) * (P0 + d) / (NI * NI);
+        setText('exc-n', pairs.length + ' 對（≈ ' + (d ? sci(d, 0) : '0') + ' cm⁻³）');
+        setText('exc-np', d ? '≈ ' + sci(ratio, 1) + ' 倍' : '= 1（n·p = nᵢ²）');
+        setText('exc-st', holdOn ? (pairs.length < 9 * tau - 1 ? '照光中：產生 > 復合，δ 增加' : '穩態：產生 = 復合（δ ≈ G·τ）')
+          : pairs.length ? '復合中：δ 指數衰減，回到熱平衡' : '熱平衡');
+      }
+    }});
+    document.getElementById('exc-flash').addEventListener('click', () => { for (let i = 0; i < 18; i++) addPair(); });
+    const hb = document.getElementById('exc-hold');
+    hb.addEventListener('click', () => { holdOn = !holdOn; hb.setAttribute('aria-pressed', String(holdOn)); });
+    bindRange('exc-tau', x => 'τ = ' + x.toFixed(2) + ' 秒（示意）', x => { tau = x; });
+  })();
+
+  /* ── 例題：愛因斯坦關係求 D ──────────────────────────────── */
+  liveExample('#ex-ein', {
+    title: '例題 · 由移動率求擴散係數（愛因斯坦關係）',
+    givens: [
+      { id: 'exe-mu', label: '移動率 μ', min: 100, max: 1500, step: 10, value: 1350, fmt: v => v + ' cm²/(V·s)' },
+      { id: 'exe-T', label: '溫度 T', min: 200, max: 500, step: 5, value: 300, fmt: v => v + ' K' }
+    ],
+    compute: g => { const vt = K_EV * g['exe-T']; return { mu: g['exe-mu'], T: g['exe-T'], vt, D: g['exe-mu'] * vt }; },
+    question: (g, r) => '矽中某載子的移動率 <b>μ = ' + r.mu + ' cm²/(V·s)</b>，溫度 <b>T = ' + r.T + ' K</b>。求擴散係數 D。',
+    steps: (g, r) => [
+      { t: 'Step 1　先算 kT/e。', note: 'k 用 eV/K 的單位（8.617×10⁻⁵），除以 e 剛好得到伏特：', eq: 'kT/e = 8.617×10⁻⁵ × ' + r.T + ' = ' + fix(r.vt, 4) + ' V' },
+      { t: 'Step 2　D = μ · kT/e。', note: '單位：cm²/(V·s) × V = cm²/s：', eq: 'D = ' + r.mu + ' × ' + fix(r.vt, 4) + ' = ' + fix(r.D, 1) + ' cm²/s' },
+      { t: 'Step 3　對答案。', note: r.mu === 1350 && r.T === 300 ? '跟課本給的矽 D<sub>n</sub> = 35 cm²/s 吻合。'
+          : r.mu === 480 && r.T === 300 ? '跟課本給的矽 D<sub>p</sub> = 12 cm²/s 吻合。'
+          : 'μ 越大 D 越大：撞得少的載子，被推跑得快、自己也散得快。', eq: 'D / μ = ' + fix(r.vt, 4) + ' V（只跟溫度有關）' }
+    ],
+    answer: (g, r) => 'D = ' + fix(r.D, 1) + ' cm²/s'
+  });
+
+  /* ── 例題：多出載子對誰影響大 ───────────────────────────── */
+  liveExample('#ex-exc', {
+    title: '例題 · 照光之後，多數載子與少數載子各變多少',
+    ratio: 0.3, minH: 150, maxH: 190,
+    givens: [
+      { id: 'exx-nd', label: '施體濃度 N<sub>d</sub>', min: 14, max: 18, step: 0.5, value: 16, fmt: v => '10' + sup(v % 1 ? v.toFixed(1) : v) + ' cm' + sup(-3) },
+      { id: 'exx-d', label: '照光產生 δ', min: 10, max: 17, step: 0.5, value: 14, fmt: v => '10' + sup(v % 1 ? v.toFixed(1) : v) + ' cm' + sup(-3) },
+      { id: 'exx-tau', label: '生命週期 τ', min: 0.2, max: 10, step: 0.2, value: 1, fmt: v => v.toFixed(1) + ' μs' },
+      { id: 'exx-t', label: '停止照光後經過 t', min: 0, max: 10, step: 0.2, value: 0, fmt: v => v.toFixed(1) + ' μs' }
+    ],
+    compute: g => {
+      const n0 = Math.pow(10, g['exx-nd']), p0 = NI * NI / n0, d0 = Math.pow(10, g['exx-d']);
+      const d = d0 * Math.exp(-g['exx-t'] / g['exx-tau']);
+      const n = n0 + d, p = p0 + d;
+      return { n0, p0, d0, d, n, p, tau: g['exx-tau'], t: g['exx-t'], rn: n / n0, rp: p / p0, np: n * p / (NI * NI) };
+    },
+    question: (g, r) => 'n 型矽 <b>N<sub>d</sub> = ' + sci(r.n0, 1) + ' cm⁻³</b>（300 K）。照光產生 <b>δn = δp = ' + sci(r.d0, 1) + ' cm⁻³</b>，' +
+      '多出載子生命週期 <b>τ = ' + r.tau.toFixed(1) + ' μs</b>。停止照光後 <b>t = ' + r.t.toFixed(1) + ' μs</b>，n 和 p 各是多少？各變了幾倍？',
+    steps: (g, r) => [
+      { t: 'Step 1　先算熱平衡。', note: 'n 型：多數 ≈ 摻雜，少數用質量作用定律：', eq: 'n₀ ≈ ' + sci(r.n0, 2) + '　p₀ = nᵢ²/n₀ = ' + sci(r.p0, 2) + ' cm⁻³' },
+      { t: 'Step 2　過了 t 還剩多少多出載子。', note: '指數衰減：', eq: 'δ(t) = ' + sci(r.d0, 1) + ' × e<sup>−' + r.t.toFixed(1) + '/' + r.tau.toFixed(1) + '</sup> = ' + (r.d > 0 ? sci(r.d, 2) : '0') + ' cm⁻³' },
+      { t: 'Step 3　加回去。', note: '電子和電洞加一樣多：', eq: 'n = ' + sci(r.n, 3) + '　p = ' + sci(r.p, 2) + ' cm⁻³' },
+      { t: 'Step 4　比較相對變化。', note: r.d < 0.1 * r.n0
+          ? '<b>低階注入</b>：多數載子幾乎沒變，少數載子卻暴增 —— 多出載子主要影響的是少數載子。'
+          : '<b>高階注入</b>：δ 已經跟摻雜濃度同一個量級，連多數載子都明顯改變了。',
+        eq: 'n / n₀ = ' + (r.rn < 10 ? r.rn.toFixed(4) : sci(r.rn, 2)) + ' 倍　　p / p₀ = ' + (r.rp < 10 ? r.rp.toFixed(3) : sci(r.rp, 2)) + ' 倍' }
+    ],
+    answer: (g, r) => 'n = ' + sci(r.n, 3) + '、p = ' + sci(r.p, 2) + ' cm⁻³；n·p 是 nᵢ² 的 ' + (r.np < 10 ? r.np.toFixed(2) : sci(r.np, 1)) + ' 倍',
+    draw: (ctx, w, h, g, r) => {
+      const x0 = w * 0.16, x1 = w * 0.96, lo = 2, hi = 19;
+      const X = v => lerp(x0, x1, clamp((Math.log10(Math.max(v, 1)) - lo) / (hi - lo), 0, 1));
+      ctx.strokeStyle = C.line; ctx.lineWidth = 1;
+      for (let k = lo; k <= hi; k += (w < 520 ? 4 : 2)) { const x = X(Math.pow(10, k)); ctx.beginPath(); ctx.moveTo(x, h * 0.1); ctx.lineTo(x, h * 0.78); ctx.stroke();
+        label(ctx, x, h * 0.88, '10' + sup(k), C['ink-3'], 9.5); }
+      [['n₀', r.n0, C.accent, 0.18], ['n', r.n, C.accent, 0.34], ['p₀', r.p0, C.hole, 0.54], ['p', r.p, C.hole, 0.7]].forEach(([nm, v, col, yy]) => {
+        const y = h * yy;
+        ctx.fillStyle = col; ctx.globalAlpha = nm.length > 1 ? 0.4 : 1;
+        ctx.fillRect(x0, y - 6, Math.max(2, X(v) - x0), 12); ctx.globalAlpha = 1;
+        labelCJK(ctx, x0 - 8, y, nm, col, 12, 'right', '700');
+      });
+    }
+  });
 })();

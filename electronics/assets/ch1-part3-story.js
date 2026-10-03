@@ -1,7 +1,9 @@
 /* ============================================================
-   電子學 CH1 PART 3（投影片 1-19～1-37）—— 故事模式
+   電子學 CH1 PART 3（投影片 1-16～1-37）—— 故事模式
    寫法：照 PART 1 的節奏 —— 前半只講直覺（擠過去、碰到抵消、留下離子、擋板、旋轉門），
          「先整理一下」之後才加數字和公式。
+   開頭先補兩塊拼圖（投影片 1-16～1-18，10/3 從 PART 2 搬過來）：
+     小謎題：電子、電洞的 D、μ 差將近 3 倍，相除卻都是 0.026 → 愛因斯坦關係；照一道光 → 多出載子。
    主線謎題：電池反接，1 V 跟 10 V 的電流都只有約 10⁻¹⁴ A，一動也不動。為什麼？
    答案：逆偏把位障墊高，多數載子過不去；剩下的電流只靠「數量固定」的少數載子。
    ============================================================ */
@@ -58,13 +60,13 @@
       g('wire', '<path class="ln" d="M250 140 H150 V280 H300 M340 280 H490 V140 H390"/>' +
         '<line class="ln" x1="304" y1="266" x2="304" y2="294" style="stroke-width:3.4"/><line class="ln" x1="336" y1="258" x2="336" y2="302"/>' +
         T(290, 262, '−', { fs: 18 }) + T(352, 254, '+', { fs: 18 })) +
-      T(320, 326, 'V_R = 1 V', { cls: 't', fs: 15, k: 'v' }) +
+      T(420, 302, 'V_R = 1 V', { cls: 't', fs: 15, a: 'start', k: 'v' }) +
       g('am', '<circle class="bgw" cx="490" cy="210" r="30"/>' + T(490, 210, 'A', { fs: 18, dy: '.35em' })) +
       chip(150, 96, 'P 接負、N 接正', '反著接 = 逆向偏壓', 'cR', { fs: 12.5 }) +
       T(448, 200, '電流', { cls: 'tm', fs: 12, a: 'end', k: 'iL' }) + T(448, 226, '≈ 10⁻¹⁴ A', { cls: 'ta', fs: 17, a: 'end', k: 'i' }) +
       T(320, 240, '?', { cls: 'ta', fs: 110, k: 'q' }),
     steps: [
-      { sub: '一塊 P 型跟一塊 N 型黏在一起，就是一顆<b>二極體</b>。接上電池 —— 但是<b>反著接</b>。', on: 'd wire v cR' },
+      { sub: '主線謎題：P、N 黏在一起就是<b>二極體</b>。接上電池 —— 但是<b>反著接</b>。', on: 'd wire v cR' },
       { sub: '電流錶幾乎不動：只有大約 <b>10⁻¹⁴ A</b>，一百兆分之一安培。', on: 'am iL i' },
       { sub: '把電池加到 <b>10 V</b>，電壓變 10 倍 —— 電流<b>還是一樣</b>，一動也不動。', txt: { v: 'V_R = 10 V' } },
       { sub: '電壓加大、電流卻不變，很奇怪。要搞懂，得先看 P 跟 N 黏在一起的時候，發生了什麼事。', op: dim('d wire v cR am iL i'), on: 'q' }
@@ -254,7 +256,7 @@
   const P6 = {
     t: '內建電壓怎麼算', en: 'V_bi = V_T · ln(NaNd / nᵢ²)',
     svg: T(320, 112, 'V<tspan font-size="13" dy="5">bi</tspan><tspan dy="-5"> = V</tspan><tspan font-size="13" dy="5">T</tspan><tspan dy="-5"> · ln( N</tspan><tspan font-size="13" dy="5">a</tspan><tspan dy="-5">N</tspan><tspan font-size="13" dy="5">d</tspan><tspan dy="-5"> / n</tspan><tspan font-size="13" dy="5">i</tspan><tspan font-size="12" dy="-14">2</tspan><tspan dy="9"> )</tspan>', { cls: 't', fs: 25, k: 'f' }) +
-      chip(320, 152, 'V_T = kT/e ≈ 26 mV（熱電壓）', '就是 PART 2 愛因斯坦關係的那個 kT/e', 'cVt', { fs: 12.5 }) +
+      chip(320, 152, 'V_T = kT/e ≈ 26 mV（熱電壓）', '就是開頭愛因斯坦關係的那個 kT/e', 'cVt', { fs: 12.5 }) +
       T(320, 206, '(0.026) · ln[ (10¹⁶)(10¹⁷) / (1.5×10¹⁰)² ]', { cls: 'tm', fs: 16, k: 's1' }) +
       T(320, 238, '= 0.026 × 29.1 = 0.757 V', { cls: 'ta', fs: 22, k: 's2' }) +
       chip(320, 296, 'N_a 乘 10 倍 → V_bi 只多 60 mV', 'ln 把十幾個數量級壓成一個小數字', 'cLn', { fs: 13, acc: true }),
@@ -408,8 +410,164 @@
     ]
   };
 
+  /* ════════════════════════════════════════════════════════════
+     開頭兩塊拼圖：愛因斯坦關係（1-16）、多出載子（1-17～1-18）
+     ════════════════════════════════════════════════════════════ */
+  const zig = (x0, y0, n, key, cls, seed, sw) => {
+    let d = 'M' + x0 + ' ' + y0, x = x0; const r = rnd(seed);
+    for (let i = 0; i < n; i++) { x += 8 + r() * 14; const y = y0 + (r() - 0.5) * 30; d += ' L' + x.toFixed(1) + ' ' + y.toFixed(1); }
+    return '<path class="' + cls + '" style="fill:none;stroke-width:' + (sw || 2) + '" d="' + d + '"' + (key ? k(key) : '') + '/>';
+  };
+  const box = (x, y, w, hh, key, inner) => g(key, '<rect class="card" x="' + x + '" y="' + y + '" width="' + w + '" height="' + hh + '" rx="14" filter="url(#st-sh)"/>' + inner);
+
+  /* ── A0 小謎題：奇怪的巧合 ── */
+  const A0 = {
+    t: '奇怪的巧合', en: 'A STRANGE COINCIDENCE',
+    svg: box(90, 96, 210, 150, 'cE', T(195, 126, '電子', { fs: 17 }) + e(150, 120, null, 6) +
+        T(195, 170, 'μₙ = 1350', { cls: 'ta', fs: 18 }) + T(195, 206, 'Dₙ = 35', { cls: 'ta', fs: 18 })) +
+      box(340, 96, 210, 150, 'cH', T(445, 126, '電洞', { fs: 17 }) + h(400, 120, null, 6.5) +
+        T(445, 170, 'μₚ = 480', { cls: 't', fs: 18 }) + T(445, 206, 'Dₚ = 12', { cls: 't', fs: 18 })) +
+      chip(320, 280, '電子樣樣都快將近 3 倍', null, 'c3', { fs: 13 }) +
+      g('rE', T(195, 236, '35 ÷ 1350 = 0.026', { cls: 'ta', fs: 14 })) + g('rH', T(445, 236, '12 ÷ 480 = 0.025', { cls: 't', fs: 14 })) +
+      chip(320, 280, '相除之後幾乎一樣！', '巧合嗎？', 'cSame', { fs: 13, acc: true }) +
+      T(320, 210, '?', { cls: 'ta', fs: 110, k: 'q' }),
+    steps: [
+      { sub: 'PART 2 用過兩組數字：電子的 μ 跟 D，電洞的 μ 跟 D。', on: 'cE cH' },
+      { sub: '電子不管哪一項，都比電洞快<b>將近 3 倍</b>。', on: 'c3' },
+      { sub: '可是把 D 除以 μ：電子 <b>0.026</b>，電洞 <b>0.025</b> —— 幾乎一樣！', off: 'c3', on: 'rE rH cSame' },
+      { sub: '這是巧合嗎？先複習一下 PART 2 的兩招。', op: dim('cE cH rE rH cSame'), on: 'q' }
+    ]
+  };
+
+  /* ── A1 複習：推和擠 ── */
+  const A1 = {
+    t: '先複習：推和擠', en: 'RECAP · DRIFT AND DIFFUSION',
+    svg: box(70, 96, 236, 170, 'L', T(188, 124, '第一招：被推（漂移）', { fs: 15 }) +
+        arrow(110, 160, 266, 160, null, 'lna') + T(188, 150, '電場 E', { cls: 'ta', fs: 12 }) +
+        e(150, 196, null, 6) + arrow(162, 196, 232, 196, null, 'ln') + T(188, 236, '跑多快看 μ（移動率）', { cls: 'tm', fs: 13 })) +
+      box(334, 96, 236, 170, 'R', T(452, 124, '第二招：被擠（擴散）', { fs: 15 }) +
+        e(410, 170, null, 5) + e(426, 182, null, 5) + e(416, 196, null, 5) + e(432, 160, null, 5) + e(404, 188, null, 5) +
+        arrow(446, 176, 520, 176, null, 'ln') + e(536, 176, null, 5) +
+        T(452, 236, '散多快看 D（擴散係數）', { cls: 'tm', fs: 13 })) +
+      chip(320, 300, '看起來是兩件不同的事', null, 'cTwo', { fs: 13 }),
+    steps: [
+      { sub: '第一招<b>推</b>：電場推著載子跑。跑多快，看<b>移動率 μ</b>。', on: 'L' },
+      { sub: '第二招<b>擠</b>：擠的地方往空的地方散開。散多快，看<b>擴散係數 D</b>。', on: 'R' },
+      { sub: '一個是被推、一個是自己散，看起來是兩件不同的事。', on: 'cTwo' }
+    ]
+  };
+
+  /* ── A2 比喻：同一條走廊 ── */
+  const A2 = {
+    t: '同一條走廊', en: 'THE SAME HALLWAY',
+    svg: g('h1', '<rect class="bgw" x="60" y="106" width="380" height="56" rx="10"/>' + zig(74, 134, 17, null, 'lna', 52, 2.4)) +
+      T(66, 98, '空走廊：很少撞到人', { cls: 'ta', fs: 13, a: 'start', k: 'h1L' }) +
+      g('h2', '<rect class="bgw" x="60" y="198" width="380" height="56" rx="10"/>' + (function () {
+        let s = ''; const r = rnd(41);
+        for (let i = 0; i < 30; i++) s += '<circle class="ink3" cx="' + (72 + r() * 356).toFixed(1) + '" cy="' + (206 + r() * 40).toFixed(1) + '" r="3"/>';
+        return s;
+      })() + zig(74, 226, 6, null, 'ln', 70, 2.2)) +
+      T(66, 190, '擠滿人的走廊：一直撞', { cls: 't', fs: 13, a: 'start', k: 'h2L' }) +
+      chip(540, 134, '推得快，也散得快', '兩個都快', 'c1', { fs: 12.5, acc: true }) + chip(540, 226, '推不動，也散不開', '兩個都慢', 'c2', { fs: 12.5 }) +
+      chip(320, 288, 'μ 和 D 都在看同一件事：一路上撞不撞', null, 'cSame', { fs: 13, acc: true }),
+    steps: [
+      { sub: '想像你在學校走廊上。<b>空走廊</b>：幾乎不會撞到人。', on: 'h1 h1L' },
+      { sub: '有人推你，你跑很快；你自己晃來晃去，也很快就散到遠處。<b>兩個都快。</b>', on: 'c1' },
+      { sub: '<b>下課擠滿人的走廊</b>：一直撞到人。', on: 'h2 h2L' },
+      { sub: '推你也推不動，自己也散不開。<b>兩個都慢。</b>', on: 'c2' },
+      { sub: '所以 μ 和 D 其實在看<b>同一件事</b>：一路上撞不撞。一個大，另一個一定也大。', on: 'cSame' }
+    ]
+  };
+
+  /* ── A3 先整理 → 愛因斯坦關係 ── */
+  const A3 = {
+    t: '愛因斯坦關係', en: 'EINSTEIN RELATION',
+    svg: chip(320, 104, '先整理一下：撞得少 → D、μ 都大；撞得多 → 都小', null, 'sum', { fs: 13 }) +
+      T(320, 176, 'D / μ = kT / e', { cls: 'ta', fs: 34, k: 'f' }) +
+      chip(320, 222, '≈ 0.026 V（室溫 300 K）', '只跟溫度 T 有關，跟材料、電子或電洞都無關', 'v', { fs: 13, acc: true }) +
+      chip(170, 296, '驗算', '35/1350 ≈ 12/480 ≈ 0.026 ✓', 'chk', { fs: 12.5 }) +
+      chip(470, 296, '記住這個 0.026 V', '等一下改名叫「熱電壓 V_T」', 'vt', { fs: 12.5 }),
+    steps: [
+      { sub: '先整理一下：撞得少的載子，D 和 μ 都大；撞得多的，兩個都小。', on: 'sum' },
+      { sub: '所以兩個的<b>比值是固定的</b>，這叫<b>愛因斯坦關係</b>：D/μ = kT/e。', on: 'f' },
+      { sub: '室溫算出來約 <b>0.026 V</b>，<b>只跟溫度有關</b> —— 電子、電洞都一樣。', on: 'v' },
+      { sub: '回到開頭：35/1350 ≈ 12/480 ≈ 0.026，<b>不是巧合</b> ✓', on: 'chk' },
+      { sub: '記住這個 0.026 V，等一下它會換個名字出現：<b>熱電壓 V<sub>T</sub></b>。', on: 'vt' }
+    ]
+  };
+
+  /* ── A4 照一道光 ── */
+  const rA = rnd(29); let majA = '', minA = '', pE = '', pH = '';
+  for (let i = 0; i < 34; i++) majA += e((84 + rA() * 300).toFixed(1), (130 + rA() * 120).toFixed(1), null, 3.4);
+  [[110, 200], [330, 150]].forEach(([x, y]) => { minA += h(x, y, null, 5.5); });
+  const pairsA = [[130, 160], [190, 228], [250, 150], [300, 214], [160, 246], [280, 180], [220, 190]];
+  pairsA.forEach(([x, y]) => { pE += e(x, y, null, 5); pH += h(x + 16, y + 10, null, 5.5); });
+  const A4 = {
+    t: '照一道光', en: 'SHINE A LIGHT',
+    svg: g('box', '<rect class="bgw" x="70" y="118" width="330" height="146" rx="10"/>') + g('maj', majA) + g('min', minA) +
+      T(395, 108, 'N 型矽', { cls: 'tm', fs: 12.5, a: 'end', k: 'boxL' }) +
+      chip(520, 150, '電子（多數）：很多', null, 'cM', { fs: 12 }) + chip(520, 196, '電洞（少數）：很少', null, 'cm', { fs: 12 }) +
+      g('light', g(null, arrow(130, 74, 150, 112, null, 'lna') + arrow(230, 74, 250, 112, null, 'lna') + arrow(330, 74, 350, 112, null, 'lna'), ' class="glow"')) +
+      g('pe', pE) + g('ph', pH) +
+      chip(520, 250, '多出一批電子–電洞對', '成對產生：δn = δp', 'cPair', { fs: 12.5, acc: true }) +
+      chip(235, 300, '這批叫「多出載子」excess carriers', null, 'cName', { fs: 13, acc: true }),
+    steps: [
+      { sub: '第二塊拼圖。一塊安安靜靜的 <b>N 型矽</b>：電子很多 ——', on: 'box maj boxL cM' },
+      { sub: '電洞很少。這是 PART 2 的熱平衡。', on: 'min cm' },
+      { sub: '照一道光進去：光的能量<b>打斷共價鍵</b>，跟熱擾動一樣，一次生出一對。', on: 'light pe ph' },
+      { sub: '多出來的電子跟電洞<b>一樣多</b>：δn = δp。', on: 'cPair' },
+      { sub: '這批多出來的，叫<b>多出載子</b>。', on: 'cName' }
+    ]
+  };
+
+  /* ── A5 誰感覺得到？ ── */
+  const lvBar = (y, key, w0, w1, cls, lbl, a, b) => g(key,
+    T(90, y + 5, lbl, { fs: 14, a: 'end' }) +
+    '<rect class="bgw" x="100" y="' + (y - 12) + '" width="' + w0 + '" height="24" rx="4"/>') +
+    T(110 + w0, y + 5, a, { cls: 'tm', fs: 12, a: 'start', k: key + 'a' }) +
+    g(key + 'x', '<rect class="' + cls + '" x="100" y="' + (y - 12) + '" width="' + w1 + '" height="24" rx="4" style="opacity:.6"/>' +
+    T(110 + w1, y + 5, b, { cls: 'ta', fs: 13, a: 'start' }));
+  const A5 = {
+    t: '誰感覺得到？', en: 'WHO NOTICES?',
+    svg: T(100, 104, '長度 = 數量級（差 10 倍才長一格）', { cls: 'ts', fs: 11.5, a: 'start', k: 'ax' }) +
+      lvBar(126, 'bM', 320, 324, 'accw', '電子', '10¹⁶', '10¹⁶ + 10¹⁴：只多 1%') +
+      lvBar(204, 'bm', 80, 280, 'accw', '電洞', '10⁴', '10¹⁴：暴增一百億倍！') +
+      chip(460, 160, '像萬人演唱會多來 100 人', '根本沒感覺', 'aM', { fs: 12 }) +
+      chip(460, 238, '像空教室突然擠滿人', '一眼就看得出來', 'am', { fs: 12 }) +
+      chip(320, 288, '多出載子主要改變的是「少數載子」', null, 'cC', { fs: 13, acc: true }),
+    steps: [
+      { sub: '多出來的電子跟電洞一樣多，比如各 10¹⁴ 個。<b>誰感覺得到？</b>', on: 'ax bM bm bMa bma' },
+      { sub: '電子本來就有 10¹⁶：多 10¹⁴ 只多 <b>1%</b>。像萬人演唱會多來 100 人，<b>沒感覺</b>。', off: 'bMa', on: 'bMx aM' },
+      { sub: '電洞本來只有 10⁴：一下變 10¹⁴，暴增<b>一百億倍</b>。像空教室突然擠滿人。', off: 'bma', on: 'bmx am' },
+      { sub: '所以照光、注入這種事，主要改變的是<b>少數載子</b>。PART 4 會一直用到這句話。', on: 'cC' }
+    ]
+  };
+
+  /* ── A6 關燈之後：復合與生命週期 ── */
+  let curveA = 'M380 140';
+  for (let i = 1; i <= 40; i++) curveA += ' L' + (380 + i * 5).toFixed(1) + ' ' + (262 - 122 * Math.exp(-i / 10)).toFixed(1);
+  let flashA = ''; pairsA.forEach(([x, y]) => { flashA += '<circle class="ring" cx="' + (x + 8) + '" cy="' + (y + 5) + '" r="10"/>'; });
+  const A6 = {
+    t: '關燈之後', en: 'RECOMBINATION AND LIFETIME',
+    svg: g('box', '<rect class="bgw" x="40" y="118" width="300" height="146" rx="10"/>') +
+      g('pe', pE.replace(/cx="(\d+)/g, (m, x) => 'cx="' + (x - 30))) + g('ph', pH.replace(/cx="(\d+)/g, (m, x) => 'cx="' + (x - 30))) +
+      g('fl', flashA.replace(/cx="(\d+)/g, (m, x) => 'cx="' + (x - 30))) +
+      chip(190, 290, '電子掉回空位：復合', '一次消失一對', 'cR', { fs: 12.5 }) +
+      g('ax', arrow(380, 266, 590, 266, null, 'ln') + arrow(380, 266, 380, 120, null, 'ln') + T(590, 284, '時間', { cls: 'ts', fs: 12 }) + T(388, 120, '多出來的', { cls: 'tm', fs: 12, a: 'start' })) +
+      '<path class="lna" d="' + curveA + '"' + k('cv') + '/>' +
+      chip(485, 296, '平均撐多久 = 生命週期 τ', '過一個 τ 剩約 37%', 'cTau', { fs: 12.5, acc: true }) +
+      chip(190, 290, '兩塊拼圖到齊 ✓', 'kT/e、多出載子，等一下都會用到', 'next', { fs: 12.5, acc: true }),
+    steps: [
+      { sub: '把光關掉。多出來的電子會一個個<b>掉回空位</b>，跟電洞一起消失 —— 這叫<b>復合</b>。', on: 'box pe ph' },
+      { sub: '每次復合，一個電子加一個電洞<b>一起不見</b>。', off: 'pe ph', on: 'fl cR', cls: { fl: 'pulse' } },
+      { sub: '多出來的量越來越少，最後回到原本的熱平衡。', off: 'fl', on: 'ax cv' },
+      { sub: '平均能撐多久，叫<b>生命週期 τ</b>。過一個 τ 大約剩 37%。', on: 'cTau' },
+      { sub: '兩塊拼圖到齊了。它們等一下都會用到 —— 現在，來看一個<b>奇怪的電池</b>。', off: 'cR', on: 'next' }
+    ]
+  };
+
   window.__ch1p3Story = window.__Story('#story', {
     id: 'ch1-part3', title: 'CH1 PART 3 pn 接面', after: '#map',
-    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, P5, P6, P7, SR, P8, P9, P10, P11, P12, P13]
+    scenes: [A0, A1, A2, A3, A4, A5, A6, S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, P5, P6, P7, SR, P8, P9, P10, P11, P12, P13]
   });
 })();

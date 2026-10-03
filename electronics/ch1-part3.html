@@ -29,10 +29,12 @@
     <ol>
       <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
       <li><a href="#map"><i>00</i>這段在講什麼</a></li>
-      <li><a href="#form"><i>01</i>pn 接面怎麼形成</a></li>
-      <li><a href="#vbi"><i>02</i>內建電壓 V<sub>bi</sub></a></li>
-      <li><a href="#rev"><i>03</i>偏壓接法與逆向偏壓</a></li>
-      <li><a href="#cj"><i>04</i>接面電容與變容二極體</a></li>
+      <li><a href="#einstein"><i>01</i>愛因斯坦關係</a></li>
+      <li><a href="#excess"><i>02</i>多出載子</a></li>
+      <li><a href="#form"><i>03</i>pn 接面怎麼形成</a></li>
+      <li><a href="#vbi"><i>04</i>內建電壓 V<sub>bi</sub></a></li>
+      <li><a href="#rev"><i>05</i>偏壓接法與逆向偏壓</a></li>
+      <li><a href="#cj"><i>06</i>接面電容與變容二極體</a></li>
       <li><a href="#check"><i>!</i>講義勘誤</a></li>
       <li><a href="#hw"><i>📝</i>HW1 作業題（會考）</a></li>
       <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
@@ -42,23 +44,23 @@
 
   <main>
     <div class="hero">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>Chapter 1 · 1.2 The pn Junction · 投影片 1-19～1-37</div>
+      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>Chapter 1 · 1.1.4 Excess Carriers ＋ 1.2 The pn Junction · 投影片 1-16～1-37</div>
       <h1>pn 接面：熱平衡與逆向偏壓</h1>
       <p class="sub">把一塊 P 型和一塊 N 型接在一起，交界會自己長出一層<strong>沒有載子的空乏區</strong>和一道<strong>電位障</strong>。這一段講它怎麼形成、為什麼停得下來，以及反向加電壓時會發生什麼 —— 包括一個意外的副產品：<strong>可以用電壓調整的電容</strong>。</p>
       <div class="hero-meta">
         <span class="chip h">✓ 10/5 考試範圍（整段都考）</span>
-        <span class="chip">20 個畫面的故事模式</span>
-        <span class="chip">5 個互動模組</span>
-        <span class="chip">4 個可改數字例題</span>
-        <span class="chip">12 題中英對照測驗</span>
+        <span class="chip">27 個畫面的故事模式</span>
+        <span class="chip">7 個互動模組</span>
+        <span class="chip">6 個可改數字例題</span>
+        <span class="chip">15 題中英對照測驗</span>
       </div>
-      <p class="note">PART 3 講義的前 18 頁（電流密度、漂移／擴散、愛因斯坦關係、多出載子）放在 <a href="ch1-part2.html">CH1 PART 2</a>，這一頁從 <b>1.2 pn 接面</b>（投影片 1-19）開始。</p>
+      <p class="note">這一頁從 PART 3 講義的 <b>1-16 愛因斯坦關係</b>開始：先補兩塊 pn 接面會用到的拼圖（D 和 μ 的關係、多出載子），再進 <b>1.2 pn 接面</b>（投影片 1-19）。PART 3 的 1-1～1-15（電流密度、漂移／擴散）跟 PART 2 同主題，放在 <a href="ch1-part2.html">CH1 PART 2</a>。</p>
     </div>
 
     <!-- ══════════ 故事模式 ══════════ -->
     <section class="sec" id="story-sec">
       <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>Story mode · 先看這段，再往下讀</div>
-      <h2>20 個畫面看懂這一段<span class="h2-en">THE STORY IN 20 SCENES</span></h2>
+      <h2>27 個畫面看懂這一段<span class="h2-en">THE STORY IN 27 SCENES</span></h2>
       <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。<strong>先建立直覺</strong>，再往下讀推導、玩互動模組、做例題。</p>
       <div id="story"></div>
     </section>
@@ -69,8 +71,10 @@
       <h2>這一段在講什麼<span class="h2-en">THE BIG PICTURE</span></h2>
       <p class="lede">一句話：<strong><button class="tm" data-t="pn接面">pn 接面</button>是擴散和漂移的拉鋸戰</strong>。濃度差推著載子擴散過去，擴散留下的離子又建立電場把它們推回來；兩股力量打平，就是熱平衡。外加電壓，就是去幫其中一邊。</p>
       <div class="derive">
-        <h4>這一段的四個問題</h4>
+        <h4>這一段的路線</h4>
         <ol>
+          <li><span class="d-eq">先補兩塊拼圖：D 和 μ 是一家人、照光會多出一批載子</span>
+            <div class="why">投影片 1-16～1-18。愛因斯坦關係的 kT/e 等一下會改名叫熱電壓 V<sub>T</sub>；多出載子是順向偏壓「注入」的前身。</div></li>
           <li><span class="d-eq">接起來的瞬間發生什麼？　⟹　擴散 → 留下離子 → <button class="tm" data-t="空乏區">空乏區</button></span>
             <div class="why">投影片 1-20～1-24。</div></li>
           <li><span class="d-eq">為什麼不會一直擴散下去？　⟹　離子的電場 → <button class="tm" data-t="內建電壓">內建電壓</button> V<sub>bi</sub></span>
@@ -83,9 +87,131 @@
       </div>
     </section>
 
-    <!-- ══════════ 01 形成 ══════════ -->
+    <!-- ══════════ 01 愛因斯坦關係（PART 3 1-16）══════════ -->
+    <section class="sec" id="einstein">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>01 · 投影片 1-16 · Einstein Relation</div>
+      <h2><button class="tm" data-t="愛因斯坦關係">愛因斯坦關係</button>：D 和 μ 其實是一家人<span class="h2-en">EINSTEIN RELATION</span></h2>
+      <p class="lede">擴散係數 D（濃度差推得多快）跟移動率 μ（電場推得多快）看起來是兩件事，但它們都取決於<strong>載子在晶格裡亂撞的難易程度</strong>。撞得少的載子，被電場推也跑得快、自己擴散也散得快。所以兩者的比值跟材料無關，<strong>只看溫度</strong>。</p>
+      <div class="eq">D<em>n</em> / μ<em>n</em> = D<em>p</em> / μ<em>p</em> = kT / e ≈ 0.026 V　（T = 300 K）</div>
+
+      <div class="derive">
+        <h4>為什麼比值剛好是 kT/e（講義只給結論，這裡補推導）</h4>
+        <ol>
+          <li>
+            <span class="d-eq">熱平衡、沒接電路 ⟹ 總電流 = 0：　e·n·μ<sub>n</sub>·E + e·D<sub>n</sub>·(dn/dx) = 0</span>
+            <div class="why">如果材料內部有電場、濃度也不均勻（pn 接面就是這樣），漂移跟擴散必須剛好抵消，否則沒接電池也會一直有電流。</div>
+          </li>
+          <li>
+            <span class="d-eq">熱平衡時 n(x) ∝ e<sup>eφ(x)/kT</sup>　⟹　dn/dx = n · (e/kT) · dφ/dx = −n · (e/kT) · E</span>
+            <div class="why">這是統計力學的波茲曼分布：電位 φ 越高的地方電子能量越低、越多。再用 E = −dφ/dx 把電位換成電場。</div>
+          </li>
+          <li>
+            <span class="d-eq">代回：　e·n·μ<sub>n</sub>·E − e·D<sub>n</sub>·n·(e/kT)·E = 0</span>
+            <div class="why">兩項都有 e·n·E，可以一起消掉。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">μ<sub>n</sub> = D<sub>n</sub> · e / kT　⟹　D<sub>n</sub> / μ<sub>n</sub> = kT / e</span>
+            <p>電洞用同樣步驟，得到同一個值。<b>驗算：</b>矽 D<sub>n</sub>/μ<sub>n</sub> = 35/1350 = 0.0259 V、D<sub>p</sub>/μ<sub>p</sub> = 12/480 = 0.025 V ✓</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>D ↔ μ 換算器</h3><span class="spacer"></span><span class="tag">D = μ · kT/e</span></div>
+        <div class="stage-wrap"><canvas id="cv-ein" aria-label="熱電壓 kT/e 隨溫度變化，以及換算出的擴散係數"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="ein-T">溫度 T<output for="ein-T"></output></label>
+            <input type="range" id="ein-T" min="200" max="500" step="5" value="300"></div>
+        </div>
+        <dl class="readout">
+          <div><dt><button class="tm" data-t="熱電壓">熱電壓</button> kT/e</dt><dd id="ein-vt">—</dd></div>
+          <div><dt>D<sub>n</sub>（μ<sub>n</sub> = 1350）</dt><dd id="ein-dn" class="e">—</dd></div>
+          <div><dt>D<sub>p</sub>（μ<sub>p</sub> = 480）</dt><dd id="ein-dp" class="h">—</dd></div>
+        </dl>
+      </div>
+
+      <div id="ex-ein"></div>
+
+      <p class="note key">講義的 NOTE（2）說得很對：<b>kT/e 這個數字等一下會換個名字再出現</b> —— 叫<button class="tm" data-t="熱電壓">熱電壓</button> V<sub>T</sub>，在 pn 接面的內建電壓、二極體方程式裡都會用到。公式長一樣，但這裡它是「D 跟 μ 的比值」，那裡它是「電壓的尺度」，物理意義不同。</p>
+      <div class="pitfall">
+        <h4>愛因斯坦關係的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 以為 D/μ 跟材料或摻雜有關。<span class="o">只跟溫度有關</span>，電子、電洞、矽、鍺都一樣。</li>
+          <li><span class="x">✗</span> 0.026 V 套到別的溫度。<span class="o">V<sub>T</sub> = kT/e 跟 T 成正比</span>，400 K 時是 0.0345 V。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 02 多出載子（PART 3 1-17～1-18）══════════ -->
+    <section class="sec" id="excess">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>02 · 投影片 1-17～1-18 · 1.1.4 Excess Carriers</div>
+      <h2><button class="tm" data-t="多出載子">多出載子</button>：打破熱平衡之後<span class="h2-en">EXCESS CARRIERS</span></h2>
+      <p class="lede">到目前為止所有東西都假設<button class="tm" data-t="熱平衡">熱平衡</button>：n₀p₀ = nᵢ²。可是只要<strong>照光、或外加電壓注入載子</strong>，就會多出一批電子和電洞，平衡被打破。把外因拿掉，它們會一對一對<button class="tm" data-t="復合">復合</button>消失，回到平衡 —— 平均能活多久，叫<button class="tm" data-t="生命週期">生命週期</button> τ。</p>
+      <div class="eq">n = n₀ + δn　　p = p₀ + δp　　熱平衡：n₀p₀ = nᵢ²　　有多出載子：n·p &gt; nᵢ²</div>
+
+      <div class="derive">
+        <h4>多出載子從哪來、往哪去</h4>
+        <ol>
+          <li>
+            <span class="d-eq">光子能量 ≥ E<sub>g</sub>　⟹　打斷共價鍵　⟹　δn = δp（成對產生）</span>
+            <div class="why">跟熱擾動一樣是「電子–電洞對」，只是能量改成光給的。一顆光子給一對，所以照光產生的電子和電洞一樣多。</div>
+          </li>
+          <li>
+            <span class="d-eq">n·p = (n₀ + δn)(p₀ + δp) = n₀p₀ + δ(n₀ + p₀) + δ² &gt; nᵢ²　（δn = δp = δ）</span>
+            <div class="why">展開後多出兩項正的東西，所以乘積一定比 nᵢ² 大 —— 這就是「破壞熱平衡」在數學上的樣子。</div>
+          </li>
+          <li>
+            <span class="d-eq">停止照光 ⟹ <button class="tm" data-t="復合">復合</button>：自由電子掉回價帶，填掉一個電洞</span>
+            <div class="why">每一次復合同時消滅一個電子、一個電洞，所以 δn 和 δp 一起變小，直到回到 n₀、p₀。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">δn(t) = δn(0) · e<sup>−t/τ</sup>　（課本延伸，講義只定義了 τ）</span>
+            <p>多出越多、復合得越快，所以是指數衰減。<b>τ 就是平均壽命</b>：過了一個 τ 剩 e⁻¹ ≈ 37%，三個 τ 剩 5%。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>照光實驗室</h3>
+          <div class="btn-row">
+            <button class="btn solid" type="button" id="exc-flash">⚡ 照一下光</button>
+            <button class="btn" type="button" id="exc-hold" aria-pressed="false">持續照光</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-exc" aria-label="照光產生電子電洞對、再復合消失，右邊畫出多出載子隨時間衰減"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="exc-tau">生命週期 τ（相對）<output for="exc-tau"></output></label>
+            <input type="range" id="exc-tau" min="0.5" max="3" step="0.25" value="1.25"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>多出的電子–電洞對</dt><dd id="exc-n">—</dd></div>
+          <div><dt>n·p 跟 nᵢ² 比</dt><dd id="exc-np" style="font-size:14px">—</dd></div>
+          <div><dt>狀態</dt><dd id="exc-st" style="font-size:13px">—</dd></div>
+        </dl>
+      </div>
+
+      <div id="ex-exc"></div>
+
+      <div class="howto">
+        <h4>多出載子的題目怎麼算</h4>
+        <ol>
+          <li>先用 PART 2 的方法算<b>熱平衡</b>的 n₀、p₀（多數 ≈ 摻雜濃度，少數 = nᵢ² / 多數）。</li>
+          <li>照光／注入產生 δ：<b>n = n₀ + δ、p = p₀ + δ</b>（成對產生，兩邊加一樣多）。</li>
+          <li>比較 δ 跟 n₀、p₀：<b>少數載子通常被改變好幾個數量級，多數載子幾乎不動</b>。</li>
+          <li>問「過一段時間剩多少」就用 δ(t) = δ(0)·e<sup>−t/τ</sup>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>多出載子的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 以為多出載子對多數載子影響很大。<span class="o">影響最大的是少數載子</span>：n 型裡 p₀ 只有 10⁴，多 10¹⁴ 就是暴增 10 個數量級；n₀ 本來就 10¹⁶，多 10¹⁴ 只差 1%。</li>
+          <li><span class="x">✗</span> 熱平衡被破壞就一定 n·p &gt; nᵢ²。<span class="o">多出載子的情況才是大於</span>；後面 §05 的逆向偏壓是把載子「抽走」，那裡反而 n·p &lt; nᵢ²。嚴格講是 n·p ≠ nᵢ²。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 03 形成 ══════════ -->
     <section class="sec" id="form">
-      <div class="eyebrow"><a class="hw-tag" href="#hw-q7">📝 HW1 第 7 題</a><span class="part-tag">原講義 PART 3</span>01 · 投影片 1-20～1-24 · 1.2.1 The Equilibrium pn Junction</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q7">📝 HW1 第 7 題</a><span class="part-tag">原講義 PART 3</span>03 · 投影片 1-20～1-24 · 1.2.1 The Equilibrium pn Junction</div>
       <h2>pn 接面怎麼形成<span class="h2-en">FORMING THE JUNCTION</span></h2>
       <p class="lede">P 型那邊電洞很多、N 型那邊電子很多。一接起來，<strong>濃度差</strong>就會讓它們往對面擴散 —— 但每跑過去一個，就在原地留下一個不會動的離子。離子越積越多，電場越來越強，最後剛好擋住擴散。</p>
       <div class="eq">熱平衡：|J<em>diffusion</em>| = |J<em>drift</em>|　⟹　總電流 = 0</div>
@@ -150,7 +276,7 @@
 
     <!-- ══════════ 02 內建電壓 ══════════ -->
     <section class="sec" id="vbi">
-      <div class="eyebrow"><a class="hw-tag" href="#hw-q8">📝 HW1 第 8 題</a><span class="part-tag">原講義 PART 3</span>02 · 投影片 1-25～1-27 · Built-in Potential Barrier</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q8">📝 HW1 第 8 題</a><span class="part-tag">原講義 PART 3</span>04 · 投影片 1-25～1-27 · Built-in Potential Barrier</div>
       <h2><button class="tm" data-t="內建電壓">內建電壓</button> V<sub>bi</sub><span class="h2-en">BUILT-IN POTENTIAL BARRIER</span></h2>
       <p class="lede">空乏區的離子在接面兩側造成一個電位差，叫內建電壓（<b>built</b>-in，不是 build-in）。它就是多數載子要擴散過去必須翻過的那道「坡」。坡多高？只看兩邊摻多少、溫度多少。</p>
       <div class="eq">V<em>bi</em> = (kT/e) · ln( N<em>a</em>N<em>d</em> / nᵢ² ) = V<em>T</em> · ln( N<em>a</em>N<em>d</em> / nᵢ² )　　V<em>T</em> = kT/e ≈ 26 mV（300 K）</div>
@@ -223,7 +349,7 @@
 
     <!-- ══════════ 03 逆偏 ══════════ -->
     <section class="sec" id="rev">
-      <div class="eyebrow"><a class="hw-tag" href="#hw-q9">📝 HW1 第 9 題</a><span class="part-tag">原講義 PART 3</span>03 · 投影片 1-28～1-31 · 1.2.2 Reverse-Biased pn Junction</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q9">📝 HW1 第 9 題</a><span class="part-tag">原講義 PART 3</span>05 · 投影片 1-28～1-31 · 1.2.2 Reverse-Biased pn Junction</div>
       <h2>偏壓接法與<button class="tm" data-t="逆向偏壓">逆向偏壓</button><span class="h2-en">FORWARD / REVERSE BIAS · REVERSE-BIASED JUNCTION</span></h2>
       <p class="lede">外加電壓有兩種接法：<b>P 接正</b>是<button class="tm" data-t="順向偏壓">順向偏壓</button>（PART 4），<b>P 接負</b>是逆向偏壓。逆偏時外加電場跟內建電場<strong>同方向</strong>，坡被墊得更高 —— 多數載子完全過不去，只剩少數載子流過的一點點<button class="tm" data-t="逆向飽和電流">逆向飽和電流</button> I<sub>S</sub>。</p>
       <div class="eq">E<em>total</em> = Ē + E<em>A</em>　⟹　位障 V<em>bi</em> + V<em>R</em>，空乏區 W ↑　　i<em>D</em> ≈ −I<em>S</em>（矽 10⁻¹⁴ A 等級）</div>
@@ -284,7 +410,7 @@
 
     <!-- ══════════ 04 接面電容 ══════════ -->
     <section class="sec" id="cj">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>04 · 投影片 1-32～1-37 · Junction Capacitance</div>
+      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>06 · 投影片 1-32～1-37 · Junction Capacitance</div>
       <h2><button class="tm" data-t="接面電容">接面電容</button>與<button class="tm" data-t="變容二極體">變容二極體</button><span class="h2-en">JUNCTION CAPACITANCE · VARACTOR</span></h2>
       <p class="lede">空乏區沒有載子，像一層絕緣體；兩側的 P 區、N 區像電容的兩塊極板。逆偏一變，空乏區寬度 W 跟著變，等於<strong>極板距離在變</strong> —— 所以這是一顆<strong>可以用電壓調整的電容</strong>。</p>
       <div class="eq">C<em>j</em> = C<em>j0</em> · ( 1 + V<em>R</em> / V<em>bi</em> )<sup>−1/2</sup>　　（C<em>j0</em>：V<em>R</em> = 0 時的接面電容）</div>
@@ -357,31 +483,46 @@
     <section class="sec" id="check">
       <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>Errata · 講義檢查結果</div>
       <h2>講義勘誤<span class="h2-en">ERRATA</span></h2>
-      <p class="lede">PART 3 的 1-19～1-37 我逐頁驗算過。<strong>Example 1.5、1.6 的數字全部正確</strong>，下面是要修正或要注意的地方。</p>
+      <p class="lede">PART 3 的 1-16～1-37 我逐頁驗算過。<strong>1-16 愛因斯坦關係的數字、Example 1.5、1.6 全部正確</strong>（35/1350 = 0.0259、12/480 = 0.025 ≈ kT/e ✓），下面是要修正或要注意的地方。</p>
 
       <div class="pitfall">
-        <h4>① 投影片 1-21：N 區剩下的離子符號寫反</h4>
+        <h4>① 投影片 1-17：英文拼錯（考英文要注意）</h4>
+        <ul>
+          <li>講義寫：<span class="x">多出電子（excess electron<b>ics</b>）</span></li>
+          <li>應該是：<span class="o">excess electron<b>s</b></span>。electronics 是「電子學」，electrons 才是「電子」。課本原句：<i>δn and δp are the excess electron and hole concentrations.</i></li>
+        </ul>
+      </div>
+      <div class="pitfall">
+        <h4>② 投影片 1-17：「破壞熱平衡：n·p &gt; nᵢ²」只對一半</h4>
+        <ul>
+          <li>照光或順向注入產生<b>多出載子</b>時，確實 <span class="o">n·p &gt; nᵢ²</span>。</li>
+          <li>但下一段的<b>逆向偏壓</b>會把載子抽走，空乏區附近反而 <span class="o">n·p &lt; nᵢ²</span>。嚴格的寫法是：<b>熱平衡被破壞 ⟹ n·p ≠ nᵢ²</b>。不算錯，但考觀念題要小心。</li>
+        </ul>
+      </div>
+
+      <div class="pitfall">
+        <h4>③ 投影片 1-21：N 區剩下的離子符號寫反</h4>
         <ul>
           <li>講義紅字寫：<span class="x">在 N 區便沒有傳導載子，只剩下 P⊖</span></li>
           <li>應該是：<span class="o">只剩下 P⊕</span>。磷（施體）給出電子之後變成<b>正</b>離子；同一頁下方的晶格圖畫的就是 P⊕。</li>
         </ul>
       </div>
       <div class="pitfall">
-        <h4>② 投影片 1-25：build-in → built-in（考英文要注意）</h4>
+        <h4>④ 投影片 1-25：build-in → built-in（考英文要注意）</h4>
         <ul>
           <li>講義寫：<span class="x">build-in potential barrier、build-in voltage</span></li>
           <li>應該是：<span class="o">built-in potential barrier、built-in voltage</span>（過去分詞「內建的」）。課本圖 1.12 的說明寫的就是 built-in。</li>
         </ul>
       </div>
       <div class="pitfall">
-        <h4>③ 投影片 1-27 NOTE (3)：靜電流 → 淨電流</h4>
+        <h4>⑤ 投影片 1-27 NOTE (3)：靜電流 → 淨電流</h4>
         <ul>
           <li>講義寫：<span class="x">v<sub>bi</sub> 乃用以維持熱平衡，並不會產生靜電流</span></li>
           <li>應該是：<span class="o">淨電流</span>（net current）。應該是同音筆誤。</li>
         </ul>
       </div>
       <div class="pitfall">
-        <h4>④ 投影片 1-27 NOTE (2)：「室溫下約定俗成取 v<sub>bi</sub> ≃ 0.7 V」—— 請跟老師確認</h4>
+        <h4>⑥ 投影片 1-27 NOTE (2)：「室溫下約定俗成取 v<sub>bi</sub> ≃ 0.7 V」—— 請跟老師確認</h4>
         <ul>
           <li>0.7 V 通常是矽二極體<b>導通電壓（順向壓降）</b>的慣用值；<b>V<sub>bi</sub> 是另一個量</b>，會隨摻雜在約 0.6～0.8 V 之間變。</li>
           <li>同一份講義的兩個例題就不是 0.7：Example 1.5 = <b>0.757 V</b>、Example 1.6 = <b>0.637 V</b>。</li>
@@ -419,6 +560,10 @@
       <p class="lede">考卷上會出現的是右邊那欄。</p>
       <div class="glossary">
         <div class="gl-row"><b>中文</b><span>English</span><code>符號/單位</code></div>
+        <div class="gl-row"><b>愛因斯坦關係</b><span>Einstein relation</span><code>D/μ = kT/e</code></div>
+        <div class="gl-row"><b>多出載子</b><span>excess carriers</span><code>δn, δp</code></div>
+        <div class="gl-row"><b>電子–電洞復合</b><span>electron–hole recombination</span><code>—</code></div>
+        <div class="gl-row"><b>多出載子生命週期</b><span>excess carrier lifetime</span><code>τ</code></div>
         <div class="gl-row"><b>pn 接面</b><span>pn junction</span><code>—</code></div>
         <div class="gl-row"><b>冶金接面</b><span>metallurgical junction</span><code>x = 0</code></div>
         <div class="gl-row"><b>空乏區</b><span>depletion region</span><code>W</code></div>
