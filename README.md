@@ -14,7 +14,6 @@
 | 電子學 | [`electronics/`](electronics/) | CH1 PART 1～4 已完成（見 [進度表](electronics/docs/CONTENT_MAP.md)） |
 | 電路學 | [`circuits/`](circuits/) | CH11 交流功率分析已完成（見 [進度表](circuits/docs/CONTENT_MAP.md)） |
 | 工程數學 | [`engineering-math/`](engineering-math/) | 拉普拉斯轉換、常係數 ODE 與特徵方程已完成（見 [進度表](engineering-math/docs/CONTENT_MAP.md)） |
-| 手寫筆記 | [`notes/`](notes/) | GoodNotes 式手寫筆記：Apple Pencil 壓感、套索、按住拉直線、多頁、自動存檔、講義並排 |
 
 ## 結構
 
@@ -31,7 +30,6 @@ electronics/
   docs/CONTENT_MAP.md   章節分類與上傳進度
 circuits/               電路學，結構同上
 engineering-math/       工程數學，結構同上
-notes/                  手寫筆記：index.html 書櫃、note.html 編輯器、assets/ 儲存與繪圖引擎
 ```
 
 每一科都有自己的主色，一進頁面就知道在哪一科：電子學藍、電路學墨綠、工程數學紫。
@@ -65,15 +63,12 @@ notes/                  手寫筆記：index.html 書櫃、note.html 編輯器�
 點一下或往左滑前進，可自動播放。引擎在 `shared/story.js`，劇本在各科 `assets/<chapter>-story.js`。
 確認效果後再推廣到其他章節。
 
-## 手寫筆記
+## 在講義上寫筆記
 
-`notes/` 是給 iPad + Apple Pencil 用的手寫筆記：筆寫字、手指捲動、手掌不會誤觸；
-筆畫粗細跟著壓力變；按住不動半秒會拉成直線；套索可以移動／複製／改色／刪除；
-每一章講義右上角都有「✎ 筆記」，會開一本綁定那一章的筆記本，寬螢幕可以左講義、右筆記並排。
-
-資料**本機優先**：每一筆都先存進瀏覽器的 IndexedDB（離線可寫）；在 claude.ai 上打開時再同步到
-artifact 的 db（只有自己看得到的 `data/users/<id>/`），所以換裝置也看得到。
-書櫃頁可以「匯出備份 / 匯入備份」成一個 .json 檔。
+每個章節頁右下角「✍ 寫筆記」：Apple Pencil 直接在講義上寫（鋼筆／原子筆／畫筆、粗細、筆畫穩定）、
+螢光筆、橡皮擦（兩指點一下切換）、手寫便條，題目下面可以「＋ 新增空間」。引擎在 `shared/annot.js`，
+儲存在 `shared/sync.js`：本機 localStorage，在 claude.ai 上打開時同步到 `data/users/<id>/`。
+另有學習紀錄（`shared/track.js`）與各科錯題本（`<科目>/mistakes.html`）。
 
 ## 給下一個接手的人（含未來的我）
 

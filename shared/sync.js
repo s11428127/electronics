@@ -35,7 +35,12 @@
     const now = Date.now();
     Object.keys(items).forEach(id => { if (items[id].x && now - (items[id].t || 0) > TOMB) delete items[id]; });
     const docId = i => 'sync_' + safe(name) + (i ? '__' + i : '');
-    const keep = () => { try { localStorage.setItem(LS, JSON.stringify(items)); } catch (e) {} };
+    /* 存本機稍微延後一下（連續擦很多筆時不要每筆都整份重寫）；離開頁面前一定寫進去 */
+    let kT = 0;
+    const flush = () => { clearTimeout(kT); kT = 0; try { localStorage.setItem(LS, JSON.stringify(items)); } catch (e) {} };
+    const keep = () => { clearTimeout(kT); kT = setTimeout(flush, 250); };
+    window.addEventListener('pagehide', () => { if (kT) flush(); });
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && kT) flush(); });
     const emit = remote => fns.forEach(f => { try { f(remote); } catch (e) {} });
     function save() { keep(); push(); }
     function push() { if (!cloud.col) return; clearTimeout(timer); timer = setTimeout(send, 1500); }

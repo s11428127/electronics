@@ -437,22 +437,7 @@ body[data-subject="math"] { --accent: #6a4bbc; }
 :root[data-theme="dark"] body[data-subject="circuits"] { --accent: #46c2a5; }
 :root[data-theme="dark"] body[data-subject="math"] { --accent: #a992f0; }
 
-/* 手寫筆記：琥珀色（鉛筆、紙張的聯想），不跟三個科目撞色 */
-body[data-subject="notes"] { --accent: #b45309; }
-:root:not([data-theme="light"]) body[data-subject="notes"] { --accent: #f0a24a; }
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) body[data-subject="notes"] { --accent: #b45309; }
-}
-:root[data-theme="dark"] body[data-subject="notes"] { --accent: #f0a24a; }
-
-/* 章節頁右上角的「✎ 筆記」按鈕 */
-a.btn.notes-btn {
-  display: inline-flex; align-items: center; gap: 4px; flex: none; text-decoration: none; white-space: nowrap;
-  font-family: var(--font-body); font-size: 12.5px; color: var(--ink); padding: 5px 11px;
-  background: var(--surface); border: 1px solid var(--line); border-radius: 7px;
-}
-a.btn.notes-btn:hover { border-color: var(--accent); color: var(--accent); }
-/* 被筆記頁用 iframe 嵌進去時，不需要自己的頂欄；章節列也就貼齊頂端 */
+/* 被 iframe 嵌入時不需要自己的頂欄 */
 .embed .topbar { display: none; }
 .embed .rail { top: 0; }
 
@@ -1028,61 +1013,84 @@ button.fix { display: inline-block; font: 600 10.5px/1 var(--font-body, inherit)
 .mk-empty { color: var(--ink-3); font-size: 14px; padding: 16px 0; }
 
 /* ---------- 講義上寫筆記（shared/annot.js） ---------- */
-:root { --ann-k1: #1f5fd6; --ann-k2: #d0342c; --ann-hl: #ffd60a; --ann-note: #fff4b8; --ann-note-ink: #3b3000; }
+:root { --ann-k1: #1f5fd6; --ann-k2: #d0342c; --ann-k3: #1f8a3b; --ann-k4: #e07b00; --ann-k5: #ffd60a; --ann-note: #fff4b8; --ann-note-ink: #3b3000; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { --ann-k1: #6aa2ff; --ann-k2: #ff7a70; --ann-hl: #d9b100; --ann-note: #4a4116; --ann-note-ink: #fff3c4; }
+  :root:not([data-theme="light"]) { --ann-k1: #6aa2ff; --ann-k2: #ff7a70; --ann-k3: #5fd47f; --ann-k4: #ffaa4d; --ann-k5: #d9b100; --ann-note: #4a4116; --ann-note-ink: #fff3c4; }
 }
-:root[data-theme="dark"] { --ann-k1: #6aa2ff; --ann-k2: #ff7a70; --ann-hl: #d9b100; --ann-note: #4a4116; --ann-note-ink: #fff3c4; }
+:root[data-theme="dark"] { --ann-k1: #6aa2ff; --ann-k2: #ff7a70; --ann-k3: #5fd47f; --ann-k4: #ffaa4d; --ann-k5: #d9b100; --ann-note: #4a4116; --ann-note-ink: #fff3c4; }
+.c0 { color: var(--ink); } .c1 { color: var(--ann-k1); } .c2 { color: var(--ann-k2); } .c3 { color: var(--ann-k3); } .c4 { color: var(--ann-k4); } .c5 { color: var(--ann-k5); }
 main.ann-host { position: relative; }
 .ann-layer { position: absolute; inset: 0; pointer-events: none; z-index: 20; }
-.ann-svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
-.ann-s { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.2; }
-.ann-s.k0 { stroke: var(--ink); }
-.ann-s.k1 { stroke: var(--ann-k1); }
-.ann-s.k2 { stroke: var(--ann-k2); }
-.ann-s.kh { stroke: var(--ann-hl); stroke-width: 15; opacity: .42; stroke-linecap: butt; }
+.ann-notes { position: absolute; inset: 0; z-index: 1; }
+.ann-svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; z-index: 2; pointer-events: none; }
+.ann-u { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.ann-u.ann-h { opacity: .4; }
+.ann-o { fill: currentColor; stroke: none; }
 body.ann-on main { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; cursor: crosshair; }
 body.ann-on.ann-finger main { touch-action: none; }
 .ann-fab { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60;
   font: inherit; font-size: 14px; font-weight: 600; color: var(--surface); background: var(--accent); border: 0; border-radius: 99px; padding: 10px 16px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, .18); cursor: pointer; }
-.ann-fab[hidden], .ann-bar[hidden] { display: none; }
-.ann-bar { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); z-index: 60;
-  width: max-content; max-width: calc(100vw - 16px); background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
-  box-shadow: 0 8px 26px rgba(0, 0, 0, .2); padding: 6px; }
-.ann-tools { display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-.ann-tools button { flex: none; display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: 13px; color: var(--ink-2); background: var(--surface-2);
-  border: 1px solid var(--line); border-radius: 9px; padding: 7px 10px; cursor: pointer; white-space: nowrap; }
-.ann-tools button.on { color: var(--accent); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
-.ann-tools .ann-done { color: var(--surface); background: var(--accent); border-color: var(--accent); }
-.ann-tools .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
-.dot.k0 { background: var(--ink); } .dot.k1 { background: var(--ann-k1); } .dot.k2 { background: var(--ann-k2); } .dot.kh { background: var(--ann-hl); }
-.ann-msg { font-size: 11.5px; color: var(--ink-3); padding: 4px 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100vw - 30px); }
-.ann-notes { position: absolute; inset: 0; }
-.ann-note { position: absolute; pointer-events: auto; background: var(--ann-note); color: var(--ann-note-ink); border-radius: 8px; box-shadow: 0 4px 14px rgba(0, 0, 0, .2);
-  font-size: 13.5px; -webkit-user-select: text; user-select: text; cursor: auto; z-index: 1; }
+.ann-fab[hidden], .ann-bar[hidden], .ann-pop[hidden], .ann-toast[hidden] { display: none; }
+/* 工具列：釘在畫面上方（像 GoodNotes） */
+.ann-bar { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 6px); left: 50%; transform: translateX(-50%); z-index: 70;
+  width: max-content; max-width: calc(100vw - 12px); background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, .22); padding: 5px; }
+.ann-row { display: flex; align-items: center; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.ann-row::-webkit-scrollbar { display: none; }
+.ann-grp { flex: none; display: flex; align-items: center; gap: 2px; padding: 2px; border-radius: 12px; background: var(--surface-2); }
+.ann-grp button { flex: none; position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  min-width: 38px; height: 40px; font: inherit; font-size: 17px; line-height: 1; color: var(--ink-2); background: transparent; border: 0; border-radius: 10px; padding: 0 6px; cursor: pointer; }
+.ann-grp button small { font-size: 10px; color: var(--ink-3); }
+.ann-grp button.on { color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
+.ann-grp button.on small { color: var(--accent); }
+.ann-grp button:disabled { opacity: .35; cursor: default; }
+.ann-caret { position: absolute; right: 1px; bottom: 3px; font-style: normal; font-size: 9px; color: var(--ink-3); }
+.ann-ws button { min-width: 34px; }
+.ann-ws button i { display: block; width: 18px; border-radius: 9px; background: var(--ink-2); }
+.ann-ws button.on i { background: var(--accent); }
+.ann-cs button { min-width: 30px; }
+.ann-cs button i { display: block; width: 20px; height: 20px; border-radius: 50%; background: currentColor; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .15); }
+.ann-cs button.on { background: transparent; }
+.ann-cs button.on i { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent); }
+.ann-grp .ann-done { font-size: 14px; font-weight: 600; color: var(--surface); background: var(--accent); padding: 0 12px; }
+/* 筆的設定面板 */
+.ann-pop { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 66px); z-index: 71; width: min(320px, calc(100vw - 16px)); box-sizing: border-box;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 12px 34px rgba(0, 0, 0, .25); padding: 14px 16px; }
+.ann-pop-t { display: block; text-align: center; font-size: 16px; color: var(--ink); }
+.ann-prev { display: block; width: 100%; height: 70px; margin: 6px 0; }
+.ann-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
+.ann-types button { display: flex; flex-direction: column; align-items: center; gap: 4px; font: inherit; font-size: 13px; color: var(--ink-2); background: transparent; border: 1px solid transparent; border-radius: 12px; padding: 8px 4px; cursor: pointer; }
+.ann-types button b { font-size: 20px; font-weight: 400; }
+.ann-types button.on { color: var(--accent); background: var(--surface-2); border-color: var(--line); }
+.ann-sl { display: grid; grid-template-columns: 1fr auto; gap: 4px 8px; margin: 8px 0; padding: 10px 12px; background: var(--surface-2); border-radius: 12px; font-size: 13.5px; color: var(--ink-2); }
+.ann-sl b { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; color: var(--ink); }
+.ann-sl input { grid-column: 1 / -1; width: 100%; accent-color: var(--accent); }
+.ann-pop-n { font-size: 12px; color: var(--ink-3); margin: 6px 0 0; line-height: 1.5; }
+.ann-toast { position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); left: 50%; transform: translateX(-50%); z-index: 72; max-width: calc(100vw - 32px);
+  font-size: 13px; color: var(--surface); background: color-mix(in srgb, var(--ink) 88%, transparent); border-radius: 10px; padding: 7px 12px; pointer-events: none; text-align: center; }
+/* 便條（手寫） */
+.ann-note { position: absolute; pointer-events: auto; background: var(--ann-note); color: var(--ann-note-ink); border-radius: 8px; box-shadow: 0 4px 14px rgba(0, 0, 0, .2); font-size: 13px; cursor: auto; }
 .ann-note[hidden] { display: none; }
-.ann-note-bar { display: flex; align-items: center; gap: 2px; padding: 3px 4px 3px 8px; border-bottom: 1px solid color-mix(in srgb, var(--ann-note-ink) 18%, transparent); }
-.ann-grip { flex: 1; font-size: 12px; opacity: .75; cursor: grab; touch-action: none; padding: 4px 0; -webkit-user-select: none; user-select: none; }
-.ann-note-bar button { font: inherit; font-size: 12px; color: inherit; background: transparent; border: 0; border-radius: 6px; padding: 4px 6px; cursor: pointer; }
+.ann-note-bar { display: flex; align-items: center; gap: 2px; padding: 2px 4px 2px 8px; border-bottom: 1px solid color-mix(in srgb, var(--ann-note-ink) 18%, transparent); -webkit-user-select: none; user-select: none; }
+.ann-grip { flex: 1; font-size: 12px; opacity: .75; cursor: grab; touch-action: none; padding: 5px 0; }
+.ann-note-bar button { font: inherit; font-size: 13px; color: inherit; background: transparent; border: 0; border-radius: 6px; padding: 4px 7px; cursor: pointer; }
 .ann-note-bar button:hover { background: color-mix(in srgb, var(--ann-note-ink) 10%, transparent); }
-.ann-note textarea { display: block; width: 100%; box-sizing: border-box; min-height: 64px; resize: vertical; border: 0; background: transparent; color: inherit;
-  font: inherit; font-size: 14px; line-height: 1.5; padding: 8px 10px; outline: none; }
-.ann-note .ann-note-pad { display: none; }
-.ann-note.ink textarea { display: none; }
-.ann-note.ink .ann-note-pad { display: block; }
-.ann-note .pad { margin: 0; border: 0; border-radius: 0 0 8px 8px; }
+.ann-note-body { background-image: repeating-linear-gradient(transparent 0 25px, color-mix(in srgb, var(--ann-note-ink) 14%, transparent) 25px 26px); border-radius: 0 0 8px 8px; }
 .ann-note-mini { display: none; }
 .ann-note.min > :not(.ann-note-mini) { display: none; }
 .ann-note.min { background: transparent; box-shadow: none; }
 .ann-note.min .ann-note-mini { display: block; font-size: 18px; line-height: 1; background: var(--ann-note); border: 0; border-radius: 8px; padding: 6px 7px; box-shadow: 0 3px 10px rgba(0, 0, 0, .2); cursor: pointer; }
-.ann-spaces { margin: 0; }
+/* 題目下面的空間 */
 .ann-add { display: none; font: inherit; font-size: 13px; color: var(--accent); background: transparent; border: 1px dashed var(--accent); border-radius: 10px; padding: 8px 12px; margin: 8px 0 4px; width: 100%; cursor: pointer; }
 body.ann-on .ann-add { display: block; }
 .ann-space { margin: 10px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 8px 10px 10px; }
-.ann-space-head { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: var(--ink-3); }
+.ann-space-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px; font-size: 12.5px; color: var(--ink-3); }
+.ann-sp-btns { display: flex; gap: 4px; }
 .ann-space-head button { font: inherit; font-size: 12px; color: var(--ink-3); background: transparent; border: 1px solid var(--line); border-radius: 7px; padding: 3px 8px; cursor: pointer; }
-.ann-space-head button:hover { color: var(--bad); border-color: var(--bad); }
-.ann-space .pad { margin-top: 6px; }
+.ann-space-head button[data-sp="del"]:hover { color: var(--bad); border-color: var(--bad); }
+.ann-space-body { margin-top: 6px; border-radius: 8px; background-color: var(--surface-2);
+  background-image: repeating-linear-gradient(transparent 0 27px, var(--line-soft) 27px 28px); }
+body.ann-on .ann-space-body { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent); }
 html.embed .ann-fab { display: none; }
-@media print { .ann-fab, .ann-bar, .ann-add { display: none !important; } }
+@media print { .ann-fab, .ann-bar, .ann-pop, .ann-add { display: none !important; } }

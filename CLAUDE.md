@@ -13,7 +13,7 @@
 5. **驗證**：起 `npx http-server -p 8099 -s .`，用 Playwright 在 **320 / 390 / 680 / 1180** 四種
    寬度載入，確認：無 console 錯誤、無水平捲動、測驗可互動。
 6. commit + push 到指定分支，然後**重新發佈 artifact**（同一個 URL，用 art2 bundle；
-   `files` 要帶上所有頁面與 `notes/`，capabilities 見下方「手寫筆記的規矩」）。
+   `files` 要帶上改過的頁面與 shared 檔；不要傳 `capabilities`，沿用已存的 db／user／downloads）。
 
 ## 章節頁規格（每一節都要有，缺一不可）
 
@@ -141,14 +141,21 @@
 
 ## 講義上寫筆記（`shared/annot.js` + `shared/sync.js`）
 
-- 章節頁在 track.js 前面載入 `sync.js`、`pad.js`（還沒載入才加）、`annot.js`。右下「✍ 寫筆記」進入筆記模式：
-  筆（黑／藍／紅）、螢光筆、整筆橡皮擦、便條（可打字／手寫、拖曳、縮小）、復原、手指寫、清除本頁。
-  Pencil／滑鼠寫字，手指照常捲動；在按鈕上寫字會擋掉那次 click。
-- 筆跡錨在「開始那一段」（`ATOM` 題目卡、bench、例題…整塊算一段；`BLOCK` 段落、li…），座標 = 那段寬度的比例 ×1000。
+- 使用者 10/3 決定：**書櫃式筆記本（舊 `notes/`）收掉**，只留「直接寫在講義上」。
+- 章節頁在 track.js 前面載入 `sync.js`、`annot.js`。右下「✍ 寫筆記」進入筆記模式，工具列釘在畫面上方（照 GoodNotes）：
+  復原／重做｜筆（再點一次開設定：鋼筆 f／原子筆 b／畫筆 r、粗細 0.2–4 px、筆畫穩定 0–100%）、螢光筆、整筆橡皮擦、便條｜三段粗細｜六色｜☝ 手指寫、🗑 清除本頁、完成。
+  設定存 localStorage `ee-pen`（使用者習慣很細的線，預設 0.8、最細 0.2）。
+- Pencil／滑鼠寫字，手指照常捲動；在按鈕上寫字會擋掉那次 click。
+  **Apple Pencil 側邊連點兩下網頁收不到**（Apple 只開放給原生 App）→ 替代：**兩指點一下切換橡皮擦**；有橡皮擦鍵的筆（`buttons & 32`）直接擦。
+- 筆畫穩定＝指數平滑（`a = 1 − 0.92·stab`），放開時補幾點追上筆尖；鋼筆／畫筆用壓力畫成填色外框。
+- 筆跡錨在「開始那一段」（`ATOM` 題目卡、bench、例題…整塊算一段；`BLOCK` 段落、li…），座標 = 那段寬度的比例 × z（10000；第一版是 1000）。
   錨點 key = `<最近有 id 的祖先>:<第幾個區塊>`，**改頁面結構會讓舊筆跡移位**；track 等動態插入的東西放在 `EXCL`，不算進索引。
-- 「＋ 新增空間」只在 `.hw-card .xb-card .quiz .example`（要有 id）下面，筆記模式才出現按鈕。
+- 便條＝只能手寫的一塊區域（`#ann-nb-*`），「新增空間」＝題目下面一塊區域（`#ann-sp-*`，只在 `.hw-card .xb-card .quiz .example` 有 id 的下面，筆記模式才出現按鈕）；
+  兩者都是錨點，用同一支筆寫，刪掉時連上面的筆跡一起刪（可復原）。
+- 筆跡資料欄位**不能叫 `t`**（`t` 是同步用的時間戳，踩過的坑）：種類用 `y`。
 - 儲存：`__SYNC.open('ann_<科目/檔名>')`，本機 `ee-sync:` + 雲端 `sync_<name>`（> 200 KB 自動切 `__1`、`__2`…，沒變的份不重寫）；
-  每項帶 t，刪除是墓碑，45 天後清掉。手寫板 `__PAD.mount(el, id, {h, load, save})` 可以換成自己的儲存。
+  每項帶 t，刪除是墓碑，45 天後清掉。
+- Practice 題的手寫板仍是 `shared/pad.js`（存本機）；`__PAD.mount(el, id, {h, load, save})` 可換儲存。
 
 ## 原講義 PART 標註
 
@@ -193,25 +200,12 @@ shared/app.js                 互動引擎，匯出 window.__EE
 <subject>/<chapter>-<MMDD>.html  該章某堂課的純板書上課筆記（例：laplace2-1002.html）
 <subject>/assets/<chapter>.js 每章一個 JS
 <subject>/docs/CONTENT_MAP.md 進度表
-notes/                        手寫筆記（GoodNotes 式，給 iPad + Apple Pencil）
-  index.html                  書櫃；note.html 編輯器
-  assets/store.js             儲存：IndexedDB（本機）+ claude.ai 上的 db 同步（data/users/<id>）
-  assets/render.js            紙張與筆跡繪圖（編輯器與縮圖共用）
-  assets/ink.js               編輯器：筆／螢光筆／橡皮擦／套索、按住拉直線、縮放、講義並排
-  assets/library.js           書櫃；裡面的 CHAPTERS 清單是「可綁定的章節」
-（另外「直接寫在講義上」是 shared/annot.js，見上方）
 ```
 
-### 手寫筆記的規矩
+### 其他
 
-- **新增章節時，要把它加進 `notes/assets/library.js` 的 `CHAPTERS`**，新增筆記本時才選得到。
-  （章節頁右上的「✎ 筆記」按鈕由 `shared/app.js` 自動產生，不用手動加。）
-- 章節頁被筆記頁用 iframe 嵌入時網址帶 `?embed=1`，`app.js` 會加上 `.embed` class 隱藏頂欄。
-- 筆跡座標一律存**頁面座標**（寬 1000、高 1414），不存像素。
-- 紙色與墨水色是「筆記內容」，定義在 `render.js`，**不跟網站明暗主題變**（例外於「顏色從 C 取」）；
-  介面 chrome 仍一律吃 app.css token。
-- 發佈 artifact 時要帶 `capabilities: {db:{}, user:{}, downloads:true}`，雲端同步與匯出才會動。
-  （宣告 db 之後 artifact 只能在組織內分享、不能公開。）
+- 頁面被 iframe 嵌入時網址帶 `?embed=1`，`app.js` 會加上 `.embed` class 隱藏頂欄。
+- 發佈 artifact 不要傳 `capabilities`（已存 `db`、`user`、`downloads`，學習紀錄與筆記同步要用）。
 
 - 科目主色用 `<body data-subject="…">`，chrome 一律吃 `--accent`。
   電子學 `#2a55e0` 藍｜電路學 `#0f7a66` 墨綠｜工程數學 `#6a4bbc` 紫。
