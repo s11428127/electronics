@@ -117,6 +117,18 @@
 - 章節頁故事模式下方放「選小節」：`__EXB.picker(el, [{id, no, name, count}], {key, alwaysAll})`，選了只顯示那一節。
 - 章末 Problems 使用者還沒要求，先不做。
 
+## 學習紀錄（`shared/track.js`）
+
+- 每個章節頁、科目首頁的**最後一個 script** 放 `<script src="../shared/track.js"></script>`（新頁面也要加）。
+- 自動記：小節內有互動（pointerdown/input/change）或停留 30 秒；故事切到某畫面（`story:view` 事件）；
+  測驗點選項（看 `.opt.right/.wrong`）；作業按「對答案」；Example 按看下一步；Practice 看答案／寫手寫板／按「算對了／算錯了」。
+  每一筆都有 ✕ 可刪；小節可手動「✓ 標記讀過」；hero 有「清除這一頁的紀錄」。
+- 紀錄 key：`sec:<section id>`、`sc:<故事標題>`、`q:<題幹 hash>`、`hw:<卡片 id>`（存在 `<科目>/hw1`）、`ex:`／`pp:<卡片 id>`。
+  **改小節 id、故事標題、題幹文字會讓舊紀錄對不上**，非必要不要改。
+- 不追蹤的小節 id：`story-sec quiz-sec glossary check hw map scope ref later p1…p9`；整頁不追小節用 `<body data-trk-sec="0">`。
+- 預設已讀放在 `SEED`（套一次就記在 `seed.v1`，使用者刪掉不會補回）。
+- 儲存：localStorage `ee-trk:<科目/檔名>` + 雲端 `data/users/<id>/trk_<科目_檔名>`；每筆帶時間，合併取新的，刪除是墓碑 `{t, x:1}`。
+
 ## 原講義 PART 標註
 
 老師的講義 PART 跟網頁的頁不一定一一對應（例：原講義 PART 3 前 18 頁跟 PART 2 同主題，併進 CH1 PART 2 頁）。

@@ -232,6 +232,8 @@
       const ps = sc, pt = st;
       sc = i; st = j;
       render(ps, pt);
+      /* 使用者真的看到這個畫面了（載入時還原進度不算），給學習紀錄用 */
+      root.dispatchEvent(new CustomEvent('story:view', { detail: { i: sc, t: scenes[sc].t } }));
     }
     function next() {
       hideHint();
@@ -340,7 +342,10 @@
     const saved = (lsGet(LS) || '').split(':').map(Number);
     if (saved.length === 2 && scenes[saved[0]] && scenes[saved[0]].steps[saved[1]]) { sc = saved[0]; st = saved[1]; }
     render(-1, -1);
-    return { go, next, prev, setPlay, get pos() { return [sc, st]; }, scenes };
+    const api = { go, next, prev, setPlay, get pos() { return [sc, st]; }, scenes };
+    root.__story = api;
+    root.dispatchEvent(new CustomEvent('story:ready'));
+    return api;
   }
 
   window.__Story = Story;

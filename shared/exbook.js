@@ -45,10 +45,11 @@
         '<div class="pad" data-id="xb-' + it.id + '"></div>' +
         '<div class="xb-act"><button class="btn" data-a="hint" type="button">💡 提示</button><button class="btn" data-a="ans" type="button">看答案</button><button class="btn solid" data-a="sol" type="button">看詳解</button></div>' +
         '<div class="xb-hint" hidden><b>提示：</b>' + (it.hint || it.idea || '') + '</div>' +
-        '<div class="xb-ans" hidden><b>答案：</b>' + it.ans + '</div>' +
+        '<div class="xb-ans" hidden><b>答案：</b>' + it.ans +
+          '<div class="xb-self">我自己這次：<button type="button" data-s="1">✓ 算對了</button><button type="button" data-s="0">✗ 算錯了</button></div></div>' +
         '<div class="xb-sol" hidden>' + (it.idea ? '<div class="xb-idea"><b>思路：</b>' + it.idea + '</div>' : '') + steps + (it.note ? '<div class="xb-note">' + it.note + '</div>' : '') + '</div>';
       el.querySelector('.xb-act').addEventListener('click', e => {
-        const b = e.target.closest('button'); if (!b) return;
+        const b = e.target.closest('button'); if (!b || !b.dataset.a) return;
         const box = el.querySelector('.xb-' + b.dataset.a);
         box.hidden = !box.hidden; b.classList.toggle('on', !box.hidden);
         if (b.dataset.a === 'sol' && !box.hidden) el.querySelector('.xb-ans').hidden = false;

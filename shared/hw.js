@@ -15,6 +15,9 @@
     const el = document.createElement('div');
     el.className = 'hw-card ' + (it.kind === 'hw' ? 'is-hw' : 'is-sim');
     el.id = 'hw-' + it.id;
+    /* 學習紀錄：同一份作業的紀錄不管在哪一頁做，都存在「<科目>/hw1」那一份 */
+    const seg = location.pathname.split('/').filter(Boolean);
+    el.dataset.trkDoc = (seg.length > 1 ? seg[seg.length - 2] : 'root') + '/' + String(bankName).toLowerCase();
     const badge = it.kind === 'hw'
       ? '<span class="hw-badge hw">📝 ' + bankName + ' 第 ' + it.hw + ' 題 · 作業原題</span>'
       : '<span class="hw-badge sim">仿作業 ' + it.hw + '-' + it.n + ' · 自編練習</span>';

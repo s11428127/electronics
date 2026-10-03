@@ -1,0 +1,304 @@
+/* ============================================================
+   學習紀錄：講義小節、故事畫面、題目，「互動到就記一次」，每一筆都可以單獨刪除
+   ------------------------------------------------------------
+   - 講義小節：碰了該節的互動（滑桿、按鈕、畫布、例題…）或在畫面上停留 30 秒 → 自動記；也可手動「✓ 標記讀過」
+   - 故事模式：真的切到某個畫面就記（載入時還原進度不算）
+   - 題目：測驗、作業原題／仿作業、課本 Example／Practice；記「做過」＋最近一次對錯
+   - 儲存：先存這台裝置（localStorage），在 claude.ai 打開時同步到雲端 data/users/<你>/trk_<章>
+     每一筆帶時間；兩邊合併時「時間比較新的那一筆」贏（刪除也是一筆，不會被舊資料復活）
+   - 一章一份紀錄（key = 科目資料夾/檔名，例 electronics/ch1-part1）；作業題另存 <科目>/hw1
+   - 科目首頁：每張章節卡片下面顯示進度條
+   ============================================================ */
+(function () {
+  'use strict';
+  const NOW = () => Date.now();
+  const md = t => { const d = new Date(t); return (d.getMonth() + 1) + '/' + d.getDate(); };
+  const keyOf = href => {
+    const u = new URL(href || location.href, location.href);
+    const seg = u.pathname.split('/').filter(Boolean);
+    const f = (seg.pop() || 'index.html').replace(/\.html?$/, '');
+    return (seg.pop() || 'root') + '/' + f;
+  };
+  const PAGE = keyOf();
+  const hash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
+  const plain = s => String(s || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+
+  /* 使用者 10/3 說：電子學 PART 1 讀到 §05 —— 先標成讀過（刪掉也不會再自動補回來） */
+  const SEED = {
+    'electronics/ch1-part1': { v: 'v1', t: Date.UTC(2026, 9, 3, 4), keys: ['sec:signal', 'sec:atom', 'sec:bond', 'sec:lattice', 'sec:band'] }
+  };
+
+  /* ---------------- 本機 ---------------- */
+  const docs = {};
+  const norm = d => ({ recs: (d && d.recs) || {}, tot: (d && d.tot) || {}, seed: (d && d.seed) || {} });
+  const lsGet = k => { try { return JSON.parse(localStorage.getItem('ee-trk:' + k) || 'null'); } catch (e) { return null; } };
+  const lsSet = (k, v) => { try { localStorage.setItem('ee-trk:' + k, JSON.stringify(v)); } catch (e) {} };
+  function doc(k) {
+    if (!docs[k]) {
+      docs[k] = norm(lsGet(k));
+      const s = SEED[k];
+      if (s && !docs[k].seed[s.v]) {
+        s.keys.forEach(key => { if (!docs[k].recs[key]) docs[k].recs[key] = { t: s.t }; });
+        docs[k].seed[s.v] = 1; save(k);
+      }
+    }
+    return docs[k];
+  }
+  function merge(a, b) {
+    const out = norm(JSON.parse(JSON.stringify(a))), r = norm(b);
+    Object.keys(r.recs).forEach(k => { const x = out.recs[k], y = r.recs[k]; if (!x || (y.t || 0) > (x.t || 0)) out.recs[k] = y; });
+    Object.assign(out.seed, r.seed);
+    out.tot = Object.assign({}, r.tot, out.tot);
+    return out;
+  }
+  const listeners = [];
+  const emit = () => listeners.forEach(fn => { try { fn(); } catch (e) {} });
+  const get = (k, key) => { const r = doc(k).recs[key]; return r && !r.x ? r : null; };
+  function set(k, key, data) { doc(k).recs[key] = Object.assign({ t: NOW() }, data || {}); save(k); emit(); }
+  function del(k, key) { doc(k).recs[key] = { t: NOW(), x: 1 }; save(k); emit(); }
+  function save(k) { lsSet(k, docs[k]); push(k); }
+
+  /* ---------------- 雲端 ---------------- */
+  const cloud = { col: null, status: 'local', timers: {}, busy: {}, again: {} };
+  const docId = k => 'trk_' + k.replace(/[^A-Za-z0-9_-]/g, '_');
+  function setStatus(s) { cloud.status = s; emit(); }
+  function push(k) {
+    if (!cloud.col) return;
+    clearTimeout(cloud.timers[k]);
+    cloud.timers[k] = setTimeout(() => send(k), 1200);
+  }
+  async function send(k) {
+    if (cloud.busy[k]) { cloud.again[k] = 1; return; }
+    cloud.busy[k] = 1;
+    try {
+      const d = docs[k];
+      await cloud.col.doc(docId(k)).set({ kind: 'trk', ch: k, recs: d.recs, tot: d.tot, seed: d.seed, updated: NOW() });
+      if (cloud.status !== 'on') setStatus('on');
+    } catch (e) { setStatus('error'); }
+    cloud.busy[k] = 0;
+    if (cloud.again[k]) { cloud.again[k] = 0; send(k); }
+  }
+  async function pull(k) {
+    try {
+      const snap = await cloud.col.doc(docId(k)).get();
+      const before = JSON.stringify(docs[k] || null);
+      const m = snap.exists ? merge(doc(k), snap.data()) : doc(k);
+      docs[k] = m; lsSet(k, m);
+      if (!snap.exists || JSON.stringify(m.recs) !== JSON.stringify(norm(snap.data()).recs)) send(k);
+      if (before !== JSON.stringify(m)) emit();
+    } catch (e) { setStatus('error'); }
+  }
+  async function connect() {
+    try {
+      if (!window.claude || typeof window.claude.use !== 'function') return false;
+      const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+      const id = user ? await user.id() : null;
+      if (!db || !id) return true;
+      cloud.col = db.collection('data/users/' + id);
+      setStatus('on');
+      await Promise.all(Object.keys(docs).map(pull));
+    } catch (e) { setStatus('error'); }
+    return true;
+  }
+  /* 第一次用到某一份紀錄（例：首頁才知道要看 hw1）→ 已連上雲端就順便拉一次 */
+  function ensure(k) { if (!docs[k]) { doc(k); if (cloud.col) pull(k); } return docs[k]; }
+  (function tryConnect(n) { connect().then(ok => { if (!ok && n < 5) setTimeout(() => tryConnect(n + 1), 800 * (n + 1)); }); })(0);
+
+  /* ---------------- 小元件 ---------------- */
+  const xBtn = (k, key) => '<button type="button" class="trk-x" data-doc="' + k + '" data-key="' + key + '" title="刪除這筆紀錄" aria-label="刪除這筆紀錄">✕</button>';
+  /* 內容沒變就不要動 DOM（否則 MutationObserver 會一直觸發自己） */
+  const setH = (el, h) => { if (el.__h !== h) { el.__h = h; el.innerHTML = h; } };
+  const okTxt = r => (r.ok === true ? ' · <b class="trk-ok">答對</b>' : r.ok === false ? ' · <b class="trk-ng">答錯</b>' : '');
+  document.addEventListener('click', e => {
+    const x = e.target.closest && e.target.closest('.trk-x');
+    if (x) { e.preventDefault(); e.stopPropagation(); del(x.dataset.doc, x.dataset.key); return; }
+    const m = e.target.closest && e.target.closest('.trk-mark');
+    if (m) { e.preventDefault(); e.stopPropagation(); set(m.dataset.doc, m.dataset.key, { by: 'hand' }); }
+  }, true);
+
+  /* ================= 科目首頁：章節卡片進度 ================= */
+  const cards = Array.prototype.slice.call(document.querySelectorAll('a.chap[href]'));
+  if (cards.length) {
+    cards.forEach(a => { const k = keyOf(a.getAttribute('href')); (doc(k).tot.hw || []).forEach(s => doc(s.split('|')[0])); a.dataset.trk = k; });
+    const paint = () => cards.forEach(a => {
+      const k = a.dataset.trk, d = doc(k), recs = Object.keys(d.recs).filter(x => !d.recs[x].x);
+      const n = p => recs.filter(x => x.indexOf(p) === 0).length;
+      const T = d.tot || {}, own = recs.filter(x => /^(q|ex|pp):/.test(x));
+      /* 這一章頁面上的作業卡片，紀錄存在 <科目>/hw1，要另外算進來 */
+      const hw = (T.hw || []).map(s => { const i = s.indexOf('|'); ensure(s.slice(0, i)); return get(s.slice(0, i), 'hw:' + s.slice(i + 1)); }).filter(Boolean);
+      const sec = n('sec:'), sc = n('sc:'), q = own.length + hw.length;
+      const ng = own.filter(x => d.recs[x].ok === false).length + hw.filter(r => r.ok === false).length;
+      let el = a.querySelector('.trk-card');
+      if (!el) { el = document.createElement('span'); el.className = 'trk-card'; (a.querySelector('.chap-body') || a).appendChild(el); }
+      const pct = T.sec ? Math.round(sec / T.sec * 100) : 0;
+      setH(el, !recs.length && !hw.length ? '<span class="trk-none">還沒有學習紀錄</span>' :
+        '<span class="trk-bar"><i style="width:' + pct + '%"></i></span>' +
+        '<span>講義 ' + sec + (T.sec ? '/' + T.sec : '') + ' · 故事 ' + sc + (T.sc ? '/' + T.sc : '') + ' 畫面 · 題目 ' + q + (T.q ? '/' + T.q : '') + (ng ? ' · <span class="trk-ng">錯 ' + ng + '</span>' : '') + '</span>');
+    });
+    listeners.push(paint); paint();
+    return;
+  }
+
+  /* ================= 章節頁 ================= */
+  const main = document.querySelector('main'); if (!main) return;
+  const SKIP = new Set(['story-sec', 'quiz-sec', 'glossary', 'check', 'hw', 'map', 'scope', 'ref', 'later']);
+  const trackSecs = document.body.dataset.trkSec !== '0';
+  const secs = trackSecs ? Array.prototype.slice.call(main.querySelectorAll('section.sec[id]')).filter(s => !SKIP.has(s.id) && !/^p\d$/.test(s.id)) : [];
+  const secName = s => plain((s.querySelector('h2') || {}).innerHTML).replace(/[A-Z][A-Z0-9 ·&;,'’.\-–()/]+$/, '').trim();
+
+  /* --- 講義小節 --- */
+  secs.forEach(s => {
+    const row = document.createElement('div'); row.className = 'trk-row'; row.dataset.key = 'sec:' + s.id;
+    const h2 = s.querySelector('h2'); if (h2) h2.after(row); else s.prepend(row);
+    const mark = () => { if (!get(PAGE, 'sec:' + s.id)) set(PAGE, 'sec:' + s.id, { by: 'auto' }); };
+    ['pointerdown', 'input', 'change'].forEach(ev => s.addEventListener(ev, e => { if (!e.target.closest('.trk-row, .trk-x, .trk-mark, .tm')) mark(); }, true));
+    s.__mark = mark; s.__dwell = 0;
+  });
+  if (secs.length && 'IntersectionObserver' in window) {
+    const vis = new Set();
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      const vh = window.innerHeight || 800, r = en.intersectionRect;
+      (en.isIntersecting && (r.height > vh * 0.45 || en.intersectionRatio > 0.6)) ? vis.add(en.target) : vis.delete(en.target);
+    }), { threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] });
+    secs.forEach(s => io.observe(s));
+    setInterval(() => {
+      if (document.visibilityState !== 'visible') return;
+      vis.forEach(s => { if (s.hidden) return; s.__dwell++; if (s.__dwell >= 30) s.__mark(); });
+    }, 1000);
+  }
+
+  /* --- 故事 --- */
+  const storyRoot = document.getElementById('story');
+  const scKey = t => 'sc:' + plain(t);
+  if (storyRoot) storyRoot.addEventListener('story:view', e => { const k = scKey(e.detail.t); if (!get(PAGE, k)) set(PAGE, k, {}); });
+  const storyBox = storyRoot ? document.createElement('details') : null;
+  if (storyBox) { storyBox.className = 'trk-list'; storyRoot.after(storyBox); }
+
+  /* --- 測驗（各章自己的 quiz 引擎：點選項之後看按鈕是 right 還是 wrong） --- */
+  const quizHost = document.querySelector('.quiz');
+  const qKey = host => { const t = host.querySelector('.q-text'); return t ? 'q:' + hash(plain(t.innerHTML)) : null; };
+  if (quizHost) {
+    quizHost.addEventListener('click', e => {
+      const b = e.target.closest('.opt'); if (!b) return;
+      setTimeout(() => {
+        const k = qKey(quizHost); if (!k) return;
+        if (!b.classList.contains('right') && !b.classList.contains('wrong')) return;
+        set(PAGE, k, { ok: b.classList.contains('right'), s: plain(quizHost.querySelector('.q-text').innerHTML).slice(0, 48) });
+      }, 0);
+    });
+    new MutationObserver(() => decorateQuiz()).observe(quizHost, { childList: true });
+  }
+  const quizBox = quizHost ? document.createElement('details') : null;
+  if (quizBox) { quizBox.className = 'trk-list'; quizHost.after(quizBox); }
+  function quizTotal() { const t = quizHost && quizHost.querySelector('.q-no'); const m = t && t.textContent.match(/共\s*(\d+)\s*題/); if (m) quizHost.dataset.total = m[1]; return +(quizHost && quizHost.dataset.total || 0); }
+  function decorateQuiz() {
+    if (!quizHost) return;
+    quizTotal();
+    const qn = quizHost.querySelector('.q-no'), k = qKey(quizHost); if (!qn || !k) return;
+    let b = qn.querySelector('.trk-b'); if (!b) { b = document.createElement('span'); b.className = 'trk-b'; qn.appendChild(b); }
+    const r = get(PAGE, k);
+    setH(b, r ? '✓ 做過 ' + md(r.t) + okTxt(r) + ' ' + xBtn(PAGE, k) : '');
+  }
+
+  /* --- 作業卡片、課本例題卡片（會被重畫，所以每次都重新貼） --- */
+  document.addEventListener('click', e => {
+    const hw = e.target.closest && e.target.closest('.hw-card');
+    if (hw && e.target.closest('.hw-check')) {
+      setTimeout(() => {
+        const sels = hw.querySelectorAll('.hw-sel');
+        const ok = sels.length ? Array.prototype.every.call(sels, s => s.classList.contains('ok')) : null;
+        set(hw.dataset.trkDoc || PAGE, 'hw:' + hw.id, { ok, s: plain((hw.querySelector('.hw-head') || {}).innerHTML).slice(0, 40) });
+      }, 0);
+      return;
+    }
+    const xb = e.target.closest && e.target.closest('.xb-card'); if (!xb) return;
+    const isEx = xb.classList.contains('is-ex'), key = (isEx ? 'ex:' : 'pp:') + xb.id;
+    const a = e.target.closest('[data-a]'), self = e.target.closest('[data-s]');
+    const prev = get(PAGE, key);
+    if (self) set(PAGE, key, { ok: self.dataset.s === '1' });
+    else if (a && (isEx ? /next|all/ : /sol|ans/).test(a.dataset.a) && !prev) set(PAGE, key, {});
+  });
+  document.addEventListener('pointerup', e => {
+    const xb = e.target.closest && e.target.closest('.xb-card.is-pp');
+    if (xb && e.target.closest('.pad-wrap')) { const k = 'pp:' + xb.id; if (!get(PAGE, k)) set(PAGE, k, {}); }
+  });
+  function decorateCards() {
+    document.querySelectorAll('.hw-card, .xb-card').forEach(c => {
+      const isHw = c.classList.contains('hw-card');
+      const k = isHw ? (c.dataset.trkDoc || PAGE) : PAGE, key = isHw ? 'hw:' + c.id : (c.classList.contains('is-ex') ? 'ex:' : 'pp:') + c.id;
+      const head = c.querySelector(isHw ? '.hw-head' : '.xb-head'); if (!head) return;
+      ensure(k);
+      let b = head.querySelector('.trk-b'); if (!b) { b = document.createElement('span'); b.className = 'trk-b'; head.appendChild(b); }
+      const r = get(k, key);
+      setH(b, r ? '✓ 做過 ' + md(r.t) + okTxt(r) + ' ' + xBtn(k, key) : '');
+    });
+  }
+  let cardTimer = 0;
+  new MutationObserver(() => { clearTimeout(cardTimer); cardTimer = setTimeout(decorateCards, 60); }).observe(main, { childList: true, subtree: true });
+
+  /* --- 頁首總覽 --- */
+  const hero = main.querySelector('.hero');
+  const sum = document.createElement('div'); sum.className = 'trk-sum';
+  if (hero) hero.appendChild(sum); else main.prepend(sum);
+  sum.addEventListener('click', e => {
+    if (!e.target.closest('[data-clear]')) return;
+    if (!window.confirm('清除這一頁的全部學習紀錄？（講義、故事、題目）')) return;
+    const d = doc(PAGE); Object.keys(d.recs).forEach(key => { if (!d.recs[key].x) d.recs[key] = { t: NOW(), x: 1 }; });
+    document.querySelectorAll('.hw-card').forEach(c => { const k = c.dataset.trkDoc; if (k && get(k, 'hw:' + c.id)) doc(k).recs['hw:' + c.id] = { t: NOW(), x: 1 }; });
+    Object.keys(docs).forEach(save); emit();
+  });
+
+  function counts() {
+    const d = doc(PAGE), recs = Object.keys(d.recs).filter(x => !d.recs[x].x);
+    const scenes = storyRoot && storyRoot.__story ? storyRoot.__story.scenes : [];
+    const hwCards = Array.prototype.slice.call(document.querySelectorAll('.hw-card'));
+    const hwDone = hwCards.filter(c => get(c.dataset.trkDoc || PAGE, 'hw:' + c.id));
+    const xbN = document.querySelectorAll('.xb-card').length;
+    const qN = (quizTotal() || 0) + hwCards.length + xbN;
+    const qDone = recs.filter(x => /^(q|ex|pp):/.test(x)).length + (hwCards.length ? hwDone.length : 0);
+    const ng = recs.filter(x => /^(q|ex|pp):/.test(x) && d.recs[x].ok === false).length + hwDone.filter(c => get(c.dataset.trkDoc || PAGE, 'hw:' + c.id).ok === false).length;
+    return { hw: hwCards.map(c => (c.dataset.trkDoc || PAGE) + '|' + c.id), sec: secs.filter(s => get(PAGE, 'sec:' + s.id)).length, secT: secs.length,
+      sc: scenes.filter(s => get(PAGE, scKey(s.t))).length, scT: scenes.length, q: qDone, qT: qN, ng };
+  }
+  function render() {
+    const c = counts(), d = doc(PAGE);
+    const tot = { sec: c.secT, sc: c.scT, q: c.qT, hw: c.hw };
+    if (JSON.stringify(d.tot) !== JSON.stringify(tot)) { d.tot = tot; save(PAGE); }
+    const st = cloud.status === 'on' ? '☁ 已同步到你的帳號' : cloud.status === 'error' ? '⚠ 雲端同步失敗，先存在這台裝置' : '只存在這台裝置';
+    setH(sum, '<b>📈 學習紀錄</b>' +
+      (c.secT ? '<span>講義 ' + c.sec + '/' + c.secT + '</span>' : '') +
+      (c.scT ? '<span>故事 ' + c.sc + '/' + c.scT + ' 畫面</span>' : '') +
+      (c.qT ? '<span>題目 ' + c.q + '/' + c.qT + (c.ng ? '（<b class="trk-ng">答錯 ' + c.ng + '</b>）' : '') + '</span>' : '') +
+      '<small>' + st + '</small><button type="button" class="trk-clear" data-clear>清除這一頁的紀錄</button>');
+    /* 小節 */
+    secs.forEach(s => {
+      const row = s.querySelector('.trk-row'), k = 'sec:' + s.id, r = get(PAGE, k);
+      setH(row, r ? '<span class="trk-b">✓ 已讀 ' + md(r.t) + (r.by === 'hand' ? '（手動）' : '') + ' ' + xBtn(PAGE, k) + '</span>'
+        : '<button type="button" class="trk-mark" data-doc="' + PAGE + '" data-key="' + k + '">✓ 標記讀過</button>');
+      const a = document.querySelector('.rail a[href="#' + s.id + '"]'); if (a) a.classList.toggle('trk-on', !!r);
+    });
+    /* 故事清單 */
+    if (storyBox && storyRoot.__story) {
+      const sc = storyRoot.__story.scenes;
+      setH(storyBox, '<summary>故事紀錄：看過 ' + c.sc + ' / ' + sc.length + ' 個畫面</summary><ol>' +
+        sc.map((s, i) => { const k = scKey(s.t), r = get(PAGE, k);
+          return '<li class="' + (r ? 'on' : '') + '"><a href="#story" data-go="' + i + '">' + plain(s.t) + '</a>' + (r ? '<span class="trk-b">✓ ' + md(r.t) + ' ' + xBtn(PAGE, k) + '</span>' : '<span class="trk-none">未看</span>') + '</li>'; }).join('') + '</ol>');
+    }
+    /* 測驗清單 */
+    if (quizBox) {
+      const d2 = doc(PAGE), qs = Object.keys(d2.recs).filter(x => x.indexOf('q:') === 0 && !d2.recs[x].x);
+      setH(quizBox, '<summary>測驗紀錄：做過 ' + qs.length + (quizTotal() ? ' / ' + quizTotal() : '') + ' 題' + (qs.some(x => d2.recs[x].ok === false) ? '，答錯 ' + qs.filter(x => d2.recs[x].ok === false).length + ' 題' : '') + '</summary>' +
+        (qs.length ? '<ol>' + qs.map(k => { const r = d2.recs[k]; return '<li>' + (r.s || '（題目）') + '<span class="trk-b">' + md(r.t) + okTxt(r) + ' ' + xBtn(PAGE, k) + '</span></li>'; }).join('') + '</ol>' : '<p class="trk-none">還沒有做過測驗題。</p>'));
+    }
+    decorateQuiz(); decorateCards();
+  }
+  if (storyBox) storyBox.addEventListener('click', e => {
+    const g = e.target.closest('[data-go]'); if (!g || !storyRoot.__story) return;
+    e.preventDefault(); storyRoot.__story.go(+g.dataset.go, 0); storyRoot.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  listeners.push(render);
+  if (storyRoot && !storyRoot.__story) storyRoot.addEventListener('story:ready', render);
+  render();
+  setTimeout(render, 600);
+  window.__TRK = { get, set, del, docs, PAGE };
+})();

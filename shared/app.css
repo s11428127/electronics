@@ -954,3 +954,34 @@ button.fix { display: inline-block; font: 600 10.5px/1 var(--font-body, inherit)
 .pick-row button i { font-style: normal; font-size: 11px; color: var(--ink-3); }
 .pick-row button.on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--surface)); }
 .pick-row button.on b { color: var(--accent); }
+
+/* ---------- 學習紀錄（shared/track.js） ---------- */
+.trk-row { margin: -2px 0 12px; min-height: 22px; }
+.trk-b { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--ok) 35%, var(--line)); border-radius: 99px; padding: 2px 4px 2px 9px; margin-left: 6px; letter-spacing: 0; text-transform: none; white-space: nowrap; vertical-align: 1px; }
+.trk-b:empty { display: none; }
+.trk-row .trk-b { margin-left: 0; }
+.trk-ok { color: var(--ok); }
+.trk-ng { color: var(--bad); }
+.trk-x { font: inherit; font-size: 11px; line-height: 1; color: var(--ink-3); background: var(--surface); border: 1px solid var(--line); border-radius: 99px; width: 20px; height: 20px; padding: 0; cursor: pointer; }
+.trk-x:hover { color: var(--bad); border-color: var(--bad); }
+.trk-mark { font: inherit; font-size: 12px; color: var(--ink-3); background: transparent; border: 1px dashed var(--line); border-radius: 99px; padding: 3px 10px; cursor: pointer; }
+.trk-mark:hover { color: var(--accent); border-color: var(--accent); }
+.trk-sum { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 16px; padding: 10px 14px; font-size: 13.5px; color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.trk-sum > b { color: var(--ink); }
+.trk-sum small { color: var(--ink-3); font-size: 12px; }
+.trk-clear { font: inherit; font-size: 12px; margin-left: auto; color: var(--ink-3); background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 4px 9px; cursor: pointer; }
+.trk-clear:hover { color: var(--bad); border-color: var(--bad); }
+.trk-list { margin: 10px 0 4px; font-size: 13.5px; color: var(--ink-2); }
+.trk-list > summary { cursor: pointer; font-weight: 600; color: var(--ink-2); padding: 6px 0; }
+.trk-list ol { margin: 6px 0 0; padding-left: 22px; }
+.trk-list li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; padding: 3px 0; border-bottom: 1px dashed var(--line-soft); }
+.trk-list li.on a { color: var(--ink); }
+.trk-list li a { color: var(--ink-3); text-decoration: none; }
+.trk-none { font-size: 12px; color: var(--ink-3); }
+.rail a.trk-on::after { content: " ✓"; color: var(--ok); font-weight: 700; }
+.trk-card b { display: inline; font: inherit; }
+.trk-card { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 8px; font-size: 12px; color: var(--ink-2); }
+.trk-bar { display: inline-block; width: 90px; height: 6px; border-radius: 99px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--line-soft); }
+.trk-bar i { display: block; height: 100%; background: var(--ok); }
+.xb-self { margin-top: 8px; font-size: 13px; font-weight: 400; color: var(--ink-2); display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.xb-self button { font: inherit; font-size: 12.5px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 3px 9px; cursor: pointer; }
