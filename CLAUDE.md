@@ -128,8 +128,27 @@
 - 不追蹤的小節 id：`story-sec quiz-sec glossary check hw map scope ref later p1…p9`；整頁不追小節用 `<body data-trk-sec="0">`。
 - 題目紀錄：`ok`＝最近一次對錯，`w`＝第一次答錯的時間（之後答對也保留）。標籤：答錯＝紅底、答錯後訂正＝橘（「✗ M/D 答錯 → ✓ M/D 訂正」）、答對＝綠；
   卡片加 `.trk-wrong`／`.trk-fixed` 左邊色條。作答一律走 `answer()`，不要直接 `set()`。hero 另有「清除題目紀錄」（只清 q/ex/pp/hw）。
+- 作答時另存 `s`（短標題）、`u`（回原題的連結）、`d`（題目、你選的、正解、解釋）給錯題本用。
 - 預設已讀放在 `SEED`（套一次就記在 `seed.v1`，使用者刪掉不會補回）。
 - 儲存：localStorage `ee-trk:<科目/檔名>` + 雲端 `data/users/<id>/trk_<科目_檔名>`；每筆帶時間，合併取新的，刪除是墓碑 `{t, x:1}`。
+
+## 錯題本
+
+- 每科 `<subject>/mistakes.html`（`#mk-book` 的 `data-chs` 列出 `[[科目/檔名, 名稱]…]`，作業那份放最後）；
+  科目首頁有 `a.chap.mk-card[data-trk-skip]` 卡片；每個章節頁底部由 track.js 自動長出 `#mistakes`「這一章的錯題」。
+- **新增章節時要把它加進該科 `mistakes.html` 的 `data-chs`**。
+- 收「最近一次答錯（紅）」和「答錯後訂正（橘）」；點「回原題重做」用 `u` 跳回去（收在 `<details>` 裡的會自動打開）。
+
+## 講義上寫筆記（`shared/annot.js` + `shared/sync.js`）
+
+- 章節頁在 track.js 前面載入 `sync.js`、`pad.js`（還沒載入才加）、`annot.js`。右下「✍ 寫筆記」進入筆記模式：
+  筆（黑／藍／紅）、螢光筆、整筆橡皮擦、便條（可打字／手寫、拖曳、縮小）、復原、手指寫、清除本頁。
+  Pencil／滑鼠寫字，手指照常捲動；在按鈕上寫字會擋掉那次 click。
+- 筆跡錨在「開始那一段」（`ATOM` 題目卡、bench、例題…整塊算一段；`BLOCK` 段落、li…），座標 = 那段寬度的比例 ×1000。
+  錨點 key = `<最近有 id 的祖先>:<第幾個區塊>`，**改頁面結構會讓舊筆跡移位**；track 等動態插入的東西放在 `EXCL`，不算進索引。
+- 「＋ 新增空間」只在 `.hw-card .xb-card .quiz .example`（要有 id）下面，筆記模式才出現按鈕。
+- 儲存：`__SYNC.open('ann_<科目/檔名>')`，本機 `ee-sync:` + 雲端 `sync_<name>`（> 200 KB 自動切 `__1`、`__2`…，沒變的份不重寫）；
+  每項帶 t，刪除是墓碑，45 天後清掉。手寫板 `__PAD.mount(el, id, {h, load, save})` 可以換成自己的儲存。
 
 ## 原講義 PART 標註
 
@@ -180,6 +199,7 @@ notes/                        手寫筆記（GoodNotes 式，給 iPad + Apple Pe
   assets/render.js            紙張與筆跡繪圖（編輯器與縮圖共用）
   assets/ink.js               編輯器：筆／螢光筆／橡皮擦／套索、按住拉直線、縮放、講義並排
   assets/library.js           書櫃；裡面的 CHAPTERS 清單是「可綁定的章節」
+（另外「直接寫在講義上」是 shared/annot.js，見上方）
 ```
 
 ### 手寫筆記的規矩

@@ -992,3 +992,97 @@ button.fix { display: inline-block; font: 600 10.5px/1 var(--font-body, inherit)
 .trk-bar i { display: block; height: 100%; background: var(--ok); }
 .xb-self { margin-top: 8px; font-size: 13px; font-weight: 400; color: var(--ink-2); display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .xb-self button { font: inherit; font-size: 12.5px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 3px 9px; cursor: pointer; }
+
+/* ---------- 錯題本（shared/track.js） ---------- */
+.mk-shell { grid-template-columns: minmax(0, 1fr); max-width: 860px; }
+.mk-chaps { margin-bottom: 8px; }
+.mk-card .chap-no { font-size: 22px; }
+.mk-lead { font-size: 14px; color: var(--ink-2); }
+.mk-lead a { margin-left: 6px; color: var(--accent); }
+.mk-filter { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 18px; }
+.mk-filter button { font: inherit; font-size: 13.5px; color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); border-radius: 99px; padding: 6px 14px; cursor: pointer; }
+.mk-filter button i { font-style: normal; font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); margin-left: 4px; }
+.mk-filter button.on { color: var(--accent); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+.mk-ch { display: flex; align-items: baseline; gap: 10px; margin: 22px 0 8px; font-size: 16px; }
+.mk-ch a { color: var(--ink); text-decoration: none; }
+.mk-ch small { font-size: 12px; color: var(--ink-3); font-weight: 400; }
+.mk-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.mk-item { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; box-shadow: inset 4px 0 0 var(--bad); min-width: 0; }
+.mk-item.fix { box-shadow: inset 4px 0 0 var(--warn); }
+.mk-top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.mk-top .trk-b { margin-left: 0; white-space: normal; }
+.mk-kind { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; color: var(--ink-3); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; }
+.mk-s { margin: 8px 0 4px; font-size: 14.5px; color: var(--ink); overflow-wrap: anywhere; }
+.mk-d { margin: 6px 0; font-size: 14px; color: var(--ink-2); }
+.mk-d > summary { cursor: pointer; color: var(--accent); font-size: 13px; padding: 2px 0; }
+.mk-q { margin: 8px 0; line-height: 1.75; overflow-wrap: anywhere; }
+.mk-q .q-en { font-size: 12.5px; color: var(--ink-3); margin-top: 4px; }
+.mk-row { margin: 4px 0; overflow-wrap: anywhere; }
+.mk-row.ng b { color: var(--bad); }
+.mk-row.ok b { color: var(--ok); }
+.mk-e { margin-top: 8px; padding: 8px 10px; background: var(--surface-2); border-radius: 8px; font-size: 13.5px; overflow-wrap: anywhere; }
+.mk-pick.ok { color: var(--ok); font-weight: 600; }
+.mk-pick.ng { color: var(--bad); font-weight: 600; }
+.mk-pick.ng b { color: var(--ok); font-weight: 600; }
+.mk-go { display: inline-block; margin-top: 6px; font-size: 13px; color: var(--accent); }
+.mk-empty { color: var(--ink-3); font-size: 14px; padding: 16px 0; }
+
+/* ---------- 講義上寫筆記（shared/annot.js） ---------- */
+:root { --ann-k1: #1f5fd6; --ann-k2: #d0342c; --ann-hl: #ffd60a; --ann-note: #fff4b8; --ann-note-ink: #3b3000; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --ann-k1: #6aa2ff; --ann-k2: #ff7a70; --ann-hl: #d9b100; --ann-note: #4a4116; --ann-note-ink: #fff3c4; }
+}
+:root[data-theme="dark"] { --ann-k1: #6aa2ff; --ann-k2: #ff7a70; --ann-hl: #d9b100; --ann-note: #4a4116; --ann-note-ink: #fff3c4; }
+main.ann-host { position: relative; }
+.ann-layer { position: absolute; inset: 0; pointer-events: none; z-index: 20; }
+.ann-svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
+.ann-s { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.2; }
+.ann-s.k0 { stroke: var(--ink); }
+.ann-s.k1 { stroke: var(--ann-k1); }
+.ann-s.k2 { stroke: var(--ann-k2); }
+.ann-s.kh { stroke: var(--ann-hl); stroke-width: 15; opacity: .42; stroke-linecap: butt; }
+body.ann-on main { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; cursor: crosshair; }
+body.ann-on.ann-finger main { touch-action: none; }
+.ann-fab { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60;
+  font: inherit; font-size: 14px; font-weight: 600; color: var(--surface); background: var(--accent); border: 0; border-radius: 99px; padding: 10px 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .18); cursor: pointer; }
+.ann-fab[hidden], .ann-bar[hidden] { display: none; }
+.ann-bar { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); z-index: 60;
+  width: max-content; max-width: calc(100vw - 16px); background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, .2); padding: 6px; }
+.ann-tools { display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.ann-tools button { flex: none; display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: 13px; color: var(--ink-2); background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: 9px; padding: 7px 10px; cursor: pointer; white-space: nowrap; }
+.ann-tools button.on { color: var(--accent); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
+.ann-tools .ann-done { color: var(--surface); background: var(--accent); border-color: var(--accent); }
+.ann-tools .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.dot.k0 { background: var(--ink); } .dot.k1 { background: var(--ann-k1); } .dot.k2 { background: var(--ann-k2); } .dot.kh { background: var(--ann-hl); }
+.ann-msg { font-size: 11.5px; color: var(--ink-3); padding: 4px 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100vw - 30px); }
+.ann-notes { position: absolute; inset: 0; }
+.ann-note { position: absolute; pointer-events: auto; background: var(--ann-note); color: var(--ann-note-ink); border-radius: 8px; box-shadow: 0 4px 14px rgba(0, 0, 0, .2);
+  font-size: 13.5px; -webkit-user-select: text; user-select: text; cursor: auto; z-index: 1; }
+.ann-note[hidden] { display: none; }
+.ann-note-bar { display: flex; align-items: center; gap: 2px; padding: 3px 4px 3px 8px; border-bottom: 1px solid color-mix(in srgb, var(--ann-note-ink) 18%, transparent); }
+.ann-grip { flex: 1; font-size: 12px; opacity: .75; cursor: grab; touch-action: none; padding: 4px 0; -webkit-user-select: none; user-select: none; }
+.ann-note-bar button { font: inherit; font-size: 12px; color: inherit; background: transparent; border: 0; border-radius: 6px; padding: 4px 6px; cursor: pointer; }
+.ann-note-bar button:hover { background: color-mix(in srgb, var(--ann-note-ink) 10%, transparent); }
+.ann-note textarea { display: block; width: 100%; box-sizing: border-box; min-height: 64px; resize: vertical; border: 0; background: transparent; color: inherit;
+  font: inherit; font-size: 14px; line-height: 1.5; padding: 8px 10px; outline: none; }
+.ann-note .ann-note-pad { display: none; }
+.ann-note.ink textarea { display: none; }
+.ann-note.ink .ann-note-pad { display: block; }
+.ann-note .pad { margin: 0; border: 0; border-radius: 0 0 8px 8px; }
+.ann-note-mini { display: none; }
+.ann-note.min > :not(.ann-note-mini) { display: none; }
+.ann-note.min { background: transparent; box-shadow: none; }
+.ann-note.min .ann-note-mini { display: block; font-size: 18px; line-height: 1; background: var(--ann-note); border: 0; border-radius: 8px; padding: 6px 7px; box-shadow: 0 3px 10px rgba(0, 0, 0, .2); cursor: pointer; }
+.ann-spaces { margin: 0; }
+.ann-add { display: none; font: inherit; font-size: 13px; color: var(--accent); background: transparent; border: 1px dashed var(--accent); border-radius: 10px; padding: 8px 12px; margin: 8px 0 4px; width: 100%; cursor: pointer; }
+body.ann-on .ann-add { display: block; }
+.ann-space { margin: 10px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 8px 10px 10px; }
+.ann-space-head { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: var(--ink-3); }
+.ann-space-head button { font: inherit; font-size: 12px; color: var(--ink-3); background: transparent; border: 1px solid var(--line); border-radius: 7px; padding: 3px 8px; cursor: pointer; }
+.ann-space-head button:hover { color: var(--bad); border-color: var(--bad); }
+.ann-space .pad { margin-top: 6px; }
+html.embed .ann-fab { display: none; }
+@media print { .ann-fab, .ann-bar, .ann-add { display: none !important; } }

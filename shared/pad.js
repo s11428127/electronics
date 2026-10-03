@@ -1,6 +1,8 @@
 /* ============================================================
    手寫板（給 iPad + Apple Pencil）
-   用法：<div class="pad" data-id="唯一 id"></div>，或 __PAD.mount(el, id)
+   用法：<div class="pad" data-id="唯一 id"></div>，或 __PAD.mount(el, id, opt)
+   opt（選用）：{ h: 預設高寬比, load: () => 資料, save: 資料 => {} } 換成自己的儲存（例：annot.js 存雲端）；
+   mount 回傳 { reload(資料) }，別台裝置同步過來時重畫
    - 筆跡座標存成「寬度的比例」(x/W, y/W)，換螢幕大小、轉方向都不會跑掉
    - 自動存在這台裝置（localStorage），讀寫都包 try/catch；存不了也能正常寫
    - 偵測到 Apple Pencil 之後，手指在板子上是捲動頁面（不會畫到）；按「手指也能畫」可以切換
@@ -13,9 +15,12 @@
   const save = (id, d) => { try { localStorage.setItem(KEY(id), JSON.stringify(d)); } catch (e) {} };
   let penSeen = false;
 
-  function mount(host, id) {
-    id = id || host.dataset.id;
-    const st = load(id) || { h: 0.62, strokes: [] };
+  function mount(host, id, opt) {
+    id = id || host.dataset.id; opt = opt || {};
+    const rd = () => (opt.load ? opt.load() : load(id));
+    const fresh = () => { const d = rd(); return d && d.strokes ? { h: d.h || opt.h || 0.62, strokes: d.strokes.slice() } : { h: opt.h || 0.62, strokes: [] }; };
+    let st = fresh();
+    const keep = () => (opt.save ? opt.save(st) : save(id, st));
     let tool = 'pen', finger = false, cur = null;
     host.classList.add('pad');
     host.innerHTML =
@@ -81,7 +86,7 @@
         else { cur.p.push(q); const n = cur.p.length; drawStroke({ p: cur.p.slice(n - 2) }, ink()); }
       });
     });
-    const end = () => { if (cur) { cur = null; save(id, st); draw(); } };
+    const end = () => { if (cur) { cur = null; keep(); draw(); } };
     cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
     /* iPad Safari：Apple Pencil 的 touch 要擋掉預設捲動，手指照常捲動 */
     const stylus = e => { if (finger || Array.prototype.some.call(e.touches, t => t.touchType === 'stylus')) e.preventDefault(); };
@@ -92,15 +97,16 @@
       const b = e.target.closest('button'); if (!b) return;
       if (b.dataset.t) { tool = b.dataset.t; host.querySelectorAll('[data-t]').forEach(x => x.classList.toggle('on', x === b)); }
       const a = b.dataset.a;
-      if (a === 'undo') { st.strokes.pop(); save(id, st); draw(); }
-      if (a === 'clear' && (!st.strokes.length || window.confirm('清除這一題的手寫？'))) { st.strokes = []; save(id, st); draw(); }
-      if (a === 'taller') { st.h = Math.min(3, st.h + 0.35); save(id, st); size(); }
+      if (a === 'undo') { st.strokes.pop(); keep(); draw(); }
+      if (a === 'clear' && (!st.strokes.length || window.confirm('清除這一題的手寫？'))) { st.strokes = []; keep(); draw(); }
+      if (a === 'taller') { st.h = Math.min(3, st.h + 0.35); keep(); size(); }
       if (a === 'finger') { finger = !finger; b.classList.toggle('on', finger); cv.style.touchAction = finger ? 'none' : 'pan-y'; }
     });
     cv.style.touchAction = 'pan-y';
     new ResizeObserver(size).observe(wrap);
     size();
     new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return { reload() { if (cur) return; const h = st.h; st = fresh(); if (st.h !== h) size(); else draw(); } };
   }
   function init() { document.querySelectorAll('.pad[data-id]').forEach(el => { if (!el.dataset.ok) { el.dataset.ok = 1; mount(el); } }); }
   window.__PAD = { mount, init };

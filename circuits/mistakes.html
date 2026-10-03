@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>電路學 · 錯題本</title>
+<meta name="description" content="電路學錯題本：答錯的測驗、作業、Practice 自動收集，訂正後保留紀錄。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body data-subject="circuits" data-look="clean" data-trk-sec="0">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>錯題本</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell mk-shell">
+  <main>
+    <div class="hero">
+      <div class="eyebrow">電路學 · Mistakes</div>
+      <h1>錯題本</h1>
+      <p class="sub">各章答錯的<strong>測驗、作業、Practice</strong> 會自動收進來。<b class="trk-b ng">✗ 答錯</b> 是還沒訂正的；回去再做一次答對，就變成 <b class="trk-b fix">已訂正</b>，紀錄會留著讓你考前複習。按 ✕ 會刪掉那一筆紀錄。</p>
+    </div>
+    <div id="mk-book" data-chs='[[&quot;circuits/ch11&quot;, &quot;CH11 交流功率分析&quot;]]'></div>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script>
+(function () {
+  var btn = document.getElementById('theme-btn');
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    var isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { var t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

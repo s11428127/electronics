@@ -22,6 +22,9 @@
   const PAGE = keyOf();
   const hash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
   const plain = s => String(s || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  const FILE = (location.pathname.split('/').pop() || 'index.html');
+  const headTxt = (el, n) => { if (!el) return ''; const c = el.cloneNode(true); c.querySelectorAll('.trk-b').forEach(x => x.remove()); return plain(c.innerHTML.replace(/<\/(span|b)>/g, ' </$1>')).slice(0, n); };
+  const cut = (h, n) => { h = String(h || ''); return h.length > (n || 2000) ? plain(h).slice(0, n || 2000) + '…' : h; };
 
   /* 使用者 10/3 說：電子學 PART 1 讀到 §05 —— 先標成讀過（刪掉也不會再自動補回來） */
   const SEED = {
@@ -133,8 +136,43 @@
     if (m) { e.preventDefault(); e.stopPropagation(); set(m.dataset.doc, m.dataset.key, { by: 'hand' }); }
   }, true);
 
+  /* ================= 錯題本（答錯＝紅、答錯後訂正＝橘） ================= */
+  const KIND = { q: '測驗', hw: '作業', pp: 'Practice' };
+  const fileOf = k => k.split('/').pop() + '.html';
+  /* keys：要掃的紀錄；hwPairs：頁面上作業卡片 'doc|cardId'；seen：跨群組去重 */
+  function mkCollect(keys, hwPairs, seen) {
+    const out = []; seen = seen || {};
+    const add = (k, key) => {
+      const id = k + '|' + key, r = get(k, key), st = state(r);
+      if (seen[id] || !r || !/^(q|hw|pp):/.test(key) || (st !== 'ng' && st !== 'fix')) return;
+      seen[id] = 1; out.push({ k, key, r, st });
+    };
+    (hwPairs || []).forEach(x => { const i = x.indexOf('|'); ensure(x.slice(0, i)); add(x.slice(0, i), 'hw:' + x.slice(i + 1)); });
+    keys.forEach(k => { const d = ensure(k); Object.keys(d.recs).forEach(key => add(k, key)); });
+    return out.sort((a, b) => (a.st === b.st ? b.r.t - a.r.t : a.st === 'ng' ? -1 : 1));
+  }
+  function mkItem(m) {
+    const r = m.r, p = m.key.split(':')[0], id = m.key.slice(p.length + 1), d = r.d || {};
+    const href = r.u || fileOf(m.k) + (p === 'q' ? '#quiz-sec' : '#' + id);
+    const body = d.q ? '<details class="mk-d"><summary>看題目和答案</summary><div class="mk-q">' + d.q + '</div>' +
+      (d.my ? '<div class="mk-row ng"><b>你選：</b>' + d.my + '</div>' : '') + (d.ans ? '<div class="mk-row ok"><b>正解：</b>' + d.ans + '</div>' : '') +
+      (d.e ? '<div class="mk-e">' + d.e + '</div>' : '') + '</details>' : '';
+    return '<li class="mk-item ' + m.st + '"><div class="mk-top"><span class="mk-kind">' + KIND[p] + '</span>' +
+      '<span class="trk-b ' + m.st + '">' + tagTxt(r) + ' ' + xBtn(m.k, m.key) + '</span></div>' +
+      '<div class="mk-s">' + (r.s || '（題目）') + '</div>' + body + '<a class="mk-go" href="' + href + '">回原題重做 →</a></li>';
+  }
+  /* 從錯題本點回原題：題目可能收在 <details> 裡，或是 JS 晚一點才長出來 → 打開並捲過去 */
+  function reveal() {
+    const id = decodeURIComponent(location.hash.slice(1)), t = id && document.getElementById(id); if (!t) return;
+    for (let p = t.parentElement; p; p = p.parentElement) if (p.tagName === 'DETAILS') p.open = true;
+    setTimeout(() => t.scrollIntoView({ block: 'start' }), 60);
+  }
+  window.addEventListener('load', () => setTimeout(reveal, 250));
+  window.addEventListener('hashchange', reveal);
+
   /* ================= 科目首頁：章節卡片進度 ================= */
-  const cards = Array.prototype.slice.call(document.querySelectorAll('a.chap[href]'));
+  const cards = Array.prototype.slice.call(document.querySelectorAll('a.chap[href]:not([data-trk-skip])'));
+  const mkCard = document.querySelector('a.mk-card');
   if (cards.length) {
     cards.forEach(a => { const k = keyOf(a.getAttribute('href')); (doc(k).tot.hw || []).forEach(s => doc(s.split('|')[0])); a.dataset.trk = k; });
     const paint = () => cards.forEach(a => {
@@ -152,13 +190,46 @@
         '<span class="trk-bar"><i style="width:' + pct + '%"></i></span>' +
         '<span>講義 ' + sec + (T.sec ? '/' + T.sec : '') + ' · 故事 ' + sc + (T.sc ? '/' + T.sc : '') + ' 畫面 · 題目 ' + q + (T.q ? '/' + T.q : '') + '</span>' + (ng ? '<span class="trk-b ng">✗ 答錯 ' + ng + '</span>' : '') + (fix ? '<span class="trk-b fix">已訂正 ' + fix + '</span>' : ''));
     });
-    listeners.push(paint); paint();
+    const paintMk = () => {
+      if (!mkCard) return;
+      const seen = {}, all = [];
+      cards.forEach(a => { all.push.apply(all, mkCollect([a.dataset.trk], doc(a.dataset.trk).tot.hw, seen)); });
+      const ng = all.filter(m => m.st === 'ng').length, fix = all.length - ng;
+      let el = mkCard.querySelector('.trk-card');
+      if (!el) { el = document.createElement('span'); el.className = 'trk-card'; (mkCard.querySelector('.chap-body') || mkCard).appendChild(el); }
+      setH(el, !all.length ? '<span class="trk-none">目前沒有錯題</span>' : (ng ? '<span class="trk-b ng">✗ 還沒訂正 ' + ng + '</span>' : '') + (fix ? '<span class="trk-b fix">已訂正 ' + fix + '</span>' : ''));
+    };
+    listeners.push(paint, paintMk); paint(); paintMk();
+    return;
+  }
+
+  /* ================= 科目錯題本頁 ================= */
+  const book = document.getElementById('mk-book');
+  if (book) {
+    const chs = JSON.parse(book.dataset.chs || '[]');   /* [[key, 名稱], …]，作業那一份放最後 */
+    chs.forEach(c => (ensure(c[0]).tot.hw || []).forEach(x => ensure(x.split('|')[0])));
+    let filter = 'all';
+    book.innerHTML = '<div class="mk-filter" role="tablist"></div><div class="mk-groups"></div>';
+    const fBox = book.querySelector('.mk-filter'), gBox = book.querySelector('.mk-groups');
+    fBox.addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (b) { filter = b.dataset.f; paintBook(); } });
+    function paintBook() {
+      const seen = {}, groups = chs.map(c => ({ c, list: mkCollect([c[0]], doc(c[0]).tot.hw, seen) }));
+      const all = [].concat.apply([], groups.map(g => g.list)), ng = all.filter(m => m.st === 'ng').length;
+      setH(fBox, [['all', '全部', all.length], ['ng', '還沒訂正', ng], ['fix', '已訂正', all.length - ng]].map(f =>
+        '<button type="button" data-f="' + f[0] + '" class="' + (filter === f[0] ? 'on' : '') + '">' + f[1] + ' <i>' + f[2] + '</i></button>').join(''));
+      const html = groups.map(g => {
+        const list = g.list.filter(m => filter === 'all' || m.st === filter); if (!list.length) return '';
+        return '<h3 class="mk-ch"><a href="' + fileOf(g.c[0]) + '">' + g.c[1] + '</a><small>' + list.length + ' 題</small></h3><ol class="mk-list">' + list.map(mkItem).join('') + '</ol>';
+      }).join('');
+      setH(gBox, html || '<p class="mk-empty">' + (all.length ? '這個分類沒有題目。' : '目前沒有錯題。答錯的測驗、作業、Practice 會自動收進來。') + '</p>');
+    }
+    listeners.push(paintBook); paintBook();
     return;
   }
 
   /* ================= 章節頁 ================= */
   const main = document.querySelector('main'); if (!main) return;
-  const SKIP = new Set(['story-sec', 'quiz-sec', 'glossary', 'check', 'hw', 'map', 'scope', 'ref', 'later']);
+  const SKIP = new Set(['story-sec', 'quiz-sec', 'glossary', 'check', 'hw', 'map', 'scope', 'ref', 'later', 'mistakes']);
   const trackSecs = document.body.dataset.trkSec !== '0';
   const secs = trackSecs ? Array.prototype.slice.call(main.querySelectorAll('section.sec[id]')).filter(s => !SKIP.has(s.id) && !/^p\d$/.test(s.id)) : [];
   const secName = s => plain((s.querySelector('h2') || {}).innerHTML).replace(/[A-Z][A-Z0-9 ·&;,'’.\-–()/]+$/, '').trim();
@@ -200,7 +271,11 @@
       setTimeout(() => {
         const k = qKey(quizHost); if (!k) return;
         if (!b.classList.contains('right') && !b.classList.contains('wrong')) return;
-        answer(PAGE, k, b.classList.contains('right'), { s: plain(quizHost.querySelector('.q-text').innerHTML).slice(0, 48) });
+        /* 錯題本要用：題目、你選的、正解、解釋 */
+        const qt = quizHost.querySelector('.q-text'), en = quizHost.querySelector('.q-en'), rt = quizHost.querySelector('.opt.right');
+        const optH = o => o ? (o.querySelector('span') || o).innerHTML : '';
+        answer(PAGE, k, b.classList.contains('right'), { s: plain(qt.innerHTML).slice(0, 48), u: FILE + '#quiz-sec',
+          d: { q: cut(qt.innerHTML) + (en ? '<div class="q-en">' + cut(en.innerHTML, 800) + '</div>' : ''), my: cut(optH(b), 600), ans: cut(optH(rt), 600), e: cut((quizHost.querySelector('.explain') || {}).innerHTML) } });
       }, 0);
     });
     new MutationObserver(() => decorateQuiz()).observe(quizHost, { childList: true });
@@ -223,7 +298,18 @@
       setTimeout(() => {
         const sels = hw.querySelectorAll('.hw-sel');
         const ok = sels.length ? Array.prototype.every.call(sels, s => s.classList.contains('ok')) : null;
-        answer(hw.dataset.trkDoc || PAGE, 'hw:' + hw.id, ok, { s: plain((hw.querySelector('.hw-head') || {}).innerHTML).slice(0, 40) });
+        /* 題目裡的下拉選單換成「你選的 → 正解」 */
+        const q = hw.querySelector('.hw-q').cloneNode(true);
+        q.querySelectorAll('.hw-sel').forEach(sel => {
+          const live = hw.querySelector('.hw-sel[data-i="' + sel.dataset.i + '"]'), tip = live.nextElementSibling;
+          const pick = live.selectedIndex > 0 ? live.options[live.selectedIndex].text : '（沒選）';
+          const u = document.createElement('span'); u.className = 'mk-pick ' + (live.classList.contains('ok') ? 'ok' : 'ng');
+          u.innerHTML = '［' + pick + (live.classList.contains('ok') ? '' : ' <b>' + (tip && tip.classList.contains('hw-right') ? tip.innerHTML : '') + '</b>') + '］';
+          sel.replaceWith(u);
+        });
+        q.querySelectorAll('.hw-right').forEach(t => t.remove());
+        answer(hw.dataset.trkDoc || PAGE, 'hw:' + hw.id, ok, { s: headTxt(hw.querySelector('.hw-head'), 40), u: FILE + '#' + hw.id,
+          d: { q: cut(q.innerHTML, 3000), e: cut((hw.querySelector('.hw-ans') || {}).innerHTML) } });
       }, 0);
       return;
     }
@@ -231,7 +317,11 @@
     const isEx = xb.classList.contains('is-ex'), key = (isEx ? 'ex:' : 'pp:') + xb.id;
     const a = e.target.closest('[data-a]'), self = e.target.closest('[data-s]');
     const prev = get(PAGE, key);
-    if (self) answer(PAGE, key, self.dataset.s === '1');
+    if (self) {
+      const ans = xb.querySelector('.xb-ans').cloneNode(true); ans.querySelectorAll('.xb-self').forEach(x => x.remove());
+      answer(PAGE, key, self.dataset.s === '1', { s: headTxt(xb.querySelector('.xb-head'), 48), u: FILE + '#' + xb.id,
+        d: { q: cut((xb.querySelector('.xb-q') || {}).innerHTML, 3000), ans: cut(ans.innerHTML, 800) } });
+    }
     else if (a && (isEx ? /next|all/ : /sol|ans/).test(a.dataset.a) && !prev) set(PAGE, key, {});
   });
   document.addEventListener('pointerup', e => {
@@ -250,6 +340,14 @@
   }
   let cardTimer = 0;
   new MutationObserver(() => { clearTimeout(cardTimer); cardTimer = setTimeout(decorateCards, 60); }).observe(main, { childList: true, subtree: true });
+
+  /* --- 這一章的錯題（放在頁尾前面） --- */
+  const mkSec = document.createElement('section');
+  mkSec.className = 'sec'; mkSec.id = 'mistakes'; mkSec.hidden = true;
+  mkSec.innerHTML = '<div class="eyebrow">錯題本 · Mistakes</div><h2>這一章的錯題 <span class="h2-en">MISTAKES</span></h2>' +
+    '<p class="mk-lead">答錯的題目會自動收進來；之後再做一次答對，會變成橘色的「已訂正」，留著考前複習。<a href="mistakes.html">看整科的錯題本 →</a></p><ol class="mk-list"></ol>';
+  const foot = main.querySelector('footer.foot'); if (foot && foot.parentElement === main) main.insertBefore(mkSec, foot); else main.appendChild(mkSec);
+  const mkList = mkSec.querySelector('.mk-list');
 
   /* --- 頁首總覽 --- */
   const hero = main.querySelector('.hero');
@@ -309,6 +407,10 @@
         (qs.length ? '<ol>' + qs.map(k => { const r = d2.recs[k]; const st = state(r); return '<li>' + (r.s || '（題目）') + '<span class="trk-b' + (st === 'ok' ? '' : ' ' + st) + '">' + tagTxt(r) + ' ' + xBtn(PAGE, k) + '</span></li>'; }).join('') + '</ol>' : '<p class="trk-none">還沒有做過測驗題。</p>'));
     }
     decorateQuiz(); decorateCards();
+    /* 錯題清單 */
+    const mk = mkCollect([PAGE], c.hw);
+    mkSec.hidden = !c.qT && !mk.length;
+    setH(mkList, mk.length ? mk.map(mkItem).join('') : '<p class="trk-none">這一章目前沒有錯題。</p>');
   }
   if (storyBox) storyBox.addEventListener('click', e => {
     const g = e.target.closest('[data-go]'); if (!g || !storyRoot.__story) return;
