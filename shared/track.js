@@ -55,6 +55,14 @@
   const emit = () => listeners.forEach(fn => { try { fn(); } catch (e) {} });
   const get = (k, key) => { const r = doc(k).recs[key]; return r && !r.x ? r : null; };
   function set(k, key, data) { doc(k).recs[key] = Object.assign({ t: NOW() }, data || {}); save(k); emit(); }
+  /* 作答：ok=最近一次對錯；w=第一次答錯的時間（之後答對也留著 → 顯示「答錯 → 訂正」） */
+  function answer(k, key, ok, extra) {
+    const prev = get(k, key), r = Object.assign({}, extra || {});
+    if (ok === true || ok === false) r.ok = ok; else if (prev && 'ok' in prev) r.ok = prev.ok;
+    const w = prev && (prev.w || (prev.ok === false ? prev.t : 0));
+    if (w) r.w = w;
+    set(k, key, r);
+  }
   function del(k, key) { doc(k).recs[key] = { t: NOW(), x: 1 }; save(k); emit(); }
   function save(k) { lsSet(k, docs[k]); push(k); }
 
@@ -108,7 +116,16 @@
   const xBtn = (k, key) => '<button type="button" class="trk-x" data-doc="' + k + '" data-key="' + key + '" title="刪除這筆紀錄" aria-label="刪除這筆紀錄">✕</button>';
   /* 內容沒變就不要動 DOM（否則 MutationObserver 會一直觸發自己） */
   const setH = (el, h) => { if (el.__h !== h) { el.__h = h; el.innerHTML = h; } };
-  const okTxt = r => (r.ok === true ? ' · <b class="trk-ok">答對</b>' : r.ok === false ? ' · <b class="trk-ng">答錯</b>' : '');
+  /* 題目紀錄的標籤：答錯＝紅、答錯後訂正＝橘、答對／做過＝綠 */
+  const state = r => !r ? '' : r.ok === false ? 'ng' : r.w ? 'fix' : 'ok';
+  const tagTxt = r => r.ok === false ? '✗ 答錯 ' + md(r.t) + (r.w && r.w < r.t - 6e4 ? '（' + md(r.w) + ' 起）' : '')
+    : r.w ? '✗ ' + md(r.w) + ' 答錯 → ✓ ' + md(r.t) + ' 訂正' : r.ok === true ? '✓ 答對 ' + md(r.t) : '✓ 做過 ' + md(r.t);
+  function badge(b, k, key, r, card) {
+    const st = state(r);
+    b.className = 'trk-b' + (st === 'ok' ? '' : ' ' + st);
+    setH(b, r ? tagTxt(r) + ' ' + xBtn(k, key) : '');
+    if (card) { card.classList.toggle('trk-wrong', st === 'ng'); card.classList.toggle('trk-fixed', st === 'fix'); }
+  }
   document.addEventListener('click', e => {
     const x = e.target.closest && e.target.closest('.trk-x');
     if (x) { e.preventDefault(); e.stopPropagation(); del(x.dataset.doc, x.dataset.key); return; }
@@ -127,13 +144,13 @@
       /* 這一章頁面上的作業卡片，紀錄存在 <科目>/hw1，要另外算進來 */
       const hw = (T.hw || []).map(s => { const i = s.indexOf('|'); ensure(s.slice(0, i)); return get(s.slice(0, i), 'hw:' + s.slice(i + 1)); }).filter(Boolean);
       const sec = n('sec:'), sc = n('sc:'), q = own.length + hw.length;
-      const ng = own.filter(x => d.recs[x].ok === false).length + hw.filter(r => r.ok === false).length;
+      const qr = own.map(x => d.recs[x]).concat(hw), ng = qr.filter(r => state(r) === 'ng').length, fix = qr.filter(r => state(r) === 'fix').length;
       let el = a.querySelector('.trk-card');
       if (!el) { el = document.createElement('span'); el.className = 'trk-card'; (a.querySelector('.chap-body') || a).appendChild(el); }
       const pct = T.sec ? Math.round(sec / T.sec * 100) : 0;
       setH(el, !recs.length && !hw.length ? '<span class="trk-none">還沒有學習紀錄</span>' :
         '<span class="trk-bar"><i style="width:' + pct + '%"></i></span>' +
-        '<span>講義 ' + sec + (T.sec ? '/' + T.sec : '') + ' · 故事 ' + sc + (T.sc ? '/' + T.sc : '') + ' 畫面 · 題目 ' + q + (T.q ? '/' + T.q : '') + (ng ? ' · <span class="trk-ng">錯 ' + ng + '</span>' : '') + '</span>');
+        '<span>講義 ' + sec + (T.sec ? '/' + T.sec : '') + ' · 故事 ' + sc + (T.sc ? '/' + T.sc : '') + ' 畫面 · 題目 ' + q + (T.q ? '/' + T.q : '') + '</span>' + (ng ? '<span class="trk-b ng">✗ 答錯 ' + ng + '</span>' : '') + (fix ? '<span class="trk-b fix">已訂正 ' + fix + '</span>' : ''));
     });
     listeners.push(paint); paint();
     return;
@@ -183,7 +200,7 @@
       setTimeout(() => {
         const k = qKey(quizHost); if (!k) return;
         if (!b.classList.contains('right') && !b.classList.contains('wrong')) return;
-        set(PAGE, k, { ok: b.classList.contains('right'), s: plain(quizHost.querySelector('.q-text').innerHTML).slice(0, 48) });
+        answer(PAGE, k, b.classList.contains('right'), { s: plain(quizHost.querySelector('.q-text').innerHTML).slice(0, 48) });
       }, 0);
     });
     new MutationObserver(() => decorateQuiz()).observe(quizHost, { childList: true });
@@ -196,8 +213,7 @@
     quizTotal();
     const qn = quizHost.querySelector('.q-no'), k = qKey(quizHost); if (!qn || !k) return;
     let b = qn.querySelector('.trk-b'); if (!b) { b = document.createElement('span'); b.className = 'trk-b'; qn.appendChild(b); }
-    const r = get(PAGE, k);
-    setH(b, r ? '✓ 做過 ' + md(r.t) + okTxt(r) + ' ' + xBtn(PAGE, k) : '');
+    badge(b, PAGE, k, get(PAGE, k));
   }
 
   /* --- 作業卡片、課本例題卡片（會被重畫，所以每次都重新貼） --- */
@@ -207,7 +223,7 @@
       setTimeout(() => {
         const sels = hw.querySelectorAll('.hw-sel');
         const ok = sels.length ? Array.prototype.every.call(sels, s => s.classList.contains('ok')) : null;
-        set(hw.dataset.trkDoc || PAGE, 'hw:' + hw.id, { ok, s: plain((hw.querySelector('.hw-head') || {}).innerHTML).slice(0, 40) });
+        answer(hw.dataset.trkDoc || PAGE, 'hw:' + hw.id, ok, { s: plain((hw.querySelector('.hw-head') || {}).innerHTML).slice(0, 40) });
       }, 0);
       return;
     }
@@ -215,7 +231,7 @@
     const isEx = xb.classList.contains('is-ex'), key = (isEx ? 'ex:' : 'pp:') + xb.id;
     const a = e.target.closest('[data-a]'), self = e.target.closest('[data-s]');
     const prev = get(PAGE, key);
-    if (self) set(PAGE, key, { ok: self.dataset.s === '1' });
+    if (self) answer(PAGE, key, self.dataset.s === '1');
     else if (a && (isEx ? /next|all/ : /sol|ans/).test(a.dataset.a) && !prev) set(PAGE, key, {});
   });
   document.addEventListener('pointerup', e => {
@@ -229,8 +245,7 @@
       const head = c.querySelector(isHw ? '.hw-head' : '.xb-head'); if (!head) return;
       ensure(k);
       let b = head.querySelector('.trk-b'); if (!b) { b = document.createElement('span'); b.className = 'trk-b'; head.appendChild(b); }
-      const r = get(k, key);
-      setH(b, r ? '✓ 做過 ' + md(r.t) + okTxt(r) + ' ' + xBtn(k, key) : '');
+      badge(b, k, key, get(k, key), c);
     });
   }
   let cardTimer = 0;
@@ -241,9 +256,10 @@
   const sum = document.createElement('div'); sum.className = 'trk-sum';
   if (hero) hero.appendChild(sum); else main.prepend(sum);
   sum.addEventListener('click', e => {
-    if (!e.target.closest('[data-clear]')) return;
-    if (!window.confirm('清除這一頁的全部學習紀錄？（講義、故事、題目）')) return;
-    const d = doc(PAGE); Object.keys(d.recs).forEach(key => { if (!d.recs[key].x) d.recs[key] = { t: NOW(), x: 1 }; });
+    const btn = e.target.closest('[data-clear]'); if (!btn) return;
+    const onlyQ = btn.dataset.clear === 'q', isQ = key => /^(q|ex|pp|hw):/.test(key);
+    if (!window.confirm(onlyQ ? '清除這一頁所有題目的紀錄？（測驗、作業、Example、Practice；講義和故事的紀錄會留著）' : '清除這一頁的全部學習紀錄？（講義、故事、題目）')) return;
+    const d = doc(PAGE); Object.keys(d.recs).forEach(key => { if (!d.recs[key].x && (!onlyQ || isQ(key))) d.recs[key] = { t: NOW(), x: 1 }; });
     document.querySelectorAll('.hw-card').forEach(c => { const k = c.dataset.trkDoc; if (k && get(k, 'hw:' + c.id)) doc(k).recs['hw:' + c.id] = { t: NOW(), x: 1 }; });
     Object.keys(docs).forEach(save); emit();
   });
@@ -256,9 +272,10 @@
     const xbN = document.querySelectorAll('.xb-card').length;
     const qN = (quizTotal() || 0) + hwCards.length + xbN;
     const qDone = recs.filter(x => /^(q|ex|pp):/.test(x)).length + (hwCards.length ? hwDone.length : 0);
-    const ng = recs.filter(x => /^(q|ex|pp):/.test(x) && d.recs[x].ok === false).length + hwDone.filter(c => get(c.dataset.trkDoc || PAGE, 'hw:' + c.id).ok === false).length;
+    const qRecs = recs.filter(x => /^(q|ex|pp):/.test(x)).map(x => d.recs[x]).concat(hwDone.map(c => get(c.dataset.trkDoc || PAGE, 'hw:' + c.id)));
+    const ng = qRecs.filter(r => state(r) === 'ng').length, fix = qRecs.filter(r => state(r) === 'fix').length;
     return { hw: hwCards.map(c => (c.dataset.trkDoc || PAGE) + '|' + c.id), sec: secs.filter(s => get(PAGE, 'sec:' + s.id)).length, secT: secs.length,
-      sc: scenes.filter(s => get(PAGE, scKey(s.t))).length, scT: scenes.length, q: qDone, qT: qN, ng };
+      sc: scenes.filter(s => get(PAGE, scKey(s.t))).length, scT: scenes.length, q: qDone, qT: qN, ng, fix };
   }
   function render() {
     const c = counts(), d = doc(PAGE);
@@ -268,8 +285,9 @@
     setH(sum, '<b>📈 學習紀錄</b>' +
       (c.secT ? '<span>講義 ' + c.sec + '/' + c.secT + '</span>' : '') +
       (c.scT ? '<span>故事 ' + c.sc + '/' + c.scT + ' 畫面</span>' : '') +
-      (c.qT ? '<span>題目 ' + c.q + '/' + c.qT + (c.ng ? '（<b class="trk-ng">答錯 ' + c.ng + '</b>）' : '') + '</span>' : '') +
-      '<small>' + st + '</small><button type="button" class="trk-clear" data-clear>清除這一頁的紀錄</button>');
+      (c.qT ? '<span>題目 ' + c.q + '/' + c.qT + (c.ng ? ' <b class="trk-b ng">✗ 答錯 ' + c.ng + '</b>' : '') + (c.fix ? ' <b class="trk-b fix">已訂正 ' + c.fix + '</b>' : '') + '</span>' : '') +
+      '<small>' + st + '</small><span class="trk-clears">' + (c.q ? '<button type="button" class="trk-clear" data-clear="q">清除題目紀錄</button>' : '') +
+      '<button type="button" class="trk-clear" data-clear="all">清除這一頁的紀錄</button></span>');
     /* 小節 */
     secs.forEach(s => {
       const row = s.querySelector('.trk-row'), k = 'sec:' + s.id, r = get(PAGE, k);
@@ -288,7 +306,7 @@
     if (quizBox) {
       const d2 = doc(PAGE), qs = Object.keys(d2.recs).filter(x => x.indexOf('q:') === 0 && !d2.recs[x].x);
       setH(quizBox, '<summary>測驗紀錄：做過 ' + qs.length + (quizTotal() ? ' / ' + quizTotal() : '') + ' 題' + (qs.some(x => d2.recs[x].ok === false) ? '，答錯 ' + qs.filter(x => d2.recs[x].ok === false).length + ' 題' : '') + '</summary>' +
-        (qs.length ? '<ol>' + qs.map(k => { const r = d2.recs[k]; return '<li>' + (r.s || '（題目）') + '<span class="trk-b">' + md(r.t) + okTxt(r) + ' ' + xBtn(PAGE, k) + '</span></li>'; }).join('') + '</ol>' : '<p class="trk-none">還沒有做過測驗題。</p>'));
+        (qs.length ? '<ol>' + qs.map(k => { const r = d2.recs[k]; const st = state(r); return '<li>' + (r.s || '（題目）') + '<span class="trk-b' + (st === 'ok' ? '' : ' ' + st) + '">' + tagTxt(r) + ' ' + xBtn(PAGE, k) + '</span></li>'; }).join('') + '</ol>' : '<p class="trk-none">還沒有做過測驗題。</p>'));
     }
     decorateQuiz(); decorateCards();
   }

@@ -126,6 +126,8 @@
 - 紀錄 key：`sec:<section id>`、`sc:<故事標題>`、`q:<題幹 hash>`、`hw:<卡片 id>`（存在 `<科目>/hw1`）、`ex:`／`pp:<卡片 id>`。
   **改小節 id、故事標題、題幹文字會讓舊紀錄對不上**，非必要不要改。
 - 不追蹤的小節 id：`story-sec quiz-sec glossary check hw map scope ref later p1…p9`；整頁不追小節用 `<body data-trk-sec="0">`。
+- 題目紀錄：`ok`＝最近一次對錯，`w`＝第一次答錯的時間（之後答對也保留）。標籤：答錯＝紅底、答錯後訂正＝橘（「✗ M/D 答錯 → ✓ M/D 訂正」）、答對＝綠；
+  卡片加 `.trk-wrong`／`.trk-fixed` 左邊色條。作答一律走 `answer()`，不要直接 `set()`。hero 另有「清除題目紀錄」（只清 q/ex/pp/hw）。
 - 預設已讀放在 `SEED`（套一次就記在 `seed.v1`，使用者刪掉不會補回）。
 - 儲存：localStorage `ee-trk:<科目/檔名>` + 雲端 `data/users/<id>/trk_<科目_檔名>`；每筆帶時間，合併取新的，刪除是墓碑 `{t, x:1}`。
 

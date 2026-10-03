@@ -959,6 +959,13 @@ button.fix { display: inline-block; font: 600 10.5px/1 var(--font-body, inherit)
 .trk-row { margin: -2px 0 12px; min-height: 22px; }
 .trk-b { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--ok) 35%, var(--line)); border-radius: 99px; padding: 2px 4px 2px 9px; margin-left: 6px; letter-spacing: 0; text-transform: none; white-space: nowrap; vertical-align: 1px; }
 .trk-b:empty { display: none; }
+.trk-b.ng { color: var(--surface); background: var(--bad); border-color: var(--bad); }
+.trk-b.ng .trk-x { color: var(--bad); border-color: transparent; }
+.trk-b.fix { color: var(--warn); background: color-mix(in srgb, var(--warn) 12%, var(--surface)); border-color: color-mix(in srgb, var(--warn) 45%, var(--line)); }
+.trk-sum .trk-b, .trk-card .trk-b { margin-left: 0; padding-right: 9px; }
+.hw-card.trk-wrong, .xb-card.trk-wrong { box-shadow: inset 4px 0 0 var(--bad); }
+.hw-card.trk-fixed, .xb-card.trk-fixed { box-shadow: inset 4px 0 0 var(--warn); }
+.trk-clears { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
 .trk-row .trk-b { margin-left: 0; }
 .trk-ok { color: var(--ok); }
 .trk-ng { color: var(--bad); }
@@ -969,7 +976,7 @@ button.fix { display: inline-block; font: 600 10.5px/1 var(--font-body, inherit)
 .trk-sum { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 16px; padding: 10px 14px; font-size: 13.5px; color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
 .trk-sum > b { color: var(--ink); }
 .trk-sum small { color: var(--ink-3); font-size: 12px; }
-.trk-clear { font: inherit; font-size: 12px; margin-left: auto; color: var(--ink-3); background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 4px 9px; cursor: pointer; }
+.trk-clear { font: inherit; font-size: 12px; color: var(--ink-3); background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 4px 9px; cursor: pointer; }
 .trk-clear:hover { color: var(--bad); border-color: var(--bad); }
 .trk-list { margin: 10px 0 4px; font-size: 13.5px; color: var(--ink-2); }
 .trk-list > summary { cursor: pointer; font-weight: 600; color: var(--ink-2); padding: 6px 0; }
