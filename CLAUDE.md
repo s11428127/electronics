@@ -111,7 +111,7 @@
   題庫一章一檔（例：`circuits/assets/ch11-ex.js` → `window.__CH11EX`），元件 `shared/exbook.js`：
   `<div class="exbook" data-bank="__CH11EX" data-sec="11.2"></div>`。
 - Example：照課本解法拆成「做什麼 + 算式 + 為什麼」，按「看下一步」一步步打開。
-- Practice：題目＋**手寫板**（`shared/pad.js`，Apple Pencil；筆跡存在該裝置 localStorage）；提示／答案／詳解先遮住。
+- Practice：題目＋**手寫板**（`__ANN.pad`，跟講義筆記同一支筆，不用進筆記模式就能寫，雲端同步；沒載 annot.js 才退回 `shared/pad.js`）；提示／答案／詳解先遮住。
   課本只給答案的，詳解自己解，**數值要用程式驗算**；跟課本答案有出入要寫 `note`。
 - 電路圖一律用 `shared/schem.js` 重畫（`r l c z vs is wm wave`），不要截課本圖。
 - 章節頁故事模式下方放「選小節」：`__EXB.picker(el, [{id, no, name, count}], {key, alwaysAll})`，選了只顯示那一節。
@@ -146,7 +146,8 @@
   復原／重做｜筆（再點一次開設定：鋼筆 f／原子筆 b／畫筆 r、粗細 0.2–4 px、筆畫穩定 0–100%）、螢光筆、整筆橡皮擦、便條｜三段粗細｜六色｜☝ 手指寫、🗑 清除本頁、完成。
   設定存 localStorage `ee-pen`（使用者習慣很細的線，預設 0.8、最細 0.2）。
 - Pencil／滑鼠寫字，手指照常捲動；在按鈕上寫字會擋掉那次 click。
-  **Apple Pencil 側邊連點兩下網頁收不到**（Apple 只開放給原生 App）→ 替代：**兩指點一下切換橡皮擦**；有橡皮擦鍵的筆（`buttons & 32`）直接擦。
+  **Apple Pencil 側邊連點兩下網頁收不到**（Apple 只開放給原生 App）→ 替代：**兩指點一下 = 暫時橡皮擦，擦完一次自動切回原本的筆**；
+  直接按「擦」才會一直是橡皮擦（使用者 10/3 指定）。有橡皮擦鍵的筆（`buttons & 32`）按著鍵寫直接擦。
 - 筆畫穩定＝指數平滑（`a = 1 − 0.92·stab`），放開時補幾點追上筆尖；鋼筆／畫筆用壓力畫成填色外框。
 - 筆跡錨在「開始那一段」（`ATOM` 題目卡、bench、例題…整塊算一段；`BLOCK` 段落、li…），座標 = 那段寬度的比例 × z（10000；第一版是 1000）。
   錨點 key = `<最近有 id 的祖先>:<第幾個區塊>`，**改頁面結構會讓舊筆跡移位**；track 等動態插入的東西放在 `EXCL`，不算進索引。
@@ -155,7 +156,8 @@
 - 筆跡資料欄位**不能叫 `t`**（`t` 是同步用的時間戳，踩過的坑）：種類用 `y`。
 - 儲存：`__SYNC.open('ann_<科目/檔名>')`，本機 `ee-sync:` + 雲端 `sync_<name>`（> 200 KB 自動切 `__1`、`__2`…，沒變的份不重寫）；
   每項帶 t，刪除是墓碑，45 天後清掉。
-- Practice 題的手寫板仍是 `shared/pad.js`（存本機）；`__PAD.mount(el, id, {h, load, save})` 可換儲存。
+- Practice 題手寫板 = `__ANN.pad(host, 'xb-<題目 id>')`：`.ann-pad-body.ann-free`（id `ann-pad-*`）是錨點，`.ann-free` 不用進筆記模式就能寫；
+  自己的小工具列（筆 ▾、螢光、擦、復原／重做、手指寫、加高、清除），高度存 `ph:<id>`。舊手寫板 localStorage `ee-pad:*` 第一次打開會搬過來然後刪掉。
 
 ## 原講義 PART 標註
 

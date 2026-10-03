@@ -326,7 +326,7 @@
   });
   document.addEventListener('pointerup', e => {
     const xb = e.target.closest && e.target.closest('.xb-card.is-pp');
-    if (xb && e.target.closest('.pad-wrap')) { const k = 'pp:' + xb.id; if (!get(PAGE, k)) set(PAGE, k, {}); }
+    if (xb && e.target.closest('.pad-wrap, .ann-pad-body')) { const k = 'pp:' + xb.id; if (!get(PAGE, k)) set(PAGE, k, {}); }
   });
   function decorateCards() {
     document.querySelectorAll('.hw-card, .xb-card').forEach(c => {

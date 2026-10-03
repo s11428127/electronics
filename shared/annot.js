@@ -38,7 +38,9 @@
   const BLOCK = 'p, li, h1, h2, h3, h4, dt, dd, blockquote, .derive, .howto, .pitfall, .note, .lede, .hero, .chips, .hero-meta, section';
   const ALL = ATOM + ', ' + BLOCK;
   const EXCL = '.ann-layer, .ann-spaces, .ann-add, .trk-row, .trk-sum, .trk-list, .trk-b, #mistakes, .mk-list, .term-pop';
-  const AREA = '.ann-space-body, .ann-note-body';
+  const AREA = '.ann-space-body, .ann-note-body, .ann-pad-body';
+  /* .ann-free：不用進筆記模式也能直接寫的區域（Practice 題的手寫板） */
+  const inFree = t => !!(t && t.closest && t.closest('.ann-free'));
   function idBase(el) { const b = el.parentElement && el.parentElement.closest('[id]'); return b && main.contains(b) ? b : main; }
   function list(base) {
     return Array.prototype.filter.call(base.querySelectorAll(ALL), x => {
@@ -114,7 +116,7 @@
     rafOn = false;
     const L = layer.getBoundingClientRect(), rects = new Map(), all = store.all();
     const hl = [], pen = []; drawn = [];
-    renderNotes(L, all); renderSpaces(all);
+    renderNotes(L, all); renderSpaces(all); renderPads(all);
     Object.keys(all).forEach(id => {
       if (id.indexOf('s:') !== 0) return;
       const s = all[id], n = norm(s);
@@ -180,7 +182,8 @@
     on = v; document.body.classList.toggle('ann-on', on); bar.hidden = !on; fab.hidden = on; pop.hidden = true;
     if (on) { paintBar(); toast('Pencil 直接寫，手指捲動；兩指點一下切換橡皮擦。' + statusTxt(), 3500); }
   }
-  function setTool(t) { if (t !== 'eraser') prevTool = t === 'note' ? prevTool : t; cfg.tool = t; saveCfg(); paintBar(); }
+  let tempErase = false;   /* 兩指點一下切來的橡皮擦：擦完一次就切回筆 */
+  function setTool(t, temp) { tempErase = !!temp; if (t !== 'eraser') prevTool = t === 'note' ? prevTool : t; cfg.tool = t; saveCfg(); paintBar(); }
   function paintBar() {
     bar.querySelectorAll('[data-tool]').forEach(b => b.classList.toggle('on', b.dataset.tool === cfg.tool));
     const k = kindOf(), ws = PRESET[k];
@@ -191,20 +194,31 @@
     bar.querySelectorAll('[data-c]').forEach(b => b.classList.toggle('on', b.dataset.c === cfg.color[k] && (cfg.tool === 'pen' || cfg.tool === 'hl')));
     bar.querySelector('[data-act="undo"]').disabled = !hist.length; bar.querySelector('[data-act="redo"]').disabled = !fut.length;
     bar.querySelector('[data-act="finger"]').classList.toggle('on', finger);
+    document.querySelectorAll('.ann-padbar').forEach(pb => {
+      pb.querySelectorAll('[data-pt]').forEach(b => b.classList.toggle('on', b.dataset.pt === cfg.tool || (b.dataset.pt === 'pen' && cfg.tool === 'note')));
+      pb.querySelectorAll('[data-pa="undo"]').forEach(b => { b.disabled = !hist.length; });
+      pb.querySelectorAll('[data-pa="redo"]').forEach(b => { b.disabled = !fut.length; });
+      pb.querySelectorAll('[data-pa="finger"]').forEach(b => b.classList.toggle('on', finger));
+    });
   }
   /* 筆的設定面板（像 GoodNotes）：種類、粗細、筆畫穩定 */
-  function openPop(kind) {
+  function openPop(kind, anchorBtn) {
     const isPen = kind === 'pen';
     pop.innerHTML = '<b class="ann-pop-t">' + (isPen ? TYPES[cfg.type] : '螢光筆') + '</b>' +
       '<svg class="ann-prev" viewBox="0 0 280 70"></svg>' +
       (isPen ? '<div class="ann-types">' + Object.keys(TYPES).map(t => '<button type="button" data-type="' + t + '" class="' + (cfg.type === t ? 'on' : '') + '"><b>' + ({ f: '✒︎', b: '🖊', r: '🖌' })[t] + '</b><span>' + TYPES[t] + '</span></button>').join('') + '</div>' : '') +
+      '<div class="ann-pcs">' + COLORS.map(c => '<button type="button" data-pc="' + c + '" title="顏色"><i class="c' + c + '"></i></button>').join('') + '</div>' +
       '<label class="ann-sl"><span>粗細</span><b data-v="w"></b><input type="range" data-s="w" min="' + (isPen ? 0.2 : 4) + '" max="' + (isPen ? 4 : 30) + '" step="' + (isPen ? 0.1 : 1) + '" value="' + cfg.w[kind] + '"></label>' +
       (isPen ? '<label class="ann-sl"><span>筆畫穩定</span><b data-v="stab"></b><input type="range" data-s="stab" min="0" max="100" step="1" value="' + cfg.stab + '"></label>' +
         '<p class="ann-pop-n">穩定度越高，手抖的地方越平滑，但線會稍微「跟在筆後面」。鋼筆、畫筆會跟著下筆力道變粗變細。</p>' : '') +
       '<p class="ann-pop-n">' + statusTxt() + '</p>';
     pop.dataset.kind = kind; pop.hidden = false;
-    const btn = bar.querySelector('[data-tool="' + kind + '"]').getBoundingClientRect();
+    const btn = (anchorBtn || bar.querySelector('[data-tool="' + kind + '"]')).getBoundingClientRect();
     pop.style.left = Math.max(8, Math.min(window.innerWidth - pop.offsetWidth - 8, btn.left - 10)) + 'px';
+    if (anchorBtn) {   /* 從 Practice 手寫板打開：貼在按鈕下面（放不下就放上面） */
+      const h = pop.offsetHeight, below = btn.bottom + 8;
+      pop.style.top = (below + h < window.innerHeight - 8 ? below : Math.max(8, btn.top - h - 8)) + 'px';
+    } else pop.style.top = '';
     paintPop();
   }
   function paintPop() {
@@ -213,6 +227,7 @@
     const wv = pop.querySelector('[data-v="w"]'); if (wv) wv.textContent = cfg.w[kind] + ' px';
     const sv = pop.querySelector('[data-v="stab"]'); if (sv) sv.textContent = cfg.stab + '%';
     pop.querySelectorAll('[data-type]').forEach(b => b.classList.toggle('on', b.dataset.type === cfg.type));
+    pop.querySelectorAll('[data-pc]').forEach(b => b.classList.toggle('on', b.dataset.pc === cfg.color[kind]));
     const t = pop.querySelector('.ann-pop-t'); if (t) t.textContent = isPen ? TYPES[cfg.type] : '螢光筆';
     const pts = []; for (let i = 0; i <= 40; i++) { const x = 20 + i * 6; pts.push([x, 35 - 18 * Math.sin(i / 40 * Math.PI * 2), 0.25 + 0.7 * Math.sin(i / 40 * Math.PI)]); }
     pop.querySelector('.ann-prev').innerHTML = pathOf({ t: isPen ? cfg.type : 'h', c: cfg.color[kind], w: cfg.w[kind] }, pts);
@@ -222,8 +237,11 @@
     if (s === 'w') cfg.w[pop.dataset.kind] = +e.target.value; else cfg.stab = +e.target.value;
     saveCfg(); paintPop(); paintBar();
   });
-  pop.addEventListener('click', e => { const b = e.target.closest('[data-type]'); if (b) { cfg.type = b.dataset.type; saveCfg(); paintPop(); } });
-  document.addEventListener('pointerdown', e => { if (!pop.hidden && !pop.contains(e.target) && !e.target.closest('.ann-bar [data-tool]')) pop.hidden = true; }, true);
+  pop.addEventListener('click', e => {
+    const b = e.target.closest('[data-type]'); if (b) { cfg.type = b.dataset.type; saveCfg(); paintPop(); }
+    const c = e.target.closest('[data-pc]'); if (c) { cfg.color[pop.dataset.kind] = c.dataset.pc; saveCfg(); paintPop(); paintBar(); }
+  });
+  document.addEventListener('pointerdown', e => { if (!pop.hidden && !pop.contains(e.target) && !e.target.closest('.ann-bar [data-tool], .ann-padbar [data-pt]')) pop.hidden = true; }, true);
 
   fab.addEventListener('click', () => setOn(true));
   bar.addEventListener('click', e => {
@@ -248,20 +266,21 @@
       if (window.confirm('清除這一頁所有筆跡、便條和新增的空間？（' + ids.length + ' 筆，可以按 ↶ 復原）')) { begin(); ids.forEach(del); commit(); }
     }
   });
+  /* 兩指點一下：切成橡皮擦，擦完一次自動切回原本的筆（直接按「擦」才會一直是橡皮擦） */
   function toggleEraser() {
     if (cfg.tool === 'eraser') { setTool(prevTool || 'pen'); toast(prevTool === 'hl' ? '🖍 螢光筆' : '✒︎ 筆'); }
-    else { prevTool = cfg.tool === 'note' ? 'pen' : cfg.tool; setTool('eraser'); toast('⌫ 橡皮擦（兩指再點一下切回來）'); }
+    else { prevTool = cfg.tool === 'note' ? 'pen' : cfg.tool; setTool('eraser', true); toast('⌫ 橡皮擦：擦一次就自動切回筆'); }
   }
 
   /* ---------- 輸入 ---------- */
   let cur = null, erasing = null, suppress = 0;
-  const skip = t => !t.closest || t.closest('.ann-bar, .ann-pop, .ann-fab, .ann-toast, .ann-note-bar, .ann-note-mini, .ann-space-head, .ann-add, .pad, .topbar, .term-pop, input, select, textarea');
+  const skip = t => !t.closest || t.closest('.ann-bar, .ann-pop, .ann-fab, .ann-toast, .ann-note-bar, .ann-note-mini, .ann-space-head, .ann-add, .ann-padbar, .pad, .topbar, .term-pop, input, select, textarea');
   function lpos(e) { const L = layer.getBoundingClientRect(); return [e.clientX - L.left, e.clientY - L.top]; }
   document.addEventListener('pointerdown', e => {
-    if (!on || skip(e.target) || !main.contains(e.target)) return;
+    if (!(on || inFree(e.target)) || skip(e.target) || !main.contains(e.target)) return;
     if (e.pointerType === 'pen') penSeen = true;
     if (e.pointerType === 'mouse' && e.button !== 0) return;
-    if (cfg.tool === 'note') { e.preventDefault(); e.stopPropagation(); suppress = Date.now(); addNote(e); return; }
+    if (cfg.tool === 'note' && on) { e.preventDefault(); e.stopPropagation(); suppress = Date.now(); addNote(e); return; }
     if (e.pointerType === 'touch' && !finger) return;
     e.preventDefault(); e.stopPropagation(); suppress = Date.now();
     if (cfg.tool === 'eraser' || (e.buttons & 32)) { begin(); erasing = e.pointerId; eraseAt(lpos(e)); return; }
@@ -290,7 +309,11 @@
     else if (erasing === e.pointerId) { e.preventDefault(); eraseAt(lpos(e)); }
   }, { capture: true, passive: false });
   function end(e) {
-    if (erasing != null && e.pointerId === erasing) { erasing = null; commit(); return; }
+    if (erasing != null && e.pointerId === erasing) {
+      erasing = null; commit();
+      if (tempErase) { setTool(prevTool || 'pen'); toast(prevTool === 'hl' ? '擦好了，切回 🖍 螢光筆' : '擦好了，切回 ✒︎ 筆'); }
+      return;
+    }
     if (!cur || e.pointerType + e.pointerId !== cur.pid) return;
     if (cfg.stab > 0 && e.type === 'pointerup') { for (let i = 0; i < 3; i++) addPt(e); addPt(e, true); }
     const r = cur.el.getBoundingClientRect(), sc = Z / r.width, s = { a: cur.a, y: cur.n.t, c: cur.n.c, w: cur.n.w, z: Z, p: [] };
@@ -306,18 +329,18 @@
   /* iPad：Pencil 碰到畫面時擋掉捲動與選字（手指照常）；兩指點一下 = 切換橡皮擦 */
   let two = null;
   document.addEventListener('touchstart', e => {
-    if (!on) return;
+    if (!on && !inFree(e.target)) { two = null; return; }
     if (e.touches.length === 2 && !Array.prototype.some.call(e.touches, t => t.touchType === 'stylus')) {
       two = { t: Date.now(), x: (e.touches[0].clientX + e.touches[1].clientX) / 2, y: (e.touches[0].clientY + e.touches[1].clientY) / 2 };
       if (cur && cur.touch) { cur = null; live.remove(); }
     } else if (e.touches.length > 2) two = null;
-    if (skip(e.target) || !main.contains(e.target)) return;
+    if (skip(e.target) || !main.contains(e.target) || (!on && !inFree(e.target))) return;
     if ((finger && e.touches.length === 1) || Array.prototype.some.call(e.touches, t => t.touchType === 'stylus')) e.preventDefault();
   }, { passive: false });
   document.addEventListener('touchmove', e => {
-    if (!on) return;
+    if (!on && !inFree(e.target) && !two) return;
     if (two && e.touches.length === 2) { const x = (e.touches[0].clientX + e.touches[1].clientX) / 2, y = (e.touches[0].clientY + e.touches[1].clientY) / 2; if (Math.hypot(x - two.x, y - two.y) > 14) two = null; }
-    if (skip(e.target) || !main.contains(e.target)) return;
+    if (skip(e.target) || !main.contains(e.target) || (!on && !inFree(e.target))) return;
     if ((finger && e.touches.length === 1) || Array.prototype.some.call(e.touches, t => t.touchType === 'stylus')) e.preventDefault();
   }, { passive: false });
   document.addEventListener('touchend', e => { if (two && e.touches.length === 0) { if (Date.now() - two.t < 350) toggleEraser(); two = null; } });
@@ -441,6 +464,63 @@
     Object.keys(spaceEls).forEach(id => { if (!alive[id]) { spaceEls[id].remove(); delete spaceEls[id]; } });
   }
 
+  /* ---------- Practice 題的手寫板：跟講義同一支筆，不用進筆記模式就能寫 ---------- */
+  const pads = {};
+  const padId = pid => 'ann-pad-' + pid.replace(/[^A-Za-z0-9_-]/g, '_');
+  function mountPad(host, pid) {
+    host.className = 'ann-pad'; host.dataset.pid = pid;
+    host.innerHTML = '<div class="ann-padbar">' +
+        '<button type="button" data-pt="pen" title="筆（再點一次調整種類、粗細、顏色、穩定度）">✒︎ 筆 ▾</button>' +
+        '<button type="button" data-pt="hl" title="螢光筆">🖍</button>' +
+        '<button type="button" data-pt="eraser" title="橡皮擦（兩指點一下：擦一次就切回筆）">⌫ 擦</button>' +
+        '<button type="button" data-pa="undo" title="復原">↶</button><button type="button" data-pa="redo" title="重做">↷</button>' +
+        '<span class="ann-pad-sp"></span>' +
+        '<button type="button" data-pa="finger" title="讓手指也能寫">☝ 手指寫</button>' +
+        '<button type="button" data-pa="taller">＋ 加高</button><button type="button" data-pa="clear">清除</button>' +
+      '</div><div class="ann-pad-body ann-free" id="' + padId(pid) + '"><span class="ann-pad-hint">在這裡寫算式（Apple Pencil／滑鼠）</span></div>';
+    pads[pid] = host;
+    host.querySelector('.ann-padbar').addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      const t = b.dataset.pt, a = b.dataset.pa;
+      if (t) {
+        if ((t === 'pen' || t === 'hl') && (cfg.tool === t || (t === 'pen' && cfg.tool === 'note'))) { if (pop.hidden || pop.dataset.kind !== t) openPop(t, b); else pop.hidden = true; }
+        else pop.hidden = true;
+        setTool(t);
+      }
+      if (a === 'undo') undo();
+      if (a === 'redo') redo();
+      if (a === 'finger') { finger = !finger; document.body.classList.toggle('ann-finger', finger); paintBar(); toast(finger ? '手指現在也會寫字；要捲動再按一次 ☝' : '手指恢復成捲動'); }
+      if (a === 'taller') { const d = clean(store.get('ph:' + pid)) || { h: 0.62 }; d.h = Math.min(3, (d.h || 0.62) + 0.35); begin(); put('ph:' + pid, d); commit(); }
+      if (a === 'clear') {
+        const key = padId(pid) + ':-1', all = store.all(), ids = Object.keys(all).filter(k => k.indexOf('s:') === 0 && all[k].a === key);
+        if (ids.length && window.confirm('清除這一題的手寫？（可以按 ↶ 復原）')) { begin(); ids.forEach(del); commit(); }
+      }
+    });
+    /* 以前用舊手寫板（只存在這台裝置）寫的，第一次打開時搬過來 */
+    try {
+      const old = JSON.parse(localStorage.getItem('ee-pad:' + pid) || 'null');
+      if (old && old.strokes) {
+        begin();
+        old.strokes.forEach(st => { if (!st.p || !st.p.length) return; const s2 = { a: padId(pid) + ':-1', y: 'f', c: '0', w: 1.8, z: Z, p: [], r: [] };
+          st.p.forEach(q => { s2.p.push(Math.round(q[0] * Z), Math.round(q[1] * Z)); s2.r.push(Math.round((q[2] || 0.5) * 99)); }); put('s:' + uid(), s2); });
+        if (old.h && old.h !== 0.62) put('ph:' + pid, { h: old.h });
+        tx = null; localStorage.removeItem('ee-pad:' + pid);
+      }
+    } catch (e) {}
+    paintBar(); schedule();
+    return { reload: schedule };
+  }
+  function renderPads(all) {
+    const used = {};
+    Object.keys(all).forEach(k => { if (k.indexOf('s:') === 0) used[all[k].a] = 1; });
+    Object.keys(pads).forEach(pid => {
+      const body = pads[pid].querySelector('.ann-pad-body'); if (!body) return;
+      const h = Math.round((body.clientWidth || 300) * ((all['ph:' + pid] || {}).h || 0.62)) + 'px';
+      if (body.style.height !== h) body.style.height = h;
+      body.classList.toggle('has', !!used[padId(pid) + ':-1']);
+    });
+  }
+
   /* ---------- 什麼時候要重畫 ---------- */
   store.on(() => { if (!cur) schedule(); });
   new ResizeObserver(later).observe(main);
@@ -450,5 +530,5 @@
   window.addEventListener('load', later);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(later);
   render();
-  window.__ANN = { store, render, setOn, keyOf, resolve, anchorAt, toggleEraser, cfg: () => cfg };
+  window.__ANN = { store, render, setOn, keyOf, resolve, anchorAt, toggleEraser, cfg: () => cfg, pad: mountPad };
 })();

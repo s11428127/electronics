@@ -54,7 +54,9 @@
         box.hidden = !box.hidden; b.classList.toggle('on', !box.hidden);
         if (b.dataset.a === 'sol' && !box.hidden) el.querySelector('.xb-ans').hidden = false;
       });
-      if (window.__PAD) window.__PAD.mount(el.querySelector('.pad'), 'xb-' + it.id);
+      /* 有 annot.js（講義上寫筆記）就用同一支筆；沒有才退回舊的手寫板 */
+      if (window.__ANN && window.__ANN.pad) window.__ANN.pad(el.querySelector('.pad'), 'xb-' + it.id);
+      else if (window.__PAD) window.__PAD.mount(el.querySelector('.pad'), 'xb-' + it.id);
     }
     return el;
   }
