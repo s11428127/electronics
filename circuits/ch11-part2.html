@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>有效值與功率因數</title>
+<meta name="description" content="電路學 CH11 PART 2：有效值 rms、視在功率、功率因數（落後／超前），故事模式＋推導＋可改數字的例題。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH11 PART 2</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH11 PART 2</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>課程地圖</a></li>
+      <li><a href="#rms"><i>11.4</i>有效值 rms</a></li>
+      <li><a href="#pf"><i>11.5</i>視在功率與功率因數</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <!-- ══════════ 首屏 ══════════ -->
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>Chapter 11 · Part 2 · 課本 p.468–475</div>
+      <h1>有效值與功率因數</h1>
+      <p class="sub">插座寫 110 V，最高點卻有 155 V；馬達吃 4 kW，電線卻扛了 5000 VA。這一頁講兩個新量：<strong>有效值 rms</strong>（11.4）讓交流的公式長得跟直流一樣；<strong>視在功率與功率因數</strong>（11.5）說明電線到底扛了多少、真正用掉多少。</p>
+      <div class="hero-meta">
+        <span class="chip h">📘 課本 Example 4 題 ＋ Practice 4 題（附手寫板）</span>
+        <span class="chip">20 個畫面的故事模式</span>
+        <span class="chip">2 個互動模組 ＋ 3 個可改數字例題</span>
+        <span class="chip">10 題中英對照測驗</span>
+      </div>
+    </div>
+
+    <!-- ══════════ 故事模式 ══════════ -->
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>Story mode · 先看這段，再往下讀</div>
+      <h2>20 個畫面看懂這一頁<span class="h2-en">THE STORY IN 20 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。全部看完大約 7 分鐘。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <!-- ══════════ 課程地圖 ══════════ -->
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>Course map</div>
+      <h2>CH11 分成三頁<span class="h2-en">COURSE MAP</span></h2>
+      <p class="lede">課本：Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 11。<b>這一頁是第 2 頁</b>。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>11.2</code><b><a href="ch11-part1.html#inst">瞬時功率與平均功率</a> <span style="color:var(--ink-3);font-weight:400">PART 1</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.3</code><b><a href="ch11-part1.html#mpt">最大平均功率轉移</a> <span style="color:var(--ink-3);font-weight:400">PART 1</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.4</code><b><button class="tm" data-t="有效值">有效值</button> rms <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.5</code><b><button class="tm" data-t="視在功率">視在功率</button>與<button class="tm" data-t="功率因數">功率因數</button> <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>11.6</code><b><a href="ch11-part3.html#tri">複功率</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>11.7</code><b><a href="ch11-part3.html#cons">交流功率守恆</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>11.8</code><b><a href="ch11-part3.html#pfc">功率因數校正</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>11.9</code><b><a href="ch11-part3.html#app">應用：瓦特計與電費</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+      </div>
+      <div class="derive">
+        <h4>先複習 PART 1（這一頁從這裡接下去）</h4>
+        <ol>
+          <li>
+            <span class="d-eq">P = ½V<sub>m</sub>I<sub>m</sub> cos(θ<sub>v</sub> − θ<sub>i</sub>)</span>
+            <div class="why">V<sub>m</sub>、I<sub>m</sub> 是<button class="tm" data-t="振幅">振幅</button>；½ 來自取平均；cos(θ<sub>v</sub> − θ<sub>i</sub>) 是電壓電流錯開造成的打折。</div>
+          </li>
+          <li>
+            <span class="d-eq">電阻 cos 0° = 1　｜　電感、電容 cos(±90°) = 0</span>
+            <div class="why">只有電阻真的消耗平均功率；電感電容借了又還。</div>
+          </li>
+        </ol>
+      </div>
+      <p class="note key">這一頁的主線：<b>把 ½ 吃掉（rms）→ P = V<sub>rms</sub>I<sub>rms</sub> cos θ → 拆成 S × pf</b>。</p>
+    </section>
+
+    <!-- ══════════ 11.4 RMS ══════════ -->
+    <section class="sec" id="rms">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>11.4 · Effective or RMS Value</div>
+      <h2><button class="tm" data-t="有效值">有效值</button>（均方根值 rms）<span class="h2-en">EFFECTIVE (RMS) VALUE</span></h2>
+      <p class="lede">交流電一下正一下負，「平均」是 0，「最高點」又只有一瞬間 —— 那它到底多大？最公平的比法是<strong>比發熱</strong>：拿同一顆電阻，交流接上去發多少熱，就找一個能發一樣多熱的直流，那個直流值就叫<span class="tm" data-t="有效值">有效值<i>effective value</i></span>。台灣插座的「110 V」就是它，最高點其實有 155 V。</p>
+      <div class="eq">X<em>rms</em> = √( (1/T) ∫₀<sup>T</sup> x²(t) dt )　←　先平方 square、再平均 mean、最後開根號 root</div>
+
+      <div class="derive">
+        <h4>有效值是怎麼被「定義」出來的</h4>
+        <ol>
+          <li>
+            <p><b>先設定情境。</b>兩個電路：一個接交流 i(t)、一個接直流 I<sub>eff</sub>，負載都是同一個電阻 R。問：I<sub>eff</sub> 要多大，才能讓兩邊<b>發出一樣多的熱</b>？</p>
+          </li>
+          <li>
+            <span class="d-eq">交流側：P = (1/T)∫₀<sup>T</sup> i²R dt = (R/T)∫₀<sup>T</sup> i² dt</span>
+            <div class="why">電阻的瞬時功率是 i²R（電流是負的也照樣發熱，所以是平方），取一週期平均。R 是常數可以提到積分外面。</div>
+          </li>
+          <li>
+            <span class="d-eq">直流側：P = I<sub>eff</sub><sup>2</sup> R</span>
+            <div class="why">直流不隨時間變，功率就是 I²R，不用積分。</div>
+          </li>
+          <li>
+            <span class="d-eq">令兩者相等：I<sub>eff</sub><sup>2</sup> R = (R/T)∫₀<sup>T</sup> i² dt</span>
+            <p>R 兩邊消掉，剩下 I<sub>eff</sub><sup>2</sup> = (1/T)∫i² dt，再開根號：</p>
+            <span class="d-eq hi">I<sub>eff</sub> = √( (1/T)∫₀<sup>T</sup> i² dt ) ≡ I<sub>rms</sub></span>
+            <p>倒著唸就是這條式子的英文名字：<b>r</b>oot（根號）→ <b>m</b>ean（1/T 積分取平均）→ <b>s</b>quare（i²）。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>弦波的 √2 是怎麼掉出來的</h4>
+        <ol>
+          <li>
+            <span class="d-eq">i(t) = I<sub>m</sub> cos ωt　⟹　I<sub>rms</sub> = √( (1/T)∫₀<sup>T</sup> I<sub>m</sub><sup>2</sup>cos²ωt dt )</span>
+            <p>直接把弦波代進定義式。卡住的地方是 cos² 不好積。</p>
+          </li>
+          <li>
+            <span class="d-eq">cos²x = ½(1 + cos 2x)</span>
+            <div class="why">用<b>半角（降冪）公式</b>把平方拆掉：cos² 積不動，但 ½ + ½cos2x 就很好積。</div>
+          </li>
+          <li>
+            <span class="d-eq">I<sub>rms</sub> = √( (I<sub>m</sub><sup>2</sup>/T)∫₀<sup>T</sup> ½(1 + cos 2ωt) dt )</span>
+            <p>括號裡有兩塊：常數 ½ 的平均還是 ½；cos2ωt 是弦波，<b>一週期平均為 0</b>（跟 PART 1 用的是同一個道理）。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">I<sub>rms</sub> = √( I<sub>m</sub><sup>2</sup> × ½ ) = I<sub>m</sub>/√2 ≈ 0.707 I<sub>m</sub></span>
+            <p>所以 √2 的來源就是那個 <b>½</b>，而 ½ 來自 cos² 的降冪公式。<b>換一種波形，這個 ½ 就會變成別的數，√2 自然不成立。</b></p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>有了 rms，功率公式為什麼變乾淨了</h4>
+        <ol>
+          <li>
+            <span class="d-eq">P = ½V<sub>m</sub>I<sub>m</sub>cos(θv−θi)</span>
+            <div class="why">PART 1 推出來的結果，用的是振幅，前面拖著一個礙眼的 ½。</div>
+          </li>
+          <li>
+            <span class="d-eq">把 ½ 拆成 (1/√2)(1/√2)，各自配給 V<sub>m</sub> 和 I<sub>m</sub>：<br>
+              P = (V<sub>m</sub>/√2)(I<sub>m</sub>/√2)cos(θv−θi)</span>
+          </li>
+          <li>
+            <span class="d-eq hi">P = V<sub>rms</sub> I<sub>rms</sub> cos(θv − θi)　　P = I<sub>rms</sub><sup>2</sup>R　　P = V<sub>rms</sub><sup>2</sup>/R（純電阻）</span>
+            <p>½ 消失了，長得跟直流的 P = VI 幾乎一樣 —— <b>這正是當初發明有效值的目的</b>。電力工程講電壓電流時，<b>預設就是 rms</b>（台電的 110 V、220 V 都是 rms）。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div id="ex-rms"></div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>rms 三步驟演示</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-shape="sine">弦波</button>
+            <button class="btn" type="button" data-shape="square">方波</button>
+            <button class="btn" type="button" data-shape="tri">三角波</button>
+            <button class="btn" type="button" data-shape="saw">鋸齒波</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-rms" aria-label="rms 計算三步驟：平方、平均、開根號"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="rms-amp">振幅 Vm<output for="rms-amp"></output></label>
+            <input type="range" id="rms-amp" min="2" max="20" step="1" value="10"></div>
+          <div class="ctrl"><span class="lab">逐步演示</span>
+            <div class="btn-row"><button class="btn solid" type="button" id="rms-step">開始：平方 →</button></div></div>
+        </div>
+        <dl class="readout">
+          <div><dt>波形</dt><dd id="rms-shape" style="font-size:14px">—</dd></div>
+          <div><dt>振幅 Vm</dt><dd id="rms-am">—</dd></div>
+          <div><dt>Vrms</dt><dd id="rms-val" style="color:var(--p-real)">—</dd></div>
+          <div><dt>通式</dt><dd id="rms-formula" style="font-size:13px">—</dd></div>
+        </dl>
+      </div>
+      <p class="note key">V<sub>m</sub>/√2 <b>只對弦波成立</b>。方波的 rms 就是 V<sub>m</sub>、三角波與鋸齒波是 V<sub>m</sub>/√3、半波整流是 V<sub>m</sub>/2。考試若給非弦波卻照套 √2，就會錯。</p>
+
+      <div class="howto">
+        <h4>看到 rms 題目</h4>
+        <ol>
+          <li><b>先判斷波形。</b>純弦波（或全波整流）→ 直接 <code>Vm/√2</code>。其他波形 → 回定義式老實做「平方、平均、開根號」。</li>
+          <li>波形是<b>分段</b>的（半波整流、脈衝、斜坡＋平台），把一個週期<b>切成幾段分別積分再相加</b>；分母的 T 是<b>完整週期</b>，不是那一段的長度。</li>
+          <li>含直流偏壓的波形（V<sub>DC</sub> + 弦波）用 <code>Vrms = √(V²DC + V²ac,rms)</code>：兩部分的「平方」可以相加，rms 本身不能直接相加。</li>
+          <li>題目要功率時，用 rms 就<b>不要再乘 ½</b>：<code>P = Irms²R</code>、<code>P = Vrms²/R</code>。</li>
+          <li>算完檢查：<b>rms 一定介於 0 和最高點之間</b>。算出比振幅還大就是錯了。</li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>有效值最常見的錯</h4>
+        <ul>
+          <li><span class="x">✗</span> 任何波形都除以 √2。<span class="o">✓ 只有弦波（和全波整流）是 √2；方波 = V<sub>m</sub>、三角波 = V<sub>m</sub>/√3、半波整流 = V<sub>m</sub>/2。</span></li>
+          <li><span class="x">✗</span> 先平均再平方（「平均的平方」）。<span class="o">✓ 順序是先平方再平均（「平方的平均」）；弦波的平均是 0，先平均就全毀了。</span></li>
+          <li><span class="x">✗</span> 分段積分時除以那一段的長度。<span class="o">✓ 永遠除以整個週期 T。</span></li>
+          <li><span class="x">✗</span> 用了 rms 還乘 ½：P = ½V<sub>rms</sub>I<sub>rms</sub>cos θ。<span class="o">✓ ½ 已經被 rms 吃掉了，P = V<sub>rms</sub>I<sub>rms</sub>cos θ。</span></li>
+          <li><span class="x">✗</span> 把插座的 110 V 當成振幅，再除一次 √2。<span class="o">✓ 電力系統講的電壓預設就是 rms。</span></li>
+        </ul>
+      </div>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.4"></div>
+    </section>
+
+    <!-- ══════════ 11.5 功率因數 ══════════ -->
+    <section class="sec" id="pf">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>11.5 · Apparent Power and Power Factor</div>
+      <h2>視在功率與功率因數<span class="h2-en">APPARENT POWER &amp; POWER FACTOR</span></h2>
+      <p class="lede">P = V<sub>rms</sub>I<sub>rms</sub>cos θ 是兩個東西相乘：V<sub>rms</sub>I<sub>rms</sub>「看起來」就該是功率，所以叫<span class="tm" data-t="視在功率">視在功率<i>apparent power</i></span> S，它是<strong>電線、發電機真正要扛的量</strong>，單位 VA。cos θ 則是打折率，叫<span class="tm" data-t="功率因數">功率因數<i>power factor</i></span>。像一杯啤酒：杯子是 S，酒是 P，泡沫是來回搬、沒被用掉的那部分。</p>
+      <div class="eq">S = V<em>rms</em>I<em>rms</em> (VA)　　pf = P/S = cos(θv − θi)　　P = S·pf (W)</div>
+
+      <div class="derive">
+        <h4>S 和 pf 是怎麼被「拆」出來的</h4>
+        <ol>
+          <li>
+            <span class="d-eq">P = V<sub>rms</sub> I<sub>rms</sub> cos(θv − θi)</span>
+            <div class="why">從 11.4 的結果出發。注意這是<b>兩個東西的乘積</b>：一個是 V<sub>rms</sub>I<sub>rms</sub>、一個是 cos(θv−θi)。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">S ≡ V<sub>rms</sub> I<sub>rms</sub>　　pf ≡ cos(θv − θi)</span>
+            <p>把它們各自取名字：前者叫<b>視在功率</b>、後者叫<b>功率因數</b>。於是 P = S × pf，也就是 <b>pf = P/S</b>。</p>
+          </li>
+          <li>
+            <p><b>為什麼叫「視在」？</b>在直流電路，功率就是電壓乘電流。到了交流，V<sub>rms</sub>I<sub>rms</sub>「看起來」也該是功率 —— 但實際上不是，真正被消耗的只有 P。所以它叫 apparent（表面上的），而且<b>刻意用 VA 而不是 W</b>當單位，就是為了提醒你「這不是真的瓦特」。</p>
+          </li>
+          <li>
+            <span class="d-eq">pf = cos θ，而 0° ≤ |θ| ≤ 90°　⟹　0 ≤ pf ≤ 1</span>
+            <div class="why">純電阻 θ = 0 → pf = 1（杯子裡全是酒）；純電感、純電容 θ = ±90° → pf = 0（全是泡沫）。</div>
+          </li>
+          <li>
+            <span class="d-eq">Z = V/I = (V<sub>m</sub>∠θv)/(I<sub>m</sub>∠θi) = (V<sub>m</sub>/I<sub>m</sub>)∠(θv − θi)</span>
+            <div class="why">複數相除：大小相除、<b>角度相減</b>。而相減出來的角度，剛好就是功因角。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">阻抗 Z 的角度　＝　功率因數角 (θv − θi)</span>
+            <p>解題超好用：<b>題目只給你 Z，你就已經知道 pf 了</b>。例如 Z = 20 + j20 → 角度 45° → pf = cos45° = 0.707 落後。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>落後（lagging）還是超前（leading）？</h4>
+        <ol>
+          <li>
+            <span class="d-eq">cos(+36.87°) = cos(−36.87°) = 0.8</span>
+            <p>cos 是偶函數，光寫「pf = 0.8」分不出是電感還是電容 —— 所以一定要加註<button class="tm" data-t="落後功因">落後</button>或<button class="tm" data-t="超前功因">超前</button>。</p>
+          </li>
+          <li>
+            <span class="d-eq">θv − θi &gt; 0 → 電流比電壓晚 → <b>lagging</b> → 電感性（X &gt; 0）</span>
+            <div class="why">馬達、冷氣、變壓器裡都是線圈，所以工業負載幾乎都是落後功因。</div>
+          </li>
+          <li>
+            <span class="d-eq">θv − θi &lt; 0 → 電流比電壓早 → <b>leading</b> → 電容性（X &lt; 0）</span>
+            <div class="why">口訣「ELI the ICE man」：電感 L 中 E（電壓）在 I 前面；電容 C 中 I 在 E 前面。</div>
+          </li>
+        </ol>
+      </div>
+
+      <div id="ex-pf"></div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>相量圖與功率因數</h3><span class="spacer"></span>
+          <div class="btn-row"><button class="btn" type="button" id="pf-spin">停止旋轉</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-pf" aria-label="電壓電流相量圖與 S、P、Q 比例條"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="pf-v">Vrms<output for="pf-v"></output></label>
+            <input type="range" id="pf-v" min="10" max="240" step="10" value="120"></div>
+          <div class="ctrl"><label for="pf-i">Irms<output for="pf-i"></output></label>
+            <input type="range" id="pf-i" min="1" max="20" step="1" value="5"></div>
+          <div class="ctrl"><label for="pf-th">相位差 θv−θi<output for="pf-th"></output></label>
+            <input type="range" id="pf-th" min="-89" max="89" step="1" value="37"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>S 視在功率</dt><dd id="pf-S" style="color:var(--s-app)">—</dd></div>
+          <div><dt>P 實功率</dt><dd id="pf-P" style="color:var(--p-real)">—</dd></div>
+          <div><dt>Q 虛功率</dt><dd id="pf-Q" style="color:var(--q-react)">—</dd></div>
+          <div><dt>功率因數</dt><dd id="pf-pf" style="font-size:13px">—</dd></div>
+        </dl>
+        <div class="msg" id="pf-note"></div>
+      </div>
+      <p class="note">圖上的 Q 是下一頁（PART 3）的主角，先知道它就是「泡沫」那一份就好。</p>
+
+      <div id="ex-pfz"></div>
+
+      <div class="howto">
+        <h4>求 S、pf、P 的標準流程</h4>
+        <ol>
+          <li><b>統一成 rms。</b>給 v(t)、i(t)（振幅）就先除以 √2；給「120 V 電源」預設已經是 rms。</li>
+          <li><b>S = V<sub>rms</sub>I<sub>rms</sub></b>（VA）。只看大小，不管相位。</li>
+          <li><b>pf = cos(θv − θi)</b>；只給阻抗時，<code>θ = arctan(X/R)</code> 就是功因角。</li>
+          <li><b>標落後／超前：</b>θ &gt; 0（X &gt; 0）→ lagging；θ &lt; 0（X &lt; 0）→ leading。</li>
+          <li><b>P = S × pf</b>（W），再用 <code>P = Irms²R</code> 驗算（R 是阻抗實部）。</li>
+          <li>題目要反推元件：Z = V/I → 實部是電阻；虛部 X &gt; 0 → <code>L = X/ω</code>，X &lt; 0 → <code>C = 1/(ω|X|)</code>。</li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>落後 / 超前最容易搞混</h4>
+        <ul>
+          <li><span class="x">✗</span> 只寫「pf = 0.8」。<span class="o">✓ 一定要註明 lagging 或 leading：cos(+36.87°) 和 cos(−36.87°) 都是 0.8，一個電感性、一個電容性，後面算 Q 和功因校正會完全相反。</span></li>
+          <li><span class="x">✗</span> 把 pf 算成大於 1。<span class="o">✓ pf = cos(角度)，範圍永遠是 0 到 1；算出 1.2 就是 P 和 S 弄反了。</span></li>
+          <li><span class="x">✗</span> S 的單位寫 W。<span class="o">✓ S 用 VA、P 用 W、Q 用 VAR，三個單位不能混。</span></li>
+          <li><span class="x">✗</span> 用 S = V<sub>m</sub>I<sub>m</sub>（振幅直接乘）。<span class="o">✓ S = V<sub>rms</sub>I<sub>rms</sub> = ½V<sub>m</sub>I<sub>m</sub>。</span></li>
+          <li><span class="x">✗</span> 看到電流角度比較大就說「落後」。<span class="o">✓ 電流角度<b>大</b> = 電流<b>早到</b> = 超前（leading）。例：θv = −20°、θi = +10° → 超前。</span></li>
+        </ul>
+      </div>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.5"></div>
+      <p class="note src">下一頁（PART 3）：泡沫有名字 —— 虛功率 Q；P、Q、S 打包成一個複數 <b>S = P + jQ</b>，再用一顆電容把泡沫消掉（功因校正）。<a href="ch11-part3.html">前往 PART 3 →</a></p>
+    </section>
+
+    <!-- ══════════ 名詞對照 ══════════ -->
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <p class="lede">考卷上會出現的是右邊那欄。讀書用中文、寫題目認英文。</p>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號／單位</code></div>
+        <div class="gl-row"><b>有效值</b><span>effective value</span><code>Veff, Ieff</code></div>
+        <div class="gl-row"><b>均方根值</b><span>root-mean-square (rms) value</span><code>Vrms, Irms</code></div>
+        <div class="gl-row"><b>振幅（峰值）</b><span>amplitude, peak value</span><code>Vm</code></div>
+        <div class="gl-row"><b>週期性波形</b><span>periodic waveform</span><code>T</code></div>
+        <div class="gl-row"><b>半波整流</b><span>half-wave rectified</span><code>Vm/2</code></div>
+        <div class="gl-row"><b>全波整流</b><span>full-wave rectified</span><code>Vm/√2</code></div>
+        <div class="gl-row"><b>視在功率</b><span>apparent power</span><code>S, VA</code></div>
+        <div class="gl-row"><b>功率因數</b><span>power factor</span><code>pf = P/S</code></div>
+        <div class="gl-row"><b>功因角</b><span>power factor angle</span><code>θv − θi</code></div>
+        <div class="gl-row"><b>落後功因</b><span>lagging power factor（電感性）</span><code>θ &gt; 0</code></div>
+        <div class="gl-row"><b>超前功因</b><span>leading power factor（電容性）</span><code>θ &lt; 0</code></div>
+        <div class="gl-row"><b>單位功因</b><span>unity power factor</span><code>pf = 1</code></div>
+        <div class="gl-row"><b>阻抗角</b><span>impedance angle</span><code>∠Z</code></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 測驗 ══════════ -->
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">10 題，中英對照。題目下方那行英文就是考卷上會看到的講法。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Charles K. Alexander &amp; Matthew N. O. Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 11 AC Power Analysis（McGraw-Hill），11.4–11.5。</p>
+      <p><a href="ch11-part1.html">← PART 1 瞬時與平均功率</a>　｜　<a href="ch11-part3.html">PART 3 複功率與功因校正 →</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="assets/ch11-ex.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'rms', no: '11.4', name: '有效值 rms', count: '例 2 · 練 2' },
+  { id: 'pf', no: '11.5', name: '視在功率與 pf', count: '例 2 · 練 2' }
+], { key: 'ch11-part2', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/ch11.js"></script>
+<script src="assets/ch11-part2.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch11-part2-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

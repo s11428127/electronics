@@ -163,7 +163,7 @@
   function bindRange(id, fmt, onChange) {
     const el = document.getElementById(id);
     const out = document.querySelector('output[for="' + id + '"]');
-    function sync() { if (out) out.textContent = fmt(parseFloat(el.value)); onChange && onChange(parseFloat(el.value)); }
+    function sync() { if (out) { const s = String(fmt(parseFloat(el.value))); if (/<(sub|sup|b)>/.test(s)) out.innerHTML = s; else out.textContent = s; } onChange && onChange(parseFloat(el.value)); }
     el.addEventListener('input', sync);
     sync();
     return el;

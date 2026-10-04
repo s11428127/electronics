@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>瞬時、平均與最大功率</title>
+<meta name="description" content="電路學 CH11 PART 1：瞬時功率、平均功率、最大平均功率轉移（共軛匹配），故事模式＋推導＋可改數字的例題。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH11 PART 1</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH11 PART 1</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>課程地圖</a></li>
+      <li><a href="#inst"><i>11.2</i>瞬時功率與平均功率</a></li>
+      <li><a href="#mpt"><i>11.3</i>最大平均功率轉移</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <!-- ══════════ 首屏 ══════════ -->
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>Chapter 11 · Part 1 · 課本 p.456–468</div>
+      <h1>瞬時、平均與最大功率</h1>
+      <p class="sub">交流電的電壓、電流一直在翻正負，那「功率」要怎麼算？這一頁回答兩件事：<strong>電路平均到底吃掉多少功率</strong>（11.2），以及<strong>負載要怎麼選才能拿到最多功率</strong>（11.3）。</p>
+      <div class="hero-meta">
+        <span class="chip h">📘 課本 Example 6 題 ＋ Practice 6 題（附手寫板）</span>
+        <span class="chip">20 個畫面的故事模式</span>
+        <span class="chip">2 個互動模組 ＋ 3 個可改數字例題</span>
+        <span class="chip">10 題中英對照測驗</span>
+      </div>
+    </div>
+
+    <!-- ══════════ 故事模式 ══════════ -->
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>Story mode · 先看這段，再往下讀</div>
+      <h2>20 個畫面看懂這一頁<span class="h2-en">THE STORY IN 20 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。全部看完大約 7 分鐘。<strong>先建立直覺</strong>，再往下讀推導、玩互動模組、改例題的數字。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <!-- ══════════ 課程地圖 ══════════ -->
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>Course map</div>
+      <h2>CH11 分成三頁<span class="h2-en">COURSE MAP</span></h2>
+      <p class="lede">課本：Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 11 AC Power Analysis。整章拆成三頁，<b>這一頁是第 1 頁</b>。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>11.1</code><b>導論 <span style="color:var(--ink-3);font-weight:400">Introduction</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.2</code><b><button class="tm" data-t="瞬時功率">瞬時功率</button>與<button class="tm" data-t="平均功率">平均功率</button> <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>11.3</code><b>最大平均功率轉移 <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>11.4</code><b><a href="ch11-part2.html#rms">有效值 rms</a> <span style="color:var(--ink-3);font-weight:400">PART 2</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>11.5</code><b><a href="ch11-part2.html#pf">視在功率與功率因數</a> <span style="color:var(--ink-3);font-weight:400">PART 2</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>11.6</code><b><a href="ch11-part3.html#tri">複功率</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>11.7</code><b><a href="ch11-part3.html#cons">交流功率守恆</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>11.8</code><b><a href="ch11-part3.html#pfc">功率因數校正</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>11.9</code><b><a href="ch11-part3.html#app">應用：瓦特計與電費</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+      </div>
+      <p class="note key">這一頁只有一條主線：<b>p(t) = v·i → 取平均 → P = ½V<sub>m</sub>I<sub>m</sub>cos(θ<sub>v</sub>−θ<sub>i</sub>)</b>。最大功率轉移也只是「把這個 P 做到最大」。</p>
+
+      <div class="derive">
+        <h4>先備：一條弦波怎麼讀（CH9 的東西，先複習一下）</h4>
+        <ol>
+          <li>
+            <span class="d-eq">v(t) = V<sub>m</sub> cos(ωt + θ<sub>v</sub>)</span>
+            <p>三個數字各管一件事：<b>V<sub>m</sub></b>（<button class="tm" data-t="振幅">振幅</button>）是波峰多高；<b>ω</b>（<button class="tm" data-t="角頻率">角頻率</button>）是擺得多快；<b>θ<sub>v</sub></b>（相位角）是「起跑時間」—— 它比標準的 cos 早或晚多少度。</p>
+          </li>
+          <li>
+            <span class="d-eq">θ<sub>v</sub> − θ<sub>i</sub> = 電壓比電流早多少度</span>
+            <div class="why">電壓、電流頻率一樣，所以兩條波的差別只剩<button class="tm" data-t="相位差">相位差</button>。這一章所有功率公式，都只看這個差。</div>
+          </li>
+          <li>
+            <span class="d-eq">V = V<sub>m</sub>∠θ<sub>v</sub>（<button class="tm" data-t="相量">相量</button>），Z = V/I = R + jX（<button class="tm" data-t="阻抗">阻抗</button>）</span>
+            <p>把 ω 拿掉，只留「大小」和「角度」就是相量。阻抗的實部 R 是電阻、虛部 X 是<button class="tm" data-t="電抗">電抗</button>（電感 X &gt; 0、電容 X &lt; 0）。</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 11.2 瞬時功率 ══════════ -->
+    <section class="sec" id="inst">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>11.2 · Instantaneous and Average Power</div>
+      <h2>瞬時功率與平均功率<span class="h2-en">INSTANTANEOUS &amp; AVERAGE POWER</span></h2>
+      <p class="lede">直流的功率很簡單：P = V × I。交流的電壓電流每秒翻正負 60 次，<strong>每一瞬間</strong>的乘積都不一樣，這叫<span class="tm" data-t="瞬時功率">瞬時功率<i>instantaneous power</i></span> p(t)。它跳來跳去沒辦法拿來報數字，所以要取<strong>一個週期的平均</strong>，得到一個固定的數 —— <span class="tm" data-t="平均功率">平均功率<i>average power</i></span> P。電器上標的「800 W」、電費單算的，都是這個 P。</p>
+      <div class="eq">p(t) = ½V<em>m</em>I<em>m</em> cos(θv − θi) &nbsp;+&nbsp; ½V<em>m</em>I<em>m</em> cos(2ωt + θv + θi)　⟹　P = ½V<em>m</em>I<em>m</em> cos(θv − θi)</div>
+      <div class="derive">
+        <h4>這條式子是怎麼來的？</h4>
+        <ol>
+          <li>
+            <span class="d-eq">p(t) = v(t)·i(t) = V<sub>m</sub>cos(ωt+θv) × I<sub>m</sub>cos(ωt+θi)</span>
+            <p>功率的定義就是「電壓 × 電流」，跟直流一樣。只是現在兩個都是弦波，所以卡在一個「cos 乘 cos」。</p>
+          </li>
+          <li>
+            <span class="d-eq">cos A · cos B = ½[ cos(A−B) + cos(A+B) ]</span>
+            <div class="why">用<b>積化和差</b>把乘法拆成加法（加法比乘法好看出誰會變、誰不會變）。令 A = ωt+θv、B = ωt+θi：<br>
+              A − B = <b>θv − θi</b>（ωt 消掉了，變成常數！）<br>
+              A + B = <b>2ωt + θv + θi</b>（ωt 變兩倍）</div>
+          </li>
+          <li>
+            <span class="d-eq hi">p(t) = ½V<sub>m</sub>I<sub>m</sub>cos(θv−θi) + ½V<sub>m</sub>I<sub>m</sub>cos(2ωt+θv+θi)</span>
+            <p>代進去就得到兩項。<b>左項完全沒有 t</b>（是個定值），<b>右項是 2ω 的弦波</b>（擺得比電壓快一倍）。整章的故事到這裡就定調了。</p>
+          </li>
+          <li>
+            <span class="d-eq">P = (1/T)∫₀<sup>T</sup> p(t) dt</span>
+            <div class="why">平均功率的定義：把 p(t) 在一個週期內積分（加總），再除以週期。就像「一個月的零用錢 ÷ 30 天 = 平均每天」。</div>
+          </li>
+          <li>
+            <span class="d-eq">第一項：常數的平均 = 它自己 → 保留<br>第二項：弦波一週期的平均 = 0 → 消失</span>
+            <p>弦波正半週的面積，剛好被負半週抵銷，所以積分為零。這就是為什麼「會擺盪的那一半不算進平均功率」。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">P = ½V<sub>m</sub>I<sub>m</sub> cos(θv − θi)</span>
+            <p>剩下的就是答案。注意 cos(θv−θi) = cos(θi−θv)，所以<b>只有相位差的大小重要，誰減誰不影響 P</b>（但會影響 Q 的正負，PART 3 會用到）。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>三個特例：cos 就是「打幾折」</h4>
+        <ol>
+          <li>
+            <span class="d-eq">純電阻：θv − θi = 0° → cos 0° = 1 → P = ½V<sub>m</sub>I<sub>m</sub></span>
+            <div class="why">電壓電流同步，正×正、負×負都是正的，p(t) 永遠 ≥ 0。<b>不打折</b>：送來的全部吃掉，變成熱。</div>
+          </li>
+          <li>
+            <span class="d-eq">純電感：θv − θi = +90° → cos 90° = 0 → P = 0</span>
+            <div class="why">p(t) 一半時間正、一半時間負，面積完全相等。電感前半拍把能量存進磁場、後半拍原封不動還給電源 —— 像跟朋友借 100 元又還 100 元，<b>淨支出 0</b>。</div>
+          </li>
+          <li>
+            <span class="d-eq">純電容：θv − θi = −90° → cos(−90°) = 0 → P = 0</span>
+            <div class="why">一樣借了又還，只是存在電場裡。所以<b>只有電阻會真的消耗平均功率</b>，P = ½|I|²R 只看電阻。</div>
+          </li>
+        </ol>
+      </div>
+
+      <p class="note">順帶一提，用相量也能算：½V·I* = ½V<sub>m</sub>I<sub>m</sub>∠(θv−θi) = ½V<sub>m</sub>I<sub>m</sub>[cos(θv−θi) + j·sin(θv−θi)]，取<b>實部</b>就是 P。所以 <b>P = ½Re[V·I*]</b> —— 這條在 PART 3 會變成<button class="tm" data-t="複功率">複功率</button>的起點。</p>
+
+      <div id="ex-avg"></div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>瞬時功率波形實驗室</h3><span class="spacer"></span><span class="tag">p(t) = v(t)·i(t)</span></div>
+        <div class="stage-wrap"><canvas id="cv-inst" aria-label="瞬時功率波形，正區為吸收、負區為回送電源"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="inst-vm">電壓振幅 Vm<output for="inst-vm"></output></label>
+            <input type="range" id="inst-vm" min="2" max="16" step="1" value="10"></div>
+          <div class="ctrl"><label for="inst-im">電流振幅 Im<output for="inst-im"></output></label>
+            <input type="range" id="inst-im" min="1" max="8" step="1" value="4"></div>
+          <div class="ctrl"><label for="inst-thv">電壓相角 θv<output for="inst-thv"></output></label>
+            <input type="range" id="inst-thv" min="-90" max="90" step="5" value="0"></div>
+          <div class="ctrl"><label for="inst-thi">電流相角 θi<output for="inst-thi"></output></label>
+            <input type="range" id="inst-thi" min="-90" max="90" step="5" value="-45"></div>
+          <div class="ctrl" style="grid-column:span 2"><span class="lab">三個特例</span>
+            <div class="btn-row">
+              <button class="btn" type="button" data-inst="0,0">純電阻 θv=θi</button>
+              <button class="btn" type="button" data-inst="0,-90">純電感 落後90°</button>
+              <button class="btn" type="button" data-inst="0,90">純電容 超前90°</button>
+              <button class="btn" type="button" id="inst-play">暫停</button>
+            </div></div>
+        </div>
+        <dl class="readout">
+          <div><dt>相位差 θv−θi</dt><dd id="inst-d">—</dd></div>
+          <div><dt>平均功率 P</dt><dd id="inst-P" style="color:var(--p-real)">—</dd></div>
+          <div><dt><button class="tm" data-t="虛功率">虛功率</button> Q</dt><dd id="inst-Q" style="color:var(--q-react)">—</dd></div>
+          <div><dt>功率因數</dt><dd id="inst-pf">—</dd></div>
+        </dl>
+        <div class="msg" id="inst-kind"></div>
+        <div class="msg" id="inst-note"></div>
+      </div>
+      <p class="note key">電阻<b>任何時刻</b>都在吸收功率（p(t) ≥ 0）；電感與電容的平均功率為 <b>0</b>，它們只是把能量借來還去。</p>
+
+      <div id="ex-rc"></div>
+
+      <div class="howto">
+        <h4>拿到「求平均功率」的題目</h4>
+        <ol>
+          <li><b>先把 sin 換成 cos。</b><code>sin x = cos(x − 90°)</code>，兩條波都寫成 cos 才能直接比角度。</li>
+          <li><b>看題目給什麼：</b>給 v(t)、i(t) → <code>P = ½VmIm cos(θv − θi)</code>；給電流和阻抗 → <code>P = ½|I|²R</code>（R 是阻抗的實部）；給電壓和阻抗 → 先 <code>I = V/Z</code>。</li>
+          <li><b>電路裡有好幾個元件</b>時，電感、電容直接寫 0，只算電阻；最後用「電源送出 = 電阻吸收總和」驗算。</li>
+          <li><b>最後檢查</b>：P 不可能大於 ½V<sub>m</sub>I<sub>m</sub>；若是電源，算出負的代表它在<b>吸收</b>（被充電）。</li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>這一節最常被扣分的地方</h4>
+        <ul>
+          <li><span class="x">✗</span> 忘記那個 <b>½</b>。公式是 P = <b>½</b>V<sub>m</sub>I<sub>m</sub>cos θ，用的是<b>振幅</b>。若題目給的已經是 rms 值，才是 P = V<sub>rms</sub>I<sub>rms</sub>cos θ（沒有 ½，PART 2 講）。<span class="o">✓ 先看清楚題目給的是振幅還是 rms。</span></li>
+          <li><span class="x">✗</span> 題目給 <b>sin</b> 卻直接當成 cos 代入。<span class="o">✓ 先轉成 cos：sin(x) = cos(x − 90°)，轉完再讀相角。</span></li>
+          <li><span class="x">✗</span> θv − θi 算成 45° − 10° = 35°。<span class="o">✓ θi = −10° 時是 45° − (−10°) = 55°，負負得正。</span></li>
+          <li><span class="x">✗</span> 以為 p(t) 的週期跟 v(t) 一樣。<span class="o">✓ p(t) 的角頻率是 2ω，週期只有一半。</span></li>
+          <li><span class="x">✗</span> 看到 p(t) 有負的部分就說「負載在發電」。<span class="o">✓ 負區只代表儲能元件把先前存的能量還給電源，不是產生新能量。</span></li>
+        </ul>
+      </div>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.2"></div>
+    </section>
+
+    <!-- ══════════ 11.3 最大功率轉移 ══════════ -->
+    <section class="sec" id="mpt">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>11.3 · Maximum Average Power Transfer</div>
+      <h2>最大平均功率轉移<span class="h2-en">MAXIMUM AVERAGE POWER TRANSFER</span></h2>
+      <p class="lede">擴大機接喇叭、天線接收音機：電源固定，<strong>負載要選多少，才能從電源拿到最多功率？</strong>直流時的答案是 R<sub>L</sub> = R<sub>Th</sub>。交流多了電抗，做法變成兩步：先用 X<sub>L</sub> 把 X<sub>Th</sub> <strong>抵銷掉</strong>，再用 R<sub>L</sub> 去匹配 R<sub>Th</sub>。合起來叫<span class="tm" data-t="共軛匹配">共軛匹配<i>conjugate matching</i></span>。</p>
+      <div class="eq">Z<em>L</em> = Z<em>Th</em>*　（即 R<em>L</em> = R<em>Th</em>，X<em>L</em> = −X<em>Th</em>）　⟹　P<em>max</em> = |V<em>Th</em>|² / (8R<em>Th</em>)</div>
+
+      <div class="derive">
+        <h4>先把電源化簡：戴維寧等效</h4>
+        <ol>
+          <li>
+            <p>不管電源那一側的電路多複雜，從負載兩端看進去，都可以換成<b>一個電壓源 V<sub>Th</sub> 串一個阻抗 Z<sub>Th</sub></b>（<button class="tm" data-t="戴維寧等效">戴維寧等效</button>）。</p>
+          </li>
+          <li>
+            <span class="d-eq">V<sub>Th</sub> = 負載拿掉時的開路電壓　　Z<sub>Th</sub> = 電源歸零後從負載端看進去的阻抗</span>
+            <div class="why">電壓源歸零 = 短路、電流源歸零 = 開路。這是 CH10 的做法，到這裡直接拿來用。</div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="derive">
+        <h4>為什麼是「共軛」而不是「相等」？</h4>
+        <ol>
+          <li>
+            <span class="d-eq">I = V<sub>Th</sub> / (Z<sub>Th</sub> + Z<sub>L</sub>) = V<sub>Th</sub> / [(R<sub>Th</sub>+R<sub>L</sub>) + j(X<sub>Th</sub>+X<sub>L</sub>)]</span>
+            <p>先寫出迴路電流：電源電壓除以總阻抗，電阻與電抗分開寫。</p>
+          </li>
+          <li>
+            <span class="d-eq">P = ½|I|²R<sub>L</sub> = ½|V<sub>Th</sub>|²R<sub>L</sub> ÷ [(R<sub>Th</sub>+R<sub>L</sub>)² + (X<sub>Th</sub>+X<sub>L</sub>)²]</span>
+            <div class="why">負載只有 R<sub>L</sub> 會吃平均功率（上一節的結論）。取 |I|² 時，分母的複數變成「實部平方 + 虛部平方」。現在 P 是 <b>R<sub>L</sub> 和 X<sub>L</sub> 兩個變數的函數</b>，要找它的最大值。</div>
+          </li>
+          <li>
+            <span class="d-eq">先看 X<sub>L</sub>：它只出現在分母的 (X<sub>Th</sub>+X<sub>L</sub>)² 裡</span>
+            <p>分母越小、P 越大。而 (X<sub>Th</sub>+X<sub>L</sub>)² 是平方，<b>最小值就是 0</b>。所以不必真的微分也看得出來：</p>
+            <span class="d-eq hi">X<sub>L</sub> = −X<sub>Th</sub>　（電抗互相抵銷，電路變成純電阻）</span>
+          </li>
+          <li>
+            <span class="d-eq">∂P/∂R<sub>L</sub> = 0　⟹　R<sub>L</sub> = √[ R<sub>Th</sub><sup>2</sup> + (X<sub>Th</sub>+X<sub>L</sub>)² ]</span>
+            <div class="why">再對 R<sub>L</sub> 微分並令為零。這是通式，還沒代入上一步的結果（純電阻負載的題目會用到它）。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">把 X<sub>L</sub> = −X<sub>Th</sub> 代進去 → 括號歸零 → R<sub>L</sub> = R<sub>Th</sub></span>
+            <p>兩個條件合起來寫成一個：<b>Z<sub>L</sub> = R<sub>Th</sub> − jX<sub>Th</sub> = Z<sub>Th</sub>*</b>。這就是<button class="tm" data-t="共軛複數">共軛</button>的由來 —— 實部照抄、虛部變號。</p>
+          </li>
+          <li>
+            <span class="d-eq">匹配後：Z<sub>Th</sub> + Z<sub>L</sub> = 2R<sub>Th</sub>（虛部消失）　⟹　|I| = |V<sub>Th</sub>| / (2R<sub>Th</sub>)</span>
+            <div class="why">總阻抗只剩下 2R<sub>Th</sub>，是個純電阻。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">P<sub>max</sub> = ½|I|²R<sub>Th</sub> = ½ × |V<sub>Th</sub>|²/(4R<sub>Th</sub><sup>2</sup>) × R<sub>Th</sub> = |V<sub>Th</sub>|² / (8R<sub>Th</sub>)</span>
+            <p>那個 <b>8</b> 就是這樣來的：½（振幅轉平均）× 4（分母的 2 平方）= 8。若題目給的 V<sub>Th</sub> 是 <b>rms 值</b>，就沒有那個 ½，變成 |V<sub>Th</sub>|²/(4R<sub>Th</sub>)。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div id="ex-mpt"></div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>阻抗匹配挑戰</h3><span class="spacer"></span>
+          <div class="btn-row">
+            <button class="btn" type="button" id="mpt-auto">直接套公式</button>
+            <button class="btn" type="button" id="mpt-new">換一題 ↺</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-mpt" aria-label="戴維寧等效電路與負載功率計"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="mpt-rl">負載電阻 RL<output for="mpt-rl"></output></label>
+            <input type="range" id="mpt-rl" min="0.5" max="16" step="0.5" value="8"></div>
+          <div class="ctrl"><label for="mpt-xl">負載電抗 XL<output for="mpt-xl"></output></label>
+            <input type="range" id="mpt-xl" min="-12" max="12" step="0.5" value="6"></div>
+          <div class="ctrl"><span class="lab">題目給定</span>
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--ink-2);line-height:1.7">
+              ZTh = <span id="mpt-zth">—</span><br>VTh = <span id="mpt-vth">—</span></div></div>
+        </div>
+        <dl class="readout">
+          <div><dt>目前 P</dt><dd id="mpt-P" style="color:var(--s-app)">—</dd></div>
+          <div><dt>理論 Pmax</dt><dd id="mpt-Pmax" style="color:var(--p-real)">—</dd></div>
+          <div><dt>達成率</dt><dd id="mpt-pct">—</dd></div>
+          <div><dt>應設定 ZL</dt><dd id="mpt-target" style="font-size:13px">—</dd></div>
+        </dl>
+        <div class="msg" id="mpt-msg"></div>
+      </div>
+      <p class="note key">若題目限定負載<b>只能是純電阻</b>（X<sub>L</sub> = 0），條件會變成 <b>R<sub>L</sub> = |Z<sub>Th</sub>| = √(R<sub>Th</sub><sup>2</sup> + X<sub>Th</sub><sup>2</sup>)</b>，不是 R<sub>Th</sub>。這是最常見的考點差異。</p>
+
+      <div class="howto">
+        <h4>看到最大功率轉移題目</h4>
+        <ol>
+          <li><b>把負載拿掉</b>，求開路電壓 V<sub>Th</sub>、從負載端看進去的 Z<sub>Th</sub>。</li>
+          <li><b>問：負載可不可以有電抗？</b>可以 → <code>ZL = ZTh*</code>；只能純電阻 → <code>RL = |ZTh|</code>。這一步決定整題走向。</li>
+          <li><b>問：V<sub>Th</sub> 給的是振幅還是 rms？</b>振幅 → <code>Pmax = |VTh|²/(8RTh)</code>；rms → <code>Pmax = |VTh|²/(4RTh)</code>。</li>
+          <li>只有<b>共軛匹配</b>那一種情況才能用 P<sub>max</sub> 的簡化公式；純電阻負載一律回頭算 <code>I = VTh/(ZTh + RL)</code>、<code>P = ½|I|²RL</code>。</li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>最大功率轉移的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> Z<sub>L</sub> = Z<sub>Th</sub>（照直流的經驗直接相等）。<span class="o">✓ 虛部要<b>變號</b>：Z<sub>L</sub> = Z<sub>Th</sub>*。相等的話電抗會疊加、電流反而變小。</span></li>
+          <li><span class="x">✗</span> 純電阻負載還寫 R<sub>L</sub> = R<sub>Th</sub>。<span class="o">✓ 電抗抵銷不掉時，R<sub>L</sub> = |Z<sub>Th</sub>|。</span></li>
+          <li><span class="x">✗</span> 純電阻負載也套 |V<sub>Th</sub>|²/(8R<sub>Th</sub>)。<span class="o">✓ 這條只在共軛匹配時成立，其他情況回去算電流。</span></li>
+          <li><span class="x">✗</span> 求 Z<sub>Th</sub> 時電壓源沒有短路、電流源沒有開路。<span class="o">✓ 獨立電源先歸零再看進去。</span></li>
+        </ul>
+      </div>
+
+      <div class="exbook" data-bank="__CH11EX" data-sec="11.3"></div>
+      <p class="note src">下一頁（PART 2）：公式裡那個 ½ 很煩 —— 用<b>有效值 rms</b> 把它吃掉，再認識<b>視在功率</b>與<b>功率因數</b>。<a href="ch11-part2.html">前往 PART 2 →</a></p>
+    </section>
+
+    <!-- ══════════ 名詞對照 ══════════ -->
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <p class="lede">考卷上會出現的是右邊那欄。讀書用中文、寫題目認英文。</p>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號／單位</code></div>
+        <div class="gl-row"><b>弦波</b><span>sinusoid</span><code>Vm cos(ωt+θ)</code></div>
+        <div class="gl-row"><b>振幅（峰值）</b><span>amplitude, peak value</span><code>Vm, Im</code></div>
+        <div class="gl-row"><b>相位差</b><span>phase difference</span><code>θv − θi</code></div>
+        <div class="gl-row"><b>相量</b><span>phasor</span><code>V = Vm∠θ</code></div>
+        <div class="gl-row"><b>瞬時功率</b><span>instantaneous power</span><code>p(t), W</code></div>
+        <div class="gl-row"><b>平均功率</b><span>average power</span><code>P, W</code></div>
+        <div class="gl-row"><b>電阻性／電感性／電容性</b><span>resistive / inductive / capacitive</span><code>—</code></div>
+        <div class="gl-row"><b>戴維寧等效</b><span>Thevenin equivalent</span><code>VTh, ZTh</code></div>
+        <div class="gl-row"><b>共軛複數</b><span>complex conjugate</span><code>Z*</code></div>
+        <div class="gl-row"><b>最大平均功率轉移</b><span>maximum average power transfer</span><code>Pmax</code></div>
+        <div class="gl-row"><b>共軛匹配</b><span>conjugate matching</span><code>ZL = ZTh*</code></div>
+        <div class="gl-row"><b>被動符號慣例</b><span>passive sign convention</span><code>—</code></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 測驗 ══════════ -->
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH11</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">10 題，中英對照。題目下方那行英文就是考卷上會看到的講法。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Charles K. Alexander &amp; Matthew N. O. Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 11 AC Power Analysis（McGraw-Hill），11.1–11.3。</p>
+      <p>所有數值皆依課本公式即時計算；波形與向量圖為觀念示意，比例經過調整以利觀察。　<a href="ch11-part2.html">下一頁：PART 2 有效值與功率因數 →</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="assets/ch11-ex.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'inst', no: '11.2', name: '瞬時與平均功率', count: '例 4 · 練 4' },
+  { id: 'mpt', no: '11.3', name: '最大功率轉移', count: '例 2 · 練 2' }
+], { key: 'ch11-part1', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/ch11.js"></script>
+<script src="assets/ch11-part1.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch11-part1-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

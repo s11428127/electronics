@@ -76,7 +76,8 @@
 - 同頁面加 `<body data-look="clean">` 會套用同一套乾淨外觀（標題卡 + 英文小字 `.h2-en`）。
 - SVG 文字裡的 `<`、`>` 一定要寫成 `&lt;`、`&gt;`，否則整個畫面 parse 失敗（踩過的坑）。
 - 下標用 `fx(['i','D',' = I','S'])` 這種寫法：下標後面的字要跟回基線的 tspan 放一起，空的 tspan 的 dy 不會生效。
-- 現有劇本：電子學 `ch1-part1～4-story.js`、電路學 `ch11-story.js`、工數 `laplace-story.js`、`laplace2-story.js`、`ode-story.js`。
+- 現有劇本：電子學 `ch1-part1～4-story.js`、電路學 `ch11-part1～3-story.js`、工數 `laplace-story.js`、`laplace2-story.js`、`ode-story.js`。
+- 版面實測（看截圖總表得到的）：標題卡蓋到約 y 92（x 200～440），兩行字幕從約 y 312 開始，最後一幕的「從頭再看／往下看」按鈕在 y 285 以下 → **內容放 y 100～305，最後一幕放到 270 為止**。
 
 ## 上課筆記（板書照片）的做法
 
@@ -91,6 +92,7 @@
   2. **章節重點頁**（故事模式＋推導＋互動＋測驗，照「章節頁規格」），hero 放
      `<div class="lec-links"><a href="<chapter>-<MMDD>.html">📝 M/D 上課筆記（純板書）</a></div>`，每堂課一個按鈕。
 - 科目首頁**只放章節卡片**，不要替單堂筆記另開卡片；上課筆記從章節頁點進去。
+- 一章內容太多就拆成 PART（電路學 CH11 10/4 拆成 part1～3，舊 `ch11.html` 留轉址頁）；拆頁時互動模組共用一支 `<chapter>.js`（沒有對應 canvas 就跳過），每頁另有 `<chapter>-partN.js`（例題＋測驗）。
 - 使用者已經看過的章節不要動；同主題的新進度**開新的一章**（例：`laplace.html` 看過 → 10/2 開 `laplace2.html`）。
 - 開頭「複習」若屬於別章的內容（例：共軛複根屬 ODE），只留在上課筆記，不放進本章重點。
 
@@ -209,7 +211,7 @@ index.html                    主頁：科目選單
 shared/app.css                設計語彙 + 所有教學元件
 shared/app.js                 互動引擎，匯出 window.__EE
 <subject>/index.html          科目首頁：**章節選單**（.chap 卡片 + .progress 進度）
-<subject>/<chapter>.html      章節內容頁（例：ch1-part1.html、ch11.html、laplace.html）
+<subject>/<chapter>.html      章節內容頁（例：ch1-part1.html、ch11-part1.html、laplace.html）
 <subject>/<chapter>-<MMDD>.html  該章某堂課的純板書上課筆記（例：laplace2-1002.html）
 <subject>/assets/<chapter>.js 每章一個 JS
 <subject>/docs/CONTENT_MAP.md 進度表

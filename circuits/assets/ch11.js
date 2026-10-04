@@ -1,5 +1,5 @@
 /* ============================================================
-   電路學 CH11 交流功率分析 — 互動模組
+   電路學 CH11 交流功率分析 — 互動模組（PART 1～3 三頁共用；頁面上沒有的 canvas 自動跳過）
    Sadiku, Fundamentals of Electric Circuits, Ch.11 AC Power Analysis
    ============================================================ */
 (function () {
@@ -656,97 +656,14 @@
 })();
 
 /* ============================================================
-   CH11 觀念小測驗（中英對照，考試用英文、讀書用中文）
+   CH11 觀念小測驗（三頁共用）：__ch11Quiz(題庫, 結語)
+   中英對照（考試用英文、讀書用中文）；選項每次打亂，題庫裡正解寫在哪都沒關係
    ============================================================ */
-(function () {
+window.__ch11Quiz = function (Q, verdicts) {
   'use strict';
   const host = document.getElementById('quiz'); if (!host) return;
-
-  const Q = [
-    { zh: '在弦波穩態下，瞬時功率 p(t) 的頻率是電壓頻率的幾倍？',
-      en: 'In sinusoidal steady state, the frequency of the instantaneous power p(t) is how many times that of the voltage?',
-      o: [['與電壓相同', 'the same as the voltage'], ['兩倍', 'twice'], ['一半', 'half'], ['四倍', 'four times']], a: 1,
-      e: 'p(t) = ½VmIm cos(θv−θi) + ½VmIm cos(2ωt + θv + θi)。第二項的角頻率是 2ω，所以 p(t) 的週期是 T₀ = T/2，頻率為電壓的兩倍。' },
-
-    { zh: '純電感或純電容所吸收的平均功率是多少？',
-      en: 'What is the average power absorbed by a purely inductive or purely capacitive element?',
-      o: [['等於 VrmsIrms', 'equal to VrmsIrms'], ['等於 ½VmIm', 'equal to ½VmIm'], ['零', 'zero'], ['視頻率而定', 'depends on frequency']], a: 2,
-      e: '純電抗元件的 θv − θi = ±90°，而 cos(±90°) = 0，故 P = 0。它們只是把能量在電源與元件之間借來還去，不消耗淨能量。' },
-
-    { zh: '交流電路要把最大平均功率送給負載，負載阻抗 ZL 應該等於？',
-      en: 'For maximum average power transfer to the load in an ac circuit, the load impedance ZL should equal:',
-      o: [['ZTh', 'ZTh'], ['ZTh 的共軛複數 ZTh*', 'the complex conjugate ZTh*'], ['|ZTh|', 'the magnitude |ZTh|'], ['1/ZTh', 'the reciprocal 1/ZTh']], a: 1,
-      e: 'ZL = ZTh* 表示 RL = RTh 且 XL = −XTh。先用 XL 把電抗抵銷讓電路呈純電阻，再用 RL 匹配電阻，此時 Pmax = |VTh|²/(8RTh)。' },
-
-    { zh: '若負載被限定只能是純電阻，最大功率轉移的條件變成什麼？',
-      en: 'If the load is restricted to be purely resistive, the condition for maximum power transfer becomes:',
-      o: [['RL = RTh', 'RL = RTh'], ['RL = XTh', 'RL = XTh'], ['RL = |ZTh|', 'RL = |ZTh|'], ['RL = 0', 'RL = 0']], a: 2,
-      e: '在 XL = 0 的限制下，對 RL 微分求極值得 RL = √(R²Th + X²Th) = |ZTh|，也就是戴維寧阻抗的「大小」，而不是它的實部。' },
-
-    { zh: '弦波訊號的有效值（rms 值）等於什麼？',
-      en: 'The effective (rms) value of a sinusoidal signal is equal to:',
-      o: [['Vm', 'Vm'], ['Vm/√2', 'Vm/√2'], ['Vm/√3', 'Vm/√3'], ['2Vm/π', '2Vm/π']], a: 1,
-      e: 'rms 的做法是「先平方 → 取一週期平均 → 再開根號」。對弦波做完這三步得到 Vm/√2 ≈ 0.707Vm。注意這個 √2 只適用於弦波，方波的 rms 是 Vm、三角波是 Vm/√3。' },
-
-    { zh: '「有效值」這個名稱的物理意義是什麼？',
-      en: 'What is the physical meaning of the term "effective value"?',
-      o: [['波形的最大值', 'the peak value of the waveform'], ['波形一週期的平均值', 'the average value over one period'],
-          ['能對電阻送出相同平均功率的等效直流值', 'the dc value delivering the same average power to a resistor'],
-          ['波形的瞬時值', 'the instantaneous value']], a: 2,
-      e: '定義就是：一個週期性電流的有效值，等於能對同一個電阻送出相同平均功率的那個直流電流。所以才會用 P = I²rms R 這種跟直流一樣的式子。' },
-
-    { zh: '視在功率 S 的單位是什麼？',
-      en: 'What is the unit of apparent power S?',
-      o: [['瓦特 W', 'watt (W)'], ['伏安 VA', 'volt-ampere (VA)'], ['乏 VAR', 'volt-ampere reactive (VAR)'], ['焦耳 J', 'joule (J)']], a: 1,
-      e: '三個功率各有各的單位，考試很愛考：實功率 P 用瓦特 W、虛功率 Q 用乏 VAR、視在功率 S 用伏安 VA。用不同單位就是為了把它們區分開來。' },
-
-    { zh: '功率因數 pf 的定義是？',
-      en: 'The power factor (pf) is defined as:',
-      o: [['P/S', 'P/S'], ['Q/S', 'Q/S'], ['S/P', 'S/P'], ['P/Q', 'P/Q']], a: 0,
-      e: 'pf = P/S = cos(θv − θi)。它同時也等於負載阻抗角的餘弦。因為是比值，所以沒有單位。' },
-
-    { zh: '電流落後電壓的負載，它的功率因數與虛功率分別是？',
-      en: 'For a load whose current lags the voltage, the power factor and reactive power are:',
-      o: [['超前，Q < 0', 'leading, Q < 0'], ['落後，Q > 0', 'lagging, Q > 0'], ['單位，Q = 0', 'unity, Q = 0'], ['落後，Q < 0', 'lagging, Q < 0']], a: 1,
-      e: '電流落後電壓 → 電感性負載 → pf 落後（lagging）、Q > 0，S 落在第一象限。馬達、變壓器、冷氣、冰箱都屬於這一類。' },
-
-    { zh: '複功率 S 的正確定義是？',
-      en: 'The correct definition of complex power S is:',
-      o: [['S = Vrms · Irms', 'S = Vrms · Irms'], ['S = Vrms · I*rms', 'S = Vrms · I*rms'],
-          ['S = V*rms · Irms', 'S = V*rms · Irms'], ['S = Vrms / Irms', 'S = Vrms / Irms']], a: 1,
-      e: 'S = Vrms I*rms = P + jQ。要取電流的「共軛」才會得到正確的角度 θv − θi；若不取共軛，角度會變成 θv + θi 而完全錯誤。' },
-
-    { zh: '兩個負載並聯在同一電源上，下列哪一個關係式「不成立」？',
-      en: 'For two loads connected in parallel across the same source, which relation does NOT hold?',
-      o: [['S = S₁ + S₂', 'S = S₁ + S₂'], ['P = P₁ + P₂', 'P = P₁ + P₂'],
-          ['Q = Q₁ + Q₂', 'Q = Q₁ + Q₂'], ['|S| = |S₁| + |S₂|', '|S| = |S₁| + |S₂|']], a: 3,
-      e: '這是最常見的考試陷阱。複功率 S、實功率 P、虛功率 Q 都可以直接相加，但視在功率是「大小」，必須先把 S 向量加起來再取絕對值：|S| = √(P總² + Q總²)，一般會小於 Σ|Sᵢ|。' },
-
-    { zh: '在電感性負載旁並聯一個電容做功因校正，負載消耗的實功率 P 會如何變化？',
-      en: 'When a capacitor is connected in parallel with an inductive load for pf correction, the real power P consumed by the load:',
-      o: [['增加', 'increases'], ['減少', 'decreases'], ['維持不變', 'remains unchanged'], ['變成零', 'becomes zero']], a: 2,
-      e: '理想電容的平均功率為零，它只提供 −Q 去抵銷電感的 +Q。所以 P 完全不變，改變的是 Q、S 和線電流 —— 功率三角形變矮，斜邊變短。' },
-
-    { zh: '要把功率因數從 cos θ₁ 提升到 cos θ₂，所需並聯電容值 C 為？',
-      en: 'To raise the power factor from cos θ₁ to cos θ₂, the required shunt capacitance C is:',
-      o: [['P(tan θ₁ − tan θ₂) / (ωV²rms)', 'P(tan θ₁ − tan θ₂) / (ωV²rms)'],
-          ['P(tan θ₂ − tan θ₁) / (ωV²rms)', 'P(tan θ₂ − tan θ₁) / (ωV²rms)'],
-          ['P(cos θ₁ − cos θ₂) / (ωV²rms)', 'P(cos θ₁ − cos θ₂) / (ωV²rms)'],
-          ['ωV²rms / P(tan θ₁ − tan θ₂)', 'ωV²rms / P(tan θ₁ − tan θ₂)']], a: 0,
-      e: '電容要提供的虛功率 QC = Q₁ − Q₂ = P(tan θ₁ − tan θ₂)，而 QC = ωCV²rms，兩式相等解出 C = P(tan θ₁ − tan θ₂)/(ωV²rms)。順序是 θ₁ 減 θ₂（θ₁ 較大）。' },
-
-    { zh: '量測平均功率要用哪一種儀器？',
-      en: 'Which instrument is used to measure average power?',
-      o: [['伏特計 voltmeter', 'voltmeter'], ['安培計 ammeter', 'ammeter'], ['瓦特計 wattmeter', 'wattmeter'], ['乏計 varmeter', 'varmeter']], a: 2,
-      e: '瓦特計（wattmeter）量平均功率 P：電流線圈串聯在負載上、電壓線圈並聯在負載兩端。量虛功率 Q 用的是乏計（varmeter），量用電度數用的是電表（kilowatt-hour meter）。' },
-
-    { zh: '一個負載阻抗 Z = 20 − j20 Ω，它的功率因數是？',
-      en: 'A load impedance Z = 20 − j20 Ω has a power factor of:',
-      o: [['0.707 落後 lagging', '0.707 lagging'], ['0.707 超前 leading', '0.707 leading'], ['1.0 單位 unity', '1.0 unity'], ['0.5 超前 leading', '0.5 leading']], a: 1,
-      e: '阻抗角 θ = arctan(−20/20) = −45°，pf = cos(−45°) = 0.707。X 為負代表電容性，電流超前電壓，所以是超前（leading）功因。' }
-  ];
-
-  let i = 0, score = 0, answered = false;
+  const shuffle = n => { const o = Array.from({ length: n }, (_, k) => k); for (let k = n - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [o[k], o[j]] = [o[j], o[k]]; } return o; };
+  let i = 0, score = 0, answered = false, ord = [];
 
   function render() {
     const q = Q[i];
@@ -762,7 +679,9 @@
       '<div class="quiz-foot"><span class="score">答對 ' + score + ' / ' + i + '</span><span class="spacer"></span>' +
         '<button class="btn" id="q-next" hidden>下一題 →</button></div>';
     const opts = host.querySelector('.opts');
-    q.o.forEach((pair, k) => {
+    ord = shuffle(q.o.length);
+    ord.forEach((src, k) => {
+      const pair = q.o[src];
       const b = document.createElement('button');
       b.className = 'opt'; b.type = 'button';
       b.innerHTML = '<i>' + 'ABCD'[k] + '</i><span>' + pair[0] + '<span class="en">' + pair[1] + '</span></span>';
@@ -774,12 +693,12 @@
   }
   function pick(k) {
     if (answered) return; answered = true;
-    const q = Q[i], btns = Array.prototype.slice.call(host.querySelectorAll('.opt'));
-    btns.forEach((b, idx) => { b.disabled = true; if (idx === q.a) b.classList.add('right'); });
-    if (k === q.a) score++; else btns[k].classList.add('wrong');
+    const q = Q[i], A = ord.indexOf(q.a), btns = Array.prototype.slice.call(host.querySelectorAll('.opt'));
+    btns.forEach((b, idx) => { b.disabled = true; if (idx === A) b.classList.add('right'); });
+    if (k === A) score++; else btns[k].classList.add('wrong');
     const ex = host.querySelector('.explain');
     ex.hidden = false;
-    ex.innerHTML = '<b>' + (k === q.a ? '答對了。' : '正確答案是 ' + 'ABCD'[q.a] + '。') + '</b> ' + q.e;
+    ex.innerHTML = '<b>' + (k === A ? '答對了。' : '正確答案是 ' + 'ABCD'[A] + '。') + '</b> ' + q.e;
     host.querySelector('.score').textContent = '答對 ' + score + ' / ' + (i + 1);
     const nx = host.querySelector('#q-next');
     nx.hidden = false; nx.textContent = i === Q.length - 1 ? '看結果 →' : '下一題 →';
@@ -787,9 +706,7 @@
   }
   function done() {
     const pct = Math.round(score / Q.length * 100);
-    const verdict = pct >= 90 ? '這一章的觀念已經很穩，可以直接去寫課本習題了。'
-      : pct >= 70 ? '主幹抓到了，把答錯的那幾題回去把對應的互動模組再玩一次。'
-      : '建議從「功率三角形」跟「功率守恆」兩個模組重新走一遍，那是這章計算題的核心。';
+    const verdict = pct >= 90 ? verdicts[0] : pct >= 70 ? verdicts[1] : verdicts[2];
     host.innerHTML =
       '<div class="bar"><i style="width:100%"></i></div>' +
       '<div class="quiz-body" style="padding-bottom:18px">' +
@@ -801,7 +718,7 @@
     host.querySelector('#q-again').addEventListener('click', () => { i = 0; score = 0; render(); });
   }
   render();
-})();
+};
 
 /* 側欄捲動高亮 + 明暗主題切換（與電子學共用同一套行為） */
 (function () {

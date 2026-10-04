@@ -1160,7 +1160,7 @@ body.ann-finger .ann-free { touch-action: none; }
   .mt-given .gl-row span { grid-column: 2; grid-row: 1; }
   .mt-given .gl-row code { grid-column: 1 / -1; grid-row: auto; text-align: left; }
 }
-.mt-card .d-eq { white-space: normal; overflow-wrap: anywhere; }
+.mt-card .d-eq, .example.live .d-eq { white-space: normal; overflow-wrap: anywhere; }
 /* 期中考複習：仿題組 */
 .xb-tag.sim { color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); }
 .mt-spick { margin: 6px 0 16px; }

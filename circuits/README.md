@@ -6,8 +6,14 @@
 ```
 circuits/
   index.html            科目首頁：**章節選單**
-  ch11.html             CH11 交流功率分析（課本 p.455–488）
-  assets/ch11.js        CH11 的 8 個互動模組 + 15 題中英對照測驗
+  ch11-part1.html       CH11 PART 1 瞬時、平均與最大功率（11.2–11.3）
+  ch11-part2.html       CH11 PART 2 有效值與功率因數（11.4–11.5）
+  ch11-part3.html       CH11 PART 3 複功率與功因校正（11.6–11.9）
+  ch11.html             舊網址，轉到上面三頁
+  assets/ch11.js        CH11 的 8 個互動模組（三頁共用）+ 測驗引擎 __ch11Quiz
+  assets/ch11-partN.js  每頁的可改數字例題 + 10 題測驗
+  assets/ch11-partN-story.js  每頁的故事模式
+  assets/ch11-ex.js     課本 Example／Practice 題庫
   docs/CONTENT_MAP.md   章節分類與上傳進度
 ```
 
@@ -28,7 +34,7 @@ circuits/
 | 07 | 功因校正計算器 | 11.8 | 含課本例題 11.15，算出所需電容與線電流降幅 |
 | 08 | 電費計算器 | 11.9 | 度數與電費試算，附瓦特計接法說明 |
 
-另有**名詞中英對照表**（19 個關鍵詞）與 **15 題中英對照測驗**。
+三頁各有故事模式（20／20／21 個畫面）、可改數字的課本例題、名詞中英對照表與 10 題中英對照測驗。
 
 ## 語言慣例
 
