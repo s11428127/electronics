@@ -1110,3 +1110,54 @@ body.ann-finger .ann-free { touch-action: none; }
 .ann-pcs button { width: 32px; height: 32px; display: grid; place-items: center; background: transparent; border: 0; border-radius: 50%; cursor: pointer; padding: 0; }
 .ann-pcs button i { width: 20px; height: 20px; border-radius: 50%; background: currentColor; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .15); }
 .ann-pcs button.on i { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent); }
+
+/* ---------- 期中考複習頁（electronics/midterm1.html） ---------- */
+.xb-tag.teacher { color: var(--surface); background: #7a4fd0; }
+:root[data-theme="dark"] .xb-tag.teacher { background: #a98bf0; color: #1a1430; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .xb-tag.teacher { background: #a98bf0; color: #1a1430; } }
+.mt-changed { margin: 8px 0 0; font-size: 13px; color: var(--warn); }
+.mt-fig { margin: 12px 0 0; }
+.mt-chain { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin: 16px 0; }
+.mt-chain > div { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; min-width: 0; }
+.mt-chain > div:not(:last-child)::after { content: "→"; position: absolute; right: -9px; top: 50%; transform: translateY(-50%); color: var(--accent); font-weight: 700; font-size: 13px; z-index: 1; }
+.mt-chain small { display: block; font-size: 11px; color: var(--ink-3); }
+.mt-chain b { display: block; font-family: var(--font-mono); font-size: 13px; color: var(--accent); line-height: 1.5; margin: 2px 0; overflow-wrap: anywhere; }
+.mt-chain span { font-size: 11px; color: var(--ink-3); }
+@media (max-width: 900px) { .mt-chain { grid-template-columns: repeat(3, minmax(0, 1fr)); } .mt-chain > div:nth-child(3)::after { content: none; } }
+@media (max-width: 440px) { .mt-chain { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mt-chain > div:nth-child(3)::after { content: "→"; } .mt-chain > div:nth-child(2n)::after { content: none; } }
+.mt-junction { margin: 16px 0; }
+.mt-junction svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; font-family: inherit; }
+.mt-junction figcaption { font-size: 13px; color: var(--ink-2); margin-top: 6px; }
+.mtj-box { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+.mtj-p { fill: var(--hole-w); stroke: none; }
+.mtj-n { fill: var(--electron-w); stroke: none; }
+.mtj-dp { fill: var(--hole-w); opacity: .55; }
+.mtj-dn { fill: var(--electron-w); opacity: .55; }
+.mtj-dash { stroke: var(--ink-2); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.mtj-mid { stroke: var(--ink-3); stroke-width: 1; }
+.mtj-sg text { font-size: 18px; fill: var(--ink); text-anchor: middle; }
+.mtj-big { font-size: 34px; font-weight: 700; fill: var(--ink); text-anchor: middle; dominant-baseline: middle; }
+.mtj-t { font-size: 15px; fill: var(--ink); font-style: italic; }
+.mtj-arr { stroke: var(--ink); stroke-width: 1.4; marker-start: none; }
+.mt-sheet h3 { margin: 22px 0 8px; font-size: 15px; color: var(--accent); }
+.fs-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr) minmax(0, 1fr) auto; gap: 6px 14px; align-items: baseline;
+  padding: 10px 12px; border-bottom: 1px dashed var(--line); font-size: 13.5px; }
+.fs-row code { font-family: var(--font-mono); font-size: 13.5px; color: var(--ink); background: none; overflow-wrap: anywhere; }
+.fs-row span { color: var(--ink-2); }
+.fs-row em { font-style: normal; color: var(--warn); font-size: 12.5px; }
+.fs-row a { font-size: 12.5px; color: var(--accent); white-space: nowrap; }
+@media (max-width: 720px) { .fs-row { grid-template-columns: minmax(0, 1fr) auto; } .fs-row span, .fs-row em { grid-column: 1 / -1; } .fs-row a { grid-row: 1; grid-column: 2; } }
+.mt-qa { display: grid; gap: 8px; }
+.mt-qa details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
+.mt-qa summary { cursor: pointer; font-weight: 600; color: var(--ink); font-size: 14.5px; }
+.mt-qa details p { margin: 8px 0 2px; font-size: 14px; color: var(--ink-2); line-height: 1.7; }
+.mt-qa details a { margin-left: 4px; color: var(--accent); font-size: 13px; }
+/* 期中考複習：已知條件表的數值比較長，給它自己的欄寬並允許換行；詳解算式允許換行 */
+.mt-given .gl-row { grid-template-columns: minmax(0, 1.1fr) minmax(0, .8fr) minmax(0, 1.4fr); }
+.mt-given .gl-row code { white-space: normal; overflow-wrap: anywhere; text-align: right; }
+@media (max-width: 600px) {
+  .mt-given .gl-row { grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; }
+  .mt-given .gl-row span { grid-column: 2; grid-row: 1; }
+  .mt-given .gl-row code { grid-column: 1 / -1; grid-row: auto; text-align: left; }
+}
+.mt-card .d-eq { white-space: normal; overflow-wrap: anywhere; }

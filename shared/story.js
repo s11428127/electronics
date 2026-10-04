@@ -31,7 +31,10 @@
   }
   /* <sup>…</sup> → SVG 上標；後面接一個零寬字元把基線拉回來（空的 tspan 的 dy 不會生效） */
   const supSvg = (s, fs) => String(s).replace(/<sup>(.*?)<\/sup>/g, (m, x) =>
-    '<tspan font-size="' + (fs * 0.7).toFixed(1) + '" dy="' + (-fs * 0.4).toFixed(1) + '">' + x + '</tspan><tspan dy="' + (fs * 0.4).toFixed(1) + '">\u200B</tspan>');
+    '<tspan font-size="' + (fs * 0.7).toFixed(1) + '" dy="' + (-fs * 0.4).toFixed(1) + '">' + x + '</tspan><tspan dy="' + (fs * 0.4).toFixed(1) + '">\u200B</tspan>')
+    /* <sub>…</sub> → SVG 下標（同一招） */
+    .replace(/<sub>(.*?)<\/sub>/g, (m, x) =>
+    '<tspan font-size="' + (fs * 0.7).toFixed(1) + '" dy="' + (fs * 0.25).toFixed(1) + '">' + x + '</tspan><tspan dy="' + (-fs * 0.25).toFixed(1) + '">\u200B</tspan>');
   const D = {
     textW, supSvg,
     e: (x, y, key, r) => '<circle class="e" cx="' + x + '" cy="' + y + '" r="' + (r || 5) + '"' + k(key) + '/>',

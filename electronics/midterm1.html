@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>第一次期中考複習</title>
+<meta name="description" content="電子學第一次期中考（10/5）複習：老師範例整合計算題組（本質矽 → 摻雜 → 漂移電流 → V_bi → 接面電容）一步一步解、可改數字整條鏈重算，加上 CH1 公式總表與觀念速查。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="electronics" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>期中考 1 複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">期中考 1 複習</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事：一條鏈走一遍</a></li>
+      <li><a href="#given"><i>00</i>題目與已知（可改數字）</a></li>
+      <li><a href="#q1"><i>1</i>本質載子濃度 nᵢ</a></li>
+      <li><a href="#q2"><i>2</i>多數與少數載子</a></li>
+      <li><a href="#q3"><i>3</i>漂移電流密度</a></li>
+      <li><a href="#q4"><i>4</i>內建電壓 V<sub>bi</sub></a></li>
+      <li><a href="#q5"><i>5</i>逆偏與接面電容</a></li>
+      <li><a href="#sheet"><i>∑</i>公式總表</a></li>
+      <li><a href="#concepts"><i>?</i>觀念速查</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">電子學 · 第一次期中考 · 10/5（一）</div>
+      <h1>第一次期中考複習</h1>
+      <p class="sub">老師給的<strong>半導體整合計算題組</strong>：從一塊純矽開始，摻雜、算載子、加電場算電流、接成 pn 接面算 V<sub>bi</sub>、最後加逆偏算接面電容。五小題<strong>每一題都用到上一題的答案</strong>，這頁把它拆開一步一步解，數字也可以自己改。後面附整個考試範圍的公式總表和觀念速查。</p>
+      <div class="hero-meta">
+        <span class="chip h">✓ 10/5 考試範圍：CH1 PART 1 ～ PART 4 §01</span>
+        <span class="chip">📝 老師範例題組 5 題（參考解答已驗算 ✓）</span>
+        <span class="chip">10 個畫面的故事</span>
+      </div>
+      <div class="lec-links"><a href="hw1.html">📝 HW1 考前總複習（作業原題＋仿題）</a><a href="mistakes.html">📕 我的錯題本</a></div>
+    </div>
+
+    <!-- ══════════ 故事 ══════════ -->
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · 考前先看這段</div>
+      <h2>10 個畫面走完整條鏈<span class="h2-en">THE CHAIN IN 10 SCENES</span></h2>
+      <p class="lede">用老師題目的數字，從純矽一路走到 0.174 pF。點畫面前進、點左邊四分之一退回，也可以自動播放。</p>
+      <div id="story"></div>
+    </section>
+
+    <!-- ══════════ 00 題目與已知 ══════════ -->
+    <section class="sec" id="given">
+      <div class="eyebrow">00 · 老師範例 · 半導體整合計算題組</div>
+      <h2>題目與已知條件<span class="h2-en">THE PROBLEM SET</span></h2>
+      <p class="lede">這份題組的重點不是五條公式各自會套，而是<strong>前一步的答案就是下一步的輸入</strong>：nᵢ 決定少數載子、載子濃度決定電流、摻雜濃度和 nᵢ 決定 V<sub>bi</sub>、V<sub>bi</sub> 又決定電容。任何一步算錯，後面全部跟著錯。</p>
+
+      <div class="mt-chain" aria-label="整條因果鏈與目前的答案">
+        <div><small>① 本質矽</small><b id="ch-ni">—</b><span>nᵢ（cm⁻³）</span></div>
+        <div><small>② P 型</small><b id="ch-p">—</b><span>多數／少數</span></div>
+        <div><small>② N 型</small><b id="ch-n">—</b><span>多數／少數</span></div>
+        <div><small>③ 加電場</small><b id="ch-j">—</b><span>A/cm²</span></div>
+        <div><small>④ 接起來</small><b id="ch-vbi">—</b><span>V<sub>bi</sub></span></div>
+        <div><small>⑤ 逆偏</small><b id="ch-cj">—</b><span>C<sub>j</sub></span></div>
+      </div>
+
+      <div class="glossary mt-given">
+        <div class="gl-row"><b>已知</b><span>符號</span><code>數值</code></div>
+        <div class="gl-row"><b>溫度</b><span>T</span><code>300 K</code></div>
+        <div class="gl-row"><b>矽材料常數</b><span>B</span><code>5.23×10¹⁵ cm⁻³K⁻³ᐟ²</code></div>
+        <div class="gl-row"><b>矽能隙</b><span>E<sub>g</sub></span><code>1.10 eV</code></div>
+        <div class="gl-row"><b>波茲曼常數</b><span>k</span><code>86×10⁻⁶ eV/K</code></div>
+        <div class="gl-row"><b>電子電荷量</b><span>q</span><code>1.60×10⁻¹⁹ C</code></div>
+        <div class="gl-row"><b>電子／電洞遷移率</b><span>μ<sub>n</sub>／μ<sub>p</sub></span><code>1350／480 cm²/(V·s)</code></div>
+        <div class="gl-row"><b>外加電場</b><span>E</span><code>100 V/cm</code></div>
+        <div class="gl-row"><b>P 型受體濃度</b><span>N<sub>a</sub></span><code>1.0×10¹⁶ cm⁻³</code></div>
+        <div class="gl-row"><b>N 型施體濃度</b><span>N<sub>d</sub></span><code>8.0×10¹⁵ cm⁻³</code></div>
+        <div class="gl-row"><b>零偏壓接面電容</b><span>C<sub>j0</sub></span><code>0.50 pF</code></div>
+        <div class="gl-row"><b>逆向偏壓</b><span>V<sub>R</sub></span><code>5.0 V</code></div>
+        <div class="gl-row"><b>熱電壓（300 K）</b><span>V<sub>T</sub> = kT/q</span><code>0.026 V</code></div>
+      </div>
+      <p class="note">假設：雜質完全游離、N<sub>a</sub>、N<sub>d</sub> ≫ nᵢ；低電場下 μ<sub>n</sub>、μ<sub>p</sub> 視為常數。可用的關係式：nᵢ = BT<sup>3/2</sup>e<sup>−E<sub>g</sub>/(2kT)</sup>、n₀p₀ = nᵢ²、J = q(nμ<sub>n</sub> + pμ<sub>p</sub>)E、V<sub>bi</sub> = V<sub>T</sub> ln(N<sub>a</sub>N<sub>d</sub>/nᵢ²)、C<sub>j</sub> = C<sub>j0</sub>(1 + V<sub>R</sub>/V<sub>bi</sub>)<sup>−1/2</sup>。</p>
+
+      <figure class="mt-junction">
+        <svg viewBox="0 0 560 190" role="img" aria-label="突變 pn 接面：P 側 Na = 1.0×10^16，N 側 Nd = 8.0×10^15，空乏區寬度 W，N 側比 P 側寬一點">
+          <rect x="30" y="50" width="500" height="90" rx="6" class="mtj-box"/>
+          <rect x="30" y="50" width="211" height="90" rx="6" class="mtj-p"/>
+          <rect x="319" y="50" width="211" height="90" rx="6" class="mtj-n"/>
+          <rect x="241" y="50" width="34.7" height="90" class="mtj-dp"/><rect x="275.7" y="50" width="43.3" height="90" class="mtj-dn"/>
+          <line x1="241" y1="44" x2="241" y2="164" class="mtj-dash"/><line x1="319" y1="44" x2="319" y2="164" class="mtj-dash"/>
+          <line x1="275.7" y1="50" x2="275.7" y2="140" class="mtj-mid"/>
+          <g class="mtj-sg"><text x="258" y="80">−</text><text x="258" y="104">−</text><text x="258" y="128">−</text><text x="297" y="80">+</text><text x="297" y="104">+</text><text x="297" y="128">+</text></g>
+          <text x="135" y="102" class="mtj-big">p</text><text x="425" y="102" class="mtj-big">n</text>
+          <text x="30" y="32" class="mtj-t">N<tspan font-size="10" dy="3">a</tspan><tspan dy="-3"> = 1.0×10¹⁶ cm⁻³</tspan></text>
+          <text x="530" y="32" class="mtj-t" text-anchor="end">N<tspan font-size="10" dy="3">d</tspan><tspan dy="-3"> = 8.0×10¹⁵ cm⁻³</tspan></text>
+          <line x1="243" y1="158" x2="317" y2="158" class="mtj-arr"/><text x="280" y="182" class="mtj-t" text-anchor="middle">W</text>
+        </svg>
+        <figcaption>重畫老師的示意圖。小修正：N<sub>a</sub> &gt; N<sub>d</sub>，空乏區兩側要露出一樣多的電荷，所以摻雜少的 <b>N 側比較寬</b>（x<sub>n</sub> : x<sub>p</sub> = N<sub>a</sub> : N<sub>d</sub> = 1 : 0.8）；原圖畫成一樣寬。不影響這題的計算。</figcaption>
+      </figure>
+
+      <div class="bench">
+        <div class="bench-head"><h3>改數字：整條鏈一起重算</h3><span class="spacer"></span><button class="btn" type="button" id="mt-reset">↺ 回到老師原題</button></div>
+        <div class="controls">
+          <div class="ctrl"><label for="mt-T">溫度 T<output for="mt-T"></output></label><input type="range" id="mt-T" min="250" max="400" step="5" value="300"></div>
+          <div class="ctrl"><label for="mt-Na">受體 N<sub>a</sub><output for="mt-Na"></output></label><input type="range" id="mt-Na" min="0" max="13" step="1" value="7"></div>
+          <div class="ctrl"><label for="mt-Nd">施體 N<sub>d</sub><output for="mt-Nd"></output></label><input type="range" id="mt-Nd" min="0" max="13" step="1" value="6"></div>
+          <div class="ctrl"><label for="mt-E">電場 E<output for="mt-E"></output></label><input type="range" id="mt-E" min="0" max="6" step="1" value="3"></div>
+          <div class="ctrl"><label for="mt-VR">逆偏 V<sub>R</sub><output for="mt-VR"></output></label><input type="range" id="mt-VR" min="0" max="20" step="0.5" value="5"></div>
+          <div class="ctrl"><label for="mt-Cj0">C<sub>j0</sub><output for="mt-Cj0"></output></label><input type="range" id="mt-Cj0" min="0.1" max="2" step="0.05" value="0.5"></div>
+        </div>
+        <p class="msg" id="mt-note"></p>
+      </div>
+      <p class="note">溫度一改，V<sub>T</sub> 照 0.026 × T/300 跟著變。跟參考解答一樣，每一步的結果先四捨五入到 3 位有效數字再帶進下一步（nᵢ = 1.50×10¹⁰、V<sub>bi</sub> = 0.692 V）。</p>
+    </section>
+
+    <!-- ══════════ 1 ══════════ -->
+    <section class="sec" id="q1">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 1</span>第 1 題 · Intrinsic Carrier Concentration</div>
+      <h2>本質載子濃度 nᵢ<span class="h2-en">INTRINSIC CARRIER CONCENTRATION</span></h2>
+      <p class="lede">純矽裡，熱擾動偶爾打斷一個共價鍵，生出一對電子–電洞。nᵢ 就是「室溫下平均有多少對」—— 它是後面所有計算的<strong>基準尺</strong>。</p>
+      <div class="eq">nᵢ = B · T<sup>3/2</sup> · e<sup>−E<em>g</em>/(2kT)</sup>　　本質矽：n₀ = p₀ = nᵢ</div>
+      <div id="card-q1"></div>
+      <div class="pitfall">
+        <h4>這一題的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> k 用 8.62×10⁻⁵ 算出 1.56×10¹⁰。<span class="o">照題目給的 86×10⁻⁶</span>，才會剛好 1.50×10¹⁰。</li>
+          <li><span class="x">✗</span> 指數寫成 −E<sub>g</sub>/(kT)。<span class="o">分母是 2kT</span>，漏掉 2 會差十個數量級。</li>
+          <li><span class="x">✗</span> T<sup>3/2</sup> 按成 T × 3/2。<span class="o">T<sup>3/2</sup> = T√T</span>。</li>
+        </ul>
+      </div>
+      <p class="note">要回去看：<a href="ch1-part1.html#ni">CH1 PART 1 · 本質載子濃度</a></p>
+    </section>
+
+    <!-- ══════════ 2 ══════════ -->
+    <section class="sec" id="q2">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 1 ＋ PART 2</span>第 2 題 · Majority and Minority Carriers</div>
+      <h2>摻雜後的多數與少數載子<span class="h2-en">MAJORITY AND MINORITY CARRIERS</span></h2>
+      <p class="lede">摻雜決定<button class="tm" data-t="多數載子">多數載子</button>（幾乎等於摻雜濃度）；<button class="tm" data-t="少數載子">少數載子</button>再用<button class="tm" data-t="質量作用定律">質量作用定律</button>反推。兩者乘積永遠是 nᵢ²，像翹翹板：一邊越多，另一邊越少。</p>
+      <div class="eq">P 型：p<em>p0</em> ≈ N<em>a</em>，n<em>p0</em> = nᵢ²/N<em>a</em>　　N 型：n<em>n0</em> ≈ N<em>d</em>，p<em>n0</em> = nᵢ²/N<em>d</em></div>
+      <div id="card-q2"></div>
+      <div class="pitfall">
+        <h4>這一題的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 少數載子寫成 nᵢ / N。<span class="o">是 nᵢ² / N</span>（nᵢ 要平方）。</li>
+          <li><span class="x">✗</span> 以為多數載子 = 摻雜 + nᵢ。<span class="o">N ≫ nᵢ 時 nᵢ 可以忽略</span>，直接 ≈ N。</li>
+          <li><span class="x">✗</span> P 型、N 型的多數少數寫反。<span class="o">P 型：電洞多；N 型：電子多</span>。</li>
+        </ul>
+      </div>
+      <p class="note">要回去看：<a href="ch1-part1.html#dope">N 型摻雜</a>、<a href="ch1-part2.html#ptype">P 型</a>、<a href="ch1-part2.html#mass">質量作用定律</a></p>
+    </section>
+
+    <!-- ══════════ 3 ══════════ -->
+    <section class="sec" id="q3">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 2 ＋ PART 3</span>第 3 題 · Drift Current Density</div>
+      <h2>漂移電流密度<span class="h2-en">DRIFT CURRENT DENSITY</span></h2>
+      <p class="lede">加了電場，電子、電洞都被推著跑，兩者的電流都<strong>順著電場方向</strong>，所以相加。哪一種載子多，電流就幾乎全靠它 —— 少數載子那項會小到可以忽略。</p>
+      <div class="eq">J = q(n·μ<em>n</em> + p·μ<em>p</em>)E = σE　　P 型 ≈ q·p·μ<em>p</em>·E　　N 型 ≈ q·n·μ<em>n</em>·E</div>
+      <div id="card-q3"></div>
+      <div class="pitfall">
+        <h4>這一題的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 只寫一項就說「主要由電洞貢獻」。<span class="o">兩項都寫出來再比大小</span>，這題問的就是比較。</li>
+          <li><span class="x">✗</span> 以為 N<sub>d</sub> 比較小，J<sub>N</sub> 就比較小。<span class="o">電子的 μ 是電洞的 2.8 倍</span>，這題 J<sub>N</sub> 反而比較大。</li>
+          <li><span class="x">✗</span> 單位混用 m 和 cm。<span class="o">濃度 cm⁻³、μ 用 cm²/V·s、E 用 V/cm</span>，J 才是 A/cm²。</li>
+        </ul>
+      </div>
+      <p class="note">要回去看：<a href="ch1-part2.html#drift">漂移電流</a>、<a href="ch1-part2.html#sigma">導電度</a></p>
+    </section>
+
+    <!-- ══════════ 4 ══════════ -->
+    <section class="sec" id="q4">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>第 4 題 · Built-in Potential Barrier</div>
+      <h2>pn 接面內建電壓 V<sub>bi</sub><span class="h2-en">BUILT-IN POTENTIAL</span></h2>
+      <p class="lede">接起來的瞬間，多數載子往對面擴散，留下固定的離子；離子的電場把擴散擋住，形成一道坡。兩邊濃度差越大，擴散越兇，坡就要越高 —— 但因為是 ln，<strong>摻雜放大 10 倍，坡只高約 0.06 V</strong>。</p>
+      <div class="eq">V<em>bi</em> = V<em>T</em> · ln(N<em>a</em>N<em>d</em> / nᵢ²)　　V<em>T</em> = kT/q ≈ 0.026 V（300 K）</div>
+      <div id="card-q4"></div>
+      <div class="pitfall">
+        <h4>這一題的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 用 log（以 10 為底）。<span class="o">是 ln</span>，用 log 會算出 0.30 V。</li>
+          <li><span class="x">✗</span> 分母寫 nᵢ。<span class="o">分母是 nᵢ²</span>。</li>
+          <li><span class="x">✗</span> 把 V<sub>bi</sub> 當成可以用電錶量到的電壓。<span class="o">外部量不到</span>，接面兩端的金屬接觸電位會抵消它。</li>
+        </ul>
+      </div>
+      <p class="note">要回去看：<a href="ch1-part3.html#form">接面形成</a>、<a href="ch1-part3.html#vbi">內建電壓</a></p>
+    </section>
+
+    <!-- ══════════ 5 ══════════ -->
+    <section class="sec" id="q5">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 3</span>第 5 題 · Junction Capacitance under Reverse Bias</div>
+      <h2>逆向偏壓下的接面電容<span class="h2-en">JUNCTION CAPACITANCE</span></h2>
+      <p class="lede">空乏區沒有載子、像電容中間的絕緣層，兩側的 P、N 區像極板。逆偏把坡墊高，空乏區要露出更多離子才擋得住，於是變寬 —— 極板距離拉大，電容變小。</p>
+      <div class="eq">C<em>j</em> = C<em>j0</em> (1 + V<em>R</em>/V<em>bi</em>)<sup>−1/2</sup>　　W ∝ √(V<em>bi</em> + V<em>R</em>)　　C<em>j</em> ≈ εA/W</div>
+      <div id="card-q5"></div>
+      <div class="pitfall">
+        <h4>這一題的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 指數當成 +1/2，電容變大。<span class="o">是 −1/2：逆偏越大，電容越小</span>。</li>
+          <li><span class="x">✗</span> V<sub>R</sub> 代成 −5 V。<span class="o">公式裡的 V<sub>R</sub> 是逆偏的大小，代正值</span>。</li>
+          <li><span class="x">✗</span> (b) 只寫結論。<span class="o">要寫因果：V<sub>R</sub>↑ → W↑ → C<sub>j</sub>↓</span>，並說明空乏區像電容的介電層。</li>
+        </ul>
+      </div>
+      <p class="note">要回去看：<a href="ch1-part3.html#rev">逆向偏壓</a>、<a href="ch1-part3.html#cj">接面電容</a></p>
+    </section>
+
+    <!-- ══════════ 公式總表 ══════════ -->
+    <section class="sec" id="sheet">
+      <div class="eyebrow">Formula sheet · 考試範圍 CH1 PART 1 ～ PART 4 §01</div>
+      <h2>公式總表<span class="h2-en">FORMULA SHEET</span></h2>
+      <p class="lede">每一條都寫了<strong>什麼時候用</strong>和<strong>最常錯在哪</strong>，右邊可以直接跳回講解。</p>
+      <div class="mt-sheet">
+        <h3>常數（矽、300 K）</h3>
+        <div class="fs-row"><code>q = 1.6×10⁻¹⁹ C　k = 86×10⁻⁶ eV/K（≈ 8.62×10⁻⁵）　V<sub>T</sub> = kT/q ≈ 0.026 V</code><span>E<sub>g</sub> = 1.1 eV、nᵢ ≈ 1.5×10¹⁰ cm⁻³、μ<sub>n</sub> = 1350、μ<sub>p</sub> = 480 cm²/V·s、D<sub>n</sub> = 35、D<sub>p</sub> = 12 cm²/s</span><em>題目有給就照題目的數字</em><a href="ch1-part1.html#ni">PART 1</a></div>
+
+        <h3>PART 1 · 本質半導體與 N 型</h3>
+        <div class="fs-row"><code>nᵢ = B T<sup>3/2</sup> e<sup>−E<sub>g</sub>/(2kT)</sup></code><span>算本質載子濃度；溫度一升 nᵢ 暴增</span><em>分母 2kT；T<sup>3/2</sup> = T√T</em><a href="ch1-part1.html#ni">nᵢ</a></div>
+        <div class="fs-row"><code>本質：n₀ = p₀ = nᵢ</code><span>純矽電子、電洞成對產生</span><em>不是 n₀ + p₀ = nᵢ</em><a href="ch1-part1.html#holemove">電洞</a></div>
+        <div class="fs-row"><code>N 型：n₀ ≈ N<sub>d</sub></code><span>摻 5 價（磷），施體，留下 P⁺</span><em>需 N<sub>d</sub> ≫ nᵢ；P⁺ 不會動、不導電</em><a href="ch1-part1.html#dope">N 型</a></div>
+
+        <h3>PART 2 · P 型、質量作用、漂移與擴散</h3>
+        <div class="fs-row"><code>P 型：p₀ ≈ N<sub>a</sub></code><span>摻 3 價（硼），受體，留下 B⁻</span><em>B⁻ 是固定離子</em><a href="ch1-part2.html#ptype">P 型</a></div>
+        <div class="fs-row"><code>n₀p₀ = nᵢ²</code><span>由多數載子反推少數載子</span><em>只在熱平衡成立；nᵢ 要平方</em><a href="ch1-part2.html#mass">質量作用</a></div>
+        <div class="fs-row"><code>I = J · A</code><span>電流密度換實際電流</span><em>μm² → cm² 是 10⁻⁸</em><a href="ch1-part2.html#ij">I 與 J</a></div>
+        <div class="fs-row"><code>J<sub>drift</sub> = q(nμ<sub>n</sub> + pμ<sub>p</sub>)E = σE</code><span>加電場的電流</span><em>兩種載子都順電場 → 相加</em><a href="ch1-part2.html#drift">漂移</a></div>
+        <div class="fs-row"><code>σ = q(nμ<sub>n</sub> + pμ<sub>p</sub>)，ρ = 1/σ</code><span>導電度、電阻率</span><em>單位 (Ω·cm)⁻¹</em><a href="ch1-part2.html#sigma">導電度</a></div>
+        <div class="fs-row"><code>J<sub>diff</sub> = qD<sub>n</sub>(dn/dx) − qD<sub>p</sub>(dp/dx)</code><span>濃度不均勻的電流</span><em>電洞那項有負號</em><a href="ch1-part2.html#diff">擴散</a></div>
+        <div class="fs-row"><code>J = 漂移（電子＋電洞）＋ 擴散（電子＋電洞）</code><span>四項加起來</span><em>通常只有一項是主角</em><a href="ch1-part2.html#total">總電流</a></div>
+
+        <h3>PART 3 · 愛因斯坦、多出載子、pn 接面</h3>
+        <div class="fs-row"><code>D/μ = kT/q = V<sub>T</sub></code><span>由 μ 求 D（或反過來）</span><em>只跟溫度有關</em><a href="ch1-part3.html#einstein">愛因斯坦</a></div>
+        <div class="fs-row"><code>n = n₀ + δn，p = p₀ + δp，δn = δp</code><span>照光、注入產生多出載子</span><em>主要改變少數載子；n·p ≠ nᵢ²</em><a href="ch1-part3.html#excess">多出載子</a></div>
+        <div class="fs-row"><code>V<sub>bi</sub> = V<sub>T</sub> ln(N<sub>a</sub>N<sub>d</sub>/nᵢ²)</code><span>pn 接面的內建電位障</span><em>ln 不是 log；分母 nᵢ²</em><a href="ch1-part3.html#vbi">V<sub>bi</sub></a></div>
+        <div class="fs-row"><code>內建電場：N → P；熱平衡 |J<sub>diff</sub>| = |J<sub>drift</sub>|</code><span>接面為什麼會停下來</span><em>總電流 = 0，但兩股電流都還在</em><a href="ch1-part3.html#form">接面形成</a></div>
+        <div class="fs-row"><code>逆偏：位障 V<sub>bi</sub> + V<sub>R</sub>，W ∝ √(V<sub>bi</sub> + V<sub>R</sub>)，I ≈ −I<sub>S</sub></code><span>反接時空乏區變寬、電流極小且固定</span><em>I<sub>S</sub> 由少數載子決定，跟 V<sub>R</sub> 無關</em><a href="ch1-part3.html#rev">逆偏</a></div>
+        <div class="fs-row"><code>C<sub>j</sub> = C<sub>j0</sub>(1 + V<sub>R</sub>/V<sub>bi</sub>)<sup>−1/2</sup></code><span>逆偏下的接面電容</span><em>指數 −1/2；V<sub>R</sub> 代正值</em><a href="ch1-part3.html#cj">接面電容</a></div>
+
+        <h3>PART 4 §01 · 順向偏壓（考到這裡）</h3>
+        <div class="fs-row"><code>順偏：位障 V<sub>bi</sub> − v<sub>D</sub>，W 變窄</code><span>P 接正、N 接負</span><em>淨電場仍由 N 指向 P，只是變弱</em><a href="ch1-part4.html#fwd">順偏</a></div>
+        <div class="fs-row"><code>p<sub>n</sub>(0) = p<sub>n0</sub> e<sup>v<sub>D</sub>/V<sub>T</sub></sup></code><span>多數載子翻過坡、變成對面的少數載子（注入）</span><em>電流是指數的根源</em><a href="ch1-part4.html#fwd">注入</a></div>
+        <div class="fs-row"><code>i<sub>D</sub> = I<sub>S</sub>(e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1)</code><span>老師第 7 頁介紹過公式（例題還沒教）</span><em>逆偏時 e 項 → 0，只剩 −I<sub>S</sub></em><a href="ch1-part4.html#iv">I–V</a></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 觀念速查 ══════════ -->
+    <section class="sec" id="concepts">
+      <div class="eyebrow">Concept check · 點開看答案</div>
+      <h2>觀念速查<span class="h2-en">CONCEPT CHECK</span></h2>
+      <p class="lede">簡答題、是非題最常問的觀念。先在心裡回答，再點開對。</p>
+      <div class="mt-qa">
+        <details><summary>摻雜之後，半導體還是電中性嗎？</summary><p>是。矽和雜質原子本來都是中性，加在一起還是中性：多出來的自由電子被固定的 P⁺ 平衡，多出來的電洞被固定的 B⁻ 平衡。<a href="ch1-part2.html#compare">→ 總整理</a></p></details>
+        <details><summary>摻雜越重，少數載子會怎樣？</summary><p>越少。少數 = nᵢ² / 多數，多數變 10 倍，少數就變 1/10。<a href="ch1-part2.html#mass">→ 質量作用定律</a></p></details>
+        <details><summary>n₀p₀ = nᵢ² 什麼時候不成立？</summary><p>不在熱平衡的時候：照光、順偏注入（n·p &gt; nᵢ²），逆偏把載子抽走（n·p &lt; nᵢ²）。<a href="ch1-part3.html#excess">→ 多出載子</a></p></details>
+        <details><summary>電子往左跑，它的漂移電流往哪？</summary><p>往右。電子帶負電，電流方向跟它的運動方向相反；所以電子、電洞的漂移電流都<b>順著電場</b>。<a href="ch1-part2.html#drift">→ 漂移</a></p></details>
+        <details><summary>電洞從濃往稀擴散，擴散電流往哪？</summary><p>跟電洞跑的方向相同（往稀的方向），所以 J<sub>p</sub> = −qD<sub>p</sub>(dp/dx) 有負號；電子剛好相反，J<sub>n</sub> = +qD<sub>n</sub>(dn/dx)。<a href="ch1-part2.html#diff">→ 擴散</a></p></details>
+        <details><summary>空乏區裡有什麼？</summary><p>只有固定的離子（P 側 B⁻、N 側 P⁺），沒有能動的載子，所以不導電，又叫空間電荷區。<a href="ch1-part3.html#form">→ 接面形成</a></p></details>
+        <details><summary>內建電場的方向？</summary><p>由 N 指向 P（從 P⁺ 指向 B⁻）。它擋住多數載子繼續擴散，同時把少數載子掃過接面（漂移）。<a href="ch1-part3.html#form">→ 接面形成</a></p></details>
+        <details><summary>熱平衡時接面沒有電流嗎？</summary><p>宏觀總電流 = 0，但擴散電流和漂移電流都還在，只是大小相等、方向相反（動態平衡）。<a href="ch1-part3.html#form">→ 接面形成</a></p></details>
+        <details><summary>N<sub>a</sub> ≠ N<sub>d</sub> 時，空乏區偏向哪一邊？</summary><p>摻雜比較少的那一邊比較寬：兩側露出的電荷要一樣多，濃度低就要露出更寬一層（N<sub>a</sub>x<sub>p</sub> = N<sub>d</sub>x<sub>n</sub>）。這題 N 側比較寬。<a href="ch1-part3.html#vbi">→ 內建電壓</a></p></details>
+        <details><summary>逆偏加大，為什麼電流幾乎不變？</summary><p>多數載子翻不過更高的坡，貢獻 ≈ 0；剩下的電流只靠少數載子，而它們的數量由熱產生決定、跟電壓無關，所以固定在 I<sub>S</sub>。<a href="ch1-part3.html#rev">→ 逆偏</a></p></details>
+        <details><summary>逆偏加大，W 和 C<sub>j</sub> 怎麼變？</summary><p>V<sub>R</sub>↑ → 要露出更多離子才擋得住 → W↑ → C<sub>j</sub> ≈ εA/W ↓。<a href="ch1-part3.html#cj">→ 接面電容</a></p></details>
+        <details><summary>順偏時，越過接面的多數載子後來怎樣？</summary><p>到了對面就變成少數載子（注入），一邊擴散、一邊被復合掉，濃度隨距離指數衰減。<a href="ch1-part4.html#fwd">→ 順偏</a></p></details>
+        <details><summary>V<sub>T</sub> = 0.026 V 是什麼？</summary><p>熱電壓 kT/q：熱擾動的能量換成電壓有多大。它同時是愛因斯坦關係的 D/μ、V<sub>bi</sub> 和二極體方程式的電壓尺度。<a href="ch1-part3.html#einstein">→ 愛因斯坦關係</a></p></details>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p>題目來源：老師提供的「半導體整合計算題組範例」（10/5 第一次期中考複習）；參考解答已逐題用程式驗算，數值全部正確。示意圖依題目數據重畫。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="assets/midterm1.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/midterm1-story.js"></script>
+<script>
+(function () {
+  'use strict';
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } });
+  }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

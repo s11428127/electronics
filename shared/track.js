@@ -155,9 +155,9 @@
     const r = m.r, p = m.key.split(':')[0], id = m.key.slice(p.length + 1), d = r.d || {};
     const href = r.u || fileOf(m.k) + (p === 'q' ? '#quiz-sec' : '#' + id);
     const body = d.q ? '<details class="mk-d"><summary>看題目和答案</summary><div class="mk-q">' + d.q + '</div>' +
-      (d.my ? '<div class="mk-row ng"><b>你選：</b>' + d.my + '</div>' : '') + (d.ans ? '<div class="mk-row ok"><b>正解：</b>' + d.ans + '</div>' : '') +
+      (d.my ? '<div class="mk-row ng"><b>你選：</b>' + d.my + '</div>' : '') + (d.ans ? '<div class="mk-row ok"><b>正解：</b>' + String(d.ans).replace(/^\s*<b>答案：<\/b>/, '') + '</div>' : '') +
       (d.e ? '<div class="mk-e">' + d.e + '</div>' : '') + '</details>' : '';
-    return '<li class="mk-item ' + m.st + '"><div class="mk-top"><span class="mk-kind">' + KIND[p] + '</span>' +
+    return '<li class="mk-item ' + m.st + '"><div class="mk-top"><span class="mk-kind">' + (/^老師範例/.test(r.s || '') ? '老師範例' : KIND[p]) + '</span>' +
       '<span class="trk-b ' + m.st + '">' + tagTxt(r) + ' ' + xBtn(m.k, m.key) + '</span></div>' +
       '<div class="mk-s">' + (r.s || '（題目）') + '</div>' + body + '<a class="mk-go" href="' + href + '">回原題重做 →</a></li>';
   }
