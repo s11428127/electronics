@@ -1172,3 +1172,6 @@ body.ann-finger .ann-free { touch-action: none; }
 .mt-sgiven span:last-child { font-family: inherit; color: var(--ink-2); font-size: 12.5px; background: none; padding-left: 0; }
 .mt-rbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 12px; font-size: 13.5px; color: var(--ink-2); }
 .mt-slot + .mt-slot { margin-top: 14px; }
+
+/* 課本練習題：題目下面的英文原文 */
+.xb-q .q-en { margin: 10px 0 0; }

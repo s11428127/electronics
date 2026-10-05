@@ -2,7 +2,7 @@
    課本例題（Example）與練習題（Practice Problem）卡片
    用法：<div class="exbook" data-bank="__CH11EX" data-sec="11.2"></div>
    題庫：window.__CH11EX = { book:'Alexander & Sadiku', items:[…] }
-   每一題：{ id, sec:'11.2', kind:'ex'|'pp', no:'11.1', title, q, fig, idea, steps:[{t, eq, why}], ans, hint, note }
+   每一題：{ id, sec:'11.2', kind:'ex'|'pp', no:'11.1', tag（選用，自訂標籤文字，例 'TYU 1.3'）, title, q, fig, idea, steps:[{t, eq, why}], ans, hint, note }
    - Example：題目＋圖，詳解一步一步按「下一步」打開（也可以全部展開）
    - Practice：題目＋圖＋手寫板，提示／答案／詳解都先遮起來，寫完再按
    另外 __EXB.picker(host, secs) 做「選小節」：只顯示選中的那一節。
@@ -15,7 +15,7 @@
     const el = document.createElement('article');
     el.className = 'xb-card ' + (it.kind === 'ex' ? 'is-ex' : 'is-pp');
     el.id = 'xb-' + it.id;
-    const tag = it.kind === 'ex' ? '<span class="xb-tag ex">Example ' + it.no + '</span>' : '<span class="xb-tag pp">Practice Problem ' + it.no + '</span>';
+    const tag = it.tag ? '<span class="xb-tag ' + (it.kind === 'ex' ? 'ex' : 'pp') + '">' + it.tag + '</span>' : it.kind === 'ex' ? '<span class="xb-tag ex">Example ' + it.no + '</span>' : '<span class="xb-tag pp">Practice Problem ' + it.no + '</span>';
     const head = '<header class="xb-head">' + tag + (it.title ? '<b>' + it.title + '</b>' : '') + '</header>' +
       '<div class="xb-q">' + it.q + '</div>' + (it.fig ? '<figure class="xb-fig">' + it.fig + (it.cap ? '<figcaption>' + it.cap + '</figcaption>' : '') + '</figure>' : '');
     const steps = '<ol class="xb-steps">' + it.steps.map((s, i) => stepHTML(s, i)).join('') + '</ol>';

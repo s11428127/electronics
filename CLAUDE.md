@@ -107,6 +107,8 @@
 - 考試範圍：範圍內的章節 hero 放 `✓ 考試範圍` chip；範圍終點放 `.scope-end` 提示框，之後的節 eyebrow 加 `<span class="scope-no">還沒教到</span>`；
   故事模式在終點插一個「⛳ 考試範圍到這裡」畫面。還沒教到的作業題先不放，在總複習頁列出來。
 
+- 課本練習題頁 `electronics/practice1.html`（題庫 `assets/ch1-practice.js` → `__CH1PR`，exbook 卡片，`tag` 自訂標籤如 'TYU 1.3'）：作業指定進階題、Exercise、TYU、章末習題、Review Questions；**題目先中文、下面 `.q-en` 放課本英文原文**（使用者 10/5 要求）。課本沒附答案的自己解、程式驗算。
+
 ## 考前複習頁（例：`electronics/midterm1.html`）
 
 - 老師給的範例題組做成一頁：故事模式（約 10 個畫面，用題目數字走一遍）→ 題目與已知（可改數字面板，整條鏈一起重算）→ 每小題一張 `.xb-card.is-pp`

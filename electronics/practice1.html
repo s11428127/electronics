@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH1 課本練習題</title>
+<meta name="description" content="電子學第一次期中考範圍的課本練習題：作業指定進階題、Exercise、TYU、章末習題與觀念題，中英對照、附手寫板與詳解。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body data-subject="electronics" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>CH1 課本練習題</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH1 課本練習題</div>
+    <ol>
+      <li><a href="#hwp"><i>★</i>作業指定進階題</a></li>
+      <li><a href="#exs"><i>Ex</i>Exercise Problems</a></li>
+      <li><a href="#tyus"><i>TYU</i>Test Your Understanding</a></li>
+      <li><a href="#p11"><i>1.1</i>章末習題：半導體</a></li>
+      <li><a href="#p12"><i>1.2</i>章末習題：pn 接面</a></li>
+      <li><a href="#rqs"><i>RQ</i>觀念題 Review Questions</a></li>
+      <li><a href="#ext"><i>+</i>延伸（還沒教到）</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Neamen 4e · Chapter 1 · Practice</div>
+      <h1>CH1 課本練習題（考試範圍）</h1>
+      <p class="sub">全部從課本第一章出：<strong>先寫中文題目，下面是英文原文</strong>（考卷是英文）。每題都有手寫板，先自己算，再按「提示」「看答案」「看詳解」，最後按「算對了／算錯了」—— 算錯的會進錯題本。</p>
+      <div class="hero-meta">
+        <span class="chip h">✓ 10/5 考試範圍：1.1 全部 ＋ 1.2 到順向偏壓</span>
+        <span class="chip">★ 作業指定進階題 9 題</span>
+        <span class="chip">Exercise 6 ＋ TYU 6</span>
+        <span class="chip">章末習題 16</span>
+        <span class="chip">觀念題 7</span>
+      </div>
+      <div class="lec-links"><a href="midterm1.html#sheet">📋 公式總表</a><a href="hw1.html">📝 HW1 考前總複習</a><a href="midterm1.html">🎯 老師範例題組</a></div>
+    </div>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="hwp">
+      <div class="eyebrow"><span class="scope-ok">作業指定 · 會考</span>HW1 PART II Advanced</div>
+      <h2>作業指定的進階題<span class="h2-en">ASSIGNED ADVANCED PROBLEMS</span></h2>
+      <p class="lede">HW1 最後寫：<i>These basic and advanced problems will be the materials for our examinations.</i> 指定的是 Problem 1.2、1.9、1.14、1.16、1.17、1.20、1.25、1.36、1.37。課本沒附答案，詳解是自己解、數值用程式驗算過。</p>
+      <p class="note">1.36、1.37 是<b>溫度效應</b>（I<sub>S</sub> 每 5 °C 加倍），在原講義 PART 4 第 8 頁之後、老師還沒教；作業有列所以放上來，排在最後，有時間再看。</p>
+      <div class="exbook" data-bank="__CH1PR" data-sec="hw"></div>
+    </section>
+
+    <section class="sec" id="exs">
+      <div class="eyebrow">Exercise Problems · 課本附答案</div>
+      <h2>Exercise 1.1 ～ 1.6<span class="h2-en">EXERCISE PROBLEMS</span></h2>
+      <p class="lede">每個 Example 後面的練習，跟 Example 同一個做法換數字。作業 PART I 說「All examples in Section 1.1 and 1.2」—— Example 本身已經做成各章節頁的可改數字例題，這裡練它們的 Exercise。</p>
+      <div class="exbook" data-bank="__CH1PR" data-sec="ex"></div>
+    </section>
+
+    <section class="sec" id="tyus">
+      <div class="eyebrow">Test Your Understanding · 課本附答案</div>
+      <h2>TYU 1.1 ～ 1.6<span class="h2-en">TEST YOUR UNDERSTANDING</span></h2>
+      <div class="exbook" data-bank="__CH1PR" data-sec="tyu"></div>
+    </section>
+
+    <section class="sec" id="p11">
+      <div class="eyebrow">End-of-chapter Problems · Section 1.1</div>
+      <h2>章末習題：半導體材料與性質<span class="h2-en">PROBLEMS · SECTION 1.1</span></h2>
+      <p class="lede">n<sub>i</sub>、摻雜、少數載子、漂移與擴散、多出載子。課本沒附答案，詳解自己解、程式驗算。</p>
+      <div class="exbook" data-bank="__CH1PR" data-sec="p11"></div>
+    </section>
+
+    <section class="sec" id="p12">
+      <div class="eyebrow">End-of-chapter Problems · Section 1.2</div>
+      <h2>章末習題：pn 接面<span class="h2-en">PROBLEMS · SECTION 1.2</span></h2>
+      <p class="lede">V<sub>bi</sub> 與接面電容。（1.20、1.25 在上面的作業指定題。）</p>
+      <div class="exbook" data-bank="__CH1PR" data-sec="p12"></div>
+    </section>
+
+    <section class="sec" id="rqs">
+      <div class="eyebrow">Review Questions · 觀念題</div>
+      <h2>觀念題<span class="h2-en">REVIEW QUESTIONS 1–7</span></h2>
+      <p class="lede">課本章末的觀念題，範圍內是第 1～7 題。先在手寫板寫自己的答案，再對參考答案。</p>
+      <div class="exbook" data-bank="__CH1PR" data-sec="rq"></div>
+    </section>
+
+    <section class="sec" id="ext">
+      <div class="eyebrow"><span class="scope-no">延伸</span>I–V 公式代入</div>
+      <h2>延伸：I–V 公式的代入題<span class="h2-en">BEYOND THE SCOPE</span></h2>
+      <p class="lede">老師第 7 頁只介紹了 i<sub>D</sub> = I<sub>S</sub>(e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1)，Example 1.7 還沒教。這兩題就是把公式代進去，有餘力再練。</p>
+      <div class="exbook" data-bank="__CH1PR" data-sec="ext"></div>
+    </section>
+
+    <footer class="foot">
+      <p>題目出處：Donald A. Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4th ed., Chapter 1（Exercise、Test Your Understanding、Problems、Review Questions）。中文是翻譯，英文是課本原文。</p>
+      <p>常數照課本 Table 1.3：Si B = 5.23×10<sup>15</sup>、E<sub>g</sub> = 1.1 eV；GaAs 2.10×10<sup>14</sup>、1.4 eV；Ge 1.66×10<sup>15</sup>、0.66 eV；k = 86×10<sup>−6</sup> eV/K；V<sub>T</sub> = 0.026 V；300 K 時 n<sub>i</sub>：Si 1.5×10<sup>10</sup>、GaAs 1.8×10<sup>6</sup>、Ge 2.4×10<sup>13</sup> cm<sup>−3</sup>。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="assets/ch1-practice.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'hwp', no: '★', name: '作業指定', count: '9 題' },
+  { id: 'exs', no: 'Ex', name: 'Exercise', count: '6 題' },
+  { id: 'tyus', no: 'TYU', name: 'TYU', count: '6 題' },
+  { id: 'p11', no: '1.1', name: '章末：半導體', count: '13 題' },
+  { id: 'p12', no: '1.2', name: '章末：pn 接面', count: '3 題' },
+  { id: 'rqs', no: 'RQ', name: '觀念題', count: '7 題' },
+  { id: 'ext', no: '+', name: '延伸', count: '2 題' }
+], { key: 'ch1-practice' });
+(function () {
+  'use strict';
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } });
+  }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
