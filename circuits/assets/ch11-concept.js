@@ -129,7 +129,7 @@
     'P<sub>max</sub> = |V<sub>Th</sub>|²/(8R<sub>Th</sub>) 裡的 V<sub>Th</sub> 是 {0}；如果 V<sub>Th</sub> 是 rms 值，要改成 {1}。',
     'In P<sub>max</sub> = |V<sub>Th</sub>|²/(8R<sub>Th</sub>), V<sub>Th</sub> is ___; if V<sub>Th</sub> is an rms value, use ___.',
     [S(['振幅 amplitude', 'rms 值 rms value', '平均值 average value', '開路電流 open-circuit current']), S(['|VTh|²/(4RTh)', '|VTh|²/(2RTh)', '|VTh|²/(16RTh)', '|VTh|²/RTh'])],
-    '8 = ½（振幅轉平均）× 4（總阻抗 2R<sub>Th</sub> 的平方）。用 rms 就沒有那個 ½。');
+    '8 = 2 × 4：2 來自取平均的 ½（跑到分母），4 來自總阻抗 2R<sub>Th</sub> 的平方。用 rms 就沒有那個 ½。');
   C('11.3', 6, L3, '解法：求 ZTh',
     '求戴維寧阻抗 Z<sub>Th</sub> 時，獨立電壓源要 {0}，獨立電流源要 {1}，再從負載端看進去。',
     'To find Z<sub>Th</sub>, independent voltage sources are ___ and independent current sources are ___, then look in from the load terminals.',

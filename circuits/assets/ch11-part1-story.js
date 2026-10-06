@@ -551,13 +551,13 @@
   const S17 = {
     t: '最大功率是多少', en: 'HOW MUCH IS P MAX',
     svg: T(320, 124, 'P<sub>max</sub> = |V<sub>Th</sub>|<sup>2</sup> ÷ (8R<sub>Th</sub>)', { fs: 21, k: 'f' }) +
-      T(320, 158, '8 = ½（取平均）× 4（總阻抗 2R<sub>Th</sub> 的平方）', { cls: 'tm', fs: 13, k: 'why' }) +
+      T(320, 158, '8 = 2 × 4　（取平均的 ½ 變成 2，總阻抗 2R<sub>Th</sub> 的平方變成 4）', { cls: 'tm', fs: 13, k: 'why' }) +
       g('bar1', T(196, 205, '共軛 4 − j3', { cls: 'ta', fs: 13, a: 'end' }) + hbar(206, 192, 240, 20, 'acc') + T(454, 207, '100 ÷ 32 = 3.125 W', { cls: 'ta', fs: 13, a: 'start' })) +
       g('bar2', T(196, 249, '選一樣 4 + j3', { cls: 't', fs: 13, a: 'end' }) + hbar(206, 236, 240 * 2 / 3.125, 20, 'ink3') + T(206 + 154 + 8, 251, '2 W', { cls: 't', fs: 13, a: 'start' })) +
       chip(320, 296, '共軛比「選一樣」多拿 56%', null, 'c56', { fs: 13.5, acc: true }),
     steps: [
       { sub: '共軛匹配時的最大功率：<b>P<sub>max</sub> = |V<sub>Th</sub>|² ÷ (8R<sub>Th</sub>)</b>。|V<sub>Th</sub>| 就是電壓的大小。', on: 'f' },
-      { sub: '8 從哪來？½（取平均）× 4（總阻抗是 2R<sub>Th</sub>，平方變 4）。', on: 'why' },
+      { sub: '8 從哪來？<b>8 = 2 × 4</b>：取平均的 ½ 跑到分母變 2；總阻抗 2R<sub>Th</sub> 平方後變 4，也在分母。', on: 'why' },
       { sub: 'V<sub>Th</sub> = 10 V、R<sub>Th</sub> = 4 Ω：100 ÷ 32 = <b>3.125 W</b>。', on: 'bar1' },
       { sub: '跟「選一樣」的 2 W 比，多了 56%。共軛真的有差。', on: 'bar2 c56' }
     ]
