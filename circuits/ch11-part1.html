@@ -30,6 +30,7 @@
       <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
       <li><a href="#map"><i>00</i>課程地圖</a></li>
       <li><a href="#inst"><i>11.2</i>瞬時功率與平均功率</a></li>
+      <li><a href="#basics"><i>補</i>補課：負載、阻抗、j、戴維寧</a></li>
       <li><a href="#mpt"><i>11.3</i>最大平均功率轉移</a></li>
       <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
       <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
@@ -44,18 +45,18 @@
       <p class="sub">交流電的電壓、電流一直在翻正負，那「功率」要怎麼算？這一頁回答兩件事：<strong>電路平均到底吃掉多少功率</strong>（11.2），以及<strong>負載要怎麼選才能拿到最多功率</strong>（11.3）。</p>
       <div class="hero-meta">
         <span class="chip h">📘 課本 Example 6 題 ＋ Practice 6 題（附手寫板）</span>
-        <span class="chip">20 個畫面的故事模式</span>
-        <span class="chip">2 個互動模組 ＋ 3 個可改數字例題</span>
-        <span class="chip">10 題中英對照測驗</span>
+        <span class="chip">32 個畫面的故事模式（含 12 幕補課）</span>
+        <span class="chip">3 個互動模組 ＋ 4 個可改數字例題</span>
+        <span class="chip">13 題中英對照測驗</span>
       </div>
-      <div class="lec-links"><a href="ch11-review.html">🧠 CH11 觀念填充總複習（64 題，不用算）</a></div>
+      <div class="lec-links"><a href="ch11-review.html">🧠 CH11 觀念填充總複習（72 題，不用算）</a></div>
     </div>
 
     <!-- ══════════ 故事模式 ══════════ -->
     <section class="sec" id="story-sec">
       <div class="eyebrow"><span class="part-tag">原講義 CH11</span>Story mode · 先看這段，再往下讀</div>
-      <h2>20 個畫面看懂這一頁<span class="h2-en">THE STORY IN 20 SCENES</span></h2>
-      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。全部看完大約 7 分鐘。<strong>先建立直覺</strong>，再往下讀推導、玩互動模組、改例題的數字。</p>
+      <h2>32 個畫面看懂這一頁<span class="h2-en">THE STORY IN 32 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。全部看完大約 11 分鐘（第 14～25 幕是補課：負載、阻抗、j、戴維寧）。<strong>先建立直覺</strong>，再往下讀推導、玩互動模組、改例題的數字。</p>
       <div id="story"></div>
     </section>
 
@@ -215,8 +216,130 @@
       <div class="exbook" data-bank="__CH11EX" data-sec="11.2"></div>
           <div class="cf-wrap" id="cf-11-2">
         <h3>🧠 觀念填充 11.2（不用算，用選的）</h3>
-        <p>每格從下拉選單挑一個，按「對答案」看解釋。考觀念和解法，不用計算；題目下面附英文。全部 64 題也集中在 <a href="ch11-review.html">CH11 觀念填充總複習</a>。</p>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。考觀念和解法，不用計算；題目下面附英文。全部 72 題也集中在 <a href="ch11-review.html">CH11 觀念填充總複習</a>。</p>
         <div class="hw-list" data-bank="__CH11C" data-sec="11.2"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 補課：負載、阻抗、j、戴維寧（使用者 10/6 要求：故事 55 步之後聽不懂） ══════════ -->
+    <section class="sec" id="basics">
+      <div class="eyebrow"><span class="part-tag">補課 · CH9–CH10 複習</span>Before 11.3 · Load, Impedance, j, Thevenin</div>
+      <h2>補課：負載、阻抗、j、戴維寧<span class="h2-en">BACK TO BASICS</span></h2>
+      <p class="lede">11.3 一開口就是「負載 Z<sub>L</sub>」「Z<sub>Th</sub> = 4 + j3」「共軛」。這些都是 CH9、CH10 的東西，忘了很正常。這一節不趕進度，一個詞一個詞講回來：
+        <button class="tm" data-t="負載">負載</button>是把電用掉的那一端；<button class="tm" data-t="阻抗">阻抗</button>是交流版的電阻，分成會發熱的<button class="tm" data-t="實部">實部</button>和只擋不熱的<button class="tm" data-t="虛部">虛部</button>；
+        <button class="tm" data-t="虛數單位">j</button> 是「放直軸」的標籤；<button class="tm" data-t="戴維寧等效">戴維寧等效</button>把整個電源縮成一個插座。看完再往下讀 11.3 會順很多。</p>
+      <div class="eq">Z = R + jX　　|Z| = √(R² + X²)　　θ = tan⁻¹(X/R)　　Z<em>R</em> = R，Z<em>L</em> = jωL，Z<em>C</em> = −j/(ωC)　　j × j = −1</div>
+
+      <div class="derive">
+        <h4>一步一步把這些詞講回來</h4>
+        <ol>
+          <li>
+            <span class="d-eq">電源 → 導線 → 負載（load）</span>
+            <p><b>負載</b>就是接在電路最後面、把電<b>用掉</b>的東西：燈泡、喇叭、馬達、充電器。題目說「負載要選多少」，意思是「要接一個什麼樣的電器」。跟「負擔」沒有關係。</p>
+          </li>
+          <li>
+            <span class="d-eq">直流：R = V ÷ I（例：12 V ÷ 3 A = 4 Ω）</span>
+            <div class="why">先回到最熟的直流：電阻就是「電壓推多少、電流只出來多少」的比值。被擋下來的能量變成熱 —— 電阻是真的會吃功率的元件。</div>
+          </li>
+          <li>
+            <span class="d-eq">電感：電流晚到 90°　　電容：電流早到 90°</span>
+            <p>電感、電容對交流也會擋電流，但<b>擋法不一樣</b>：它們會讓電流跟電壓錯開 90°，而且能量借了又還、<b>不發熱</b>（11.2 看過，平均功率是 0）。這種擋法另外取名叫<button class="tm" data-t="電抗">電抗</button> X。</p>
+          </li>
+          <li>
+            <span class="d-eq">電阻 4 Ω ＋ 電抗 3 Ω ≠ 7 Ω，而是 √(4² + 3²) = 5 Ω</span>
+            <div class="why">兩種擋法方向不同，像「往東走 4 步、往北走 3 步」，離起點是斜邊 5，不是 7。所以需要一種能把「東」和「北」<b>分開記</b>的寫法 —— 那就是<button class="tm" data-t="複數">複數</button>。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">Z = R + jX　（4 + j3 = 往東 4、往北 3）</span>
+            <p>沒貼標籤的 R 放橫軸（<b>實部</b>），貼了 <b>j</b> 的 X 放直軸（<b>虛部</b>）。j 就是一張「放直軸」的標籤。電路學把虛數單位寫成 j 而不是 i，是因為 <b>i 已經拿去當電流</b>了。</p>
+          </li>
+          <li>
+            <span class="d-eq">1 →(× j)→ j →(× j)→ −1　⟹　j² = −1</span>
+            <div class="why">乘上 j 等於在平面上<b>往左轉 90°</b>：往東的 1 轉一次變往北的 j，再轉一次變往西的 −1。所以 j × j = −1。電感、電容讓電流錯開的正好是 90°，所以用 j 來記電抗剛剛好。</div>
+          </li>
+          <li>
+            <span class="d-eq">i = I<sub>m</sub>cos ωt　⟹　v = L·di/dt = −ωL·I<sub>m</sub>sin ωt = ωL·I<sub>m</sub>cos(ωt + 90°)</span>
+            <div class="why">電感的電壓是電流的微分。cos 微分變 −sin，而 −sin x = cos(x + 90°)：電壓的大小變成 ωL 倍、角度<b>超前 90°</b>。「大小 ωL、轉 90°」寫成複數就是 <b>Z<sub>L</sub> = jωL</b>。</div>
+          </li>
+          <li>
+            <span class="d-eq">電容：i = C·dv/dt　⟹　Z<sub>C</sub> = 1/(jωC) = −j/(ωC)</span>
+            <div class="why">電容反過來：電流是電壓的微分，所以電流超前 90°。1/j 上下同乘 j：j/(j·j) = j/(−1) = <b>−j</b>，所以電容的電抗是<b>負的</b>。結論：X &gt; 0 是電感性、X &lt; 0 是電容性、X = 0 是純電阻。</div>
+          </li>
+          <li>
+            <span class="d-eq">|Z| = √(R² + X²)，θ = tan⁻¹(X/R)；電流大小 |I| = |V| ÷ |Z|，電流落後 θ</span>
+            <p>|Z|（唸「Z 的大小」，又叫<button class="tm" data-t="複數的絕對值">絕對值</button>）是<b>總共擋多少</b>；θ 是<b>電流錯開幾度</b> —— 也就是 11.2 的 θ<sub>v</sub> − θ<sub>i</sub>，功率要打 cos θ 折。例：4 + j3 → |Z| = 5 Ω、θ = 36.87°、cos θ = 0.8。</p>
+          </li>
+          <li>
+            <span class="d-eq">串聯：Z<sub>總</sub> = Z<sub>1</sub> + Z<sub>2</sub>（實部加實部、虛部加虛部）</span>
+            <div class="why">跟電阻串聯一樣直接相加，只是東、北分開加：(4 + j3) + (4 − j3) = 8 + j0 = 8 Ω。虛部剛好消掉 —— 這就是 11.3「共軛匹配」在做的事。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">任何電源，從 a、b 看進去 = V<sub>Th</sub> 串 Z<sub>Th</sub></span>
+            <p><b>戴維寧等效</b>：電源那一側再複雜（發電機、變壓器、一堆電線），負載只接在 a、b 兩點，看不到裡面。所以可以把它縮成<b>一個插座</b>：插座電壓 V<sub>Th</sub>、插座裡面擋多少 Z<sub>Th</sub>。Th 是人名 Thevenin 的縮寫。</p>
+          </li>
+          <li>
+            <span class="d-eq">V<sub>Th</sub> = 拔掉負載量 a、b 的電壓　　Z<sub>Th</sub> = 電源關掉、從 a、b 往裡看的總阻抗</span>
+            <div class="why">「電源關掉」= 電壓源換成一條線（短路）、電流源剪斷（開路）。CH11 的題目大多直接給 V<sub>Th</sub>、Z<sub>Th</sub>，少數要自己求。</div>
+          </li>
+          <li>
+            <span class="d-eq">共軛：(4 + j3)* = 4 − j3（實部照抄、虛部變號）</span>
+            <div class="why">在平面上就是<b>上下翻面</b>。Z + Z* = 2R，虛部一定消掉。11.3 會用到它。</div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>阻抗平面：拖一拖就懂 R、X、|Z|、θ</h3><span class="spacer"></span>
+          <div class="btn-row">
+            <button class="btn" type="button" id="zp-conj" aria-pressed="false">顯示共軛 Z*</button>
+            <button class="btn" type="button" id="zp-reset">回到 4 + j3</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-zp" aria-label="阻抗平面與電壓電流波形"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="zp-r">電阻 R（實部，橫軸）<output for="zp-r"></output></label>
+            <input type="range" id="zp-r" min="0" max="10" step="0.5" value="4"></div>
+          <div class="ctrl"><label for="zp-x">電抗 X（虛部，直軸）<output for="zp-x"></output></label>
+            <input type="range" id="zp-x" min="-8" max="8" step="0.5" value="3"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>Z</dt><dd id="zp-z">—</dd></div>
+          <div><dt>|Z| 總共擋多少</dt><dd id="zp-mag">—</dd></div>
+          <div><dt>θ 電流錯開</dt><dd id="zp-th">—</dd></div>
+          <div><dt>接 10 V 時 |I|</dt><dd id="zp-i">—</dd></div>
+        </dl>
+        <div class="msg" id="zp-msg"></div>
+      </div>
+
+      <div id="ex-zrc"></div>
+
+      <div class="howto">
+        <h4>看到「求阻抗／電流」的題目</h4>
+        <ol>
+          <li><b>從 cos(ωt) 抓出 ω</b>（不是 f；ω = 2πf）。</li>
+          <li><b>每個元件換成阻抗</b>：電阻 <code>R</code>、電感 <code>jωL</code>、電容 <code>−j/(ωC)</code>。</li>
+          <li><b>串聯直接加</b>：實部加實部、虛部加虛部，得到 <code>Z = R + jX</code>。</li>
+          <li><b>看 X 的正負</b>：正 → 電感性（電流落後）；負 → 電容性（電流超前）；0 → 純電阻。</li>
+          <li><b>算 |Z| 和 θ</b>：<code>|Z| = √(R² + X²)</code>、<code>θ = tan⁻¹(X/R)</code>。</li>
+          <li><b>電流</b>：大小 <code>|I| = |V|/|Z|</code>，角度 <code>θi = θv − θ</code>（除法 = 大小相除、角度相減）。</li>
+          <li>題目要你「從負載看電源」→ 先求 <code>VTh</code>（拔掉負載量開路電壓）和 <code>ZTh</code>（電源歸零往裡看）。</li>
+        </ol>
+      </div>
+
+      <div class="pitfall">
+        <h4>這幾個基本詞最常錯的地方</h4>
+        <ul>
+          <li><span class="x">✗</span> 4 + j3 Ω 就是 7 Ω。<span class="o">✓ 實部、虛部方向不同，不能直接加；總共擋 |Z| = 5 Ω。</span></li>
+          <li><span class="x">✗</span> 把 j 當成電流 i。<span class="o">✓ j 是虛數單位（數學課的 i），電路學因為 i 是電流才改叫 j。</span></li>
+          <li><span class="x">✗</span> 電容的阻抗寫成 jωC 或 1/(ωC)。<span class="o">✓ Z<sub>C</sub> = 1/(jωC) = −j/(ωC)：分母有 ωC，而且是<b>負的 j</b>。</span></li>
+          <li><span class="x">✗</span> |Z| = R（只看實部）。<span class="o">✓ |Z| = √(R² + X²)；只有算<b>平均功率</b>時才只用 R（P = ½|I|²R）。</span></li>
+          <li><span class="x">✗</span> 共軛把實部也變號：(4 + j3)* = −4 − j3。<span class="o">✓ 只有虛部變號：4 − j3。</span></li>
+          <li><span class="x">✗</span> ω 直接代 60。<span class="o">✓ 60 Hz 是 f，ω = 2π × 60 = 377 rad/s。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-basics">
+        <h3>🧠 觀念填充 · 補課（不用算，用選的）</h3>
+        <p>8 題，確認這幾個詞真的回來了。每格從下拉選單挑一個，按「對答案」看解釋；題目下面附英文。</p>
+        <div class="hw-list" data-bank="__CH11C" data-sec="補課"></div>
       </div>
     </section>
 
@@ -327,7 +450,7 @@
       <p class="note src">下一頁（PART 2）：公式裡那個 ½ 很煩 —— 用<b>有效值 rms</b> 把它吃掉，再認識<b>視在功率</b>與<b>功率因數</b>。<a href="ch11-part2.html">前往 PART 2 →</a></p>
           <div class="cf-wrap" id="cf-11-3">
         <h3>🧠 觀念填充 11.3（不用算，用選的）</h3>
-        <p>每格從下拉選單挑一個，按「對答案」看解釋。考觀念和解法，不用計算；題目下面附英文。全部 64 題也集中在 <a href="ch11-review.html">CH11 觀念填充總複習</a>。</p>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。考觀念和解法，不用計算；題目下面附英文。全部 72 題也集中在 <a href="ch11-review.html">CH11 觀念填充總複習</a>。</p>
         <div class="hw-list" data-bank="__CH11C" data-sec="11.3"></div>
       </div>
     </section>
@@ -346,6 +469,12 @@
         <div class="gl-row"><b>瞬時功率</b><span>instantaneous power</span><code>p(t), W</code></div>
         <div class="gl-row"><b>平均功率</b><span>average power</span><code>P, W</code></div>
         <div class="gl-row"><b>電阻性／電感性／電容性</b><span>resistive / inductive / capacitive</span><code>—</code></div>
+        <div class="gl-row"><b>負載</b><span>load</span><code>ZL, RL</code></div>
+        <div class="gl-row"><b>阻抗</b><span>impedance</span><code>Z = R + jX, Ω</code></div>
+        <div class="gl-row"><b>電阻／電抗</b><span>resistance / reactance</span><code>R, X</code></div>
+        <div class="gl-row"><b>虛數單位</b><span>imaginary unit</span><code>j, j² = −1</code></div>
+        <div class="gl-row"><b>實部／虛部</b><span>real part / imaginary part</span><code>Re, Im</code></div>
+        <div class="gl-row"><b>大小（絕對值）</b><span>magnitude</span><code>|Z| = √(R²+X²)</code></div>
         <div class="gl-row"><b>戴維寧等效</b><span>Thevenin equivalent</span><code>VTh, ZTh</code></div>
         <div class="gl-row"><b>共軛複數</b><span>complex conjugate</span><code>Z*</code></div>
         <div class="gl-row"><b>最大平均功率轉移</b><span>maximum average power transfer</span><code>Pmax</code></div>
@@ -358,7 +487,7 @@
     <section class="sec" id="quiz-sec">
       <div class="eyebrow"><span class="part-tag">原講義 CH11</span>自我檢查</div>
       <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
-      <p class="lede">10 題，中英對照。題目下方那行英文就是考卷上會看到的講法。</p>
+      <p class="lede">13 題，中英對照。題目下方那行英文就是考卷上會看到的講法。</p>
       <div class="quiz" id="quiz"></div>
     </section>
 
@@ -378,6 +507,7 @@
 <script>
 __EXB.picker(document.getElementById('sec-pick'), [
   { id: 'inst', no: '11.2', name: '瞬時與平均功率', count: '例 4 · 練 4' },
+  { id: 'basics', no: '補課', name: '負載、阻抗、j、戴維寧', count: '白話' },
   { id: 'mpt', no: '11.3', name: '最大功率轉移', count: '例 2 · 練 2' }
 ], { key: 'ch11-part1', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
 </script>

@@ -13,6 +13,52 @@
   const C = (sec, n, link, title, q, en, b, ex, how) =>
     items.push({ id: 'c' + sec.replace('.', '') + '-' + n, kind: 'cf', sec, no: sec + '-' + n, how: !!how, link, title, q, en, b, ex });
 
+  /* ═════════ 補課（11.3 之前）：負載、阻抗、j、戴維寧 ═════════ */
+  const LB = P1 + '#basics';
+  const K = (n, title, q, en, b, ex, how) =>
+    items.push({ id: 'cb-' + n, kind: 'cf', sec: '補課', no: '補課-' + n, how: !!how, link: LB, title, q, en, b, ex });
+  K(1, '負載是什麼',
+    '「負載」指的是 {0}，例如燈泡、喇叭。',
+    'A "load" is ___, e.g. a lamp or a speaker.',
+    [S(['接在電路最後、把電用掉的元件 the element that consumes the power', '電源內部的電阻 the internal resistance of the source', '電路裡最重的元件 the heaviest element', '導線 the connecting wire'])],
+    '負載 = 用電的那一端。電源像自來水廠，負載像水龍頭。跟「負擔」無關。');
+  K(2, '阻抗的兩部分',
+    '阻抗 Z = R + jX 中，會發熱、吃平均功率的是 {0}；只擋電流、讓電流錯開的是 {1}。',
+    'In Z = R + jX, the part that dissipates average power is ___; the part that only opposes current and shifts its phase is ___.',
+    [S(['實部 R（電阻）real part R', '虛部 X（電抗）imaginary part X', '大小 |Z| magnitude', '角度 θ angle']), S(['虛部 X（電抗）imaginary part X', '實部 R（電阻）real part R', '大小 |Z| magnitude', '頻率 ω frequency'])],
+    'R 是電阻、會發熱；X 是電抗（電感、電容），能量借了又還，平均不吃功率。所以 P = ½|I|²R 只乘 R。');
+  K(3, 'j 是什麼',
+    '電路學的 j 是 {0}；改用 j 而不用 i 的原因是 {1}。',
+    'In circuit analysis, j is ___; it is used instead of i because ___.',
+    [S(['虛數單位，j² = −1 the imaginary unit', '電流 current', '焦耳 joule', '電感 inductance']), S(['i 已經用來表示電流 i already denotes current', 'j 比較好寫 j is easier to write', '兩者數值不同 they have different values', '國際標準規定 j = 2i a standard says j = 2i'])],
+    'j 跟數學課的 i 是同一個東西（j × j = −1），只是電路學的 i 被電流用掉了。');
+  K(4, '電阻和電抗能不能直接相加',
+    'Z = 4 + j3 Ω 的大小 |Z| 應該用 {0} 算，因為電阻和電抗 {1}。',
+    'The magnitude of Z = 4 + j3 Ω is found by ___, because resistance and reactance ___.',
+    [S(['√(R² + X²)', 'R + X', 'R − X', 'R × X']), S(['方向不同（差 90°），不能直接相加 are perpendicular and cannot be added directly', '單位不同 have different units', '永遠相等 are always equal', '一個是正一個是負 always have opposite signs'])],
+    '像往東 4 步、往北 3 步，離起點是斜邊 √(4² + 3²) = 5，不是 7。');
+  K(5, '電感和電容的阻抗',
+    '電感的阻抗是 {0}，電容的阻抗是 {1}。',
+    'The impedance of an inductor is ___ and that of a capacitor is ___.',
+    [S(['jωL', '−j/(ωC)', 'ωL', 'jωC']), S(['−j/(ωC)', 'jωC', 'jωL', '1/(ωC)'])],
+    '電感：v = L di/dt，電壓超前 90°、大小 ωL → jωL。電容：Z = 1/(jωC) = −j/(ωC)，電抗是負的。');
+  K(6, 'X 的正負代表什麼',
+    '阻抗的虛部 X > 0 代表負載是 {0}，電流比電壓 {1}。',
+    'If the imaginary part X > 0, the load is ___ and the current ___ the voltage.',
+    [S(['電感性 inductive', '電容性 capacitive', '純電阻 purely resistive', '短路 a short circuit']), S(['落後（晚到）lags', '超前（早到）leads', '同步 is in phase with', '相反 is opposite to'])],
+    'X > 0 → 點在阻抗平面上半 → 電感性 → 電流落後 θ = tan⁻¹(X/R)。X < 0 則是電容性、電流超前。');
+  K(7, '戴維寧等效',
+    '從負載兩端 a、b 看進去，戴維寧等效把電源那一側換成 {0}；其中 V<sub>Th</sub> 是 {1}。',
+    'Seen from the load terminals a–b, the Thevenin equivalent replaces the source side with ___; VTh is ___.',
+    [S(['VTh 串聯 ZTh a voltage source in series with an impedance', 'VTh 並聯 ZTh a voltage source in parallel with an impedance', '只有一個阻抗 an impedance only', '一個電流源 a current source only']),
+     S(['拔掉負載時 a、b 的開路電壓 the open-circuit voltage at a–b', 'a、b 短路時的電流 the short-circuit current', '電源的最大電壓 the peak source voltage', '負載上的電壓 the voltage across the load'])],
+    '像把整座發電廠縮成一個插座：V<sub>Th</sub> 是插座電壓（沒插東西時量到的），Z<sub>Th</sub> 是插座裡面擋多少。');
+  K(8, '怎麼求 ZTh',
+    '求 Z<sub>Th</sub> 時要先把獨立電源歸零：電壓源換成 {0}，電流源換成 {1}，再從 a、b 往裡看。',
+    'To find ZTh, turn off the independent sources: replace voltage sources with ___ and current sources with ___, then look into a–b.',
+    [S(['短路（一條線）a short circuit', '開路（剪斷）an open circuit', '一個電阻 a resistor', '一個電容 a capacitor']), S(['開路（剪斷）an open circuit', '短路（一條線）a short circuit', '一個電感 an inductor', '一個電阻 a resistor'])],
+    '電壓源歸零 = 電壓為 0 = 一條線；電流源歸零 = 電流為 0 = 剪斷。這一步錯了 Z<sub>Th</sub> 就全錯。', true);
+
   /* ═════════ 11.2 瞬時功率與平均功率 ═════════ */
   const L2 = P1 + '#inst';
   C('11.2', 1, L2, '瞬時功率的定義',

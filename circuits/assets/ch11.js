@@ -743,3 +743,136 @@ window.__ch11Quiz = function (Q, verdicts) {
   }
   try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 })();
+
+/* ============================================================
+   CH11 PART 1 補課：阻抗平面（Z = R + jX、|Z|、θ、共軛）
+   使用者 10/6：「阻抗、負載、j、ZTh 都忘了」→ 拖一個點看 R、X、|Z|、θ，右邊同步畫 v、i 錯開多少
+   ============================================================ */
+(function () {
+  'use strict';
+  const E = window.__EE;
+  const { C, Stage, disc, label, labelCJK, arrow, bindRange, setText, clamp, lerp, TAU, pointerPos } = E;
+  const RAD = Math.PI / 180;
+  const fix = (x, n) => (Math.abs(x) < 5e-13 ? 0 : x).toFixed(n === undefined ? 2 : n).replace('-', '−');
+  const cpx = (re, im) => fix(re, 1) + (im < 0 ? ' − j' : ' + j') + fix(Math.abs(im), 1);
+
+  const cv = document.getElementById('cv-zp'); if (!cv) return;
+  let R = 4, X = 3, conj = false, drag = false;
+  const RMAX = 10, XMAX = 8;
+
+  /* 版面：寬 → 左平面右波形；窄 → 上平面下波形。座標都由 w、h 當下算，不存像素 */
+  function geom(w, h) {
+    const wide = w >= 560;
+    const pw = wide ? Math.min(w * 0.52, 420) : w, ph = wide ? h : h - 150;
+    const s = Math.max(0.5, Math.min((pw - 70) / RMAX, (ph - 50) / (2 * XMAX)));
+    const ox = Math.max(36, (pw - RMAX * s) / 2 + 4), oy = (wide ? h : ph) / 2 - 6;
+    const wave = wide ? { x0: pw + 30, x1: w - 14, y0: 26, y1: h - 30 } : { x0: 34, x1: w - 12, y0: ph + 18, y1: h - 22 };
+    return { ox, oy, s, wave, wide, pw, ph };
+  }
+
+  const st = Stage(cv, { animate: false, ratio: w => (w >= 560 ? 0.5 : 1.55), minH: 330, maxH: 560, draw(ctx, w, h) {
+    const g = geom(w, h), P = (r, x) => [g.ox + r * g.s, g.oy - x * g.s];
+    const mag = Math.hypot(R, X), th = Math.atan2(X, R) / RAD;
+
+    /* 上半＝電感性、下半＝電容性 */
+    ctx.fillStyle = C['q-react-w']; ctx.globalAlpha = 0.45; ctx.fillRect(g.ox, g.oy - XMAX * g.s, RMAX * g.s, XMAX * g.s);
+    ctx.fillStyle = C['s-app-w']; ctx.fillRect(g.ox, g.oy, RMAX * g.s, XMAX * g.s); ctx.globalAlpha = 1;
+    labelCJK(ctx, g.ox + RMAX * g.s - 4, g.oy - XMAX * g.s + 12, '電感性 X > 0', C['q-react'], 10.5, 'right');
+    labelCJK(ctx, g.ox + RMAX * g.s - 4, g.oy + XMAX * g.s - 8, '電容性 X < 0', C['s-app'], 10.5, 'right');
+
+    /* 軸與刻度 */
+    ctx.strokeStyle = C['ink-3']; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(g.ox - 8, g.oy); ctx.lineTo(g.ox + RMAX * g.s + 6, g.oy);
+    ctx.moveTo(g.ox, g.oy + XMAX * g.s); ctx.lineTo(g.ox, g.oy - XMAX * g.s); ctx.stroke();
+    for (let r = 2; r <= RMAX; r += 2) label(ctx, g.ox + r * g.s, g.oy + 12, String(r), C['ink-3'], 9.5);
+    [-8, -4, 4, 8].forEach(x => label(ctx, g.ox - 6, g.oy - x * g.s, (x > 0 ? '+' : '−') + Math.abs(x), C['ink-3'], 9.5, 'right'));
+
+    const [px, py] = P(R, X);
+    if (mag < 0.25) {
+      disc(ctx, px, py, 7, C.bad, C.surface);
+      labelCJK(ctx, px + 12, py - 12, 'Z = 0：短路！', C.bad, 12, 'left', '700');
+    } else {
+      /* R 邊、X 邊、斜邊 |Z| */
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = C['p-real']; ctx.lineWidth = 3.4;
+      ctx.beginPath(); ctx.moveTo(g.ox, g.oy); ctx.lineTo(px, g.oy); ctx.stroke();
+      ctx.strokeStyle = C['q-react']; ctx.lineWidth = 3.4;
+      ctx.beginPath(); ctx.moveTo(px, g.oy); ctx.lineTo(px, py); ctx.stroke();
+      arrow(ctx, g.ox, g.oy, px, py, C['s-app'], 2.6);
+      if (R > 0.4) label(ctx, (g.ox + px) / 2, g.oy + (X >= 0 ? 26 : -12), 'R = ' + fix(R, 1), C['p-real'], 11, 'center', '700');
+      if (Math.abs(X) > 0.4) label(ctx, px + 8, (g.oy + py) / 2, 'X = ' + fix(X, 1), C['q-react'], 11, 'left', '700');
+      const mx = (g.ox + px) / 2, my = (g.oy + py) / 2;
+      label(ctx, mx - 8, my + (X >= 0 ? -10 : 12), '|Z| = ' + fix(mag, 2), C['s-app'], 11.5, 'right', '700');
+      if (Math.abs(th) > 2 && R > 0.4) {
+        ctx.beginPath(); ctx.arc(g.ox, g.oy, 24, 0, -th * RAD, X > 0);
+        ctx.strokeStyle = C['ink-2']; ctx.lineWidth = 1.4; ctx.stroke();
+        label(ctx, g.ox + 30, g.oy + (X > 0 ? -9 : 11), 'θ', C['ink-2'], 11, 'left', '700');
+      }
+      disc(ctx, px, py, 7, C['s-app'], C.surface);
+      if (conj && Math.abs(X) > 0.01) {
+        const [qx, qy] = P(R, -X);
+        ctx.setLineDash([5, 4]); ctx.strokeStyle = C['ink-3']; ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.moveTo(g.ox, g.oy); ctx.lineTo(qx, qy); ctx.moveTo(px, py); ctx.lineTo(qx, qy); ctx.stroke(); ctx.setLineDash([]);
+        disc(ctx, qx, qy, 6, C['ink-2'], C.surface);
+        label(ctx, qx - 10, qy + (X > 0 ? 14 : -12), 'Z* = ' + cpx(R, -X), C['ink-2'], 11, 'right', '700');
+      }
+    }
+    labelCJK(ctx, g.ox + RMAX * g.s / 2, g.oy + XMAX * g.s + 17, g.s * RMAX > 300 ? '橫軸 = 電阻 R（實部）　直軸 = 電抗 X（虛部，貼 j）' : '橫軸 R（實部）｜直軸 X（虛部）', C['ink-2'], 10.5, 'center');
+    if (!g.wide) labelCJK(ctx, w - 10, 14, '拖藍點', C['ink-3'], 10.5, 'right');
+    else labelCJK(ctx, 10, h - 10, '拖藍點改變 R、X', C['ink-3'], 10.5, 'left');
+
+    /* 波形：v 固定，i 依 |Z| 變大小、依 θ 錯開 */
+    const W = g.wave, ym = (W.y0 + W.y1) / 2, amp = (W.y1 - W.y0) / 2 - 8;
+    ctx.strokeStyle = C['line-soft']; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(W.x0, ym); ctx.lineTo(W.x1, ym); ctx.stroke();
+    const N = 220, X_ = i => lerp(W.x0, W.x1, i / N), ph = i => (i / N) * 2 * TAU;
+    const iA = mag < 0.25 ? 1 : clamp(4 / mag, 0.12, 1);
+    [[1, 0, C.ink, 2.2, []], [iA, th, C['s-app'], 2.2, [6, 4]]].forEach(([a, d, col, lw, dash]) => {
+      ctx.beginPath();
+      for (let i = 0; i <= N; i++) { const y = ym - a * amp * Math.cos(ph(i) - d * RAD); i ? ctx.lineTo(X_(i), y) : ctx.moveTo(X_(i), y); }
+      ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.setLineDash(dash); ctx.stroke(); ctx.setLineDash([]);
+    });
+    label(ctx, W.x0 - 6, ym - amp + 4, 'v', C.ink, 11, 'right', '700');
+    label(ctx, W.x0 - 6, ym - iA * amp * Math.cos(-th * RAD) + 4, 'i', C['s-app'], 11, 'right', '700');
+    const kind = mag < 0.25 ? '短路：電流爆表' : Math.abs(th) < 0.5 ? '同步（純電阻）' : th > 0 ? '電流落後 ' + fix(th, 1) + '°（電感性）' : '電流超前 ' + fix(-th, 1) + '°（電容性）';
+    labelCJK(ctx, W.x1, W.y0 - 10, kind, mag < 0.25 ? C.bad : th > 0.5 ? C['q-react'] : th < -0.5 ? C['s-app'] : C['p-real'], 11.5, 'right', '700');
+    labelCJK(ctx, W.x0, W.y1 + 14, '實線 v、虛線 i（|Z| 越大，i 越小）', C['ink-3'], 10.5, 'left');
+  }});
+
+  function pick(ev) {
+    const p = pointerPos(cv, ev), g = geom(st.w, st.h);
+    R = Math.round(clamp((p.x - g.ox) / g.s, 0, RMAX) * 2) / 2;
+    X = Math.round(clamp((g.oy - p.y) / g.s, -XMAX, XMAX) * 2) / 2;
+    sync();
+  }
+  cv.addEventListener('pointerdown', e => { const g = geom(st.w, st.h); if (g.wide || pointerPos(cv, e).y < g.ph) { drag = true; cv.setPointerCapture(e.pointerId); pick(e); } });
+  cv.addEventListener('pointermove', e => { if (drag) pick(e); });
+  cv.addEventListener('pointerup', () => { drag = false; });
+
+  function sync() {
+    const a = document.getElementById('zp-r'), b = document.getElementById('zp-x');
+    a.value = R; b.value = X; a.dispatchEvent(new Event('input')); b.dispatchEvent(new Event('input'));
+  }
+  function refresh() {
+    const mag = Math.hypot(R, X), th = Math.atan2(X, R) / RAD;
+    setText('zp-z', cpx(R, X) + ' Ω');
+    setText('zp-mag', fix(mag, 2) + ' Ω');
+    setText('zp-th', mag < 0.25 ? '—' : fix(th, 1) + '°');
+    setText('zp-i', mag < 0.25 ? '∞（短路）' : fix(10 / mag, 2) + ' A');
+    const el = document.getElementById('zp-msg');
+    el.className = 'msg' + (mag < 0.25 ? ' bad' : Math.abs(X) < 0.01 ? ' good' : '');
+    el.innerHTML = mag < 0.25 ? 'R 和 X 都是 0：完全沒擋，電流無限大 —— 這就是短路。'
+      : R < 0.01 ? '只剩電抗、沒有電阻：電流錯開整整 90°，<b>完全不吃平均功率</b>（cos 90° = 0）。純電感或純電容就是這樣。'
+      : Math.abs(X) < 0.01 ? '<b>X = 0：純電阻</b>。電流跟電壓同步，cos 0° = 1，功率完全不打折。共軛匹配就是要把總電抗弄成這樣。'
+      : (X > 0 ? '點在<b>上半</b>：電抗是正的 → 電感性，電流比電壓<b>晚</b> ' : '點在<b>下半</b>：電抗是負的 → 電容性，電流比電壓<b>早</b> ') + fix(Math.abs(th), 1) + '°。' +
+        '總共擋 |Z| = √(' + fix(R, 1) + '² + ' + fix(Math.abs(X), 1) + '²) = ' + fix(mag, 2) + ' Ω，不是 ' + fix(R + Math.abs(X), 1) + ' Ω。' +
+        (conj ? '　共軛 Z* = ' + cpx(R, -X) + '（上下翻面）；Z + Z* = ' + fix(2 * R, 1) + ' Ω，虛部消失。' : '');
+    st.redraw();
+  }
+  bindRange('zp-r', v => fix(v, 1) + ' Ω', v => { R = v; refresh(); });
+  bindRange('zp-x', v => (v < 0 ? '−j' + fix(-v, 1) : '+j' + fix(v, 1)) + ' Ω', v => { X = v; refresh(); });
+  const cb = document.getElementById('zp-conj');
+  cb.addEventListener('click', () => { conj = !conj; cb.setAttribute('aria-pressed', conj); cb.textContent = conj ? '隱藏共軛 Z*' : '顯示共軛 Z*'; refresh(); });
+  document.getElementById('zp-reset').addEventListener('click', () => { R = 4; X = 3; sync(); });
+  refresh();
+})();
