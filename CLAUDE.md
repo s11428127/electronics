@@ -131,6 +131,13 @@
 - 章節頁故事模式下方放「選小節」：`__EXB.picker(el, [{id, no, name, count}], {key, alwaysAll})`，選了只顯示那一節。
 - 章末 Problems 使用者還沒要求，先不做。
 
+## 觀念填充題（電路學 CH11 起）
+
+- 使用者 10/6 要求：**每一小節 8 題**、用選的、**不用計算**（考觀念、知識，少量考「這題怎麼解」的解法）、中文題目下面附英文。
+- 題庫一章一檔（例：`circuits/assets/ch11-concept.js` → `window.__CH11C`，`name:'ch11c'`），item `kind:'cf'`、`sec`、`en`、`how`（解法題）；作答元件同 `shared/hw.js`，選項自動打亂。
+- 放法：每節最後加 `<div class="cf-wrap" id="cf-11-x">…<div class="hw-list" data-bank="__CH11C" data-sec="11.x"></div></div>`（放最後才不會讓筆跡錨點移位）；另做總複習頁 `ch11-review.html`。
+- 紀錄存在 `<科目>/<bank.name>`（跨頁共用），要把它加進 `mistakes.html` 的 `data-chs`。選項同樣不能有 `<sup>`、底線。
+
 ## 學習紀錄（`shared/track.js`）
 
 - 每個章節頁、科目首頁的**最後一個 script** 放 `<script src="../shared/track.js"></script>`（新頁面也要加）。

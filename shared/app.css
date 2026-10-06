@@ -1175,3 +1175,9 @@ body.ann-finger .ann-free { touch-action: none; }
 
 /* 課本練習題：題目下面的英文原文 */
 .xb-q .q-en { margin: 10px 0 0; }
+
+/* 觀念填充：題幹下的英文、區塊標題 */
+.hw-card .hw-en { margin: 6px 0 10px; }
+.cf-wrap { margin-top: 28px; }
+.cf-wrap > h3 { font-size: 16px; margin: 0 0 4px; }
+.cf-wrap > p { margin: 0 0 12px; color: var(--ink-2); font-size: 14px; }

@@ -2,7 +2,7 @@
    作業題／仿作業題作答元件
    用法：<div class="hw-list" data-bank="__HW1" data-hw="1,2,4" data-sims="1"></div>
          題庫放在 window.__HW1 = { items: [...] }（例：electronics/assets/hw1-bank.js）
-   每一題：{ id, hw, kind:'hw'|'sim', title, q:'含 {0} {1} 空格的題幹', b:[空格…], ex:'解釋', fig, link }
+   每一題：{ id, hw, kind:'hw'|'sim'|'cf'（觀念填充，用 data-sec 掛）, sec, no, how, en（英文題幹）, title, q:'含 {0} {1} 空格的題幹', b:[空格…], ex:'解釋', fig, link }
    空格：{ o:['選項',…], a: 正解 index }（下拉選單）或 { f:'參考答案' }（自己寫，按「對答案」才顯示）
    作業原題的選項照作業原本的順序；仿作業的選項每次打亂（正解在題庫裡都寫第一個也沒關係）。
    ============================================================ */
@@ -20,12 +20,14 @@
     el.dataset.trkDoc = (seg.length > 1 ? seg[seg.length - 2] : 'root') + '/' + String(bankName).toLowerCase();
     const badge = it.kind === 'hw'
       ? '<span class="hw-badge hw">📝 ' + bankName + ' 第 ' + it.hw + ' 題 · 作業原題</span>'
+      : it.kind === 'cf'
+      ? '<span class="hw-badge sim">觀念填充 ' + it.no + (it.how ? ' · 解法' : ' · 觀念') + '</span>'
       : '<span class="hw-badge sim">仿作業 ' + it.hw + '-' + it.n + ' · 自編練習</span>';
     let html = it.q, blanks = [];
     it.b.forEach((b, i) => {
       let w;
       if (b.o) {
-        const ord = it.kind === 'sim' ? shuffle(b.o.length) : b.o.map((_, k) => k);
+        const ord = it.kind !== 'hw' ? shuffle(b.o.length) : b.o.map((_, k) => k);
         w = '<select class="hw-sel" data-i="' + i + '" aria-label="第 ' + (i + 1) + ' 格"><option value="">（選）</option>' +
           ord.map(k => '<option value="' + k + '">' + strip(b.o[k]) + '</option>').join('') + '</select>';
       } else {
@@ -35,7 +37,7 @@
       html = html.replace('{' + i + '}', w);
     });
     el.innerHTML = '<div class="hw-head">' + badge + (it.title ? '<b>' + it.title + '</b>' : '') + '</div>' +
-      '<div class="hw-q">' + html + '</div>' + (it.fig ? '<div class="hw-fig">' + it.fig + '</div>' : '') +
+      '<div class="hw-q">' + html + '</div>' + (it.en ? '<div class="q-en hw-en">' + it.en + '</div>' : '') + (it.fig ? '<div class="hw-fig">' + it.fig + '</div>' : '') +
       '<div class="hw-act"><button class="btn solid hw-check" type="button">對答案</button><button class="btn hw-reset" type="button">重做</button>' +
       (it.link ? '<a class="hw-link" href="' + it.link + '">回到講解 →</a>' : '') + '<span class="hw-score"></span></div>' +
       '<div class="hw-ans" hidden></div>';
@@ -65,6 +67,12 @@
   function mount(host) {
     const bank = window[host.dataset.bank || '__HW1'];
     if (!bank) return;
+    /* 觀念填充：data-sec="11.2" → 這一節的全部題目，直接列出 */
+    if (host.dataset.sec) {
+      const want = host.dataset.sec.split(',').map(x => x.trim());
+      bank.items.filter(it => want.indexOf(it.sec) >= 0).forEach(it => host.appendChild(card(it, bank.name)));
+      return;
+    }
     const nums = (host.dataset.hw || '').split(',').map(s => +s.trim()).filter(Boolean);
     const withSims = host.dataset.sims !== '0';
     nums.forEach(n => {
