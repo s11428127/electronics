@@ -71,6 +71,7 @@
     if (host.dataset.sec) {
       const want = host.dataset.sec.split(',').map(x => x.trim());
       bank.items.filter(it => want.indexOf(it.sec) >= 0).forEach(it => host.appendChild(card(it, bank.name)));
+      if (!host.previousElementSibling || !host.previousElementSibling.classList.contains('hw-tools')) host.before(tools());
       return;
     }
     const nums = (host.dataset.hw || '').split(',').map(s => +s.trim()).filter(Boolean);
@@ -92,7 +93,36 @@
     });
   }
 
-  function init() { document.querySelectorAll('.hw-list').forEach(mount); }
+  /* 工具列：全部重做（選項重新洗牌）／只重做錯過的／打亂題目順序；紀錄（錯幾次）都不會被清掉 */
+  function tools(page) {
+    const t = document.createElement('div');
+    t.className = 'hw-tools'; if (page) t.dataset.hwScope = 'page';
+    t.innerHTML = '<span class="hw-sum"></span><span class="spacer"></span>' +
+      '<button class="btn" type="button" data-hw-act="all" title="全部卡片清空重來，選項順序重新洗牌；你的作答紀錄與錯題次數不會被清掉">🔄 全部重做</button>' +
+      '<button class="btn" type="button" data-hw-act="bad" title="只重做曾經答錯的題目">↺ 只重做錯過的</button>' +
+      '<button class="btn" type="button" data-hw-act="shuf" title="把題目順序打亂">🔀 打亂順序</button><span class="hw-tip" role="status"></span>';
+    return t;
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('[data-hw-act]'); if (!b) return;
+    const bar = b.closest('.hw-tools'); if (!bar) return;
+    const page = bar.dataset.hwScope === 'page';
+    const hosts = page ? Array.prototype.slice.call(document.querySelectorAll('.hw-list[data-sec]')) : [bar.nextElementSibling];
+    const tip = bar.querySelector('.hw-tip'), say = s => { if (tip) { tip.textContent = s; clearTimeout(tip.__t); tip.__t = setTimeout(() => { tip.textContent = ''; }, 3500); } };
+    const act = b.dataset.hwAct;
+    if (act === 'shuf') {
+      hosts.forEach(h => { if (!h) return; shuffle(h.children.length).map(i => h.children[i]).forEach(c => h.appendChild(c)); });
+      say('題目順序已打亂'); return;
+    }
+    let cards = [];
+    hosts.forEach(h => { if (h) cards = cards.concat(Array.prototype.slice.call(h.querySelectorAll('.hw-card'))); });
+    if (act === 'bad') cards = cards.filter(c => c.classList.contains('trk-wrong') || c.classList.contains('trk-fixed'));
+    if (!cards.length) { say(act === 'bad' ? '還沒有錯過的題目 👍' : ''); return; }
+    cards.forEach(c => { const r = c.querySelector('.hw-reset'); if (r) r.click(); });
+    say('已重做 ' + cards.length + ' 題，選項重新洗牌');
+  });
+
+  function init() { document.querySelectorAll('.hw-list').forEach(mount); document.querySelectorAll('.hw-tools-slot').forEach(s => s.replaceWith(tools(true))); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
   window.__HW = { mount };
 })();

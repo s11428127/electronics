@@ -1218,3 +1218,14 @@ body.ann-finger .ann-free { touch-action: none; }
 
 /* 可改數字例題：題目下面的英文 */
 .example .ex-q .q-en { margin: 8px 0 0; }
+
+/* 觀念填充的工具列：全部重做／只重做錯過的／打亂順序、這一節的錯題統計 */
+.hw-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0 12px; padding: 8px 10px; background: var(--surface-2); border: 1px solid var(--line-soft); border-radius: 9px; }
+.hw-tools .btn { padding: 5px 11px; font-size: 13px; }
+.hw-tools .hw-sum { font-size: 13px; color: var(--ink-2); }
+.hw-tools .hw-sum b { color: var(--ink); font-family: var(--font-mono); }
+.hw-tools .hw-sum b.bad { color: var(--bad); }
+.hw-tools .hw-sum b.ok { color: var(--ok); font-family: inherit; }
+.hw-tools .spacer { flex: 1 1 8px; }
+.hw-tools .hw-tip { flex-basis: 100%; font-size: 12.5px; color: var(--accent); min-height: 0; }
+.hw-tools .hw-tip:empty { display: none; }

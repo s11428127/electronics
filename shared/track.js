@@ -59,11 +59,15 @@
   const get = (k, key) => { const r = doc(k).recs[key]; return r && !r.x ? r : null; };
   function set(k, key, data) { doc(k).recs[key] = Object.assign({ t: NOW() }, data || {}); save(k); emit(); }
   /* 作答：ok=最近一次對錯；w=第一次答錯的時間（之後答對也留著 → 顯示「答錯 → 訂正」） */
-  function answer(k, key, ok, extra) {
+  /* n＝這題累計答錯幾次（舊紀錄沒有 n 但答錯過 → 當作 1 次）；opt.nocount：同一次作答重複按「對答案」不要重複算 */
+  const wrongN = r => !r ? 0 : r.n || (r.w || r.ok === false ? 1 : 0);
+  function answer(k, key, ok, extra, opt) {
     const prev = get(k, key), r = Object.assign({}, extra || {});
     if (ok === true || ok === false) r.ok = ok; else if (prev && 'ok' in prev) r.ok = prev.ok;
     const w = prev && (prev.w || (prev.ok === false ? prev.t : 0));
     if (w) r.w = w;
+    const n = wrongN(prev) + (ok === false && !(opt && opt.nocount) ? 1 : 0);
+    if (n) r.n = n;
     set(k, key, r);
   }
   function del(k, key) { doc(k).recs[key] = { t: NOW(), x: 1 }; save(k); emit(); }
@@ -121,8 +125,9 @@
   const setH = (el, h) => { if (el.__h !== h) { el.__h = h; el.innerHTML = h; } };
   /* 題目紀錄的標籤：答錯＝紅、答錯後訂正＝橘、答對／做過＝綠 */
   const state = r => !r ? '' : r.ok === false ? 'ng' : r.w ? 'fix' : 'ok';
-  const tagTxt = r => r.ok === false ? '✗ 答錯 ' + md(r.t) + (r.w && r.w < r.t - 6e4 ? '（' + md(r.w) + ' 起）' : '')
-    : r.w ? '✗ ' + md(r.w) + ' 答錯 → ✓ ' + md(r.t) + ' 訂正' : r.ok === true ? '✓ 答對 ' + md(r.t) : '✓ 做過 ' + md(r.t);
+  const nTxt = r => wrongN(r) ? ' · 錯 ' + wrongN(r) + ' 次' : '';
+  const tagTxt = r => (r.ok === false ? '✗ 答錯 ' + md(r.t) + (r.w && r.w < r.t - 6e4 ? '（' + md(r.w) + ' 起）' : '')
+    : r.w ? '✗ ' + md(r.w) + ' 答錯 → ✓ ' + md(r.t) + ' 訂正' : r.ok === true ? '✓ 答對 ' + md(r.t) : '✓ 做過 ' + md(r.t)) + nTxt(r);
   function badge(b, k, key, r, card) {
     const st = state(r);
     b.className = 'trk-b' + (st === 'ok' ? '' : ' ' + st);
@@ -149,7 +154,7 @@
     };
     (hwPairs || []).forEach(x => { const i = x.indexOf('|'); ensure(x.slice(0, i)); add(x.slice(0, i), 'hw:' + x.slice(i + 1)); });
     keys.forEach(k => { const d = ensure(k); Object.keys(d.recs).forEach(key => add(k, key)); });
-    return out.sort((a, b) => (a.st === b.st ? b.r.t - a.r.t : a.st === 'ng' ? -1 : 1));
+    return out.sort((a, b) => (a.st === b.st ? (wrongN(b.r) - wrongN(a.r)) || (b.r.t - a.r.t) : a.st === 'ng' ? -1 : 1));
   }
   function mkItem(m) {
     const r = m.r, p = m.key.split(':')[0], id = m.key.slice(p.length + 1), d = r.d || {};
@@ -215,10 +220,11 @@
     function paintBook() {
       const seen = {}, groups = chs.map(c => ({ c, list: mkCollect([c[0]], doc(c[0]).tot.hw, seen) }));
       const all = [].concat.apply([], groups.map(g => g.list)), ng = all.filter(m => m.st === 'ng').length;
-      setH(fBox, [['all', '全部', all.length], ['ng', '還沒訂正', ng], ['fix', '已訂正', all.length - ng]].map(f =>
+      const often = all.filter(m => wrongN(m.r) >= 2).length;
+      setH(fBox, [['all', '全部', all.length], ['ng', '還沒訂正', ng], ['fix', '已訂正', all.length - ng], ['often', '常錯（≥ 2 次）', often]].map(f =>
         '<button type="button" data-f="' + f[0] + '" class="' + (filter === f[0] ? 'on' : '') + '">' + f[1] + ' <i>' + f[2] + '</i></button>').join(''));
       const html = groups.map(g => {
-        const list = g.list.filter(m => filter === 'all' || m.st === filter); if (!list.length) return '';
+        const list = g.list.filter(m => filter === 'all' || (filter === 'often' ? wrongN(m.r) >= 2 : m.st === filter)); if (!list.length) return '';
         return '<h3 class="mk-ch"><a href="' + fileOf(g.c[0]) + '">' + g.c[1] + '</a><small>' + list.length + ' 題</small></h3><ol class="mk-list">' + list.map(mkItem).join('') + '</ol>';
       }).join('');
       setH(gBox, html || '<p class="mk-empty">' + (all.length ? '這個分類沒有題目。' : '目前沒有錯題。答錯的測驗、作業、Practice 會自動收進來。') + '</p>');
@@ -308,8 +314,10 @@
           sel.replaceWith(u);
         });
         q.querySelectorAll('.hw-right').forEach(t => t.remove());
+        /* 同一張卡片（沒按重做）重複按「對答案」只算一次錯 */
         answer(hw.dataset.trkDoc || PAGE, 'hw:' + hw.id, ok, { s: headTxt(hw.querySelector('.hw-head'), 40), u: FILE + '#' + hw.id,
-          d: { q: cut(q.innerHTML, 3000), e: cut((hw.querySelector('.hw-ans') || {}).innerHTML) } });
+          d: { q: cut(q.innerHTML, 3000), e: cut((hw.querySelector('.hw-ans') || {}).innerHTML) } }, { nocount: !!hw.__wc });
+        if (ok === false) hw.__wc = true;
       }, 0);
       return;
     }
@@ -320,7 +328,7 @@
     if (self) {
       const ans = xb.querySelector('.xb-ans').cloneNode(true); ans.querySelectorAll('.xb-self').forEach(x => x.remove());
       answer(PAGE, key, self.dataset.s === '1', { s: headTxt(xb.querySelector('.xb-head'), 48), u: FILE + '#' + xb.id,
-        d: { q: cut((xb.querySelector('.xb-q') || {}).innerHTML, 3000), ans: cut(ans.innerHTML, 800) } });
+        d: { q: cut((xb.querySelector('.xb-q') || {}).innerHTML, 3000), ans: cut(ans.innerHTML, 800) } }, { nocount: !!(prev && prev.ok === false) });
     }
     else if (a && (isEx ? /next|all/ : /sol|ans/).test(a.dataset.a) && !prev) set(PAGE, key, {});
   });
@@ -336,6 +344,19 @@
       ensure(k);
       let b = head.querySelector('.trk-b'); if (!b) { b = document.createElement('span'); b.className = 'trk-b'; head.appendChild(b); }
       badge(b, k, key, get(k, key), c);
+    });
+    updateTools();
+  }
+  /* 觀念填充上方的工具列：這一節做過幾題、錯過幾題、共錯幾次 */
+  function updateTools() {
+    document.querySelectorAll('.hw-tools').forEach(t => {
+      const sum = t.querySelector('.hw-sum'); if (!sum) return;
+      const scope = t.dataset.hwScope === 'page' ? document : t.nextElementSibling;
+      const cards = scope ? Array.prototype.slice.call(scope.querySelectorAll('.hw-card')) : [];
+      let done = 0, now = 0, ever = 0, times = 0;
+      cards.forEach(c => { const r = get(c.dataset.trkDoc || PAGE, 'hw:' + c.id); if (!r) return; done++; if (r.ok === false) now++; const n = wrongN(r); if (n) { ever++; times += n; } });
+      setH(sum, !cards.length ? '' : '共 ' + cards.length + ' 題　做過 <b>' + done + '</b>' + (now ? '　目前答錯 <b class="bad">' + now + '</b>' : '') +
+        (ever ? '　錯過 <b>' + ever + '</b> 題（共錯 <b>' + times + '</b> 次）' : done ? '　<b class="ok">還沒錯過</b>' : ''));
     });
   }
   let cardTimer = 0;

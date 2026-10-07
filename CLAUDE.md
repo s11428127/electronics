@@ -139,6 +139,9 @@
 - 題庫一章一檔（例：`circuits/assets/ch11-concept.js` → `window.__CH11C`，`name:'ch11c'`），item `kind:'cf'`、`sec`、`en`、`how`（解法題）；作答元件同 `shared/hw.js`，選項自動打亂。
 - 放法：每節最後加 `<div class="cf-wrap" id="cf-11-x">…<div class="hw-list" data-bank="__CH11C" data-sec="11.x"></div></div>`（放最後才不會讓筆跡錨點移位）；另做總複習頁 `ch11-review.html`。
 - 紀錄存在 `<科目>/<bank.name>`（跨頁共用），要把它加進 `mistakes.html` 的 `data-chs`。選項同樣不能有 `<sup>`、底線。
+- 使用者 10/7 要求：**可以全部重做、並記錄每題錯過幾次**。
+  - `data-sec` 的 `.hw-list` 上面 hw.js 會自動長出 `.hw-tools` 工具列：🔄 全部重做（選項重新洗牌）、↺ 只重做錯過的、🔀 打亂順序；總複習頁 hero 放 `<div class="hw-tools-slot"></div>` 會長出整頁（72 題）的那一條。重做不會清掉紀錄。
+  - 紀錄多一個欄位 `n`＝累計答錯次數（舊紀錄答錯過但沒 `n` → 當 1 次）。`answer(k, key, ok, extra, {nocount})`：同一張卡片沒按「重做」就重複按「對答案」只算一次。標籤顯示「· 錯 N 次」；錯題本同狀態內錯最多次的排前面，並有「常錯（≥ 2 次）」篩選。
 
 ## 電子實習（`lab/`，10/7 新科目）
 
