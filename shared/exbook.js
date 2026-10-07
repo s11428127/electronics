@@ -17,7 +17,7 @@
     el.id = 'xb-' + it.id;
     const tag = it.tag ? '<span class="xb-tag ' + (it.kind === 'ex' ? 'ex' : 'pp') + '">' + it.tag + '</span>' : it.kind === 'ex' ? '<span class="xb-tag ex">Example ' + it.no + '</span>' : '<span class="xb-tag pp">Practice Problem ' + it.no + '</span>';
     const head = '<header class="xb-head">' + tag + (it.title ? '<b>' + it.title + '</b>' : '') + '</header>' +
-      '<div class="xb-q">' + it.q + '</div>' + (it.fig ? '<figure class="xb-fig">' + it.fig + (it.cap ? '<figcaption>' + it.cap + '</figcaption>' : '') + '</figure>' : '');
+      '<div class="xb-q">' + it.q + (it.en ? '<div class="q-en">' + it.en + '</div>' : '') + '</div>' + (it.fig ? '<figure class="xb-fig">' + it.fig + (it.cap ? '<figcaption>' + it.cap + '</figcaption>' : '') + '</figure>' : '');
     const steps = '<ol class="xb-steps">' + it.steps.map((s, i) => stepHTML(s, i)).join('') + '</ol>';
     if (it.kind === 'ex') {
       el.innerHTML = head +

@@ -37,6 +37,7 @@
     },
     question: (g, r) => '一個最高點 <b>V<sub>m</sub> = ' + r.Vm + ' V</b> 的<b>' + r.s.nm + '</b>電壓，求它的 rms 值，以及接在 <b>' + r.R + ' Ω</b> 電阻上消耗的平均功率。' +
       '<br><span style="font-size:13px;color:var(--ink-3)">↑ 拉「波形」換成方波、三角波，看 √2 什麼時候不能用。</span>',
+    questionEn: (g, r) => 'A <b>' + ({ '弦波': 'sinusoidal', '半波整流': 'half-wave rectified sine', '全波整流': 'full-wave rectified sine', '方波': 'square-wave', '三角波': 'triangular' }[r.s.nm] || '') + '</b> voltage has a peak value of <b>V<sub>m</sub> = ' + r.Vm + ' V</b>. Find its rms value and the average power dissipated in a <b>' + r.R + '-Ω</b> resistor.',
     steps: (g, r) => [
       { t: 'Step 1　寫出一個週期。', eq: r.s.per },
       { t: 'Step 2　平方（square）。', note: '負的部分平方後變正 —— 電壓是負的也照樣發熱：', eq: 'v² 在 0 到 ' + (r.Vm * r.Vm) + ' 之間' },
@@ -88,6 +89,7 @@
     },
     question: (g, r) => '串聯負載的電流 <b>i(t) = ' + r.Im + ' cos(100πt ' + (r.ti < 0 ? '− ' : '+ ') + Math.abs(r.ti) + '°) A</b>，外加電壓 <b>v(t) = ' + r.Vm +
       ' cos(100πt ' + (r.tv < 0 ? '− ' : '+ ') + Math.abs(r.tv) + '°) V</b>。求視在功率與功率因數，並求構成此串聯負載的元件值。',
+    questionEn: (g, r) => 'A series-connected load draws a current <b>i(t) = ' + r.Im + ' cos(100πt ' + (r.ti < 0 ? '− ' : '+ ') + Math.abs(r.ti) + '°) A</b> when the applied voltage is <b>v(t) = ' + r.Vm + ' cos(100πt ' + (r.tv < 0 ? '− ' : '+ ') + Math.abs(r.tv) + '°) V</b>. Find the apparent power and the power factor of the load, and determine the element values that form the series-connected load.',
     steps: (g, r) => [
       { t: 'Step 1　換成有效值。', eq: 'V<sub>rms</sub> = ' + r.Vm + '/√2 = ' + fix(r.Vr, 2) + ' V　I<sub>rms</sub> = ' + r.Im + '/√2 = ' + fix(r.Ir, 3) + ' A' },
       { t: 'Step 2　視在功率：有效值相乘，不管相位。', eq: 'S = ' + fix(r.Vr, 2) + ' × ' + fix(r.Ir, 3) + ' = ' + fix(r.S, 1) + ' VA' },
@@ -134,6 +136,7 @@
       return { R, X, Vm, Zm, th, pf, Vr, Ir, S, P };
     },
     question: (g, r) => '負載阻抗 <b>Z = ' + r.R + (r.X < 0 ? ' − j' : ' + j') + Math.abs(r.X) + '&nbsp;Ω</b>，外加電壓 <b>v(t) = ' + r.Vm + ' cos(377t + 10°) V</b>。求功率因數與視在功率。',
+    questionEn: (g, r) => 'Obtain the power factor and the apparent power of a load whose impedance is <b>Z = ' + r.R + (r.X < 0 ? ' − j' : ' + j') + Math.abs(r.X) + '&nbsp;Ω</b> when the applied voltage is <b>v(t) = ' + r.Vm + ' cos(377t + 10°) V</b>.',
     steps: (g, r) => [
       { t: 'Step 1　阻抗化成極座標。', note: '阻抗角 = 功因角：',
         eq: '|Z| = √(' + r.R + '² + ' + r.X + '²) = ' + fix(r.Zm, 2) + ' Ω　θ = arctan(' + r.X + '/' + r.R + ') = ' + angF(r.th) },

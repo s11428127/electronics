@@ -31,6 +31,7 @@
     question: (g, r) => '已知 <b>v(t) = ' + r.Vm + ' cos(377t ' + (r.tv < 0 ? '− ' : '+ ') + Math.abs(r.tv) + '°) V</b>、<b>i(t) = ' + r.Im +
       ' cos(377t ' + (r.ti < 0 ? '− ' : '+ ') + Math.abs(r.ti) + '°) A</b>，求負載吸收的瞬時功率 p(t) 與平均功率 P。' +
       '<br><span style="font-size:13px;color:var(--ink-3)">↑ 把 θi 拉到跟 θv 一樣（純電阻）、或差 90°（純電感／電容），看 P 怎麼變。</span>',
+    questionEn: (g, r) => 'Given <b>v(t) = ' + r.Vm + ' cos(377t ' + (r.tv < 0 ? '− ' : '+ ') + Math.abs(r.tv) + '°) V</b> and <b>i(t) = ' + r.Im + ' cos(377t ' + (r.ti < 0 ? '− ' : '+ ') + Math.abs(r.ti) + '°) A</b>, find the instantaneous power p(t) and the average power P absorbed by the load.',
     steps: (g, r) => [
       { t: 'Step 1　抓出四個數字。', note: '兩條都已經是 cos，可以直接讀：',
         eq: 'V<sub>m</sub> = ' + r.Vm + '、I<sub>m</sub> = ' + r.Im + '、θ<sub>v</sub> = ' + angF(r.tv, 0) + '、θ<sub>i</sub> = ' + angF(r.ti, 0) },
@@ -96,6 +97,7 @@
     },
     question: (g, r) => '電壓源 <b>' + r.Vm + '∠30° V</b>（振幅）串聯 <b>' + r.R + ' Ω</b> 電阻與 <b>' + (r.X < 0 ? '−j' : '+j') + Math.abs(r.X) + '&nbsp;Ω</b>' +
       (r.X < 0 ? '（電容）' : r.X > 0 ? '（電感）' : '（沒有電抗）') + '。求電源供給的平均功率、電阻與' + (r.X < 0 ? '電容' : '電感') + '各吸收多少。',
+    questionEn: (g, r) => 'A voltage source <b>' + r.Vm + '∠30° V</b> (amplitude) is in series with a <b>' + r.R + '-Ω</b> resistor and a <b>' + (r.X < 0 ? '−j' : '+j') + Math.abs(r.X) + '&nbsp;Ω</b> ' + (r.X < 0 ? 'capacitive' : r.X > 0 ? 'inductive' : 'zero') + ' reactance. Find the average power supplied by the source and the average power absorbed by the resistor and the ' + (r.X < 0 ? 'capacitor' : 'inductor') + '.',
     steps: (g, r) => [
       { t: 'Step 1　總阻抗化成極座標。', note: '串聯直接相加，相除用極座標最方便：',
         eq: 'Z = ' + cpx(r.R, r.X, 1) + ' = ' + fix(r.Zm, 3) + '∠' + angF(r.Za) + ' Ω' },
@@ -153,6 +155,7 @@
     question: (g, r) => '某電路從負載端看進去的戴維寧等效為 <b>V<sub>Th</sub> = ' + r.V.toFixed(3) + ' V（振幅）</b>、<b>Z<sub>Th</sub> = ' + cpx(r.R, r.X, 3) + ' Ω</b>。' +
       (r.m ? '負載<b>只能是一個電阻 R<sub>L</sub></b>，' : '負載 Z<sub>L</sub> 可以自由選，') + '求讓負載得到最大平均功率的負載值與功率。' +
       '<br><span style="font-size:13px;color:var(--ink-3)">↑ 把「負載限制」拉到 1 看純電阻的情況；把 X<sub>Th</sub> 拉到 0，兩種答案會變一樣。</span>',
+    questionEn: (g, r) => 'The Thevenin equivalent seen from the load terminals is <b>V<sub>Th</sub> = ' + r.V.toFixed(3) + ' V (amplitude)</b> and <b>Z<sub>Th</sub> = ' + cpx(r.R, r.X, 3) + ' Ω</b>. ' + (r.m ? 'The load must be <b>a pure resistor R<sub>L</sub></b>. ' : 'The load Z<sub>L</sub> may be chosen freely. ') + 'Find the load that receives the maximum average power, and that power.',
     steps: (g, r) => r.m ? [
       { t: 'Step 1　電抗抵銷不掉。', note: '負載沒有電抗（X<sub>L</sub> = 0），Z<sub>Th</sub> 的 ' + cpx(0, r.X, 3).replace(/^0\.000 /, '') + ' 只能留著，所以<b>不能</b>用 R<sub>L</sub> = R<sub>Th</sub>。' },
       { t: 'Step 2　回到通式，X<sub>L</sub> = 0 代進去。',
@@ -224,6 +227,7 @@
     question: (g, r) => '電源 <b>v<sub>s</sub> = 10 cos ' + r.w + 't V</b> 串聯 <b>R = ' + r.R + ' Ω</b>' + (r.L ? '、<b>L = ' + r.L.toFixed(2) + ' H</b>' : '') +
       '、<b>C = ' + r.Cc.toFixed(2) + ' F</b>。求總阻抗 Z，以及電流 i(t)。' +
       '<br><span style="font-size:13px;color:var(--ink-3)">↑ 把 L 拉上來，找找看哪個 L 會讓電感和電容的電抗<b>剛好抵銷</b>（電流最大）。</span>',
+    questionEn: (g, r) => 'A source <b>v<sub>s</sub> = 10 cos ' + r.w + 't V</b> is connected in series with <b>R = ' + r.R + ' Ω</b>' + (r.L ? ', <b>L = ' + r.L.toFixed(2) + ' H</b>' : '') + ' and <b>C = ' + r.Cc.toFixed(2) + ' F</b>. Find the total impedance Z and the current i(t).',
     steps: (g, r) => [
       { t: 'Step 1　從電源抓出 ω。', note: 'cos 裡面 t 前面的數字就是 ω（rad/s），不是 f：',
         eq: 'v<sub>s</sub> = 10 cos ' + r.w + 't　⟹　ω = ' + r.w + '，電源相量 V = 10∠0° V' },

@@ -1215,3 +1215,6 @@ body.ann-finger .ann-free { touch-action: none; }
 .res-grid figcaption { font-size: 13px; color: var(--ink-2); display: flex; gap: 8px; justify-content: space-between; padding: 0 4px 4px; }
 .res-grid figcaption b { color: var(--ink); }
 .res-grid canvas { display: block; width: 100%; }
+
+/* 可改數字例題：題目下面的英文 */
+.example .ex-q .q-en { margin: 8px 0 0; }

@@ -126,6 +126,7 @@
   題庫一章一檔（例：`circuits/assets/ch11-ex.js` → `window.__CH11EX`），元件 `shared/exbook.js`：
   `<div class="exbook" data-bank="__CH11EX" data-sec="11.2"></div>`。
 - Example：照課本解法拆成「做什麼 + 算式 + 為什麼」，按「看下一步」一步步打開。
+- **電路學所有例題題目都要有英文版在中文下面**（使用者 10/7 要求）：exbook 卡片寫 `en: '…'`（顯示在 `.xb-q` 裡的 `.q-en`）；可改數字例題 `liveExample` 加 `questionEn: (g, r) => '…'`（數字跟中文題幹用同一組變數）。新章節照做。
 - Practice：題目＋**手寫板**（`__ANN.pad`，跟講義筆記同一支筆，不用進筆記模式就能寫，雲端同步；沒載 annot.js 才退回 `shared/pad.js`）；提示／答案／詳解先遮住。
   課本只給答案的，詳解自己解，**數值要用程式驗算**；跟課本答案有出入要寫 `note`。
 - 電路圖一律用 `shared/schem.js` 重畫（`r l c z vs is wm wave`），不要截課本圖。

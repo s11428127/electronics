@@ -289,7 +289,7 @@
 
     function render() {
       const r = cfg.compute(state);
-      host.querySelector('.ex-q').innerHTML = cfg.question(state, r);
+      host.querySelector('.ex-q').innerHTML = cfg.question(state, r) + (cfg.questionEn ? '<div class="q-en">' + cfg.questionEn(state, r) + '</div>' : '');
       host.querySelector('ol').innerHTML = cfg.steps(state, r).map(st =>
         '<li><b>' + st.t + '</b>' + (st.note ? ' ' + st.note : '') +
         (st.eq ? '<span class="d-eq">' + st.eq + '</span>' : '') +

@@ -45,6 +45,7 @@
     },
     question: (g, r) => '負載電壓 <b>v(t) = ' + r.Vm + ' cos(ωt ' + (r.tv < 0 ? '− ' : '+ ') + Math.abs(r.tv) + '°) V</b>，流過的電流 <b>i(t) = ' + r.Im.toFixed(1) +
       ' cos(ωt ' + (r.ti < 0 ? '− ' : '+ ') + Math.abs(r.ti) + '°) A</b>。求 (a) 複功率與視在功率 (b) 實功率與虛功率 (c) 功率因數與負載阻抗。',
+    questionEn: (g, r) => 'The voltage across a load is <b>v(t) = ' + r.Vm + ' cos(ωt ' + (r.tv < 0 ? '− ' : '+ ') + Math.abs(r.tv) + '°) V</b> and the current through it is <b>i(t) = ' + r.Im.toFixed(1) + ' cos(ωt ' + (r.ti < 0 ? '− ' : '+ ') + Math.abs(r.ti) + '°) A</b>. Find (a) the complex and apparent powers, (b) the real and reactive powers, and (c) the power factor and the load impedance.',
     steps: (g, r) => [
       { t: 'Step 1　換成 rms 相量。', eq: 'V<sub>rms</sub> = (' + r.Vm + '/√2)∠' + angF(r.tv, 0) + '　I<sub>rms</sub> = (' + r.Im.toFixed(1) + '/√2)∠' + angF(r.ti, 0) },
       { t: 'Step 2　S = V<sub>rms</sub>I<sub>rms</sub>*：電流角度變號再相乘。', note: '(V<sub>m</sub>/√2)(I<sub>m</sub>/√2) = ½V<sub>m</sub>I<sub>m</sub>：',
@@ -76,6 +77,7 @@
     },
     question: (g, r) => '負載 Z 從 <b>' + r.V + ' V（rms）</b>電源吸取 <b>' + fix(r.S / 1000, 1) + ' kVA</b>，功率因數 <b>' + r.pf.toFixed(3) + (r.sg > 0 ? ' 落後' : ' 超前') +
       '</b>。求 (a) 平均功率與虛功率 (b) 峰值電流 (c) 負載阻抗。',
+    questionEn: (g, r) => 'A load Z draws <b>' + fix(r.S / 1000, 1) + ' kVA</b> at a power factor of <b>' + r.pf.toFixed(3) + (r.sg > 0 ? ' lagging' : ' leading') + '</b> from a <b>' + r.V + '-V rms</b> sinusoidal source. Calculate (a) the average and reactive powers delivered to the load, (b) the peak current, and (c) the load impedance.',
     steps: (g, r) => [
       { t: 'Step 1　功率角（' + (r.sg > 0 ? '落後取正' : '超前取負') + '）。', eq: 'θ = ' + (r.sg > 0 ? '' : '−') + 'cos⁻¹ ' + r.pf.toFixed(3) + ' = ' + angF(r.th) },
       { t: 'Step 2　P 與 Q。', eq: 'P = |S| cos θ = ' + fix(r.S, 0) + ' × ' + r.pf.toFixed(3) + ' = ' + fix(r.P / 1000, 3) + ' kW　Q = |S| sin θ = ' + fix(r.Q / 1000, 3) + ' kVAR',
@@ -107,6 +109,7 @@
     },
     question: (g, r) => '兩個負載並聯在 <b>' + r.V + ' V（rms）</b>電源上：<b>Z₁ = ' + r.L[0].z + '∠' + angF(r.L[0].a, 0) + ' Ω</b>、<b>Z₂ = ' + r.L[1].z + '∠' + angF(r.L[1].a, 0) +
       ' Ω</b>。求電源供給的 (a) 視在功率 (b) 實功率 (c) 虛功率 (d) 功率因數。',
+    questionEn: (g, r) => 'Two loads are connected in parallel across a <b>' + r.V + '-V (rms)</b> source: <b>Z<sub>1</sub> = ' + r.L[0].z + '∠' + angF(r.L[0].a, 0) + ' Ω</b> and <b>Z<sub>2</sub> = ' + r.L[1].z + '∠' + angF(r.L[1].a, 0) + ' Ω</b>. Calculate the total (a) apparent power, (b) real power, (c) reactive power, and (d) power factor supplied by the source.',
     steps: (g, r) => [
       { t: 'Step 1　Z₁ 的複功率。', note: '並聯兩端都是 V，用 S = V<sup>2</sup>/Z* 最快：',
         eq: 'S₁ = ' + r.V + '² ÷ ' + r.L[0].z + '∠' + angF(-r.L[0].a, 0) + ' = ' + fix(r.L[0].m, 1) + '∠' + angF(r.L[0].a, 0) + ' = ' + cpx(r.L[0].P, r.L[0].Q, 2) + ' VA' },
@@ -154,6 +157,7 @@
       return { P, pf1, pf2, V, w, t1, t2, Q1, Q2, QC, Cf, S1, S2, I1, I2, ok: pf2 > pf1 };
     },
     question: (g, r) => '負載接在 <b>' + r.V + ' V（rms）、60 Hz</b> 電源上，吸收 <b>' + fix(r.P / 1000, 1) + ' kW</b>，功率因數 <b>' + r.pf1.toFixed(2) + ' 落後</b>。求要把 pf 提高到 <b>' + r.pf2.toFixed(2) + '</b> 所需的並聯電容。',
+    questionEn: (g, r) => 'When connected to a <b>' + r.V + '-V (rms), 60-Hz</b> power line, a load absorbs <b>' + fix(r.P / 1000, 1) + ' kW</b> at a lagging power factor of <b>' + r.pf1.toFixed(2) + '</b>. Find the value of parallel capacitance necessary to raise the pf to <b>' + r.pf2.toFixed(2) + '</b>.',
     steps: (g, r) => r.ok ? [
       { t: 'Step 1　校正前的角度與 Q₁。', eq: 'θ₁ = cos⁻¹ ' + r.pf1.toFixed(2) + ' = ' + angF(r.t1) + '　Q₁ = P tan θ₁ = ' + fix(r.P, 0) + ' × ' + fix(Math.tan(r.t1 * RAD), 4) + ' = ' + fix(r.Q1, 1) + ' VAR' },
       { t: 'Step 2　校正後的角度與 Q₂（P 不變）。', eq: 'θ₂ = cos⁻¹ ' + r.pf2.toFixed(2) + ' = ' + angF(r.t2) + '　Q₂ = ' + fix(r.P, 0) + ' × ' + fix(Math.tan(r.t2 * RAD), 4) + ' = ' + fix(r.Q2, 1) + ' VAR' },
@@ -202,6 +206,7 @@
     },
     question: (g, r) => '電源 <b>' + r.V + '∠0° V（rms）</b>經過線路阻抗 <b>12 + j10 Ω</b>，接到負載 <b>' + r.R + (r.X < 0 ? ' − j' : ' + j') + Math.abs(r.X) +
       '&nbsp;Ω</b>。瓦特計的電流線圈串在負載上、電壓線圈並在負載兩端。求瓦特計讀數。',
+    questionEn: (g, r) => 'A source <b>' + r.V + '∠0° V (rms)</b> feeds a load <b>' + r.R + (r.X < 0 ? ' − j' : ' + j') + Math.abs(r.X) + '&nbsp;Ω</b> through a line impedance of <b>12 + j10 Ω</b>. The current coil of the wattmeter is in series with the load and the voltage coil is across the load. Find the wattmeter reading.',
     steps: (g, r) => [
       { t: 'Step 1　看線圈接哪：讀的是負載的 P。', note: '電流線圈串在負載、電壓線圈並在負載 → 不含線路那 12 + j10。' },
       { t: 'Step 2　總阻抗與電流。', eq: 'Z = (12 + j10) + (' + cpx(r.R, r.X, 0) + ') = ' + cpx(r.Rt, r.Xt, 0) + ' Ω　|I| = ' + r.V + ' ÷ √' + fix(r.Z2, 0) + ' = ' + fix(r.I, 3) + ' A' },
@@ -237,6 +242,7 @@
     },
     question: (g, r) => '<b>' + r.P + ' kW</b> 負載由 13 kV（rms）供電，每月運轉 <b>' + r.H + ' 小時</b>，功率因數 <b>' + r.pf.toFixed(2) +
       '</b>。費率：電能費每度 6 美分；pf 每低於 0.85 一個 0.01，罰電能費的 0.1%；每高於 0.85 一個 0.01，減免 0.1%。求每月電費。',
+    questionEn: (g, r) => 'A <b>' + r.P + '-kW</b> load supplied at 13 kV (rms) operates <b>' + r.H + ' hours</b> a month at a power factor of <b>' + r.pf.toFixed(2) + '</b>. Rate: energy charge 6 cents per kWh; penalty of 0.1% of the energy charge for every 0.01 that pf falls below 0.85; credit of 0.1% for every 0.01 that pf exceeds 0.85. Find the monthly bill.',
     steps: (g, r) => [
       { t: 'Step 1　用電量。', eq: 'W = ' + r.P + ' kW × ' + r.H + ' h = ' + r.W.toLocaleString('en-US') + ' kWh' },
       { t: 'Step 2　跟 0.85 差幾個 0.01？', eq: '0.85 − ' + r.pf.toFixed(2) + ' = ' + fix(r.n / 100, 2) + ' → ' + Math.abs(r.n) + ' 個 0.01 → ' + (r.n > 0 ? '罰 ' : r.n < 0 ? '減免 ' : '') + fix(Math.abs(r.pct), 1) + ' %',
