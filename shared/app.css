@@ -428,14 +428,18 @@ em { font-style: italic; }
    ============================================================ */
 body[data-subject="circuits"] { --accent: #0f7a66; }
 body[data-subject="math"] { --accent: #6a4bbc; }
+body[data-subject="lab"] { --accent: #c2571a; }
 :root:not([data-theme="light"]) body[data-subject="circuits"] { --accent: #46c2a5; }
 :root:not([data-theme="light"]) body[data-subject="math"] { --accent: #a992f0; }
+:root:not([data-theme="light"]) body[data-subject="lab"] { --accent: #f09a5e; }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) body[data-subject="circuits"] { --accent: #0f7a66; }
   :root:not([data-theme="dark"]) body[data-subject="math"] { --accent: #6a4bbc; }
+  :root:not([data-theme="dark"]) body[data-subject="lab"] { --accent: #c2571a; }
 }
 :root[data-theme="dark"] body[data-subject="circuits"] { --accent: #46c2a5; }
 :root[data-theme="dark"] body[data-subject="math"] { --accent: #a992f0; }
+:root[data-theme="dark"] body[data-subject="lab"] { --accent: #f09a5e; }
 
 /* 被 iframe 嵌入時不需要自己的頂欄 */
 .embed .topbar { display: none; }
@@ -1181,3 +1185,33 @@ body.ann-finger .ann-free { touch-action: none; }
 .cf-wrap { margin-top: 28px; }
 .cf-wrap > h3 { font-size: 16px; margin: 0 0 4px; }
 .cf-wrap > p { margin: 0 0 12px; color: var(--ink-2); font-size: 14px; }
+
+/* ============================================================
+   電子實習：實驗表格、器材清單、結果圖格、我的實測輸入
+   ============================================================ */
+.tbl-wrap { overflow-x: auto; margin: 14px 0; border: 1px solid var(--line); border-radius: 9px; -webkit-overflow-scrolling: touch; }
+.lab-tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--surface); }
+.lab-tbl th, .lab-tbl td { padding: 8px 10px; border-top: 1px solid var(--line-soft); text-align: center; white-space: nowrap; }
+.lab-tbl thead th { background: color-mix(in srgb, var(--accent) 10%, var(--surface)); color: var(--ink); font-weight: 600; border-top: 0; font-size: 12.5px; }
+.lab-tbl td.num { font-family: var(--font-mono); }
+.lab-tbl td.hi { color: var(--accent); font-weight: 700; }
+.lab-tbl tr.grp td:first-child { font-weight: 600; }
+.lab-tbl input { width: 76px; font: inherit; font-family: var(--font-mono); padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: var(--ink); text-align: right; }
+.lab-tbl input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.lab-tbl .diff-ok { color: var(--ok); } .lab-tbl .diff-far { color: var(--warn); }
+.gear { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; margin: 14px 0; padding: 0; list-style: none; }
+.gear li { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; font-size: 14px; }
+.gear li b { display: block; font-size: 14.5px; }
+.gear li span { color: var(--ink-3); font-size: 12.5px; }
+.lab-steps { counter-reset: ls; list-style: none; padding: 0; margin: 14px 0; }
+.lab-steps > li { counter-increment: ls; position: relative; padding: 10px 12px 10px 46px; margin: 8px 0; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; }
+.lab-steps > li::before { content: counter(ls); position: absolute; left: 12px; top: 10px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--surface); font: 700 13px/24px var(--font-mono); text-align: center; }
+.lab-steps > li b.t { display: block; margin-bottom: 2px; }
+.lab-steps > li p { margin: 4px 0 0; color: var(--ink-2); font-size: 14px; }
+.schem-box { display: flex; justify-content: center; margin: 14px 0; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; color: var(--ink); }
+.schem-box figcaption { font-size: 12.5px; color: var(--ink-3); text-align: center; margin-top: 6px; }
+.res-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin: 14px 0; }
+.res-grid figure { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 8px 8px 6px; }
+.res-grid figcaption { font-size: 13px; color: var(--ink-2); display: flex; gap: 8px; justify-content: space-between; padding: 0 4px 4px; }
+.res-grid figcaption b { color: var(--ink); }
+.res-grid canvas { display: block; width: 100%; }

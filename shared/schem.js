@@ -32,6 +32,8 @@
   const zig = () => { let d = 'M0 0'; for (let i = 0; i < 6; i++) d += ' L' + (i * 6.67 + 3.33) + ' ' + (i % 2 ? 6 : -6); return '<path d="' + d + ' L40 0" fill="none"/>'; };
   const coil = () => { let d = 'M0 0'; for (let i = 0; i < 4; i++) d += ' a5 5 0 0 1 10 0'; return '<path d="' + d + '" fill="none"/>'; };
   const cap = () => line(0, 0, 17, 0) + line(17, -10, 17, 10, ' stroke-width="2"') + line(23, -10, 23, 10, ' stroke-width="2"') + line(23, 0, 40, 0);
+  /* 二極體：三角形尖端朝 (x2,y2)，尖端那邊是陰極（加一條短線） */
+  const diode = () => line(0, 0, 12, 0) + '<path d="M12 -8 L12 8 L28 0 Z" fill="none"/>' + line(28, -8, 28, 8, ' stroke-width="2"') + line(28, 0, 40, 0);
   const boxz = () => '<rect x="4" y="-8" width="32" height="16" rx="2" fill="none"/>';
 
   const S = {
@@ -39,6 +41,16 @@
     l: (x1, y1, x2, y2, l, o) => along(x1, y1, x2, y2, coil(), l, o),
     c: (x1, y1, x2, y2, l, o) => along(x1, y1, x2, y2, cap(), l, o),
     z: (x1, y1, x2, y2, l, o) => along(x1, y1, x2, y2, boxz(), l, o),
+    d: (x1, y1, x2, y2, l, o) => along(x1, y1, x2, y2, diode(), l, o),
+    /* 接地符號：(x,y) 是接點 */
+    gnd: (x, y) => line(x, y, x, y + 8) + line(x - 10, y + 8, x + 10, y + 8) + line(x - 6, y + 12, x + 6, y + 12) + line(x - 2.5, y + 16, x + 2.5, y + 16),
+    /* 交流電壓源（圓圈裡畫一個 ~） */
+    vac: (x, y1, y2, label, o) => {
+      o = o || {}; const cy = (y1 + y2) / 2;
+      return line(x, y1, x, cy - 14) + line(x, cy + 14, x, y2) + '<circle cx="' + x + '" cy="' + cy + '" r="14" fill="none"/>' +
+        '<path d="M' + (x - 8) + ' ' + cy + ' C' + (x - 5) + ' ' + (cy - 8) + ' ' + (x - 1) + ' ' + (cy - 8) + ' ' + x + ' ' + cy + ' S' + (x + 5) + ' ' + (cy + 8) + ' ' + (x + 8) + ' ' + cy + '" fill="none"/>' +
+        (label ? text(o.side === 'r' ? x + 19 : x - 19, cy + 4, label, o.side === 'r' ? 'start' : 'end') : '');
+    },
     w: (...p) => '<polyline points="' + p.join(' ') + '" fill="none"/>',
     dot: (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="2.6" fill="currentColor" stroke="none"/>',
     term: (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="3" fill="var(--surface, #fff)"/>',

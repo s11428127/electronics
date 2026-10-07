@@ -122,16 +122,18 @@
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     if (r >= 6) ctx.fillText('+', x, y + 0.5);
   }
-  /* 文字裡的 <sup>…</sup> 畫成上標（次方一律這樣寫，不用 ^） */
+  /* 文字裡的 <sup>…</sup> 畫成上標、<sub>…</sub> 畫成下標（次方一律這樣寫，不用 ^） */
   function richText(ctx, x, y, text, size, fam, weight, align) {
-    const parts = String(text).split(/<sup>|<\/sup>/);
-    if (parts.length === 1) { ctx.textAlign = align; ctx.fillText(text, x, y); return; }
+    const toks = String(text).split(/(<\/?su[pb]>)/);
+    if (toks.length === 1) { ctx.textAlign = align; ctx.fillText(text, x, y); return; }
     const fN = weight + ' ' + size + 'px ' + fam, fS = weight + ' ' + Math.round(size * 0.72) + 'px ' + fam;
+    const parts = []; let mode = 0;                       /* 0 一般、1 上標、−1 下標 */
+    toks.forEach(t => { if (t === '<sup>') mode = 1; else if (t === '<sub>') mode = -1; else if (t === '</sup>' || t === '</sub>') mode = 0; else if (t) parts.push([t, mode]); });
     let W = 0;
-    parts.forEach((p, i) => { ctx.font = i % 2 ? fS : fN; W += ctx.measureText(p).width; });
+    parts.forEach(p => { ctx.font = p[1] ? fS : fN; W += ctx.measureText(p[0]).width; });
     let cx = align === 'center' ? x - W / 2 : align === 'right' ? x - W : x;
     ctx.textAlign = 'left';
-    parts.forEach((p, i) => { ctx.font = i % 2 ? fS : fN; ctx.fillText(p, cx, i % 2 ? y - size * 0.38 : y); cx += ctx.measureText(p).width; });
+    parts.forEach(p => { ctx.font = p[1] ? fS : fN; ctx.fillText(p[0], cx, p[1] > 0 ? y - size * 0.38 : p[1] < 0 ? y + size * 0.24 : y); cx += ctx.measureText(p[0]).width; });
     ctx.font = fN;
   }
   function label(ctx, x, y, text, color, size, align, weight) {

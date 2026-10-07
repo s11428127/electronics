@@ -77,7 +77,7 @@
 - 同頁面加 `<body data-look="clean">` 會套用同一套乾淨外觀（標題卡 + 英文小字 `.h2-en`）。
 - SVG 文字裡的 `<`、`>` 一定要寫成 `&lt;`、`&gt;`，否則整個畫面 parse 失敗（踩過的坑）。
 - 下標用 `fx(['i','D',' = I','S'])` 這種寫法：下標後面的字要跟回基線的 tspan 放一起，空的 tspan 的 dy 不會生效。
-- 現有劇本：電子學 `ch1-part1～4-story.js`、電路學 `ch11-part1～3-story.js`、工數 `laplace-story.js`、`laplace2-story.js`、`ode-story.js`。
+- 現有劇本：電子學 `ch1-part1～4-story.js`、電路學 `ch11-part1～3-story.js`、工數 `laplace-story.js`、`laplace2-story.js`、`ode-story.js`、電子實習 `filter-story.js`。
 - 版面實測（看截圖總表得到的）：標題卡蓋到約 y 92（x 200～440），兩行字幕從約 y 312 開始，最後一幕的「從頭再看／往下看」按鈕在 y 285 以下 → **內容放 y 100～305，最後一幕放到 270 為止**。
 
 ## 上課筆記（板書照片）的做法
@@ -138,6 +138,15 @@
 - 題庫一章一檔（例：`circuits/assets/ch11-concept.js` → `window.__CH11C`，`name:'ch11c'`），item `kind:'cf'`、`sec`、`en`、`how`（解法題）；作答元件同 `shared/hw.js`，選項自動打亂。
 - 放法：每節最後加 `<div class="cf-wrap" id="cf-11-x">…<div class="hw-list" data-bank="__CH11C" data-sec="11.x"></div></div>`（放最後才不會讓筆跡錨點移位）；另做總複習頁 `ch11-review.html`。
 - 紀錄存在 `<科目>/<bank.name>`（跨頁共用），要把它加進 `mistakes.html` 的 `data-chs`。選項同樣不能有 `<sup>`、底線。
+
+## 電子實習（`lab/`，10/7 新科目）
+
+- 主色 `#c2571a`（暗色 `#f09a5e`），`<body data-subject="lab">`。一個實驗一頁，固定順序：
+  **故事模式 → 原理（照章節頁規格）→ 🔬 實驗流程（器材、接線圖、步驟、示波器設定、出包點）→ 📈 結果 → 💻 PSpice 回家作業 → 名詞、測驗**。
+- 使用者 10/7：**沒有實測數據時先放模擬結果**（程式模擬、Python 長時間跑穩態驗算，數字寫進 `docs/CONTENT_MAP.md`）；結果節附「我的實測」輸入表（`__SYNC.open('lab_<實驗>_meas')`），自動算並跟模擬比。
+- 講義公式有兩種版本時**兩個都列**、說明差別（例：漣波 rms 正弦 /2√2 vs 鋸齒 /2√3 vs 課堂簡化 Vpp/Vdc）。
+- 電路圖用 `shared/schem.js`，10/7 新增 `d`（二極體，尖端朝第二點＝陰極）、`gnd`、`vac`（交流源）。
+- canvas 的 `label`/`labelCJK` 現在也支援 `<sub>`。
 
 ## 學習紀錄（`shared/track.js`）
 

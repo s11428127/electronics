@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>電子實習 · 實驗選單</title>
+<meta name="description" content="電子實習（上）互動講義：每個實驗一頁，故事模式、實驗流程、模擬結果與 PSpice 作業。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body data-subject="lab">
+
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><b>電子實習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="home">
+  <div class="home-hero">
+    <div class="eyebrow">Electronics Lab · 電子實習（上）</div>
+    <h1>電子實習</h1>
+    <p>選一個實驗進去。每個實驗一頁：<b>故事模式</b>先看懂在幹嘛 → <b>原理</b>（推導＋互動）→ <b>實驗流程</b>（接線、示波器、三用電表）→ <b>結果</b>（模擬出來的波形與表格，可以填自己的實測對照）→ <b>PSpice 回家作業</b>。</p>
+  </div>
+
+  <dl class="progress">
+    <div><dt>已完成</dt><dd>1 <small>個實驗</small></dd></div>
+    <div><dt>互動模組</dt><dd>5 <small>＋ 4 例題</small></dd></div>
+    <div><dt>測驗題</dt><dd>10 <small>＋ 觀念填充 24</small></dd></div>
+  </dl>
+
+  <div class="chapters mk-chaps">
+    <a class="chap mk-card" href="mistakes.html" data-trk-skip>
+      <span class="chap-no">📕<em>錯題本</em></span>
+      <span class="chap-body">
+        <b>錯題本</b>
+        <span>Mistakes · 答錯的測驗、觀念填充自動收集</span>
+      </span>
+      <span class="chap-go">打開 →</span>
+    </a>
+  </div>
+  <div class="chap-group">已上線</div>
+  <div class="chapters">
+    <a class="chap" href="filter.html">
+      <span class="chap-no">CH4<em>濾波</em></span>
+      <span class="chap-body">
+        <b>整流器濾波：電容濾波電路</b>
+        <span>Rectifier Filter · 半波整流＋電容 · 橋式全波（PSpice）</span>
+        <p>整流完是一顆一顆的脈波，手機要的是平的直流：在負載旁邊並一顆電容當「水塔」。R、C 怎麼影響漣波，漣波因數怎麼算，6 組實驗結果先模擬給你看。</p>
+        <span class="chap-tags"><i>▶ 19 個畫面的故事模式</i><i>🔬 實驗流程＋模擬結果（6 組）</i><i>5 個互動模組 ＋ 4 個可改數字例題</i><i>10 題中英對照測驗</i></span>
+      </span>
+      <span class="chap-go">進入 →</span>
+    </a>
+  </div>
+
+  <div class="chap-group">講義已收到，接著做</div>
+  <div class="chapters">
+    <div class="chap soon"><span class="chap-no">CH3</span><span class="chap-body"><b>二極體特性 Diode Characteristics</b><span>順偏／反偏靜態特性、V-I 曲線、PSpice DC Sweep</span></span><span class="chap-go">待製作</span></div>
+    <div class="chap soon"><span class="chap-no">CH4<em>整流</em></span><span class="chap-body"><b>整流器 Rectifier</b><span>半波、中間抽頭全波、橋式全波；V<sub>avg</sub> = 0.45V<sub>rms</sub>／0.9V<sub>rms</sub></span></span><span class="chap-go">待製作</span></div>
+  </div>
+
+  <p class="note src home-note">丟新的實驗講義過來時說一聲是第幾章，我會做成獨立一頁接在上面。</p>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('theme-btn');
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    var isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { var t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

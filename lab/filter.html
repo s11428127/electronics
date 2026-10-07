@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>整流器濾波</title>
+<meta name="description" content="電子實習第四章：半波整流電容濾波電路。故事模式、原理推導、可拉 R 與 C 的模擬器、實驗流程、6 組模擬結果與 PSpice 作業。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="lab" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子實習</a><span>›</span><b>CH4 整流器濾波</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH4 整流器濾波</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>這一頁怎麼讀</a></li>
+      <li><a href="#why"><i>1</i>為什麼要濾波</a></li>
+      <li><a href="#how"><i>2</i>電容怎麼濾：充電與放電</a></li>
+      <li><a href="#rc"><i>3</i>R、C 怎麼影響漣波</a></li>
+      <li><a href="#ripple"><i>4</i>漣波因數（兩種算法）</a></li>
+      <li><a href="#cost"><i>5</i>代價：二極體峰值電流</a></li>
+      <li><a href="#exp"><i>🔬</i>實驗流程（課堂）</a></li>
+      <li><a href="#result"><i>📈</i>結果（模擬）＋我的實測</a></li>
+      <li><a href="#pspice"><i>💻</i>PSpice 回家作業</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>Electronics Lab · Rectifier Filter</div>
+      <h1>整流器濾波：電容濾波電路</h1>
+      <p class="sub">整流完的電壓是一顆一顆的駝峰（<button class="tm" data-t="脈動直流">脈動直流</button>），手機、音響要的是平平的直流。這一頁做的事只有一件：<strong>在負載旁邊並一顆電容當「水塔」</strong>，看它怎麼把駝峰抹平、R 和 C 怎麼決定抹得多平，以及實驗要怎麼量、量出來應該長什麼樣子。</p>
+      <div class="hero-meta">
+        <span class="chip h">🔬 實驗流程 ＋ 6 組模擬結果</span>
+        <span class="chip">19 個畫面的故事模式</span>
+        <span class="chip">5 個互動模組 ＋ 4 個可改數字例題</span>
+        <span class="chip">觀念填充 24 題 ＋ 10 題測驗</span>
+      </div>
+    </div>
+
+    <!-- ══════════ 故事模式 ══════════ -->
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>Story mode · 先看這段，再往下讀</div>
+      <h2>19 個畫面看懂濾波<span class="h2-en">THE STORY IN 19 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。全部看完大約 7 分鐘。最後會用實驗那 6 組數字解謎。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <!-- ══════════ 地圖 ══════════ -->
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>How to read this page</div>
+      <h2>這一頁怎麼讀<span class="h2-en">PAGE MAP</span></h2>
+      <p class="lede">講義 9 頁：p.2–6 是原理、p.7 是課堂實驗、p.8–9 是 PSpice 回家作業。網頁照同樣順序，先原理、再實驗、再結果。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>p.2</code><b>為什麼要濾波：脈動直流與漣波</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.3</code><b>電容怎麼濾：充電（二極體導通）與放電（二極體截止）</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.4–5</code><b>R、C 怎麼影響漣波；ΔV ≈ I<sub>DC</sub>T/C</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.6–7</code><b>漣波因數：講義版（正弦）、鋸齒版、課堂簡化版</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.5</code><b>濾波電容的代價：二極體峰值電流</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.7</code><b>🔬 實驗流程 → 📈 結果（6 組）</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.8–9</code><b>💻 PSpice：半波濾波、橋式全波濾波</b><span class="dot"></span></div>
+      </div>
+      <p class="note key">整頁一句話：<b>電容像水塔，漣波大小只看 RC 跟電源週期 T 誰大</b>。RC ≫ T → 平；RC ≈ T 或更小 → 幾乎沒濾到。</p>
+      <div class="note">
+        <b>講義勘誤／請確認</b>（用程式與定義驗算過）：
+        <ol style="margin:6px 0 0;padding-left:20px">
+          <li>p.4「負載越大，負載電流越小」指的是<b>負載電阻</b>越大。一般說「負載變大」通常是指吃的電流變多，意思剛好相反，讀的時候要注意。</li>
+          <li>p.5「旦通過二極體」是錯字，應為「但」。Q = I<sub>DC</sub> × T 是近似：假設電容放電放了整整一個週期。</li>
+          <li>p.6 V<sub>r(rms)</sub> = V<sub>r,amplitude</sub>/√2 是把漣波當<b>正弦波</b>；實際漣波比較像鋸齒波，課本常用 V<sub>r(p-p)</sub>/(2√3)。兩個都列在第 4 節，<b>請確認老師要用哪一個</b>。</li>
+          <li>p.7 表格用的是「簡化漣波因數」V<sub>o(p-p)</sub>/V<sub>dc</sub>，跟 p.6 的定義數字差約 2.8 倍，對不起來是正常的。</li>
+          <li>另一份「整流器」講義的 PSpice 作業寫 VAMPL = 10V，但課堂是 Vpp = 10V（振幅 5V）。<b>請確認作業要填 5 還是 10</b>。這一頁一律用振幅 5V。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 1 為什麼要濾波 ══════════ -->
+    <section class="sec" id="why">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.2 · Why filter</div>
+      <h2>為什麼要濾波：脈動直流與漣波<span class="h2-en">PULSATING DC &amp; RIPPLE</span></h2>
+      <p class="lede">插座是 110 V、60 Hz 的交流；手機要 5 V 平平的直流。電源供應器分四步：<b>變壓 → 整流 → 濾波 → 穩壓</b>。<button class="tm" data-t="整流">整流</button>只解決了「方向」（不再變負），大小還是一顆一顆地跳，這叫<button class="tm" data-t="脈動直流">脈動直流</button>。疊在直流上面那些上下跳動的部分，就叫<button class="tm" data-t="漣波">漣波</button>。<b>濾波</b>的工作就是把漣波壓小。</p>
+      <div class="eq">半波整流（不濾波）：V<em>dc</em> = V<em>p</em> / π，V<em>p</em> = V<em>m</em> − V<em>γ</em>　　漣波 = 直流上面的交流變動量</div>
+      <div class="derive">
+        <h4>從函數產生器到半波整流的輸出</h4>
+        <ol>
+          <li>
+            <span class="d-eq">實驗室：函數產生器 Vpp = 10 V、60 Hz　→　V<sub>m</sub> = 5 V</span>
+            <div class="why">實驗用函數產生器代替「插座 + 變壓器」。<button class="tm" data-t="峰對峰值">峰對峰值</button> = 2 × 振幅，所以 10 V<sub>pp</sub> 的最高點只有 5 V。這是最常被搞錯的一步。</div>
+          </li>
+          <li>
+            <span class="d-eq">V<sub>p</sub> = V<sub>m</sub> − V<sub>γ</sub> ≈ 5 − 0.7 = 4.3 V</span>
+            <p>二極體要先吃掉約 0.7 V（<button class="tm" data-t="導通電壓">導通電壓</button>）才會導通，所以輸出的最高點比 5 V 低。實際上電流越大、壓降越大，模擬出來是 4.2～4.4 V。</p>
+          </li>
+          <li>
+            <span class="d-eq">V<sub>dc</sub> = (1/2π) ∫₀<sup>π</sup> V<sub>p</sub> sin θ dθ = V<sub>p</sub>/π ≈ 1.37 V</span>
+            <div class="why">一個週期 2π 裡，只有前半 0～π 有駝峰，後半是 0。把面積平均到整個週期，就是三用電表 DC 檔會看到的值。</div>
+          </li>
+          <li>
+            <span class="d-eq">輸出在 0 ～ 4.3 V 之間跳：漣波 V<sub>pp</sub> = 4.3 V，比直流 1.37 V 還大</span>
+            <p>漣波比直流本身還大，這種電壓不能直接拿去用 —— 手機會一下有電、一下沒電。<b>這就是要濾波的理由。</b></p>
+          </li>
+          <li>
+            <span class="d-eq">不濾波時：V<sub>pp</sub> / V<sub>dc</sub> = V<sub>p</sub> / (V<sub>p</sub>/π) = π ≈ 314%</span>
+            <div class="why">先記住這個數字：用課堂的簡化漣波因數，「完全沒濾」大約是 314%。等一下實驗 100 Ω／10 µF 那一組會量到很接近的值（模擬 326%），代表那一組幾乎沒濾到。</div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>電源供應器的四個方塊</h3><span class="spacer"></span>
+          <div class="btn-row"><button class="btn" type="button" id="chain-play" aria-pressed="true">⏸ 暫停</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-chain" aria-label="交流、整流、濾波、穩壓四個階段的波形"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="chain-c">濾波電容 C（R 固定 1 kΩ）<output for="chain-c"></output></label>
+            <input type="range" id="chain-c" min="0" max="3" step="0.05" value="2"></div>
+        </div>
+        <div class="msg" id="chain-msg"></div>
+      </div>
+
+      <div id="ex-dc"></div>
+
+      <div class="howto">
+        <h4>看到「整流後直流值多少」</h4>
+        <ol>
+          <li>先把題目的電壓換成<b>振幅</b>：給 Vpp 就除以 2；給 rms 就乘 √2。</li>
+          <li>扣掉二極體壓降：半波一顆 V<sub>γ</sub>、橋式兩顆 2V<sub>γ</sub>（理想二極體就不扣）。</li>
+          <li>沒有濾波：半波 V<sub>dc</sub> = V<sub>p</sub>/π、全波 2V<sub>p</sub>/π。有濾波：接近 V<sub>p</sub> − ΔV/2（第 3 節）。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> Vpp = 10 V 就當 V<sub>m</sub> = 10 V。<span class="o">✓ V<sub>m</sub> = Vpp/2 = 5 V。</span></li>
+          <li><span class="x">✗</span> 整流完就是直流，可以直接用。<span class="o">✓ 只是「方向」對了，大小還在跳（脈動直流），要再濾波。</span></li>
+          <li><span class="x">✗</span> 輸出最高點 = 5 V。<span class="o">✓ 要扣二極體壓降，約 4.3 V。</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 2 充電與放電 ══════════ -->
+    <section class="sec" id="how">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.3 · Charge &amp; discharge</div>
+      <h2>電容怎麼濾：充電與放電<span class="h2-en">CHARGE &amp; DISCHARGE</span></h2>
+      <p class="lede">在負載 R 兩端<b>並聯一顆電容 C</b>。把它想成水塔：自來水（電源）一陣一陣來，來的時候順便把水塔灌滿；沒來的時候，家裡的水龍頭（負載）改由水塔供水。二極體就是只能往水塔那邊開的單向閥。所以輸出只會在每個週期的最頂端被「補一下」，其他時間慢慢往下掉。</p>
+      <div class="eq">充電（v<em>s</em> &gt; v<em>C</em> + V<em>γ</em>）：二極體導通，v<em>o</em> ≈ v<em>s</em> − V<em>γ</em>　　放電（v<em>s</em> &lt; v<em>C</em>）：二極體截止，v<em>o</em> = V<em>p</em> e<sup>−t/RC</sup></div>
+      <div class="derive">
+        <h4>一個週期裡發生的事（講義 p.3 的三張圖）</h4>
+        <ol>
+          <li>
+            <span class="d-eq">Step 1（0° → 90°）：v<sub>s</sub> 上升，二極體順偏導通　→　v<sub>s</sub> ≈ v<sub>C</sub> = v<sub>o</sub></span>
+            <p>電源同時做兩件事：供電給 R，並把 C 充電。輸出跟著電源往上爬（少一個 V<sub>γ</sub>），一路爬到峰值 V<sub>p</sub>。</p>
+          </li>
+          <li>
+            <span class="d-eq">Step 2（過了 90°）：v<sub>s</sub> 開始下降，但 v<sub>C</sub> 還停在 V<sub>p</sub>　→　二極體陽極電壓 &lt; 陰極電壓 → 逆偏截止</span>
+            <div class="why">電容不會瞬間放電，它把二極體的陰極「頂」在 V<sub>p</sub>。電源一往下走，陽極就比陰極低，單向閥自己關上。</div>
+          </li>
+          <li>
+            <span class="d-eq">截止期間只剩 C → R 的迴路：v<sub>o</sub>(t) = V<sub>p</sub> e<sup>−t/RC</sup></span>
+            <p>這就是 RC 放電。電容自己供電給 R，電壓沿著指數曲線慢慢往下掉。掉多快由<button class="tm" data-t="時間常數">時間常數</button> τ = RC 決定。</p>
+          </li>
+          <li>
+            <span class="d-eq">Step 3（下一個週期）：v<sub>s</sub> 再爬上來，在 t<sub>2</sub> 追上 v<sub>C</sub> + V<sub>γ</sub>　→　二極體再導通、把電容補滿</span>
+            <div class="why">注意二極體不是從 0° 就開始導通，而是要等電源追上電容電壓的那一刻（t<sub>2</sub>）。電容越大、掉得越少，這一段導通時間就越短。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">輸出 = 直流（約 V<sub>p</sub> − ΔV/2）＋ 鋸齒狀的漣波（峰對峰 ΔV）</span>
+            <p>「短短充一下、長長放一段」一直重複，輸出就變成接近平的直流，上面疊一點鋸齒。這個鋸齒就是漣波。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>濾波模擬器：拉 R、C 看充電和放電</h3><span class="spacer"></span>
+          <div class="btn-row">
+            <button class="btn" type="button" id="sim-play" aria-pressed="true">⏸ 暫停</button>
+            <button class="btn" type="button" id="sim-bridge" aria-pressed="false">改成橋式全波</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-sim" aria-label="半波整流電容濾波的電源電壓與輸出電壓波形，標出充電與放電區間"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="sim-r">負載電阻 R<output for="sim-r"></output></label>
+            <input type="range" id="sim-r" min="2" max="4" step="0.05" value="3"></div>
+          <div class="ctrl"><label for="sim-c">濾波電容 C<output for="sim-c"></output></label>
+            <input type="range" id="sim-c" min="0" max="3" step="0.05" value="2"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>V<sub>o</sub> 最高／最低</dt><dd id="sim-mm">—</dd></div>
+          <div><dt>V<sub>o,dc</sub>（平均）</dt><dd id="sim-dc">—</dd></div>
+          <div><dt>V<sub>o(p-p)</sub> 漣波</dt><dd id="sim-pp">—</dd></div>
+          <div><dt>r%（簡化 V<sub>pp</sub>/V<sub>dc</sub>）</dt><dd id="sim-r100">—</dd></div>
+          <div><dt>RC ÷ T</dt><dd id="sim-tau">—</dd></div>
+          <div><dt>二極體導通時間</dt><dd id="sim-on">—</dd></div>
+        </dl>
+        <div class="msg" id="sim-msg"></div>
+      </div>
+
+      <div class="howto">
+        <h4>看示波器上的濾波波形，判斷哪一段在做什麼</h4>
+        <ol>
+          <li><b>V<sub>o</sub> 跟著 V<sub>1</sub> 一起往上爬</b>的那一小段 → 二極體導通、電容在充電。</li>
+          <li><b>V<sub>o</sub> 離開 V<sub>1</sub>、自己慢慢往下滑</b>的那一長段 → 二極體截止、電容放電給 R。</li>
+          <li>往下滑的斜率越平，代表 RC 越大、漣波越小。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 以為二極體在整個正半週（0°～180°）都導通。<span class="o">✓ 只在 t<sub>2</sub> 到峰值那一小段導通，其他時間都被電容「頂住」截止。</span></li>
+          <li><span class="x">✗</span> 加了電容輸出就完全平了。<span class="o">✓ 一定還有漣波，只是變小；RC 不夠大時漣波還是很大。</span></li>
+          <li><span class="x">✗</span> 電解電容隨便插。<span class="o">✓ 電解電容有極性：+ 接 V<sub>o</sub>、− 接地。接反會發熱、鼓起，甚至爆開。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-how">
+        <h3>🧠 觀念填充 · 原理（不用算，用選的）</h3>
+        <p>8 題，涵蓋第 1、2 節。每格從下拉選單挑一個，按「對答案」看解釋；題目下面附英文。</p>
+        <div class="hw-list" data-bank="__FLC" data-sec="原理"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 3 R、C ══════════ -->
+    <section class="sec" id="rc">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.4–5 · Effect of R and C</div>
+      <h2>R、C 怎麼影響漣波<span class="h2-en">RIPPLE vs RC</span></h2>
+      <p class="lede">講義 p.4 的兩句話：「固定負載，電容越大濾波越好」「固定電容，負載電阻越大濾波越好」。其實是同一件事：<b>漣波只看 RC 乘積</b>。水塔越大（C 大）、水龍頭開越小（R 大 → 電流小），水位就掉得越慢。比較的對象是電源週期 T = 1/60 s ≈ 16.7 ms。</p>
+      <div class="eq">ΔV ≈ I<em>DC</em> · T / C ≈ V<em>p</em> / (f R C)　　（條件：RC ≫ T）</div>
+      <div class="derive">
+        <h4>從「電荷收支」推出漣波大小（講義 p.5 的兩條式子）</h4>
+        <ol>
+          <li>
+            <span class="d-eq">電容掉的電量：Q = C · ΔV</span>
+            <div class="why">電容的定義 Q = CV。電壓掉了 ΔV，代表電容少了 C·ΔV 的電荷。</div>
+          </li>
+          <li>
+            <span class="d-eq">負載拿走的電量：Q ≈ I<sub>DC</sub> · T</span>
+            <p>放電期間是負載在用電容的電，電量 = 電流 × 時間。這裡<b>近似</b>：假設放電放了整整一個週期 T（實際上少了充電那一小段，所以會稍微高估）。</p>
+          </li>
+          <li>
+            <span class="d-eq">兩個相等　⟹　ΔV = I<sub>DC</sub> T / C</span>
+            <div class="why">電容少掉的，就是負載拿走的。這是講義 p.5 那兩行 Q 放在一起的意思。</div>
+          </li>
+          <li>
+            <span class="d-eq hi">I<sub>DC</sub> ≈ V<sub>p</sub> / R　⟹　ΔV ≈ V<sub>p</sub> T / (RC) = V<sub>p</sub> / (f R C)</span>
+            <p>R 和 C 永遠以<b>乘積 RC</b> 出現：1 kΩ × 100 µF 跟 10 kΩ × 10 µF 都是 0.1 s，漣波會一樣。這就是講義兩句話其實是同一句話。</p>
+          </li>
+          <li>
+            <span class="d-eq">RC = 0.1 s、T = 16.7 ms、V<sub>p</sub> = 4.3 V　⟹　ΔV ≈ 4.3 × 0.0167 / 0.1 ≈ 0.72 V</span>
+            <div class="why">模擬出來是 0.59 V。估算偏大是因為步驟 2 的近似（放電時間其實比 T 短，而且是指數掉不是直線掉）。</div>
+          </li>
+          <li>
+            <span class="d-eq">什麼時候這條近似不能用：RC 跟 T 差不多或更小</span>
+            <p>RC = 1 ms 時公式會算出 ΔV ≈ 72 V，比 V<sub>p</sub> 還大 —— 不合理。實際上電容早就放光，ΔV 最多就是 V<sub>p</sub>。講義 p.5 說「RC 要比週期大許多」就是這個意思，至少要好幾倍。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>漣波只看 RC：6 組實驗放在同一張圖上</h3></div>
+        <div class="stage-wrap"><canvas id="cv-rcmap" aria-label="漣波對 RC 的對數圖，標出實驗六組"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="rcm-r">R<output for="rcm-r"></output></label>
+            <input type="range" id="rcm-r" min="2" max="4" step="0.05" value="3"></div>
+          <div class="ctrl"><label for="rcm-c">C<output for="rcm-c"></output></label>
+            <input type="range" id="rcm-c" min="0" max="3" step="0.05" value="2"></div>
+        </div>
+        <div class="msg" id="rcm-msg"></div>
+      </div>
+
+      <div id="ex-rc"></div>
+
+      <div class="howto">
+        <h4>估算濾波後的漣波</h4>
+        <ol>
+          <li>算 V<sub>p</sub> = V<sub>m</sub> − V<sub>γ</sub>（橋式扣兩個 V<sub>γ</sub>）。</li>
+          <li>算 RC，跟 T 比：半波 T = 1/60 s；全波電容每半個週期就補一次，用 T/2 = 1/120 s。</li>
+          <li>RC ≥ 5T 左右：用 ΔV ≈ V<sub>p</sub>T/(RC)，V<sub>dc</sub> ≈ V<sub>p</sub> − ΔV/2。</li>
+          <li>RC ≲ T：公式失效，輸出接近沒濾波的半波（ΔV ≈ V<sub>p</sub>）。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 「負載越大，濾波越好」。<span class="o">✓ 是負載<b>電阻</b>越大（電流越小）才越好；負載吃越多電流，漣波越大。</span></li>
+          <li><span class="x">✗</span> R 加 10 倍、C 減 10 倍，漣波會變。<span class="o">✓ RC 不變，漣波一樣。</span></li>
+          <li><span class="x">✗</span> RC 很小時也硬套 V<sub>p</sub>/(fRC)。<span class="o">✓ 算出來比 V<sub>p</sub> 還大就代表公式失效。</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 4 漣波因數 ══════════ -->
+    <section class="sec" id="ripple">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.6–7 · Ripple factor</div>
+      <h2>漣波因數：三種算法都要認得<span class="h2-en">RIPPLE FACTOR</span></h2>
+      <p class="lede">只說「漣波 0.5 V」看不出好壞：疊在 5 V 上很糟，疊在 500 V 上幾乎看不到。所以要除以直流，得到<button class="tm" data-t="漣波因數">漣波因數</button> r%。麻煩的是「漣波」可以用 rms 也可以用峰對峰，rms 又要看你把漣波當成什麼形狀。講義兩種都用了，這一節把它們放在一起比。</p>
+      <div class="eq">定義：r% = V<em>r(rms)</em>/V<em>dc</em> × 100%　｜　講義（當正弦）：V<em>r(rms)</em> = V<em>r(p-p)</em>/(2√2)　｜　鋸齒：V<em>r(rms)</em> = V<em>r(p-p)</em>/(2√3)　｜　課堂簡化：r% = V<em>o(p-p)</em>/V<em>dc</em> × 100%</div>
+      <div class="derive">
+        <h4>為什麼會有三個數字</h4>
+        <ol>
+          <li>
+            <span class="d-eq">r = （漣波的有效值）÷（直流值）</span>
+            <div class="why">正式定義用<button class="tm" data-t="有效值">有效值</button>，因為它代表漣波帶的「能量」有多少。</div>
+          </li>
+          <li>
+            <span class="d-eq">講義 p.6：V<sub>r(rms)</sub> = V<sub>r,amplitude</sub> / √2 = V<sub>r(p-p)</sub> / (2√2)</span>
+            <p>把漣波當成正弦波：振幅 = 峰對峰的一半，正弦波 rms = 振幅/√2。</p>
+          </li>
+          <li>
+            <span class="d-eq">鋸齒波：在 −a 到 +a 之間直線變化，平均(x²) = a²/3　⟹　rms = a/√3 = V<sub>r(p-p)</sub> / (2√3)</span>
+            <div class="why">濾波後的漣波是「很快充上去、慢慢掉下來」，比較像鋸齒波而不是正弦波，所以這個更接近真實。√3 ≈ 1.73 比 √2 ≈ 1.41 大，算出來的 rms 比講義版小約 18%。</div>
+          </li>
+          <li>
+            <span class="d-eq">課堂 p.7：r% = V<sub>o(p-p)</sub> / V<sub>dc</sub> × 100%（直接用峰對峰）</span>
+            <p>示波器上峰對峰最好量，所以實驗表格用這個「簡化版」。它不是 rms，所以數字是正弦版的 2√2 ≈ 2.83 倍、鋸齒版的 2√3 ≈ 3.46 倍。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">1 kΩ／100 µF：V<sub>pp</sub> = 0.589 V、V<sub>dc</sub> = 4.010 V　→　簡化 14.7%、正弦 5.2%、鋸齒 4.2%（真實 rms 4.4%）</span>
+            <p>同一組波形，三個數字差很多。<b>填實驗表格用簡化版，寫報告時註明用的是哪一個</b>，才不會跟別人對不起來。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>漣波長什麼樣子？正弦、鋸齒、真實波形比一比</h3></div>
+        <div class="stage-wrap"><canvas id="cv-shape" aria-label="把漣波的交流部分放大，跟同峰對峰的正弦波與鋸齒波比較"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="shp-r">R<output for="shp-r"></output></label>
+            <input type="range" id="shp-r" min="2" max="4" step="0.05" value="3"></div>
+          <div class="ctrl"><label for="shp-c">C<output for="shp-c"></output></label>
+            <input type="range" id="shp-c" min="0" max="3" step="0.05" value="2"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>簡化 V<sub>pp</sub>/V<sub>dc</sub></dt><dd id="shp-a">—</dd></div>
+          <div><dt>講義（當正弦）</dt><dd id="shp-b">—</dd></div>
+          <div><dt>鋸齒 /(2√3)</dt><dd id="shp-c2">—</dd></div>
+          <div><dt>真實 rms（模擬）</dt><dd id="shp-d">—</dd></div>
+        </dl>
+        <div class="msg" id="shp-msg"></div>
+      </div>
+
+      <div id="ex-r"></div>
+
+      <div class="howto">
+        <h4>算漣波因數</h4>
+        <ol>
+          <li>示波器量 V<sub>o</sub> 的最高、最低 → V<sub>o(p-p)</sub> = 最高 − 最低（或切 AC 耦合直接量峰對峰）。</li>
+          <li>三用電表 DC 檔量 V<sub>o,dc</sub>。</li>
+          <li>先看題目／表格要哪一種：簡化版直接 V<sub>pp</sub>/V<sub>dc</sub>；講義 rms 版先除 2√2；鋸齒版先除 2√3。</li>
+          <li>×100% 寫成百分比，答案註明用哪一種。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 把 V<sub>pp</sub> 直接當振幅除 √2。<span class="o">✓ 振幅是 V<sub>pp</sub> 的一半，正弦 rms = V<sub>pp</sub>/(2√2)。</span></li>
+          <li><span class="x">✗</span> 簡化版和 rms 版的數字拿來互相比。<span class="o">✓ 定義不同，差 2.8～3.5 倍，要先統一。</span></li>
+          <li><span class="x">✗</span> V<sub>dc</sub> 用示波器的最高點。<span class="o">✓ V<sub>dc</sub> 是平均值，用三用電表 DC 檔量（或示波器的 Mean）。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-ripple">
+        <h3>🧠 觀念填充 · R、C 與漣波（不用算，用選的）</h3>
+        <p>8 題，涵蓋第 3、4、5 節。</p>
+        <div class="hw-list" data-bank="__FLC" data-sec="漣波"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 5 峰值電流 ══════════ -->
+    <section class="sec" id="cost">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.5 · The price of a big capacitor</div>
+      <h2>代價：二極體峰值電流<span class="h2-en">PEAK DIODE CURRENT</span></h2>
+      <p class="lede">講義 p.5：「濾波電容值越大，漣波越小，<b>但</b>通過二極體的峰值電流越大」。電容越大，水位掉得越少，二極體每個週期只需要開一下下就能補滿 —— 可是負載一整個週期用掉的電荷，必須在這一下下全部灌回去。時間越短，電流就要越大。這就是<button class="tm" data-t="峰值電流">峰值電流</button>。</p>
+      <div class="eq">一週期補回的電荷 = I<em>DC</em> · T　＝　導通期間 Δt 灌進去的電荷 ≈ ½ · I<em>D,peak</em> · Δt　⟹　I<em>D,peak</em> ≈ 2 I<em>DC</em> T / Δt</div>
+      <div class="derive">
+        <h4>電荷收支，換個角度看</h4>
+        <ol>
+          <li>
+            <span class="d-eq">負載一個週期用掉：Q = I<sub>DC</sub> · T</span>
+            <div class="why">穩態時每個週期電容的電量要「收支平衡」，用掉多少就得補回多少。</div>
+          </li>
+          <li>
+            <span class="d-eq">二極體只在 Δt（t<sub>2</sub> 到峰值）這段補，電流是一個窄窄的脈衝</span>
+            <p>把脈衝粗略當成三角形：面積 = ½ × 峰值 × 寬度 = ½ I<sub>D,peak</sub> Δt。</p>
+          </li>
+          <li>
+            <span class="d-eq hi">I<sub>D,peak</sub> ≈ 2 I<sub>DC</sub> · (T/Δt)</span>
+            <p>C 越大 → 漣波越小 → t<sub>2</sub> 越靠近峰值 → Δt 越短 → T/Δt 越大 → 峰值電流越大。</p>
+          </li>
+          <li>
+            <span class="d-eq">模擬：1 kΩ 時 10 µF → 17.8 mA，100 µF → 72.5 mA（I<sub>DC</sub> 約 2.6～4 mA）</span>
+            <div class="why">電容大 10 倍，漣波小了約 5 倍，但二極體的瞬間電流變成約 4 倍。1N4002 能承受平均 1 A、瞬間突波 30 A，實驗這點電流沒問題；但真正的電源用幾千 µF、負載幾安培時，就要特別挑二極體。</div>
+          </li>
+          <li>
+            <span class="d-eq">開機第一下：電容是空的（0 V），二極體一導通就灌很大的電流</span>
+            <p>這叫湧入電流（inrush）。電容越大越嚴重，所以大電源會加限流電阻或軟啟動。</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>二極體電流長什麼樣子</h3></div>
+        <div class="stage-wrap"><canvas id="cv-ipk" aria-label="二極體電流脈衝與輸出電壓"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="ipk-r">R<output for="ipk-r"></output></label>
+            <input type="range" id="ipk-r" min="2" max="4" step="0.05" value="3"></div>
+          <div class="ctrl"><label for="ipk-c">C<output for="ipk-c"></output></label>
+            <input type="range" id="ipk-c" min="0" max="3" step="0.05" value="2"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>負載平均電流 I<sub>DC</sub></dt><dd id="ipk-idc">—</dd></div>
+          <div><dt>二極體峰值電流</dt><dd id="ipk-pk">—</dd></div>
+          <div><dt>峰值 ÷ 平均</dt><dd id="ipk-ratio">—</dd></div>
+          <div><dt>導通時間 Δt</dt><dd id="ipk-dt">—</dd></div>
+        </dl>
+        <div class="msg" id="ipk-msg"></div>
+      </div>
+
+      <div id="ex-ipk"></div>
+
+      <div class="howto">
+        <h4>選濾波電容的思路</h4>
+        <ol>
+          <li>先決定能接受多少漣波 ΔV，用 C ≈ I<sub>DC</sub>T/ΔV 算出最小電容。</li>
+          <li>再估峰值電流 I<sub>D,peak</sub> ≈ 2I<sub>DC</sub>T/Δt，確認二極體撐得住。</li>
+          <li>電容耐壓要大於 V<sub>p</sub>，而且留餘裕（例：5 V 電路用 16 V 的電容）。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 電容越大越好，沒有缺點。<span class="o">✓ 峰值電流和開機湧入電流都會變大，體積和價格也變大。</span></li>
+          <li><span class="x">✗</span> 二極體電流 = 負載電流。<span class="o">✓ 平均起來相等，但二極體是短時間的大脈衝，峰值可以是平均的好幾倍到幾十倍。</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 實驗流程 ══════════ -->
+    <section class="sec" id="exp">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.7 · Experiment（課堂）</div>
+      <h2>🔬 實驗流程：半波整流濾波電路<span class="h2-en">LAB PROCEDURE</span></h2>
+      <p class="lede">課堂要做兩件事：<b>(1) 固定 R1，C1 換 10 µF、100 µF；(2) 固定 C1，R1 換 100 Ω、1 kΩ、10 kΩ</b>。一共 6 組，每組用示波器看 V1 與 Vo、量 V<sub>o(p-p)</sub>，用三用電表 DC 檔量 V<sub>o,dc</sub>，最後算 r%。</p>
+
+      <h3 style="font-size:16px;margin:18px 0 6px">器材</h3>
+      <ul class="gear">
+        <li><b>函數產生器</b><span>正弦、60 Hz、Vpp = 10 V、Offset 0</span></li>
+        <li><b>示波器（雙通道）＋ 2 支探棒</b><span>CH1 看 V1、CH2 看 Vo</span></li>
+        <li><b>三用電表</b><span>DC 電壓檔量 V<sub>o,dc</sub></span></li>
+        <li><b>二極體 1N4002</b><span>有白色環的那端是陰極（K）</span></li>
+        <li><b>電阻 R1</b><span>100 Ω、1 kΩ、10 kΩ 各一</span></li>
+        <li><b>電解電容 C1</b><span>10 µF、100 µF，耐壓 ≥ 16 V，注意極性</span></li>
+        <li><b>麵包板、單心線</b><span>—</span></li>
+      </ul>
+
+      <figure class="schem-box" id="fig-431"><div><div id="schem-hw"></div><figcaption>圖 4.31 半波整流濾波電路（講義 p.7，重畫）</figcaption></div></figure>
+
+      <ol class="lab-steps">
+        <li><b class="t">設定函數產生器</b><p>波形選正弦（Sine）、頻率 60 Hz、振幅 <b>Vpp = 10 V</b>、Offset 0 V。先<b>直接接示波器 CH1 確認</b>真的是 10 Vpp（有些函數產生器面板設定是 50 Ω 負載，接高阻抗時實際輸出會變兩倍）。</p></li>
+        <li><b class="t">先接「不含電容」的半波整流</b><p>V1 → 二極體陽極，陰極 → Vo；R1 = 100 Ω 從 Vo 接到地。示波器 CH1 夾 V1、CH2 夾 Vo，<b>兩支探棒的地夾都夾在同一個地</b>。應該看到 V1 是完整正弦，Vo 只剩上半部的駝峰。</p></li>
+        <li><b class="t">接上 C1 = 10 µF（注意極性）</b><p>電解電容：外殼有一條帶「−」的白條那腳是負極、接地；另一腳（通常比較長）是正極、接 Vo。接好後再打開函數產生器的輸出。</p></li>
+        <li><b class="t">讀示波器：V<sub>o(p-p)</sub></b><p>CH2 用 <b>DC 耦合</b>先看整體：最高點約 4.2～4.4 V。漣波很小時（10 kΩ／100 µF 只有約 0.07 V）切成 <button class="tm" data-t="AC 耦合">AC 耦合</button>、把 V/div 調小，再用游標量峰對峰。</p></li>
+        <li><b class="t">讀三用電表：V<sub>o,dc</sub></b><p>三用電表切 DC 電壓檔，紅棒接 Vo、黑棒接地，讀到的是平均值。</p></li>
+        <li><b class="t">換元件，重複 6 組</b><p><b>換元件前先關掉函數產生器輸出。</b>依序：R1 = 100 Ω 配 10 µF／100 µF → 1 kΩ 配 10 µF／100 µF → 10 kΩ 配 10 µF／100 µF，每組記下 V<sub>o(p-p)</sub>、V<sub>o,dc</sub>。</p></li>
+        <li><b class="t">算漣波因數</b><p>r% = V<sub>o(p-p)</sub> ÷ V<sub>o,dc</sub> × 100%（課堂簡化版）。下面「結果」那一節可以直接把數字填進去，自動算 r% 並跟模擬比較。</p></li>
+      </ol>
+
+      <h3 style="font-size:16px;margin:18px 0 6px">示波器建議設定</h3>
+      <div class="tbl-wrap"><table class="lab-tbl">
+        <thead><tr><th>組別</th><th>s/div</th><th>CH1（V1）</th><th>CH2（Vo）耦合</th><th>CH2 V/div</th></tr></thead>
+        <tbody>
+          <tr><td>無電容、R1 = 100 Ω</td><td class="num">5 ms</td><td class="num">2 V</td><td>DC</td><td class="num">1 V</td></tr>
+          <tr><td>100 Ω、1 kΩ 配 10 µF，100 Ω 配 100 µF</td><td class="num">5 ms</td><td class="num">2 V</td><td>DC</td><td class="num">1 V</td></tr>
+          <tr><td>1 kΩ／100 µF、10 kΩ／10 µF</td><td class="num">5 ms</td><td class="num">2 V</td><td>AC（量漣波）</td><td class="num">200 mV</td></tr>
+          <tr><td>10 kΩ／100 µF</td><td class="num">5 ms</td><td class="num">2 V</td><td>AC（量漣波）</td><td class="num">20 mV</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">5 ms/div × 10 格 = 50 ms，剛好看到 3 個週期（每個 16.7 ms）。切 AC 耦合後波形會移到中間、看不到直流，這時<b>只能量峰對峰，V<sub>o,dc</sub> 要回 DC 耦合或用三用電表</b>。</p>
+
+      <div class="pitfall">
+        <h4>實驗時最常出包的地方</h4>
+        <ul>
+          <li><span class="x">✗</span> 兩支探棒的地夾夾在不同點。<span class="o">✓ 示波器兩個通道的地在機器裡是連在一起的，夾在不同點等於拿一條線把電路短路。一律夾同一個地。</span></li>
+          <li><span class="x">✗</span> 二極體方向接反。<span class="o">✓ Vo 會變成負的駝峰（電解電容也會被反接）。白環（陰極）朝 Vo。</span></li>
+          <li><span class="x">✗</span> 函數產生器顯示 10 Vpp 就相信它。<span class="o">✓ 先用 CH1 量一次，確認真的是 10 Vpp。</span></li>
+          <li><span class="x">✗</span> 用 AC 耦合讀 V<sub>o,dc</sub>。<span class="o">✓ AC 耦合把直流擋掉了，平均會變 0。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-exp">
+        <h3>🧠 觀念填充 · 實驗操作（不用算，用選的）</h3>
+        <p>8 題：示波器、三用電表、接線與 PSpice。</p>
+        <div class="hw-list" data-bank="__FLC" data-sec="實驗"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 結果 ══════════ -->
+    <section class="sec" id="result">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.7 · Results（模擬）</div>
+      <h2>📈 結果：6 組模擬＋我的實測<span class="h2-en">RESULTS</span></h2>
+      <p class="lede">還沒有實測數據，先放<b>模擬</b>出來的結果當「應該長這樣」的參考：1N4002 的 SPICE 模型、60 Hz、Vpp = 10 V，跑到穩態後量 2 個週期。虛線是 V1，實線是 Vo。你量完可以填在最下面的表格，它會自動算 r% 並跟模擬比。</p>
+      <div class="res-grid" id="res-grid"></div>
+
+      <div class="tbl-wrap"><table class="lab-tbl">
+        <thead><tr><th>R1</th><th>C1</th><th>RC</th><th>V<sub>o(p-p)</sub></th><th>V<sub>o,dc</sub></th><th>r%（簡化）</th><th>r%（講義 /√2）</th><th>r%（鋸齒）</th><th>二極體峰值</th></tr></thead>
+        <tbody id="res-tbl"></tbody>
+      </table></div>
+      <div class="note key">
+        <b>從這張表要看出的三件事：</b>
+        <ol style="margin:6px 0 0;padding-left:20px">
+          <li><b>RC 一樣，漣波就一樣</b>：1 kΩ／100 µF 和 10 kΩ／10 µF 都是 0.1 s，r% 都是 14.7%。100 Ω／100 µF 和 1 kΩ／10 µF 都是 10 ms，r% 都約 120%。</li>
+          <li><b>100 Ω／10 µF 幾乎沒濾</b>：RC = 1 ms，比週期 16.7 ms 小很多，電容一下就放光，r% = 326%，接近完全不濾波的 π ≈ 314%（第 1 節）。</li>
+          <li><b>V<sub>o,dc</sub> 隨 RC 變大而接近 V<sub>p</sub></b>：1.30 V → 2.6 V → 4.0 V → 4.3 V。濾得越好，平均值越接近最高點。</li>
+        </ol>
+      </div>
+
+      <h3 style="font-size:16px;margin:22px 0 6px">我的實測（填數字自動算）</h3>
+      <p style="margin:0 0 8px;color:var(--ink-2);font-size:14px">數字存在這台裝置，登入 claude.ai 時也會同步到雲端。單位：伏特（V）。</p>
+      <div class="tbl-wrap"><table class="lab-tbl" id="meas-tbl">
+        <thead><tr><th>R1</th><th>C1</th><th>我量的 V<sub>o(p-p)</sub></th><th>我量的 V<sub>o,dc</sub></th><th>我的 r%</th><th>模擬 r%</th><th>差多少</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <div class="btn-row" style="margin-top:8px"><button class="btn" type="button" id="meas-clear">清空我的實測</button></div>
+      <p class="note">實測跟模擬差個 10～20% 很正常：電容標示值本身就有 ±20% 誤差、二極體不是同一顆、示波器游標也有讀數誤差。另外<b>函數產生器本身有約 50 Ω 的內阻</b>（模擬沒算進去），R1 = 100 Ω 那兩組電流大，實際電壓會比模擬低一截。<b>趨勢對就好</b>（RC 越大 r% 越小、RC 一樣的兩組差不多）。</p>
+    </section>
+
+    <!-- ══════════ PSpice ══════════ -->
+    <section class="sec" id="pspice">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.8–9 · PSpice（回家作業）</div>
+      <h2>💻 PSpice 回家作業<span class="h2-en">PSPICE HOMEWORK</span></h2>
+      <p class="lede">兩題：<b>(1) 半波整流濾波</b>、<b>(2) 橋式全波整流濾波</b>，都是 C1 試 10 µF 和 100 µF，R1 = 100 Ω，把 Vi 和 Vo 畫在同一張圖上。下面是設定步驟和「應該跑出來長怎樣」。</p>
+
+      <h3 style="font-size:16px;margin:18px 0 6px">1. 半波整流濾波（圖 4.31）</h3>
+      <ol class="lab-steps">
+        <li><b class="t">放元件（Place Part）</b><p><code>VSIN</code>（SOURCE 庫）、<code>D1N4002</code>（DIODE 庫）、<code>R</code>、<code>C</code>（ANALOG 庫），再放一個接地 <code>0</code>（Place Ground → 選 0/SOURCE）。<b>沒有接地 PSpice 會報錯</b>。</p></li>
+        <li><b class="t">設定 VSIN</b><p>VOFF = 0、<b>VAMPL = 5</b>（講義寫 Vpp = 10 V，VAMPL 填的是<b>振幅</b>）、FREQ = 60。另一份整流器講義寫 VAMPL = 10V，跟課堂不一樣，請跟老師確認。</p></li>
+        <li><b class="t">R1 = 100、C1 = 10u（第二次改 100u）</b><p>PSpice 的單位字首：<code>u</code> = 10<sup>−6</sup>、<code>m</code> = 10<sup>−3</sup>（不是百萬！百萬是 <code>meg</code>）、<code>k</code> = 10<sup>3</sup>。</p></li>
+        <li><b class="t">替兩個點取名字</b><p>用 Net Alias（N）把電源那點取名 <code>Vi</code>、輸出那點取名 <code>Vo</code>，之後畫圖比較好找。</p></li>
+        <li><b class="t">New Simulation Profile → Time Domain（<button class="tm" data-t="暫態分析">Transient</button>）</b><p>Run To Time = <b>100ms</b>（6 個週期）、Maximum Step Size = <b>10us</b>（不設的話波形會很粗糙）。想跳過一開始充電的那段，可把 Start saving data after 設成 50ms。</p></li>
+        <li><b class="t">放電壓探針、執行</b><p>在 Vi、Vo 各放一支 Voltage Marker，兩條線會畫在同一張圖上。換 C1 = 100u 再跑一次。</p></li>
+      </ol>
+      <div class="tbl-wrap"><table class="lab-tbl">
+        <thead><tr><th>半波、R1 = 100 Ω</th><th>V<sub>o</sub> 最高</th><th>V<sub>o</sub> 最低</th><th>V<sub>o,dc</sub></th><th>V<sub>o(p-p)</sub></th><th>r%（簡化）</th></tr></thead>
+        <tbody>
+          <tr><td>C1 = 10 µF</td><td class="num">4.23 V</td><td class="num">0.00 V</td><td class="num">1.30 V</td><td class="num">4.23 V</td><td class="num hi">326%</td></tr>
+          <tr><td>C1 = 100 µF</td><td class="num">4.23 V</td><td class="num">1.16 V</td><td class="num">2.56 V</td><td class="num">3.07 V</td><td class="num hi">120%</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 style="font-size:16px;margin:22px 0 6px">2. 橋式全波整流濾波（圖 4.34）</h3>
+      <figure class="schem-box"><div><div id="schem-br"></div><figcaption>圖 4.34 橋式全波整流濾波電路（講義 p.9，重畫）</figcaption></div></figure>
+      <ol class="lab-steps">
+        <li><b class="t">四顆 D1N4002 排成橋</b><p>照圖接：電源兩端接到橋的左右兩個角；上面那個角（兩顆二極體的陰極接在一起）是 Vo；下面那個角（兩顆的陽極接在一起）接地。</p></li>
+        <li><b class="t">注意：電源兩端都沒有接地</b><p>所以「Vi」不能只用一支對地的探針量 —— 那樣畫出來的不是電源電壓。要用 <b>Differential Voltage Markers</b>（兩支探針一組，量電源兩端的電壓差）。</p></li>
+        <li><b class="t">一樣跑 Transient 100ms、step 10us</b><p>C1 = 10u、100u 各跑一次，跟半波的結果比。</p></li>
+      </ol>
+      <div class="tbl-wrap"><table class="lab-tbl">
+        <thead><tr><th>橋式、R1 = 100 Ω</th><th>V<sub>o</sub> 最高</th><th>V<sub>o</sub> 最低</th><th>V<sub>o,dc</sub></th><th>V<sub>o(p-p)</sub></th><th>r%（簡化）</th></tr></thead>
+        <tbody>
+          <tr><td>C1 = 10 µF</td><td class="num">3.49 V</td><td class="num">0.17 V</td><td class="num">1.96 V</td><td class="num">3.32 V</td><td class="num hi">169%</td></tr>
+          <tr><td>C1 = 100 µF</td><td class="num">3.47 V</td><td class="num">2.01 V</td><td class="num">2.78 V</td><td class="num">1.46 V</td><td class="num hi">53%</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note key">
+        <b>橋式跟半波比，該看出什麼：</b>
+        <ol style="margin:6px 0 0;padding-left:20px">
+          <li><b>最高點比較低</b>：3.47 V 對 4.23 V。每半週電流都要經過<b>兩顆</b>二極體，壓降約 2 × 0.76 V。</li>
+          <li><b>漣波大約砍半</b>：100 µF 時 1.46 V 對 3.07 V。電容每半個週期（1/120 s）就補一次，放電時間少一半，ΔV ≈ V<sub>p</sub>/(2fRC) 也少一半。</li>
+          <li>想看兩者差別，可以在上面的「濾波模擬器」按「改成橋式全波」。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 名詞 ══════════ -->
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號／單位</code></div>
+        <div class="gl-row"><b>整流器</b><span>rectifier</span><code>—</code></div>
+        <div class="gl-row"><b>半波整流／橋式全波整流</b><span>half-wave / bridge full-wave rectifier</span><code>Vm/π、2Vm/π</code></div>
+        <div class="gl-row"><b>脈動直流</b><span>pulsating DC</span><code>—</code></div>
+        <div class="gl-row"><b>濾波器</b><span>filter</span><code>—</code></div>
+        <div class="gl-row"><b>漣波</b><span>ripple</span><code>Vr(p-p), Vr(rms)</code></div>
+        <div class="gl-row"><b>漣波因數</b><span>ripple factor</span><code>r%</code></div>
+        <div class="gl-row"><b>時間常數</b><span>time constant</span><code>τ = RC</code></div>
+        <div class="gl-row"><b>峰對峰值</b><span>peak-to-peak value</span><code>Vpp = 2Vm</code></div>
+        <div class="gl-row"><b>有效值（均方根值）</b><span>rms value</span><code>Vrms</code></div>
+        <div class="gl-row"><b>平均值（直流值）</b><span>average / DC value</span><code>Vdc, Vavg</code></div>
+        <div class="gl-row"><b>電解電容</b><span>electrolytic capacitor</span><code>有極性</code></div>
+        <div class="gl-row"><b>峰值電流／湧入電流</b><span>peak current / inrush current</span><code>ID,peak</code></div>
+        <div class="gl-row"><b>示波器／三用電表／函數產生器</b><span>oscilloscope / multimeter / function generator</span><code>—</code></div>
+        <div class="gl-row"><b>AC 耦合／DC 耦合</b><span>AC coupling / DC coupling</span><code>—</code></div>
+        <div class="gl-row"><b>穩壓器</b><span>voltage regulator</span><code>—</code></div>
+        <div class="gl-row"><b>暫態分析</b><span>transient analysis</span><code>PSpice</code></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 測驗 ══════════ -->
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">10 題，中英對照。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：電子實習（上）第四章「整流器濾波」講義（9 頁）。模擬使用 1N4002 常見 SPICE 模型（IS = 14.11 nA、N = 1.984、RS = 33.89 mΩ），數值以程式求穩態後量測；實際元件會有 ±10～20% 差異。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="assets/filter-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'why', no: '1', name: '為什麼要濾波', count: 'p.2' },
+  { id: 'how', no: '2', name: '充電與放電', count: 'p.3' },
+  { id: 'rc', no: '3', name: 'R、C 怎麼影響', count: 'p.4–5' },
+  { id: 'ripple', no: '4', name: '漣波因數', count: 'p.6–7' },
+  { id: 'cost', no: '5', name: '峰值電流', count: 'p.5' },
+  { id: 'exp', no: '🔬', name: '實驗流程', count: 'p.7' },
+  { id: 'result', no: '📈', name: '結果', count: '6 組' },
+  { id: 'pspice', no: '💻', name: 'PSpice 作業', count: 'p.8–9' }
+], { key: 'lab-filter', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/filter.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/filter-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
