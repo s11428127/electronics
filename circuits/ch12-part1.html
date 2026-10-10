@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>三相電壓與 Y-Y</title>
+<meta name="description" content="電路學 CH12 PART 1：為什麼要三相、平衡三相電壓與相序、平衡 Y-Y 接法與單相等效電路。故事模式＋推導＋可改數字的例題＋課本例題圖解故事。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH12 PART 1</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH12 PART 1</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>課程地圖</a></li>
+      <li><a href="#intro"><i>12.1</i>為什麼要三相</a></li>
+      <li><a href="#bal"><i>12.2</i>平衡三相電壓與相序</a></li>
+      <li><a href="#yy"><i>12.3</i>平衡 Y-Y 接法</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>Chapter 12 · Part 1 · 課本 p.501–510</div>
+      <h1>三相電壓與 Y-Y 接法</h1>
+      <p class="sub">CH11 的電路都是一顆電源。這一章換成<button class="tm" data-t="三相">三相</button>：三顆一樣的電源錯開 120° 一起工作。這一頁先搞懂三相電壓長怎樣、<button class="tm" data-t="相序">相序</button>怎麼判斷（12.2），再學最基本的 <button class="tm" data-t="Y接">Y</button>-Y 接法（12.3）—— 它是所有三相題目的終點：<strong>任何平衡三相電路，最後都化成 Y-Y 的「單相等效電路」來算</strong>。</p>
+      <div class="hero-meta">
+        <span class="chip h">📘 課本 Example 2 題 ＋ Practice 2 題（每題都有 🎬 圖解故事）</span>
+        <span class="chip">18 個畫面的故事模式</span>
+        <span class="chip">3 個互動模組 ＋ 4 個可改數字例題</span>
+        <span class="chip">10 題中英對照測驗</span>
+      </div>
+      <div class="lec-links"><a href="ch12-review.html">🧠 CH12 觀念填充總複習（80 題，不用算）</a></div>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>Story mode · 先看這段，再往下讀</div>
+      <h2>18 個畫面看懂這一頁<span class="h2-en">THE STORY IN 18 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。全部看完大約 8 分鐘。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>Course map</div>
+      <h2>CH12 分成四頁<span class="h2-en">COURSE MAP</span></h2>
+      <p class="lede">課本：Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 12 Three-Phase Circuits。<b>這一頁是第 1 頁</b>。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>12.1</code><b>為什麼要三相 <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>12.2</code><b>平衡三相電壓與相序 <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>12.3</code><b>平衡 Y-Y 接法 <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>12.4</code><b><a href="ch12-part2.html#yd">平衡 Y-Δ</a> <span style="color:var(--ink-3);font-weight:400">PART 2</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>12.5</code><b><a href="ch12-part2.html#dd">平衡 Δ-Δ</a> <span style="color:var(--ink-3);font-weight:400">PART 2</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>12.6</code><b><a href="ch12-part2.html#dy">平衡 Δ-Y、總整理表</a> <span style="color:var(--ink-3);font-weight:400">PART 2</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>12.7</code><b><a href="ch12-part3.html#pow">平衡三相的功率</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>12.8</code><b><a href="ch12-part3.html#unb">不平衡三相系統</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>12.9</code><b><a href="ch12-part4.html#psp">用 PSpice 解三相</a> <span style="color:var(--ink-3);font-weight:400">PART 4</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>12.10</code><b><a href="ch12-part4.html#wm">三相功率量測</a>、<a href="ch12-part4.html#home">家用配電</a> <span style="color:var(--ink-3);font-weight:400">PART 4</span></b><span class="dot"></span></div>
+      </div>
+      <div class="derive">
+        <h4>先複習 CH9～CH11 會一直用到的三件事</h4>
+        <ol>
+          <li><span class="d-eq">相量：v(t) = V<sub>m</sub>cos(ωt + θ)　⟷　V = V∠θ</span>
+            <div class="why">這一章的電壓、電流<b>一律是 rms</b>（電力系統的習慣），寫 110∠0° V 就是有效值 110 V。</div></li>
+          <li><span class="d-eq">相乘：大小相乘、角度相加；相除：大小相除、角度相減</span>
+            <div class="why">「∠−120°」就是把相量順時針轉 120°。整章都在轉 120° 和 30°。</div></li>
+          <li><span class="d-eq">串聯阻抗直接相加；Z = R + jX，|Z| = √(R² + X²)，∠Z = tan<sup>−1</sup>(X/R)</span>
+            <div class="why">CH11 PART 1 補課講過。X &gt; 0 電感性，X &lt; 0 電容性。</div></li>
+        </ol>
+      </div>
+      <p class="note key">整章最重要的一句話：<b>平衡的三相，只要算一相</b>。其他兩相是同一個答案轉 ∓120°。</p>
+    </section>
+
+    <!-- ══════════ 12.1 ══════════ -->
+    <section class="sec" id="intro">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>12.1 · Introduction</div>
+      <h2>為什麼要三相<span class="h2-en">WHY THREE PHASES</span></h2>
+      <p class="lede">CH11 的電路都是<b>單相</b>：一顆電源、兩條線（去和回）。家裡的插座就是這樣。但發電廠送出來的電幾乎全是<span class="tm" data-t="三相">三相<i>three-phase</i></span>：一台<button class="tm" data-t="交流發電機">發電機</button>同時發出三個一樣大、一樣頻率、但<strong>錯開 120°</strong>的電壓。課本給三個理由：(1) 發電、輸電本來就是三相，要單相再從裡面拿一相；(2) 三相的<strong>總瞬時功率是常數</strong>，馬達轉得很順、不會抖（12.7 證明）；(3) 同樣的功率，三相用的銅線比較少（12.7 算出只要 75%）。</p>
+      <div class="eq">v<sub>an</sub> = V<sub>m</sub>cos ωt　　v<sub>bn</sub> = V<sub>m</sub>cos(ωt − 120°)　　v<sub>cn</sub> = V<sub>m</sub>cos(ωt + 120°)　　⟹　v<sub>an</sub> + v<sub>bn</sub> + v<sub>cn</sub> = 0（每一瞬間）</div>
+      <div class="derive">
+        <h4>為什麼三個加起來「每一瞬間」都是 0</h4>
+        <ol>
+          <li><span class="d-eq">v<sub>bn</sub> + v<sub>cn</sub> = V<sub>m</sub>[cos(ωt − 120°) + cos(ωt + 120°)]</span>
+            <div class="why">先把 b、c 兩相湊在一起，因為它們剛好對稱（一個 −120°、一個 +120°）。</div></li>
+          <li><span class="d-eq">cos(x − y) + cos(x + y) = 2 cos x cos y</span>
+            <div class="why">和差化積公式：兩個對稱的角度相加，sin 的部分會互相抵掉。</div></li>
+          <li><span class="d-eq">= V<sub>m</sub> · 2 cos ωt · cos 120° = V<sub>m</sub> · 2 cos ωt · (−½) = −V<sub>m</sub>cos ωt</span>
+            <div class="why">cos 120° = −½，所以 b + c 剛好是 a 的負的。</div></li>
+          <li><span class="d-eq hi">v<sub>an</sub> + v<sub>bn</sub> + v<sub>cn</sub> = V<sub>m</sub>cos ωt − V<sub>m</sub>cos ωt = 0</span>
+            <p>不是只有某些時刻，是<b>每一瞬間</b>都抵消。這就是三相可以「不要回程線」的根本原因（12.3）。</p></li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>三相發電機：一塊磁鐵轉、三組線圈輪流發電</h3><span class="spacer"></span><button class="btn" id="gen-play" type="button">❚❚ 暫停</button></div>
+        <div class="stage-wrap"><canvas id="cv-gen" aria-label="三相發電機動畫：轉子旋轉，三個線圈的電壓波形依序出現"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="gen-vm">振幅 V<sub>m</sub><output for="gen-vm"></output></label>
+            <input type="range" id="gen-vm" min="50" max="340" step="10" value="170"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>v<sub>an</sub>（現在）</dt><dd id="gen-a">—</dd></div>
+          <div><dt>v<sub>bn</sub>（現在）</dt><dd id="gen-b">—</dd></div>
+          <div><dt>v<sub>cn</sub>（現在）</dt><dd id="gen-c">—</dd></div>
+          <div><dt>三個相加</dt><dd id="gen-sum" style="color:var(--accent)">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">看「三個相加」那格：磁鐵轉到哪裡都是 0（四捨五入到 0.1 V）。磁鐵 N 極掃過哪個線圈，哪個線圈的電壓就最大 —— 三個線圈隔 120°，波形就錯開 120°。</p>
+
+      <div id="ex-sum"></div>
+
+      <div class="howto">
+        <h4>拿到三相題目，先做這三件事</h4>
+        <ol>
+          <li><b>電源是 Y 還是 Δ？負載是 Y 還是 Δ？</b>四種組合（12.3～12.6），先認出是哪一種。</li>
+          <li><b>平衡嗎？</b>電源三相一樣大、差 120°，負載三相阻抗一樣 → 平衡 → 只算一相。不平衡 → 12.8 的方法。</li>
+          <li><b>數字是 rms 還是振幅？</b>這一章預設 rms；看到 v(t) = 200 cos(…) 這種寫法，200 是振幅。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見誤會</h4>
+        <ul>
+          <li><span class="x">✗</span> 三相 = 三個互不相干的單相電路。<span class="o">✓ 三個是同一台發電機、同頻率、固定錯開 120°，所以才能互相抵消。</span></li>
+          <li><span class="x">✗</span> 錯開 90°。<span class="o">✓ 三相錯開 120°（360° ÷ 3）；錯開 90° 的是兩相系統。</span></li>
+          <li><span class="x">✗</span> 三相的「220 V」是每一相對地 220 V。<span class="o">✓ 通常說的是線電壓（兩條火線之間），12.3 會算出每一相只有 220/√3 = 127 V。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-12-1">
+        <h3>🧠 觀念填充 12.1（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。考觀念和解法，不用計算；題目下面附英文。全部 80 題也集中在 <a href="ch12-review.html">CH12 觀念填充總複習</a>。</p>
+        <div class="hw-list" data-bank="__CH12C" data-sec="12.1"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 12.2 ══════════ -->
+    <section class="sec" id="bal">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>12.2 · Balanced Three-Phase Voltages</div>
+      <h2>平衡三相電壓與相序<span class="h2-en">BALANCED VOLTAGES · PHASE SEQUENCE</span></h2>
+      <p class="lede">三顆電源一樣大、錯開 120°，就叫<b>平衡</b>（balanced）。它們接到中性點 n 的電壓叫<span class="tm" data-t="相電壓">相電壓<i>phase voltage</i></span>。三個錯開 120° 的排法有兩種：b 比 a 晚 120° 叫<b>正相序 abc</b>，c 比 a 晚 120° 叫<b>負相序 acb</b>。電源和負載都可以接成 <button class="tm" data-t="Y接">Y</button> 或 <button class="tm" data-t="Δ接">Δ</button>，所以一共有四種組合。</p>
+      <div class="eq">abc：V<sub>an</sub> = V<sub>p</sub>∠0°、V<sub>bn</sub> = V<sub>p</sub>∠−120°、V<sub>cn</sub> = V<sub>p</sub>∠+120°　　V<sub>an</sub> + V<sub>bn</sub> + V<sub>cn</sub> = 0　　Z<sub>Δ</sub> = 3Z<sub>Y</sub></div>
+      <div class="derive">
+        <h4>用相量再證一次「加起來 = 0」</h4>
+        <ol>
+          <li><span class="d-eq">V<sub>p</sub>∠0° + V<sub>p</sub>∠−120° + V<sub>p</sub>∠+120°</span>
+            <div class="why">相量加法要換成直角座標（實部加實部、虛部加虛部）。</div></li>
+          <li><span class="d-eq">= V<sub>p</sub>[1 + (−0.5 − j0.866) + (−0.5 + j0.866)]</span>
+            <div class="why">cos(±120°) = −0.5，sin(±120°) = ±0.866。</div></li>
+          <li><span class="d-eq hi">= V<sub>p</sub>(1 − 0.5 − 0.5) + jV<sub>p</sub>(−0.866 + 0.866) = 0</span>
+            <p>三支一樣長、各差 120° 的箭頭頭尾接起來，剛好圍成一個正三角形回到原點。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>相序怎麼看：誰先到最高點</h4>
+        <ol>
+          <li><span class="d-eq">相量是以 ω 逆時針旋轉的箭頭</span>
+            <div class="why">v(t) = Re{V e<sup>jωt</sup>}：時間往前走，箭頭就逆時針轉。</div></li>
+          <li><span class="d-eq">固定看一個點（例如正實軸），記下箭頭經過的順序</span>
+            <div class="why">經過正實軸的那一刻就是那一相到達最大值。</div></li>
+          <li><span class="d-eq hi">abc：a → b → c → a…；acb：a → c → b → a…</span>
+            <p>實用判斷法：<b>從 a 開始，往順時針（越來越晚）找下一個差 120° 的是誰</b>。是 b 就是 abc，是 c 就是 acb。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>為什麼 Z<sub>Δ</sub> = 3Z<sub>Y</sub></h4>
+        <ol>
+          <li><span class="d-eq">Δ → Y 轉換（CH9）：Z<sub>1</sub> = Z<sub>b</sub>Z<sub>c</sub> / (Z<sub>a</sub> + Z<sub>b</sub> + Z<sub>c</sub>)</span>
+            <div class="why">一般的公式：Y 的每一臂 = 相鄰兩個 Δ 邊相乘 ÷ 三邊總和。</div></li>
+          <li><span class="d-eq">平衡：Z<sub>a</sub> = Z<sub>b</sub> = Z<sub>c</sub> = Z<sub>Δ</sub>　⟹　Z<sub>Y</sub> = Z<sub>Δ</sub><sup>2</sup> / (3Z<sub>Δ</sub>)</span></li>
+          <li><span class="d-eq hi">Z<sub>Y</sub> = Z<sub>Δ</sub>/3　或　Z<sub>Δ</sub> = 3Z<sub>Y</sub></span>
+            <p>平衡的 Δ 負載換成 Y，每相變成三分之一 —— 之後每一種接法都靠這一條換成 Y-Y。</p></li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>相序判斷器：看箭頭經過固定點的順序</h3><span class="spacer"></span>
+          <button class="btn" data-seq="abc" aria-pressed="true" type="button">abc</button><button class="btn" data-seq="acb" aria-pressed="false" type="button">acb</button><button class="btn" id="seq-play" type="button">❚❚ 暫停</button></div>
+        <div class="stage-wrap"><canvas id="cv-seq" aria-label="三個相量逆時針旋轉，記錄通過固定點的順序"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="seq-sp">旋轉速度<output for="seq-sp"></output></label>
+            <input type="range" id="seq-sp" min="10" max="150" step="10" value="50"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>相序</dt><dd id="seq-kind">—</dd></div>
+          <div><dt>V<sub>bn</sub></dt><dd id="seq-b">—</dd></div>
+          <div><dt>V<sub>cn</sub></dt><dd id="seq-c">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">切到 acb，b、c 兩支箭頭對調 —— 三相馬達把任兩條電線對調，相序就反過來，馬達倒轉。</p>
+
+      <div id="ex-seq"></div>
+      <div id="ex-from1"></div>
+
+      <div class="howto">
+        <h4>判斷相序／由一相推另外兩相</h4>
+        <ol>
+          <li><b>全部換成相量</b>，角度用 −180°～180° 表示（加減 360°）。</li>
+          <li><b>從 V<sub>an</sub> 開始</b>，看哪一相比它晚 120°（角度小 120°）：是 b → abc；是 c → acb。</li>
+          <li><b>由一相推其他相：</b>abc 時 V<sub>bn</sub> = V<sub>an</sub>∠−120°、V<sub>cn</sub> = V<sub>an</sub>∠+120°；acb 時 b、c 對調。</li>
+          <li><b>檢查：</b>三個大小一樣、兩兩差 120°，加起來 = 0。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>相序的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> 看到 −230° 比 −110° 小就說它「比較早」。<span class="o">✓ 先 +360° 換成 130°。角度一律換到同一圈再比。</span></li>
+          <li><span class="x">✗</span> abc 時 V<sub>bn</sub> = V<sub>an</sub>∠+120°。<span class="o">✓ b 比 a 晚 → ∠−120°。</span></li>
+          <li><span class="x">✗</span> Δ 換 Y 時 Z<sub>Y</sub> = 3Z<sub>Δ</sub>。<span class="o">✓ 反了：Y 比較小，Z<sub>Y</sub> = Z<sub>Δ</sub>/3。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH12EX" data-sec="12.2"></div>
+      <div class="cf-wrap" id="cf-12-2">
+        <h3>🧠 觀念填充 12.2（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。全部 80 題也集中在 <a href="ch12-review.html">CH12 觀念填充總複習</a>。</p>
+        <div class="hw-list" data-bank="__CH12C" data-sec="12.2"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 12.3 ══════════ -->
+    <section class="sec" id="yy">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>12.3 · Balanced Wye-Wye Connection</div>
+      <h2>平衡 Y-Y 接法<span class="h2-en">BALANCED WYE-WYE</span></h2>
+      <p class="lede">Y 接電源 → 三條線 → Y 接負載。每一相上串著三個阻抗：發電機內阻 Z<sub>s</sub>、線路 Z<sub>ℓ</sub>、負載 Z<sub>L</sub>，合起來叫 Z<sub>Y</sub>。兩條線之間的電壓叫<span class="tm" data-t="線電壓">線電壓<i>line voltage</i></span>，它是兩個相電壓相減：<strong>大小 √3 倍、超前 30°</strong>。平衡時三個<span class="tm" data-t="線電流">線電流</span>加起來 = 0，<button class="tm" data-t="中性線">中性線</button>上沒有電流 —— 所以可以只拿出 a 相畫成<button class="tm" data-t="單相等效電路">單相等效電路</button>來算。</p>
+      <div class="eq">Z<sub>Y</sub> = Z<sub>s</sub> + Z<sub>ℓ</sub> + Z<sub>L</sub>　　V<sub>ab</sub> = √3 V<sub>p</sub>∠30°（V<sub>L</sub> = √3 V<sub>p</sub>）　　I<sub>a</sub> = V<sub>an</sub>/Z<sub>Y</sub>，I<sub>b</sub> = I<sub>a</sub>∠−120°，I<sub>c</sub> = I<sub>a</sub>∠+120°　　I<sub>n</sub> = 0</div>
+      <div class="derive">
+        <h4>線電壓為什麼是 √3 倍、超前 30°</h4>
+        <ol>
+          <li><span class="d-eq">V<sub>ab</sub> = V<sub>an</sub> + V<sub>nb</sub> = V<sub>an</sub> − V<sub>bn</sub></span>
+            <div class="why">KVL：從 a 走到 b，先從 a 到 n，再從 n 到 b。V<sub>nb</sub> = −V<sub>bn</sub>。</div></li>
+          <li><span class="d-eq">= V<sub>p</sub>∠0° − V<sub>p</sub>∠−120° = V<sub>p</sub>[1 − (−0.5 − j0.866)]</span>
+            <div class="why">換成直角座標才能相減。</div></li>
+          <li><span class="d-eq">= V<sub>p</sub>(1.5 + j0.866)</span></li>
+          <li><span class="d-eq hi">= √3 V<sub>p</sub>∠30°</span>
+            <p>|1.5 + j0.866| = √(2.25 + 0.75) = √3，角度 tan<sup>−1</sup>(0.866/1.5) = 30°。另外兩條同理：V<sub>bc</sub> = √3V<sub>p</sub>∠−90°、V<sub>ca</sub> = √3V<sub>p</sub>∠−210°。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>為什麼中性線上沒有電流、可以只算一相</h4>
+        <ol>
+          <li><span class="d-eq">I<sub>a</sub> = V<sub>an</sub>/Z<sub>Y</sub>，I<sub>b</sub> = V<sub>bn</sub>/Z<sub>Y</sub> = I<sub>a</sub>∠−120°，I<sub>c</sub> = I<sub>a</sub>∠+120°</span>
+            <div class="why">三相電壓只差 120°、阻抗一樣 → 電流也只差 120°。</div></li>
+          <li><span class="d-eq">I<sub>a</sub> + I<sub>b</sub> + I<sub>c</sub> = I<sub>a</sub>(1 + 1∠−120° + 1∠120°) = 0</span>
+            <div class="why">跟三個電壓加起來 = 0 一模一樣的道理。</div></li>
+          <li><span class="d-eq hi">I<sub>n</sub> = −(I<sub>a</sub> + I<sub>b</sub> + I<sub>c</sub>) = 0　⟹　V<sub>nN</sub> = Z<sub>n</sub>I<sub>n</sub> = 0</span>
+            <p>中性線上沒有電流、兩端也沒有電壓差 → <b>有沒有中性線都一樣</b>（三線式、四線式結果相同）。n 跟 N 同電位，所以 a 相可以自己成一個迴路：這就是單相等效電路。</p></li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>線電壓 = 兩個相電壓相減</h3><span class="spacer"></span>
+          <button class="btn" data-vl="ab" aria-pressed="true" type="button">V<sub>ab</sub></button><button class="btn" data-vl="bc" aria-pressed="false" type="button">V<sub>bc</sub></button><button class="btn" data-vl="ca" aria-pressed="false" type="button">V<sub>ca</sub></button></div>
+        <div class="stage-wrap"><canvas id="cv-vl" aria-label="相電壓與線電壓的相量圖，顯示 √3 倍與 30° 超前"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="vl-vp">相電壓 V<sub>p</sub><output for="vl-vp"></output></label>
+            <input type="range" id="vl-vp" min="50" max="280" step="5" value="110"></div>
+          <div class="ctrl"><label for="vl-th">V<sub>an</sub> 的角度<output for="vl-th"></output></label>
+            <input type="range" id="vl-th" min="-180" max="180" step="5" value="0"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>相電壓 V<sub>p</sub></dt><dd id="vl-rp">—</dd></div>
+          <div><dt>線電壓 V<sub>L</sub> = √3 V<sub>p</sub></dt><dd id="vl-vl" style="color:var(--accent)">—</dd></div>
+          <div><dt>結果</dt><dd id="vl-ang" style="font-size:13px">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">虛線是「減掉的那一相」反過來接在尖端 —— 兩支差 120° 的箭頭相減，合起來永遠是 √3 倍、往前轉 30°。台灣三相 220 V（線電壓）→ 每相 220/√3 = 127 V；美國 208 V → 120 V。</p>
+
+      <div id="ex-yy"></div>
+      <div id="ex-vl"></div>
+
+      <div class="howto">
+        <h4>平衡 Y-Y 的標準流程</h4>
+        <ol>
+          <li><b>每相總阻抗：</b><code>Z<sub>Y</sub> = Z<sub>s</sub> + Z<sub>ℓ</sub> + Z<sub>L</sub></code>（沒給的當 0）。</li>
+          <li><b>單相等效：</b><code>I<sub>a</sub> = V<sub>an</sub>/Z<sub>Y</sub></code>。</li>
+          <li><b>照相序補齊：</b>abc → <code>I<sub>b</sub> = I<sub>a</sub>∠−120°、I<sub>c</sub> = I<sub>a</sub>∠+120°</code>（acb 對調）。</li>
+          <li><b>要線電壓：</b><code>V<sub>ab</sub> = √3 V<sub>an</sub>∠+30°</code>；要負載電壓：<code>V<sub>AN</sub> = I<sub>a</sub>Z<sub>L</sub></code>。</li>
+          <li><b>中性線電流：</b>平衡時直接寫 0。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>Y-Y 的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> 只用負載阻抗算電流，忘了線路阻抗。<span class="o">✓ 線路、內阻、負載是串聯的，全部加起來。</span></li>
+          <li><span class="x">✗</span> V<sub>ab</sub> = √3 V<sub>an</sub>∠−30°。<span class="o">✓ abc 相序線電壓<b>超前</b> 30°（acb 才是 −30°）。</span></li>
+          <li><span class="x">✗</span> 三線式沒有中性線，所以不能用單相等效。<span class="o">✓ 平衡時 n、N 同電位，有沒有中性線都可以用。</span></li>
+          <li><span class="x">✗</span> 把線電壓當相電壓除阻抗。<span class="o">✓ Y 負載每相吃的是相電壓 = 線電壓 / √3。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH12EX" data-sec="12.3"></div>
+      <div class="cf-wrap" id="cf-12-3">
+        <h3>🧠 觀念填充 12.3（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。全部 80 題也集中在 <a href="ch12-review.html">CH12 觀念填充總複習</a>。</p>
+        <div class="hw-list" data-bank="__CH12C" data-sec="12.3"></div>
+      </div>
+    </section>
+
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <p class="lede">考卷上會出現的是右邊那欄。讀書用中文、寫題目認英文。</p>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號／單位</code></div>
+        <div class="gl-row"><b>單相／三相</b><span>single-phase / three-phase</span><code>—</code></div>
+        <div class="gl-row"><b>多相系統</b><span>polyphase system</span><code>—</code></div>
+        <div class="gl-row"><b>交流發電機（轉子、定子）</b><span>alternator (rotor, stator)</span><code>—</code></div>
+        <div class="gl-row"><b>平衡相電壓</b><span>balanced phase voltages</span><code>V<sub>p</sub></code></div>
+        <div class="gl-row"><b>相序</b><span>phase sequence</span><code>abc / acb</code></div>
+        <div class="gl-row"><b>正相序／負相序</b><span>positive / negative sequence</span><code>—</code></div>
+        <div class="gl-row"><b>Y 接（星形接）</b><span>wye (Y) / star connection</span><code>—</code></div>
+        <div class="gl-row"><b>Δ 接（三角形接）</b><span>delta (Δ) connection</span><code>—</code></div>
+        <div class="gl-row"><b>平衡負載</b><span>balanced load</span><code>Z<sub>Y</sub>, Z<sub>Δ</sub></code></div>
+        <div class="gl-row"><b>中性線／中性點</b><span>neutral line / neutral point</span><code>n, N</code></div>
+        <div class="gl-row"><b>線電壓（線間電壓）</b><span>line (line-to-line) voltage</span><code>V<sub>L</sub></code></div>
+        <div class="gl-row"><b>相電壓（線對中性點）</b><span>phase (line-to-neutral) voltage</span><code>V<sub>p</sub></code></div>
+        <div class="gl-row"><b>線電流／相電流</b><span>line current / phase current</span><code>I<sub>L</sub>, I<sub>p</sub></code></div>
+        <div class="gl-row"><b>單相等效電路</b><span>single-phase (per-phase) equivalent circuit</span><code>—</code></div>
+        <div class="gl-row"><b>三線式／四線式</b><span>three-wire / four-wire system</span><code>—</code></div>
+        <div class="gl-row"><b>線路阻抗／電源內阻</b><span>line impedance / source impedance</span><code>Z<sub>ℓ</sub>, Z<sub>s</sub></code></div>
+      </div>
+    </section>
+
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">10 題，中英對照。題目下方那行英文就是考卷上會看到的講法。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Charles K. Alexander &amp; Matthew N. O. Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 12 Three-Phase Circuits（McGraw-Hill），12.1–12.3。</p>
+      <p><a href="index.html">回電路學首頁</a>　｜　<a href="ch12-part2.html">PART 2 Y-Δ、Δ-Δ、Δ-Y →</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/ch12-ex.js"></script>
+<script src="assets/ch12-ex2.js"></script>
+<script src="../shared/exbook.js"></script>
+<script src="assets/ch12-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'intro', no: '12.1', name: '為什麼要三相' },
+  { id: 'bal', no: '12.2', name: '平衡電壓與相序', count: '例 1 · 練 1' },
+  { id: 'yy', no: '12.3', name: 'Y-Y 接法', count: '例 1 · 練 1' }
+], { key: 'ch12-part1', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/ch12.js"></script>
+<script src="assets/ch12-part1.js"></script>
+<script src="assets/ch12-part1-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

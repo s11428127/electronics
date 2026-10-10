@@ -306,6 +306,10 @@
     document.addEventListener('keydown', e => {
       if (e.target.closest && e.target.closest('input, textarea, select, button')) return;
       if (!(root.classList.contains('full') || root.contains(document.activeElement) || inView())) return;
+      /* 同一頁有好幾個故事（例題的圖解故事）：焦點在別的故事上就不要跟著動 */
+      const fo = document.activeElement && document.activeElement.closest && document.activeElement.closest('.story');
+      if (fo && fo !== root) return;
+      if (!fo && !root.classList.contains('full') && document.querySelector('.story.full')) return;
       if (e.key === 'ArrowRight' || e.key === 'PageDown' || (e.key === ' ' && root.contains(document.activeElement))) { e.preventDefault(); next(); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
       else if (e.key === 'Escape' && root.classList.contains('full')) toggleFull();

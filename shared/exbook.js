@@ -2,7 +2,8 @@
    課本例題（Example）與練習題（Practice Problem）卡片
    用法：<div class="exbook" data-bank="__CH11EX" data-sec="11.2"></div>
    題庫：window.__CH11EX = { book:'Alexander & Sadiku', items:[…] }
-   每一題：{ id, sec:'11.2', kind:'ex'|'pp', no:'11.1', tag（選用，自訂標籤文字，例 'TYU 1.3'）, title, q, fig, idea, steps:[{t, eq, why}], ans, hint, note }
+   每一題：{ id, sec:'11.2', kind:'ex'|'pp', no:'11.1', tag（選用，自訂標籤文字，例 'TYU 1.3'）, title, q, fig, idea, steps:[{t, eq, why}], ans, hint, note,
+            story（選用）: () => [scenes]  —— 「🎬 圖解故事」：按了才畫（__Story），把解題過程畫成一格一格的圖 }
    - Example：題目＋圖，詳解一步一步按「下一步」打開（也可以全部展開）
    - Practice：題目＋圖＋手寫板，提示／答案／詳解都先遮起來，寫完再按
    另外 __EXB.picker(host, secs) 做「選小節」：只顯示選中的那一節。
@@ -10,6 +11,23 @@
 (function () {
   'use strict';
   const stepHTML = (s, i) => '<li' + (i === undefined ? '' : ' data-i="' + i + '"') + '><b>' + s.t + '</b>' + (s.eq ? '<span class="d-eq">' + s.eq + '</span>' : '') + (s.why ? '<div class="why">' + s.why + '</div>' : '') + '</li>';
+
+  /* 圖解故事：按了才建（不按就不花任何繪圖成本） */
+  function storyBtn(it) {
+    if (!it.story || !window.__Story) return '';
+    return '<button class="btn xb-sbtn" data-a="story" type="button">🎬 ' + (it.kind === 'ex' ? '看圖解故事' : '圖解詳解') + '</button>';
+  }
+  function toggleStory(el, it, b) {
+    const box = el.querySelector('.xb-story');
+    if (!box) return;
+    box.hidden = !box.hidden; b.classList.toggle('on', !box.hidden);
+    if (!box.hidden && !box.__built) {
+      box.__built = true;
+      const host = document.createElement('div'); box.appendChild(host);
+      window.__Story(host, { id: 'xb-' + it.id, title: (it.kind === 'ex' ? 'Example ' : 'Practice ') + it.no, scenes: it.story() });
+    }
+    if (!box.hidden) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
 
   function card(it) {
     const el = document.createElement('article');
@@ -23,7 +41,8 @@
       el.innerHTML = head +
         (it.idea ? '<div class="xb-idea"><b>思路：</b>' + it.idea + '</div>' : '') +
         '<div class="xb-sol">' + steps + '<div class="xb-ans" hidden><b>答案：</b>' + it.ans + '</div>' + (it.note ? '<div class="xb-note" hidden>' + it.note + '</div>' : '') + '</div>' +
-        '<div class="xb-act"><button class="btn solid" data-a="next" type="button">看下一步 ▸</button><button class="btn" data-a="all" type="button">全部展開</button><button class="btn" data-a="reset" type="button">收起</button><span class="xb-prog"></span></div>';
+        '<div class="xb-act">' + storyBtn(it) + '<button class="btn solid" data-a="next" type="button">看下一步 ▸</button><button class="btn" data-a="all" type="button">全部展開</button><button class="btn" data-a="reset" type="button">收起</button><span class="xb-prog"></span></div>' +
+        (it.story ? '<div class="xb-story" hidden></div>' : '');
       const lis = Array.prototype.slice.call(el.querySelectorAll('.xb-steps > li'));
       let n = 0;
       const show = k => {
@@ -37,19 +56,22 @@
       };
       el.querySelector('.xb-act').addEventListener('click', e => {
         const a = e.target.closest('button') && e.target.closest('button').dataset.a;
-        if (a === 'next') show(n + 1); else if (a === 'all') show(lis.length); else if (a === 'reset') show(0);
+        if (a === 'story') toggleStory(el, it, e.target.closest('button'));
+        else if (a === 'next') show(n + 1); else if (a === 'all') show(lis.length); else if (a === 'reset') show(0);
       });
       show(0);
     } else {
       el.innerHTML = head +
         '<div class="pad" data-id="xb-' + it.id + '"></div>' +
-        '<div class="xb-act"><button class="btn" data-a="hint" type="button">💡 提示</button><button class="btn" data-a="ans" type="button">看答案</button><button class="btn solid" data-a="sol" type="button">看詳解</button></div>' +
+        '<div class="xb-act"><button class="btn" data-a="hint" type="button">💡 提示</button><button class="btn" data-a="ans" type="button">看答案</button><button class="btn solid" data-a="sol" type="button">看詳解</button>' + storyBtn(it) + '</div>' +
+        (it.story ? '<div class="xb-story" hidden></div>' : '') +
         '<div class="xb-hint" hidden><b>提示：</b>' + (it.hint || it.idea || '') + '</div>' +
         '<div class="xb-ans" hidden><b>答案：</b>' + it.ans +
           '<div class="xb-self">我自己這次：<button type="button" data-s="1">✓ 算對了</button><button type="button" data-s="0">✗ 算錯了</button></div></div>' +
         '<div class="xb-sol" hidden>' + (it.idea ? '<div class="xb-idea"><b>思路：</b>' + it.idea + '</div>' : '') + steps + (it.note ? '<div class="xb-note">' + it.note + '</div>' : '') + '</div>';
       el.querySelector('.xb-act').addEventListener('click', e => {
         const b = e.target.closest('button'); if (!b || !b.dataset.a) return;
+        if (b.dataset.a === 'story') { toggleStory(el, it, b); return; }
         const box = el.querySelector('.xb-' + b.dataset.a);
         box.hidden = !box.hidden; b.classList.toggle('on', !box.hidden);
         if (b.dataset.a === 'sol' && !box.hidden) el.querySelector('.xb-ans').hidden = false;

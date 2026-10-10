@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH12 觀念填充</title>
+<meta name="description" content="電路學 CH12 三相電路的觀念填充題：80 題下拉選單，不用計算，考觀念與解法，中英對照。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH12 觀念填充</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH12 觀念填充</div>
+    <ol>
+      <li><a href="#r121"><i>12.1</i>為什麼要三相</a></li>
+      <li><a href="#r122"><i>12.2</i>平衡三相電壓與相序</a></li>
+      <li><a href="#r123"><i>12.3</i>平衡 Y-Y</a></li>
+      <li><a href="#r124"><i>12.4</i>平衡 Y-Δ</a></li>
+      <li><a href="#r125"><i>12.5</i>平衡 Δ-Δ</a></li>
+      <li><a href="#r126"><i>12.6</i>平衡 Δ-Y 與總整理</a></li>
+      <li><a href="#r127"><i>12.7</i>平衡三相的功率</a></li>
+      <li><a href="#r128"><i>12.8</i>不平衡三相系統</a></li>
+      <li><a href="#r129"><i>12.9</i>用 PSpice 解三相</a></li>
+      <li><a href="#r1210"><i>12.10</i>功率量測與家用配電</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Chapter 12 · Concept check</div>
+      <h1>CH12 觀念填充總複習</h1>
+      <p class="sub">三相電路 12.1～12.10，每一小節 8 題，共 80 題。<strong>全部用選的、不用計算</strong>：大部分考觀念與知識（定義、√3 與 30°、相序、接法、量測），標「解法」的考這類題目該怎麼下手。題目先中文，下面附英文。</p>
+      <div class="hero-meta">
+        <span class="chip h">80 題 · 自編練習</span>
+        <span class="chip">觀念 60 題 ＋ 解法 20 題</span>
+        <span class="chip">答錯自動進錯題本</span>
+      </div>
+      <div class="hw-tools-slot"></div>
+      <div class="lec-links"><a href="ch12-part1.html">PART 1 三相電壓與 Y-Y</a><a href="ch12-part2.html">PART 2 Y-Δ、Δ-Δ、Δ-Y</a><a href="ch12-part3.html">PART 3 功率與不平衡</a><a href="ch12-part4.html">PART 4 PSpice、量測、配電</a></div>
+    </div>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="r121">
+      <div class="eyebrow">12.1 · 自編練習</div>
+      <h2>為什麼要三相<span class="h2-en">WHY THREE PHASES</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch12-part1.html#intro">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH12C" data-sec="12.1"></div>
+    </section>
+
+    <section class="sec" id="r122">
+      <div class="eyebrow">12.2 · 自編練習</div>
+      <h2>平衡三相電壓與相序<span class="h2-en">BALANCED VOLTAGES</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch12-part1.html#bal">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH12C" data-sec="12.2"></div>
+    </section>
+
+    <section class="sec" id="r123">
+      <div class="eyebrow">12.3 · 自編練習</div>
+      <h2>平衡 Y-Y<span class="h2-en">WYE-WYE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch12-part1.html#yy">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH12C" data-sec="12.3"></div>
+    </section>
+
+    <section class="sec" id="r124">
+      <div class="eyebrow">12.4 · 自編練習</div>
+      <h2>平衡 Y-Δ<span class="h2-en">WYE-DELTA</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch12-part2.html#yd">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH12C" data-sec="12.4"></div>
+    </section>
+
+    <section class="sec" id="r125">
+      <div class="eyebrow">12.5 · 自編練習</div>
+      <h2>平衡 Δ-Δ<span class="h2-en">DELTA-DELTA</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch12-part2.html#dd">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH12C" data-sec="12.5"></div>
+    </section>
+
+    <section class="sec" id="r126">
+      <div class="eyebrow">12.6 · 自編練習</div>
+      <h2>平衡 Δ-Y 與總整理<span class="h2-en">DELTA-WYE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch12-part2.html#dy">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH12C" data-sec="12.6"></div>
+    </section>
+
+    <section class="sec" id="r127">
+      <div class="eyebrow">12.7 · 自編練習</div>
+      <h2>平衡三相的功率<span class="h2-en">POWER</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch12-part3.html#pow">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH12C" data-sec="12.7"></div>
+    </section>
+
+    <section class="sec" id="r128">
+      <div class="eyebrow">12.8 · 自編練習</div>
+      <h2>不平衡三相系統<span class="h2-en">UNBALANCED</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch12-part3.html#unb">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH12C" data-sec="12.8"></div>
+    </section>
+
+    <section class="sec" id="r129">
+      <div class="eyebrow">12.9 · 自編練習</div>
+      <h2>用 PSpice 解三相<span class="h2-en">PSPICE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch12-part4.html#psp">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH12C" data-sec="12.9"></div>
+    </section>
+
+    <section class="sec" id="r1210">
+      <div class="eyebrow">12.10 · 自編練習</div>
+      <h2>功率量測與家用配電<span class="h2-en">MEASUREMENT · WIRING</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch12-part4.html#wm">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH12C" data-sec="12.10"></div>
+    </section>
+
+    <footer class="foot">
+      <p>題目為自編練習（依 Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 12 的內容）。同一題在章節頁和這一頁做，紀錄是同一份。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="assets/ch12-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'r121', no: '12.1', name: '為什麼要三相', count: '8 題' },
+  { id: 'r122', no: '12.2', name: '平衡三相電壓與相序', count: '8 題' },
+  { id: 'r123', no: '12.3', name: '平衡 Y-Y', count: '8 題' },
+  { id: 'r124', no: '12.4', name: '平衡 Y-Δ', count: '8 題' },
+  { id: 'r125', no: '12.5', name: '平衡 Δ-Δ', count: '8 題' },
+  { id: 'r126', no: '12.6', name: '平衡 Δ-Y 與總整理', count: '8 題' },
+  { id: 'r127', no: '12.7', name: '平衡三相的功率', count: '8 題' },
+  { id: 'r128', no: '12.8', name: '不平衡三相系統', count: '8 題' },
+  { id: 'r129', no: '12.9', name: '用 PSpice 解三相', count: '8 題' },
+  { id: 'r1210', no: '12.10', name: '功率量測與家用配電', count: '8 題' }
+], { key: 'ch12-review' });
+(function () {
+  'use strict';
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } });
+  }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

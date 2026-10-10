@@ -77,7 +77,7 @@
 - 同頁面加 `<body data-look="clean">` 會套用同一套乾淨外觀（標題卡 + 英文小字 `.h2-en`）。
 - SVG 文字裡的 `<`、`>` 一定要寫成 `&lt;`、`&gt;`，否則整個畫面 parse 失敗（踩過的坑）。
 - 下標用 `fx(['i','D',' = I','S'])` 這種寫法：下標後面的字要跟回基線的 tspan 放一起，空的 tspan 的 dy 不會生效。
-- 現有劇本：電子學 `ch1-part1～4-story.js`、電路學 `ch11-part1～3-story.js`、工數 `laplace-story.js`、`laplace2-story.js`、`ode-story.js`、電子實習 `filter-story.js`。
+- 現有劇本：電子學 `ch1-part1～4-story.js`、電路學 `ch11-part1～3-story.js`、`ch12-part1～4-story.js`、工數 `laplace-story.js`、`laplace2-story.js`、`ode-story.js`、電子實習 `filter-story.js`。
 - 版面實測（看截圖總表得到的）：標題卡蓋到約 y 92（x 200～440），兩行字幕從約 y 312 開始，最後一幕的「從頭再看／往下看」按鈕在 y 285 以下 → **內容放 y 100～305，最後一幕放到 270 為止**。
 
 ## 上課筆記（板書照片）的做法
@@ -132,6 +132,9 @@
 - 電路圖一律用 `shared/schem.js` 重畫（`r l c z vs is wm wave`），不要截課本圖。
 - 章節頁故事模式下方放「選小節」：`__EXB.picker(el, [{id, no, name, count}], {key, alwaysAll})`，選了只顯示那一節。
 - 章末 Problems 使用者還沒要求，先不做。
+- **例題圖解故事（使用者 10/10 要求，CH12 起每題都要）**：exbook item 加 `story: () => [scenes]`，卡片會多一顆「🎬 看圖解故事／圖解詳解」，按了才建 `__Story`（id `xb-<題目 id>`）。
+  每題 3～6 幕：題目畫成圖 → 化簡（單相等效、換接法）→ 一步一步算（計算卡一行一行亮＋相量圖／功率三角形）→ 答案卡。最後一幕字幕要短（不然會被「從頭再看」按鈕蓋到）。
+  三相用的畫圖工具在 `circuits/assets/ch12-kit.js`（`__K12`）；別章要用可以照抄或搬到 shared。驗證：每題每一步截圖，再挑每幕最後一步拼總表看。
 
 ## 觀念填充題（電路學 CH11 起）
 

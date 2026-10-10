@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Y-Δ、Δ-Δ、Δ-Y</title>
+<meta name="description" content="電路學 CH12 PART 2：平衡 Y-Δ、Δ-Δ、Δ-Y 接法，線電流與相電流的 √3 關係，四種接法總整理。故事模式＋推導＋可改數字的例題＋課本例題圖解故事。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH12 PART 2</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH12 PART 2</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>課程地圖</a></li>
+      <li><a href="#yd"><i>12.4</i>平衡 Y-Δ</a></li>
+      <li><a href="#dd"><i>12.5</i>平衡 Δ-Δ</a></li>
+      <li><a href="#dy"><i>12.6</i>平衡 Δ-Y 與總整理</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>Chapter 12 · Part 2 · 課本 p.510–517</div>
+      <h1>Y-Δ、Δ-Δ、Δ-Y 接法</h1>
+      <p class="sub">PART 1 練熟了 Y-Y。這一頁把負載或電源換成 <button class="tm" data-t="Δ接">Δ</button>：Δ 負載每格跨在兩條線之間，吃的是<button class="tm" data-t="線電壓">線電壓</button>；線上的電流是兩格<button class="tm" data-t="相電流">相電流</button>相減，<strong>√3 倍、落後 30°</strong>。最後用 <button class="tm" data-t="Δ-Y轉換">Δ-Y 轉換</button>把三種接法全部化回 Y-Y，做成一張總整理表。</p>
+      <div class="hero-meta">
+        <span class="chip h">📘 課本 Example 3 題 ＋ Practice 3 題（每題都有 🎬 圖解故事）</span>
+        <span class="chip">17 個畫面的故事模式</span>
+        <span class="chip">3 個互動模組 ＋ 3 個可改數字例題</span>
+        <span class="chip">10 題中英對照測驗</span>
+      </div>
+      <div class="lec-links"><a href="ch12-review.html">🧠 CH12 觀念填充總複習（80 題，不用算）</a></div>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>Story mode · 先看這段，再往下讀</div>
+      <h2>17 個畫面看懂這一頁<span class="h2-en">THE STORY IN 17 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。全部看完大約 8 分鐘。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>Course map</div>
+      <h2>CH12 分成四頁<span class="h2-en">COURSE MAP</span></h2>
+      <p class="lede">課本：Alexander &amp; Sadiku, Chapter 12。<b>這一頁是第 2 頁</b>。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>12.1–12.3</code><b><a href="ch12-part1.html">三相電壓、相序、Y-Y</a> <span style="color:var(--ink-3);font-weight:400">PART 1</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>12.4</code><b>平衡 Y-Δ <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>12.5</code><b>平衡 Δ-Δ <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>12.6</code><b>平衡 Δ-Y、總整理 <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>12.7–12.8</code><b><a href="ch12-part3.html">三相功率、不平衡系統</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>12.9–12.10</code><b><a href="ch12-part4.html">PSpice、功率量測、家用配電</a> <span style="color:var(--ink-3);font-weight:400">PART 4</span></b><span class="dot"></span></div>
+      </div>
+      <div class="derive">
+        <h4>先複習 PART 1（這一頁從這裡接下去）</h4>
+        <ol>
+          <li><span class="d-eq">V<sub>ab</sub> = √3 V<sub>an</sub>∠+30°（abc）</span><div class="why">線電壓 = 兩相相減。這一頁的 Δ 負載吃的就是它。</div></li>
+          <li><span class="d-eq">平衡 → 單相等效：I<sub>a</sub> = V<sub>an</sub>/Z<sub>Y</sub>，其他兩相轉 ∓120°</span><div class="why">這一頁所有接法最後都會化回這一條。</div></li>
+          <li><span class="d-eq">Z<sub>Y</sub> = Z<sub>Δ</sub>/3</span><div class="why">12.2 推過的 Δ-Y 轉換。</div></li>
+        </ol>
+      </div>
+      <p class="note key">這一頁只有一個新觀念：<b>Δ 那一側，「線」的量是「相」的量的 √3 倍、差 30°</b>。Δ 負載是電流 √3 倍；Y 電源是電壓 √3 倍。</p>
+    </section>
+
+    <!-- ══════════ 12.4 ══════════ -->
+    <section class="sec" id="yd">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>12.4 · Balanced Wye-Delta Connection</div>
+      <h2>平衡 Y-Δ 接法<span class="h2-en">BALANCED WYE-DELTA</span></h2>
+      <p class="lede">Y 接電源接 Δ 接負載，這是最實用的組合（電源通常 Y、負載通常 Δ）。Δ 負載的每一格直接跨在兩條線之間，所以每格吃的是<b>線電壓</b> V<sub>AB</sub>；流過每格的叫<b>相電流</b> I<sub>AB</sub>。線上的電流在節點 A 被分給 AB、CA 兩格，所以 <b>I<sub>a</sub> = I<sub>AB</sub> − I<sub>CA</sub></b>：√3 倍、落後 30°。</p>
+      <div class="eq">V<sub>AB</sub> = V<sub>ab</sub> = √3 V<sub>p</sub>∠30°　　I<sub>AB</sub> = V<sub>AB</sub>/Z<sub>Δ</sub>　　I<sub>a</sub> = √3 I<sub>AB</sub>∠−30°（I<sub>L</sub> = √3 I<sub>p</sub>）　　或 I<sub>a</sub> = V<sub>an</sub>/(Z<sub>Δ</sub>/3)</div>
+      <div class="derive">
+        <h4>相電流：KVL 沿 aABbna</h4>
+        <ol>
+          <li><span class="d-eq">−V<sub>an</sub> + Z<sub>Δ</sub>I<sub>AB</sub> + V<sub>bn</sub> = 0</span><div class="why">從 a 出發經過 AB 那格到 b，再經過電源 b 相、a 相回到 a（沒有線路阻抗）。</div></li>
+          <li><span class="d-eq hi">I<sub>AB</sub> = (V<sub>an</sub> − V<sub>bn</sub>)/Z<sub>Δ</sub> = V<sub>ab</sub>/Z<sub>Δ</sub> = V<sub>AB</sub>/Z<sub>Δ</sub></span><p>V<sub>an</sub> − V<sub>bn</sub> 就是線電壓。<b>Δ 負載每格吃線電壓</b>。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>線電流：節點 A 的 KCL</h4>
+        <ol>
+          <li><span class="d-eq">I<sub>a</sub> = I<sub>AB</sub> − I<sub>CA</sub></span><div class="why">流進節點 A 的有 I<sub>a</sub>（從線上來）和 I<sub>CA</sub>（從 CA 那格來），流出去的是 I<sub>AB</sub>。</div></li>
+          <li><span class="d-eq">I<sub>CA</sub> = I<sub>AB</sub>∠−240°（abc）</span><div class="why">三格相電流也只差 120°，CA 比 AB 晚 240°。</div></li>
+          <li><span class="d-eq">I<sub>a</sub> = I<sub>AB</sub>(1 − 1∠−240°) = I<sub>AB</sub>(1 + 0.5 − j0.866)</span><div class="why">1∠−240° = −0.5 + j0.866，減掉它。</div></li>
+          <li><span class="d-eq hi">I<sub>a</sub> = √3 I<sub>AB</sub>∠−30°</span><p>|1.5 − j0.866| = √3、角度 −30°。跟 PART 1「線電壓 = 兩相相減」是同一個幾何：兩支差 120° 的箭頭相減，永遠 √3 倍、轉 30°。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>另一條路：Δ 換成 Y</h4>
+        <ol>
+          <li><span class="d-eq">Z<sub>Y</sub> = Z<sub>Δ</sub>/3</span><div class="why">從三條線看進去完全一樣。</div></li>
+          <li><span class="d-eq hi">I<sub>a</sub> = V<sub>an</sub>/(Z<sub>Δ</sub>/3)</span><p>直接拿到線電流；要相電流再除 √3、往前轉 30°。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>Δ 負載：線電流 = 兩個相電流相減</h3><span class="spacer"></span><span class="tag">I<sub>a</sub> = I<sub>AB</sub> − I<sub>CA</sub></span></div>
+        <div class="stage-wrap"><canvas id="cv-di" aria-label="相電流與線電流的相量圖"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="di-ip">相電流 I<sub>p</sub><output for="di-ip"></output></label><input type="range" id="di-ip" min="1" max="40" step="0.5" value="19.5"></div>
+          <div class="ctrl"><label for="di-th">I<sub>AB</sub> 的角度<output for="di-th"></output></label><input type="range" id="di-th" min="-180" max="180" step="5" value="15"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>相電流 I<sub>p</sub></dt><dd id="di-rp">—</dd></div>
+          <div><dt>線電流 I<sub>L</sub> = √3 I<sub>p</sub></dt><dd id="di-il" style="color:var(--accent)">—</dd></div>
+          <div><dt>結果</dt><dd id="di-ang" style="font-size:13px">—</dd></div>
+        </dl>
+      </div>
+      <div id="ex-yd"></div>
+      <div class="howto">
+        <h4>Y-Δ 的標準流程</h4>
+        <ol>
+          <li><b>負載吃線電壓：</b><code>V<sub>AB</sub> = √3 V<sub>an</sub>∠+30°</code>（題目給 V<sub>AB</sub> 就直接用）。</li>
+          <li><b>相電流：</b><code>I<sub>AB</sub> = V<sub>AB</sub>/Z<sub>Δ</sub></code>，其他兩格轉 ∓120°。</li>
+          <li><b>線電流：</b><code>I<sub>a</sub> = √3 I<sub>AB</sub>∠−30°</code>，其他兩條轉 ∓120°。</li>
+          <li><b>驗算：</b><code>I<sub>a</sub> = V<sub>an</sub>/(Z<sub>Δ</sub>/3)</code> 應該一樣。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>Y-Δ 的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> 用相電壓 V<sub>an</sub> 除 Z<sub>Δ</sub> 當相電流。<span class="o">✓ Δ 每格吃線電壓：I<sub>AB</sub> = V<sub>AB</sub>/Z<sub>Δ</sub>。（V<sub>an</sub> 要除的是 Z<sub>Δ</sub>/3，得到的是線電流。）</span></li>
+          <li><span class="x">✗</span> I<sub>a</sub> = √3 I<sub>AB</sub>∠+30°。<span class="o">✓ 線電流<b>落後</b>相電流 30°（abc）。</span></li>
+          <li><span class="x">✗</span> 把線電流當成流過負載的電流。<span class="o">✓ 流過每格負載的是相電流，小 √3 倍。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH12EX" data-sec="12.4"></div>
+      <div class="cf-wrap" id="cf-12-4">
+        <h3>🧠 觀念填充 12.4（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。全部 80 題也集中在 <a href="ch12-review.html">CH12 觀念填充總複習</a>。</p>
+        <div class="hw-list" data-bank="__CH12C" data-sec="12.4"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 12.5 ══════════ -->
+    <section class="sec" id="dd">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>12.5 · Balanced Delta-Delta Connection</div>
+      <h2>平衡 Δ-Δ 接法<span class="h2-en">BALANCED DELTA-DELTA</span></h2>
+      <p class="lede">電源也接成 Δ：每顆電源本身就跨在兩條線之間，所以<b>電源的相電壓 = 線電壓</b>。沒有線路阻抗時，負載每格兩端就是電源的電壓（V<sub>AB</sub> = V<sub>ab</sub>）—— 四種接法裡最好算的。負載仍是 Δ，所以線電流一樣是相電流的 √3 倍、落後 30°。代價是 Δ 電源三顆繞成一圈，稍微不平衡就會有<button class="tm" data-t="環流">環流</button>，實務上很少用。</p>
+      <div class="eq">V<sub>ab</sub> = V<sub>p</sub>∠0° = V<sub>AB</sub>　　I<sub>AB</sub> = V<sub>ab</sub>/Z<sub>Δ</sub>　　I<sub>a</sub> = I<sub>AB</sub> − I<sub>CA</sub> = √3 I<sub>AB</sub>∠−30°</div>
+      <div class="derive">
+        <h4>為什麼 Δ-Δ 最好算</h4>
+        <ol>
+          <li><span class="d-eq">Δ 電源：V<sub>ab</sub>、V<sub>bc</sub>、V<sub>ca</sub> 本身就是線電壓</span><div class="why">每顆電源的兩端就是兩條線。</div></li>
+          <li><span class="d-eq">沒有線路阻抗 → V<sub>AB</sub> = V<sub>ab</sub>、V<sub>BC</sub> = V<sub>bc</sub>、V<sub>CA</sub> = V<sub>ca</sub></span><div class="why">導線兩端同電位，負載每格直接接在電源每顆上。</div></li>
+          <li><span class="d-eq hi">I<sub>AB</sub> = V<sub>ab</sub>/Z<sub>Δ</sub>，I<sub>a</sub> = √3 I<sub>AB</sub>∠−30°</span><p>線電流那一步跟 12.4 一模一樣（只看負載的節點 KCL）。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>Δ 電源的麻煩：環流</h4>
+        <ol>
+          <li><span class="d-eq">迴路 a → b → c → a 上只有三顆電源（加上很小的線圈內阻 r）</span></li>
+          <li><span class="d-eq">KVL：3r·I<sub>環</sub> = V<sub>ab</sub> + V<sub>bc</sub> + V<sub>ca</sub></span><div class="why">平衡時右邊 = 0，沒事；只要差一點點，除以很小的 3r 就是很大的電流。</div></li>
+          <li><span class="d-eq hi">I<sub>環</sub> = ΣV / 3r　→　浪費、發熱</span><p>所以電源幾乎都接 Y（PART 4 的互動可以玩這個）。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>Δ-Δ：電源電壓直接加在負載上</h3><span class="spacer"></span><span class="tag">負載角決定電流方向</span></div>
+        <div class="stage-wrap"><canvas id="cv-dd" aria-label="Δ-Δ 相量圖：電源線電壓、相電流與線電流"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="dd-v">電源電壓 V<sub>ab</sub><output for="dd-v"></output></label><input type="range" id="dd-v" min="100" max="480" step="10" value="330"></div>
+          <div class="ctrl"><label for="dd-z">|Z<sub>Δ</sub>|<output for="dd-z"></output></label><input type="range" id="dd-z" min="5" max="60" step="1" value="25"></div>
+          <div class="ctrl"><label for="dd-t">負載角 θ<output for="dd-t"></output></label><input type="range" id="dd-t" min="-90" max="90" step="0.01" value="-36.87"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>相電流 I<sub>p</sub></dt><dd id="dd-ip">—</dd></div>
+          <div><dt>線電流 I<sub>L</sub></dt><dd id="dd-il" style="color:var(--accent)">—</dd></div>
+          <div><dt>結果</dt><dd id="dd-ang" style="font-size:13px">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">預設值 = Example 12.4（330 V、25∠−36.87° Ω）。負載角是負的（電容性）：相電流超前電壓 36.87°。</p>
+      <div id="ex-dd"></div>
+      <div class="howto">
+        <h4>Δ-Δ 的標準流程</h4>
+        <ol>
+          <li><b>沒有線路阻抗：</b><code>I<sub>AB</sub> = V<sub>ab</sub>/Z<sub>Δ</sub></code> 直接除。</li>
+          <li><b>線電流：</b><code>I<sub>a</sub> = √3 I<sub>AB</sub>∠−30°</code>。反過來給 I<sub>a</sub> 求 I<sub>AB</sub>：除 √3、角度 +30°。</li>
+          <li><b>有線路阻抗：</b>兩邊都換成 Y（電源 V<sub>an</sub> = V<sub>ab</sub>/√3∠−30°、負載 Z<sub>Δ</sub>/3），再單相等效。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>Δ-Δ 的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> Δ 電源的「相電壓」再乘 √3 當線電壓。<span class="o">✓ Δ 電源的相電壓本來就是線電壓。</span></li>
+          <li><span class="x">✗</span> 有線路阻抗時還說 V<sub>AB</sub> = V<sub>ab</sub>。<span class="o">✓ 線上有壓降就不相等，要先換成 Y-Y 算。</span></li>
+          <li><span class="x">✗</span> 20 − j15 = 25∠−36.57°（課本 Example 12.4 的筆誤）。<span class="o">✓ tan<sup>−1</sup>(15/20) = 36.87°。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH12EX" data-sec="12.5"></div>
+      <div class="cf-wrap" id="cf-12-5">
+        <h3>🧠 觀念填充 12.5（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。全部 80 題也集中在 <a href="ch12-review.html">CH12 觀念填充總複習</a>。</p>
+        <div class="hw-list" data-bank="__CH12C" data-sec="12.5"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 12.6 ══════════ -->
+    <section class="sec" id="dy">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>12.6 · Balanced Delta-Wye Connection</div>
+      <h2>平衡 Δ-Y 接法與總整理<span class="h2-en">BALANCED DELTA-WYE · SUMMARY</span></h2>
+      <p class="lede">Δ 電源接 Y 負載。Δ 電源沒有中性點，沒辦法直接畫單相等效電路 —— 解法是想像一個<b>等效的 Y 電源</b>，它產生的線電壓跟原本的 Δ 一模一樣：<strong>V<sub>an</sub> = V<sub>ab</sub>/√3∠−30°</strong>（就是「線電壓 = √3 相電壓、超前 30°」倒過來）。換完就是 Y-Y。到這裡，四種接法全部都能化成 Y-Y 的單相等效 —— 課本表 12.1 就是這一節的總整理。</p>
+      <div class="eq">V<sub>an</sub> = (V<sub>p</sub>/√3)∠−30°　　I<sub>a</sub> = V<sub>p</sub>∠−30° / (√3 Z<sub>Y</sub>)　　Y 負載：相電流 = 線電流</div>
+      <div class="derive">
+        <h4>方法一：KVL 沿 aANBba</h4>
+        <ol>
+          <li><span class="d-eq">−V<sub>ab</sub> + Z<sub>Y</sub>I<sub>a</sub> − Z<sub>Y</sub>I<sub>b</sub> = 0　→　I<sub>a</sub> − I<sub>b</sub> = V<sub>p</sub>∠0°/Z<sub>Y</sub></span><div class="why">從 a 經過 A 相負載到 N，再經過 B 相負載（電流反向）回到 b。</div></li>
+          <li><span class="d-eq">I<sub>b</sub> = I<sub>a</sub>∠−120°　→　I<sub>a</sub> − I<sub>b</sub> = I<sub>a</sub>(1 − 1∠−120°) = √3 I<sub>a</sub>∠30°</span><div class="why">又是「兩支差 120° 的相減」。</div></li>
+          <li><span class="d-eq hi">I<sub>a</sub> = (V<sub>p</sub>/√3)∠−30° / Z<sub>Y</sub></span></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>方法二：Δ 電源換成等效 Y 電源</h4>
+        <ol>
+          <li><span class="d-eq">Y 電源：V<sub>ab</sub> = √3 V<sub>an</sub>∠+30°</span><div class="why">PART 1 推過。</div></li>
+          <li><span class="d-eq hi">倒過來：V<sub>an</sub> = V<sub>ab</sub>/√3 ∠−30°</span><p>Δ 電源每相若有內阻 Z<sub>s</sub>，等效 Y 的內阻是 Z<sub>s</sub>/3。</p></li>
+          <li><span class="d-eq">單相等效：I<sub>a</sub> = V<sub>an</sub>/Z<sub>Y</sub>，跟方法一一樣</span></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>四種接法 → 全部化成 Y-Y 的單相等效</h3><span class="spacer"></span>
+          <span class="tag">電源</span><button class="btn" data-conn-s="Y" aria-pressed="true" type="button">Y</button><button class="btn" data-conn-s="D" aria-pressed="false" type="button">Δ</button>
+          <span class="tag">負載</span><button class="btn" data-conn-l="Y" aria-pressed="false" type="button">Y</button><button class="btn" data-conn-l="D" aria-pressed="true" type="button">Δ</button></div>
+        <div class="stage-wrap"><canvas id="cv-conn" aria-label="選擇電源與負載的接法，顯示怎麼化成單相等效電路"></canvas></div>
+        <dl class="readout">
+          <div><dt>接法</dt><dd id="conn-name">—</dd></div>
+          <div><dt>電壓</dt><dd id="conn-v" style="font-size:12.5px">—</dd></div>
+          <div><dt>電流</dt><dd id="conn-i" style="font-size:12.5px">—</dd></div>
+          <div><dt>怎麼換</dt><dd id="conn-how" style="font-size:12.5px">—</dd></div>
+          <div><dt>公式</dt><dd id="conn-eq" style="font-size:12.5px;color:var(--accent)">—</dd></div>
+        </dl>
+      </div>
+      <div class="tbl-wrap"><table class="lab-tbl">
+        <caption>課本表 12.1：平衡三相的相、線電壓電流（abc）</caption>
+        <thead><tr><th>接法</th><th>相電壓／相電流</th><th>線電壓／線電流</th></tr></thead>
+        <tbody>
+          <tr><td>Y-Y</td><td>V<sub>an</sub> = V<sub>p</sub>∠0°、V<sub>bn</sub> = V<sub>p</sub>∠−120°、V<sub>cn</sub> = V<sub>p</sub>∠+120°；相電流 = 線電流</td><td>V<sub>ab</sub> = √3V<sub>p</sub>∠30°；I<sub>a</sub> = V<sub>an</sub>/Z<sub>Y</sub></td></tr>
+          <tr><td>Y-Δ</td><td>同上；I<sub>AB</sub> = V<sub>AB</sub>/Z<sub>Δ</sub></td><td>V<sub>ab</sub> = V<sub>AB</sub> = √3V<sub>p</sub>∠30°；I<sub>a</sub> = √3 I<sub>AB</sub>∠−30°</td></tr>
+          <tr><td>Δ-Δ</td><td>V<sub>ab</sub> = V<sub>p</sub>∠0°…；I<sub>AB</sub> = V<sub>ab</sub>/Z<sub>Δ</sub></td><td>線電壓 = 相電壓；I<sub>a</sub> = √3 I<sub>AB</sub>∠−30°</td></tr>
+          <tr><td>Δ-Y</td><td>V<sub>ab</sub> = V<sub>p</sub>∠0°…；相電流 = 線電流</td><td>線電壓 = 相電壓；I<sub>a</sub> = V<sub>p</sub>∠−30°/(√3Z<sub>Y</sub>)</td></tr>
+        </tbody></table></div>
+      <p class="note">課本提醒：<b>不要背這張表</b>，要懂它怎麼來的 —— 每一格都是 KCL、KVL 加上「兩支差 120° 的箭頭相減 = √3 倍、轉 30°」。</p>
+      <div id="ex-dy"></div>
+      <div class="howto">
+        <h4>任何平衡三相題的萬用流程</h4>
+        <ol>
+          <li><b>電源 Δ → Y：</b><code>V<sub>an</sub> = V<sub>ab</sub>/√3 ∠−30°</code>（內阻 Z<sub>s</sub>/3）。</li>
+          <li><b>負載 Δ → Y：</b><code>Z<sub>Y</sub> = Z<sub>Δ</sub>/3</code>。</li>
+          <li><b>單相等效：</b><code>I<sub>a</sub> = V<sub>an</sub>/(Z<sub>s</sub> + Z<sub>ℓ</sub> + Z<sub>Y</sub>)</code>，照相序補齊。</li>
+          <li><b>需要 Δ 裡面的量再換回去：</b>相電流 = 線電流 /√3、∠+30°；線電壓 = √3 × 相電壓、∠+30°。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>Δ-Y 的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> V<sub>an</sub> = V<sub>ab</sub>/√3 ∠+30°。<span class="o">✓ 倒過來是 −30°。</span></li>
+          <li><span class="x">✗</span> 直接用線電壓除 Z<sub>Y</sub>。<span class="o">✓ Y 負載每相只吃 V<sub>L</sub>/√3。</span></li>
+          <li><span class="x">✗</span> −62° − 120° 寫成 −178°（課本 Example 12.5 的筆誤）。<span class="o">✓ = −182° = +178°。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH12EX" data-sec="12.6"></div>
+      <div class="cf-wrap" id="cf-12-6">
+        <h3>🧠 觀念填充 12.6（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。全部 80 題也集中在 <a href="ch12-review.html">CH12 觀念填充總複習</a>。</p>
+        <div class="hw-list" data-bank="__CH12C" data-sec="12.6"></div>
+      </div>
+    </section>
+
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <p class="lede">考卷上會出現的是右邊那欄。</p>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號</code></div>
+        <div class="gl-row"><b>Y-Δ 接法</b><span>wye-delta connection</span><code>—</code></div>
+        <div class="gl-row"><b>Δ-Δ 接法</b><span>delta-delta connection</span><code>—</code></div>
+        <div class="gl-row"><b>Δ-Y 接法</b><span>delta-wye connection</span><code>—</code></div>
+        <div class="gl-row"><b>相電流</b><span>phase current</span><code>I<sub>AB</sub>, I<sub>p</sub></code></div>
+        <div class="gl-row"><b>線電流</b><span>line current</span><code>I<sub>a</sub>, I<sub>L</sub></code></div>
+        <div class="gl-row"><b>Δ-Y 轉換</b><span>delta-to-wye transformation</span><code>Z<sub>Y</sub> = Z<sub>Δ</sub>/3</code></div>
+        <div class="gl-row"><b>等效 Y 電源</b><span>equivalent wye-connected source</span><code>V<sub>ab</sub>/√3∠−30°</code></div>
+        <div class="gl-row"><b>環流</b><span>circulating current</span><code>—</code></div>
+        <div class="gl-row"><b>單相等效電路</b><span>single-phase equivalent circuit</span><code>—</code></div>
+        <div class="gl-row"><b>落後／超前</b><span>lag / lead</span><code>∠−30° / ∠+30°</code></div>
+      </div>
+    </section>
+
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">10 題，中英對照。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 12，12.4–12.6。</p>
+      <p><a href="ch12-part1.html">← PART 1 三相電壓與 Y-Y</a>　｜　<a href="index.html">回電路學首頁</a>　｜　<a href="ch12-part3.html">PART 3 功率與不平衡 →</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/ch12-ex.js"></script>
+<script src="assets/ch12-ex2.js"></script>
+<script src="../shared/exbook.js"></script>
+<script src="assets/ch12-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'yd', no: '12.4', name: 'Y-Δ', count: '例 1 · 練 1' },
+  { id: 'dd', no: '12.5', name: 'Δ-Δ', count: '例 1 · 練 1' },
+  { id: 'dy', no: '12.6', name: 'Δ-Y 與總整理', count: '例 1 · 練 1' }
+], { key: 'ch12-part2', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/ch12.js"></script>
+<script src="assets/ch12-part2.js"></script>
+<script src="assets/ch12-part2-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

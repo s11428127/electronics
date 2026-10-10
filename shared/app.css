@@ -1229,3 +1229,8 @@ body.ann-finger .ann-free { touch-action: none; }
 .hw-tools .spacer { flex: 1 1 8px; }
 .hw-tools .hw-tip { flex-basis: 100%; font-size: 12.5px; color: var(--accent); min-height: 0; }
 .hw-tools .hw-tip:empty { display: none; }
+
+/* 例題的圖解故事（exbook item.story） */
+.xb-story { margin: 12px 0 2px; }
+.xb-story .story { margin: 0; }
+.xb-sbtn { border-color: var(--accent); color: var(--accent); font-weight: 600; }
