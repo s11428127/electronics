@@ -35,7 +35,8 @@
 | 1.1.4 | Excess Carriers 過剩載子 | ✅ CH1 PART 3 開頭（原講義 PART 3 投影片 1-17～1-18） |
 | 1.2.1–1.2.2 | pn 接面熱平衡、逆向偏壓、接面電容 | ✅ CH1 PART 3 |
 | 1.2.3–1.2.5 | 順向偏壓、理想 I–V、pn 接面二極體、溫度效應 | ✅ CH1 PART 4 |
-| 1.3 | Diode Circuits: DC Analysis and Models | 待上傳 |
+| 1.2.5（崩潰） | Breakdown Voltage、累增／齊納、PIV | ✅ CH1 PART 5 §01、§02 |
+| 1.3.1–1.3.2 | Diode Circuits: DC Analysis and Models（開關、半波整流、負載線、疊代、片段線性、定電壓降） | ✅ CH1 PART 5 §03～§07 |
 | 1.4 | Diode Circuits: AC Equivalent Circuit | 待上傳 |
 | 1.5 | Other Diode Types（Schottky、Zener…） | 待上傳 |
 | 1.6 | Design Application: Diode Thermometer | ✅ CH1 PART 4（講義 1-54 的 NOTE） |
@@ -169,6 +170,15 @@ p.53 擴散公式正負號、Example 1.4（187 A/cm²）。
 | PART 4 | 1-48、1-49（理想二極體模型） | CH1 PART 4 §04 |
 | PART 4 | 1-50～1-53（溫度效應） | CH1 PART 4 §05 |
 | PART 4 | 1-52、1-54（二極體溫度計 Fig 1.47／1.48） | CH1 PART 4 §06 |
+| PART 4（V3） | 1-85～1-105（與舊版 PART 4 同內容，改編號） | CH1 PART 4（不動） |
+| PART 4（V3） | 1-89、1-93～1-97（實際 I–V 含崩潰、半波整流 4.3 V、理想／定電壓降模型、補充數學式） | CH1 PART 5 §00 複習、§03 |
+| PART 4（V3） | 1-106、1-111（崩潰電壓、PIV、齊納二極體） | CH1 PART 5 §01 |
+| PART 4（V3） | 1-107～1-110（累增、齊納、摻雜與 BV） | CH1 PART 5 §02 |
+| PART 4（V3） | 1-112～1-115（非線性二端元件、v_D／i_D 定義、開關模型、半波整流） | CH1 PART 5 §03 |
+| PART 4（V3） | 1-116～1-119（直流分析方法、圖形法、負載線、Problem 設計 R） | CH1 PART 5 §04（＋ Example 1.8 依課本補） |
+| PART 4（V3） | 1-120～1-122（片段線性模型、Example 1.9） | CH1 PART 5 §05 |
+| PART 4（V3） | 1-123～1-125（定電壓降＋負載線、Fig 1.30 A～D） | CH1 PART 5 §06 |
+| PART 4（V3） | 1-126（逆偏 Q 點） | CH1 PART 5 §07 |
 
 ### 勘誤摘要
 - PART 3 1-21：N 區只剩 P⊖ → **P⊕**
@@ -178,6 +188,13 @@ p.53 擴散公式正負號、Example 1.4（187 A/cm²）。
 - PART 4 1-49：理想二極體導通標 I_F → ∞ 錯，R_F = 0 是因為 V_F = 0
 - PART 4 1-42：Practice diode → **practical diode**
 - PART 4 1-44：矽 I_S 範圍 10⁻¹³～10⁻¹⁸ A（課本為 10⁻¹⁸～10⁻¹²，請確認）
+- PART 4 V3 1-89：Practice diode → **practical diode**
+- PART 4 V3 1-93、1-95、1-97：水平段標「導通、等效電阻 ∞」→ **不導通（截止）**
+- PART 4 V3 1-97：i_D ≥ 0 V → **i_D ≥ 0**
+- PART 4 V3 1-107：累積崩潰 → **累增崩潰**；英文框 colliding with the fixed ions → 撞晶格原子／共價鍵（請確認）
+- PART 4 V3 1-120：slop → **slope**
+- PART 4 V3 1-122 (3)：V_γ = 0.7 V → 2.15 mA 是 r_f = 0 的結果；r_f = 10 Ω 為 2.14 mA（請確認）
+- 數值驗算（程式）：Ex 1.8 V_D = 0.61906 V、I_D = 2.1905 mA；Ex 1.9 I_D = 2.1891 mA、V_D = 0.6219 V、P_D = 1.361 mW；Problem R = 1.991 kΩ；Fig 1.30 A 2.15／B 1.075／C 0.9／D 0.45 mA（指數公式 2.19／1.10／0.951／0.480）
 
 
 ## HW1（Issued 28/09/2026 · Due 17/10/2026）與 10/5 考試範圍
@@ -185,7 +202,7 @@ p.53 擴散公式正負號、Example 1.4（187 A/cm²）。
 - 考試範圍：CH1 PART 1 ～ PART 4 §01（原講義 PART 4 第 8 頁；第 7 頁已介紹 i<sub>D</sub> 公式，Example 1.7 未教）。
 - 題庫 `assets/hw1-bank.js`（作答元件 `shared/hw.js`）：第 1～10 題原題 ＋ 每題 5 題仿作業。總複習頁 `hw1.html`。
 - 對應：1→PART1 #lattice、2→#dope、4→#holemove；3→PART2 #ptype、5→#drift、6→#diff；7→PART3 #form、8→#vbi、9→#rev；10→PART4 #fwd。
-- 第 11 題（溫度，PART 4 p.13–16）、第 12 題（崩潰）尚未教到，先不放。
+- 第 11 題（溫度，PART 4 p.13–16）、第 12 題（崩潰）尚未教到，先不放。崩潰內容已做進 CH1 PART 5 §01、§02，等原題確認後再加題。
 - 第 4 題依講義 PART 1 p.24「其實電洞不會移動」：電洞不會自行移動、但會協助導通；離子不會移動、不會導通。
 - 課本 Problem 1.2、1.9、1.14、1.16、1.17、1.20、1.25、1.36、1.37 原文尚未取得。
 

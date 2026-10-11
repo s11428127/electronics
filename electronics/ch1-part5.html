@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>崩潰與二極體直流分析</title>
+<meta name="description" content="電子學 CH1 PART 5 互動講義：崩潰電壓、累增與齊納崩潰、PIV；二極體直流分析：理想開關、半波整流、負載線與 Q 點、疊代法、片段線性模型、定電壓降模型、逆偏。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="electronics" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>CH1 PART 5</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH1 PART 5</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>·</i>這段在講什麼</a></li>
+      <li><a href="#recap"><i>00</i>複習：曲線與簡化模型</a></li>
+      <li><a href="#bd"><i>01</i>崩潰電壓與 PIV</a></li>
+      <li><a href="#zen"><i>02</i>累增崩潰 vs 齊納崩潰</a></li>
+      <li><a href="#sw"><i>03</i>理想開關與半波整流</a></li>
+      <li><a href="#load"><i>04</i>圖形法：負載線與 Q 點</a></li>
+      <li><a href="#pwl"><i>05</i>片段線性模型</a></li>
+      <li><a href="#cvd"><i>06</i>定電壓降＋負載線</a></li>
+      <li><a href="#revb"><i>07</i>逆偏的 Q 點</a></li>
+      <li><a href="#check"><i>!</i>講義勘誤</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>Chapter 1 · 1.2.5 · 1.3.1～1.3.2 · 投影片 1-89～1-126</div>
+      <h1>崩潰與二極體直流分析</h1>
+      <p class="sub">二極體反著推太用力會怎樣？——<strong>崩潰</strong>。順著接進電路裡電流到底多少？——指數方程式手算解不出來，要靠<strong>負載線</strong>找交點，或把彎線換成<strong>直線模型</strong>。這一頁把「懂二極體」變成「會算二極體電路」。</p>
+      <div class="hero-meta">
+        <span class="chip">20 個畫面的故事模式</span>
+        <span class="chip">8 個互動模組</span>
+        <span class="chip">9 個可改數字例題</span>
+        <span class="chip">8 題例題與練習（附圖解故事）</span>
+        <span class="chip">13 題中英對照測驗</span>
+      </div>
+      <p class="note">接續 <a href="ch1-part4.html">CH1 PART 4</a>（順偏、I–V、理想模型、溫度）。老師的 PART 4 V3 版講義前半（1-85～1-105）跟 PART 4 網頁同一段，這一頁從 <b>複習</b>（1-89、1-93～1-97）開始，接 <b>1.2.5 崩潰</b>（1-106～1-111）和 <b>1.3 直流分析</b>（1-112～1-126）。</p>
+    </div>
+
+    <!-- ══════════ 故事模式 ══════════ -->
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>Story mode · 先看這段，再往下讀</div>
+      <h2>20 個畫面看懂這一段<span class="h2-en">THE STORY IN 20 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。<strong>先建立直覺</strong>，再往下讀推導、玩互動模組、做例題。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <!-- ══════════ 導論 ══════════ -->
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>Big picture · 投影片 1-106、1-112、1-116</div>
+      <h2>這一段在講什麼<span class="h2-en">THE BIG PICTURE</span></h2>
+      <p class="lede">兩件事：<strong>(1) 逆偏太大會崩潰</strong>（兩種機制、摻雜決定哪一種、規格用 PIV）；<strong>(2) 二極體放進電路怎麼算</strong>（負載線 × 特性曲線 = Q 點，或用直線模型代入）。</p>
+      <div class="derive">
+        <h4>整頁的主線，一張表看完</h4>
+        <ol>
+          <li><span class="d-eq">逆偏 &gt; BV ⟹ 電場扯斷共價鍵 ⟹ 電流暴增（崩潰）</span>
+            <div class="why">低摻雜 → 空乏區寬 → 累增崩潰、BV 大；高摻雜 → 空乏區窄 → 齊納崩潰、BV 小。一般二極體用 PIV 額定避開崩潰，齊納二極體故意住在崩潰區穩壓。</div></li>
+          <li><span class="d-eq">二極體是非線性元件：i<sub>D</sub> = I<sub>S</sub>(e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1) ⟹ 不能用 V = IR 直接解</span>
+            <div class="why">投影片 1-112。所以需要新的直流分析方法（1-116）：疊代法、圖形法、片段線性（模型代入）、電腦分析。</div></li>
+          <li><span class="d-eq hi">外面電路（KVL）給一條直線 = 負載線；二極體給一條曲線；交點 = Q 點</span>
+            <div class="why">圖形法看交點；疊代法用真公式逼近交點；模型代入法把曲線換成直線，一條 KVL 解出交點。三種方法答案都在 2.15～2.19 mA（V<sub>PS</sub> = 5 V、R = 2 kΩ）。</div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 00 複習 ══════════ -->
+    <section class="sec" id="recap">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>00 · 投影片 1-89、1-94～1-97 · 複習</div>
+      <h2>複習：實際曲線與簡化模型<span class="h2-en">RECAP · PRACTICAL CURVE &amp; MODELS</span></h2>
+      <p class="lede">V3 講義在進新內容前，先把實際二極體的曲線（這次<strong>多畫了崩潰那一段</strong>）和兩種簡化模型再講一次。先把這張圖記熟：左邊崩潰、中間 OFF、右邊導通。</p>
+      <div class="eq">理想：v<em>D</em> &lt; 0 斷路、導通時 v<em>D</em> = 0　　定電壓降：v<em>D</em> &lt; V<em>γ</em> 斷路、導通時 v<em>D</em> = V<em>γ</em> ≈ 0.7 V，i<em>D</em> 由外部電路決定</div>
+      <div class="derive">
+        <h4>從實際曲線到兩種模型</h4>
+        <ol>
+          <li><span class="d-eq">實際二極體（1-89）：逆偏 −I<sub>S</sub> 貼地；超過 V<sub>ZK</sub>（崩潰）往下衝；順偏過 V<sub>γ</sub> 往上衝</span>
+            <div class="why">V3 的 Fig 1.20 多了左邊那一段：逆偏到「崩潰起始電壓」V<sub>ZK</sub> 就崩潰（下一節）。講義寫的「Practice diode」應為 practical diode（勘誤 ①）。</div></li>
+          <li><span class="d-eq">mA 尺度看，導通那段幾乎垂直 ⟹ 把它換成一面「牆」</span>
+            <div class="why">PART 4：每 60 mV 電流 × 10。從 1 mA 到 10 mA 電壓才多 0.06 V，所以電壓幾乎固定。</div></li>
+          <li><span class="d-eq">牆放在 0 V ⟹ 理想二極體（1-94）；牆放在 V<sub>γ</sub> ⟹ 定電壓降模型（1-95）</span>
+            <div class="why">電源比 0.7 V 大很多時兩者差不多；電源小的時候一定要扣 0.7 V。</div></li>
+          <li><span class="d-eq hi">數學寫法（1-96、1-97）：v<sub>D</sub> &lt; V<sub>γ</sub> ⟹ i<sub>D</sub> = 0（OFF）；i<sub>D</sub> &gt; 0 ⟹ v<sub>D</sub> = V<sub>γ</sub>（ON）</span>
+            <p>注意 OFF 那段是「<b>不導通</b>、等效電阻 ∞」—— 講義 1-93、1-95、1-97 圖上把它寫成「導通」，是筆誤（勘誤 ②）。1-97 的「i<sub>D</sub> ≥ 0 V」也多了一個 V（勘誤 ③）。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>實際曲線 vs 模型</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-rcm="ideal">理想</button>
+            <button class="btn solid" type="button" data-rcm="cvd">定電壓降</button>
+            <button class="btn" type="button" data-rcm="pwl">片段線性</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-recap" aria-label="實際二極體的 I–V 曲線（含崩潰），疊上理想、定電壓降、片段線性三種模型"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="rc-v">v<sub>D</sub><output for="rc-v"></output></label>
+            <input type="range" id="rc-v" min="-6" max="0.75" step="0.01" value="0.72"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>實際電流</dt><dd id="rc-r" class="e" style="font-size:15px">—</dd></div>
+          <div><dt>模型說</dt><dd id="rc-m" style="font-size:14px">—</dd></div>
+        </dl>
+        <div class="msg" id="rc-msg"></div>
+      </div>
+      <div id="ex-recap"></div>
+      <div class="howto">
+        <h4>用簡化模型的標準流程</h4>
+        <ol>
+          <li><b>先假設</b>二極體 ON：換成短路（理想）或 V<sub>γ</sub> 電池（定電壓降）。</li>
+          <li>算出 i<sub>D</sub>。<b>i<sub>D</sub> &gt; 0</b> → 假設成立。</li>
+          <li>i<sub>D</sub> ≤ 0 → 改成 OFF（斷路），算它兩端電壓，應該 &lt; V<sub>γ</sub>。</li>
+          <li>電源跟 0.7 V 差不多大時，別用理想模型。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>複習段的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 模型會畫出崩潰。<span class="o">理想、定電壓降、片段線性都只有 OFF 和 ON 兩段</span>，崩潰要另外考慮。</li>
+          <li><span class="x">✗</span> 定電壓降模型導通時電流無限大。<span class="o">電流由外部電路決定</span>：(V<sub>PS</sub> − V<sub>γ</sub>)/R。</li>
+          <li><span class="x">✗</span> 水平那段是「導通、電阻 ∞」。<span class="o">是不導通（截止）</span>，電阻 ∞ 才對得上。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 01 崩潰 ══════════ -->
+    <section class="sec" id="bd">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>01 · 投影片 1-106、1-111 · 1.2.5 Breakdown Voltage</div>
+      <h2><button class="tm" data-t="崩潰電壓">崩潰電壓</button>與 PIV<span class="h2-en">BREAKDOWN VOLTAGE &amp; PIV</span></h2>
+      <p class="lede">逆偏越加越大，空乏區的電場越來越強。強到某個程度，<strong>共價鍵被扯斷</strong>，一下子冒出一大堆電子電洞對，逆向電流突然暴衝 —— 這就是<button class="tm" data-t="崩潰">崩潰</button>。一般二極體要避開它，所以規格會寫<button class="tm" data-t="反向峰值電壓">反向峰值電壓 PIV</button>。</p>
+      <div class="eq">|v<em>R</em>| &lt; BV：i<em>D</em> ≈ −I<em>S</em>　　|v<em>R</em>| ≥ BV：逆向電流大幅增加（由外部電路限流）　　設計：最大逆壓 &lt; PIV &lt; BV</div>
+      <div class="derive">
+        <h4>崩潰怎麼發生、為什麼要 PIV</h4>
+        <ol>
+          <li><span class="d-eq">逆偏 V<sub>R</sub> ↑ ⟹ 空乏區的電場 E ↑</span>
+            <div class="why">PART 3：逆偏把坡墊高、空乏區變寬，空乏區裡的電場跟著變強（E ≈ (V<sub>bi</sub> + V<sub>R</sub>)/W 的等級）。</div></li>
+          <li><span class="d-eq">E 大到某值 ⟹ 破壞共價鍵 ⟹ 產生電子電洞對</span>
+            <div class="why">投影片 1-106：電子被電場掃到 N 區、電洞被掃到 P 區 —— 方向跟逆向電流一樣，所以逆向電流突然變大。</div></li>
+          <li><span class="d-eq">開始崩潰的電壓 = 崩潰電壓 BV（曲線上叫 V<sub>ZK</sub>）</span>
+            <div class="why">BV 的大小由摻雜決定（下一節）：同一張圖上的 BV1（小）、BV2（大）。</div></li>
+          <li><span class="d-eq">崩潰 ≠ 損壞；但 P = V·I 太大 ⟹ 過熱燒毀</span>
+            <div class="why">1-106 NOTE (2)：有些應用故意用崩潰（例如穩在 BV1 或 BV2 當穩壓），但無限制地加大逆偏，電流巨大、功率過大就會壞。</div></li>
+          <li><span class="d-eq hi">一般二極體：BV 約 50～200 V，用 PIV 額定 ⟹ 實際最大逆壓不可超過 PIV</span>
+            <p>投影片 1-111。<button class="tm" data-t="額定">額定</button>＝設計上保證可以安全工作的值。整流電路裡，二極體每個負半周都被反著加一次電壓，最大值就是輸入峰值；選零件時 PIV 要比它大，還要留餘裕。<button class="tm" data-t="齊納二極體">齊納二極體</button>則相反，故意操作在崩潰區穩壓。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>崩潰實驗室</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-bv="5">齊納二極體 BV 5 V</button>
+            <button class="btn solid" type="button" data-bv="50">一般二極體 BV 50 V</button>
+            <button class="btn" type="button" data-bv="200">BV 200 V</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-bd" aria-label="逆偏加大，超過 BV 電流暴增；PIV 額定標線"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="bd-v">逆偏 |v<sub>R</sub>|<output for="bd-v"></output></label>
+            <input type="range" id="bd-v" min="0" max="60" step="1" value="30"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>逆向電流</dt><dd id="bd-i" class="e" style="font-size:15px">—</dd></div>
+          <div><dt>狀態</dt><dd id="bd-s" style="font-size:14px">—</dd></div>
+        </dl>
+        <div class="msg" id="bd-msg"></div>
+      </div>
+      <div id="ex-bd"></div>
+      <div class="howto">
+        <h4>檢查二極體會不會崩潰</h4>
+        <ol>
+          <li>找出二極體 OFF 時兩端的<b>最大逆壓</b>（電阻負載的半波整流 = 輸入峰值 V<sub>m</sub>；rms 要乘 √2）。</li>
+          <li>跟規格的 PIV 比：最大逆壓 &lt; PIV 才安全。</li>
+          <li>留餘裕（實務 1.5～2 倍），電源會浮動、會有突波。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>崩潰的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 崩潰 = 二極體燒壞。<span class="o">崩潰是電流暴增的現象</span>，限流得當就不會壞；齊納二極體就靠它工作。</li>
+          <li><span class="x">✗</span> 家用 110 V，二極體 PIV 110 V 就夠。<span class="o">110 V 是 rms</span>，峰值 155.6 V。</li>
+          <li><span class="x">✗</span> 崩潰電流是順向電流。<span class="o">是逆向電流</span>（N → P 方向流過二極體）。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH15EX" data-sec="bd"></div>
+    </section>
+
+    <!-- ══════════ 02 兩種崩潰 ══════════ -->
+    <section class="sec" id="zen">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>02 · 投影片 1-107～1-110 · Avalanche &amp; Zener Breakdown</div>
+      <h2><button class="tm" data-t="累增崩潰">累增崩潰</button> vs <button class="tm" data-t="齊納崩潰">齊納崩潰</button><span class="h2-en">AVALANCHE VS ZENER</span></h2>
+      <p class="lede">一樣是「共價鍵被打斷」，打斷的方法有兩種：<strong>撞斷</strong>（累增，像雪崩、像保齡球）和<strong>扯斷</strong>（齊納，像撕紙）。誰會發生，看摻雜 —— 摻雜決定空乏區多寬，寬度決定同樣電壓下電場多強。</p>
+      <div class="eq">W ∝ √( (V<em>bi</em> + V<em>R</em>)(1/N<em>A</em> + 1/N<em>D</em>) )　　E ≈ V / W　　摻雜 ↑ ⟹ W ↓ ⟹ |BV| ↓（齊納）；摻雜 ↓ ⟹ |BV| ↑（累增）</div>
+      <div class="derive">
+        <h4>兩種機制，一步一步</h4>
+        <ol>
+          <li><span class="d-eq">累增（低摻雜）：少數載子穿越空乏區時被電場加速，得到大動能</span>
+            <div class="why">投影片 1-107 第 1 點。空乏區寬，加速的距離長。</div></li>
+          <li><span class="d-eq">撞上晶格 ⟹ 打斷共價鍵 ⟹ 多一對電子電洞（<button class="tm" data-t="撞擊游離">撞擊游離</button>）</span>
+            <div class="why">第 2 點。講義英文框寫「colliding with the fixed ions」，比較精確的說法是撞上晶格原子、打斷共價鍵（勘誤 ⑤，請確認）。</div></li>
+          <li><span class="d-eq">新的電子電洞又被加速、再撞 ⟹ 1 → 2 → 4 → 8 … 連鎖反應 ⟹ 大電流</span>
+            <div class="why">第 3、4 點。講義 NOTE 的「累積崩潰」應為「累增崩潰」（勘誤 ④）。</div></li>
+          <li><span class="d-eq">齊納（高摻雜）：W 很窄 ⟹ 小逆偏就有極強電場 ⟹ 直接把束縛電子拉離共價鍵</span>
+            <div class="why">投影片 1-108、1-109。不用撞，電場本身就夠強（約 10<sup>6</sup> V/cm 等級，課本延伸）。</div></li>
+          <li><span class="d-eq">W = √(2ε<sub>s</sub>(V<sub>bi</sub> + V<sub>R</sub>)/e · (N<sub>A</sub> + N<sub>D</sub>)/(N<sub>A</sub>N<sub>D</sub>))，E ≈ V/W</span>
+            <div class="why">PART 3 的空乏區公式。(N<sub>A</sub> + N<sub>D</sub>)/(N<sub>A</sub>N<sub>D</sub>) = 1/N<sub>A</sub> + 1/N<sub>D</sub>：摻雜越濃，W 越窄。E ≈ V/W 是<b>平均</b>電場，突變接面的最大電場約是它的 2 倍（補充）。</div></li>
+          <li><span class="d-eq hi">結論（1-110）：高摻雜 → 小 |BV|（BV1，齊納）；低摻雜 → 大 |BV|（BV2，累增）</span>
+            <p>經驗上 BV &lt; 約 5 V 是齊納、&gt; 約 6～7 V 是累增，中間兩種都有（課本延伸）。講義 1-109 的旁註也提醒：外加的逆壓不一定百分之百只落在理想化的空乏區上，所以 E ≈ V/W 只是估計。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>摻雜調調看：撞斷還是扯斷？</h3><span class="spacer"></span><span class="tag">對稱接面 N<sub>a</sub> = N<sub>d</sub></span></div>
+        <div class="stage-wrap"><canvas id="cv-av" aria-label="調摻雜看空乏區寬度與崩潰機制：低摻雜累增連鎖反應，高摻雜電場直接扯出電子"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="av-n">摻雜 N<output for="av-n"></output></label>
+            <input type="range" id="av-n" min="14" max="19" step="0.1" value="16"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>崩潰時的 W</dt><dd id="av-w">—</dd></div>
+          <div><dt>BV（經驗式）</dt><dd id="av-bv" class="e">—</dd></div>
+          <div><dt>機制</dt><dd id="av-m" style="font-size:15px">—</dd></div>
+        </dl>
+        <div class="msg" id="av-msg"></div>
+      </div>
+      <div id="ex-zener"></div>
+      <div class="howto">
+        <h4>判斷崩潰機制的流程</h4>
+        <ol>
+          <li>看摻雜：高（≳ 10<sup>18</sup> cm<sup>−3</sup>）還是低。</li>
+          <li>高摻雜 → W 窄 → E ≈ V/W 大 → 小電壓就崩潰 → <b>齊納</b>。</li>
+          <li>低摻雜 → W 寬 → 要大電壓 → 載子加速撞擊 → <b>累增</b>。</li>
+          <li>題目給 BV：&lt; 5 V 多半齊納、&gt; 7 V 多半累增。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>兩種崩潰的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 齊納崩潰需要比較大的逆偏。<span class="o">相反</span>：高摻雜、空乏區窄，<b>小</b>逆偏就崩潰。</li>
+          <li><span class="x">✗</span> 累增崩潰是電場直接把電子扯出來。<span class="o">那是齊納</span>；累增是加速後<b>撞</b>出來、連鎖反應。</li>
+          <li><span class="x">✗</span> 摻雜越高，空乏區越寬。<span class="o">越窄</span>：W ∝ √(1/N<sub>A</sub> + 1/N<sub>D</sub>)。</li>
+          <li><span class="x">✗</span> 「齊納二極體」只會發生齊納崩潰。<span class="o">市售齊納二極體 V<sub>Z</sub> 大於約 6 V 的，主要其實是累增崩潰</span>，只是統稱齊納二極體。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 03 理想開關 + 半波整流 ══════════ -->
+    <section class="sec" id="sw">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>03 · 投影片 1-93、1-112～1-115 · 1.3 Diode as a Switch</div>
+      <h2>理想開關與<button class="tm" data-t="半波整流">半波整流</button><span class="h2-en">DIODE AS A SWITCH · HALF-WAVE RECTIFIER</span></h2>
+      <p class="lede">二極體是<button class="tm" data-t="非線性元件">非線性</button>的二端元件。最粗的看法：它是一個<strong>自動開關</strong> —— 順偏 ON、逆偏 OFF。拿交流電來推它，就只剩正半周通過，這就是半波整流。</p>
+      <div class="eq">理想開關：v<em>D</em> &lt; 0 ⟹ OFF（i<em>D</em> = 0）；順偏 ⟹ ON（v<em>D</em> = 0，i<em>D</em> 由外部電路決定）　　半波整流：v<em>O</em> = v<em>I</em> − V<em>γ</em>（ON）、0（OFF）</div>
+      <div class="derive">
+        <h4>從定義到半波整流</h4>
+        <ol>
+          <li><span class="d-eq">i<sub>D</sub> = I<sub>S</sub>(e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1) ⟹ 非線性二端元件</span>
+            <div class="why">投影片 1-112：描述元件 I–V 關係的數學模型，讓我們不用實作就能分析、設計電路。</div></li>
+          <li><span class="d-eq">v<sub>D</sub>、i<sub>D</sub> 的參考方向固定：+ 在 P 端、電流 P → N；v<sub>D</sub> &gt; 0 順偏、v<sub>D</sub> &lt; 0 逆偏</span>
+            <div class="why">投影片 1-113：「定義的 + − 與電流方向是不變的」。外加電壓反過來時，是 v<sub>D</sub> 變負，不是把定義翻過來 —— 第 07 節逆偏的 Q 點就靠這個。</div></li>
+          <li><span class="d-eq">理想開關模型（Fig 1.26）：逆偏 OFF、順偏 ON</span>
+            <div class="why">投影片 1-114。跟理想二極體同一個東西。</div></li>
+          <li><span class="d-eq">半波整流（Fig 1.27）：v<sub>I</sub> &gt; 0 ⟹ ON ⟹ v<sub>O</sub> = v<sub>I</sub>；v<sub>I</sub> &lt; 0 ⟹ OFF ⟹ v<sub>O</sub> = 0</span>
+            <div class="why">投影片 1-115：正半周「通過」、負半周「截止」，輸出方向不變但大小一直變 = <button class="tm" data-t="脈動直流">脈動直流</button>。</div></li>
+          <li><span class="d-eq hi">定電壓降模型（1-93）：v<sub>O</sub> = v<sub>I</sub> − 0.7（v<sub>I</sub> &gt; 0.7 V），峰值 5 − 0.7 = 4.3 V</span>
+            <p>導通從 sin θ = 0.7/5 → θ = 8.0° 才開始、172° 結束，導通時間約 45.5%（不是 50%）。電源越小，這 0.7 V 越不能忽略。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>半波整流器</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-swm="ideal">理想開關</button>
+            <button class="btn solid" type="button" data-swm="cvd">定電壓降 0.7 V</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-sw" aria-label="半波整流器：二極體隨輸入正負切換 ON/OFF，輸出脈動直流"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="sw-vm">輸入峰值 V<sub>m</sub><output for="sw-vm"></output></label>
+            <input type="range" id="sw-vm" min="0.5" max="20" step="0.1" value="5"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>輸出峰值</dt><dd id="sw-pk" class="e">—</dd></div>
+          <div><dt>導通時間比例</dt><dd id="sw-f">—</dd></div>
+        </dl>
+        <div class="msg" id="sw-msg"></div>
+      </div>
+      <div id="ex-sw"></div>
+      <div class="howto">
+        <h4>半波整流題目的標準流程</h4>
+        <ol>
+          <li>判斷每一段時間二極體 ON 還是 OFF（v<sub>I</sub> 跟 V<sub>γ</sub> 比）。</li>
+          <li>ON：二極體換成 V<sub>γ</sub> 電池（或短路），v<sub>O</sub> = v<sub>I</sub> − V<sub>γ</sub>。</li>
+          <li>OFF：電流 0，v<sub>O</sub> = 0；這時二極體承受的逆壓 = v<sub>I</sub>（檢查 PIV）。</li>
+          <li>畫波形：輸出比輸入矮 V<sub>γ</sub>、負半周削平。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>半波整流的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 輸出峰值 = 輸入峰值。<span class="o">要扣 V<sub>γ</sub></span>（理想模型才相等）。</li>
+          <li><span class="x">✗</span> 二極體剛好導通半個週期。<span class="o">v<sub>I</sub> 超過 V<sub>γ</sub> 才導通</span>，比半個週期短一點。</li>
+          <li><span class="x">✗</span> 脈動直流就是直流。<span class="o">方向不變但大小一直變</span>，還要濾波才平。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH15EX" data-sec="sw"></div>
+    </section>
+
+    <!-- ══════════ 04 圖形法 ══════════ -->
+    <section class="sec" id="load">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>04 · 投影片 1-116～1-119 · 1.3.1 Iteration and Graphical Analysis</div>
+      <h2><button class="tm" data-t="圖形法">圖形法</button>：<button class="tm" data-t="負載線">負載線</button>與 Q 點<span class="h2-en">LOAD LINE &amp; Q-POINT</span></h2>
+      <p class="lede">二極體自己有一條規矩（特性曲線），外面的電源和電阻也給了一條規矩（KVL）。KVL 畫出來是一條直線 —— 負載線。<strong>兩條都要滿足，答案就是交點</strong>，叫<button class="tm" data-t="工作點">Q 點</button>。用算的就是<button class="tm" data-t="疊代法">疊代法</button>。</p>
+      <div class="eq">負載線：I<em>D</em> = −V<em>D</em>/R + V<em>PS</em>/R（斜率 −1/R，截距 V<em>PS</em> 與 V<em>PS</em>/R）　　Q = 負載線 ∩ 特性曲線</div>
+      <div class="derive">
+        <h4>負載線怎麼來、Q 點怎麼找</h4>
+        <ol>
+          <li><span class="d-eq">KVL：V<sub>PS</sub> = I<sub>D</sub>R + V<sub>D</sub>　（5 = I<sub>D</sub>·2k + V<sub>D</sub>）</span>
+            <div class="why">投影片 1-119。電源電壓 = 電阻壓降 + 二極體壓降。這條式子只跟外面電路有關。</div></li>
+          <li><span class="d-eq">移項：I<sub>D</sub> = −(1/R)V<sub>D</sub> + V<sub>PS</sub>/R = −V<sub>D</sub>/2k + 5/2k</span>
+            <div class="why">寫成 y = mx + b 的形式：在 I<sub>D</sub>–V<sub>D</sub> 圖上是一條直線，斜率 −1/R。</div></li>
+          <li><span class="d-eq">兩個截距：I<sub>D</sub> = 0 → V<sub>D</sub> = V<sub>PS</sub> = 5 V；V<sub>D</sub> = 0 → I<sub>D</sub> = V<sub>PS</sub>/R = 2.5 mA</span>
+            <div class="why">「截距求法」（1-118 STEP 2）：兩點連一條線最快。講義寫的 slop 應為 slope（勘誤 ⑥）。</div></li>
+          <li><span class="d-eq">STEP 1 畫特性曲線（實驗或 datasheet）、STEP 3 找交點</span>
+            <div class="why">投影片 1-118 的三個步驟。交點同時滿足元件和電路，就是直流工作點。</div></li>
+          <li><span class="d-eq">疊代法：猜 V<sub>D</sub> → KVL 算 I<sub>D</sub> → V<sub>D</sub> = V<sub>T</sub>ln(I<sub>D</sub>/I<sub>S</sub>) → 重複</span>
+            <div class="why">不畫圖、用算的逼近同一個交點（Example 1.8，I<sub>S</sub> = 10<sup>−13</sup> A → 0.619 V、2.19 mA）。</div></li>
+          <li><span class="d-eq hi">Q ≈ (0.62 V, 2.2 mA)；反過來設計：R = (V<sub>PS</sub> − V<sub>D</sub>)/I<sub>D</sub> = (5 − 0.62)/2.2 mA ≈ 2 kΩ</span>
+            <p>講義 1-119 的 Problem 就是這個反推。注意 Q 點的 V<sub>D</sub> 怎麼調都卡在 0.6 V 附近 —— 二極體曲線太陡，電流幾乎只由 V<sub>PS</sub> 和 R 決定。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>負載線實驗室・小遊戲：把 Q 點調到目標</h3><span class="spacer"></span><span class="tag" id="ld-score">過關 0</span></div>
+        <div class="stage-wrap"><canvas id="cv-load" aria-label="調電源與電阻，負載線移動，跟二極體指數曲線的交點就是 Q 點；目標電流小遊戲"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="ld-vps">電源 V<sub>PS</sub><output for="ld-vps"></output></label>
+            <input type="range" id="ld-vps" min="1" max="10" step="0.1" value="5"></div>
+          <div class="ctrl"><label for="ld-r">電阻 R<output for="ld-r"></output></label>
+            <input type="range" id="ld-r" min="0.5" max="10" step="0.05" value="2"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>V_DQ</dt><dd id="ld-vd">—</dd></div>
+          <div><dt>I_DQ</dt><dd id="ld-id" class="e">—</dd></div>
+        </dl>
+        <div class="msg" id="ld-msg"></div>
+        <div class="btn-row" style="padding:0 16px 14px"><button class="btn" type="button" id="ld-new">換一個目標 →</button></div>
+      </div>
+      <div id="ex-load"></div>
+      <div id="ex-design"></div>
+      <div class="howto">
+        <h4>圖形法的標準流程</h4>
+        <ol>
+          <li>寫 KVL，整理成 I<sub>D</sub> = −V<sub>D</sub>/R + V<sub>PS</sub>/R。</li>
+          <li>算兩個截距：(V<sub>PS</sub>, 0) 和 (0, V<sub>PS</sub>/R)，連成負載線。</li>
+          <li>跟二極體特性曲線找交點 → Q = (V<sub>DQ</sub>, I<sub>DQ</sub>)。</li>
+          <li>要精確就疊代：從 0.6～0.7 V 開始猜，兩三輪就收斂。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>圖形法的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 負載線是二極體的特性。<span class="o">負載線只由外面電路（V<sub>PS</sub>、R）決定</span>，跟二極體無關。</li>
+          <li><span class="x">✗</span> 縱軸截距是 V<sub>PS</sub>·R。<span class="o">是 V<sub>PS</sub>/R</span>（5 V/2 kΩ = 2.5 mA）。</li>
+          <li><span class="x">✗</span> R 變大，負載線變陡。<span class="o">變平</span>：斜率 −1/R。</li>
+          <li><span class="x">✗</span> 疊代時用 log。<span class="o">V<sub>D</sub> = V<sub>T</sub> ln(I<sub>D</sub>/I<sub>S</sub>)</span>，是自然對數。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH15EX" data-sec="load"></div>
+    </section>
+
+    <!-- ══════════ 05 片段線性 ══════════ -->
+    <section class="sec" id="pwl">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>05 · 投影片 1-120～1-122 · 1.3.2 Piecewise Linear Model</div>
+      <h2><button class="tm" data-t="片段線性模型">片段線性模型</button><span class="h2-en">PIECEWISE LINEAR MODEL</span></h2>
+      <p class="lede">畫圖、疊代都麻煩。最常用的做法：<strong>用兩段直線去描那條彎線</strong>。直線可以直接放進 KVL，一行解完 —— 這叫模型代入法。</p>
+      <div class="eq">V<em>D</em> &lt; V<em>γ</em>：I<em>D</em> = 0（OFF）　　V<em>D</em> &gt; V<em>γ</em>：V<em>D</em> = V<em>γ</em> + I<em>D</em>r<em>f</em>（ON）　　串聯電路：I<em>D</em> = (V<em>PS</em> − V<em>γ</em>) / (R + r<em>f</em>)</div>
+      <div class="derive">
+        <h4>從兩段直線到 Example 1.9</h4>
+        <ol>
+          <li><span class="d-eq">第一段：V<sub>D</sub> &lt; V<sub>γ</sub>，一條趨近 0、跟 V<sub>D</sub> 軸平行的直線 ⟹ OFF</span>
+            <div class="why">投影片 1-120 ②。V<sub>γ</sub> 叫導通電壓（切入電壓），一般 0.6～0.7 V。</div></li>
+          <li><span class="d-eq">第二段：V<sub>D</sub> &gt; V<sub>γ</sub>，斜率 1/r<sub>f</sub> 的直線 ⟹ ON</span>
+            <div class="why">投影片 1-120 ①。r<sub>f</sub> 叫<button class="tm" data-t="順偏電阻">順偏二極體電阻</button>，一般數十 Ω。</div></li>
+          <li><span class="d-eq">直線方程式：I<sub>D</sub> = (V<sub>D</sub> − V<sub>γ</sub>)/r<sub>f</sub> ⟺ V<sub>D</sub> = V<sub>γ</sub> + I<sub>D</sub>r<sub>f</sub></span>
+            <div class="why">投影片 1-121：從特性曲線（點斜式）或等效電路（電池 + 電阻）推都一樣。</div></li>
+          <li><span class="d-eq">代入 KVL：V<sub>PS</sub> = I<sub>D</sub>R + V<sub>γ</sub> + I<sub>D</sub>r<sub>f</sub> ⟹ I<sub>D</sub> = (V<sub>PS</sub> − V<sub>γ</sub>)/(R + r<sub>f</sub>)</span>
+            <div class="why">二極體換成「V<sub>γ</sub> 電池 + r<sub>f</sub>」之後整個電路是線性的。</div></li>
+          <li><span class="d-eq hi">Example 1.9：(5 − 0.6)/(2000 + 10) = 2.19 mA；V<sub>D</sub> = 0.622 V；P<sub>D</sub> = 1.36 mW</span>
+            <p>跟 Example 1.8 疊代的 2.19 mA 幾乎一樣，但簡單得多（1-122 (1)）。因為 r<sub>f</sub> = 10 Ω ≪ R = 2 kΩ，r<sub>f</sub> 對電流影響很小（1-122 (2)）。V<sub>γ</sub> 改 0.7 V：r<sub>f</sub> = 10 Ω 時 2.14 mA、r<sub>f</sub> = 0 時 2.15 mA（勘誤 ⑦）。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>片段線性 × 負載線</h3><span class="spacer"></span><span class="tag">灰虛線：真的指數曲線</span></div>
+        <div class="stage-wrap"><canvas id="cv-pwl" aria-label="片段線性模型（V_γ、r_f 可調）跟負載線的交點，對照真實指數曲線"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="pw-vps">電源 V<sub>PS</sub><output for="pw-vps"></output></label>
+            <input type="range" id="pw-vps" min="1" max="10" step="0.1" value="5"></div>
+          <div class="ctrl"><label for="pw-r">電阻 R<output for="pw-r"></output></label>
+            <input type="range" id="pw-r" min="0.2" max="10" step="0.05" value="2"></div>
+          <div class="ctrl"><label for="pw-vg">V<sub>γ</sub><output for="pw-vg"></output></label>
+            <input type="range" id="pw-vg" min="0.5" max="0.8" step="0.01" value="0.6"></div>
+          <div class="ctrl"><label for="pw-rf">r<sub>f</sub><output for="pw-rf"></output></label>
+            <input type="range" id="pw-rf" min="0" max="200" step="5" value="10"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>V_DQ</dt><dd id="pw-vd">—</dd></div>
+          <div><dt>I_DQ</dt><dd id="pw-id" class="e">—</dd></div>
+        </dl>
+        <div class="msg" id="pw-msg"></div>
+      </div>
+      <div id="ex-pwl"></div>
+      <div class="howto">
+        <h4>模型代入法的標準流程</h4>
+        <ol>
+          <li>假設二極體 ON，換成 V<sub>γ</sub> 電池（+ 端在 P 側）串 r<sub>f</sub>。</li>
+          <li>寫 KVL 解 I<sub>D</sub>。</li>
+          <li>檢查 I<sub>D</sub> &gt; 0；否則改 OFF（斷路）重算。</li>
+          <li>V<sub>D</sub> = V<sub>γ</sub> + I<sub>D</sub>r<sub>f</sub>，P<sub>D</sub> = I<sub>D</sub>V<sub>D</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>片段線性的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> V<sub>D</sub> = V<sub>γ</sub>。<span class="o">片段線性要加 I<sub>D</sub>r<sub>f</sub></span>（0.6 + 0.022 = 0.622 V）；r<sub>f</sub> = 0 才是 V<sub>γ</sub>。</li>
+          <li><span class="x">✗</span> 分母只寫 R。<span class="o">R + r<sub>f</sub></span>（雖然 r<sub>f</sub> 小，但題目給了就要放）。</li>
+          <li><span class="x">✗</span> V<sub>γ</sub> 電池方向畫反。<span class="o">+ 在陽極（P）側</span>，跟順向電流同方向會「吃掉」電壓。</li>
+          <li><span class="x">✗</span> 沒檢查假設。<span class="o">V<sub>PS</sub> &lt; V<sub>γ</sub> 時算出負電流</span>，代表二極體其實 OFF。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH15EX" data-sec="pwl"></div>
+    </section>
+
+    <!-- ══════════ 06 定電壓降 + 負載線 ══════════ -->
+    <section class="sec" id="cvd">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>06 · 投影片 1-123～1-125 · Constant-Voltage-Drop Model &amp; Q-point</div>
+      <h2><button class="tm" data-t="定電壓降模型">定電壓降模型</button>＋負載線<span class="h2-en">CONSTANT-VOLTAGE DROP &amp; THE Q-POINT</span></h2>
+      <p class="lede">再簡化一步：r<sub>f</sub> 跟 kΩ 的電阻比根本可以忽略，乾脆讓它 = 0。斜線立成垂直線，二極體導通就是一顆固定的 V<sub>γ</sub> 電池。這時 Q 點只會<strong>在 V<sub>γ</sub> 那條垂直線上上下滑</strong>。</p>
+      <div class="eq">r<em>f</em> = 0（1/r<em>f</em> = ∞）：V<em>DQ</em> = V<em>γ</em>　　I<em>DQ</em> = (V<em>PS</em> − V<em>γ</em>) / R</div>
+      <div class="derive">
+        <h4>垂直線 × 負載線</h4>
+        <ol>
+          <li><span class="d-eq">r<sub>f</sub> → 0 ⟹ 斜率 1/r<sub>f</sub> → ∞ ⟹ ON 那段變成 V<sub>D</sub> = V<sub>γ</sub> 的垂直線</span>
+            <div class="why">投影片 1-123：片段線性模型的簡化，又稱定電壓降模型。條件 r<sub>f</sub> ≪ R。</div></li>
+          <li><span class="d-eq">只看模型：V<sub>D</sub> &gt; V<sub>γ</sub> 時 I<sub>D</sub> → ∞？</span>
+            <div class="why">投影片 1-124 NOTE (1)：單看那條垂直線，好像電壓再多一點電流就無限大。</div></li>
+          <li><span class="d-eq">加上外部電路（負載線）⟹ I<sub>D</sub> = I<sub>DQ</sub> = (V<sub>PS</sub> − V<sub>γ</sub>)/R，有限值</span>
+            <div class="why">NOTE (2)：實際電流由負載線決定，二極體兩端被「釘」在 V<sub>γ</sub>。</div></li>
+          <li><span class="d-eq">Fig 1.30：A 5 V/2k → 2.15 mA；B 5 V/4k → 1.075 mA；C 2.5 V/2k → 0.9 mA；D 2.5 V/4k → 0.45 mA</span>
+            <div class="why">V<sub>PS</sub> 變 → 負載線平移；R 變 → 負載線轉動（斜率 −1/R）。交點都在 0.7 V 那條線上。</div></li>
+          <li><span class="d-eq hi">Q 點由 (1) 電源電壓、(2) 外接電阻、(3) 二極體 I–V 特性 決定</span>
+            <p>投影片 1-125：(1)(2) 是外接電路的因素（決定負載線），(3) 是元件本身（決定特性曲線）。三者任一改變，Q 點就跟著動。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>Q 點跑跑看</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-q="5,2">A</button>
+            <button class="btn" type="button" data-q="5,4">B</button>
+            <button class="btn" type="button" data-q="2.5,2">C</button>
+            <button class="btn" type="button" data-q="2.5,4">D</button>
+            <button class="btn solid" type="button" data-lm="cvd">定電壓降</button>
+            <button class="btn" type="button" data-lm="pwl">片段線性</button>
+            <button class="btn" type="button" data-lm="exp">指數公式</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-q" aria-label="Fig 1.30：不同電源與電阻的負載線，定電壓降模型下 Q 點在 0.7 V 垂直線上移動"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="qq-vps">電源 V<sub>PS</sub><output for="qq-vps"></output></label>
+            <input type="range" id="qq-vps" min="1" max="10" step="0.1" value="5"></div>
+          <div class="ctrl"><label for="qq-r">電阻 R<output for="qq-r"></output></label>
+            <input type="range" id="qq-r" min="0.5" max="8" step="0.1" value="2"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>V_DQ</dt><dd id="qq-vd">—</dd></div>
+          <div><dt>I_DQ</dt><dd id="qq-id" class="e">—</dd></div>
+        </dl>
+        <div class="msg" id="qq-msg"></div>
+      </div>
+      <div id="ex-cvd"></div>
+      <div class="howto">
+        <h4>定電壓降模型的標準流程</h4>
+        <ol>
+          <li>確認 V<sub>PS</sub> &gt; V<sub>γ</sub>（否則 OFF，I<sub>D</sub> = 0）。</li>
+          <li>V<sub>DQ</sub> = V<sub>γ</sub>（題目沒給就用 0.7 V）。</li>
+          <li>I<sub>DQ</sub> = (V<sub>PS</sub> − V<sub>γ</sub>)/R。</li>
+          <li>題目要比較 Q 點：V<sub>PS</sub> 改 → 平移，R 改 → 轉動。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>定電壓降的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> R 加倍，Q 點電壓也變。<span class="o">定電壓降模型的 V<sub>DQ</sub> 永遠是 V<sub>γ</sub></span>，只有電流變。</li>
+          <li><span class="x">✗</span> V<sub>PS</sub> 減半，電流也剛好減半。<span class="o">(2.5 − 0.7)/(5 − 0.7) = 0.42</span>，比一半還少，因為 0.7 V 不跟著減。</li>
+          <li><span class="x">✗</span> 定電壓降 = 片段線性。<span class="o">定電壓降是 r<sub>f</sub> = 0 的特例</span>。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH15EX" data-sec="cvd"></div>
+    </section>
+
+    <!-- ══════════ 07 逆偏 ══════════ -->
+    <section class="sec" id="revb">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>07 · 投影片 1-126 · Reverse-Biased Diode</div>
+      <h2>逆偏的 Q 點<span class="h2-en">REVERSE-BIASED DIODE</span></h2>
+      <p class="lede">同一套方法也能處理二極體反接。重點只有一個：<strong>V<sub>D</sub>、I<sub>D</sub> 的定義方向不變</strong>，所以電源對二極體來說變成負的，負載線跑到左下，交在特性曲線的 OFF 段。</p>
+      <div class="eq">反接：−V<em>PS</em> = I<em>D</em>R + V<em>D</em>　截距 (−V<em>PS</em>, 0)、(0, −V<em>PS</em>/R)　⟹　Q = (−V<em>PS</em>, 0)</div>
+      <div class="derive">
+        <h4>照定義寫 KVL</h4>
+        <ol>
+          <li><span class="d-eq">二極體反接 ⟹ 從二極體的 + − 定義看，電源是 −V<sub>PS</sub></span>
+            <div class="why">投影片 1-113：定義的極性與電流方向不變，變的是數值的正負。</div></li>
+          <li><span class="d-eq">令 I<sub>D</sub> = 0 ⟹ V<sub>D</sub> = −5 V；令 V<sub>D</sub> = 0 ⟹ I<sub>D</sub> = −5/2k = −2.5 mA</span>
+            <div class="why">投影片 1-126 右上圖：負載線在第三象限。</div></li>
+          <li><span class="d-eq">特性曲線（片段線性）在 V<sub>D</sub> &lt; V<sub>γ</sub> 是 I<sub>D</sub> = 0 的水平線</span>
+            <div class="why">逆偏時二極體 OFF。</div></li>
+          <li><span class="d-eq hi">交點 Q = (V<sub>D</sub>, I<sub>D</sub>) = (−5 V, 0 A)</span>
+            <p>電流 0、電阻沒壓降，整個 5 V 都反著落在二極體上。片段線性模型比 Example 1.8 的理想二極體方程式略不準，但分析簡單得多（1-126 下方說明）。逆壓若超過 BV，就要回到 §01 的崩潰。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>電源從正掃到負</h3><span class="spacer"></span><span class="tag">定電壓降模型</span></div>
+        <div class="stage-wrap"><canvas id="cv-rev" aria-label="電源從正到負，負載線在四個象限移動，Q 點在 ON 段或 OFF 段"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="rv-vps">電源（對二極體）V<sub>PS</sub><output for="rv-vps"></output></label>
+            <input type="range" id="rv-vps" min="-10" max="10" step="0.1" value="-5"></div>
+          <div class="ctrl"><label for="rv-r">電阻 R<output for="rv-r"></output></label>
+            <input type="range" id="rv-r" min="0.5" max="8" step="0.1" value="2"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>V_DQ</dt><dd id="rv-vd">—</dd></div>
+          <div><dt>I_DQ</dt><dd id="rv-id" class="e">—</dd></div>
+        </dl>
+        <div class="msg" id="rv-msg"></div>
+      </div>
+      <div id="ex-rev"></div>
+      <div class="howto">
+        <h4>逆偏題目的標準流程</h4>
+        <ol>
+          <li>照二極體原本的 V<sub>D</sub>、I<sub>D</sub> 定義寫 KVL（電源可能變負號）。</li>
+          <li>算截距、畫負載線。</li>
+          <li>交點落在 OFF 段 → I<sub>D</sub> = 0，V<sub>D</sub> = 電源（負值）。</li>
+          <li>檢查 |V<sub>D</sub>| 有沒有超過 BV／PIV。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>逆偏的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 二極體反接，就把 V<sub>D</sub> 的 + − 也反過來。<span class="o">定義不變</span>，所以 V<sub>D</sub> = −5 V。</li>
+          <li><span class="x">✗</span> 逆偏 Q 點是 (0, −2.5 mA)。<span class="o">那是負載線的截距</span>，不是交點。</li>
+          <li><span class="x">✗</span> 逆偏時電阻上有 5 V。<span class="o">電流 0，電阻沒壓降</span>，5 V 全在二極體上。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH15EX" data-sec="revb"></div>
+    </section>
+
+    <!-- ══════════ 勘誤 ══════════ -->
+    <section class="sec" id="check">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>Errata · 講義檢查結果</div>
+      <h2>講義勘誤<span class="h2-en">ERRATA</span></h2>
+      <p class="lede">V3 講義 1-85～1-126 我逐頁驗算過。<strong>Example 1.9、Problem 的 R = 2 kΩ、Fig 1.30 四個 Q 點、逆偏 Q 點的數字都正確</strong>，下面是要修正或要注意的地方。</p>
+      <div class="pitfall">
+        <h4>① 投影片 1-89：Practice diode → practical diode</h4>
+        <ul><li>講義寫：<span class="x">Practice diode</span>　應該是：<span class="o">practical diode</span>（PART 4 網頁勘誤 ② 同一個字）。</li></ul>
+      </div>
+      <div class="pitfall">
+        <h4>② 投影片 1-93、1-95、1-97：水平那段標成「導通」</h4>
+        <ul>
+          <li>講義在 v<sub>D</sub> &lt; V<sub>γ</sub> 的水平段寫：<span class="x">導通　等效電阻 ∞</span></li>
+          <li>應該是：<span class="o">不導通（截止、OFF）　等效電阻 ∞</span>。電阻 ∞ 就是不導通；垂直那段才是導通。</li>
+        </ul>
+      </div>
+      <div class="pitfall">
+        <h4>③ 投影片 1-97：「i<sub>D</sub> ≥ 0 V」</h4>
+        <ul><li>電流的單位不是 V：<span class="x">i<sub>D</sub> ≥ 0 V</span>　→　<span class="o">i<sub>D</sub> ≥ 0（A）</span>。</li></ul>
+      </div>
+      <div class="pitfall">
+        <h4>④ 投影片 1-107 NOTE：「累積崩潰」→ 累增崩潰</h4>
+        <ul><li>同一頁標題寫「累增崩潰 (avalanche breakdown)」，NOTE 寫成 <span class="x">累積崩潰</span>，應統一為 <span class="o">累增崩潰（雪崩崩潰）</span>。</li></ul>
+      </div>
+      <div class="pitfall">
+        <h4>⑤ 投影片 1-107 英文框：「colliding with the fixed ions」—— 請確認</h4>
+        <ul>
+          <li>撞擊游離的對象是<span class="o">晶格原子（打斷共價鍵）</span>，不是空乏區裡的固定離子。講義中文寫的「碰撞時破壞共價鍵」是對的。</li>
+          <li>若是從課本原文抄來的，請對照課本確認原句；考英文時建議寫 <b>collide with lattice atoms and break covalent bonds</b>。</li>
+        </ul>
+      </div>
+      <div class="pitfall">
+        <h4>⑥ 投影片 1-120：slop → slope</h4>
+        <ul><li><span class="x">slop</span>（濺出的水）→ <span class="o">slope</span>（斜率）。</li></ul>
+      </div>
+      <div class="pitfall">
+        <h4>⑦ 投影片 1-122 (3)：V<sub>γ</sub> = 0.7 V 求出 I<sub>D</sub> = 2.15 mA —— 請確認</h4>
+        <ul>
+          <li>同一頁是 r<sub>f</sub> = 10 Ω 的例子：(5 − 0.7)/(2000 + 10) = <span class="o">2.14 mA</span>。</li>
+          <li>2.15 mA 是 <b>r<sub>f</sub> = 0</b>（定電壓降，Fig 1.30 的 A 點）的結果：4.3/2000 = 2.15 mA。差 0.01 mA，觀念（差距很小）不變，只是數字對應的模型要分清楚。</li>
+        </ul>
+      </div>
+      <p class="note">補充（不是錯）：1-109 的 E ≈ V/W 是<b>平均</b>電場，突變接面的最大電場約是平均的 2 倍；講義旁註「外加的反向電壓不一定百分之百只落在空乏區」也是在提醒這只是估計。1-126 提到的 Example 1.8 講義沒有放題目，本頁依課本補上（V<sub>PS</sub> = 5 V、R = 2 kΩ、I<sub>S</sub> = 10<sup>−13</sup> A），請對照課本確認。</p>
+      <div class="note key">
+        <b>驗算過、正確的部分：</b>
+        <ul style="margin:8px 0 0;padding-left:18px">
+          <li>1-93 半波整流：峰值 5 V → 輸出 5 − 0.7 = <b>4.3 V</b> ✓</li>
+          <li>1-110 高摻雜 → |BV| 小（BV1）、低摻雜 → |BV| 大（BV2）✓；1-111 一般二極體 BV 50～200 V ✓</li>
+          <li>1-119 負載線：截距 5 V、5/2k = <b>2.5 mA</b>，斜率 −1/2k ✓；Problem：R = (5 − 0.62)/2.2m = 1.99 kΩ ≈ <b>2 kΩ</b> ✓</li>
+          <li>Example 1.8（課本）：疊代 0.6 → 0.6192 → 0.6191 V，I<sub>D</sub> = <b>2.19 mA</b> ✓（程式精確解 0.61906 V、2.1905 mA）</li>
+          <li>1-122 Example 1.9：I<sub>D</sub> = 4.4/2010 = <b>2.189 mA</b>、V<sub>D</sub> = <b>0.622 V</b>、P<sub>D</sub> = <b>1.36 mW</b> ✓</li>
+          <li>1-125 Fig 1.30：A <b>2.15</b>、B <b>1.075</b>、C <b>0.9</b>、D <b>0.45</b> mA ✓</li>
+          <li>1-126 逆偏：Q = (<b>−5 V, 0</b>)，負載線截距 −2.5 mA ✓</li>
+        </ul>
+      </div>
+      <p class="note src">勘誤僅針對數學、單位與用詞正確性；若與課堂說法不同，以老師為準。</p>
+    </section>
+
+    <!-- ══════════ 名詞 ══════════ -->
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <p class="lede">考卷上會出現的是右邊那欄。</p>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號/單位</code></div>
+        <div class="gl-row"><b>崩潰電壓</b><span>breakdown voltage</span><code>BV</code></div>
+        <div class="gl-row"><b>崩潰起始電壓</b><span>Zener knee voltage</span><code>V_ZK</code></div>
+        <div class="gl-row"><b>累增崩潰（雪崩崩潰）</b><span>avalanche breakdown</span><code>低摻雜、BV 大</code></div>
+        <div class="gl-row"><b>齊納崩潰</b><span>Zener breakdown</span><code>高摻雜、BV 小</code></div>
+        <div class="gl-row"><b>撞擊游離</b><span>impact ionization</span><code>—</code></div>
+        <div class="gl-row"><b>齊納二極體</b><span>Zener diode</span><code>V_Z</code></div>
+        <div class="gl-row"><b>反向峰值電壓</b><span>peak inverse voltage</span><code>PIV</code></div>
+        <div class="gl-row"><b>額定</b><span>rating</span><code>—</code></div>
+        <div class="gl-row"><b>非線性元件</b><span>nonlinear device</span><code>—</code></div>
+        <div class="gl-row"><b>二端元件</b><span>two-terminal device</span><code>—</code></div>
+        <div class="gl-row"><b>開關模型</b><span>diode as a switch</span><code>ON / OFF</code></div>
+        <div class="gl-row"><b>半波整流器</b><span>half-wave rectifier</span><code>—</code></div>
+        <div class="gl-row"><b>脈動直流</b><span>pulsating DC</span><code>—</code></div>
+        <div class="gl-row"><b>直流分析</b><span>DC analysis</span><code>—</code></div>
+        <div class="gl-row"><b>疊代法</b><span>iteration</span><code>—</code></div>
+        <div class="gl-row"><b>圖形法</b><span>graphical analysis technique</span><code>—</code></div>
+        <div class="gl-row"><b>負載線</b><span>load line</span><code>I_D = −V_D/R + V_PS/R</code></div>
+        <div class="gl-row"><b>工作點（靜態點）</b><span>Q-point / quiescent point / operating point</span><code>(V_DQ, I_DQ)</code></div>
+        <div class="gl-row"><b>片段線性模型</b><span>piecewise linear model</span><code>V_D = V_γ + I_D r_f</code></div>
+        <div class="gl-row"><b>導通電壓（切入電壓）</b><span>cut-in / turn-on voltage</span><code>V_γ ≈ 0.6～0.7 V</code></div>
+        <div class="gl-row"><b>順偏二極體電阻</b><span>forward diode resistance</span><code>r_f</code></div>
+        <div class="gl-row"><b>定電壓降模型</b><span>constant-voltage-drop model</span><code>r_f = 0</code></div>
+        <div class="gl-row"><b>實際二極體</b><span>practical diode</span><code>—</code></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 測驗 ══════════ -->
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">13 題，中英對照，選項順序每次打亂。題目下方那行英文就是考卷上會看到的講法。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Donald A. Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4th ed.（McGraw-Hill），Chapter 1 §1.2.5、§1.3.1～1.3.2，2026 Fall 課程 PART 4（V3）投影片 1-85～1-126。</p>
+      <p>互動模組為觀念示意；定量數值皆依課本公式即時計算。崩潰電壓的經驗式 BV ≈ 60(N/10<sup>16</sup>)<sup>−3/4</sup> V、齊納／累增的分界（約 5～6 V）為課本延伸，講義未列。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch1-part5-kit.js"></script>
+<script src="assets/ch1-part5-ex.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'recap', no: '00', name: '複習：模型' },
+  { id: 'bd', no: '01', name: '崩潰與 PIV', count: '練 1' },
+  { id: 'zen', no: '02', name: '累增 vs 齊納' },
+  { id: 'sw', no: '03', name: '開關與半波整流', count: '練 1' },
+  { id: 'load', no: '04', name: '負載線與 Q 點', count: '例 1 · 練 1' },
+  { id: 'pwl', no: '05', name: '片段線性', count: '例 1 · 練 1' },
+  { id: 'cvd', no: '06', name: '定電壓降', count: '練 1' },
+  { id: 'revb', no: '07', name: '逆偏', count: '練 1' }
+], { key: 'ch1-part5', alwaysAll: ['map', 'check', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/ch1-part5.js"></script>
+<script src="assets/ch1-part5-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
