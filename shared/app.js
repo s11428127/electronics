@@ -322,3 +322,83 @@
 (function () {
   if (/[?&]embed=1\b/.test(location.search)) document.documentElement.classList.add('embed');
 })();
+
+/* ============================================================
+   推導 → 故事卡（使用者 10/12：推導字太多讀不下去，要跟故事模式一樣一步一步）
+   每一步只露出「算式 ＋ 一句白話」，原本的長說明收進「看詳細」；按「下一步」才出下一張。
+   只用 class 切換顯示、加上的按鈕都是 .dv-ui（annot.js 不把它算進筆跡錨點，舊筆跡不會移位）。
+   ============================================================ */
+(function () {
+  'use strict';
+  const LS = 'ee-dv-all';
+  const lsGet = () => { try { return localStorage.getItem(LS) === '1'; } catch (e) { return false; } };
+  const lsSet = v => { try { localStorage.setItem(LS, v ? '1' : '0'); } catch (e) {} };
+  /* 複製一段 HTML，只留到第一個句號（。；！？）為止 */
+  function firstSentence(el) {
+    const c = el.cloneNode(true);
+    let cut = false, len = 0;
+    (function walk(n) {
+      for (let k = 0; k < n.childNodes.length; k++) {
+        const ch = n.childNodes[k];
+        if (cut) { n.removeChild(ch); k--; continue; }
+        if (ch.nodeType === 3) {
+          const s = ch.nodeValue, m = /[。！？；]/.exec(s.slice(Math.max(0, 16 - len)));
+          if (m) { const at = Math.max(0, 16 - len) + m.index + 1; ch.nodeValue = s.slice(0, at); cut = true; }
+          len += s.length;
+        } else if (ch.nodeType === 1) walk(ch);
+      }
+    })(c);
+    return { html: c.innerHTML, rest: cut && el.textContent.trim().length > c.textContent.trim().length + 2 };
+  }
+  function build(dv) {
+    if (dv.dataset.cards) return; dv.dataset.cards = '1';
+    const ol = dv.querySelector(':scope > ol'); if (!ol) return;
+    const lis = Array.prototype.slice.call(ol.children).filter(x => x.tagName === 'LI');
+    if (lis.length < 2) return;
+    dv.classList.add('dv-cards');
+    lis.forEach(li => {
+      const long = li.querySelector(':scope > .why, :scope > p');
+      if (!long) return;
+      const fs = firstSentence(long);
+      if (!fs.rest) return;                       /* 本來就只有一句：照原樣顯示 */
+      const s = document.createElement('div'); s.className = 'dv-ui dv-short'; s.innerHTML = fs.html;
+      long.parentNode.insertBefore(s, long);
+      long.classList.add('dv-long');
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'dv-ui dv-more'; b.textContent = '看詳細 ▾';
+      b.addEventListener('click', () => { const on = li.classList.toggle('dv-open'); b.textContent = on ? '收起詳細 ▴' : '看詳細 ▾'; });
+      long.parentNode.insertBefore(b, long.nextSibling);
+    });
+    const bar = document.createElement('div'); bar.className = 'dv-ui dv-bar';
+    bar.innerHTML = '<button type="button" class="btn solid" data-dv="next">下一步 ▸</button><button type="button" class="btn" data-dv="all">全部展開</button><button type="button" class="btn" data-dv="reset">從第一步</button><span class="dv-prog"></span>';
+    dv.appendChild(bar);
+    let n = 1;
+    function show(k) {
+      n = Math.max(1, Math.min(k, lis.length));
+      lis.forEach((li, i) => { li.classList.toggle('dv-hide', i >= n); li.classList.toggle('dv-cur', i === n - 1 && n < lis.length); });
+      const done = n >= lis.length;
+      bar.querySelector('[data-dv="next"]').hidden = done;
+      bar.querySelector('[data-dv="all"]').hidden = done;
+      bar.querySelector('[data-dv="reset"]').hidden = n === 1;
+      bar.querySelector('.dv-prog').textContent = done ? '✓ 全部 ' + lis.length + ' 步' : '第 ' + n + ' / ' + lis.length + ' 步';
+    }
+    bar.addEventListener('click', e => {
+      const a = e.target.closest('[data-dv]'); if (!a) return;
+      if (a.dataset.dv === 'next') show(n + 1);
+      else if (a.dataset.dv === 'all') { show(lis.length); lsSet(true); }
+      else { show(1); lsSet(false); }
+    });
+    /* 點卡片本身（不是按鈕、名詞、連結）也前進一步 —— 跟故事模式一樣「點一下往下」 */
+    ol.addEventListener('click', e => {
+      if (e.target.closest('button, a, .tm, input')) return;
+      if (window.__ANN && document.body.classList.contains('ann-on')) return;
+      const li = e.target.closest('li'); if (li && li.classList.contains('dv-cur')) show(n + 1);
+    });
+    show(lsGet() ? lis.length : 1);
+    dv.__dvShow = show;
+  }
+  function init() { document.querySelectorAll('.derive').forEach(build); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  /* 從錯題本、連結跳進來時，目標在收起來的步驟裡 → 全部打開 */
+  window.addEventListener('hashchange', () => { const t = document.getElementById(location.hash.slice(1)); const d = t && t.closest('.derive'); if (d && d.__dvShow) d.__dvShow(99); });
+  window.__EE && (window.__EE.deriveCards = init);
+})();

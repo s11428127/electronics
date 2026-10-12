@@ -34,6 +34,8 @@
   const cap = () => line(0, 0, 17, 0) + line(17, -10, 17, 10, ' stroke-width="2"') + line(23, -10, 23, 10, ' stroke-width="2"') + line(23, 0, 40, 0);
   /* 二極體：三角形尖端朝 (x2,y2)，尖端那邊是陰極（加一條短線） */
   const diode = () => line(0, 0, 12, 0) + '<path d="M12 -8 L12 8 L28 0 Z" fill="none"/>' + line(28, -8, 28, 8, ' stroke-width="2"') + line(28, 0, 40, 0);
+  /* 稽納二極體：同二極體，陰極那條線兩端彎折 */
+  const zdiode = () => line(0, 0, 12, 0) + '<path d="M12 -8 L12 8 L28 0 Z" fill="none"/>' + '<polyline points="24,-11 28,-8 28,8 32,11" fill="none" stroke-width="2"/>' + line(28, 0, 40, 0);
   const boxz = () => '<rect x="4" y="-8" width="32" height="16" rx="2" fill="none"/>';
 
   const S = {
@@ -42,6 +44,7 @@
     c: (x1, y1, x2, y2, l, o) => along(x1, y1, x2, y2, cap(), l, o),
     z: (x1, y1, x2, y2, l, o) => along(x1, y1, x2, y2, boxz(), l, o),
     d: (x1, y1, x2, y2, l, o) => along(x1, y1, x2, y2, diode(), l, o),
+    zd: (x1, y1, x2, y2, l, o) => along(x1, y1, x2, y2, zdiode(), l, o),
     /* 接地符號：(x,y) 是接點 */
     gnd: (x, y) => line(x, y, x, y + 8) + line(x - 10, y + 8, x + 10, y + 8) + line(x - 6, y + 12, x + 6, y + 12) + line(x - 2.5, y + 16, x + 2.5, y + 16),
     /* 交流電壓源（圓圈裡畫一個 ~） */

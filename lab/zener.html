@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>稽納二極體穩壓</title>
+<meta name="description" content="電子實習第六章：稽納二極體穩壓電路。故事模式、特性曲線、穩壓電路實驗室、實驗流程、模擬結果與 PSpice AC to DC 作業。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="lab" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子實習</a><span>›</span><b>CH6 稽納二極體</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH6 稽納二極體</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>這一頁怎麼讀</a></li>
+      <li><a href="#reg"><i>1</i>為什麼要穩壓</a></li>
+      <li><a href="#zd"><i>2</i>稽納的特性曲線</a></li>
+      <li><a href="#circ"><i>3</i>穩壓電路：有沒有崩潰</a></li>
+      <li><a href="#exp"><i>🔬</i>實驗流程（課堂）</a></li>
+      <li><a href="#result"><i>📈</i>結果（模擬）＋我的實測</a></li>
+      <li><a href="#pspice"><i>💻</i>PSpice 回家作業</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>Electronics Lab · Zener Diode</div>
+      <h1>稽納二極體：穩壓電路</h1>
+      <p class="sub">電源一直晃、負載一直換，輸出還是要穩穩的 5 V。做法：讓一顆二極體<strong>故意住在崩潰區</strong>，像水塔的<strong>溢流管</strong> —— 水位一到管口，多的就流走。</p>
+      <div class="hero-meta">
+        <span class="chip h">🔬 實驗流程 ＋ 模擬結果</span>
+        <span class="chip">19 個畫面的故事模式</span>
+        <span class="chip">5 個互動模組 ＋ 4 個可改數字例題</span>
+        <span class="chip">觀念填充 24 題 ＋ 10 題測驗</span>
+      </div>
+    </div>
+
+    <!-- ══════════ 故事模式 ══════════ -->
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>Story mode · 先看這段，再往下讀</div>
+      <h2>19 個畫面看懂稽納穩壓<span class="h2-en">THE STORY IN 19 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進，點左邊四分之一退回；也可以按「自動播放」。大約 7 分鐘。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <!-- ══════════ 地圖 ══════════ -->
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>How to read this page</div>
+      <h2>這一頁怎麼讀<span class="h2-en">PAGE MAP</span></h2>
+      <p class="lede">講義 11 頁：p.2–5 原理、p.6–8 把整條電源供應器接起來、p.9 課堂實驗、p.10 PSpice 作業。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>p.2</code><b>為什麼要穩壓</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.3–4</code><b>稽納特性：V<sub>Z</sub>、I<sub>ZK</sub>、r<sub>z</sub>、等效電路</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.5</code><b>穩壓電路、判斷有沒有崩潰</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.9</code><b>🔬 電壓變動率測試 → 📈 結果</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.6–8、10</code><b>💻 PSpice：AC to DC（V1、V2、V3）</b><span class="dot"></span></div>
+      </div>
+      <p class="note key">整頁一句話：<b>稽納＝溢流管，R＝節流閥</b>。先確認「拿掉稽納的分壓 ≥ V<sub>Z</sub>」，它才會開始穩壓。</p>
+      <div class="note">
+        <b>講義勘誤／請確認</b>（用模擬驗算過）：
+        <ol style="margin:6px 0 0;padding-left:20px">
+          <li>p.5「穩壓條件 V<sub>S</sub> ≥ V<sub>ZO</sub>」只是必要條件。真正要看的是上面那條：<b>V<sub>S</sub>·R<sub>L</sub>/(R + R<sub>L</sub>) ≥ V<sub>ZO</sub></b>。</li>
+          <li>p.10 PSpice 的 V3 照圖接（R3 = 1 kΩ、負載 1 kΩ）：分壓只有約 4.5 V &lt; 5.1 V，<b>稽納沒崩潰</b>，模擬 V3 ≈ 4.18～4.46 V，不是 5.1 V。負載改 10 kΩ 才會穩在約 5.03 V。<b>請確認</b>作業是要看這個現象，還是負載要改。</li>
+          <li>p.6–8 示意圖寫 D1N4001，p.10 作業寫 D1N4007；這個電路兩顆結果幾乎一樣。</li>
+          <li>p.9 圖 6.11 稽納標「5V」，PSpice 的 D1N5231 是 5.1 V。</li>
+          <li>p.3–4 特性曲線左邊中間那個標籤也寫 −I<sub>ZK</sub>，位置跟右邊的 −I<sub>ZT</sub> 同高，<b>請確認</b>是不是應該是 −I<sub>ZT</sub>。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 1 為什麼要穩壓 ══════════ -->
+    <section class="sec" id="reg">
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>p.2 · Why regulate</div>
+      <h2>為什麼要<button class="tm" data-t="穩壓電路">穩壓</button><span class="h2-en">WHY REGULATE</span></h2>
+      <p class="lede">濾波完還剩一點<button class="tm" data-t="漣波">漣波</button>，負載一換電壓也會掉。穩壓電路是電源供應器的最後一關：<b>不管哪一個在變，輸出都盡量不變</b>。</p>
+      <div class="eq">變壓 → 整流 → 濾波 → <em>穩壓</em> → 負載　　目標：V<em>o</em> ≈ 固定</div>
+      <div class="derive">
+        <h4>輸出會晃的兩個原因</h4>
+        <ol>
+          <li><span class="d-eq">原因 ①：電源浮動（插座電壓、濾波剩下的漣波）</span>
+            <div class="why">濾波只能把駝峰抹「平一點」。CH4 濾波那頁的 1 kΩ／100 µF，還剩 14.7% 的漣波。</div></li>
+          <li><span class="d-eq">原因 ②：負載電流變化（I<sub>L</sub> 忽大忽小）</span>
+            <div class="why">手機從待機到打遊戲，吃的電流差好幾倍；電流一大，電源內阻、線路上的壓降就變大，電壓跟著掉。</div></li>
+          <li><span class="d-eq hi">穩壓電路：兩種變化都吸收掉，V<sub>o</sub> 盡量不動</span>
+            <div class="why">講義 p.2 的方塊圖，紅框那一塊。這一章用最簡單的做法：一顆電阻＋一顆稽納二極體。</div></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>穩壓前 vs 穩壓後</h3><span class="spacer"></span>
+          <div class="btn-row"><button class="btn" type="button" id="rg-load">換重負載（1 kΩ）</button><button class="btn" type="button" id="rg-play">⏸ 暫停</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-reg" aria-label="穩壓前的漣波電壓與穩壓後的輸出"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="rg-rip">輸入漣波（峰對峰）<output for="rg-rip"></output></label>
+            <input type="range" id="rg-rip" min="0" max="3" step="0.05" value="1.3"></div>
+        </div>
+        <dl class="readout"><div><dt>輸入晃</dt><dd id="rg-in">—</dd></div><div><dt>輸出晃</dt><dd id="rg-out" class="e">—</dd></div></dl>
+        <div class="msg" id="rg-msg"></div>
+      </div>
+      <div id="ex-reg"></div>
+      <div class="howto">
+        <h4>看到穩壓題目先想</h4>
+        <ol>
+          <li>是<b>輸入</b>在變，還是<b>負載</b>在變？</li>
+          <li>穩壓器把變化丟給誰吸收？（稽納穩壓器：丟給稽納的電流）</li>
+          <li>輸出變了多少 %（<button class="tm" data-t="電壓變動率">電壓變動率</button>）。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見誤會</h4>
+        <ul>
+          <li><span class="x">✗</span> 濾波完就是純直流。<span class="o">✓ 還有漣波，所以才要穩壓。</span></li>
+          <li><span class="x">✗</span> 穩壓器把交流變直流。<span class="o">✓ 那是整流器；穩壓器的輸入已經是直流。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-reg">
+        <h3>🧠 觀念填充 · 稽納特性（不用算，用選的）</h3>
+        <p>8 題：穩壓、崩潰、I<sub>ZK</sub>、r<sub>z</sub>、等效電路。</p>
+        <div class="hw-list" data-bank="__ZNC" data-sec="特性"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 2 特性曲線 ══════════ -->
+    <section class="sec" id="zd">
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>p.3–4 · Zener characteristics</div>
+      <h2><button class="tm" data-t="稽納二極體">稽納</button>的特性曲線<span class="h2-en">ZENER V-I CURVE</span></h2>
+      <p class="lede">稽納被做成在一個很準的電壓 <button class="tm" data-t="稽納電壓">V<sub>Z</sub></button> 崩潰。崩潰那段<b>幾乎垂直</b>：電流變很多，電壓幾乎不動 —— 這就是它能穩壓的原因。</p>
+      <div class="eq">ΔV = r<em>z</em> ΔI　　V<em>Z</em> = V<em>ZO</em> + r<em>z</em> × I<em>Z</em>　　條件：I<em>Z</em> ≥ I<em>ZK</em></div>
+      <div class="derive">
+        <h4>從曲線到等效電路</h4>
+        <ol>
+          <li><span class="d-eq">反接、電壓到 V<sub>Z</sub> ⟹ 崩潰，電流開始大量流過</span>
+            <div class="why">講義 p.3：利用崩潰效應設計穩壓器。電子學 CH1 PART 5 講過崩潰；一般二極體怕它，稽納故意住在這裡。</div></li>
+          <li><span class="d-eq">I<sub>Z</sub> &gt; I<sub>ZK</sub> ⟹ 曲線幾乎是一直線</span>
+            <div class="why">I<sub>ZK</sub> 是曲線轉彎的<button class="tm" data-t="膝點電流">膝點電流</button>。電流比它小就在膝蓋下面，穩不住。</div></li>
+          <li><span class="d-eq">直線的斜率：ΔV = r<sub>z</sub>ΔI</span>
+            <div class="why">r<sub>z</sub> 叫<button class="tm" data-t="動態電阻">動態電阻</button>，通常只有幾 Ω 到幾十 Ω。</div></li>
+          <li><span class="d-eq hi">等效電路：電池 V<sub>ZO</sub> 串 r<sub>z</sub> ⟹ V<sub>Z</sub> = V<sub>ZO</sub> + r<sub>z</sub>I<sub>Z</sub></span>
+            <div class="why">講義 p.4。V<sub>ZO</sub> 是把直線延長到 I = 0 的電壓。</div></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>拖電流，看稽納電壓</h3><span class="spacer"></span><span class="tag">D1N5231（5.1 V）模型</span></div>
+        <div class="stage-wrap"><canvas id="cv-iv" aria-label="稽納二極體崩潰區的 V-I 曲線，可調電流"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="iv-i">稽納電流 I<sub>Z</sub><output for="iv-i"></output></label>
+            <input type="range" id="iv-i" min="0.05" max="24" step="0.05" value="5"></div>
+        </div>
+        <dl class="readout"><div><dt>V_Z</dt><dd id="iv-v" class="e">—</dd></div><div><dt>這附近的 r_z</dt><dd id="iv-rz">—</dd></div></dl>
+        <div class="msg" id="iv-msg"></div>
+      </div>
+      <div id="ex-zd"></div>
+      <div class="howto">
+        <h4>用等效電路算 V<sub>Z</sub></h4>
+        <ol>
+          <li>確認 I<sub>Z</sub> ≥ I<sub>ZK</sub>（在穩壓區）。</li>
+          <li>V<sub>Z</sub> = V<sub>ZO</sub> + r<sub>z</sub> × I<sub>Z</sub>（I 用安培）。</li>
+          <li>只問「變多少」：ΔV = r<sub>z</sub> × ΔI。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見誤會</h4>
+        <ul>
+          <li><span class="x">✗</span> 稽納順偏時也穩在 5.1 V。<span class="o">✓ 順偏時跟一般二極體一樣，約 0.7 V。</span></li>
+          <li><span class="x">✗</span> 電流越小越省、越穩。<span class="o">✓ 小於 I<sub>ZK</sub> 就穩不住。</span></li>
+          <li><span class="x">✗</span> r<sub>z</sub> × I<sub>Z</sub> 用 mA 直接乘 Ω。<span class="o">✓ Ω × mA = mV，單位要換。</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 3 穩壓電路 ══════════ -->
+    <section class="sec" id="circ">
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>p.5 · Zener regulator</div>
+      <h2>穩壓電路：先看有沒有崩潰<span class="h2-en">THE ZENER REGULATOR</span></h2>
+      <p class="lede">電源串一顆電阻 R，稽納和負載並在一起。<b>R 吃掉多出來的電壓，稽納吃掉多出來的電流。</b>但前提是稽納真的崩潰了。</p>
+      <div class="eq">崩潰條件：V<em>S</em> · R<em>L</em> / (R + R<em>L</em>) ≥ V<em>ZO</em>　　I<em>R</em> = I<em>Z</em> + I<em>L</em>　　I<em>Z</em> ≥ I<em>ZK</em></div>
+      <figure class="schem-box"><div><div id="schem-reg"></div><figcaption>圖 6.5 稽納穩壓器（講義 p.5，重畫）</figcaption></div></figure>
+      <div class="derive">
+        <h4>判斷與計算，一步一步</h4>
+        <ol>
+          <li><span class="d-eq">拿掉稽納：V<sub>th</sub> = V<sub>S</sub> · R<sub>L</sub>/(R + R<sub>L</sub>)</span>
+            <div class="why">講義 p.5 的判斷式。這是「稽納不存在時」負載上的電壓，也就是水位能升到多高。</div></li>
+          <li><span class="d-eq">V<sub>th</sub> ≥ V<sub>ZO</sub> ⟹ 有崩潰，V<sub>o</sub> ≈ V<sub>Z</sub>；否則 V<sub>o</sub> = V<sub>th</sub></span>
+            <div class="why">水位沒到溢流管，溢流管就沒作用。講義寫的「V<sub>S</sub> ≥ V<sub>ZO</sub>」只是必要條件。</div></li>
+          <li><span class="d-eq">I<sub>R</sub> = (V<sub>S</sub> − V<sub>Z</sub>)/R，I<sub>L</sub> = V<sub>Z</sub>/R<sub>L</sub>，I<sub>Z</sub> = I<sub>R</sub> − I<sub>L</sub></span>
+            <div class="why">電流分帳：R 送下來的，負載先拿，剩下給稽納。</div></li>
+          <li><span class="d-eq hi">實驗 1 第二部分：15 V、1 kΩ、負載 1 kΩ ⟹ V<sub>th</sub> = 7.5 V ≥ 5.1 V，I<sub>Z</sub> ≈ 9.9 − 5.1 = 4.8 mA</span>
+            <div class="why">模擬（含 r<sub>z</sub>）：V<sub>o</sub> = 5.04 V、I<sub>Z</sub> = 4.92 mA。</div></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>穩壓電路實驗室</h3><span class="spacer"></span><span class="tag">右邊：拿掉稽納的分壓 vs 實際</span></div>
+        <div class="stage-wrap"><canvas id="cv-circ" aria-label="穩壓電路的電流分帳與崩潰判斷"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="cc-vs">電源 V<sub>S</sub><output for="cc-vs"></output></label><input type="range" id="cc-vs" min="0" max="20" step="0.1" value="15"></div>
+          <div class="ctrl"><label for="cc-r">串聯 R<output for="cc-r"></output></label><input type="range" id="cc-r" min="0.1" max="5" step="0.1" value="1"></div>
+          <div class="ctrl"><label for="cc-rl">負載 R<sub>L</sub><output for="cc-rl"></output></label><input type="range" id="cc-rl" min="0" max="6" step="1" value="1"></div>
+        </div>
+        <dl class="readout"><div><dt>V_o</dt><dd id="cc-vo" class="e">—</dd></div><div><dt>I_Z</dt><dd id="cc-iz">—</dd></div></dl>
+        <div class="msg" id="cc-msg"></div>
+      </div>
+      <div id="ex-circ"></div>
+      <div class="howto">
+        <h4>稽納穩壓題的標準流程</h4>
+        <ol>
+          <li><b>先拿掉稽納</b>，算分壓 V<sub>th</sub>。</li>
+          <li>V<sub>th</sub> &lt; V<sub>Z</sub> → 沒崩潰，V<sub>o</sub> = V<sub>th</sub>，結束。</li>
+          <li>V<sub>th</sub> ≥ V<sub>Z</sub> → V<sub>o</sub> = V<sub>Z</sub>，算 I<sub>R</sub>、I<sub>L</sub>、I<sub>Z</sub>。</li>
+          <li>檢查 I<sub>Z</sub> ≥ I<sub>ZK</sub>（也不能超過 I<sub>MAX</sub>）。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> V<sub>S</sub> 比 5.1 V 大，就一定穩在 5.1 V。<span class="o">✓ 要看分壓；PSpice V3 就是反例。</span></li>
+          <li><span class="x">✗</span> 沒崩潰時也直接寫 V<sub>o</sub> = V<sub>Z</sub>。<span class="o">✓ 沒崩潰時 V<sub>o</sub> 是分壓。</span></li>
+          <li><span class="x">✗</span> 負載變重，稽納電流變多。<span class="o">✓ 變少：I<sub>Z</sub> = I<sub>R</sub> − I<sub>L</sub>。</span></li>
+        </ul>
+      </div>
+      <div id="ex-v3"></div>
+      <div class="cf-wrap" id="cf-circ">
+        <h3>🧠 觀念填充 · 穩壓電路（不用算，用選的）</h3>
+        <p>8 題：電流分帳、有沒有崩潰、負載變重會怎樣。</p>
+        <div class="hw-list" data-bank="__ZNC" data-sec="電路"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 實驗流程 ══════════ -->
+    <section class="sec" id="exp">
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>p.9 · Experiment（課堂）</div>
+      <h2>🔬 實驗流程：稽納電壓變動率測試<span class="h2-en">LAB PROCEDURE</span></h2>
+      <p class="lede">兩件事：<b>(1) R1 = 1 kΩ 固定，V<sub>S</sub> 從 2 V 轉到 16 V，量 V<sub>D</sub>、算 I<sub>D</sub></b>；<b>(2) V<sub>S</sub> = 15 V，稽納旁邊並 1k／10k／20k，量 V<sub>D</sub></b>。</p>
+      <h3 style="font-size:16px;margin:18px 0 6px">器材</h3>
+      <ul class="gear">
+        <li><b>直流電源供應器</b><span>0～16 V 可調</span></li>
+        <li><b>三用電表</b><span>DC 電壓檔量 V<sub>D</sub>（再順便確認 V<sub>S</sub>）</span></li>
+        <li><b>稽納二極體 5.1 V</b><span>1N5231（講義圖寫 5 V）；有色環那端是陰極</span></li>
+        <li><b>電阻</b><span>R1 = 1 kΩ；負載 1 kΩ、10 kΩ、20 kΩ</span></li>
+        <li><b>麵包板、單心線</b><span>—</span></li>
+      </ul>
+      <figure class="schem-box"><div><div id="schem-611"></div><figcaption>圖 6.11 稽納二極體電壓變動的測試電路（講義 p.9，重畫）</figcaption></div></figure>
+      <ol class="lab-steps">
+        <li><b class="t">接線</b><p>電源 + → R1 → 稽納<b>陰極（色環端）</b>；稽納陽極 → 電源 −（地）。稽納是<b>反著接</b>的。</p></li>
+        <li><b class="t">電源先轉到 0 V 再開</b><p>三用電表紅棒夾稽納陰極、黑棒夾地。</p></li>
+        <li><b class="t">V<sub>S</sub> = 2、4、6…16 V 各量一次 V<sub>D</sub></b><p>每次用電表確認電源真的是那個電壓。填進下面「我的實測」，I<sub>D</sub> = (V<sub>S</sub> − V<sub>D</sub>)/1 kΩ 會自動算。</p></li>
+        <li><b class="t">V<sub>S</sub> 固定 15 V，並負載</b><p>在稽納兩端並一顆 1 kΩ 量 V<sub>D</sub>，換 10 kΩ、20 kΩ 再量。</p></li>
+        <li><b class="t">回家用 Excel 畫兩張圖</b><p>① X = V<sub>S</sub>、Y = V<sub>D</sub>；② X = V<sub>D</sub>、Y = I<sub>D</sub>（V-I 曲線）。</p></li>
+      </ol>
+      <div class="pitfall">
+        <h4>實驗時最常出包的地方</h4>
+        <ul>
+          <li><span class="x">✗</span> 稽納接成順向。<span class="o">✓ V<sub>D</sub> 會一直卡在 0.7 V 左右，不會到 5 V。色環端接高電位。</span></li>
+          <li><span class="x">✗</span> 沒接 R1 直接把稽納接到電源。<span class="o">✓ 沒有限流，崩潰後電流爆大，稽納會燒掉。</span></li>
+          <li><span class="x">✗</span> 相信電源面板的數字。<span class="o">✓ 用三用電表量一次 V<sub>S</sub>。</span></li>
+          <li><span class="x">✗</span> 用電流檔串進去量 I<sub>D</sub>。<span class="o">✓ 講義要你「量電壓、算電流」：(V<sub>S</sub> − V<sub>D</sub>)/R1。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-exp">
+        <h3>🧠 觀念填充 · 實驗操作（不用算，用選的）</h3>
+        <p>8 題：實驗 1、接線、PSpice。</p>
+        <div class="hw-list" data-bank="__ZNC" data-sec="實驗"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 結果 ══════════ -->
+    <section class="sec" id="result">
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>p.9 · Results（模擬）</div>
+      <h2>📈 結果：模擬＋我的實測<span class="h2-en">RESULTS</span></h2>
+      <p class="lede">還沒有實測數據，先放<b>模擬</b>（D1N5231 的 SPICE 模型）當「應該長這樣」。你量完填在下面，圖上會多出黑圈。</p>
+      <h3 style="font-size:16px;margin:14px 0 6px">實驗 1：R1 = 1 kΩ，改 V<sub>S</sub></h3>
+      <div class="tbl-wrap"><table class="lab-tbl"><tbody id="res1"></tbody></table></div>
+      <h3 style="font-size:16px;margin:18px 0 6px">實驗 1：V<sub>S</sub> = 15 V，並負載</h3>
+      <div class="tbl-wrap"><table class="lab-tbl"><tbody id="res2"></tbody></table></div>
+      <div class="bench">
+        <div class="bench-head"><h3>Excel 那兩張圖（模擬＋我的實測）</h3></div>
+        <div class="stage-wrap"><canvas id="cv-res" aria-label="VD 對 VS、ID 對 VD 兩張圖"></canvas></div>
+      </div>
+      <div class="note key">
+        <b>從表上要看出的三件事：</b>
+        <ol style="margin:6px 0 0;padding-left:20px">
+          <li><b>2 V、4 V 還沒穩</b>：V<sub>D</sub> 幾乎等於 V<sub>S</sub>（4 V 時已經在膝蓋附近，3.87 V）。</li>
+          <li><b>8～16 V 幾乎平</b>：5.02 → 5.07 V，電源翻倍，輸出只多 1%。</li>
+          <li><b>並負載影響很小</b>：1k 時 5.04 V、10k／20k 時 5.07 V；負載吃得越多，稽納電流越少（4.9 mA 對 9.7 mA）。</li>
+        </ol>
+      </div>
+      <h3 style="font-size:16px;margin:22px 0 6px">我的實測（填數字自動算）</h3>
+      <p style="margin:0 0 8px;color:var(--ink-2);font-size:14px">存在這台裝置，登入 claude.ai 時也會同步到雲端。單位：V。</p>
+      <div class="tbl-wrap"><table class="lab-tbl" id="meas1">
+        <thead><tr><th>V<sub>S</sub></th><th>我量的 V<sub>D</sub></th><th>I<sub>D</sub>（mA）</th><th>模擬 V<sub>D</sub></th><th>差多少</th></tr></thead><tbody></tbody></table></div>
+      <div class="tbl-wrap" style="margin-top:10px"><table class="lab-tbl" id="meas2">
+        <thead><tr><th>負載（V<sub>S</sub> = 15 V）</th><th>我量的 V<sub>D</sub></th><th>模擬 V<sub>D</sub></th><th>差多少</th></tr></thead><tbody></tbody></table></div>
+      <div class="btn-row" style="margin-top:8px"><button class="btn" type="button" id="meas-clear">清空我的實測</button></div>
+      <p class="note">差個 0.1～0.3 V 很正常：稽納的 V<sub>Z</sub> 有 ±5% 誤差（5.1 V 就是 4.85～5.36 V），而且會隨溫度飄。</p>
+    </section>
+
+    <!-- ══════════ PSpice ══════════ -->
+    <section class="sec" id="pspice">
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>p.6–8、p.10 · PSpice（回家作業）</div>
+      <h2>💻 PSpice 回家作業：AC to DC<span class="h2-en">PSPICE HOMEWORK</span></h2>
+      <p class="lede">把整條電源供應器接起來，<b>Vin&amp;V1、Vin&amp;V2、Vin&amp;V3</b> 各畫一張（同一張圖兩條線）。</p>
+      <figure class="schem-box"><div><div id="schem-ps"></div><figcaption>講義 p.8／p.10 的完整電路（重畫）：V1 整流、V2 濾波、V3 穩壓</figcaption></div></figure>
+      <ol class="lab-steps">
+        <li><b class="t">三個電路分開畫</b><p>① D1N4007 + 1 kΩ（量 V1）；② 再並 C = 100u（量 V2）；③ 再串 R3 = 1k、並 D1N5231 和 1k（量 V3）。</p></li>
+        <li><b class="t">VSIN 設定</b><p>VOFF = 0、<b>VAMPL = 10</b>、FREQ = 60。這次講義直接寫 VAMPL，振幅就是 10 V。</p></li>
+        <li><b class="t">稽納方向</b><p>D1N5231 的陰極（有線那端）接上面、陽極接地。</p></li>
+        <li><b class="t">Time Domain（Transient）</b><p>Run To Time = 100ms、Maximum Step Size = 10us；在 Vin 和 V1（或 V2、V3）各放一支電壓探針。</p></li>
+      </ol>
+      <div class="bench">
+        <div class="bench-head"><h3>應該跑出來長這樣（模擬）</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-ps="v1">V1</button>
+            <button class="btn" type="button" data-ps="v2">V2</button>
+            <button class="btn solid" type="button" data-ps="v3">V3（照講義）</button>
+            <button class="btn" type="button" data-ps="v3b">V3（負載 10k）</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-ps" aria-label="PSpice V1、V2、V3 模擬波形"></canvas></div>
+        <div class="msg"><b id="ps-t"></b>：<span id="ps-msg"></span></div>
+      </div>
+      <div class="tbl-wrap"><table class="lab-tbl">
+        <thead><tr><th>波形</th><th>最高</th><th>最低</th><th>平均</th><th>重點</th></tr></thead>
+        <tbody>
+          <tr><td>V1 半波整流</td><td class="num">9.31 V</td><td class="num">0 V</td><td class="num">2.86 V</td><td>二極體吃掉約 0.7 V</td></tr>
+          <tr><td>V2 ＋100 µF</td><td class="num">9.27 V</td><td class="num">7.99 V</td><td class="num">8.64 V</td><td>漣波 1.28 V</td></tr>
+          <tr><td>V3（R3 = 1k、負載 1k）</td><td class="num">4.46 V</td><td class="num">4.18 V</td><td class="num">4.32 V</td><td class="hi">稽納沒崩潰（分壓 &lt; 5.1 V）</td></tr>
+          <tr><td>V3（負載改 10k，自編對照）</td><td class="num">5.03 V</td><td class="num">5.02 V</td><td class="num">5.03 V</td><td>穩住了，只晃 7 mV</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">V3 那一組請跟老師確認：如果作業是要看到穩在 5.1 V 的直線，負載要改大（≥ 約 1.5 kΩ），或 R3 改小。照講義原樣跑，就會看到上面這個「穩不住」的結果 —— 拿來解釋 p.5 的崩潰條件剛好。</p>
+    </section>
+
+    <!-- ══════════ 名詞 ══════════ -->
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號／單位</code></div>
+        <div class="gl-row"><b>稽納二極體</b><span>Zener diode</span><code>D1N5231</code></div>
+        <div class="gl-row"><b>穩壓電路／穩壓器</b><span>voltage regulator</span><code>—</code></div>
+        <div class="gl-row"><b>稽納電壓</b><span>Zener voltage</span><code>VZ</code></div>
+        <div class="gl-row"><b>膝點電流</b><span>knee current</span><code>IZK</code></div>
+        <div class="gl-row"><b>測試電流</b><span>test current</span><code>IZT</code></div>
+        <div class="gl-row"><b>最大電流</b><span>maximum current</span><code>IMAX</code></div>
+        <div class="gl-row"><b>動態電阻</b><span>dynamic (Zener) resistance</span><code>rz</code></div>
+        <div class="gl-row"><b>崩潰</b><span>breakdown</span><code>—</code></div>
+        <div class="gl-row"><b>負載電流</b><span>load current</span><code>IL</code></div>
+        <div class="gl-row"><b>電壓變動率</b><span>voltage regulation</span><code>%</code></div>
+        <div class="gl-row"><b>漣波</b><span>ripple</span><code>Vr</code></div>
+        <div class="gl-row"><b>暫態分析</b><span>transient analysis</span><code>PSpice</code></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 測驗 ══════════ -->
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">10 題，中英對照，選項每次打亂。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：電子實習（上）第六章「稽納二極體」講義（11 頁）。模擬：稽納用 PSpice D1N5231 模型的崩潰參數（BV = 5.1 V、IBV = 27.721 mA、NBV = 1.1779、IBVL = 1.1646 mA、NBVL = 21.894、RS = 0.25 Ω），整流用 1N4007 常見模型（IS = 14.11 nA、N = 1.984、RS = 33.89 mΩ），程式求解；實際元件有 ±5～20% 差異。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="assets/zener-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'reg', no: '1', name: '為什麼要穩壓', count: 'p.2' },
+  { id: 'zd', no: '2', name: '特性曲線', count: 'p.3–4' },
+  { id: 'circ', no: '3', name: '穩壓電路', count: 'p.5' },
+  { id: 'exp', no: '🔬', name: '實驗流程', count: 'p.9' },
+  { id: 'result', no: '📈', name: '結果', count: '模擬' },
+  { id: 'pspice', no: '💻', name: 'PSpice 作業', count: 'p.10' }
+], { key: 'lab-zener', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/zener-wave.js"></script>
+<script src="assets/zener.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/zener-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

@@ -37,7 +37,7 @@
   const ATOM = '.quiz, .bench, .example, .hw-card, .xb-card, #story, .story, .glossary, table, figure, .eq, .board, .sec-pick, .pad';
   const BLOCK = 'p, li, h1, h2, h3, h4, dt, dd, blockquote, .derive, .howto, .pitfall, .note, .lede, .hero, .chips, .hero-meta, section';
   const ALL = ATOM + ', ' + BLOCK;
-  const EXCL = '.ann-layer, .ann-spaces, .ann-add, .trk-row, .trk-sum, .trk-list, .trk-b, #mistakes, .mk-list, .term-pop';
+  const EXCL = '.dv-ui, .ann-layer, .ann-spaces, .ann-add, .trk-row, .trk-sum, .trk-list, .trk-b, #mistakes, .mk-list, .term-pop';
   const AREA = '.ann-space-body, .ann-note-body, .ann-pad-body';
   /* .ann-free：不用進筆記模式也能直接寫的區域（Practice 題的手寫板） */
   const inFree = t => !!(t && t.closest && t.closest('.ann-free'));

@@ -236,3 +236,40 @@ body[data-subject="electronics"][data-look="clean"] {
 :root[data-theme="dark"] body[data-subject="electronics"][data-look="clean"] {
   --hole: #cfd3df; --hole-w: #262b38; --ion-pos: #9aa0b4; --ion-pos-w: #232733;
 }
+
+/* ===== 電腦版放大（tools/desktop-css.py 自動產生，不要手改） ===== */
+@media (min-width: 1200px) {
+  .st-hint { font-size: 12.5px; }
+  .st-bar button { font-size: 14.8px; }
+  .st-count { font-size: 13.1px; }
+  .st-list button { font-size: 16.0px; }
+  .st-list button i { font-size: 12.5px; }
+  .st-list button small { font-size: 11.4px; }
+  .st-end .btn { font-size: 16.0px; }
+  /* ============================================================
+   「乾淨版」頁面外觀：跟故事模式同一套視覺語彙
+   只套在 <body data-look="clean"> 的頁面（目前：電子學 CH1 PART 1），
+   其他頁面不受影響，確認效果後再推廣。
+   ============================================================ */
+.h2-en { font-size: 12.5px; }
+  /* 原講義對照：每一節旁邊小小標「這是講義 PART 幾」 */
+.part-tag { font-size: 11.4px; }
+}
+@media (min-width: 1600px) {
+  .st-hint { font-size: 13.6px; }
+  .st-bar button { font-size: 16.1px; }
+  .st-count { font-size: 14.3px; }
+  .st-list button { font-size: 17.4px; }
+  .st-list button i { font-size: 13.6px; }
+  .st-list button small { font-size: 12.4px; }
+  .st-end .btn { font-size: 17.4px; }
+  /* ============================================================
+   「乾淨版」頁面外觀：跟故事模式同一套視覺語彙
+   只套在 <body data-look="clean"> 的頁面（目前：電子學 CH1 PART 1），
+   其他頁面不受影響，確認效果後再推廣。
+   ============================================================ */
+.h2-en { font-size: 13.6px; }
+  /* 原講義對照：每一節旁邊小小標「這是講義 PART 幾」 */
+.part-tag { font-size: 12.4px; }
+}
+/* ===== 電腦版放大 end ===== */

@@ -1234,3 +1234,511 @@ body.ann-finger .ann-free { touch-action: none; }
 .xb-story { margin: 12px 0 2px; }
 .xb-story .story { margin: 0; }
 .xb-sbtn { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+
+/* ---------- 推導故事卡（app.js 的 .dv-cards） ---------- */
+.derive.dv-cards ol { padding: 8px 16px 6px 40px; }
+.derive.dv-cards ol > li {
+  margin: 12px 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface);
+  animation: dvIn .35s ease;
+}
+.derive.dv-cards ol > li.dv-cur { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); box-shadow: 0 2px 10px color-mix(in srgb, var(--accent) 12%, transparent); cursor: pointer; }
+.derive.dv-cards ol > li.dv-hide { display: none; }
+.derive.dv-cards .dv-short { font-size: 15px; color: var(--ink); line-height: 1.7; margin-top: 8px; }
+.derive.dv-cards .dv-short b { color: var(--accent); }
+.derive.dv-cards .dv-long { display: none; }
+.derive.dv-cards li.dv-open .dv-long { display: block; }
+.derive.dv-cards li.dv-open .dv-short { display: none; }
+.dv-more { margin-top: 6px; border: 0; background: none; padding: 2px 0; color: var(--accent); font: inherit; font-size: 12.5px; cursor: pointer; }
+.dv-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 4px 16px 16px 40px; }
+.dv-bar .btn[hidden] { display: none; }
+.dv-prog { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
+@keyframes dvIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* 寫筆記模式：全部攤開，筆跡位置才會跟原本一樣 */
+body.ann-on .derive.dv-cards ol > li.dv-hide { display: list-item; } body.ann-on .derive.dv-cards .dv-long { display: block; }
+body.ann-on .derive.dv-cards .dv-short, body.ann-on .derive.dv-cards .dv-more, body.ann-on .dv-bar { display: none; }
+@media (max-width: 520px) { .derive.dv-cards ol { padding-left: 30px; padding-right: 10px; } .dv-bar { padding-left: 14px; } .derive.dv-cards ol > li { padding: 10px 11px; } }
+@media (prefers-reduced-motion: reduce) { .derive.dv-cards ol > li { animation: none; } }
+
+/* ===== 電腦版放大（tools/desktop-css.py 自動產生，不要手改） ===== */
+@media (min-width: 1200px) {
+  body { font-size: 17.1px; }
+  .shell, .topbar-in { max-width: 1400px; }
+  .shell { --rail: 250px; gap: 56px; }
+  .hero .sub { max-width: 66ch; }  section.sec > .lede { max-width: 72ch; }  .home { max-width: 960px; }
+  #theme-btn { font-size: 14.2px; }
+  .brand b { font-size: 18.2px; }
+  .brand span { font-size: 12.5px; }
+  .rail-title { font-size: 12.0px; }
+  .rail a { font-size: 15.4px; }
+  .rail a i { font-size: 12.5px; }
+  .eyebrow { font-size: 12.5px; }
+  .hero .sub { font-size: 18.2px; }
+  .chip { font-size: 13.1px; }
+  .bench-head h3 { font-size: 17.1px; }
+  .bench-head .tag { font-size: 12.0px; }
+  .ctrl > label, .ctrl > .lab { font-size: 12.5px; }
+  .ctrl output, .ctrl .val { font-size: 14.2px; }
+  button.btn, select.btn { font-size: 14.8px; }
+  .readout dt { font-size: 12.0px; }
+  .readout dd { font-size: 19.4px; }
+  .readout dd small { font-size: 13.1px; }
+  /* 提示 / 判讀訊息 */
+.note { font-size: 16.0px; }
+  .note.key::before { font-size: 12.0px; }
+  .note.src { font-size: 14.2px; }
+  .msg { font-size: 15.4px; }
+  /* 公式 */
+.eq { font-size: 17.1px; }
+  .terms b { font-size: 16.0px; }
+  .terms span { font-size: 13.1px; }
+  .map-row .no { font-size: 22.8px; }
+  .map-row .ti b { font-size: 16.5px; }
+  .map-row .ti span { font-size: 13.1px; }
+  .stat { font-size: 12.0px; }
+  .outline-row code { font-size: 13.7px; }
+  .outline-row b { font-size: 16.0px; }
+  .q-no { font-size: 12.5px; }
+  .q-text { font-size: 18.2px; }
+  .opt { font-size: 16.0px; }
+  .opt i { font-size: 13.7px; }
+  .explain { font-size: 15.4px; }
+  .quiz-foot .score { font-size: 14.2px; }
+  footer.foot { font-size: 14.2px; }
+  /* ---------- 窄螢幕 ---------- */
+
+@media (max-width: 880px) { font-size: 17.1px; }
+  .gl-row b { font-size: 16.0px; }
+  .gl-row span { font-size: 14.2px; }
+  .gl-row code { font-size: 13.1px; }
+  .gl-row:first-child b, .gl-row:first-child span, .gl-row:first-child code { font-size: 12.0px; }
+  /* ============================================================
+   小測驗：中英對照題目
+   ============================================================ */
+.q-en { font-size: 14.2px; }
+  .opt .en { font-size: 13.1px; }
+  .home-hero p { font-size: 18.2px; }
+  .subj .mark { font-size: 21.7px; }
+  .subj .body b { font-size: 20.5px; }
+  .subj .body span { font-size: 13.1px; }
+  .subj .body p { font-size: 15.4px; }
+  .subj .go { font-size: 13.7px; }
+  /* 回主頁連結 */
+.home-link { font-size: 13.7px; }
+  /* ============================================================
+   教學元件：推導、例題、解題步驟、常見錯誤
+   ============================================================ */
+
+/* 行內算式：推導每一步用 */
+.d-eq { font-size: 16.0px; }
+  .derive > h4 { font-size: 16.5px; }
+  .derive > h4::before { font-size: 11.4px; }
+  .derive ol > li::marker { font-size: 13.7px; }
+  .derive p { font-size: 15.4px; }
+  .derive .why { font-size: 14.8px; }
+  .example > .ex-head { font-size: 12.5px; }
+  .example .ex-q { font-size: 16.5px; }
+  .example ol > li { font-size: 15.4px; }
+  .example ol > li::marker { font-size: 13.7px; }
+  .example .ex-ans { font-size: 16.0px; }
+  .howto > h4 { font-size: 16.5px; }
+  .howto > h4::before { font-size: 11.4px; }
+  .howto ol > li { font-size: 15.4px; }
+  .howto code { font-size: 14.2px; }
+  .pitfall > h4 { font-size: 16.5px; }
+  .pitfall > h4::before { font-size: 11.4px; }
+  .pitfall li { font-size: 15.4px; }
+  .pair-head { font-size: 15.4px; }
+  .pair-head .arr { font-size: 12.5px; }
+  .pair-head .roc { font-size: 12.5px; }
+  .dv-no { font-size: 12.5px; }
+  .dv-why { font-size: 14.8px; }
+  .f0-t { font-size: 12.0px; }
+  .f0-verdict { font-size: 14.8px; }
+  /* ============================================================
+   麵包屑：主頁 › 科目 › 章節
+   ============================================================ */
+.crumbs { font-size: 14.2px; }
+  .chap-no { font-size: 18.2px; }
+  .chap-no em { font-size: 10.8px; }
+  .chap-body b { font-size: 19.4px; }
+  .chap-body > span { font-size: 13.1px; }
+  .chap-body p { font-size: 15.4px; }
+  .chap-tags i { font-size: 12.0px; }
+  .chap-go { font-size: 14.8px; }
+  .chap.soon .chap-body b { font-size: 17.7px; }
+  /* 章節群組標題 */
+.chap-group { font-size: 12.5px; }
+  .progress dt { font-size: 12.0px; }
+  .progress dd { font-size: 22.8px; }
+  .progress dd small { font-size: 13.7px; }
+  .term-pop { font-size: 15.4px; }
+  .term-pop h5 { font-size: 18.2px; }
+  .term-pop .tp-en { font-size: 13.1px; }
+  .term-pop .tp-why { font-size: 14.2px; }
+  .term-pop .tp-unit { font-size: 13.1px; }
+  .term-pop .tp-close { font-size: 17.1px; }
+  .ex-live-tag { font-size: 11.4px; }
+  .example.live .ex-reset { font-size: 13.1px; }
+  .board > h3 { font-size: 17.1px; }
+  .board .bl { font-size: 16.0px; }
+  .lec-links a { font-size: 16.0px; }
+  .hw-head b { font-size: 16.5px; }
+  .hw-badge { font-size: 13.1px; }
+  .hw-q { font-size: 17.1px; }
+  .hw-sel { font-size: 16.0px; }
+  .hw-right { font-size: 15.4px; }
+  .hw-link { font-size: 14.8px; }
+  .hw-score { font-size: 14.8px; }
+  .hw-ans { font-size: 16.0px; }
+  .hw-more > summary { font-size: 16.0px; }
+  .hw-tag { font-size: 12.5px; }
+  .scope-end { font-size: 16.5px; }
+  .scope-ok { font-size: 13.7px; }
+  .scope-no { font-size: 12.5px; }
+  .xb-title span { font-size: 20.5px; }
+  .xb-title small { font-size: 14.2px; }
+  .xb-head b { font-size: 17.1px; }
+  .xb-tag { font-size: 13.7px; }
+  .xb-q { font-size: 17.1px; }
+  .xb-fig figcaption { font-size: 13.7px; }
+  .xb-idea { font-size: 16.0px; }
+  .xb-steps > li { font-size: 16.5px; }
+  .xb-steps .why { font-size: 15.4px; }
+  .xb-ans { font-size: 17.1px; }
+  .xb-hint { font-size: 16.0px; }
+  .xb-note { font-size: 15.4px; }
+  .xb-prog { font-size: 14.2px; }
+  .pad-bar button { font-size: 14.2px; }
+  .pad-hint { font-size: 14.2px; }
+  .pick-title { font-size: 14.8px; }
+  .pick-row button b { font-size: 17.1px; }
+  .pick-row button span { font-size: 13.7px; }
+  .pick-row button i { font-size: 12.5px; }
+  .trk-b { font-size: 13.7px; }
+  .trk-x { font-size: 12.5px; }
+  .trk-mark { font-size: 13.7px; }
+  .trk-sum { font-size: 15.4px; }
+  .trk-sum small { font-size: 13.7px; }
+  .trk-clear { font-size: 13.7px; }
+  .trk-list { font-size: 15.4px; }
+  .trk-none { font-size: 13.7px; }
+  .trk-card { font-size: 13.7px; }
+  .xb-self { font-size: 14.8px; }
+  .xb-self button { font-size: 14.2px; }
+  .mk-card .chap-no { font-size: 25.1px; }
+  .mk-lead { font-size: 16.0px; }
+  .mk-filter button { font-size: 15.4px; }
+  .mk-filter button i { font-size: 13.7px; }
+  .mk-ch { font-size: 18.2px; }
+  .mk-ch small { font-size: 13.7px; }
+  .mk-kind { font-size: 12.5px; }
+  .mk-s { font-size: 16.5px; }
+  .mk-d { font-size: 16.0px; }
+  .mk-d > summary { font-size: 14.8px; }
+  .mk-q .q-en { font-size: 14.2px; }
+  .mk-e { font-size: 15.4px; }
+  .mk-go { font-size: 14.8px; }
+  .mk-empty { font-size: 16.0px; }
+  .ann-fab { font-size: 16.0px; }
+  .ann-grp button { font-size: 19.4px; }
+  .ann-grp button small { font-size: 11.4px; }
+  .ann-caret { font-size: 10.3px; }
+  .ann-grp .ann-done { font-size: 16.0px; }
+  .ann-pop-t { font-size: 18.2px; }
+  .ann-types button { font-size: 14.8px; }
+  .ann-types button b { font-size: 22.8px; }
+  .ann-sl { font-size: 15.4px; }
+  .ann-sl b { font-size: 14.2px; }
+  .ann-pop-n { font-size: 13.7px; }
+  .ann-toast { font-size: 14.8px; }
+  /* 便條（手寫） */
+.ann-note { font-size: 14.8px; }
+  .ann-grip { font-size: 13.7px; }
+  .ann-note-bar button { font-size: 14.8px; }
+  .ann-note.min .ann-note-mini { font-size: 20.5px; }
+  /* 題目下面的空間 */
+.ann-add { font-size: 14.8px; }
+  .ann-space-head { font-size: 14.2px; }
+  .ann-space-head button { font-size: 13.7px; }
+  .ann-padbar button { font-size: 14.2px; }
+  .ann-pad-hint { font-size: 14.2px; }
+  .mt-changed { font-size: 14.8px; }
+  .mt-chain > div:not(:last-child)::after { font-size: 14.8px; }
+  .mt-chain small { font-size: 12.5px; }
+  .mt-chain b { font-size: 14.8px; }
+  .mt-chain span { font-size: 12.5px; }
+  .mt-junction figcaption { font-size: 14.8px; }
+  .mtj-sg text { font-size: 20.5px; }
+  .mtj-t { font-size: 17.1px; }
+  .mt-sheet h3 { font-size: 17.1px; }
+  .fs-row { font-size: 15.4px; }
+  .fs-row code { font-size: 15.4px; }
+  .fs-row em { font-size: 14.2px; }
+  .fs-row a { font-size: 14.2px; }
+  .mt-qa summary { font-size: 16.5px; }
+  .mt-qa details p { font-size: 16.0px; }
+  .mt-qa details a { font-size: 14.8px; }
+  .mt-sgiven { font-size: 15.4px; }
+  .mt-sgiven span { font-size: 14.8px; }
+  .mt-sgiven span i { font-size: 13.7px; }
+  .mt-sgiven span:last-child { font-size: 14.2px; }
+  .mt-rbar { font-size: 15.4px; }
+  .cf-wrap > h3 { font-size: 18.2px; }
+  .cf-wrap > p { font-size: 16.0px; }
+  .lab-tbl { font-size: 15.4px; }
+  .lab-tbl thead th { font-size: 14.2px; }
+  .gear li { font-size: 16.0px; }
+  .gear li b { font-size: 16.5px; }
+  .gear li span { font-size: 14.2px; }
+  .lab-steps > li p { font-size: 16.0px; }
+  .schem-box figcaption { font-size: 14.2px; }
+  .res-grid figcaption { font-size: 14.8px; }
+  .hw-tools .btn { font-size: 14.8px; }
+  .hw-tools .hw-sum { font-size: 14.8px; }
+  .hw-tools .hw-tip { font-size: 14.2px; }
+  .derive.dv-cards .dv-short { font-size: 17.1px; }
+  .dv-more { font-size: 14.2px; }
+  .dv-prog { font-size: 13.7px; }
+}
+@media (min-width: 1600px) {
+  body { font-size: 18.6px; }
+  .shell, .topbar-in { max-width: 1560px; }
+  .shell { --rail: 270px; gap: 64px; }
+  .hero .sub { max-width: 66ch; }  section.sec > .lede { max-width: 72ch; }  .home { max-width: 1040px; }
+  #theme-btn { font-size: 15.5px; }
+  .brand b { font-size: 19.8px; }
+  .brand span { font-size: 13.6px; }
+  .rail-title { font-size: 13.0px; }
+  .rail a { font-size: 16.7px; }
+  .rail a i { font-size: 13.6px; }
+  .eyebrow { font-size: 13.6px; }
+  .hero .sub { font-size: 19.8px; }
+  .chip { font-size: 14.3px; }
+  .bench-head h3 { font-size: 18.6px; }
+  .bench-head .tag { font-size: 13.0px; }
+  .ctrl > label, .ctrl > .lab { font-size: 13.6px; }
+  .ctrl output, .ctrl .val { font-size: 15.5px; }
+  button.btn, select.btn { font-size: 16.1px; }
+  .readout dt { font-size: 13.0px; }
+  .readout dd { font-size: 21.1px; }
+  .readout dd small { font-size: 14.3px; }
+  /* 提示 / 判讀訊息 */
+.note { font-size: 17.4px; }
+  .note.key::before { font-size: 13.0px; }
+  .note.src { font-size: 15.5px; }
+  .msg { font-size: 16.7px; }
+  /* 公式 */
+.eq { font-size: 18.6px; }
+  .terms b { font-size: 17.4px; }
+  .terms span { font-size: 14.3px; }
+  .map-row .no { font-size: 24.8px; }
+  .map-row .ti b { font-size: 18.0px; }
+  .map-row .ti span { font-size: 14.3px; }
+  .stat { font-size: 13.0px; }
+  .outline-row code { font-size: 14.9px; }
+  .outline-row b { font-size: 17.4px; }
+  .q-no { font-size: 13.6px; }
+  .q-text { font-size: 19.8px; }
+  .opt { font-size: 17.4px; }
+  .opt i { font-size: 14.9px; }
+  .explain { font-size: 16.7px; }
+  .quiz-foot .score { font-size: 15.5px; }
+  footer.foot { font-size: 15.5px; }
+  /* ---------- 窄螢幕 ---------- */
+
+@media (max-width: 880px) { font-size: 18.6px; }
+  .gl-row b { font-size: 17.4px; }
+  .gl-row span { font-size: 15.5px; }
+  .gl-row code { font-size: 14.3px; }
+  .gl-row:first-child b, .gl-row:first-child span, .gl-row:first-child code { font-size: 13.0px; }
+  /* ============================================================
+   小測驗：中英對照題目
+   ============================================================ */
+.q-en { font-size: 15.5px; }
+  .opt .en { font-size: 14.3px; }
+  .home-hero p { font-size: 19.8px; }
+  .subj .mark { font-size: 23.6px; }
+  .subj .body b { font-size: 22.3px; }
+  .subj .body span { font-size: 14.3px; }
+  .subj .body p { font-size: 16.7px; }
+  .subj .go { font-size: 14.9px; }
+  /* 回主頁連結 */
+.home-link { font-size: 14.9px; }
+  /* ============================================================
+   教學元件：推導、例題、解題步驟、常見錯誤
+   ============================================================ */
+
+/* 行內算式：推導每一步用 */
+.d-eq { font-size: 17.4px; }
+  .derive > h4 { font-size: 18.0px; }
+  .derive > h4::before { font-size: 12.4px; }
+  .derive ol > li::marker { font-size: 14.9px; }
+  .derive p { font-size: 16.7px; }
+  .derive .why { font-size: 16.1px; }
+  .example > .ex-head { font-size: 13.6px; }
+  .example .ex-q { font-size: 18.0px; }
+  .example ol > li { font-size: 16.7px; }
+  .example ol > li::marker { font-size: 14.9px; }
+  .example .ex-ans { font-size: 17.4px; }
+  .howto > h4 { font-size: 18.0px; }
+  .howto > h4::before { font-size: 12.4px; }
+  .howto ol > li { font-size: 16.7px; }
+  .howto code { font-size: 15.5px; }
+  .pitfall > h4 { font-size: 18.0px; }
+  .pitfall > h4::before { font-size: 12.4px; }
+  .pitfall li { font-size: 16.7px; }
+  .pair-head { font-size: 16.7px; }
+  .pair-head .arr { font-size: 13.6px; }
+  .pair-head .roc { font-size: 13.6px; }
+  .dv-no { font-size: 13.6px; }
+  .dv-why { font-size: 16.1px; }
+  .f0-t { font-size: 13.0px; }
+  .f0-verdict { font-size: 16.1px; }
+  /* ============================================================
+   麵包屑：主頁 › 科目 › 章節
+   ============================================================ */
+.crumbs { font-size: 15.5px; }
+  .chap-no { font-size: 19.8px; }
+  .chap-no em { font-size: 11.8px; }
+  .chap-body b { font-size: 21.1px; }
+  .chap-body > span { font-size: 14.3px; }
+  .chap-body p { font-size: 16.7px; }
+  .chap-tags i { font-size: 13.0px; }
+  .chap-go { font-size: 16.1px; }
+  .chap.soon .chap-body b { font-size: 19.2px; }
+  /* 章節群組標題 */
+.chap-group { font-size: 13.6px; }
+  .progress dt { font-size: 13.0px; }
+  .progress dd { font-size: 24.8px; }
+  .progress dd small { font-size: 14.9px; }
+  .term-pop { font-size: 16.7px; }
+  .term-pop h5 { font-size: 19.8px; }
+  .term-pop .tp-en { font-size: 14.3px; }
+  .term-pop .tp-why { font-size: 15.5px; }
+  .term-pop .tp-unit { font-size: 14.3px; }
+  .term-pop .tp-close { font-size: 18.6px; }
+  .ex-live-tag { font-size: 12.4px; }
+  .example.live .ex-reset { font-size: 14.3px; }
+  .board > h3 { font-size: 18.6px; }
+  .board .bl { font-size: 17.4px; }
+  .lec-links a { font-size: 17.4px; }
+  .hw-head b { font-size: 18.0px; }
+  .hw-badge { font-size: 14.3px; }
+  .hw-q { font-size: 18.6px; }
+  .hw-sel { font-size: 17.4px; }
+  .hw-right { font-size: 16.7px; }
+  .hw-link { font-size: 16.1px; }
+  .hw-score { font-size: 16.1px; }
+  .hw-ans { font-size: 17.4px; }
+  .hw-more > summary { font-size: 17.4px; }
+  .hw-tag { font-size: 13.6px; }
+  .scope-end { font-size: 18.0px; }
+  .scope-ok { font-size: 14.9px; }
+  .scope-no { font-size: 13.6px; }
+  .xb-title span { font-size: 22.3px; }
+  .xb-title small { font-size: 15.5px; }
+  .xb-head b { font-size: 18.6px; }
+  .xb-tag { font-size: 14.9px; }
+  .xb-q { font-size: 18.6px; }
+  .xb-fig figcaption { font-size: 14.9px; }
+  .xb-idea { font-size: 17.4px; }
+  .xb-steps > li { font-size: 18.0px; }
+  .xb-steps .why { font-size: 16.7px; }
+  .xb-ans { font-size: 18.6px; }
+  .xb-hint { font-size: 17.4px; }
+  .xb-note { font-size: 16.7px; }
+  .xb-prog { font-size: 15.5px; }
+  .pad-bar button { font-size: 15.5px; }
+  .pad-hint { font-size: 15.5px; }
+  .pick-title { font-size: 16.1px; }
+  .pick-row button b { font-size: 18.6px; }
+  .pick-row button span { font-size: 14.9px; }
+  .pick-row button i { font-size: 13.6px; }
+  .trk-b { font-size: 14.9px; }
+  .trk-x { font-size: 13.6px; }
+  .trk-mark { font-size: 14.9px; }
+  .trk-sum { font-size: 16.7px; }
+  .trk-sum small { font-size: 14.9px; }
+  .trk-clear { font-size: 14.9px; }
+  .trk-list { font-size: 16.7px; }
+  .trk-none { font-size: 14.9px; }
+  .trk-card { font-size: 14.9px; }
+  .xb-self { font-size: 16.1px; }
+  .xb-self button { font-size: 15.5px; }
+  .mk-card .chap-no { font-size: 27.3px; }
+  .mk-lead { font-size: 17.4px; }
+  .mk-filter button { font-size: 16.7px; }
+  .mk-filter button i { font-size: 14.9px; }
+  .mk-ch { font-size: 19.8px; }
+  .mk-ch small { font-size: 14.9px; }
+  .mk-kind { font-size: 13.6px; }
+  .mk-s { font-size: 18.0px; }
+  .mk-d { font-size: 17.4px; }
+  .mk-d > summary { font-size: 16.1px; }
+  .mk-q .q-en { font-size: 15.5px; }
+  .mk-e { font-size: 16.7px; }
+  .mk-go { font-size: 16.1px; }
+  .mk-empty { font-size: 17.4px; }
+  .ann-fab { font-size: 17.4px; }
+  .ann-grp button { font-size: 21.1px; }
+  .ann-grp button small { font-size: 12.4px; }
+  .ann-caret { font-size: 11.2px; }
+  .ann-grp .ann-done { font-size: 17.4px; }
+  .ann-pop-t { font-size: 19.8px; }
+  .ann-types button { font-size: 16.1px; }
+  .ann-types button b { font-size: 24.8px; }
+  .ann-sl { font-size: 16.7px; }
+  .ann-sl b { font-size: 15.5px; }
+  .ann-pop-n { font-size: 14.9px; }
+  .ann-toast { font-size: 16.1px; }
+  /* 便條（手寫） */
+.ann-note { font-size: 16.1px; }
+  .ann-grip { font-size: 14.9px; }
+  .ann-note-bar button { font-size: 16.1px; }
+  .ann-note.min .ann-note-mini { font-size: 22.3px; }
+  /* 題目下面的空間 */
+.ann-add { font-size: 16.1px; }
+  .ann-space-head { font-size: 15.5px; }
+  .ann-space-head button { font-size: 14.9px; }
+  .ann-padbar button { font-size: 15.5px; }
+  .ann-pad-hint { font-size: 15.5px; }
+  .mt-changed { font-size: 16.1px; }
+  .mt-chain > div:not(:last-child)::after { font-size: 16.1px; }
+  .mt-chain small { font-size: 13.6px; }
+  .mt-chain b { font-size: 16.1px; }
+  .mt-chain span { font-size: 13.6px; }
+  .mt-junction figcaption { font-size: 16.1px; }
+  .mtj-sg text { font-size: 22.3px; }
+  .mtj-t { font-size: 18.6px; }
+  .mt-sheet h3 { font-size: 18.6px; }
+  .fs-row { font-size: 16.7px; }
+  .fs-row code { font-size: 16.7px; }
+  .fs-row em { font-size: 15.5px; }
+  .fs-row a { font-size: 15.5px; }
+  .mt-qa summary { font-size: 18.0px; }
+  .mt-qa details p { font-size: 17.4px; }
+  .mt-qa details a { font-size: 16.1px; }
+  .mt-sgiven { font-size: 16.7px; }
+  .mt-sgiven span { font-size: 16.1px; }
+  .mt-sgiven span i { font-size: 14.9px; }
+  .mt-sgiven span:last-child { font-size: 15.5px; }
+  .mt-rbar { font-size: 16.7px; }
+  .cf-wrap > h3 { font-size: 19.8px; }
+  .cf-wrap > p { font-size: 17.4px; }
+  .lab-tbl { font-size: 16.7px; }
+  .lab-tbl thead th { font-size: 15.5px; }
+  .gear li { font-size: 17.4px; }
+  .gear li b { font-size: 18.0px; }
+  .gear li span { font-size: 15.5px; }
+  .lab-steps > li p { font-size: 17.4px; }
+  .schem-box figcaption { font-size: 15.5px; }
+  .res-grid figcaption { font-size: 16.1px; }
+  .hw-tools .btn { font-size: 16.1px; }
+  .hw-tools .hw-sum { font-size: 16.1px; }
+  .hw-tools .hw-tip { font-size: 15.5px; }
+  .derive.dv-cards .dv-short { font-size: 18.6px; }
+  .dv-more { font-size: 15.5px; }
+  .dv-prog { font-size: 14.9px; }
+}
+/* ===== 電腦版放大 end ===== */
