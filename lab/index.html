@@ -27,13 +27,13 @@
   <div class="home-hero">
     <div class="eyebrow">Electronics Lab · 電子實習（上）</div>
     <h1>電子實習</h1>
-    <p>選一個實驗進去。每個實驗一頁：<b>故事模式</b>先看懂在幹嘛 → <b>原理</b>（推導＋互動）→ <b>實驗流程</b>（接線、示波器、三用電表）→ <b>結果</b>（模擬出來的波形與表格，可以填自己的實測對照）→ <b>PSpice 回家作業</b>。</p>
+    <p>選一個實驗進去。每個實驗一頁：<b>故事模式</b>先看懂在幹嘛 → <b>原理</b>（推導＋互動）→ <b>實驗流程</b>（接線、示波器、三用電表）→ <b>結果</b>（模擬出來的波形、你的結報數據與照片，兩邊對照）→ <b>PSpice 回家作業</b>。</p>
   </div>
 
   <dl class="progress">
-    <div><dt>已完成</dt><dd>2 <small>個實驗</small></dd></div>
-    <div><dt>互動模組</dt><dd>10 <small>＋ 8 例題</small></dd></div>
-    <div><dt>測驗題</dt><dd>20 <small>＋ 觀念填充 48</small></dd></div>
+    <div><dt>已完成</dt><dd>4 <small>個實驗</small></dd></div>
+    <div><dt>互動模組</dt><dd>19 <small>＋ 15 例題</small></dd></div>
+    <div><dt>測驗題</dt><dd>40 <small>＋ 觀念填充 96</small></dd></div>
   </dl>
 
   <div class="chapters mk-chaps">
@@ -48,15 +48,33 @@
   </div>
   <div class="chap-group">實驗（照上課順序）</div>
   <div class="chapters">
-    <div class="chap soon"><span class="chap-no">CH3<em>特性</em></span><span class="chap-body"><b>二極體特性 Diode Characteristics</b><span>順偏／反偏靜態特性、V-I 曲線、PSpice DC Sweep</span></span><span class="chap-go">講義已收到・待製作</span></div>
-    <div class="chap soon"><span class="chap-no">CH4<em>整流</em></span><span class="chap-body"><b>整流器 Rectifier</b><span>半波、中間抽頭全波、橋式全波；V<sub>avg</sub> = 0.45V<sub>rms</sub>／0.9V<sub>rms</sub></span></span><span class="chap-go">講義已收到・待製作</span></div>
+    <a class="chap" href="diode.html">
+      <span class="chap-no">CH3<em>特性</em></span>
+      <span class="chap-body">
+        <b>二極體特性：單向導電與 V-I 曲線</b>
+        <span>Diode Characteristics · 順偏／反偏靜態特性 · PSpice DC Sweep</span>
+        <p>二極體是有門檻的單向旋轉門：過了 0.6 V 電流指數暴衝，反著推 30 V 也推不動。用你 9/23 的 15 個點擬合出 η ≈ 1.78。</p>
+        <span class="chap-tags"><i>▶ 18 個畫面的故事模式</i><i>📊 9/23 結報數據＋照片</i><i>4 個互動模組 ＋ 3 個可改數字例題</i><i>測驗＋觀念填充</i></span>
+      </span>
+      <span class="chap-go">進入 →</span>
+    </a>
+    <a class="chap" href="rectifier.html">
+      <span class="chap-no">CH4<em>整流</em></span>
+      <span class="chap-body">
+        <b>整流器：半波、中間抽頭、橋式</b>
+        <span>Rectifier · V<sub>avg</sub> = 0.45V<sub>rms</sub>／0.9V<sub>rms</sub> · PSpice Time Domain</span>
+        <p>理論 1.59 V，你只量到 1.29 V —— 少掉的是二極體的 0.64 V 跟變短的導通時間。峰值、有效值、平均值一次搞清楚。</p>
+        <span class="chap-tags"><i>▶ 19 個畫面的故事模式</i><i>📊 9/30 結報數據＋照片</i><i>5 個互動模組 ＋ 4 個可改數字例題</i><i>測驗＋觀念填充</i></span>
+      </span>
+      <span class="chap-go">進入 →</span>
+    </a>
     <a class="chap" href="filter.html">
       <span class="chap-no">CH4<em>濾波</em></span>
       <span class="chap-body">
         <b>整流器濾波：電容濾波電路</b>
         <span>Rectifier Filter · 半波整流＋電容 · 橋式全波（PSpice）</span>
         <p>整流完是一顆一顆的脈波，手機要的是平的直流：在負載旁邊並一顆電容當「水塔」。R、C 怎麼影響漣波，漣波因數怎麼算，6 組實驗結果先模擬給你看。</p>
-        <span class="chap-tags"><i>▶ 19 個畫面的故事模式</i><i>🔬 實驗流程＋模擬結果（6 組）</i><i>5 個互動模組 ＋ 4 個可改數字例題</i><i>10 題中英對照測驗</i></span>
+        <span class="chap-tags"><i>▶ 19 個畫面的故事模式</i><i>📊 10/7 結報數據 vs 模擬（6 組）</i><i>5 個互動模組 ＋ 4 個可改數字例題</i><i>10 題中英對照測驗</i></span>
       </span>
       <span class="chap-go">進入 →</span>
     </a>
@@ -66,7 +84,7 @@
         <b>稽納二極體：穩壓電路</b>
         <span>Zener Diode · Voltage Regulator · 電壓變動率測試 · AC to DC（PSpice）</span>
         <p>電源一直晃、負載一直換，輸出還是要穩穩的 5 V：讓二極體「住在崩潰區」當穩壓器。什麼時候穩得住、什麼時候會穩不住，實驗數字先模擬給你看。</p>
-        <span class="chap-tags"><i>▶ 19 個畫面的故事模式</i><i>🔬 實驗流程＋模擬結果</i><i>💻 PSpice AC to DC</i><i>測驗＋觀念填充</i></span>
+        <span class="chap-tags"><i>▶ 19 個畫面的故事模式</i><i>📊 結報數據 vs 模擬</i><i>💻 PSpice AC to DC</i><i>測驗＋觀念填充</i></span>
       </span>
       <span class="chap-go">進入 →</span>
     </a>

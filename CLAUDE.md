@@ -87,7 +87,7 @@
 - 同頁面加 `<body data-look="clean">` 會套用同一套乾淨外觀（標題卡 + 英文小字 `.h2-en`）。
 - SVG 文字裡的 `<`、`>` 一定要寫成 `&lt;`、`&gt;`，否則整個畫面 parse 失敗（踩過的坑）。
 - 下標用 `fx(['i','D',' = I','S'])` 這種寫法：下標後面的字要跟回基線的 tspan 放一起，空的 tspan 的 dy 不會生效。
-- 現有劇本：電子學 `ch1-part1～5-story.js`、電路學 `ch11-part1～3-story.js`、`ch12-part1～4-story.js`、工數 `laplace-story.js`、`laplace2-story.js`、`ode-story.js`、電子實習 `filter-story.js`、`zener-story.js`。
+- 現有劇本：電子學 `ch1-part1～5-story.js`、電路學 `ch11-part1～3-story.js`、`ch12-part1～4-story.js`、工數 `laplace-story.js`、`laplace2-story.js`、`ode-story.js`、電子實習 `diode-story.js`、`rectifier-story.js`、`filter-story.js`、`zener-story.js`。
 - 版面實測（看截圖總表得到的）：標題卡蓋到約 y 92（x 200～440），兩行字幕從約 y 312 開始，最後一幕的「從頭再看／往下看」按鈕在 y 285 以下 → **內容放 y 100～305，最後一幕放到 270 為止**。
 
 ## 上課筆記（板書照片）的做法
@@ -164,6 +164,7 @@
 - 講義公式有兩種版本時**兩個都列**、說明差別（例：漣波 rms 正弦 /2√2 vs 鋸齒 /2√3 vs 課堂簡化 Vpp/Vdc）。
 - 電路圖用 `shared/schem.js`，10/7 新增 `d`（二極體，尖端朝第二點＝陰極）、`gnd`、`vac`（交流源）；10/12 新增 `zd`（稽納）。
 - 使用者會給自己的實驗報告（電路圖＋數據）：收到後填進該頁「我的實測」的預設對照、在結果節比較模擬與實測。
+  做法（10/14 四份結報）：輸入框 `data-def` 放結報數字、按鈕「改回結報數據」；結果節加 `.note.key`「你的數據說了什麼」（數字錯、檔位錯、接線問題要點出來，不確定寫請確認）＋照片 `.lab-photos`（`figure > img + figcaption`，截圖類用 `img.contain`，點一下放大；照片縮到 ≤ 1200 px 放 `lab/img/`）；標題前加 `<span class="my-tag">我的</span>`。
 - canvas 的 `label`/`labelCJK` 現在也支援 `<sub>`。
 
 ## 學習紀錄（`shared/track.js`）

@@ -402,3 +402,9 @@
   window.addEventListener('hashchange', () => { const t = document.getElementById(location.hash.slice(1)); const d = t && t.closest('.derive'); if (d && d.__dvShow) d.__dvShow(99); });
   window.__EE && (window.__EE.deriveCards = init);
 })();
+
+/* 實驗照片：點一下放大、再點一下縮回（.lab-photos） */
+document.addEventListener('click', function (e) {
+  var img = e.target.closest && e.target.closest('.lab-photos img'); if (!img) return;
+  img.closest('figure').classList.toggle('open');
+});

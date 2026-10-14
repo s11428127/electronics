@@ -569,38 +569,42 @@
       if (store) { obj ? store.put(id, obj) : store.del(id); return; }
       try { const a = getAll(); if (obj) a[id] = obj; else delete a[id]; localStorage.setItem(LS, JSON.stringify(a)); } catch (e) {}
     };
+    /* 使用者 10/7 結報（示波器 Vo p-p、電表 DCV）；S50 = 把函數產生器 50 Ω 內阻算進去的模擬 */
+    const MY = [[2.96, 0.8662], [1.36, 1.2782], [3.00, 2.3912], [0.56, 3.1368], [0.80, 3.9449], [0.40, 4.4586]];
+    const S50 = [[2.809, 0.865], [1.343, 1.286], [2.890, 2.458], [0.412, 3.173], [0.574, 4.004], [0.059, 4.085]];
     RESULTS.forEach((d, i) => {
       mt.insertAdjacentHTML('beforeend', '<tr data-i="' + i + '"><td>' + fmtR(d.R) + '</td><td>' + fmtC(d.C) + '</td>' +
-        '<td><input type="number" inputmode="decimal" step="any" min="0" data-k="pp" aria-label="' + fmtR(d.R) + ' ' + fmtC(d.C) + ' 量到的峰對峰"></td>' +
-        '<td><input type="number" inputmode="decimal" step="any" min="0" data-k="dc" aria-label="' + fmtR(d.R) + ' ' + fmtC(d.C) + ' 量到的直流"></td>' +
-        '<td class="num my">—</td><td class="num">' + pct(d.vpp / d.vdc * 100) + '</td><td class="num df">—</td></tr>');
+        '<td><input type="number" inputmode="decimal" step="any" min="0" data-k="pp" data-def="' + MY[i][0] + '" aria-label="' + fmtR(d.R) + ' ' + fmtC(d.C) + ' 量到的峰對峰"></td>' +
+        '<td><input type="number" inputmode="decimal" step="any" min="0" data-k="dc" data-def="' + MY[i][1] + '" aria-label="' + fmtR(d.R) + ' ' + fmtC(d.C) + ' 量到的直流"></td>' +
+        '<td class="num my">—</td><td class="num">' + pct(d.vpp / d.vdc * 100) + '</td><td class="num">' + fix(S50[i][0], 3) + ' / ' + fix(S50[i][1], 3) + '</td><td class="num">' + pct(S50[i][0] / S50[i][1] * 100) + '</td><td class="num df">—</td><td class="num dd">—</td></tr>');
     });
     function calc(tr) {
       const i = +tr.dataset.i, d = RESULTS[i];
       const pp = parseFloat(tr.querySelector('[data-k="pp"]').value), dc = parseFloat(tr.querySelector('[data-k="dc"]').value);
-      const my = tr.querySelector('.my'), df = tr.querySelector('.df');
+      const my = tr.querySelector('.my'), df = tr.querySelector('.df'), dd = tr.querySelector('.dd');
       if (pp > 0 && dc > 0) {
-        const a = pp / dc * 100, s = d.vpp / d.vdc * 100, rel = (a - s) / s * 100;
+        const a = pp / dc * 100, s = S50[i][0] / S50[i][1] * 100, rel = (a - s) / s * 100, rd = (dc - S50[i][1]) / S50[i][1] * 100;
         my.textContent = pct(a); df.textContent = (rel >= 0 ? '+' : '−') + fix(Math.abs(rel), 0) + '%';
         df.className = 'num df ' + (Math.abs(rel) <= 25 ? 'diff-ok' : 'diff-far');
-      } else { my.textContent = '—'; df.textContent = '—'; df.className = 'num df'; }
+        dd.textContent = (rd >= 0 ? '+' : '−') + fix(Math.abs(rd), 1) + '%'; dd.className = 'num dd ' + (Math.abs(rd) <= 5 ? 'diff-ok' : 'diff-far');
+      } else { my.textContent = '—'; df.textContent = '—'; df.className = 'num df'; dd.textContent = '—'; dd.className = 'num dd'; }
     }
     function fill() {
       const all = getAll();
       mt.querySelectorAll('tr').forEach(tr => {
         const it = all['r' + tr.dataset.i];
-        tr.querySelectorAll('input').forEach(inp => { if (document.activeElement !== inp) inp.value = it && it[inp.dataset.k] !== undefined && it[inp.dataset.k] !== '' ? it[inp.dataset.k] : ''; });
+        tr.querySelectorAll('input').forEach(inp => { if (document.activeElement !== inp) inp.value = it && it[inp.dataset.k] !== undefined ? it[inp.dataset.k] : inp.dataset.def; });
         calc(tr);
       });
     }
     mt.addEventListener('input', e => {
       const tr = e.target.closest('tr'); if (!tr) return;
       const pp = tr.querySelector('[data-k="pp"]').value, dc = tr.querySelector('[data-k="dc"]').value;
-      put('r' + tr.dataset.i, pp === '' && dc === '' ? null : { pp, dc });
+      put('r' + tr.dataset.i, { pp, dc });
       calc(tr);
     });
     document.getElementById('meas-clear').addEventListener('click', () => {
-      if (!confirm('清空 6 組實測數字？')) return;
+      if (!confirm('改回結報的原始數據？')) return;
       RESULTS.forEach((d, i) => put('r' + i, null)); fill();
     });
     fill();

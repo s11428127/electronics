@@ -46,7 +46,7 @@
       <h1>稽納二極體：穩壓電路</h1>
       <p class="sub">電源一直晃、負載一直換，輸出還是要穩穩的 5 V。做法：讓一顆二極體<strong>故意住在崩潰區</strong>，像水塔的<strong>溢流管</strong> —— 水位一到管口，多的就流走。</p>
       <div class="hero-meta">
-        <span class="chip h">🔬 實驗流程 ＋ 模擬結果</span>
+        <span class="chip h">📊 含結報數據（8 點＋3 個負載）＋ 模擬對照</span>
         <span class="chip">19 個畫面的故事模式</span>
         <span class="chip">5 個互動模組 ＋ 4 個可改數字例題</span>
         <span class="chip">觀念填充 24 題 ＋ 10 題測驗</span>
@@ -283,9 +283,9 @@
 
     <!-- ══════════ 結果 ══════════ -->
     <section class="sec" id="result">
-      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>p.9 · Results（模擬）</div>
+      <div class="eyebrow"><span class="part-tag">實習講義 第六章</span>p.9 · Results（模擬＋結報）</div>
       <h2>📈 結果：模擬＋我的實測<span class="h2-en">RESULTS</span></h2>
-      <p class="lede">還沒有實測數據，先放<b>模擬</b>（D1N5231 的 SPICE 模型）當「應該長這樣」。你量完填在下面，圖上會多出黑圈。</p>
+      <p class="lede">先看<b>模擬</b>（D1N5231 的 SPICE 模型）當「應該長這樣」，再看下面<b>你結報的數據</b>（圖上的黑圈）。</p>
       <h3 style="font-size:16px;margin:14px 0 6px">實驗 1：R1 = 1 kΩ，改 V<sub>S</sub></h3>
       <div class="tbl-wrap"><table class="lab-tbl"><tbody id="res1"></tbody></table></div>
       <h3 style="font-size:16px;margin:18px 0 6px">實驗 1：V<sub>S</sub> = 15 V，並負載</h3>
@@ -302,14 +302,33 @@
           <li><b>並負載影響很小</b>：1k 時 5.04 V、10k／20k 時 5.07 V；負載吃得越多，稽納電流越少（4.9 mA 對 9.7 mA）。</li>
         </ol>
       </div>
-      <h3 style="font-size:16px;margin:22px 0 6px">我的實測（填數字自動算）</h3>
-      <p style="margin:0 0 8px;color:var(--ink-2);font-size:14px">存在這台裝置，登入 claude.ai 時也會同步到雲端。單位：V。</p>
+      <h3 style="font-size:16px;margin:22px 0 6px"><span class="my-tag">我的</span>實測（結報數據，可修改）</h3>
+      <p style="margin:0 0 8px;color:var(--ink-2);font-size:14px">預設是你結報的數字；改了會存起來（登入時同步雲端）。單位：V。</p>
       <div class="tbl-wrap"><table class="lab-tbl" id="meas1">
         <thead><tr><th>V<sub>S</sub></th><th>我量的 V<sub>D</sub></th><th>I<sub>D</sub>（mA）</th><th>模擬 V<sub>D</sub></th><th>差多少</th></tr></thead><tbody></tbody></table></div>
       <div class="tbl-wrap" style="margin-top:10px"><table class="lab-tbl" id="meas2">
         <thead><tr><th>負載（V<sub>S</sub> = 15 V）</th><th>我量的 V<sub>D</sub></th><th>模擬 V<sub>D</sub></th><th>差多少</th></tr></thead><tbody></tbody></table></div>
-      <div class="btn-row" style="margin-top:8px"><button class="btn" type="button" id="meas-clear">清空我的實測</button></div>
+      <div class="btn-row" style="margin-top:8px"><button class="btn" type="button" id="meas-clear">改回結報數據</button></div>
       <p class="note">差個 0.1～0.3 V 很正常：稽納的 V<sub>Z</sub> 有 ±5% 誤差（5.1 V 就是 4.85～5.36 V），而且會隨溫度飄。</p>
+      <div class="note key">
+        <b>你的數據說了什麼：</b>
+        <ol style="margin:6px 0 0;padding-left:20px">
+          <li><b>穩壓有成功</b>：V<sub>S</sub> 從 6 V 加到 16 V（快三倍），V<sub>D</sub> 只從 5.37 V 變到 5.54 V。2 V、4 V 還沒到膝蓋，V<sub>D</sub> ≈ V<sub>S</sub>，跟模擬一樣。</li>
+          <li><b>V<sub>Z</sub> ≈ 5.5 V，比 1N5231（5.1 V，最大 5.36 V）高</b>：整條線都比模擬高約 0.45 V。可能拿到的是 5.6 V 的稽納（例如 1N5232），請看一下元件上印的型號（請確認）。</li>
+          <li><b>並負載那三筆是「沒有稽納」的數字</b>：7.4946、13.622、14.276 V 剛好等於純電阻分壓 15 × R<sub>L</sub>/(1k + R<sub>L</sub>) = 7.50、13.64、14.29 V。如果稽納有接上，10k、20k 時應該被壓在約 5.5 V。最可能是量負載那次稽納<b>沒插好或被拔掉了</b>（請確認接線）。1 kΩ 負載那筆（7.5 V）反而說明：稽納不在，電壓就跟著分壓跑。</li>
+          <li>結報 I<sub>D</sub> 欄四捨五入太多：16 V 那點 (16 − 5.5425)/1k = <b>10.46 mA</b>；2 V、4 V 是 0.002、0.011 mA（不是 0）。上表「I<sub>D</sub>」欄已經用你量的 V<sub>D</sub> 重算。</li>
+          <li>PSpice 那頁說「V3 漣波被消除」不太精確：模擬 V3 在 4.18～4.46 V 之間，輸入 V2 的漣波 0.70 V 被<b>壓小到約 0.28 V</b>，不是 0。你的 TINA 圖看起來平，是因為縱軸一格 5 V。更重要的是：V3 ≈ 4.3 V 比 V<sub>Z</sub> 低，<b>稽納其實沒導通</b>——R3 = 1k 跟負載 1k 把 V2（約 9 V）對半分只剩約 4.5 V，這時 V3 只是普通分壓。要真的穩壓，負載要大一點（例如 10 kΩ）讓分壓後超過 V<sub>Z</sub>（講義 p.6 的穩壓條件）。</li>
+        </ol>
+      </div>
+      <h3 style="font-size:16px;margin:22px 0 6px">📷 實驗照片（結報）</h3>
+      <div class="lab-photos">
+        <figure><img src="img/zener-board.jpg" alt="麵包板接線" loading="lazy"><figcaption>麵包板接線</figcaption></figure>
+        <figure><img src="img/zener-board2.jpg" alt="麵包板接線（另一角度）" loading="lazy"><figcaption>接線（另一個角度）</figcaption></figure>
+        <figure><img src="img/zener-vs6.jpg" alt="Vs 8 V 量測" loading="lazy"><figcaption>V<sub>S</sub> = 8 V：V<sub>D</sub> = 5.4890 V、電源 2.5 mA 左右</figcaption></figure>
+        <figure><img src="img/zener-load1k.jpg" alt="並 1 kΩ 負載" loading="lazy"><figcaption>V<sub>S</sub> = 15 V 並 1 kΩ：7.4946 V（＝純分壓，稽納沒作用）</figcaption></figure>
+        <figure><img class="contain" src="img/zener-ps2.jpg" alt="TINA V2" loading="lazy"><figcaption>TINA-TI：V2（整流＋濾波）</figcaption></figure>
+        <figure><img class="contain" src="img/zener-ps3.jpg" alt="TINA V3" loading="lazy"><figcaption>TINA-TI：V3（加稽納穩壓，約 4.3 V）</figcaption></figure>
+      </div>
     </section>
 
     <!-- ══════════ PSpice ══════════ -->

@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>整流器</title>
+<meta name="description" content="電子實習第四章：整流器。故事模式、峰值／有效值／平均值、半波與全波（中間抽頭、橋式）整流、課堂半波實驗（含 9/30 結報數據）、PSpice 暫態模擬。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="lab" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子實習</a><span>›</span><b>CH4 整流器</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH4 整流器</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>這一頁怎麼讀</a></li>
+      <li><a href="#why"><i>1</i>四個數字：峰值、有效值、平均值</a></li>
+      <li><a href="#half"><i>2</i>半波整流</a></li>
+      <li><a href="#full"><i>3</i>全波整流：中間抽頭與橋式</a></li>
+      <li><a href="#exp"><i>🔬</i>實驗流程（課堂）</a></li>
+      <li><a href="#result"><i>📈</i>結果：我的結報數據</a></li>
+      <li><a href="#pspice"><i>💻</i>PSpice 回家作業</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>Electronics Lab · Rectifiers</div>
+      <h1>整流器：把交流變成只往一個方向</h1>
+      <p class="sub">二極體這扇單向旋轉門，放進交流電裡就是<strong>整流器</strong>：半波砍掉負的、全波把負的翻上來。這一頁用<strong>你 9/30 量到的數據</strong>解一個謎：為什麼理論 1.59 V，你只量到 1.29 V？</p>
+      <div class="hero-meta">
+        <span class="chip h">📊 含 9/30 結報數據（示波器＋三用電表）</span>
+        <span class="chip">19 個畫面的故事模式</span>
+        <span class="chip">5 個互動模組 ＋ 4 個可改數字例題</span>
+        <span class="chip">觀念填充 24 題 ＋ 10 題測驗</span>
+      </div>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>Story mode · 先看這段，再往下讀</div>
+      <h2>19 個畫面看懂整流器<span class="h2-en">THE STORY IN 19 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進，點左邊四分之一退回；也可以按「自動播放」。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>How to read this page</div>
+      <h2>這一頁怎麼讀<span class="h2-en">PAGE MAP</span></h2>
+      <p class="lede">講義 12 頁：p.2–8 原理、p.9 課堂實驗、p.10–12 PSpice。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>p.2, p.4</code><b>整流器做什麼；V<sub>m</sub>、V<sub>pp</sub>、V<sub>rms</sub>、V<sub>avg</sub></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.3</code><b>半波整流、V<sub>m</sub>/π</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.5–8</code><b>全波：中間抽頭、橋式、比較表</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.9</code><b>🔬 半波實驗 → 📈 你的數據</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.10–12</code><b>💻 PSpice 半波、橋式（Time Domain）</b><span class="dot"></span></div>
+      </div>
+      <div class="note">
+        <b>講義檢查：</b>公式和 p.8 比較表都對（半波 0.318V<sub>m</sub>＝0.45V<sub>rms</sub>、全波 0.637V<sub>m</sub>＝0.9V<sub>rms</sub>、漣波 f／2f、PIV V<sub>m</sub>／2V<sub>m</sub>／V<sub>m</sub>）。兩個要注意的地方：
+        <ol style="margin:6px 0 0;padding-left:20px">
+          <li>公式都是<b>理想二極體</b>。V<sub>m</sub> 只有 5 V 時，二極體的 0.64 V 不能忽略，平均會少約 20%（見 <a href="#half">§2</a>）。</li>
+          <li>課堂設 <b>10 Vpp</b>（峰值 5 V），PSpice 的 Vsin 設 <b>VAMP = 10 V</b>（峰值 10 V），兩者差一倍，波形高度不能直接比。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 1 四個數字 ══════════ -->
+    <section class="sec" id="why">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.2, p.4 · Peak, rms &amp; average</div>
+      <h2>四個數字：峰值、有效值、平均值<span class="h2-en">PEAK, RMS &amp; AVERAGE</span></h2>
+      <p class="lede"><button class="tm" data-t="整流">整流</button>＝把來回跑的交流，變成只往一個方向。先認識一條正弦的四個數字：示波器看<button class="tm" data-t="峰對峰值">V<sub>pp</sub></button>，電表 AC 檔看<button class="tm" data-t="有效值">V<sub>rms</sub></button>，DC 檔看<button class="tm" data-t="平均值">V<sub>avg</sub></button>。</p>
+      <div class="eq">V<em>pp</em> = 2V<em>m</em>　　V<em>m</em> = √2 V<em>rms</em>　⟹　V<em>pp</em> = 2√2 V<em>rms</em> ≈ 2.83 V<em>rms</em></div>
+      <div class="derive">
+        <h4>從示波器讀值到電表讀值</h4>
+        <ol>
+          <li><span class="d-eq">V<sub>pp</sub> = 2V<sub>m</sub></span>
+            <div class="why">峰對峰是從谷底量到山頂，兩倍峰值。你示波器讀 9.92 Vpp → V<sub>m</sub> = 4.96 V。</div></li>
+          <li><span class="d-eq">V<sub>rms</sub> = √(平均的 v<sup>2</sup>) = V<sub>m</sub>/√2</span>
+            <div class="why">有效值＝跟多少直流一樣熱。sin<sup>2</sup> 的平均是 1/2，開根號就是 1/√2。</div></li>
+          <li><span class="d-eq">完整正弦：V<sub>avg</sub> = 0</span>
+            <div class="why">上下面積抵消。所以 DC 檔量交流讀 0，整流就是要讓它不是 0。</div></li>
+          <li><span class="d-eq hi">V<sub>pp</sub> = 2V<sub>m</sub> = 2√2 V<sub>rms</sub> ≈ 2.83 V<sub>rms</sub></span>
+            <div class="why">這就是講義 p.9 的「回答：V<sub>pp</sub> = ? V<sub>rms</sub>」。10 Vpp → 3.54 V<sub>rms</sub>。</div></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>把駝峰攤平：平均值是多高？</h3>
+          <div class="btn-row"><button class="btn solid" type="button" data-vm="sin">完整正弦</button><button class="btn" type="button" data-vm="half">半波</button><button class="btn" type="button" data-vm="full">全波</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-val" aria-label="正弦波的峰值、有效值與平均值"></canvas></div>
+        <div class="controls"><div class="ctrl" style="grid-column:1 / -1"><label for="val-vpp">峰對峰值 V<sub>pp</sub><output for="val-vpp"></output></label><input type="range" id="val-vpp" min="1" max="20" step="0.1" value="10"></div></div>
+        <dl class="readout"><div><dt>V_m</dt><dd id="val-m">—</dd></div><div><dt>V_rms</dt><dd id="val-r">—</dd></div><div><dt>V_avg</dt><dd id="val-a" class="e">—</dd></div></dl>
+        <div class="msg" id="val-msg"></div>
+      </div>
+      <div id="ex-val"></div>
+      <div class="howto">
+        <h4>拿到一個正弦，四個數字怎麼換</h4>
+        <ol>
+          <li>示波器讀 V<sub>pp</sub> → 除以 2 得 V<sub>m</sub>。</li>
+          <li>V<sub>m</sub> ÷ √2 → V<sub>rms</sub>（AC 檔應該讀到的）。</li>
+          <li>整流後的 V<sub>avg</sub>：半波 V<sub>m</sub>/π、全波 2V<sub>m</sub>/π（DC 檔應該讀到的）。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 把 V<sub>pp</sub> 當 V<sub>m</sub>。<span class="o">✓ 10 Vpp 的峰值是 5 V。</span></li>
+          <li><span class="x">✗</span> 0.45 V<sub>rms</sub> 的 V<sub>rms</sub> 是輸出的有效值。<span class="o">✓ 是<b>輸入正弦</b>的有效值。</span></li>
+          <li><span class="x">✗</span> V<sub>m</sub>/√2 對任何波形都成立。<span class="o">✓ 只對正弦；半波輸出的有效值是 V<sub>m</sub>/2。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-why">
+        <h3>🧠 觀念填充 · 原理（不用算，用選的）</h3>
+        <div class="hw-list" data-bank="__RECC" data-sec="原理"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 2 半波 ══════════ -->
+    <section class="sec" id="half">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.3 · Half-wave rectifier</div>
+      <h2>半波整流<span class="h2-en">HALF-WAVE RECTIFIER</span></h2>
+      <p class="lede">一顆二極體串一個電阻。正半週門打開，負半週門卡住：輸出只剩一排駝峰。二極體負半週要扛住 V<sub>m</sub>（<button class="tm" data-t="反向峰值電壓">PIV</button>）。</p>
+      <div class="eq">理想：V<em>avg</em> = V<em>m</em>/π = 0.318V<em>m</em> = 0.45V<em>rms</em>　　考慮 V<em>γ</em>：V<em>avg</em> = [2V<em>m</em> cos α − V<em>γ</em>(π − 2α)]/2π，sin α = V<em>γ</em>/V<em>m</em></div>
+      <div class="derive">
+        <h4>一個駝峰攤平後多高</h4>
+        <ol>
+          <li><span class="d-eq">0～π：v<sub>o</sub> = V<sub>m</sub> sin θ；π～2π：v<sub>o</sub> = 0</span>
+            <div class="why">正半週順偏當短路，負半週逆偏當斷路（講義 p.3）。</div></li>
+          <li><span class="d-eq">V<sub>avg</sub> = (1/2π)∫<sub>0</sub><sup>π</sup>V<sub>m</sub> sin θ dθ</span>
+            <div class="why">平均＝一整個週期的面積 ÷ 2π，負半週面積是 0。</div></li>
+          <li><span class="d-eq">∫<sub>0</sub><sup>π</sup>sin θ dθ = [−cos θ]<sub>0</sub><sup>π</sup> = 2 ⟹ V<sub>avg</sub> = 2V<sub>m</sub>/2π = V<sub>m</sub>/π</span>
+            <div class="why">一個 sin 駝峰的面積剛好是 2。</div></li>
+          <li><span class="d-eq">V<sub>m</sub> = √2 V<sub>rms</sub> ⟹ V<sub>avg</sub> = √2/π V<sub>rms</sub> = 0.45 V<sub>rms</sub></span>
+            <div class="why">講義用 V<sub>rms</sub> 寫的版本，市電（標有效值）直接代。</div></li>
+          <li><span class="d-eq">真實二極體：v<sub>o</sub> = V<sub>m</sub> sin θ − V<sub>γ</sub>，只在 α &lt; θ &lt; π − α</span>
+            <div class="why">要先爬過 V<sub>γ</sub> 才導通，所以峰值少 V<sub>γ</sub>、導通也不到半圈。</div></li>
+          <li><span class="d-eq hi">V<sub>avg</sub> = [2V<sub>m</sub> cos α − V<sub>γ</sub>(π − 2α)]/2π</span>
+            <div class="why">你的 V<sub>m</sub> 4.96、V<sub>γ</sub> 0.64：α = 7.4°，算出 1.27 V，你量 1.29 V。</div></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>二極體模型換一換：峰值和平均差多少</h3>
+          <div class="btn-row"><button class="btn" type="button" data-hm="ideal">理想</button><button class="btn" type="button" data-hm="cvd">扣 0.7 V</button><button class="btn solid" type="button" data-hm="real">真實 1N4002</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-half" aria-label="半波整流的輸入與輸出波形"></canvas></div>
+        <div class="controls"><div class="ctrl" style="grid-column:1 / -1"><label for="hf-vm">輸入峰值 V<sub>m</sub><output for="hf-vm"></output></label><input type="range" id="hf-vm" min="0.5" max="15" step="0.01" value="4.96"></div></div>
+        <dl class="readout"><div><dt>輸出峰值</dt><dd id="hf-pk">—</dd></div><div><dt>平均</dt><dd id="hf-avg" class="e">—</dd></div><div><dt>導通</dt><dd id="hf-on">—</dd></div></dl>
+        <div class="msg" id="hf-msg"></div>
+      </div>
+      <div id="ex-half"></div>
+      <div class="howto">
+        <h4>半波題目的標準流程</h4>
+        <ol>
+          <li>先求 V<sub>m</sub>（V<sub>pp</sub>/2 或 √2 V<sub>rms</sub>）。</li>
+          <li>看 V<sub>γ</sub>/V<sub>m</sub>：小於 5% → 直接 V<sub>m</sub>/π；不小 → 用 α 的公式。</li>
+          <li>峰值 V<sub>m</sub> − V<sub>γ</sub>；PIV = V<sub>m</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 有壓降時平均 = (V<sub>m</sub> − 0.7)/π。<span class="o">✓ 這假裝還導通 180°；V<sub>m</sub> 小時會高估（你的例子 1.37 vs 1.27 V）。</span></li>
+          <li><span class="x">✗</span> 除以 π 是因為半個週期。<span class="o">✓ 面積 2V<sub>m</sub> ÷ 週期 2π＝V<sub>m</sub>/π。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-half">
+        <h3>🧠 觀念填充 · 整流電路（不用算，用選的）</h3>
+        <div class="hw-list" data-bank="__RECC" data-sec="整流"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 3 全波 ══════════ -->
+    <section class="sec" id="full">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.5–8 · Full-wave rectifiers</div>
+      <h2>全波整流：中間抽頭與橋式<span class="h2-en">FULL-WAVE RECTIFIERS</span></h2>
+      <p class="lede"><button class="tm" data-t="全波整流">全波</button>＝兩扇門輪流開，出口都在同一邊：負半週不砍掉，翻上來。<button class="tm" data-t="中間抽頭">中間抽頭</button>用 2 顆，<button class="tm" data-t="橋式整流">橋式</button>用 4 顆（最常用）。</p>
+      <div class="eq">理想：V<em>avg</em> = 2V<em>m</em>/π = 0.637V<em>m</em> = 0.9V<em>rms</em>　　<button class="tm" data-t="漣波">漣波</button>頻率 2f　　PIV：中間抽頭 2V<em>m</em>、橋式 V<em>m</em></div>
+      <div class="derive">
+        <h4>從半波到全波</h4>
+        <ol>
+          <li><span class="d-eq">v<sub>o</sub> = V<sub>m</sub>|sin θ|</span>
+            <div class="why">負半週也輸出正電壓，一個週期兩個駝峰。</div></li>
+          <li><span class="d-eq">V<sub>avg</sub> = (1/π)∫<sub>0</sub><sup>π</sup>V<sub>m</sub> sin θ dθ = 2V<sub>m</sub>/π</span>
+            <div class="why">每 π 就重複一次，面積 2V<sub>m</sub> ÷ π。是半波的兩倍。</div></li>
+          <li><span class="d-eq">中間抽頭：正半週 D1、負半週 D2</span>
+            <div class="why">兩半邊線圈各負責一個半週（講義 p.6）。截止那顆兩端差 2V<sub>m</sub>。</div></li>
+          <li><span class="d-eq">橋式：正半週 D1、D4，負半週 D2、D3</span>
+            <div class="why">四顆排成菱形，電流永遠從同一端進負載（講義 p.7）。</div></li>
+          <li><span class="d-eq hi">橋式峰值 ≈ V<sub>m</sub> − 2V<sub>γ</sub>，PIV = V<sub>m</sub></span>
+            <div class="why">每半週過兩顆，壓降兩倍；但不用中間抽頭、耐壓只要一半。</div></li>
+        </ol>
+      </div>
+      <div class="lab-photos" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+        <figure><div id="schem-ct" style="padding:8px"></div><figcaption>中間抽頭式（講義 p.6，重畫）</figcaption></figure>
+        <figure><div id="schem-br" style="padding:8px"></div><figcaption>橋式（講義 p.7，重畫；負載畫在菱形中間）</figcaption></figure>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>看哪幾顆二極體在導通</h3>
+          <div class="btn-row"><button class="btn" type="button" data-fw="ct">中間抽頭</button><button class="btn solid" type="button" data-fw="br">橋式</button><button class="btn" type="button" id="fw-play">⏸ 暫停</button><button class="btn" type="button" id="fw-step">下一個半週</button></div></div>
+        <div id="full-sch" style="display:flex;justify-content:center;padding:6px 0"></div>
+        <div class="stage-wrap"><canvas id="cv-full" aria-label="全波整流的輸入與輸出波形"></canvas></div>
+        <div class="controls"><div class="ctrl" style="grid-column:1 / -1"><label for="fw-vm">V<sub>m</sub><output for="fw-vm"></output></label><input type="range" id="fw-vm" min="2" max="20" step="0.1" value="10"></div></div>
+        <dl class="readout"><div><dt>導通中</dt><dd id="fw-on" class="e">—</dd></div><div><dt>峰值</dt><dd id="fw-pk">—</dd></div><div><dt>平均</dt><dd id="fw-avg">—</dd></div><div><dt>PIV</dt><dd id="fw-piv">—</dd></div></dl>
+        <div class="msg" id="fw-msg"></div>
+      </div>
+      <div id="ex-full"></div>
+      <div class="tbl-wrap"><table class="lab-tbl">
+        <thead><tr><th>講義 p.8</th><th>半波</th><th>中間抽頭</th><th>橋式</th></tr></thead>
+        <tbody>
+          <tr><td>二極體數</td><td>1</td><td>2</td><td>4</td></tr>
+          <tr><td>輸出平均</td><td>0.318V<sub>m</sub>＝0.45V<sub>rms</sub></td><td>0.637V<sub>m</sub>＝0.9V<sub>rms</sub></td><td>0.637V<sub>m</sub>＝0.9V<sub>rms</sub></td></tr>
+          <tr><td>漣波頻率</td><td>f<sub>s</sub></td><td>2f<sub>s</sub></td><td>2f<sub>s</sub></td></tr>
+          <tr><td>二極體耐壓</td><td>V<sub>m</sub></td><td>2V<sub>m</sub></td><td>V<sub>m</sub></td></tr>
+          <tr><td>加濾波電容後耐壓</td><td>2V<sub>m</sub></td><td>2V<sub>m</sub></td><td>V<sub>m</sub></td></tr>
+        </tbody></table></div>
+      <div class="howto">
+        <h4>全波題目的標準流程</h4>
+        <ol>
+          <li>認電路：兩顆＋中間抽頭，還是四顆菱形。</li>
+          <li>每半週過幾顆 → 峰值扣 V<sub>γ</sub> 或 2V<sub>γ</sub>。</li>
+          <li>平均 2V<sub>m</sub>/π（V<sub>m</sub> 小就用 α 的公式）；PIV 查表。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 中間抽頭的 V<sub>m</sub> 是整個次級線圈。<span class="o">✓ 是<b>半邊</b>線圈的峰值。</span></li>
+          <li><span class="x">✗</span> 橋式只扣一個 0.7 V。<span class="o">✓ 每半週過兩顆，扣 1.4 V。</span></li>
+          <li><span class="x">✗</span> 全波漣波頻率還是 60 Hz。<span class="o">✓ 120 Hz，濾波會比較好濾。</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ 實驗流程 ══════════ -->
+    <section class="sec" id="exp">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.9 · Experiment（課堂）</div>
+      <h2>🔬 實驗流程：半波整流<span class="h2-en">LAB PROCEDURE</span></h2>
+      <p class="lede">函數產生器 10 Vpp、60 Hz → 1N4002 → 1 kΩ。示波器看 V1、Vo；電表量 V1（AC）、Vo（DC）、二極體（DC）。</p>
+      <ul class="gear">
+        <li><b>函數信號產生器</b><span>正弦、60 Hz、10 Vpp、偏移 0</span></li>
+        <li><b>示波器（雙通道）</b><span>CH2 看 V1、CH1 看 Vo</span></li>
+        <li><b>三用電表</b><span>AC 量 V1、DC 量 Vo 與二極體</span></li>
+        <li><b>1N4002 ＋ 1 kΩ</b><span>色環端＝陰極，朝 Vo</span></li>
+      </ul>
+      <figure class="schem-box"><div><div id="schem-half"></div><figcaption>講義 p.9 的半波電路（重畫）</figcaption></div></figure>
+      <ol class="lab-steps">
+        <li><b class="t">接線</b><p>產生器 + → 二極體陽極；陰極（色環）→ 1 kΩ → 地。Vo 取在電阻上。</p></li>
+        <li><b class="t">設定產生器</b><p>正弦、60 Hz、10 Vpp、DC offset 0。先用示波器確認真的是 10 Vpp（你的是 9.92）。</p></li>
+        <li><b class="t">示波器看波形</b><p>兩個通道都 DC 耦合、地線同一點；記 V1、Vo 的峰對峰值。</p></li>
+        <li><b class="t">電表量三個值</b><p>V1 → <b>AC 檔</b>；Vo → <b>DC 檔</b>（平均）；二極體兩端 → DC 檔。</p></li>
+      </ol>
+      <div class="pitfall">
+        <h4>實驗時最常出包的地方</h4>
+        <ul>
+          <li><span class="x">✗</span> 量 Vo 切到 ACV 檔。<span class="o">✓ 讀到的是交流成分不是平均（你的 1.5714 V 就是這樣）。</span></li>
+          <li><span class="x">✗</span> 示波器用 AC 耦合看 Vo。<span class="o">✓ 波形會整條往下沉，看不出底部是 0。</span></li>
+          <li><span class="x">✗</span> 示波器兩支探棒地線接不同點。<span class="o">✓ 地線是相通的，接錯等於把二極體短路。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-exp">
+        <h3>🧠 觀念填充 · 實驗操作（不用算，用選的）</h3>
+        <div class="hw-list" data-bank="__RECC" data-sec="實驗"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 結果 ══════════ -->
+    <section class="sec" id="result">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>Results · 9/30 結報</div>
+      <h2>📈 結果：我的結報數據<span class="h2-en">MY DATA</span></h2>
+      <p class="lede">「我的實測」欄預設是你 9/30 結報的數字，改了會存起來，模擬跟著重算（模擬用你量到的 V<sub>pp</sub>、1N4002、1 kΩ）。</p>
+      <div class="bench">
+        <div class="bench-head"><h3>模擬波形 vs 你的讀值</h3></div>
+        <div class="stage-wrap"><canvas id="cv-res" aria-label="模擬的半波輸出與使用者量測值"></canvas></div>
+      </div>
+      <div class="tbl-wrap"><table class="lab-tbl" id="meas">
+        <thead><tr><th>量測</th><th>理論（理想、10 Vpp）</th><th>模擬（1N4002）</th><th><span class="my-tag">我的</span>實測</th><th>實測 vs 模擬</th></tr></thead><tbody></tbody></table></div>
+      <div class="btn-row" style="margin-top:8px"><button class="btn" type="button" id="meas-reset">改回結報數據</button></div>
+      <div id="ex-meter"></div>
+      <div class="note key">
+        <b>你的數據說了什麼：</b>
+        <ol style="margin:6px 0 0;padding-left:20px">
+          <li><b>峰值 4.32 V</b>：比輸入峰值 4.96 V 少 0.64 V，就是二極體壓降。模擬 4.31 V，幾乎一樣。</li>
+          <li><b>平均 1.29 V</b>（由二極體 −1.29 V 推）：模擬 1.28 V，差 0.5%。結報寫的 (5 − 0.7)/π = 1.37 V 只扣了峰值、沒算導通角變短；完整公式是 1.27 V。</li>
+          <li><b>表 2 的 V<sub>avg</sub> 那格要寫 1.29 V，不是 1.57 V</b>：1.5714 是 ACV 檔讀到的交流成分（模擬 1.64 V）。</li>
+          <li><b>V1 = 3.464 V</b>：示波器 9.92 Vpp 換算是 3.51 V，差 1.3%，電表在 60 Hz 正常。</li>
+          <li>表 2 的「V<sub>rms</sub>」那列如果是指 <b>Vo 的有效值</b>，理想值是 V<sub>m</sub>/2 = 2.5 V（不是 3.54 V）；你的數據推得 √(1.29<sup>2</sup> + 1.57<sup>2</sup>) = 2.03 V（請確認老師這列指的是哪個）。</li>
+        </ol>
+      </div>
+      <h3 style="font-size:16px;margin:22px 0 6px">📷 實驗照片（結報）</h3>
+      <div class="lab-photos">
+        <figure><img src="img/rect-board.jpg" alt="麵包板接線" loading="lazy"><figcaption>麵包板接線</figcaption></figure>
+        <figure><img src="img/rect-scope.jpg" alt="示波器 V1 與 Vo" loading="lazy"><figcaption>示波器：V1 9.92 Vpp（59.95 Hz）、Vo 4.32 V</figcaption></figure>
+        <figure><img src="img/rect-v1.jpg" alt="電表量 V1" loading="lazy"><figcaption>V1 = 3.4639 VAC（AC 檔）</figcaption></figure>
+        <figure><img src="img/rect-vo.jpg" alt="電表量 Vo" loading="lazy"><figcaption>Vo = 1.5714 V（<b>ACV 檔</b>，是交流成分）</figcaption></figure>
+        <figure><img src="img/rect-vd.jpg" alt="電表量二極體電壓" loading="lazy"><figcaption>二極體 = −1.2906 VDC → Vo 平均 1.29 V</figcaption></figure>
+        <figure><img class="contain" src="img/rect-tina-h.jpg" alt="TINA 半波模擬" loading="lazy"><figcaption>TINA-TI 半波模擬</figcaption></figure>
+        <figure><img class="contain" src="img/rect-tina-b.jpg" alt="TINA 橋式模擬" loading="lazy"><figcaption>TINA-TI 橋式模擬</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ══════════ PSpice ══════════ -->
+    <section class="sec" id="pspice">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.10–12 · PSpice（回家作業）</div>
+      <h2>💻 PSpice：半波與橋式的 Vo 波形<span class="h2-en">PSPICE TRANSIENT</span></h2>
+      <p class="lede">Vsin：VAMP = 10 V（峰值，不是 Vpp）、FREQ = 60 Hz。分析選 <b>Time Domain</b>，Run to time 50 ms。</p>
+      <div class="lab-photos" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+        <figure><div id="schem-psh" style="padding:8px"></div><figcaption>半波（講義 p.10，重畫）</figcaption></figure>
+        <figure><div id="schem-psb" style="padding:8px"></div><figcaption>橋式（講義 p.11，重畫）</figcaption></figure>
+      </div>
+      <ol class="lab-steps">
+        <li><b class="t">New Simulation Profile → Time Domain (Transient)</b><p>講義 p.12。Run to time 50 ms（3 個週期），Maximum step 可設 0.05 ms 讓波形平滑。</p></li>
+        <li><b class="t">Vsin 參數</b><p>VOFF = 0、VAMP = 10、FREQ = 60。</p></li>
+        <li><b class="t">放電壓探棒</b><p>V1 一支、Vo 一支；橋式的 Vo 是負載兩端的差（用差動探棒或 V(+) − V(−)）。</p></li>
+      </ol>
+      <div class="bench">
+        <div class="bench-head"><h3>應該跑出來長這樣</h3>
+          <div class="btn-row"><button class="btn solid" type="button" data-ps="half">半波</button><button class="btn" type="button" data-ps="br">橋式</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-ps" aria-label="PSpice 半波與橋式整流輸出波形"></canvas></div>
+        <div class="controls"><div class="ctrl" style="grid-column:1 / -1"><label for="ps-r">負載 R<output for="ps-r"></output></label><input type="range" id="ps-r" min="50" max="2000" step="10" value="100"></div></div>
+        <div class="msg" id="ps-msg"></div>
+      </div>
+      <div class="note"><b>跟你的 TINA 結果對：</b>半波 50 ms 內 3 個駝峰、橋式 6 個。模擬（D1N4002、100 Ω）：半波峰值 9.19 V、平均 2.81 V；橋式峰值 8.39 V、平均 4.91 V。你用的 1N1183 是大電流整流管，壓降會略有不同。</div>
+    </section>
+
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號</code></div>
+        <div class="gl-row"><b>整流器</b><span>rectifier</span><code>—</code></div>
+        <div class="gl-row"><b>半波整流</b><span>half-wave rectifier</span><code>—</code></div>
+        <div class="gl-row"><b>全波整流</b><span>full-wave rectifier</span><code>—</code></div>
+        <div class="gl-row"><b>中間抽頭變壓器</b><span>center-tapped transformer</span><code>CT</code></div>
+        <div class="gl-row"><b>橋式整流</b><span>bridge rectifier</span><code>—</code></div>
+        <div class="gl-row"><b>峰值</b><span>peak value</span><code>V<sub>m</sub></code></div>
+        <div class="gl-row"><b>峰對峰值</b><span>peak-to-peak value</span><code>V<sub>pp</sub></code></div>
+        <div class="gl-row"><b>有效值（方均根值）</b><span>rms value</span><code>V<sub>rms</sub></code></div>
+        <div class="gl-row"><b>平均值</b><span>average (DC) value</span><code>V<sub>avg</sub>, V<sub>dc</sub></code></div>
+        <div class="gl-row"><b>反向峰值電壓</b><span>peak inverse voltage</span><code>PIV</code></div>
+        <div class="gl-row"><b>漣波頻率</b><span>ripple frequency</span><code>f<sub>s</sub>, 2f<sub>s</sub></code></div>
+        <div class="gl-row"><b>導通角</b><span>conduction angle</span><code>—</code></div>
+        <div class="gl-row"><b>暫態分析</b><span>transient (time-domain) analysis</span><code>PSpice</code></div>
+      </div>
+    </section>
+
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：電子實習（上）第四章「整流器」講義（12 頁）；量測數據取自使用者 2026/09/30 實驗結報（第 27 組）。模擬：1N4002 SPICE 模型（IS = 14.11 nA、N = 1.984、RS = 33.89 mΩ），每週期 720 點求解。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="assets/rectifier-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'why', no: '1', name: '四個數字', count: 'p.2, 4' },
+  { id: 'half', no: '2', name: '半波', count: 'p.3' },
+  { id: 'full', no: '3', name: '全波', count: 'p.5–8' },
+  { id: 'exp', no: '🔬', name: '實驗流程', count: 'p.9' },
+  { id: 'result', no: '📈', name: '我的數據', count: '9/30' },
+  { id: 'pspice', no: '💻', name: 'PSpice', count: 'p.10–12' }
+], { key: 'lab-rect', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/rectifier.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/rectifier-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

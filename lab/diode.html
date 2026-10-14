@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>二極體特性</title>
+<meta name="description" content="電子實習第三章：二極體特性。故事模式、單向導電、二極體方程式、順偏反偏靜態特性實驗（含 9/23 結報數據）、PSpice DC Sweep。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="lab" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子實習</a><span>›</span><b>CH3 二極體特性</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH3 二極體特性</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>這一頁怎麼讀</a></li>
+      <li><a href="#pn"><i>1</i>單向導電：順偏與反偏</a></li>
+      <li><a href="#iv"><i>2</i>V-I 特性曲線與方程式</a></li>
+      <li><a href="#exp"><i>🔬</i>實驗流程（課堂）</a></li>
+      <li><a href="#result"><i>📈</i>結果：我的結報數據</a></li>
+      <li><a href="#pspice"><i>💻</i>PSpice 回家作業</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">實習講義 第三章</span>Electronics Lab · Diode Characteristics</div>
+      <h1>二極體特性：單向導電與 V-I 曲線</h1>
+      <p class="sub">二極體是一扇<strong>有門檻的單向旋轉門</strong>：順著推，過了 0.6 V 電流就指數暴衝；反著推，30 V 也幾乎推不動。這一頁用<strong>你 9/23 量到的數據</strong>一路講完。</p>
+      <div class="hero-meta">
+        <span class="chip h">📊 含 9/23 結報數據（順偏 7 點、反偏 8 點）</span>
+        <span class="chip">18 個畫面的故事模式</span>
+        <span class="chip">4 個互動模組 ＋ 3 個可改數字例題</span>
+        <span class="chip">觀念填充 24 題 ＋ 10 題測驗</span>
+      </div>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">實習講義 第三章</span>Story mode · 先看這段，再往下讀</div>
+      <h2>18 個畫面看懂二極體<span class="h2-en">THE STORY IN 18 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進，點左邊四分之一退回；也可以按「自動播放」。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">實習講義 第三章</span>How to read this page</div>
+      <h2>這一頁怎麼讀<span class="h2-en">PAGE MAP</span></h2>
+      <p class="lede">講義 11 頁：p.2–4 原理、p.5–6 課堂實驗、p.7–11 PSpice。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>p.2–3</code><b>二極體構造、順偏與反偏</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.4</code><b>V-I 特性曲線、二極體方程式、切入電壓</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.5–6</code><b>🔬 順偏／反偏靜態特性 → 📈 你的數據</b><span class="dot"></span></div>
+        <div class="outline-row done"><code>p.7–11</code><b>💻 PSpice DC Sweep</b><span class="dot"></span></div>
+      </div>
+      <div class="note">
+        <b>講義勘誤／請確認：</b>
+        <ol style="margin:6px 0 0;padding-left:20px">
+          <li>p.4「η 為常數，矽二極體 = 2，鍺二極體 = 1」是較舊課本的取法；實際元件 η 在 1～2 之間。你這顆 1N4004 擬合出 <b>η ≈ 1.78</b>，接近講義的 2。</li>
+          <li>p.7 PSpice 範例用 R4 = 100 Ω、D1N4002，跟課堂的 1 kΩ、1N4004 不同；p.8 截圖又是 R1 = 5k、D1N4148、掃 −10～10 V，只是操作示範。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 1 單向導電 ══════════ -->
+    <section class="sec" id="pn">
+      <div class="eyebrow"><span class="part-tag">實習講義 第三章</span>p.2–3 · Forward &amp; reverse bias</div>
+      <h2>單向導電：順偏與反偏<span class="h2-en">FORWARD &amp; REVERSE BIAS</span></h2>
+      <p class="lede">P 型接 N 型就是一顆二極體。<button class="tm" data-t="陽極">陽極</button>接正是<button class="tm" data-t="順向偏壓">順偏</button>（通），<button class="tm" data-t="陰極">陰極</button>接正是<button class="tm" data-t="逆向偏壓">反偏</button>（擋）。</p>
+      <div class="eq">順偏：I = (V − V<em>D</em>) / R　　反偏：I ≈ 0，V<em>D</em> ≈ V</div>
+      <div class="derive">
+        <h4>從接法到電流</h4>
+        <ol>
+          <li><span class="d-eq">陽極 A（P）接正、陰極 K（N，色環端）接負 ⟹ 順偏</span>
+            <div class="why">順著三角形的方向推。講義圖 3.4(a)。</div></li>
+          <li><span class="d-eq">KVL：V = I·R + V<sub>D</sub> ⟹ I = (V − V<sub>D</sub>)/R</span>
+            <div class="why">導通後 V<sub>D</sub> 只有 0.5～0.7 V，其餘電壓都在<button class="tm" data-t="限流電阻">限流電阻</button>上。</div></li>
+          <li><span class="d-eq">反過來接 ⟹ 反偏，I ≈ 0</span>
+            <div class="why">旋轉門卡住，只剩極小的逆向飽和電流。講義圖 3.4(b)。</div></li>
+          <li><span class="d-eq hi">I ≈ 0 ⟹ 電阻壓降 ≈ 0 ⟹ V<sub>D</sub> ≈ V</span>
+            <div class="why">你的數據：V<sub>i</sub> = 20 V 時 V<sub>d</sub> = 19.997 V。</div></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>順偏 vs 反偏</h3>
+          <div class="btn-row"><button class="btn solid" type="button" data-dr="f">順偏</button><button class="btn" type="button" data-dr="r">反偏</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-dir" aria-label="二極體順偏與反偏時的電流"></canvas></div>
+        <div class="controls"><div class="ctrl" style="grid-column:1 / -1"><label for="dr-vi">電源 V<sub>i</sub><output for="dr-vi"></output></label><input type="range" id="dr-vi" min="0" max="12" step="0.05" value="5"></div></div>
+        <dl class="readout"><div><dt>電流</dt><dd id="dr-i" class="e">—</dd></div><div><dt>V_D</dt><dd id="dr-v">—</dd></div></dl>
+        <div class="msg" id="dr-msg"></div>
+      </div>
+      <div id="ex-fwd"></div>
+      <div class="howto">
+        <h4>判斷順偏／反偏</h4>
+        <ol>
+          <li>找色環（陰極）。</li>
+          <li>陽極電位比陰極高 → 順偏；反之反偏。</li>
+          <li>順偏：I = (V − 0.7)/R；反偏：I ≈ 0、V<sub>D</sub> ≈ V。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 反偏時二極體兩端沒電壓。<span class="o">✓ 電壓全部落在它身上。</span></li>
+          <li><span class="x">✗</span> 不串電阻直接接電源。<span class="o">✓ 一導通電流就爆大，會燒掉。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-pn">
+        <h3>🧠 觀念填充 · 原理（不用算，用選的）</h3>
+        <div class="hw-list" data-bank="__DIC" data-sec="原理"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 2 V-I 曲線 ══════════ -->
+    <section class="sec" id="iv">
+      <div class="eyebrow"><span class="part-tag">實習講義 第三章</span>p.4 · V-I characteristic</div>
+      <h2>V-I 特性曲線與二極體方程式<span class="h2-en">THE DIODE EQUATION</span></h2>
+      <p class="lede">過了<button class="tm" data-t="切入電壓">切入電壓</button>，電流隨電壓<b>指數</b>成長：每 ×10 只要多約 0.1 V。反偏只剩極小的<button class="tm" data-t="逆向飽和電流">I<sub>S</sub></button>。</p>
+      <div class="eq">I = I<em>S</em>(e<sup>V/ηV<em>T</em></sup> − 1)　　V<em>T</em> = (273 + T°C)/11600 ≈ 26 mV　　V<em>r</em>：矽 0.6 V、鍺 0.2 V</div>
+      <div class="derive">
+        <h4>從公式看你的數據</h4>
+        <ol>
+          <li><span class="d-eq">順偏、V ≫ V<sub>T</sub> ⟹ I ≈ I<sub>S</sub>e<sup>V/ηV<sub>T</sub></sup></span>
+            <div class="why">e 的次方很大，「−1」可以不管。</div></li>
+          <li><span class="d-eq">兩點相除：I<sub>2</sub>/I<sub>1</sub> = e<sup>(V<sub>2</sub> − V<sub>1</sub>)/ηV<sub>T</sub></sup></span>
+            <div class="why">I<sub>S</sub> 消掉了，只剩 η。</div></li>
+          <li><span class="d-eq">電流 ×10 ⟹ ΔV = ηV<sub>T</sub> ln 10 = η × 59.6 mV</span>
+            <div class="why">η = 2 時每 ×10 多 119 mV；η = 1 時 60 mV。</div></li>
+          <li><span class="d-eq hi">你的數據：0.1 → 1 mA 多 103 mV、1 → 10 mA 多 108 mV ⟹ η ≈ 1.78</span>
+            <div class="why">7 個點擬合：η = 1.78、I<sub>S</sub> = 2.4 nA（含 0.3 Ω 串聯電阻，每點誤差 ≤ 3 mV）；不含串聯電阻則是 η = 1.80、I<sub>S</sub> = 2.8 nA。</div></li>
+          <li><span class="d-eq">反偏：e 項 → 0 ⟹ I → −I<sub>S</sub>（約 nA）</span>
+            <div class="why">你量到的 0.001～0.003 mA 已經是電表最後一位。</div></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>調 η、溫度、I<sub>S</sub>，讓曲線穿過你的點</h3>
+          <div class="btn-row"><button class="btn" type="button" id="iv-fit">套用擬合值</button><button class="btn" type="button" id="iv-log">切換：對數刻度</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-iv" aria-label="二極體方程式曲線與使用者量測點"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="iv-n">η<output for="iv-n"></output></label><input type="range" id="iv-n" min="1" max="2.2" step="0.01" value="2"></div>
+          <div class="ctrl"><label for="iv-t">溫度<output for="iv-t"></output></label><input type="range" id="iv-t" min="-20" max="100" step="1" value="27"></div>
+          <div class="ctrl"><label for="iv-is">I<sub>S</sub><output for="iv-is"></output></label><input type="range" id="iv-is" min="-12" max="-6" step="0.01" value="-8.558"></div>
+        </div>
+        <dl class="readout"><div><dt>V_T</dt><dd id="iv-vt">—</dd></div><div><dt>1 mA 時的 V</dt><dd id="iv-v1" class="e">—</dd></div><div><dt>每 ×10 多</dt><dd id="iv-dec">—</dd></div></dl>
+        <div class="msg" id="iv-msg"></div>
+      </div>
+      <div id="ex-eq"></div>
+      <div id="ex-dec"></div>
+      <div class="howto">
+        <h4>用兩個量測點算 η</h4>
+        <ol>
+          <li>挑兩點（電流差越多越好）。</li>
+          <li>η = (V<sub>2</sub> − V<sub>1</sub>) / (V<sub>T</sub> ln(I<sub>2</sub>/I<sub>1</sub>))。</li>
+          <li>結果應在 1～2 之間。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> V<sub>T</sub> 代 26（沒換成 V）。<span class="o">✓ 0.026 V。</span></li>
+          <li><span class="x">✗</span> 用 log 不用 ln。<span class="o">✓ 公式是自然對數；用 log 要乘 2.303。</span></li>
+          <li><span class="x">✗</span> 反偏電流是 0。<span class="o">✓ 是 −I<sub>S</sub>，極小但不是 0。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-iv">
+        <h3>🧠 觀念填充 · 特性曲線（不用算，用選的）</h3>
+        <div class="hw-list" data-bank="__DIC" data-sec="特性"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 實驗流程 ══════════ -->
+    <section class="sec" id="exp">
+      <div class="eyebrow"><span class="part-tag">實習講義 第三章</span>p.5–6 · Experiment（課堂）</div>
+      <h2>🔬 實驗流程：順偏／反偏靜態特性<span class="h2-en">LAB PROCEDURE</span></h2>
+      <p class="lede"><b>順偏</b>：調 V<sub>i</sub> 讓 A1 = 0.1～10 mA，記 V<sub>i</sub>、V<sub>d</sub>。<b>反偏</b>：V<sub>i</sub> = 5～30 V，記 A1、V<sub>d</sub>。</p>
+      <ul class="gear">
+        <li><b>直流電源供應器</b><span>0～30 V</span></li>
+        <li><b>三用電表</b><span>DCA 量 A1、DCV 量 V<sub>d</sub></span></li>
+        <li><b>1N4004</b><span>色環端＝陰極</span></li>
+        <li><b>電阻 1 kΩ</b><span>限流</span></li>
+      </ul>
+      <div class="lab-photos" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+        <figure><div id="schem-f" style="padding:8px"></div><figcaption>順偏：A1 串、V<sub>d</sub> 並（講義 p.5，重畫）</figcaption></figure>
+        <figure><div id="schem-r" style="padding:8px"></div><figcaption>反偏：二極體反過來（講義 p.6，重畫）</figcaption></figure>
+      </div>
+      <ol class="lab-steps">
+        <li><b class="t">順偏接線</b><p>陽極接電阻端、陰極（色環）接地。電表切 DCA 串進去。</p></li>
+        <li><b class="t">慢慢調 V<sub>i</sub></b><p>讓 A1 = 0.1、0.2、0.5、1、3、5、10 mA，記下 V<sub>i</sub>。過了 0.6 V 電流衝很快，要很慢。</p></li>
+        <li><b class="t">換 DCV 量 V<sub>d</sub></b><p>電表並在二極體兩端。</p></li>
+        <li><b class="t">反偏</b><p>二極體反過來，V<sub>i</sub> = 5、10、14.5、15、15.5、20、25、30 V，各量 A1、V<sub>d</sub>。</p></li>
+      </ol>
+      <div class="pitfall">
+        <h4>實驗時最常出包的地方</h4>
+        <ul>
+          <li><span class="x">✗</span> DCA 檔並在二極體上。<span class="o">✓ 等於短路，會燒電表保險絲。</span></li>
+          <li><span class="x">✗</span> 順偏一口氣把電壓轉大。<span class="o">✓ 電流瞬間衝過 10 mA。</span></li>
+          <li><span class="x">✗</span> 反偏讀到 0.00x mA 以為接錯。<span class="o">✓ 本來就幾乎沒電流，那是電表最後一位。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-exp">
+        <h3>🧠 觀念填充 · 實驗操作（不用算，用選的）</h3>
+        <div class="hw-list" data-bank="__DIC" data-sec="實驗"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 結果 ══════════ -->
+    <section class="sec" id="result">
+      <div class="eyebrow"><span class="part-tag">實習講義 第三章</span>Results · 9/23 結報</div>
+      <h2>📈 結果：我的結報數據<span class="h2-en">MY DATA</span></h2>
+      <p class="lede">表格預設是你 9/23 結報的數字（1N4004、第 27 組），改了會存起來、圖跟著變；按「改回結報數據」還原。</p>
+      <div class="bench">
+        <div class="bench-head"><h3>順偏（左）與反偏（右）</h3></div>
+        <div class="stage-wrap"><canvas id="cv-res" aria-label="使用者量測的順偏與反偏特性"></canvas></div>
+      </div>
+      <h3 style="font-size:16px;margin:18px 0 6px"><span class="my-tag">我的</span>順偏（表 1）</h3>
+      <div class="tbl-wrap"><table class="lab-tbl" id="meas-f">
+        <thead><tr><th>目標 A1</th><th>V<sub>i</sub>（V）</th><th>A1（mA）</th><th>V<sub>d</sub>（V）</th><th>擬合 V<sub>d</sub></th><th>(V<sub>i</sub> − V<sub>d</sub>)/A1（kΩ）</th></tr></thead><tbody></tbody></table></div>
+      <h3 style="font-size:16px;margin:18px 0 6px"><span class="my-tag">我的</span>反偏（表 2）</h3>
+      <div class="tbl-wrap"><table class="lab-tbl" id="meas-r">
+        <thead><tr><th>目標 V<sub>i</sub></th><th>A1（mA）</th><th>V<sub>d</sub>（V）</th></tr></thead><tbody></tbody></table></div>
+      <div class="btn-row" style="margin-top:8px"><button class="btn" type="button" id="meas-reset">改回結報數據</button></div>
+      <div class="note key">
+        <b>你的數據說了什麼：</b>
+        <ol style="margin:6px 0 0;padding-left:20px">
+          <li><b>指數</b>：電流 ×100，電壓只多 0.21 V；擬合出 <b>η = 1.78、I<sub>S</sub> = 2.4 nA</b>，每點誤差 ≤ 3 mV。</li>
+          <li><b>切入電壓約 0.6 V</b>：0.596 V 時剛好 1 mA，跟講義矽 0.6 V 一致。</li>
+          <li><b>反偏 ≈ 0</b>：5～30 V 都在 0.000～0.003 mA，是電表解析度極限；V<sub>d</sub> ≈ V<sub>i</sub>。</li>
+          <li><b>電阻反推約 1.07～1.08 kΩ</b>（右邊那欄）：電阻誤差加上電流表內阻。10 mA 那點算出 0.975 kΩ 比較怪，可能那時電表換了檔位（請確認）。</li>
+        </ol>
+      </div>
+      <h3 style="font-size:16px;margin:22px 0 6px">📷 實驗照片（結報）</h3>
+      <div class="lab-photos">
+        <figure><img src="img/diode-board.jpg" alt="麵包板接線" loading="lazy"><figcaption>麵包板接線</figcaption></figure>
+        <figure><img src="img/diode-meter.jpg" alt="0.1 mA 量測" loading="lazy"><figcaption>順偏 0.1 mA：A1 = 0.1041 mA、V<sub>i</sub> = 0.605 V</figcaption></figure>
+        <figure><img class="contain" src="img/diode-tina-f.jpg" alt="TINA 順偏模擬" loading="lazy"><figcaption>TINA-TI 順偏模擬</figcaption></figure>
+        <figure><img class="contain" src="img/diode-tina-r.jpg" alt="TINA 反偏模擬" loading="lazy"><figcaption>TINA-TI 反偏模擬</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ══════════ PSpice ══════════ -->
+    <section class="sec" id="pspice">
+      <div class="eyebrow"><span class="part-tag">實習講義 第三章</span>p.7–11 · PSpice（回家作業）</div>
+      <h2>💻 PSpice：DC Sweep 掃出 V-I 曲線<span class="h2-en">PSPICE DC SWEEP</span></h2>
+      <p class="lede">講義 p.7：V1 → 100 Ω → D1N4002，V1 從 0 掃到 10 V（每次 0.01 V）。</p>
+      <figure class="schem-box"><div><div id="schem-ps"></div><figcaption>講義 p.7 的模擬電路（重畫）</figcaption></div></figure>
+      <ol class="lab-steps">
+        <li><b class="t">New Simulation Profile → DC Sweep</b><p>Voltage source、Name = V1、Linear，Start 0、End 10、Increment 0.01。</p></li>
+        <li><b class="t">Run，Add Trace → I(D1)</b><p>Y 軸放二極體電流。</p></li>
+        <li><b class="t">Plot → Axis Settings → Axis Variable → V(D1:1)</b><p>X 軸改成二極體陽極電壓，就是 V-I 曲線。</p></li>
+      </ol>
+      <div class="bench">
+        <div class="bench-head"><h3>應該跑出來長這樣（模擬 D1N4002）</h3></div>
+        <div class="stage-wrap"><canvas id="cv-ps" aria-label="PSpice DC sweep 二極體 V-I 曲線"></canvas></div>
+        <div class="controls"><div class="ctrl" style="grid-column:1 / -1"><label for="ps-v">V1 掃到<output for="ps-v"></output></label><input type="range" id="ps-v" min="0" max="10" step="0.01" value="5"></div></div>
+        <div class="msg" id="ps-msg"></div>
+      </div>
+    </section>
+
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">實習講義 第三章</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號</code></div>
+        <div class="gl-row"><b>二極體</b><span>diode</span><code>D</code></div>
+        <div class="gl-row"><b>陽極／陰極</b><span>anode / cathode</span><code>A / K</code></div>
+        <div class="gl-row"><b>順偏／反偏</b><span>forward / reverse bias</span><code>—</code></div>
+        <div class="gl-row"><b>V-I 特性曲線</b><span>V-I characteristic</span><code>—</code></div>
+        <div class="gl-row"><b>逆向飽和電流</b><span>reverse saturation current</span><code>I<sub>S</sub></code></div>
+        <div class="gl-row"><b>熱電壓</b><span>thermal voltage</span><code>V<sub>T</sub></code></div>
+        <div class="gl-row"><b>切入電壓</b><span>cut-in voltage</span><code>V<sub>r</sub></code></div>
+        <div class="gl-row"><b>崩潰電壓</b><span>breakdown voltage</span><code>V<sub>ZK</sub></code></div>
+        <div class="gl-row"><b>限流電阻</b><span>current-limiting resistor</span><code>R</code></div>
+        <div class="gl-row"><b>靜態特性</b><span>static characteristic</span><code>—</code></div>
+        <div class="gl-row"><b>直流掃描</b><span>DC sweep</span><code>PSpice</code></div>
+      </div>
+    </section>
+
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">實習講義 第三章</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：電子實習（上）第三章「二極體特性」講義（11 頁）；量測數據取自使用者 2026/09/23 實驗結報（第 27 組）。擬合模型：V = ηV<sub>T</sub> ln(I/I<sub>S</sub>) + I·R<sub>S</sub>；PSpice 對照用 D1N4002 模型（IS = 14.11 nA、N = 1.984、RS = 33.89 mΩ）。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="assets/diode-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'pn', no: '1', name: '順偏與反偏', count: 'p.2–3' },
+  { id: 'iv', no: '2', name: 'V-I 曲線', count: 'p.4' },
+  { id: 'exp', no: '🔬', name: '實驗流程', count: 'p.5–6' },
+  { id: 'result', no: '📈', name: '我的數據', count: '9/23' },
+  { id: 'pspice', no: '💻', name: 'PSpice', count: 'p.7–11' }
+], { key: 'lab-diode', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/diode.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/diode-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

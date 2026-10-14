@@ -1260,6 +1260,17 @@ body.ann-on .derive.dv-cards .dv-short, body.ann-on .derive.dv-cards .dv-more, b
 @media (max-width: 520px) { .derive.dv-cards ol { padding-left: 30px; padding-right: 10px; } .dv-bar { padding-left: 14px; } .derive.dv-cards ol > li { padding: 10px 11px; } }
 @media (prefers-reduced-motion: reduce) { .derive.dv-cards ol > li { animation: none; } }
 
+
+/* ---------- 我的實驗照片（電子實習結報） ---------- */
+.lab-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 14px 0 6px; }
+.lab-photos figure { margin: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.lab-photos img { display: block; width: 100%; height: 180px; object-fit: cover; background: var(--surface-2); cursor: zoom-in; }
+.lab-photos img.contain { object-fit: contain; }
+.lab-photos figcaption { font-size: 12.5px; color: var(--ink-2); padding: 7px 10px 9px; line-height: 1.5; }
+.lab-photos figure.open { grid-column: 1 / -1; }
+.lab-photos figure.open img { height: auto; max-height: 80vh; object-fit: contain; cursor: zoom-out; }
+.my-tag { display: inline-block; font-size: 11px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 99px; padding: 1px 8px; margin-right: 6px; vertical-align: 1px; }
+
 /* ===== 電腦版放大（tools/desktop-css.py 自動產生，不要手改） ===== */
 @media (min-width: 1200px) {
   body { font-size: 17.1px; }
@@ -1500,6 +1511,8 @@ body.ann-on .derive.dv-cards .dv-short, body.ann-on .derive.dv-cards .dv-more, b
   .derive.dv-cards .dv-short { font-size: 17.1px; }
   .dv-more { font-size: 14.2px; }
   .dv-prog { font-size: 13.7px; }
+  .lab-photos figcaption { font-size: 14.2px; }
+  .my-tag { font-size: 12.5px; }
 }
 @media (min-width: 1600px) {
   body { font-size: 18.6px; }
@@ -1740,5 +1753,7 @@ body.ann-on .derive.dv-cards .dv-short, body.ann-on .derive.dv-cards .dv-more, b
   .derive.dv-cards .dv-short { font-size: 18.6px; }
   .dv-more { font-size: 15.5px; }
   .dv-prog { font-size: 14.9px; }
+  .lab-photos figcaption { font-size: 15.5px; }
+  .my-tag { font-size: 13.6px; }
 }
 /* ===== 電腦版放大 end ===== */

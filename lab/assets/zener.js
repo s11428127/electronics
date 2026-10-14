@@ -183,8 +183,10 @@
     const getAll = () => { if (store) return store.all(); try { return JSON.parse(localStorage.getItem(LS) || '{}'); } catch (e) { return {}; } };
     const put = (id, obj) => { if (store) { obj ? store.put(id, obj) : store.del(id); return; } try { const a = getAll(); if (obj) a[id] = obj; else delete a[id]; localStorage.setItem(LS, JSON.stringify(a)); } catch (e) {} };
     const mt = document.querySelector('#meas1 tbody'), mt2 = document.querySelector('#meas2 tbody');
-    VSS.forEach((v, i) => mt.insertAdjacentHTML('beforeend', '<tr data-id="a' + i + '" data-vs="' + v + '"><td>' + v + ' V</td><td><input type="number" inputmode="decimal" step="any" data-k="vd" aria-label="Vs ' + v + ' V 時量到的 VD"></td><td class="num my">—</td><td class="num">' + sim[i].vo.toFixed(3) + '</td><td class="num df">—</td></tr>'));
-    LOADS.forEach((r, i) => mt2.insertAdjacentHTML('beforeend', '<tr data-id="b' + i + '"><td>' + fmtR(r) + '</td><td><input type="number" inputmode="decimal" step="any" data-k="vd" aria-label="R ' + fmtR(r) + ' 時量到的 VD"></td><td class="num">' + sim2[i].vo.toFixed(3) + '</td><td class="num df">—</td></tr>'));
+    /* 使用者結報（1 kΩ、改 V_S；V_S = 15 V 並負載） */
+    const MY1 = [1.9978, 3.9892, 5.3718, 5.4890, 5.5058, 5.5196, 5.5311, 5.5425], MY2 = [7.4946, 13.622, 14.276];
+    VSS.forEach((v, i) => mt.insertAdjacentHTML('beforeend', '<tr data-id="a' + i + '" data-vs="' + v + '"><td>' + v + ' V</td><td><input type="number" inputmode="decimal" step="any" data-k="vd" data-def="' + MY1[i] + '" aria-label="Vs ' + v + ' V 時量到的 VD"></td><td class="num my">—</td><td class="num">' + sim[i].vo.toFixed(3) + '</td><td class="num df">—</td></tr>'));
+    LOADS.forEach((r, i) => mt2.insertAdjacentHTML('beforeend', '<tr data-id="b' + i + '"><td>' + fmtR(r) + '</td><td><input type="number" inputmode="decimal" step="any" data-k="vd" data-def="' + MY2[i] + '" aria-label="R ' + fmtR(r) + ' 時量到的 VD"></td><td class="num">' + sim2[i].vo.toFixed(3) + '</td><td class="num df">—</td></tr>'));
     function calc(tr) {
       const vd = parseFloat(tr.querySelector('input').value), df = tr.querySelector('.df'), my = tr.querySelector('.my');
       const simv = tr.dataset.id[0] === 'a' ? sim[+tr.dataset.id.slice(1)].vo : sim2[+tr.dataset.id.slice(1)].vo;
@@ -195,12 +197,12 @@
     }
     function fill() {
       const all = getAll();
-      [mt, mt2].forEach(t => t.querySelectorAll('tr').forEach(tr => { const inp = tr.querySelector('input'), it = all[tr.dataset.id]; if (document.activeElement !== inp) inp.value = it && it.vd !== undefined ? it.vd : ''; calc(tr); }));
+      [mt, mt2].forEach(t => t.querySelectorAll('tr').forEach(tr => { const inp = tr.querySelector('input'), it = all[tr.dataset.id]; if (document.activeElement !== inp) inp.value = it && it.vd !== undefined ? it.vd : inp.dataset.def; calc(tr); }));
       if (window.__zplot) window.__zplot();
     }
-    [mt, mt2].forEach(t => t.addEventListener('input', e => { const tr = e.target.closest('tr'); if (!tr) return; const v = tr.querySelector('input').value; put(tr.dataset.id, v === '' ? null : { vd: v }); calc(tr); if (window.__zplot) window.__zplot(); }));
-    document.getElementById('meas-clear').addEventListener('click', () => { if (!confirm('清空實驗 1 的實測數字？')) return; VSS.forEach((v, i) => put('a' + i, null)); LOADS.forEach((r, i) => put('b' + i, null)); fill(); });
-    window.__zmine = () => VSS.map((v, i) => { const it = getAll()['a' + i]; return it && it.vd !== '' ? [v, parseFloat(it.vd)] : null; });
+    [mt, mt2].forEach(t => t.addEventListener('input', e => { const tr = e.target.closest('tr'); if (!tr) return; const v = tr.querySelector('input').value; put(tr.dataset.id, { vd: v }); calc(tr); if (window.__zplot) window.__zplot(); }));
+    document.getElementById('meas-clear').addEventListener('click', () => { if (!confirm('改回結報的原始數據？')) return; VSS.forEach((v, i) => put('a' + i, null)); LOADS.forEach((r, i) => put('b' + i, null)); fill(); });
+    window.__zmine = () => Array.prototype.map.call(mt.querySelectorAll('tr'), (tr, i) => { const x = parseFloat(tr.querySelector('input').value); return isNaN(x) ? null : [VSS[i], x]; });
     fill();
     window.addEventListener('load', () => {
       if (!window.__SYNC) return;

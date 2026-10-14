@@ -48,7 +48,7 @@
       <h1>整流器濾波：電容濾波電路</h1>
       <p class="sub">整流完的電壓是一顆一顆的駝峰（<button class="tm" data-t="脈動直流">脈動直流</button>），手機、音響要的是平平的直流。這一頁做的事只有一件：<strong>在負載旁邊並一顆電容當「水塔」</strong>，看它怎麼把駝峰抹平、R 和 C 怎麼決定抹得多平，以及實驗要怎麼量、量出來應該長什麼樣子。</p>
       <div class="hero-meta">
-        <span class="chip h">🔬 實驗流程 ＋ 6 組模擬結果</span>
+        <span class="chip h">📊 含 10/7 結報數據（6 組）＋ 模擬對照</span>
         <span class="chip">19 個畫面的故事模式</span>
         <span class="chip">5 個互動模組 ＋ 4 個可改數字例題</span>
         <span class="chip">觀念填充 24 題 ＋ 10 題測驗</span>
@@ -507,9 +507,9 @@
 
     <!-- ══════════ 結果 ══════════ -->
     <section class="sec" id="result">
-      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.7 · Results（模擬）</div>
+      <div class="eyebrow"><span class="part-tag">實習講義 第四章</span>p.7 · Results（模擬＋10/7 結報）</div>
       <h2>📈 結果：6 組模擬＋我的實測<span class="h2-en">RESULTS</span></h2>
-      <p class="lede">還沒有實測數據，先放<b>模擬</b>出來的結果當「應該長這樣」的參考：1N4002 的 SPICE 模型、60 Hz、Vpp = 10 V，跑到穩態後量 2 個週期。虛線是 V1，實線是 Vo。你量完可以填在最下面的表格，它會自動算 r% 並跟模擬比。</p>
+      <p class="lede">先看<b>模擬</b>（1N4002、60 Hz、Vpp = 10 V，跑到穩態後量 2 個週期；虛線 V1、實線 Vo），再往下看<b>你 10/7 量到的</b>跟模擬差多少。</p>
       <div class="res-grid" id="res-grid"></div>
 
       <div class="tbl-wrap"><table class="lab-tbl">
@@ -525,14 +525,33 @@
         </ol>
       </div>
 
-      <h3 style="font-size:16px;margin:22px 0 6px">我的實測（填數字自動算）</h3>
-      <p style="margin:0 0 8px;color:var(--ink-2);font-size:14px">數字存在這台裝置，登入 claude.ai 時也會同步到雲端。單位：伏特（V）。</p>
+      <h3 style="font-size:16px;margin:22px 0 6px"><span class="my-tag">我的</span>實測（10/7 結報，可修改）</h3>
+      <p style="margin:0 0 8px;color:var(--ink-2);font-size:14px">預設是你結報的數字；改了會存起來（登入時同步雲端）。「模擬（含 50 Ω）」把函數產生器的內阻算進去，比較接近實際。單位：伏特（V）。</p>
       <div class="tbl-wrap"><table class="lab-tbl" id="meas-tbl">
-        <thead><tr><th>R1</th><th>C1</th><th>我量的 V<sub>o(p-p)</sub></th><th>我量的 V<sub>o,dc</sub></th><th>我的 r%</th><th>模擬 r%</th><th>差多少</th></tr></thead>
+        <thead><tr><th>R1</th><th>C1</th><th>我量的 V<sub>o(p-p)</sub></th><th>我量的 V<sub>o,dc</sub></th><th>我的 r%</th><th>模擬 r%</th><th>模擬（含 50 Ω）p-p / dc</th><th>含 50 Ω 的 r%</th><th>r% 差</th><th>V<sub>o,dc</sub> 差</th></tr></thead>
         <tbody></tbody>
       </table></div>
-      <div class="btn-row" style="margin-top:8px"><button class="btn" type="button" id="meas-clear">清空我的實測</button></div>
-      <p class="note">實測跟模擬差個 10～20% 很正常：電容標示值本身就有 ±20% 誤差、二極體不是同一顆、示波器游標也有讀數誤差。另外<b>函數產生器本身有約 50 Ω 的內阻</b>（模擬沒算進去），R1 = 100 Ω 那兩組電流大，實際電壓會比模擬低一截。<b>趨勢對就好</b>（RC 越大 r% 越小、RC 一樣的兩組差不多）。</p>
+      <div class="btn-row" style="margin-top:8px"><button class="btn" type="button" id="meas-clear">改回結報數據</button></div>
+      <div class="note key">
+        <b>你的數據說了什麼：</b>
+        <ol style="margin:6px 0 0;padding-left:20px">
+          <li><b>V<sub>o,dc</sub> 跟模擬（含 50 Ω）差 3% 以內</b>（6 組有 5 組）。100 Ω 那兩組平均只有 0.87 V、1.28 V，比沒算內阻的模擬低很多 —— 就是產生器 50 Ω 內阻在分壓：你的 V1 帶 100 Ω 時掉到 8.6 Vpp／7.8 Vpp。</li>
+          <li><b>RC 越大 r% 越小</b>：342% → 106% → 126% → 18% → 20% → 9%，趨勢跟模擬一樣；RC 一樣的兩組（100 Ω/100 µF vs 1 kΩ/10 µF、1 kΩ/100 µF vs 10 kΩ/10 µF）r% 也很接近。</li>
+          <li><b>漣波很小的三組你量得偏大</b>（0.56、0.80、0.40 V vs 模擬 0.41、0.57、0.06 V）：漣波只有幾十 mV 時，你的 CH2 設 2 V/div（10 kΩ/100 µF 那張甚至 5 V/div），波形線本身的粗細跟雜訊就有幾百 mV，量出來會偏大。要量準要切 <b>AC 耦合＋把 V/div 調到 50～100 mV</b>。</li>
+          <li><b>10 kΩ/100 µF 的 V<sub>o,dc</sub> = 4.46 V 比模擬 4.09 V 高</b>（請確認）：負載電流只有 0.4 mA，二極體壓降比 0.6 V 小、電容漏電也少；這組照片沒拍到 V1 的讀值，下次量 V<sub>o,dc</sub> 時把 V1 一起記下來就能確認。</li>
+          <li>結報裡圖 15 跟圖 11 用了同一張照片（請確認是不是貼錯）。</li>
+        </ol>
+      </div>
+      <p class="note">實測跟模擬差個 10～20% 很正常：電容標示值本身就有 ±20% 誤差、二極體不是同一顆、示波器游標也有讀數誤差。<b>趨勢對就好</b>（RC 越大 r% 越小、RC 一樣的兩組差不多）。</p>
+      <h3 style="font-size:16px;margin:22px 0 6px">📷 實驗照片（結報）</h3>
+      <div class="lab-photos">
+        <figure><img src="img/filter-board.jpg" alt="麵包板接線" loading="lazy"><figcaption>麵包板接線（1N4002 ＋ 電容 ＋ 負載）</figcaption></figure>
+        <figure><img src="img/filter-scope-100-10.jpg" alt="100 Ω 10 µF 波形" loading="lazy"><figcaption>100 Ω／10 µF：幾乎沒濾，駝峰還在（V1 掉到 8.6 Vpp）</figcaption></figure>
+        <figure><img src="img/filter-scope-1k100.jpg" alt="1 kΩ 100 µF 波形" loading="lazy"><figcaption>1 kΩ／100 µF：Vo 變平，漣波 0.56 V（V1 9.2 Vpp）</figcaption></figure>
+        <figure><img src="img/filter-scope-10k100.jpg" alt="10 kΩ 100 µF 波形" loading="lazy"><figcaption>10 kΩ／100 µF：幾乎是直線（CH2 5 V/div，讀 0.40 V）</figcaption></figure>
+        <figure><img class="contain" src="img/filter-tina-h.jpg" alt="TINA 半波濾波" loading="lazy"><figcaption>TINA-TI 半波整流濾波</figcaption></figure>
+        <figure><img class="contain" src="img/filter-tina-b.jpg" alt="TINA 橋式濾波" loading="lazy"><figcaption>TINA-TI 橋式整流濾波</figcaption></figure>
+      </div>
     </section>
 
     <!-- ══════════ PSpice ══════════ -->
