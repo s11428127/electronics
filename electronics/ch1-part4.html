@@ -52,6 +52,7 @@
         <span class="chip">18 個畫面的故事模式</span>
         <span class="chip">6 個互動模組</span>
         <span class="chip">6 個可改數字例題</span>
+        <span class="chip">課本 Example 1 ＋ 練習 7（每題都有 🎬 圖解故事）</span>
         <span class="chip">12 題中英對照測驗</span>
       </div>
       <p class="note">接續 <a href="ch1-part3.html">CH1 PART 3</a>（pn 接面熱平衡、逆偏、接面電容）。這一頁從 <b>1.2.3 順向偏壓</b>（投影片 1-38）開始，到 <b>1.6 二極體溫度計</b>（1-54）。</p>
@@ -66,6 +67,8 @@
     </section>
 
     <!-- ══════════ 導論 ══════════ -->
+    <div class="sec-pick" id="sec-pick"></div>
+
     <section class="sec" id="map">
       <div class="eyebrow"><span class="part-tag">原講義 PART 4</span>Big picture · 投影片 1-38～1-41</div>
       <h2>這一段在講什麼<span class="h2-en">THE BIG PICTURE</span></h2>
@@ -160,6 +163,7 @@
           <li><span class="x">✗</span> 注入的少數載子會一直存在。<span class="o">一路被復合</span>，大約走幾個擴散長度 L 就幾乎沒了。</li>
         </ul>
       </div>
+      <div class="exbook" data-bank="__CH14EX" data-sec="fwd"></div>
     </section>
 
     <!-- ══════════ 02 I–V ══════════ -->
@@ -239,6 +243,7 @@
           <li><span class="x">✗</span> n 越大電流越大。<span class="o">相反</span>：指數變成 v<sub>D</sub>/(nV<sub>T</sub>)，n 越大曲線越「緩」，同一電壓電流越小。</li>
         </ul>
       </div>
+      <div class="exbook" data-bank="__CH14EX" data-sec="iv"></div>
     </section>
 
     <!-- ══════════ 03 60 mV ══════════ -->
@@ -299,6 +304,7 @@
           <li><span class="x">✗</span> 用 log 不用 ln。<span class="o">Δv = nV<sub>T</sub>·ln(比值)</span>；用 log₁₀ 的話要寫成 2.303·nV<sub>T</sub>·log₁₀(比值)，也就是 60 mV × log₁₀(比值)。</li>
         </ul>
       </div>
+      <div class="exbook" data-bank="__CH14EX" data-sec="dec"></div>
     </section>
 
     <!-- ══════════ 04 理想二極體 ══════════ -->
@@ -366,6 +372,7 @@
           <li><span class="x">✗</span> 0.7 V 就是 V<sub>bi</sub>。<span class="o">不同的量</span>（PART 3 勘誤 ④）。</li>
         </ul>
       </div>
+      <div class="exbook" data-bank="__CH14EX" data-sec="ideal"></div>
     </section>
 
     <!-- ══════════ 05 溫度 ══════════ -->
@@ -427,6 +434,7 @@
           <li><span class="x">✗</span> 鍺跟矽的 I<sub>S</sub> 差不多。<span class="o">鍺的能隙小（0.66 eV）</span>，nᵢ 大很多，I<sub>S</sub> 大好幾個數量級（投影片 1-53）。</li>
         </ul>
       </div>
+      <div class="exbook" data-bank="__CH14EX" data-sec="temp"></div>
     </section>
 
     <!-- ══════════ 06 溫度計 ══════════ -->
@@ -494,6 +502,7 @@
           <li><span class="x">✗</span> T 代攝氏。<span class="o">公式裡的 T 是絕對溫度 K</span>（300 K ≈ 27 °C）。</li>
         </ul>
       </div>
+      <div class="exbook" data-bank="__CH14EX" data-sec="thermo"></div>
     </section>
 
     <!-- ══════════ 勘誤 ══════════ -->
@@ -600,10 +609,24 @@
 </div>
 <script src="../shared/app.js"></script>
 <script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch1-part5-kit.js"></script>
+<script src="assets/ch1-part4-ex.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'fwd', no: '01', name: '順向偏壓', count: '練 1' },
+  { id: 'iv', no: '02', name: '理想 I–V', count: '例 1 · 練 2' },
+  { id: 'dec', no: '03', name: '60 mV／decade', count: '練 1' },
+  { id: 'ideal', no: '04', name: '理想二極體模型', count: '練 1' },
+  { id: 'temp', no: '05', name: '溫度效應', count: '練 1' },
+  { id: 'thermo', no: '06', name: '二極體溫度計', count: '練 1' }
+], { key: 'ch1-part4', alwaysAll: ['map', 'check', 'hw', 'glossary', 'quiz-sec'] });
+</script>
 <script src="assets/hw1-bank.js"></script>
 <script src="../shared/hw.js"></script>
 <script src="assets/ch1-part4.js"></script>
-<script src="../shared/story.js"></script>
 <script src="assets/ch1-part4-story.js"></script>
 <script src="../shared/sync.js"></script>
 <script src="../shared/annot.js"></script>
