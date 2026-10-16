@@ -152,6 +152,7 @@
 - 一章一頁總複習 `<chapter>-problems.html`（不放進章節頁），題庫分幾個檔 `assets/<chapter>-probN.js` → `window.__CH11PB`（`concat`），每題 exbook `kind:'pp'`、`tag:'Problem 11.x'`／`'Review Question 11.x'`、`en` 英文原文、`fig` 用 schem.js 重畫、`steps` 逐步詳解、跟課本或題意有出入寫 `note`。
 - schem.js 10/16 新增：`dvs`／`dis`（菱形相依電壓／電流源，垂直）、`dvsh`／`dish`（水平）、`opamp(x, y, {plusTop})`、`box(x, y, w, h, [多行字])`（負載方塊）。圖要截圖拼總表檢查標籤有沒有被裁掉（`S.svg` 寬度要留給右側標籤）。
 - 新頁面加進 `mistakes.html` 的 `data-chs`、科目首頁 `.lec-links`、章節頁 hero `.lec-links`。
+- 現有：電路學 `ch11-problems.html`（`ch11-prob1～3.js`，86 題）、`ch12-problems.html`（`ch12-prob1～2.js`，64 題；三相電路圖用 `__CH12PB.tp({src:'Y'|'D'|'gen', load:'Y'|'D', line, neutral})`）。節標題旁有圖示＝整節都跳過（CH12 的 12.9 PSpice）。
 
 ## 觀念填充題（電路學 CH11 起）
 

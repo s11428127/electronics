@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH12 章末練習題</title>
+<meta name="description" content="電路學 CH12 三相電路章末練習題：Review Questions 與 Problems（跳過 Design／PSpice 題），每題中英題目、重畫電路圖、手寫板、逐步詳解，答案用程式驗算。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH12 章末練習題</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH12 章末練習題</div>
+    <ol>
+      <li><a href="#prq"><i>RQ</i>Review Questions</a></li>
+      <li><a href="#p122"><i>12.2</i>平衡三相電壓</a></li>
+      <li><a href="#p123"><i>12.3</i>平衡 Y-Y</a></li>
+      <li><a href="#p124"><i>12.4</i>平衡 Y-Δ</a></li>
+      <li><a href="#p125"><i>12.5</i>平衡 Δ-Δ</a></li>
+      <li><a href="#p126"><i>12.6</i>平衡 Δ-Y</a></li>
+      <li><a href="#p127"><i>12.7</i>平衡系統的功率</a></li>
+      <li><a href="#p128"><i>12.8</i>不平衡三相系統</a></li>
+      <li><a href="#p1210"><i>12.10</i>應用：瓦特計與住宅配電</a></li>
+      <li><a href="#pcp"><i>綜合</i>綜合題</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Chapter 12 · End-of-chapter problems</div>
+      <h1>CH12 章末練習題</h1>
+      <p class="sub">課本第 12 章章末的 Review Questions 和 Problems，<strong>跳過標 e⁷d、＃ML、小筆電圖示的題目</strong>（12.9 PSpice 整節都有小筆電）。每題先中文、下面附英文原文；電路圖重畫；先自己在手寫板上算，再看提示、答案、逐步詳解，按「算對了／算錯了」會記進錯題本。</p>
+      <div class="hero-meta">
+        <span class="chip h">Review 10 題 ＋ Problems 54 題</span>
+        <span class="chip">答案都用程式驗算</span>
+        <span class="chip">沒特別說明都是 rms</span>
+      </div>
+      <div class="lec-links"><a href="ch12-part1.html">PART 1 三相電壓與 Y-Y</a><a href="ch12-part2.html">PART 2 Y-Δ、Δ-Δ、Δ-Y</a><a href="ch12-part3.html">PART 3 三相功率與不平衡</a><a href="ch12-part4.html">PART 4 PSpice 與量測</a><a href="ch12-review.html">觀念填充 80 題</a></div>
+    </div>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="prq">
+      <div class="eyebrow">Review Questions · 課本章末題</div>
+      <h2>Review Questions<span class="h2-en">REVIEW QUESTIONS</span></h2>
+      <p class="lede">10 題選擇題（課本附答案）。</p>
+      <div class="exbook" data-bank="__CH12PB" data-sec="rq"></div>
+    </section>
+
+    <section class="sec" id="p122">
+      <div class="eyebrow">Section 12.2 · 課本章末題</div>
+      <h2>平衡三相電壓<span class="h2-en">BALANCED THREE-PHASE VOLTAGES</span></h2>
+      <p class="lede">5 題。忘了就回去看 <a href="ch12-part1.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH12PB" data-sec="12.2"></div>
+    </section>
+
+    <section class="sec" id="p123">
+      <div class="eyebrow">Section 12.3 · 課本章末題</div>
+      <h2>平衡 Y-Y<span class="h2-en">BALANCED WYE-WYE</span></h2>
+      <p class="lede">4 題。忘了就回去看 <a href="ch12-part1.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH12PB" data-sec="12.3"></div>
+    </section>
+
+    <section class="sec" id="p124">
+      <div class="eyebrow">Section 12.4 · 課本章末題</div>
+      <h2>平衡 Y-Δ<span class="h2-en">BALANCED WYE-DELTA</span></h2>
+      <p class="lede">4 題。忘了就回去看 <a href="ch12-part2.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH12PB" data-sec="12.4"></div>
+    </section>
+
+    <section class="sec" id="p125">
+      <div class="eyebrow">Section 12.5 · 課本章末題</div>
+      <h2>平衡 Δ-Δ<span class="h2-en">BALANCED DELTA-DELTA</span></h2>
+      <p class="lede">4 題。忘了就回去看 <a href="ch12-part2.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH12PB" data-sec="12.5"></div>
+    </section>
+
+    <section class="sec" id="p126">
+      <div class="eyebrow">Section 12.6 · 課本章末題</div>
+      <h2>平衡 Δ-Y<span class="h2-en">BALANCED DELTA-WYE</span></h2>
+      <p class="lede">1 題。忘了就回去看 <a href="ch12-part2.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH12PB" data-sec="12.6"></div>
+    </section>
+
+    <section class="sec" id="p127">
+      <div class="eyebrow">Section 12.7 · 課本章末題</div>
+      <h2>平衡系統的功率<span class="h2-en">POWER IN A BALANCED SYSTEM</span></h2>
+      <p class="lede">13 題。忘了就回去看 <a href="ch12-part3.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH12PB" data-sec="12.7"></div>
+    </section>
+
+    <section class="sec" id="p128">
+      <div class="eyebrow">Section 12.8 · 課本章末題</div>
+      <h2>不平衡三相系統<span class="h2-en">UNBALANCED THREE-PHASE SYSTEMS</span></h2>
+      <p class="lede">4 題。忘了就回去看 <a href="ch12-part3.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH12PB" data-sec="12.8"></div>
+    </section>
+
+    <section class="sec" id="p1210">
+      <div class="eyebrow">Section 12.10 · 課本章末題</div>
+      <h2>應用：瓦特計與住宅配電<span class="h2-en">APPLICATIONS</span></h2>
+      <p class="lede">9 題。忘了就回去看 <a href="ch12-part4.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH12PB" data-sec="12.10"></div>
+    </section>
+
+    <section class="sec" id="pcp">
+      <div class="eyebrow">Comprehensive Problems · 課本章末題</div>
+      <h2>綜合題<span class="h2-en">COMPREHENSIVE PROBLEMS</span></h2>
+      <p class="lede">10 題。</p>
+      <div class="exbook" data-bank="__CH12PB" data-sec="cp"></div>
+    </section>
+
+    <footer class="foot">
+      <p>題目出處：Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 12 章末題（使用者 10/16 提供）。跳過：e⁷d 12.6、12.12、12.20、12.26、12.32、12.53、12.56、12.62、12.67、12.76、12.85；ML 12.13、12.51；小筆電 12.14、12.15、12.22、12.25、12.27、12.29、12.35、12.38、12.39、12.40、12.43、12.44、12.48；12.9 PSpice 整節 12.58～12.65。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="assets/ch12-prob1.js"></script>
+<script src="assets/ch12-prob2.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'prq', no: 'RQ', name: 'Review Questions', count: '10 題選擇題' },
+  { id: 'p122', no: '12.2', name: '平衡三相電壓', count: '5 題' },
+  { id: 'p123', no: '12.3', name: '平衡 Y-Y', count: '4 題' },
+  { id: 'p124', no: '12.4', name: '平衡 Y-Δ', count: '4 題' },
+  { id: 'p125', no: '12.5', name: '平衡 Δ-Δ', count: '4 題' },
+  { id: 'p126', no: '12.6', name: '平衡 Δ-Y', count: '1 題' },
+  { id: 'p127', no: '12.7', name: '平衡系統的功率', count: '13 題' },
+  { id: 'p128', no: '12.8', name: '不平衡三相系統', count: '4 題' },
+  { id: 'p1210', no: '12.10', name: '應用：瓦特計與住宅配電', count: '9 題' },
+  { id: 'pcp', no: '綜合', name: '綜合題', count: '10 題' }
+], { key: 'ch12-problems' });
+(function () {
+  'use strict';
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } });
+  }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
