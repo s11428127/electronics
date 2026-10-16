@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH11 章末練習題</title>
+<meta name="description" content="電路學 CH11 交流功率分析章末練習題：Review Questions 與 Problems（跳過 Design／PSpice 題），每題中英題目、重畫電路圖、手寫板、逐步詳解，答案用程式驗算。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH11 章末練習題</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH11 章末練習題</div>
+    <ol>
+      <li><a href="#prq"><i>RQ</i>Review Questions</a></li>
+      <li><a href="#p112"><i>11.2</i>瞬時功率與平均功率</a></li>
+      <li><a href="#p113"><i>11.3</i>最大平均功率轉移</a></li>
+      <li><a href="#p114"><i>11.4</i>有效值 rms</a></li>
+      <li><a href="#p115"><i>11.5</i>視在功率與功率因數</a></li>
+      <li><a href="#p116"><i>11.6</i>複功率</a></li>
+      <li><a href="#p117"><i>11.7</i>交流功率守恆</a></li>
+      <li><a href="#p118"><i>11.8</i>功率因數校正</a></li>
+      <li><a href="#p119"><i>11.9</i>應用：瓦特計與電費</a></li>
+      <li><a href="#pcp"><i>綜合</i>綜合題</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Chapter 11 · End-of-chapter problems</div>
+      <h1>CH11 章末練習題</h1>
+      <p class="sub">課本第 11 章章末的 Review Questions 和 Problems，<strong>跳過標 e⁷d（Design a problem）和 ML（PSpice／MultiSim）圖示的題目</strong>。每題先中文、下面附英文原文；電路圖重畫；先自己在手寫板上算，再看提示、答案、逐步詳解，按「算對了／算錯了」會記進錯題本。</p>
+      <div class="hero-meta">
+        <span class="chip h">Review 10 題 ＋ Problems 76 題</span>
+        <span class="chip">答案都用程式驗算</span>
+        <span class="chip">11.1～11.21 是峰值；11.22 起是 rms</span>
+      </div>
+      <div class="lec-links"><a href="ch11-part1.html">PART 1 瞬時、平均與最大功率</a><a href="ch11-part2.html">PART 2 有效值與功率因數</a><a href="ch11-part3.html">PART 3 複功率與功因校正</a><a href="ch11-review.html">觀念填充 72 題</a></div>
+    </div>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="prq">
+      <div class="eyebrow">Review Questions · 課本章末題</div>
+      <h2>Review Questions<span class="h2-en">REVIEW QUESTIONS</span></h2>
+      <p class="lede">10 題選擇題（課本附答案）。</p>
+      <div class="exbook" data-bank="__CH11PB" data-sec="rq"></div>
+    </section>
+
+    <section class="sec" id="p112">
+      <div class="eyebrow">Section 11.2 · 課本章末題</div>
+      <h2>瞬時功率與平均功率<span class="h2-en">INSTANTANEOUS & AVERAGE POWER</span></h2>
+      <p class="lede">10 題。忘了就回去看 <a href="ch11-part1.html#inst">講解</a>。</p>
+      <div class="exbook" data-bank="__CH11PB" data-sec="11.2"></div>
+    </section>
+
+    <section class="sec" id="p113">
+      <div class="eyebrow">Section 11.3 · 課本章末題</div>
+      <h2>最大平均功率轉移<span class="h2-en">MAXIMUM POWER TRANSFER</span></h2>
+      <p class="lede">9 題。忘了就回去看 <a href="ch11-part1.html#mpt">講解</a>。</p>
+      <div class="exbook" data-bank="__CH11PB" data-sec="11.3"></div>
+    </section>
+
+    <section class="sec" id="p114">
+      <div class="eyebrow">Section 11.4 · 課本章末題</div>
+      <h2>有效值 rms<span class="h2-en">EFFECTIVE (RMS) VALUE</span></h2>
+      <p class="lede">14 題。忘了就回去看 <a href="ch11-part2.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH11PB" data-sec="11.4"></div>
+    </section>
+
+    <section class="sec" id="p115">
+      <div class="eyebrow">Section 11.5 · 課本章末題</div>
+      <h2>視在功率與功率因數<span class="h2-en">APPARENT POWER & POWER FACTOR</span></h2>
+      <p class="lede">4 題。忘了就回去看 <a href="ch11-part2.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH11PB" data-sec="11.5"></div>
+    </section>
+
+    <section class="sec" id="p116">
+      <div class="eyebrow">Section 11.6 · 課本章末題</div>
+      <h2>複功率<span class="h2-en">COMPLEX POWER</span></h2>
+      <p class="lede">7 題。忘了就回去看 <a href="ch11-part3.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH11PB" data-sec="11.6"></div>
+    </section>
+
+    <section class="sec" id="p117">
+      <div class="eyebrow">Section 11.7 · 課本章末題</div>
+      <h2>交流功率守恆<span class="h2-en">CONSERVATION OF AC POWER</span></h2>
+      <p class="lede">13 題。忘了就回去看 <a href="ch11-part3.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH11PB" data-sec="11.7"></div>
+    </section>
+
+    <section class="sec" id="p118">
+      <div class="eyebrow">Section 11.8 · 課本章末題</div>
+      <h2>功率因數校正<span class="h2-en">POWER FACTOR CORRECTION</span></h2>
+      <p class="lede">6 題。忘了就回去看 <a href="ch11-part3.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH11PB" data-sec="11.8"></div>
+    </section>
+
+    <section class="sec" id="p119">
+      <div class="eyebrow">Section 11.9 · 課本章末題</div>
+      <h2>應用：瓦特計與電費<span class="h2-en">APPLICATIONS</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch11-part3.html">講解</a>。</p>
+      <div class="exbook" data-bank="__CH11PB" data-sec="11.9"></div>
+    </section>
+
+    <section class="sec" id="pcp">
+      <div class="eyebrow">Comprehensive Problems · 課本章末題</div>
+      <h2>綜合題<span class="h2-en">COMPREHENSIVE PROBLEMS</span></h2>
+      <p class="lede">5 題。</p>
+      <div class="exbook" data-bank="__CH11PB" data-sec="cp"></div>
+    </section>
+
+    <footer class="foot">
+      <p>題目出處：Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 11 章末題（使用者 10/16 提供）。跳過的題目：e⁷d 11.4、11.14、11.23、11.37、11.40、11.43、11.55、11.70、11.81、11.84、11.86、11.89、11.90、11.91、11.94、11.95、11.96；ML 11.56～11.59。講義上 11.95～11.97 印成「10.95～10.97」。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="assets/ch11-prob1.js"></script>
+<script src="assets/ch11-prob2.js"></script>
+<script src="assets/ch11-prob3.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'prq', no: 'RQ', name: 'Review Questions', count: '10 題選擇題' },
+  { id: 'p112', no: '11.2', name: '瞬時功率與平均功率', count: '10 題' },
+  { id: 'p113', no: '11.3', name: '最大平均功率轉移', count: '9 題' },
+  { id: 'p114', no: '11.4', name: '有效值 rms', count: '14 題' },
+  { id: 'p115', no: '11.5', name: '視在功率與功率因數', count: '4 題' },
+  { id: 'p116', no: '11.6', name: '複功率', count: '7 題' },
+  { id: 'p117', no: '11.7', name: '交流功率守恆', count: '13 題' },
+  { id: 'p118', no: '11.8', name: '功率因數校正', count: '6 題' },
+  { id: 'p119', no: '11.9', name: '應用：瓦特計與電費', count: '8 題' },
+  { id: 'pcp', no: '綜合', name: '綜合題', count: '5 題' }
+], { key: 'ch11-problems' });
+(function () {
+  'use strict';
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } });
+  }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

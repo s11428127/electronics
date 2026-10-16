@@ -90,6 +90,45 @@
       o += '<polyline points="' + pts.map(p => X(p[0]).toFixed(1) + ',' + Y(p[1]).toFixed(1)).join(' ') + '" fill="none" stroke-width="2" stroke="var(--accent)"/>';
       return o;
     },
+    /* 相依電壓源（菱形）：垂直，x，上端 y1、下端 y2，+ 在上（o.flip 反過來） */
+    dvs: (x, y1, y2, label, o) => {
+      o = o || {}; const cy = (y1 + y2) / 2;
+      return line(x, y1, x, cy - 15) + line(x, cy + 15, x, y2) + '<path d="M' + x + ' ' + (cy - 15) + ' L' + (x + 15) + ' ' + cy + ' L' + x + ' ' + (cy + 15) + ' L' + (x - 15) + ' ' + cy + ' Z" fill="none"/>' +
+        text(x, cy - 3, o.flip ? '−' : '+', 'middle', ' font-size="11"') + text(x, cy + 10, o.flip ? '+' : '−', 'middle', ' font-size="11"') +
+        (label ? text(o.side === 'r' ? x + 20 : x - 20, cy + 4, label, o.side === 'r' ? 'start' : 'end') : '');
+    },
+    /* 相依電流源（菱形）：垂直，箭頭朝上（o.down 朝下） */
+    dis: (x, y1, y2, label, o) => {
+      o = o || {}; const cy = (y1 + y2) / 2, u = o.down ? 1 : -1;
+      return line(x, y1, x, cy - 15) + line(x, cy + 15, x, y2) + '<path d="M' + x + ' ' + (cy - 15) + ' L' + (x + 15) + ' ' + cy + ' L' + x + ' ' + (cy + 15) + ' L' + (x - 15) + ' ' + cy + ' Z" fill="none"/>' +
+        line(x, cy - 8 * u, x, cy + 8 * u) + '<polyline points="' + (x - 4) + ',' + (cy + 3 * u) + ' ' + x + ',' + (cy + 8 * u) + ' ' + (x + 4) + ',' + (cy + 3 * u) + '" fill="none"/>' +
+        (label ? text(o.side === 'r' ? x + 20 : x - 20, cy + 4, label, o.side === 'r' ? 'start' : 'end') : '');
+    },
+    /* 水平的相依電壓源（+ 在左，o.flip 反過來）／相依電流源（箭頭朝右，o.left 朝左）：從 x1 到 x2，高度 y，標籤在上方 */
+    dvsh: (x1, x2, y, label, o) => {
+      o = o || {}; const cx = (x1 + x2) / 2;
+      return line(x1, y, cx - 15, y) + line(cx + 15, y, x2, y) + '<path d="M' + (cx - 15) + ' ' + y + ' L' + cx + ' ' + (y - 15) + ' L' + (cx + 15) + ' ' + y + ' L' + cx + ' ' + (y + 15) + ' Z" fill="none"/>' +
+        text(cx - 6, y + 4, o.flip ? '−' : '+', 'middle', ' font-size="11"') + text(cx + 6, y + 4, o.flip ? '+' : '−', 'middle', ' font-size="11"') +
+        (label ? text(cx, y - 20, label, 'middle') : '');
+    },
+    dish: (x1, x2, y, label, o) => {
+      o = o || {}; const cx = (x1 + x2) / 2, u = o.left ? -1 : 1;
+      return line(x1, y, cx - 15, y) + line(cx + 15, y, x2, y) + '<path d="M' + (cx - 15) + ' ' + y + ' L' + cx + ' ' + (y - 15) + ' L' + (cx + 15) + ' ' + y + ' L' + cx + ' ' + (y + 15) + ' Z" fill="none"/>' +
+        line(cx - 8 * u, y, cx + 8 * u, y) + '<polyline points="' + (cx + 3 * u) + ',' + (y - 4) + ' ' + (cx + 8 * u) + ',' + y + ' ' + (cx + 3 * u) + ',' + (y + 4) + '" fill="none"/>' +
+        (label ? text(cx, y - 20, label, 'middle') : '');
+    },
+    /* 運算放大器：左邊 x、中線 y，寬 56；輸入在 (x, y−12)、(x, y+12)，輸出在 (x+56, y)。預設 − 在上（o.plusTop：+ 在上） */
+    opamp: (x, y, o) => {
+      o = o || {};
+      return '<path d="M' + x + ' ' + (y - 28) + ' L' + (x + 56) + ' ' + y + ' L' + x + ' ' + (y + 28) + ' Z" fill="none"/>' +
+        text(x + 9, y - 8, o.plusTop ? '+' : '−', 'middle', ' font-size="13"') + text(x + 9, y + 17, o.plusTop ? '−' : '+', 'middle', ' font-size="13"');
+    },
+    /* 負載方塊：可多行字（lines 陣列） */
+    box: (x, y, w, h, lines) => {
+      const L = [].concat(lines || []), n = L.length;
+      return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="2" fill="none"/>' +
+        L.map((s, i) => text(x + w / 2, y + h / 2 + (i - (n - 1) / 2) * 14 + 4, s, 'middle', ' font-size="11"')).join('');
+    },
     svg: (w, h, parts) => '<svg class="schem" viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" style="max-width:100%;height:auto" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" font-family="inherit">' + parts.join('') + '</svg>'
   };
   window.__SCH = S;

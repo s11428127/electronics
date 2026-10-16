@@ -146,6 +146,13 @@
   每題 3～6 幕：題目畫成圖 → 化簡（單相等效、換接法）→ 一步一步算（計算卡一行一行亮＋相量圖／功率三角形）→ 答案卡。最後一幕字幕要短（不然會被「從頭再看」按鈕蓋到）。
   三相用的畫圖工具在 `circuits/assets/ch12-kit.js`（`__K12`）；電子學二極體電路（I–V 座標、負載線、串聯迴路、波形）在 `electronics/assets/ch1-part5-kit.js`（`__K15`）。驗證：每題每一步截圖，再挑每幕最後一步拼總表看。
 
+## 章末練習題（使用者 10/16，電路學 CH11 起）
+
+- 使用者給課本章末題 PDF：**題號旁有 e⁷d（Design a problem）或 ＃ML（PSpice／MultiSim）圖示的不做**；只有綠色小筆電圖示的也不做。圖示是向量圖，用 `pdftotext -bbox` 找題號位置、裁圖拼總表人工確認。
+- 一章一頁總複習 `<chapter>-problems.html`（不放進章節頁），題庫分幾個檔 `assets/<chapter>-probN.js` → `window.__CH11PB`（`concat`），每題 exbook `kind:'pp'`、`tag:'Problem 11.x'`／`'Review Question 11.x'`、`en` 英文原文、`fig` 用 schem.js 重畫、`steps` 逐步詳解、跟課本或題意有出入寫 `note`。
+- schem.js 10/16 新增：`dvs`／`dis`（菱形相依電壓／電流源，垂直）、`dvsh`／`dish`（水平）、`opamp(x, y, {plusTop})`、`box(x, y, w, h, [多行字])`（負載方塊）。圖要截圖拼總表檢查標籤有沒有被裁掉（`S.svg` 寬度要留給右側標籤）。
+- 新頁面加進 `mistakes.html` 的 `data-chs`、科目首頁 `.lec-links`、章節頁 hero `.lec-links`。
+
 ## 觀念填充題（電路學 CH11 起）
 
 - 使用者 10/6 要求：**每一小節 8 題**、用選的、**不用計算**（考觀念、知識，少量考「這題怎麼解」的解法）、中文題目下面附英文。
