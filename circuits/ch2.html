@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH2 基本定律</title>
+<meta name="description" content="電路學 CH2 複習：歐姆定律、KCL、KVL、串並聯、分壓分流、Y-Δ。14 個畫面的故事模式＋一張總結卡。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH2 複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH2 複習</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事（14 個畫面）</a></li>
+      <li><a href="#sum"><i>★</i>這章總結</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH2</span>Chapter 2 · 複習 · Basic Laws</div>
+      <h1>CH2 基本定律</h1>
+      <p class="sub">CH1 做好了尺，這一章給<strong>三條規則</strong>：一個元件裡電壓和電流的關係（歐姆定律），還有很多元件接在一起時的 KCL、KVL。再用它們推出兩個捷徑：串聯分壓、並聯分流。</p>
+      <ol class="rv-ladder" data-cur="2"></ol>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · 點畫面或往左滑前進</div>
+      <h2>14 個畫面看懂 CH2<span class="h2-en">THE STORY IN 14 SCENES</span></h2>
+      <div id="story"></div>
+    </section>
+
+    <section class="sec" id="sum">
+      <div class="eyebrow">Summary · 看完故事馬上檢查自己</div>
+      <h2>這章帶走三件事<span class="h2-en">THREE TAKEAWAYS</span></h2>
+      <div class="rv-sum">
+        <ol class="rv-three">
+          <li><b>三條規則</b>：歐姆定律 v = iR（一個元件）、KCL 節點流進 = 流出、KVL 迴路繞一圈電壓和 = 0。功率 p = vi = i<sup>2</sup>R = v<sup>2</sup>/R。</li>
+          <li><b>串聯</b>電流相同：R<sub>eq</sub> = R<sub>1</sub> + R<sub>2</sub>，電壓照電阻比例分（電阻大分得多）。<b>並聯</b>電壓相同：R<sub>eq</sub> = 積/和，電流反比分（分子放另一個電阻）。</li>
+          <li><b>卡住時用 Y-Δ</b>：既不是串聯也不是並聯時，把三角形換成星形；平衡時 R<sub>Y</sub> = R<sub>Δ</sub>/3。家裡的燈都並聯：一顆壞了其他照樣亮。</li>
+        </ol>
+        <div class="rv-eq"><span>v = i R</span><span>Σ i<sub>進</sub> = Σ i<sub>出</sub></span><span>Σ v = 0</span><small>歐姆定律 ＋ KCL ＋ KVL：之後每一章都靠這三條</small></div>
+        <div class="rv-next"><span class="k">還缺什麼 →</span><p>會化簡串並聯了。可是電路一大、接法一亂，化簡不完怎麼辦？下一章 CH3：節點分析、網目分析 —— 不管多亂都能一步一步解。</p></div>
+      </div>
+      <nav class="rv-nav" data-cur="2"></nav>
+    </section>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
+<script src="assets/rv-nav.js"></script>
+<script src="assets/ch2-story.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

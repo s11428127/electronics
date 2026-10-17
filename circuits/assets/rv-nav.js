@@ -7,7 +7,7 @@
   'use strict';
   const CH = [
     { no: 1, name: '基本概念', href: 'ch1.html' },
-    { no: 2, name: '基本定律' },
+    { no: 2, name: '基本定律', href: 'ch2.html' },
     { no: 3, name: '分析方法' },
     { no: 4, name: '電路定理' },
     { no: 5, name: '運算放大器' },
