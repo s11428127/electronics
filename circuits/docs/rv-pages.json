@@ -167,6 +167,37 @@
   "notes": []
  },
  {
+  "n": 6,
+  "title": "電容與電感",
+  "en": "Capacitors and Inductors",
+  "card": "i = C dv/dt、v = L di/dt；直流 C 斷路 L 短路；存能量 ½Cv²、½Li²",
+  "desc": "電路學 CH6 複習：電容、電感的 i–v 關係、不能瞬間改變、直流等效、儲存能量、串並聯。12 個畫面的故事模式＋一張總結卡。",
+  "sub": "電阻只看「現在」。這一章的兩個元件會<strong>把能量存起來</strong>：電容管電壓、電感管電流，兩個都不能瞬間改變。CH7、CH8 的開關暫態，主角就是它們。",
+  "parts": [
+   {
+    "sec": "story-sec",
+    "div": "story",
+    "label": "故事（12 個畫面）",
+    "eyebrow": "Story mode · 點畫面或往左滑前進",
+    "h2": "12 個畫面看懂 CH6",
+    "h2en": "THE STORY IN 12 SCENES"
+   }
+  ],
+  "three": [
+   "<b>電容</b>：q = Cv、i = C dv/dt → 電壓不能瞬間改變；直流穩定時像斷路。<b>電感</b>：v = L di/dt → 電流不能瞬間改變；直流穩定時像導線。",
+   "<b>儲存能量</b>：w<sub>C</sub> = ½Cv<sup>2</sup>（電場，看電壓）、w<sub>L</sub> = ½Li<sup>2</sup>（磁場，看電流）。理想的 L、C 不消耗能量。Example 6.10：50 J、4 J。",
+   "<b>串並聯</b>：電感跟電阻一樣；電容剛好反過來 —— 並聯直接相加，串聯才是積/和。"
+  ],
+  "eq": [
+   "i = C dv/dt",
+   "v = L di/dt",
+   "w = ½Cv<sup>2</sup>、½Li<sup>2</sup>"
+  ],
+  "eqsmall": "電容電壓、電感電流不能瞬間改變 —— CH7、CH8 的起點",
+  "next": "知道它們會存能量了。可是開關一切換，存的能量怎麼釋放？電壓電流怎麼從舊的值走到新的值？下一章 CH7：一階電路（RC、RL）。",
+  "notes": []
+ },
+ {
   "n": 9,
   "title": "弦波與相量",
   "en": "Sinusoids and Phasors",

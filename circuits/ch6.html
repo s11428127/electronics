@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH6 電容與電感</title>
+<meta name="description" content="電路學 CH6 複習：電容、電感的 i–v 關係、不能瞬間改變、直流等效、儲存能量、串並聯。12 個畫面的故事模式＋一張總結卡。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH6 複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH6 複習</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事（12 個畫面）</a></li>
+      <li><a href="#sum"><i>★</i>這章總結</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH6</span>Chapter 6 · 複習 · Capacitors and Inductors</div>
+      <h1>CH6 電容與電感</h1>
+      <p class="sub">電阻只看「現在」。這一章的兩個元件會<strong>把能量存起來</strong>：電容管電壓、電感管電流，兩個都不能瞬間改變。CH7、CH8 的開關暫態，主角就是它們。</p>
+      <ol class="rv-ladder" data-cur="6"></ol>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · 點畫面或往左滑前進</div>
+      <h2>12 個畫面看懂 CH6<span class="h2-en">THE STORY IN 12 SCENES</span></h2>
+      <div id="story"></div>
+    </section>
+
+    <section class="sec" id="sum">
+      <div class="eyebrow">Summary · 看完故事馬上檢查自己</div>
+      <h2>這章帶走三件事<span class="h2-en">THREE TAKEAWAYS</span></h2>
+      <div class="rv-sum">
+        <ol class="rv-three">
+          <li><b>電容</b>：q = Cv、i = C dv/dt → 電壓不能瞬間改變；直流穩定時像斷路。<b>電感</b>：v = L di/dt → 電流不能瞬間改變；直流穩定時像導線。</li>
+          <li><b>儲存能量</b>：w<sub>C</sub> = ½Cv<sup>2</sup>（電場，看電壓）、w<sub>L</sub> = ½Li<sup>2</sup>（磁場，看電流）。理想的 L、C 不消耗能量。Example 6.10：50 J、4 J。</li>
+          <li><b>串並聯</b>：電感跟電阻一樣；電容剛好反過來 —— 並聯直接相加，串聯才是積/和。</li>
+        </ol>
+        <div class="rv-eq"><span>i = C dv/dt</span><span>v = L di/dt</span><span>w = ½Cv<sup>2</sup>、½Li<sup>2</sup></span><small>電容電壓、電感電流不能瞬間改變 —— CH7、CH8 的起點</small></div>
+        <div class="rv-next"><span class="k">還缺什麼 →</span><p>知道它們會存能量了。可是開關一切換，存的能量怎麼釋放？電壓電流怎麼從舊的值走到新的值？下一章 CH7：一階電路（RC、RL）。</p></div>
+      </div>
+      <nav class="rv-nav" data-cur="6"></nav>
+    </section>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
+<script src="assets/rv-nav.js"></script>
+<script src="assets/ch6-story.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
