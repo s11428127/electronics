@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH3 分析方法</title>
+<meta name="description" content="電路學 CH3 複習：節點分析、超節點、網目分析、超網目、怎麼選。兩段故事＋一張總結卡。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH3 複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH3 複習</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>PART 1 節點分析（12 個畫面）</a></li>
+      <li><a href="#story2-sec"><i>▶</i>PART 2 網目分析（9 個畫面）</a></li>
+      <li><a href="#sum"><i>★</i>這章總結</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH3</span>Chapter 3 · 複習 · Methods of Analysis</div>
+      <h1>CH3 分析方法</h1>
+      <p class="sub">CH2 的串並聯一遇到亂的電路就卡住。這一章給兩套<strong>固定步驟</strong>：節點分析（每個節點寫 KCL）和網目分析（每一格寫 KVL）。照做一定解得出來，CH10 的交流電路也用同一套。</p>
+      <ol class="rv-ladder" data-cur="3"></ol>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · PART 1</div>
+      <h2>PART 1　節點分析<span class="h2-en">NODAL ANALYSIS · 12 SCENES</span></h2>
+      <div id="story"></div>
+    </section>
+
+    <section class="sec" id="story2-sec">
+      <div class="eyebrow">Story mode · PART 2</div>
+      <h2>PART 2　網目分析<span class="h2-en">MESH ANALYSIS · 9 SCENES</span></h2>
+      <div id="story2"></div>
+    </section>
+
+    <section class="sec" id="sum">
+      <div class="eyebrow">Summary · 看完故事馬上檢查自己</div>
+      <h2>這章帶走三件事<span class="h2-en">THREE TAKEAWAYS</span></h2>
+      <div class="rv-sum">
+        <ol class="rv-three">
+          <li><b>節點分析</b>：選參考點 → 其他節點標 v<sub>1</sub>、v<sub>2</sub>… → 每個節點寫 KCL，電阻電流一律寫 (v<sub>a</sub> − v<sub>b</sub>)/R → 解聯立。n 個節點、n − 1 條方程式。</li>
+          <li><b>網目分析</b>：每一格畫順時針電流 → 每一格寫 KVL → 共用的元件用電流差 i<sub>1</sub> − i<sub>2</sub> → 解聯立。</li>
+          <li><b>電源卡在中間</b>：電壓源夾在兩節點間 → 超節點（一條 KCL ＋ 限制式）；電流源夾在兩格間 → 超網目（外圍 KVL ＋ 限制式）。電流源多用節點、電壓源多用網目。</li>
+        </ol>
+        <div class="rv-eq"><span>節點：Σ (v<sub>a</sub> − v<sub>b</sub>)/R = 0</span><span>網目：Σ R(i<sub>1</sub> − i<sub>2</sub>) = Σ V</span><small>兩套方法都一定解得出來，挑方程式少的那套</small></div>
+        <div class="rv-next"><span class="k">還缺什麼 →</span><p>什麼電路都解得出來了。可是如果只想知道某一個元件的電流，還是要把整個電路解完，很浪費。下一章 CH4：重疊定理、電源轉換、戴維寧 —— 把電路縮小。</p></div>
+      </div>
+      <nav class="rv-nav" data-cur="3"></nav>
+    </section>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
+<script src="assets/rv-nav.js"></script>
+<script src="assets/ch3-story.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

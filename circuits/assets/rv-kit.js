@@ -53,6 +53,20 @@
       (lbl ? T(opt.side === 'r' ? x + 22 : x - 20, y + 5, lbl, { cls: opt.lc || 't', fs: opt.fs || 13, a: opt.side === 'r' ? 'start' : 'end' }) : '');
     return g(opt.k, s);
   }
+  /* 橫的直流電源：中心 (x, y)，左右各接到 x±30；opt.plusRight = + 在右邊（長板在右） */
+  function batH(x, y, lbl, opt) {
+    opt = opt || {};
+    const r = opt.plusRight ? 1 : -1;
+    return g(opt.k, '<path class="ln" d="M' + (x - 30) + ' ' + y + ' H' + (x - 5) + ' M' + (x + 5) + ' ' + y + ' H' + (x + 30) + '"/>' +
+      '<line class="ln" style="stroke-width:2.6" x1="' + (x + 5 * r) + '" y1="' + (y - 14) + '" x2="' + (x + 5 * r) + '" y2="' + (y + 14) + '"/>' +
+      '<line class="ln" style="stroke-width:4" x1="' + (x - 5 * r) + '" y1="' + (y - 7) + '" x2="' + (x - 5 * r) + '" y2="' + (y + 7) + '"/>' +
+      T(x + 16 * r, y - 10, '+', { cls: 'ts', fs: 12 }) + T(x - 16 * r, y - 10, '−', { cls: 'ts', fs: 12 }) +
+      (lbl ? T(x, opt.above ? y - 20 : y + 30, lbl, { cls: opt.lc || 't', fs: opt.fs || 13 }) : ''));
+  }
+  /* 繞圈箭頭（網目電流，順時針）：中心 (cx, cy)、半徑 r */
+  const loopA = (cx, cy, r, lbl, key) => g(key, '<path class="lna" style="fill:none" d="M' + cx + ' ' + (cy - r) + ' A' + r + ' ' + r + ' 0 1 1 ' + (cx - r) + ' ' + cy + '"/>' +
+    '<polyline class="lna" style="fill:none" points="' + (cx - r - 5) + ',' + (cy + 7) + ' ' + (cx - r) + ',' + cy + ' ' + (cx - r + 5) + ',' + (cy + 7) + '"/>' +
+    (lbl ? T(cx, cy + 5, lbl, { cls: 'ta', fs: 15 }) : ''));
   /* 交流電源（~）：中心 (x, y)，直的，上下各接一段線到 y±30 */
   function vac(x, y, lbl, opt) {
     opt = opt || {};
@@ -63,7 +77,7 @@
   function isrc(x, y, lbl, opt) {
     opt = opt || {};
     return g(opt.k, '<path class="ln" d="M' + x + ' ' + (y - 30) + ' V' + (y - 16) + ' M' + x + ' ' + (y + 16) + ' V' + (y + 30) + '"/>' +
-      '<circle class="bgw" cx="' + x + '" cy="' + y + '" r="16"/>' + D.arrow(x, y + 9, x, y - 9, null, 'ln') +
+      '<circle class="bgw" cx="' + x + '" cy="' + y + '" r="16"/>' + (opt.down ? D.arrow(x, y - 9, x, y + 9, null, 'ln') : D.arrow(x, y + 9, x, y - 9, null, 'ln')) +
       (lbl ? T(opt.side === 'r' ? x + 24 : x - 24, y + 5, lbl, { cls: opt.lc || 't', fs: opt.fs || 13, a: opt.side === 'r' ? 'start' : 'end' }) : ''));
   }
   /* 相依電源（菱形）：opt.v = true 電壓型（裡面 + −），否則電流型（箭頭朝上） */
@@ -114,5 +128,5 @@
     return g(opt.k, s) + g(opt.km, mk) + (hl ? g('lad-hl', hl) : '');
   }
 
-  window.__RV = Object.assign({}, K, { el, bat, vac, isrc, dsrc, wire, dots, dot, gnd, meter, strike, curve, axes, ladder, f1 });
+  window.__RV = Object.assign({}, K, { el, bat, batH, loopA, vac, isrc, dsrc, wire, dots, dot, gnd, meter, strike, curve, axes, ladder, f1 });
 })();

@@ -8,7 +8,7 @@
   const CH = [
     { no: 1, name: '基本概念', href: 'ch1.html' },
     { no: 2, name: '基本定律', href: 'ch2.html' },
-    { no: 3, name: '分析方法' },
+    { no: 3, name: '分析方法', href: 'ch3.html' },
     { no: 4, name: '電路定理' },
     { no: 5, name: '運算放大器' },
     { no: 6, name: '電容與電感' },

@@ -61,6 +61,44 @@
   "notes": []
  },
  {
+  "n": 3,
+  "title": "分析方法",
+  "en": "Methods of Analysis",
+  "card": "節點分析（超節點）、網目分析（超網目）：不管多亂都能解",
+  "desc": "電路學 CH3 複習：節點分析、超節點、網目分析、超網目、怎麼選。兩段故事＋一張總結卡。",
+  "sub": "CH2 的串並聯一遇到亂的電路就卡住。這一章給兩套<strong>固定步驟</strong>：節點分析（每個節點寫 KCL）和網目分析（每一格寫 KVL）。照做一定解得出來，CH10 的交流電路也用同一套。",
+  "parts": [
+   {
+    "sec": "story-sec",
+    "div": "story",
+    "label": "PART 1 節點分析（12 個畫面）",
+    "eyebrow": "Story mode · PART 1",
+    "h2": "PART 1　節點分析",
+    "h2en": "NODAL ANALYSIS · 12 SCENES"
+   },
+   {
+    "sec": "story2-sec",
+    "div": "story2",
+    "label": "PART 2 網目分析（9 個畫面）",
+    "eyebrow": "Story mode · PART 2",
+    "h2": "PART 2　網目分析",
+    "h2en": "MESH ANALYSIS · 9 SCENES"
+   }
+  ],
+  "three": [
+   "<b>節點分析</b>：選參考點 → 其他節點標 v<sub>1</sub>、v<sub>2</sub>… → 每個節點寫 KCL，電阻電流一律寫 (v<sub>a</sub> − v<sub>b</sub>)/R → 解聯立。n 個節點、n − 1 條方程式。",
+   "<b>網目分析</b>：每一格畫順時針電流 → 每一格寫 KVL → 共用的元件用電流差 i<sub>1</sub> − i<sub>2</sub> → 解聯立。",
+   "<b>電源卡在中間</b>：電壓源夾在兩節點間 → 超節點（一條 KCL ＋ 限制式）；電流源夾在兩格間 → 超網目（外圍 KVL ＋ 限制式）。電流源多用節點、電壓源多用網目。"
+  ],
+  "eq": [
+   "節點：Σ (v<sub>a</sub> − v<sub>b</sub>)/R = 0",
+   "網目：Σ R(i<sub>1</sub> − i<sub>2</sub>) = Σ V"
+  ],
+  "eqsmall": "兩套方法都一定解得出來，挑方程式少的那套",
+  "next": "什麼電路都解得出來了。可是如果只想知道某一個元件的電流，還是要把整個電路解完，很浪費。下一章 CH4：重疊定理、電源轉換、戴維寧 —— 把電路縮小。",
+  "notes": []
+ },
+ {
   "n": 9,
   "title": "弦波與相量",
   "en": "Sinusoids and Phasors",
