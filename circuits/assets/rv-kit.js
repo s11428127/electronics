@@ -124,7 +124,7 @@
       if ((opt.hl || []).indexOf(no) >= 0) hl += '<rect class="ring" style="stroke-width:2.4" x="' + (x - 1) + '" y="' + (y - 3) + '" width="' + (w + 2) + '" height="' + (yb - y + 3) + '" rx="6"/>';
     });
     const xc = x0 + (cur - 1) * w + w / 2, yc = y0 - (cur - 1) * dy;
-    const mk = '<circle class="acc" cx="' + xc + '" cy="' + (yc - 12) + '" r="5"/>' + T(xc, yc - 22, '你在這裡', { cls: 'ta', fs: 11.5 });
+    const mk = cur < 1 ? '' : '<circle class="acc" cx="' + xc + '" cy="' + (yc - 12) + '" r="5"/>' + T(xc, yc - 22, '你在這裡', { cls: 'ta', fs: 11.5 });
     return g(opt.k, s) + g(opt.km, mk) + (hl ? g('lad-hl', hl) : '');
   }
 

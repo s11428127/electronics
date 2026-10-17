@@ -1271,6 +1271,20 @@ body.ann-on .derive.dv-cards .dv-short, body.ann-on .derive.dv-cards .dv-more, b
 .lab-photos figure.open img { height: auto; max-height: 80vh; object-fit: contain; cursor: zoom-out; }
 .my-tag { display: inline-block; font-size: 11px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 99px; padding: 1px 8px; margin-right: 6px; vertical-align: 1px; }
 
+/* 電路學首頁（10/17）：課程地圖故事、章節摺疊卡（點開才列出該章所有頁面） */
+.map-sec .story { margin-top: 10px; }
+details.chap-fold { margin: 0; }
+details.chap-fold > summary.chap { cursor: pointer; list-style: none; }
+details.chap-fold > summary.chap::-webkit-details-marker { display: none; }
+details.chap-fold > summary.chap:hover { border-color: var(--accent); }
+details.chap-fold[open] > summary.chap { border-color: var(--accent); }
+details.chap-fold[open] > summary .chap-go { opacity: .6; }
+.fold-list { display: grid; gap: 7px; margin: 8px 0 6px 28px; padding-left: 14px; border-left: 2px solid color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.chap.mini { grid-template-columns: 44px minmax(0, 1fr) auto; padding: 10px 14px; gap: 12px; box-shadow: none; }
+.chap.mini .chap-no { font-size: 13px; padding: 5px 2px; }
+.chap.mini .chap-body b { font-size: 15px; }
+@media (max-width: 620px) { .fold-list { margin-left: 6px; padding-left: 10px; } .chap.mini { grid-template-columns: 38px minmax(0, 1fr); } .chap.mini .chap-go { display: none; } }
+
 /* ===== 電腦版放大（tools/desktop-css.py 自動產生，不要手改） ===== */
 @media (min-width: 1200px) {
   body { font-size: 17.1px; }
@@ -1513,6 +1527,8 @@ body.ann-on .derive.dv-cards .dv-short, body.ann-on .derive.dv-cards .dv-more, b
   .dv-prog { font-size: 13.7px; }
   .lab-photos figcaption { font-size: 14.2px; }
   .my-tag { font-size: 12.5px; }
+  .chap.mini .chap-no { font-size: 14.8px; }
+  .chap.mini .chap-body b { font-size: 17.1px; }
 }
 @media (min-width: 1600px) {
   body { font-size: 18.6px; }
@@ -1755,5 +1771,7 @@ body.ann-on .derive.dv-cards .dv-short, body.ann-on .derive.dv-cards .dv-more, b
   .dv-prog { font-size: 14.9px; }
   .lab-photos figcaption { font-size: 15.5px; }
   .my-tag { font-size: 13.6px; }
+  .chap.mini .chap-no { font-size: 16.1px; }
+  .chap.mini .chap-body b { font-size: 18.6px; }
 }
 /* ===== 電腦版放大 end ===== */

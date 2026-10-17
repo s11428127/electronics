@@ -154,6 +154,14 @@
 - 新頁面加進 `mistakes.html` 的 `data-chs`、科目首頁 `.lec-links`、章節頁 hero `.lec-links`。
 - 現有：電路學 `ch11-problems.html`（`ch11-prob1～3.js`，86 題）、`ch12-problems.html`（`ch12-prob1～2.js`，64 題；三相電路圖用 `__CH12PB.tp({src:'Y'|'D'|'gen', load:'Y'|'D', line, neutral})`）。節標題旁有圖示＝整節都跳過（CH12 的 12.9 PSpice）。
 
+## 電路學 CH1～CH10 複習（使用者 10/17，只有故事）
+
+- 使用者給課本 CH1～CH10 原書章節，要「複習」：**只有故事 ＋ 總結卡**，不要題目、不要講義內容、不要推導節。篇幅比 CH11、12 短，但每章開頭要講「這章要幹嘛」。
+- 一章一頁 `circuits/chN.html`，由 `tools/rv-pages.py` 依 `circuits/docs/rv-pages.json` 產生（也會重寫首頁 `#rv-chaps` 卡片）；只手寫 `circuits/assets/chN-story.js`。複雜的章（CH3、CH4、CH7、CH8）同一頁兩段故事（`#story`、`#story2`）。
+- 故事結構：用課本例題數字出謎題 → 「這一章要幹嘛」（`ladder(n)` 章節階梯）→ 生活比喻講觀念 → 「先整理一下」→ 公式 → 劃掉常見錯誤（`strike()`）→ 回頭解謎 → 恍然大悟＋「還缺什麼 → 下一章」。
+- 影片（電子大小事）學來的手法：`__Story` 的 `stamp`（右上角章節章）、`dots(d, key, 'ac'|'slow')` 流動電流點、同一張圖用 `mv` 縮小移到旁邊給計算卡空間。共用工具 `circuits/assets/rv-kit.js`（`__RV`：`el r/c/l`、`bat`、`batH`、`vac`、`isrc`（`down`）、`dsrc`、`loopA`、`ladder`、`strike`、`curve`、`axes`）。
+- 電路學首頁：課程地圖故事（`assets/map-story.js`）＋一章一張卡；多頁的章（CH11、CH12）用 `details.chap-fold` 摺疊卡，點開才列出各頁（`a.chap.mini`）。章節階梯／上一章下一章在 `assets/rv-nav.js`。
+
 ## 觀念填充題（電路學 CH11 起）
 
 - 使用者 10/6 要求：**每一小節 8 題**、用選的、**不用計算**（考觀念、知識，少量考「這題怎麼解」的解法）、中文題目下面附英文。

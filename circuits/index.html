@@ -4,12 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>電路學 · 章節選單</title>
-<meta name="description" content="電路學互動講義章節選單：Sadiku Fundamentals of Electric Circuits，目前 CH11 交流功率分析已上線。">
+<meta name="description" content="電路學章節選單：Sadiku Fundamentals of Electric Circuits CH1–CH12。課程地圖故事、CH1–CH10 故事複習、CH11–CH12 完整講義與練習。">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
 </head>
 <body data-subject="circuits">
 
@@ -27,14 +28,19 @@
   <div class="home-hero">
     <div class="eyebrow">Fundamentals of Electric Circuits · Sadiku</div>
     <h1>電路學</h1>
-    <p>選一個章節進去。每章都是獨立一頁，包含逐步推導、互動模組、數字例題與中英對照測驗。</p>
+    <p>先看下面的課程地圖：12 章其實是一座階梯，每一章做出來的東西都是下一章的零件。CH1～CH10 是故事複習，CH11、CH12 是完整講義（點開卡片看全部頁面）。</p>
   </div>
 
   <dl class="progress">
-    <div><dt>已完成</dt><dd>2 <small>章（7 頁）</small></dd></div>
-    <div><dt>互動模組</dt><dd>19 <small>＋ 27 例題</small></dd></div>
-    <div><dt>測驗題</dt><dd>70 <small>＋ 觀念填充 152</small></dd></div>
+    <div><dt>章節</dt><dd>12 <small>章（CH1–CH12）</small></dd></div>
+    <div><dt>故事畫面</dt><dd>157 <small>複習 ＋ 142 講義</small></dd></div>
+    <div><dt>練習</dt><dd>302 <small>觀念填充 ＋ 章末題</small></dd></div>
   </dl>
+
+  <section class="map-sec" id="map-story">
+    <div class="chap-group">課程地圖（先看這個）</div>
+    <div id="story"></div>
+  </section>
 
   <div class="chapters mk-chaps">
     <a class="chap mk-card" href="mistakes.html" data-trk-skip>
@@ -46,8 +52,8 @@
       <span class="chap-go">打開 →</span>
     </a>
   </div>
-  <div class="lec-links"><a href="ch11-review.html">🧠 CH11 觀念填充總複習（72 題，用選的、不用算）</a><a href="ch12-review.html">🧠 CH12 觀念填充總複習（80 題）</a><a href="ch11-problems.html">✏️ CH11 章末練習題（86 題，附詳解）</a><a href="ch12-problems.html">✏️ CH12 章末練習題（64 題，附詳解）</a></div>
-  <div class="chap-group">前面單元複習（只有故事）</div>
+
+  <div class="chap-group" id="chapters">章節（CH1 → CH12）</div>
   <div class="chapters" id="rv-chaps">
     <a class="chap" href="ch1.html">
       <span class="chap-no">CH1<em>複習</em></span>
@@ -140,84 +146,32 @@
       <span class="chap-go">進入 →</span>
     </a>
   </div>
-
-  <div class="chap-group">已上線</div>
   <div class="chapters">
-    <a class="chap" href="ch11-part1.html">
-      <span class="chap-no">CH11<em>PART 1</em></span>
-      <span class="chap-body">
-        <b>瞬時、平均與最大功率</b>
-        <span>AC Power Analysis · 11.2–11.3 · 課本 p.456–468</span>
-        <p>電壓 × 電流每一瞬間都在變：取平均得 P = ½V<sub>m</sub>I<sub>m</sub>cos θ；負載要怎麼選才能拿到最多功率（共軛匹配）。</p>
-        <span class="chap-tags"><i>📘 Example 6 ＋ Practice 6</i><i>▶ 20 個畫面的故事模式</i><i>2 個互動模組 ＋ 3 個可改數字例題</i><i>10 題中英對照測驗</i></span>
-      </span>
-      <span class="chap-go">進入 →</span>
-    </a>
-    <a class="chap" href="ch11-part2.html">
-      <span class="chap-no">CH11<em>PART 2</em></span>
-      <span class="chap-body">
-        <b>有效值與功率因數</b>
-        <span>AC Power Analysis · 11.4–11.5 · 課本 p.468–475</span>
-        <p>為什麼插座寫 110 V、最高點卻是 155 V（有效值 rms）；電線扛的視在功率 S 與打折率 pf，落後還是超前。</p>
-        <span class="chap-tags"><i>📘 Example 4 ＋ Practice 4</i><i>▶ 20 個畫面的故事模式</i><i>2 個互動模組 ＋ 3 個可改數字例題</i><i>10 題中英對照測驗</i></span>
-      </span>
-      <span class="chap-go">進入 →</span>
-    </a>
-    <a class="chap" href="ch11-part3.html">
-      <span class="chap-no">CH11<em>PART 3</em></span>
-      <span class="chap-body">
-        <b>複功率與功因校正</b>
-        <span>AC Power Analysis · 11.6–11.9 · 課本 p.475–486</span>
-        <p>S = P + jQ 一個複數全包；多個負載怎麼加（|S| 不能直接加）；並一顆電容把電流降下來；瓦特計與電費。</p>
-        <span class="chap-tags"><i>📘 Example 8 ＋ Practice 8</i><i>▶ 21 個畫面的故事模式</i><i>4 個互動模組 ＋ 6 個可改數字例題</i><i>10 題中英對照測驗</i></span>
-      </span>
-      <span class="chap-go">進入 →</span>
-    </a>
-    <a class="chap" href="ch12-part1.html">
-      <span class="chap-no">CH12<em>PART 1</em></span>
-      <span class="chap-body">
-        <b>三相電壓與 Y-Y 接法</b>
-        <span>12.1–12.3 為什麼要三相、相序、線電壓 = √3 相電壓、單相等效電路</span>
-        <span class="chap-tags"><i>📘 Example 2 ＋ Practice 2（🎬 每題圖解故事）</i><i>▶ 18 個畫面的故事模式</i><i>3 個互動模組 ＋ 5 個可改數字例題</i><i>10 題中英對照測驗</i></span>
-      </span>
-      <span class="chap-go">進入 →</span>
-    </a>
-    <a class="chap" href="ch12-part2.html">
-      <span class="chap-no">CH12<em>PART 2</em></span>
-      <span class="chap-body">
-        <b>Y-Δ、Δ-Δ、Δ-Y 接法</b>
-        <span>12.4–12.6 Δ 負載吃線電壓、線電流 = √3 相電流、Δ 電源換 Y、總整理表</span>
-        <span class="chap-tags"><i>📘 Example 3 ＋ Practice 3（🎬 每題圖解故事）</i><i>▶ 17 個畫面的故事模式</i><i>3 個互動模組 ＋ 3 個可改數字例題</i><i>10 題中英對照測驗</i></span>
-      </span>
-      <span class="chap-go">進入 →</span>
-    </a>
-    <a class="chap" href="ch12-part3.html">
-      <span class="chap-no">CH12<em>PART 3</em></span>
-      <span class="chap-body">
-        <b>三相功率與不平衡系統</b>
-        <span>12.7–12.8 總瞬時功率是常數、P = √3V<sub>L</sub>I<sub>L</sub>cos θ、功因校正、中性線電流、網目分析</span>
-        <span class="chap-tags"><i>📘 Example 5 ＋ Practice 5（🎬 每題圖解故事）</i><i>▶ 17 個畫面的故事模式</i><i>2 個互動模組 ＋ 4 個可改數字例題</i><i>10 題中英對照測驗</i></span>
-      </span>
-      <span class="chap-go">進入 →</span>
-    </a>
-    <a class="chap" href="ch12-part4.html">
-      <span class="chap-no">CH12<em>PART 4</em></span>
-      <span class="chap-body">
-        <b>PSpice、三相功率量測與家用配電</b>
-        <span>12.9–12.10 Δ 電源的 PSpice 技巧、三瓦特計與兩瓦特計法、120/240 V 與漏電斷路器</span>
-        <span class="chap-tags"><i>📘 Example 5 ＋ Practice 5（🎬 每題圖解故事）</i><i>▶ 17 個畫面的故事模式</i><i>3 個互動模組 ＋ 4 個可改數字例題</i><i>10 題中英對照測驗</i></span>
-      </span>
-      <span class="chap-go">進入 →</span>
-    </a>
+    <details class="chap-fold">
+      <summary class="chap"><span class="chap-no">CH11<em>5 頁</em></span><span class="chap-body"><b>交流功率分析</b><span>瞬時與平均功率、有效值、功率因數、複功率、功因校正</span><span class="chap-tags"><i>完整講義 3 頁</i><i>▶ 73 個畫面</i><i>觀念填充 72 題</i><i>章末練習 86 題</i></span></span><span class="chap-go">展開 ▾</span></summary>
+      <div class="fold-list">
+        <a class="chap mini" href="ch11-part1.html"><span class="chap-no">P1</span><span class="chap-body"><b>瞬時、平均與最大功率</b><span>11.2–11.3 · 32 個畫面的故事（含補課）</span></span><span class="chap-go">→</span></a>
+        <a class="chap mini" href="ch11-part2.html"><span class="chap-no">P2</span><span class="chap-body"><b>有效值與功率因數</b><span>11.4–11.5 · 20 個畫面的故事</span></span><span class="chap-go">→</span></a>
+        <a class="chap mini" href="ch11-part3.html"><span class="chap-no">P3</span><span class="chap-body"><b>複功率與功因校正</b><span>11.6–11.9 · 21 個畫面的故事</span></span><span class="chap-go">→</span></a>
+        <a class="chap mini" href="ch11-review.html"><span class="chap-no">🧠</span><span class="chap-body"><b>觀念填充總複習</b><span>72 題，用選的、不用算</span></span><span class="chap-go">→</span></a>
+        <a class="chap mini" href="ch11-problems.html"><span class="chap-no">✏️</span><span class="chap-body"><b>章末練習題</b><span>86 題，附詳解</span></span><span class="chap-go">→</span></a>
+      </div>
+    </details>
+    <details class="chap-fold">
+      <summary class="chap"><span class="chap-no">CH12<em>6 頁</em></span><span class="chap-body"><b>三相電路</b><span>平衡三相電壓、Y／Δ 接法、三相功率、不平衡系統、功率量測</span><span class="chap-tags"><i>完整講義 4 頁</i><i>▶ 69 個畫面</i><i>觀念填充 80 題</i><i>章末練習 64 題</i></span></span><span class="chap-go">展開 ▾</span></summary>
+      <div class="fold-list">
+        <a class="chap mini" href="ch12-part1.html"><span class="chap-no">P1</span><span class="chap-body"><b>三相電壓與 Y-Y 接法</b><span>12.1–12.3 · 18 個畫面的故事</span></span><span class="chap-go">→</span></a>
+        <a class="chap mini" href="ch12-part2.html"><span class="chap-no">P2</span><span class="chap-body"><b>Y-Δ、Δ-Δ、Δ-Y 接法</b><span>12.4–12.6 · 17 個畫面的故事</span></span><span class="chap-go">→</span></a>
+        <a class="chap mini" href="ch12-part3.html"><span class="chap-no">P3</span><span class="chap-body"><b>三相功率與不平衡系統</b><span>12.7–12.8 · 17 個畫面的故事</span></span><span class="chap-go">→</span></a>
+        <a class="chap mini" href="ch12-part4.html"><span class="chap-no">P4</span><span class="chap-body"><b>PSpice、三相功率量測與家用配電</b><span>12.9–12.10 · 17 個畫面的故事</span></span><span class="chap-go">→</span></a>
+        <a class="chap mini" href="ch12-review.html"><span class="chap-no">🧠</span><span class="chap-body"><b>觀念填充總複習</b><span>80 題</span></span><span class="chap-go">→</span></a>
+        <a class="chap mini" href="ch12-problems.html"><span class="chap-no">✏️</span><span class="chap-body"><b>章末練習題</b><span>64 題，附詳解</span></span><span class="chap-go">→</span></a>
+      </div>
+    </details>
+    <div class="chap soon"><span class="chap-no">CH13<em>+</em></span><span class="chap-body"><b>磁耦合電路、頻率響應…</b><span>Magnetically Coupled Circuits、Frequency Response</span></span><span class="chap-go">待上傳</span></div>
   </div>
 
-  <div class="chap-group">待上傳</div>
-  <div class="chapters">
-    <div class="chap soon"><span class="chap-no">CH1<em>– CH10</em></span><span class="chap-body"><b>基本觀念 → 交流穩態分析</b><span>電路定律、節點網目分析、電容電感、相量與阻抗</span></span><span class="chap-go">待上傳</span></div>
-    <div class="chap soon"><span class="chap-no">CH13<em>+</em></span><span class="chap-body"><b>磁耦合電路、頻率響應、拉普拉斯…</b><span>Magnetically Coupled Circuits、Frequency Response</span></span><span class="chap-go">待上傳</span></div>
-  </div>
-
-  <p class="note src home-note">丟新的講義過來時請一併說明是第幾章，我會拆成獨立一頁接在上面。</p>
+  <p class="note src home-note">CH1–CH10 的複習只有故事和總結卡；要練題目，用 CH11、CH12 卡片裡的觀念填充和章末練習。</p>
 </div>
 
 <script>
@@ -232,6 +186,10 @@
   try { var t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 })();
 </script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
+<script src="assets/map-story.js"></script>
 <script src="../shared/track.js"></script>
 </body>
 </html>
