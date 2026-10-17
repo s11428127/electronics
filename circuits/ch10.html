@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH10 弦波穩態分析</title>
+<meta name="description" content="電路學 CH10 複習：交流電路照 CH3、CH4 的方法解，不同頻率要用重疊。13 個畫面的故事模式＋一張總結卡。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH10 複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH10 複習</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事（13 個畫面）</a></li>
+      <li><a href="#sum"><i>★</i>這章總結</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH10</span>Chapter 10 · 複習 · Sinusoidal Steady-State Analysis</div>
+      <h1>CH10 弦波穩態分析</h1>
+      <p class="sub">CH9 只會解一個迴路。這一章把 CH3 的節點／網目、CH4 的重疊、戴維寧<strong>全部搬到交流</strong>：換成<button class="tm" data-t="相量">相量</button>和<button class="tm" data-t="阻抗">阻抗</button>，方法照舊，只是數字變複數。唯一的陷阱是<strong>不同頻率的電源</strong>。</p>
+      <ol class="rv-ladder" data-cur="10"></ol>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · 點畫面或往左滑前進</div>
+      <h2>13 個畫面看懂 CH10<span class="h2-en">THE STORY IN 13 SCENES</span></h2>
+      <div id="story"></div>
+    </section>
+
+    <section class="sec" id="sum">
+      <div class="eyebrow">Summary · 看完故事馬上檢查自己</div>
+      <h2>這章帶走三件事<span class="h2-en">THREE TAKEAWAYS</span></h2>
+      <div class="rv-sum">
+        <ol class="rv-three">
+          <li><b>交流電路固定三步</b>：換成相量（電源 V<sub>m</sub>∠φ、L → jωL、C → 1/(jωC)）→ 照 CH3、CH4 解 → 翻回 cos。</li>
+          <li><b>節點、網目、重疊、電源轉換、戴維寧全部照舊</b>，方程式一樣寫，只是係數有 j。克拉瑪公式照用；計算機開複數模式。</li>
+          <li><b>頻率不同的電源一定要用重疊</b>：每個電源用自己的 ω 算阻抗，各自翻回時間再相加。不同 ω 的相量不能直接相加。</li>
+        </ol>
+        <div class="rv-eq"><span>ΣI = 0、ΣV = 0、V = Z I</span><span>不同 ω：v(t) = v<sub>1</sub>(t) + v<sub>2</sub>(t) + …</span><small>相量只能跟「同一個 ω」的相量相加</small></div>
+        <div class="rv-next"><span class="k">還缺什麼 →</span><p>電壓、電流都會算了。可是交流電到底送了多少功率？電費怎麼算？下一章 CH11 交流功率。</p></div>
+      </div>
+      <p class="rv-why"><b>課本勘誤（請確認）</b>：Example 10.6 的 V<sub>3</sub> = 20 / (1.8 + j8.4)，算出來是 2.328∠−77.91° V（課本印 ∠−80°），所以最後一項應為 2.33 sin(5t + 12.1°) V，不是 sin(5t + 10°)。故事裡用的是驗算過的數字。</p>
+      <nav class="rv-nav" data-cur="10"></nav>
+    </section>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
+<script src="assets/rv-nav.js"></script>
+<script src="assets/ch10-story.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

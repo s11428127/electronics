@@ -15,7 +15,7 @@
     { no: 7, name: '一階電路' },
     { no: 8, name: '二階電路' },
     { no: 9, name: '弦波與相量', href: 'ch9.html' },
-    { no: 10, name: '弦波穩態分析' },
+    { no: 10, name: '弦波穩態分析', href: 'ch10.html' },
     { no: 11, name: '交流功率', href: 'ch11-part1.html' },
     { no: 12, name: '三相電路', href: 'ch12-part1.html' }
   ];

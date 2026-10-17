@@ -90,7 +90,7 @@
   const NAMES = ['單位', '定律', '解法', '化簡', '運放', 'L、C', '一階', '二階', '相量', '交流', '功率', '三相'];
   function ladder(cur, opt) {
     opt = opt || {};
-    const x0 = opt.x0 || 52, w = opt.w || 45, yb = 305, y0 = opt.y0 || 292, dy = opt.dy || 14;
+    const x0 = opt.x0 || 52, w = opt.w || 45, yb = 305, y0 = opt.y0 || 262, dy = opt.dy || 12;
     let s = '', hl = '';
     NAMES.forEach((n, i) => {
       const no = i + 1, x = x0 + i * w, y = y0 - i * dy, on = no === cur;
