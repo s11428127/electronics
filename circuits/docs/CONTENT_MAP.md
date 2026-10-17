@@ -76,14 +76,14 @@ QC   = Q1 − Q2 = P(tan θ1 − tan θ2)；C = QC / (ω V²rms)
 一章一頁 `circuits/chN.html`；簡單的章一段故事（約 10～16 畫面），複雜的章（CH3、CH4、CH7、CH8）**同一頁兩段故事**（PART 1、PART 2）。
 每頁：hero（這章要幹嘛 + `.rv-ladder` 章節階梯）→ 故事 → `#sum` 總結卡（三件事、一條公式、還缺什麼 → 下一章）→ `.rv-nav`。
 影片手法：角落章節章（`__Story` 的 `stamp`）、流動電流點（`dots()`，交流用 `'ac'`）、劃掉錯的寫法（`strike()`）、階梯（`ladder()`）。
-共用：`assets/rv-kit.js`（`__RV`，建在 `ch12-kit.js` 上）、`assets/rv-nav.js`（做好一章就把 `href` 填進 `CH`）。
+頁面由 `tools/rv-pages.py` 依 `docs/rv-pages.json` 產生（也會重寫首頁 `#rv-chaps` 卡片），只手寫 `assets/chN-story.js`。共用：`assets/rv-kit.js`（`__RV`，建在 `ch12-kit.js` 上）、`assets/rv-nav.js`（做好一章就把 `href` 填進 `CH`）。
 順序：CH9 → CH10 → CH1 → … → CH8 → 課程地圖故事＋電路學首頁改版（一章一張卡片，點進去才列出該章各頁）。做完一章就驗證 → commit → push → 發佈。
 
 | 章 | 頁 | 狀態 | 謎題 |
 |----|----|------|------|
 | CH9 弦波與相量 | `ch9.html` | ✅ 16 畫面／72 步 | Ex 9.9：8.94 + 4.47 ≠ 10 V |
 | CH10 弦波穩態分析 | `ch10.html` | ✅ 13 畫面／56 步 | Ex 10.6：2 H 是 j4 還是 j10？（勘誤：V<sub>3</sub> ∠−80° → ∠−77.91°，sin(5t + 10°) → sin(5t + 12.1°)，請使用者確認） |
-| CH1 基本概念 | `ch1.html` | ⬜ | |
+| CH1 基本概念 | `ch1.html` | ✅ 12 畫面／47 步 | Ex 1.7：四個功率加起來 = 0？ |
 | CH2 基本定律 | `ch2.html` | ⬜ | |
 | CH3 分析方法（兩段） | `ch3.html` | ⬜ | |
 | CH4 電路定理（兩段） | `ch4.html` | ⬜ | |

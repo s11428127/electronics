@@ -66,6 +66,15 @@
       '<circle class="bgw" cx="' + x + '" cy="' + y + '" r="16"/>' + D.arrow(x, y + 9, x, y - 9, null, 'ln') +
       (lbl ? T(opt.side === 'r' ? x + 24 : x - 24, y + 5, lbl, { cls: opt.lc || 't', fs: opt.fs || 13, a: opt.side === 'r' ? 'start' : 'end' }) : ''));
   }
+  /* 相依電源（菱形）：opt.v = true 電壓型（裡面 + −），否則電流型（箭頭朝上） */
+  function dsrc(x, y, lbl, opt) {
+    opt = opt || {};
+    const r = 17;
+    return g(opt.k, '<path class="ln" d="M' + x + ' ' + (y - 30) + ' V' + (y - r) + ' M' + x + ' ' + (y + r) + ' V' + (y + 30) + '"/>' +
+      '<path class="bgw" d="M' + x + ' ' + (y - r) + ' L' + (x + r) + ' ' + y + ' L' + x + ' ' + (y + r) + ' L' + (x - r) + ' ' + y + ' Z"/>' +
+      (opt.v ? T(x, y - 3, '+', { cls: 't', fs: 12 }) + T(x, y + 11, '−', { cls: 't', fs: 12 }) : D.arrow(x, y + 9, x, y - 9, null, 'ln')) +
+      (lbl ? T(opt.side === 'l' ? x - 24 : x + 24, y + 5, lbl, { cls: opt.lc || 't', fs: opt.fs || 13, a: opt.side === 'l' ? 'end' : 'start' }) : ''));
+  }
   const wire = (d, key, cls) => '<path class="' + (cls || 'ln') + '" style="fill:none" d="' + d + '"' + kk(key) + '/>';
   /* 流動的電流點：沿著 path 跑；'ac' = 來回晃（交流） */
   const dots = (d, key, cls) => '<g' + kk(key) + '><path class="dots ' + (cls || '') + '" d="' + d + '"/></g>';
@@ -105,5 +114,5 @@
     return g(opt.k, s) + g(opt.km, mk) + (hl ? g('lad-hl', hl) : '');
   }
 
-  window.__RV = Object.assign({}, K, { el, bat, vac, isrc, wire, dots, dot, gnd, meter, strike, curve, axes, ladder, f1 });
+  window.__RV = Object.assign({}, K, { el, bat, vac, isrc, dsrc, wire, dots, dot, gnd, meter, strike, curve, axes, ladder, f1 });
 })();

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH1 基本概念</title>
+<meta name="description" content="電路學 CH1 複習：電荷、電流、電壓、功率與被動符號規則。12 個畫面的故事模式＋一張總結卡。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH1 複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH1 複習</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事（12 個畫面）</a></li>
+      <li><a href="#sum"><i>★</i>這章總結</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH1</span>Chapter 1 · 複習 · Basic Concepts</div>
+      <h1>CH1 基本概念</h1>
+      <p class="sub">電路學的第一把尺：電流是每秒流過多少電荷、電壓是兩點之間的「高度差」、功率是電壓乘電流。再加上一條<strong>正負號規則</strong>，就能判斷誰在發電、誰在用電。</p>
+      <ol class="rv-ladder" data-cur="1"></ol>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · 點畫面或往左滑前進</div>
+      <h2>12 個畫面看懂 CH1<span class="h2-en">THE STORY IN 12 SCENES</span></h2>
+      <div id="story"></div>
+    </section>
+
+    <section class="sec" id="sum">
+      <div class="eyebrow">Summary · 看完故事馬上檢查自己</div>
+      <h2>這章帶走三件事<span class="h2-en">THREE TAKEAWAYS</span></h2>
+      <div class="rv-sum">
+        <ol class="rv-three">
+          <li><b>三把尺</b>：電流 i = dq/dt（A = C/s）、電壓 v = dw/dq（V = J/C，永遠是兩點之間）、功率 p = vi（W = J/s）。</li>
+          <li><b>被動符號規則</b>：電流從 + 端流進去 → p = +vi，吸收；從 + 端流出來 → p = −vi，供應。</li>
+          <li><b>能量守恆</b>：整個電路的功率帶正負號加起來 = 0（Example 1.7：−100 + 60 + 48 − 8 = 0）。電費的「度」= kWh = 功率 × 時間。</li>
+        </ol>
+        <div class="rv-eq"><span>p = v i</span><span>Σ p = 0</span><small>電流從 + 端進去：吸收（正）；從 + 端出來：供應（負）</small></div>
+        <div class="rv-next"><span class="k">還缺什麼 →</span><p>會量電壓、電流、功率了。可是一個電阻上的電壓和電流有什麼關係？好幾個元件接在一起又要遵守什麼規則？下一章 CH2：歐姆定律、KCL、KVL。</p></div>
+      </div>
+      <nav class="rv-nav" data-cur="1"></nav>
+    </section>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
+<script src="assets/rv-nav.js"></script>
+<script src="assets/ch1-story.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
