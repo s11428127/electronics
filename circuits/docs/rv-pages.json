@@ -198,6 +198,44 @@
   "notes": []
  },
  {
+  "n": 7,
+  "title": "一階電路",
+  "en": "First-Order Circuits",
+  "card": "RC、RL 放電與時間常數 τ；步階響應：起點、終點、τ 三個數字",
+  "desc": "電路學 CH7 複習：無源 RC／RL、時間常數、單位步階、步階響應的通用公式。兩段故事＋一張總結卡。",
+  "sub": "電容電壓、電感電流不能瞬間改變。那開關一切，它們怎麼從舊的值走到新的值？答案是<strong>指數曲線</strong>，而且只要三個數字：起點、終點、時間常數 τ。",
+  "parts": [
+   {
+    "sec": "story-sec",
+    "div": "story",
+    "label": "PART 1 放電與時間常數（11 個畫面）",
+    "eyebrow": "Story mode · PART 1",
+    "h2": "PART 1　放電與時間常數",
+    "h2en": "NATURAL RESPONSE · 11 SCENES"
+   },
+   {
+    "sec": "story2-sec",
+    "div": "story2",
+    "label": "PART 2 步階響應（9 個畫面）",
+    "eyebrow": "Story mode · PART 2",
+    "h2": "PART 2　步階響應",
+    "h2en": "STEP RESPONSE · 9 SCENES"
+   }
+  ],
+  "three": [
+   "<b>無源響應</b>：RC 放電 v = V<sub>0</sub>e<sup>−t/τ</sup>、τ = R<sub>Th</sub>C；RL i = I<sub>0</sub>e<sup>−t/τ</sup>、τ = L/R<sub>Th</sub>。一個 τ 剩 36.8%，5τ 當作完成。",
+   "<b>步階響應</b>：開關 = 單位步階 u(t)。x(t) = x(∞) + [x(0) − x(∞)]e<sup>−t/τ</sup>，只要三個數字。",
+   "<b>三個數字的找法</b>：x(0) 用切換「前」的穩態（C 斷路、L 短路），靠「不能跳」帶過來；x(∞) 用切換「後」的穩態；τ 用切換後、電源關掉看出去的 R<sub>Th</sub>。"
+  ],
+  "eq": [
+   "x(t) = x(∞) + [x(0) − x(∞)] e<sup>−t/τ</sup>",
+   "τ = RC、L/R"
+  ],
+  "eqsmall": "Example 7.10：v(t) = 30 − 15e<sup>−0.5t</sup> V，v(1) = 20.9 V",
+  "next": "一個 L 或一個 C 會算了。如果電路裡同時有 L 和 C 呢？它們會互相把能量丟來丟去，甚至振盪。下一章 CH8：二階電路。",
+  "notes": []
+ },
+ {
   "n": 9,
   "title": "弦波與相量",
   "en": "Sinusoids and Phasors",

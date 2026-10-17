@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH7 一階電路</title>
+<meta name="description" content="電路學 CH7 複習：無源 RC／RL、時間常數、單位步階、步階響應的通用公式。兩段故事＋一張總結卡。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH7 複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH7 複習</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>PART 1 放電與時間常數（11 個畫面）</a></li>
+      <li><a href="#story2-sec"><i>▶</i>PART 2 步階響應（9 個畫面）</a></li>
+      <li><a href="#sum"><i>★</i>這章總結</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH7</span>Chapter 7 · 複習 · First-Order Circuits</div>
+      <h1>CH7 一階電路</h1>
+      <p class="sub">電容電壓、電感電流不能瞬間改變。那開關一切，它們怎麼從舊的值走到新的值？答案是<strong>指數曲線</strong>，而且只要三個數字：起點、終點、時間常數 τ。</p>
+      <ol class="rv-ladder" data-cur="7"></ol>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · PART 1</div>
+      <h2>PART 1　放電與時間常數<span class="h2-en">NATURAL RESPONSE · 11 SCENES</span></h2>
+      <div id="story"></div>
+    </section>
+
+    <section class="sec" id="story2-sec">
+      <div class="eyebrow">Story mode · PART 2</div>
+      <h2>PART 2　步階響應<span class="h2-en">STEP RESPONSE · 9 SCENES</span></h2>
+      <div id="story2"></div>
+    </section>
+
+    <section class="sec" id="sum">
+      <div class="eyebrow">Summary · 看完故事馬上檢查自己</div>
+      <h2>這章帶走三件事<span class="h2-en">THREE TAKEAWAYS</span></h2>
+      <div class="rv-sum">
+        <ol class="rv-three">
+          <li><b>無源響應</b>：RC 放電 v = V<sub>0</sub>e<sup>−t/τ</sup>、τ = R<sub>Th</sub>C；RL i = I<sub>0</sub>e<sup>−t/τ</sup>、τ = L/R<sub>Th</sub>。一個 τ 剩 36.8%，5τ 當作完成。</li>
+          <li><b>步階響應</b>：開關 = 單位步階 u(t)。x(t) = x(∞) + [x(0) − x(∞)]e<sup>−t/τ</sup>，只要三個數字。</li>
+          <li><b>三個數字的找法</b>：x(0) 用切換「前」的穩態（C 斷路、L 短路），靠「不能跳」帶過來；x(∞) 用切換「後」的穩態；τ 用切換後、電源關掉看出去的 R<sub>Th</sub>。</li>
+        </ol>
+        <div class="rv-eq"><span>x(t) = x(∞) + [x(0) − x(∞)] e<sup>−t/τ</sup></span><span>τ = RC、L/R</span><small>Example 7.10：v(t) = 30 − 15e<sup>−0.5t</sup> V，v(1) = 20.9 V</small></div>
+        <div class="rv-next"><span class="k">還缺什麼 →</span><p>一個 L 或一個 C 會算了。如果電路裡同時有 L 和 C 呢？它們會互相把能量丟來丟去，甚至振盪。下一章 CH8：二階電路。</p></div>
+      </div>
+      <nav class="rv-nav" data-cur="7"></nav>
+    </section>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
+<script src="assets/rv-nav.js"></script>
+<script src="assets/ch7-story.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
