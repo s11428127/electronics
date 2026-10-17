@@ -10,7 +10,7 @@
     { no: 2, name: '基本定律', href: 'ch2.html' },
     { no: 3, name: '分析方法', href: 'ch3.html' },
     { no: 4, name: '電路定理', href: 'ch4.html' },
-    { no: 5, name: '運算放大器' },
+    { no: 5, name: '運算放大器', href: 'ch5.html' },
     { no: 6, name: '電容與電感' },
     { no: 7, name: '一階電路' },
     { no: 8, name: '二階電路' },

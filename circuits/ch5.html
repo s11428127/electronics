@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH5 運算放大器</title>
+<meta name="description" content="電路學 CH5 複習：運算放大器、理想運放兩條規則、反相／非反相／加法／差動放大器。11 個畫面的故事模式＋一張總結卡。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH5 複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH5 複習</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事（11 個畫面）</a></li>
+      <li><a href="#sum"><i>★</i>這章總結</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH5</span>Chapter 5 · 複習 · Operational Amplifiers</div>
+      <h1>CH5 運算放大器</h1>
+      <p class="sub">到目前為止電路只會消耗。這一章認識第一個能<strong>放大</strong>的元件：運算放大器。分析它不用新方法 —— 節點分析加上兩條規則（輸入不吃電流、v<sub>+</sub> = v<sub>−</sub>）就夠了。</p>
+      <ol class="rv-ladder" data-cur="5"></ol>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · 點畫面或往左滑前進</div>
+      <h2>11 個畫面看懂 CH5<span class="h2-en">THE STORY IN 11 SCENES</span></h2>
+      <div id="story"></div>
+    </section>
+
+    <section class="sec" id="sum">
+      <div class="eyebrow">Summary · 看完故事馬上檢查自己</div>
+      <h2>這章帶走三件事<span class="h2-en">THREE TAKEAWAYS</span></h2>
+      <div class="rv-sum">
+        <ol class="rv-three">
+          <li><b>運放</b>把兩個輸入的差放大 A 倍（A 十萬倍以上），輸出最多到電源電壓（飽和）。</li>
+          <li><b>理想運放兩條規則</b>：輸入端不吃電流；有負回授時 v<sub>+</sub> = v<sub>−</sub>（虛短路：電壓一樣、沒有電流）。分析時在 − 端寫 KCL。</li>
+          <li><b>四種電路</b>：反相 −R<sub>f</sub>/R<sub>1</sub>、非反相 1 + R<sub>f</sub>/R<sub>1</sub>（R<sub>f</sub> = 0 是隨耦器）、加法器、差動放大。多個輸入可以用重疊。</li>
+        </ol>
+        <div class="rv-eq"><span>反相：v<sub>o</sub> = −(R<sub>f</sub>/R<sub>1</sub>) v<sub>i</sub></span><span>非反相：v<sub>o</sub> = (1 + R<sub>f</sub>/R<sub>1</sub>) v<sub>i</sub></span><small>Example 5.1：理想 −2，真實 741 算出 −1.99997</small></div>
+        <div class="rv-next"><span class="k">還缺什麼 →</span><p>目前的元件（電阻、運放）都只看「現在」，沒有記憶。下一章 CH6：電容和電感 —— 會把能量存起來的元件，CH7、CH8 的暫態就從這裡開始。</p></div>
+      </div>
+      <nav class="rv-nav" data-cur="5"></nav>
+    </section>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
+<script src="assets/rv-nav.js"></script>
+<script src="assets/ch5-story.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

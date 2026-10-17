@@ -137,6 +137,36 @@
   "notes": []
  },
  {
+  "n": 5,
+  "title": "運算放大器",
+  "en": "Operational Amplifiers",
+  "card": "理想運放兩條規則；反相、非反相、加法、差動放大",
+  "desc": "電路學 CH5 複習：運算放大器、理想運放兩條規則、反相／非反相／加法／差動放大器。11 個畫面的故事模式＋一張總結卡。",
+  "sub": "到目前為止電路只會消耗。這一章認識第一個能<strong>放大</strong>的元件：運算放大器。分析它不用新方法 —— 節點分析加上兩條規則（輸入不吃電流、v<sub>+</sub> = v<sub>−</sub>）就夠了。",
+  "parts": [
+   {
+    "sec": "story-sec",
+    "div": "story",
+    "label": "故事（11 個畫面）",
+    "eyebrow": "Story mode · 點畫面或往左滑前進",
+    "h2": "11 個畫面看懂 CH5",
+    "h2en": "THE STORY IN 11 SCENES"
+   }
+  ],
+  "three": [
+   "<b>運放</b>把兩個輸入的差放大 A 倍（A 十萬倍以上），輸出最多到電源電壓（飽和）。",
+   "<b>理想運放兩條規則</b>：輸入端不吃電流；有負回授時 v<sub>+</sub> = v<sub>−</sub>（虛短路：電壓一樣、沒有電流）。分析時在 − 端寫 KCL。",
+   "<b>四種電路</b>：反相 −R<sub>f</sub>/R<sub>1</sub>、非反相 1 + R<sub>f</sub>/R<sub>1</sub>（R<sub>f</sub> = 0 是隨耦器）、加法器、差動放大。多個輸入可以用重疊。"
+  ],
+  "eq": [
+   "反相：v<sub>o</sub> = −(R<sub>f</sub>/R<sub>1</sub>) v<sub>i</sub>",
+   "非反相：v<sub>o</sub> = (1 + R<sub>f</sub>/R<sub>1</sub>) v<sub>i</sub>"
+  ],
+  "eqsmall": "Example 5.1：理想 −2，真實 741 算出 −1.99997",
+  "next": "目前的元件（電阻、運放）都只看「現在」，沒有記憶。下一章 CH6：電容和電感 —— 會把能量存起來的元件，CH7、CH8 的暫態就從這裡開始。",
+  "notes": []
+ },
+ {
   "n": 9,
   "title": "弦波與相量",
   "en": "Sinusoids and Phasors",
