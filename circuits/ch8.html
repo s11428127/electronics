@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH8 二階電路</title>
+<meta name="description" content="電路學 CH8 複習：串聯／並聯 RLC、特徵方程、過阻尼／臨界／欠阻尼、步階響應與兩個初始條件。兩段故事＋一張總結卡。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH8 複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH8 複習</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>PART 1 三種阻尼（10 個畫面）</a></li>
+      <li><a href="#story2-sec"><i>▶</i>PART 2 步階響應（8 個畫面）</a></li>
+      <li><a href="#sum"><i>★</i>這章總結</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH8</span>Chapter 8 · 複習 · Second-Order Circuits</div>
+      <h1>CH8 二階電路</h1>
+      <p class="sub">同時有 L 和 C 時，能量會在兩者之間丟來丟去，像盪鞦韆。電阻是摩擦：摩擦夠大就平平地停下來，摩擦太小就會<strong>衝過頭再晃回來</strong>。這一章教你判斷會不會晃，並把曲線算出來。</p>
+      <ol class="rv-ladder" data-cur="8"></ol>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · PART 1</div>
+      <h2>PART 1　三種阻尼<span class="h2-en">THREE KINDS OF DAMPING · 10 SCENES</span></h2>
+      <div id="story"></div>
+    </section>
+
+    <section class="sec" id="story2-sec">
+      <div class="eyebrow">Story mode · PART 2</div>
+      <h2>PART 2　步階響應<span class="h2-en">STEP RESPONSE · 8 SCENES</span></h2>
+      <div id="story2"></div>
+    </section>
+
+    <section class="sec" id="sum">
+      <div class="eyebrow">Summary · 看完故事馬上檢查自己</div>
+      <h2>這章帶走三件事<span class="h2-en">THREE TAKEAWAYS</span></h2>
+      <div class="rv-sum">
+        <ol class="rv-three">
+          <li><b>特徵方程</b> s<sup>2</sup> + 2αs + ω<sub>0</sub><sup>2</sup> = 0，ω<sub>0</sub> = 1/√(LC)；串聯 α = R/(2L)，<b>並聯 α = 1/(2RC)</b>。</li>
+          <li><b>α 跟 ω<sub>0</sub> 比大小</b>：α &gt; ω<sub>0</sub> 過阻尼（兩實根，慢慢回去）、α = ω<sub>0</sub> 臨界（重根，最快不晃）、α &lt; ω<sub>0</sub> 欠阻尼（共軛複根，ω<sub>d</sub> = √(ω<sub>0</sub><sup>2</sup> − α<sup>2</sup>)，會晃、會衝過頭）。</li>
+          <li><b>步階響應</b> = 終點 + 自然響應，有兩個常數，要兩個初始條件：x(0)（不能跳）和斜率 dv/dt(0) = i<sub>C</sub>(0)/C、di/dt(0) = v<sub>L</sub>(0)/L。</li>
+        </ol>
+        <div class="rv-eq"><span>s = −α ± √(α<sup>2</sup> − ω<sub>0</sub><sup>2</sup>)</span><span>α = R/(2L)、ω<sub>0</sub> = 1/√(LC)</span><small>Example 8.7：R = 1 Ω 欠阻尼，24 V 電源讓電容衝到 38.99 V</small></div>
+        <div class="rv-next"><span class="k">還缺什麼 →</span><p>會解開關之後的暫態了。可是家裡插座的電一直在晃（交流），每題都解二階微分方程太累。下一章 CH9：相量 —— 換一種語言，微分方程變乘除。</p></div>
+      </div>
+      <p class="rv-why">最高點 38.99 V（t ≈ 0.94 s）是用課本 Example 8.7 的式子以程式算出來的，課本本身沒有問最高點。</p>
+      <nav class="rv-nav" data-cur="8"></nav>
+    </section>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
+<script src="assets/rv-nav.js"></script>
+<script src="assets/ch8-story.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

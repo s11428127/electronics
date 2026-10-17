@@ -13,7 +13,7 @@
     { no: 5, name: '運算放大器', href: 'ch5.html' },
     { no: 6, name: '電容與電感', href: 'ch6.html' },
     { no: 7, name: '一階電路', href: 'ch7.html' },
-    { no: 8, name: '二階電路' },
+    { no: 8, name: '二階電路', href: 'ch8.html' },
     { no: 9, name: '弦波與相量', href: 'ch9.html' },
     { no: 10, name: '弦波穩態分析', href: 'ch10.html' },
     { no: 11, name: '交流功率', href: 'ch11-part1.html' },
