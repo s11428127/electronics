@@ -237,6 +237,71 @@ body[data-subject="electronics"][data-look="clean"] {
   --hole: #cfd3df; --hole-w: #262b38; --ion-pos: #9aa0b4; --ion-pos-w: #232733;
 }
 
+/* ============================================================
+   電路學 CH1～CH10 複習故事（10/17）：只有故事 ＋ 總結卡
+   仿影片：角落章節章、流動的電流點、公式裡正在講的那一項亮起來
+   ============================================================ */
+.st-stamp { position: absolute; z-index: 2; top: 3.2%; right: 2.4%; text-align: right; pointer-events: none; }
+.st-stamp b { display: block; font-family: var(--font-mono); font-weight: 700; font-size: clamp(10px, 1.7cqw, 24px); color: var(--s-ink); letter-spacing: .06em; border-bottom: 2px solid var(--s-acc); padding-bottom: 1px; }
+.st-stamp i { display: block; font-style: normal; font-family: var(--font-body); font-size: clamp(9px, 1.4cqw, 19px); color: var(--s-ink3); letter-spacing: .1em; margin-top: 2px; }
+@media (min-width: 621px) { .story.has-stamp .st-hint { top: 16%; } }
+/* 電流點：一條 path 加 class="dots"，虛線間距 0 + 圓頭 = 一顆顆點，dashoffset 動 = 往前流 */
+.st-svg .dots { fill: none; stroke: var(--s-acc); stroke-width: 5.5; stroke-linecap: round; stroke-dasharray: 0 18; animation: st-dots 1s linear infinite; }
+.st-svg .dots.rev { animation-direction: reverse; }
+.st-svg .dots.slow { animation-duration: 2.4s; }
+.st-svg .dots.fast { animation-duration: .45s; }
+@keyframes st-dots { to { stroke-dashoffset: -18; } }
+.st-svg .dots.ac { animation: st-dots-ac 1.5s ease-in-out infinite alternate; }   /* 交流：來回晃 */
+@keyframes st-dots-ac { to { stroke-dashoffset: -27; } }
+.st-svg .hlel .ln { stroke: var(--s-acc); }
+/* 正在講的那一項：cls: { key: 'hl' } */
+.st-svg text.hl, .st-svg .hl text, .st-svg .hl tspan { fill: var(--s-acc) !important; }
+.st-svg .hl rect.card { stroke: var(--s-acc); stroke-width: 2; }
+@media (prefers-reduced-motion: reduce) { .st-svg .dots { animation: none; } }
+
+/* 複習頁：章節階梯、總結卡、上一章／下一章 */
+.rv-ladder { display: flex; flex-wrap: wrap; gap: 5px; margin: 14px 0 4px; padding: 0; list-style: none; }
+.rv-ladder li a, .rv-ladder li span {
+  display: inline-flex; align-items: baseline; gap: 4px; padding: 3px 9px; border-radius: 999px; text-decoration: none;
+  font-family: var(--font-body); font-size: 12px; color: var(--ink-3); border: 1px solid var(--line-soft); background: var(--surface);
+}
+.rv-ladder li a:hover { color: var(--accent); border-color: var(--accent); }
+.rv-ladder li b { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; }
+.rv-ladder li.on span { color: #fff; background: var(--accent); border-color: var(--accent); font-weight: 700; }
+:root[data-theme="dark"] .rv-ladder li.on span { color: #0e1017; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .rv-ladder li.on span { color: #0e1017; } }
+.rv-ladder li.soon span { opacity: .55; }
+.rv-why { margin: 12px 0 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: color-mix(in srgb, var(--accent) 7%, var(--surface)); border-radius: 0 10px 10px 0; font-size: 15px; line-height: 1.75; color: var(--ink-2); }
+.rv-why b { color: var(--ink); }
+.rv-sum {
+  background: var(--surface); border: 1px solid var(--line-soft); border-radius: 14px; padding: 18px 20px 16px; margin-top: 14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 14px 34px -22px rgba(0,0,0,.35);
+}
+.rv-sum h3 { margin: 0 0 10px; font-family: var(--font-body); font-size: 16px; font-weight: 700; color: var(--ink); }
+.rv-three { list-style: none; margin: 0; padding: 0; counter-reset: rv; }
+.rv-three li { counter-increment: rv; position: relative; padding: 6px 0 6px 34px; font-size: 15px; line-height: 1.7; color: var(--ink-2); border-bottom: 1px dashed var(--line-soft); }
+.rv-three li:last-child { border-bottom: 0; }
+.rv-three li::before {
+  content: counter(rv); position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: var(--surface); font-family: var(--font-mono); font-size: 12px; font-weight: 700; display: grid; place-items: center;
+}
+.rv-three li b { color: var(--ink); }
+.rv-eq {
+  margin: 14px 0; padding: 14px 12px; border-radius: 10px; text-align: center; overflow-wrap: anywhere;
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface)); color: var(--ink); font-family: var(--font-body); font-size: 19px; font-weight: 700; line-height: 1.6;
+}
+.rv-eq > span { display: inline-block; white-space: nowrap; margin: 0 .45em; }
+.rv-eq small { display: block; font-size: 12.5px; font-weight: 500; color: var(--ink-3); margin-top: 2px; }
+.rv-next { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding-top: 12px; border-top: 1px solid var(--line-soft); font-size: 15px; line-height: 1.7; color: var(--ink-2); }
+.rv-next .k { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .12em; color: var(--accent); }
+.rv-next p { margin: 0; flex: 1 1 260px; }
+.rv-nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; margin-top: 22px; }
+.rv-nav a { flex: 1 1 200px; text-decoration: none; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line-soft); background: var(--surface); color: var(--ink); font-size: 14.5px; }
+.rv-nav a small { display: block; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: .08em; }
+.rv-nav a.nx { text-align: right; }
+.rv-nav a:hover { border-color: var(--accent); }
+.rv-part { margin-top: 28px; }
+
 /* ===== 電腦版放大（tools/desktop-css.py 自動產生，不要手改） ===== */
 @media (min-width: 1200px) {
   .st-hint { font-size: 12.5px; }
@@ -254,6 +319,18 @@ body[data-subject="electronics"][data-look="clean"] {
 .h2-en { font-size: 12.5px; }
   /* 原講義對照：每一節旁邊小小標「這是講義 PART 幾」 */
 .part-tag { font-size: 11.4px; }
+  .rv-ladder li a, .rv-ladder li span { font-size: 13.7px; }
+  .rv-ladder li b { font-size: 12.0px; }
+  .rv-why { font-size: 17.1px; }
+  .rv-sum h3 { font-size: 18.2px; }
+  .rv-three li { font-size: 17.1px; }
+  .rv-three li::before { font-size: 13.7px; }
+  .rv-eq { font-size: 21.7px; }
+  .rv-eq small { font-size: 14.2px; }
+  .rv-next { font-size: 17.1px; }
+  .rv-next .k { font-size: 12.5px; }
+  .rv-nav a { font-size: 16.5px; }
+  .rv-nav a small { font-size: 12.5px; }
 }
 @media (min-width: 1600px) {
   .st-hint { font-size: 13.6px; }
@@ -271,5 +348,17 @@ body[data-subject="electronics"][data-look="clean"] {
 .h2-en { font-size: 13.6px; }
   /* 原講義對照：每一節旁邊小小標「這是講義 PART 幾」 */
 .part-tag { font-size: 12.4px; }
+  .rv-ladder li a, .rv-ladder li span { font-size: 14.9px; }
+  .rv-ladder li b { font-size: 13.0px; }
+  .rv-why { font-size: 18.6px; }
+  .rv-sum h3 { font-size: 19.8px; }
+  .rv-three li { font-size: 18.6px; }
+  .rv-three li::before { font-size: 14.9px; }
+  .rv-eq { font-size: 23.6px; }
+  .rv-eq small { font-size: 15.5px; }
+  .rv-next { font-size: 18.6px; }
+  .rv-next .k { font-size: 13.6px; }
+  .rv-nav a { font-size: 18.0px; }
+  .rv-nav a small { font-size: 13.6px; }
 }
 /* ===== 電腦版放大 end ===== */

@@ -101,7 +101,7 @@
     const LS = 'ee-story-' + def.id;
     let sc = 0, st = 0, playing = false, timer = 0, svg = null, built = -1, ended = false;
 
-    root.className = 'story'; root.tabIndex = 0;
+    root.className = 'story' + (def.stamp ? ' has-stamp' : ''); root.tabIndex = 0;
     root.setAttribute('role', 'region'); root.setAttribute('aria-label', '故事模式：' + (def.title || ''));
     root.innerHTML =
       '<div class="st-stage">' +
@@ -109,8 +109,10 @@
         '<div class="st-title"><b></b><i></i></div>' +
         '<div class="st-sub" aria-live="polite"><span></span></div>' +
         '<div class="st-hint">點畫面或往左滑 → 下一步</div>' +
+        /* 角落章節章（仿影片右上角的「Chap.」）：def.stamp = { no: 'CH9', name: '相量' } */
+        (def.stamp ? '<div class="st-stamp"><b>' + def.stamp.no + '</b><i>' + def.stamp.name + '</i></div>' : '') +
         '<div class="st-end"><button class="btn" type="button" data-end="again">↺ 從頭再看一次</button>' +
-          (def.after ? '<a class="btn solid" href="' + def.after + '" data-end="go" style="text-decoration:none">往下看推導與例題 ↓</a>' : '') + '</div>' +
+          (def.after ? '<a class="btn solid" href="' + def.after + '" data-end="go" style="text-decoration:none">' + (def.afterLabel || '往下看推導與例題 ↓') + '</a>' : '') + '</div>' +
       '</div>' +
       '<div class="st-bar">' +
         '<button type="button" data-b="prev" aria-label="上一步">‹</button>' +

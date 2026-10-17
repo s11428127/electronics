@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH9 弦波與相量</title>
+<meta name="description" content="電路學 CH9 複習：弦波、相量、阻抗。16 個畫面的故事模式＋一張總結卡。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH9 複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH9 複習</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事（16 個畫面）</a></li>
+      <li><a href="#sum"><i>★</i>這章總結</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH9</span>Chapter 9 · 複習 · Sinusoids and Phasors</div>
+      <h1>CH9 弦波與相量</h1>
+      <p class="sub">插座的電一直在晃，每題都解微分方程太累。這一章<strong>換一種語言</strong>：<button class="tm" data-t="弦波">弦波</button>變成一支箭頭（<button class="tm" data-t="相量">相量</button>），微積分變成乘除，R、L、C 統一變成<button class="tm" data-t="阻抗">阻抗</button>。</p>
+      <ol class="rv-ladder" data-cur="9"></ol>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · 點畫面或往左滑前進</div>
+      <h2>16 個畫面看懂 CH9<span class="h2-en">THE STORY IN 16 SCENES</span></h2>
+      <div id="story"></div>
+    </section>
+
+    <section class="sec" id="sum">
+      <div class="eyebrow">Summary · 看完故事馬上檢查自己</div>
+      <h2>這章帶走三件事<span class="h2-en">THREE TAKEAWAYS</span></h2>
+      <div class="rv-sum">
+        <ol class="rv-three">
+          <li><b>弦波拍成照片就是相量</b>：V<sub>m</sub> cos(ωt + φ) → V<sub>m</sub>∠φ。同一個電路 ω 都一樣，先放旁邊，算完再放回去。</li>
+          <li><b>微分變乘 jω</b>，所以 R、L、C 都變成 V = Z I：Z<sub>R</sub> = R、Z<sub>L</sub> = jωL、Z<sub>C</sub> = 1/(jωC)。L 裡電壓領先，C 裡電流領先。</li>
+          <li><b>KVL、KCL、串並聯、分壓全部照舊</b>，但加的是箭頭，不是長度：8.94 + 4.47 ≠ 10，要 √(8.94<sup>2</sup> + 4.47<sup>2</sup>) = 10。</li>
+        </ol>
+        <div class="rv-eq"><span>V = Z I</span><span>Z<sub>L</sub> = jωL</span><span>Z<sub>C</sub> = 1 / (jωC)</span><small>交流版的歐姆定律：這一條會一路用到 CH12</small></div>
+        <div class="rv-next"><span class="k">還缺什麼 →</span><p>一個迴路會算了。可是電路一複雜（好幾個節點、迴路）呢？下一章把 CH3 節點／網目、CH4 戴維寧，全部用相量再做一次。</p></div>
+      </div>
+      <nav class="rv-nav" data-cur="9"></nav>
+    </section>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
+<script src="assets/rv-nav.js"></script>
+<script src="assets/ch9-story.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
