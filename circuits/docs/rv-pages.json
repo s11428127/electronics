@@ -99,6 +99,44 @@
   "notes": []
  },
  {
+  "n": 4,
+  "title": "電路定理",
+  "en": "Circuit Theorems",
+  "card": "重疊、電源轉換、戴維寧／諾頓、最大功率轉移：把電路縮小",
+  "desc": "電路學 CH4 複習：線性、重疊定理、電源轉換、戴維寧、諾頓、最大功率轉移。兩段故事＋一張總結卡。",
+  "sub": "CH3 什麼電路都解得出來，但每次都要全部解完。這一章是一組<strong>偷懶的定理</strong>：拆開來算（重疊）、換個包裝（電源轉換），或把一整坨縮成一顆電源（戴維寧、諾頓）。",
+  "parts": [
+   {
+    "sec": "story-sec",
+    "div": "story",
+    "label": "PART 1 重疊與電源轉換（11 個畫面）",
+    "eyebrow": "Story mode · PART 1",
+    "h2": "PART 1　重疊與電源轉換",
+    "h2en": "SUPERPOSITION · 11 SCENES"
+   },
+   {
+    "sec": "story2-sec",
+    "div": "story2",
+    "label": "PART 2 戴維寧與最大功率（9 個畫面）",
+    "eyebrow": "Story mode · PART 2",
+    "h2": "PART 2　戴維寧與最大功率",
+    "h2en": "THÉVENIN · 9 SCENES"
+   }
+  ],
+  "three": [
+   "<b>重疊</b>：每個獨立電源單獨算再相加；關掉電壓源 = 短路、關掉電流源 = 斷路，相依電源留著。<b>功率不能重疊</b>（有平方）。",
+   "<b>電源轉換</b>：電壓源串 R ⇄ 電流源並 R，v<sub>s</sub> = i<sub>s</sub>R，箭頭指向 + 端。一路換、一路併，電路越來越小。",
+   "<b>戴維寧</b>：從兩端看進去 = V<sub>Th</sub>（開路電壓）串 R<sub>Th</sub>（電源關掉看進去）；諾頓 I<sub>N</sub> = V<sub>Th</sub>/R<sub>Th</sub>。負載 R<sub>L</sub> = R<sub>Th</sub> 時功率最大。"
+  ],
+  "eq": [
+   "I<sub>L</sub> = V<sub>Th</sub> / (R<sub>Th</sub> + R<sub>L</sub>)",
+   "p<sub>max</sub> = V<sub>Th</sub><sup>2</sup> / (4R<sub>Th</sub>)"
+  ],
+  "eqsmall": "Example 4.8：30 V 串 4 Ω，R<sub>L</sub> = 4 Ω 時 56.25 W",
+  "next": "到目前為止電路裡只有電阻和電源，只會消耗、不會放大。下一章 CH5：運算放大器 —— 用它放大、相加、相減訊號。",
+  "notes": []
+ },
+ {
   "n": 9,
   "title": "弦波與相量",
   "en": "Sinusoids and Phasors",

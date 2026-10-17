@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH4 電路定理</title>
+<meta name="description" content="電路學 CH4 複習：線性、重疊定理、電源轉換、戴維寧、諾頓、最大功率轉移。兩段故事＋一張總結卡。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH4 複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH4 複習</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>PART 1 重疊與電源轉換（11 個畫面）</a></li>
+      <li><a href="#story2-sec"><i>▶</i>PART 2 戴維寧與最大功率（9 個畫面）</a></li>
+      <li><a href="#sum"><i>★</i>這章總結</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH4</span>Chapter 4 · 複習 · Circuit Theorems</div>
+      <h1>CH4 電路定理</h1>
+      <p class="sub">CH3 什麼電路都解得出來，但每次都要全部解完。這一章是一組<strong>偷懶的定理</strong>：拆開來算（重疊）、換個包裝（電源轉換），或把一整坨縮成一顆電源（戴維寧、諾頓）。</p>
+      <ol class="rv-ladder" data-cur="4"></ol>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · PART 1</div>
+      <h2>PART 1　重疊與電源轉換<span class="h2-en">SUPERPOSITION · 11 SCENES</span></h2>
+      <div id="story"></div>
+    </section>
+
+    <section class="sec" id="story2-sec">
+      <div class="eyebrow">Story mode · PART 2</div>
+      <h2>PART 2　戴維寧與最大功率<span class="h2-en">THÉVENIN · 9 SCENES</span></h2>
+      <div id="story2"></div>
+    </section>
+
+    <section class="sec" id="sum">
+      <div class="eyebrow">Summary · 看完故事馬上檢查自己</div>
+      <h2>這章帶走三件事<span class="h2-en">THREE TAKEAWAYS</span></h2>
+      <div class="rv-sum">
+        <ol class="rv-three">
+          <li><b>重疊</b>：每個獨立電源單獨算再相加；關掉電壓源 = 短路、關掉電流源 = 斷路，相依電源留著。<b>功率不能重疊</b>（有平方）。</li>
+          <li><b>電源轉換</b>：電壓源串 R ⇄ 電流源並 R，v<sub>s</sub> = i<sub>s</sub>R，箭頭指向 + 端。一路換、一路併，電路越來越小。</li>
+          <li><b>戴維寧</b>：從兩端看進去 = V<sub>Th</sub>（開路電壓）串 R<sub>Th</sub>（電源關掉看進去）；諾頓 I<sub>N</sub> = V<sub>Th</sub>/R<sub>Th</sub>。負載 R<sub>L</sub> = R<sub>Th</sub> 時功率最大。</li>
+        </ol>
+        <div class="rv-eq"><span>I<sub>L</sub> = V<sub>Th</sub> / (R<sub>Th</sub> + R<sub>L</sub>)</span><span>p<sub>max</sub> = V<sub>Th</sub><sup>2</sup> / (4R<sub>Th</sub>)</span><small>Example 4.8：30 V 串 4 Ω，R<sub>L</sub> = 4 Ω 時 56.25 W</small></div>
+        <div class="rv-next"><span class="k">還缺什麼 →</span><p>到目前為止電路裡只有電阻和電源，只會消耗、不會放大。下一章 CH5：運算放大器 —— 用它放大、相加、相減訊號。</p></div>
+      </div>
+      <nav class="rv-nav" data-cur="4"></nav>
+    </section>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
+<script src="assets/rv-nav.js"></script>
+<script src="assets/ch4-story.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
