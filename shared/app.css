@@ -1285,6 +1285,24 @@ details.chap-fold[open] > summary .chap-go { opacity: .6; }
 .chap.mini .chap-body b { font-size: 15px; }
 @media (max-width: 620px) { .fold-list { margin-left: 6px; padding-left: 10px; } .chap.mini { grid-template-columns: 38px minmax(0, 1fr); } .chap.mini .chap-go { display: none; } }
 
+/* 電路學講義收合（app.js 最後一段，10/18） */
+.example.ex-cards ol > li.dv-hide, .example.ex-cards .ex-ans.dv-hide { display: none; }
+.example.ex-cards ol > li.dv-cur { cursor: pointer; }
+.example.ex-cards ol > li.dv-cur > b:first-child { color: var(--accent); }
+.ex-bar { padding: 2px 16px 14px 38px; }
+.pr-long { display: none; }
+.pr-long.pr-open { display: block; }
+.pr-short.pr-hide { display: none; }
+.pr-less { display: none; margin: -6px 0 12px; }
+.pr-less.pr-on { display: inline-block; }
+.pr-short { margin: 0 0 14px; font-size: 15px; line-height: 1.8; color: var(--ink-2); max-width: 72ch; }
+.pr-short.note { padding: 10px 14px; border-left: 3px solid var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--surface)); border-radius: 0 10px 10px 0; }
+.pr-more { margin: 0 0 0 4px; }
+body.ann-on .pr-long { display: block; } body.ann-on .pr-short, body.ann-on .pr-less, body.ann-on .ex-bar { display: none; }
+body.ann-on .example.ex-cards ol > li.dv-hide, body.ann-on .example.ex-cards .ex-ans.dv-hide { display: list-item; }
+body.ann-on .example.ex-cards .ex-ans.dv-hide { display: block; }
+@media (max-width: 520px) { .ex-bar { padding-left: 14px; } }
+
 /* ===== 電腦版放大（tools/desktop-css.py 自動產生，不要手改） ===== */
 @media (min-width: 1200px) {
   body { font-size: 17.1px; }
@@ -1529,6 +1547,7 @@ details.chap-fold[open] > summary .chap-go { opacity: .6; }
   .my-tag { font-size: 12.5px; }
   .chap.mini .chap-no { font-size: 14.8px; }
   .chap.mini .chap-body b { font-size: 17.1px; }
+  .pr-short { font-size: 17.1px; }
 }
 @media (min-width: 1600px) {
   body { font-size: 18.6px; }
@@ -1773,5 +1792,6 @@ details.chap-fold[open] > summary .chap-go { opacity: .6; }
   .my-tag { font-size: 13.6px; }
   .chap.mini .chap-no { font-size: 16.1px; }
   .chap.mini .chap-body b { font-size: 18.6px; }
+  .pr-short { font-size: 18.6px; }
 }
 /* ===== 電腦版放大 end ===== */

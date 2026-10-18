@@ -297,6 +297,7 @@
       host.querySelector('.ex-ans').innerHTML = cfg.answer(state, r);
       if (stage) stage.redraw();
       wireTerms();
+      host.dispatchEvent(new CustomEvent('ex:render'));   /* 讓「講義收合」重新套用目前看到第幾步 */
     }
     cfg.givens.forEach(g => {
       bindRange(g.id, g.fmt, v => { state[g.id] = v; render(); });
@@ -400,7 +401,7 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
   /* 從錯題本、連結跳進來時，目標在收起來的步驟裡 → 全部打開 */
   window.addEventListener('hashchange', () => { const t = document.getElementById(location.hash.slice(1)); const d = t && t.closest('.derive'); if (d && d.__dvShow) d.__dvShow(99); });
-  window.__EE && (window.__EE.deriveCards = init);
+  window.__EE && (window.__EE.deriveCards = init, window.__EE.firstSentence = firstSentence);
 })();
 
 /* 實驗照片：點一下放大、再點一下縮回（.lab-photos） */
@@ -408,3 +409,78 @@ document.addEventListener('click', function (e) {
   var img = e.target.closest && e.target.closest('.lab-photos img'); if (!img) return;
   img.closest('figure').classList.toggle('open');
 });
+
+/* ============================================================
+   電路學講義收合（使用者 10/18：講義字太多，要跟工數一樣「字收起來，按下一步才展開」）
+   只套在電路學有推導的講義頁：
+   ① 可調數字例題：步驟一次一步（下一步／全部展開），最後一步之後才露出答案；拉滑桿重算時保留看到第幾步。
+   ② 小節導言、hero 說明、.note：只露第一句，其餘收進「看詳細」。
+   寫筆記模式全部攤開；加的東西都是 .dv-ui（不影響筆跡錨點）。
+   ============================================================ */
+(function () {
+  'use strict';
+  function ready(fn) { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
+  ready(() => {
+    const body = document.body;
+    if (!body || body.dataset.subject !== 'circuits' || !document.querySelector('.derive')) return;
+    body.classList.add('fold-text');
+    const FS = window.__EE && window.__EE.firstSentence;
+
+    /* ① 可調數字例題 */
+    document.querySelectorAll('.example.live').forEach(ex => {
+      const ol = ex.querySelector(':scope > ol'), ans = ex.querySelector(':scope > .ex-ans');
+      if (!ol) return;
+      ex.classList.add('ex-cards');
+      const bar = document.createElement('div'); bar.className = 'dv-ui dv-bar ex-bar';
+      bar.innerHTML = '<button type="button" class="btn solid" data-dv="next">下一步 ▸</button><button type="button" class="btn" data-dv="all">全部展開</button><button type="button" class="btn" data-dv="reset">從第一步</button><span class="dv-prog"></span>';
+      ol.parentNode.insertBefore(bar, ol.nextSibling);
+      let n = 1;
+      function show(k) {
+        const lis = Array.prototype.slice.call(ol.children);
+        n = Math.max(1, Math.min(k, lis.length || 1));
+        lis.forEach((li, i) => { li.classList.toggle('dv-hide', i >= n); li.classList.toggle('dv-cur', i === n - 1 && n < lis.length); });
+        const done = n >= lis.length;
+        if (ans) ans.classList.toggle('dv-hide', !done);
+        bar.querySelector('[data-dv="next"]').hidden = done;
+        bar.querySelector('[data-dv="all"]').hidden = done;
+        bar.querySelector('[data-dv="reset"]').hidden = n === 1;
+        bar.querySelector('.dv-prog').textContent = done ? '✓ 全部 ' + lis.length + ' 步' : '第 ' + n + ' / ' + lis.length + ' 步';
+      }
+      bar.addEventListener('click', e => {
+        const a = e.target.closest('[data-dv]'); if (!a) return;
+        show(a.dataset.dv === 'next' ? n + 1 : a.dataset.dv === 'all' ? 99 : 1);
+      });
+      ol.addEventListener('click', e => {
+        if (e.target.closest('button, a, .tm, input') || body.classList.contains('ann-on')) return;
+        const li = e.target.closest('li'); if (li && li.classList.contains('dv-cur')) show(n + 1);
+      });
+      ex.addEventListener('ex:render', () => show(n));
+      ex.__exShow = show;
+      show(1);
+    });
+
+    /* ② 長段落只露第一句 */
+    if (!FS) return;
+    const paras = document.querySelectorAll('main section.sec > p, main section.sec > .note, main .hero > p.sub, main section.sec > .lede');
+    paras.forEach(p => {
+      if (p.closest('.story, .derive, .example, .howto, .pitfall, .glossary, .quiz, .exbook, .rv-sum')) return;
+      if (p.textContent.trim().length < 70) return;
+      const fs = FS(p);
+      if (!fs.rest) return;
+      const s = document.createElement('div'); s.className = 'dv-ui pr-short' + (p.classList.contains('note') ? ' note' : '') + (p.classList.contains('sub') ? ' sub' : '');
+      s.innerHTML = fs.html + ' <button type="button" class="dv-more pr-more">看詳細 ▾</button>';
+      p.parentNode.insertBefore(s, p);
+      p.classList.add('pr-long');
+      const close = document.createElement('button'); close.type = 'button'; close.className = 'dv-ui dv-more pr-less'; close.textContent = '收起 ▴';
+      p.parentNode.insertBefore(close, p.nextSibling);
+      s.querySelector('.pr-more').addEventListener('click', () => { p.classList.add('pr-open'); s.classList.add('pr-hide'); close.classList.add('pr-on'); });
+      close.addEventListener('click', () => { p.classList.remove('pr-open'); s.classList.remove('pr-hide'); close.classList.remove('pr-on'); });
+    });
+    /* 連結跳進收起來的地方 → 打開 */
+    function openTarget() {
+      const t = location.hash && document.getElementById(location.hash.slice(1)); if (!t) return;
+      const ex = t.closest('.example.live'); if (ex && ex.__exShow) ex.__exShow(99);
+    }
+    window.addEventListener('hashchange', openTarget); openTarget();
+  });
+})();
