@@ -49,6 +49,41 @@
      { sub: '它<b>沒有中性點</b>。', on: 'c2' },
      { sub: '重點：<b>每一格都直接跨在兩條線之間</b>。', on: 'c3' }]);
 
+  /* ═════ 補：Δ 實際長什麼樣子（使用者 10/18：太抽象） ═════ */
+  const RV = window.__RV;
+  const res = (x1, y1, x2, y2, lbl, key, o) => (RV ? RV.el('r', x1, y1, x2, y2, lbl, Object.assign({ L: 30, fs: 12, lc: 'tm' }, o || {})) : '').replace(/^<g>/, '<g' + (key ? ' data-k="' + key + '"' : '') + '>');
+  const ly = [130, 175, 220];
+  const D2 = sc('Δ 實際怎麼接', 'DELTA IN REAL LIFE',
+    g('w', ly.map((y, i) => '<path class="ln" style="stroke-width:2.2" d="M70 ' + y + ' H570"/>' + T(62, y + 5, '火線 ' + 'abc'[i], { cls: 'ta', fs: 12.5, a: 'end' })).join('')) +
+    g('h1', '<circle class="ink" cx="220" cy="130" r="3.6"/><circle class="ink" cx="220" cy="175" r="3.6"/>' + res(220, 130, 220, 175, '', '') + T(232, 157, '電熱器 1（a–b）', { cls: 'tm', fs: 12, a: 'start' })) +
+    g('h2', '<circle class="ink" cx="360" cy="175" r="3.6"/><circle class="ink" cx="360" cy="220" r="3.6"/>' + res(360, 175, 360, 220, '', '') + T(372, 202, '電熱器 2（b–c）', { cls: 'tm', fs: 12, a: 'start' })) +
+    g('h3', '<circle class="ink" cx="500" cy="130" r="3.6"/><circle class="ink" cx="500" cy="220" r="3.6"/>' + res(500, 130, 500, 162, '', '', { L: 24 }) +
+      '<path class="ln" style="fill:none" d="M500 162 V168 A7 7 0 0 1 500 182 V220"/>' + T(514, 150, '電熱器 3（c–a）', { cls: 'tm', fs: 12, a: 'start' }) + T(514, 200, '跨過 b，沒接', { cls: 'ts', fs: 11, a: 'start' })) +
+    chip(320, 266, '每台直接夾兩條火線 → 吃線電壓', '沒有共同的結、不需要中性線', 'c1', { fs: 13.5, acc: true }) +
+    chip(320, 266, '加一台、拿掉一台：只動那兩條線', '', 'c2', { fs: 13.5 }),
+    [{ sub: '先看實物。三條火線從左邊拉過來。', on: 'w' },
+     { sub: '第一台電熱器：一腳夾火線 a、一腳夾火線 b。', on: 'h1' },
+     { sub: '第二台夾 b 和 c，第三台夾 c 和 a。這就是 <b>Δ 接</b>。', on: 'h2 h3' },
+     { sub: '每一台都<b>直接跨在兩條火線之間</b>，吃的是線電壓；而且根本不需要中性線。', on: 'c1' },
+     { sub: '想多加一台、拿掉一台，只要動那兩條線，其他台完全不受影響 —— 所以負載常常接 Δ。', on: 'c2', off: 'c1' }]);
+
+  /* 馬達接線盒：同一台馬達，換銅片就換 Y／Δ */
+  const TX = [240, 320, 400], TOP = ['U1', 'V1', 'W1'], BOT = ['W2', 'U2', 'V2'], yt = 160, yb = 250;
+  const term = (x, y, n) => '<circle class="bgw" cx="' + x + '" cy="' + y + '" r="11"/><circle class="ink" cx="' + x + '" cy="' + y + '" r="3"/>' + T(x + 16, y + (y === yt ? -10 : 22), n, { cls: 'tm', fs: 11.5, a: 'start' });
+  const bar = (x1, y1, x2, y2) => '<line class="lna" style="stroke-width:7;opacity:.85" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '"/>';
+  const D1 = sc('實物：馬達接線盒', 'MOTOR TERMINAL BOX',
+    g('box', '<rect class="card" x="190" y="120" width="260" height="170" rx="12" filter="url(#st-sh)"/>' + TX.map((x, i) => term(x, yt, TOP[i]) + term(x, yb, BOT[i])).join('') +
+      TX.map((x, i) => '<path class="ln" d="M' + x + ' 104 V' + (yt - 11) + '"/>' + T(x, 100, 'L' + (i + 1), { cls: 'ts', fs: 11 })).join('')) +
+    g('coil', '<path class="ln dsh" style="fill:none;opacity:.5" d="M240 160 L320 250 M320 160 L400 250 M400 160 L240 250"/>') +
+    g('yb', bar(240, yb, 400, yb)) + g('db', bar(240, yt, 240, yb) + bar(320, yt, 320, yb) + bar(400, yt, 400, yb)) +
+    chip(560, 150, '上排 = 頭', 'U1 V1 W1', 'c1', { fs: 13 }) + chip(560, 250, '下排 = 尾', '故意錯開：W2 U2 V2', 'c2', { fs: 13 }) +
+    chip(95, 205, 'Y：一片橫的', '三個尾接一起', 'cy', { fs: 13, acc: true }) + chip(95, 205, 'Δ：三片直的', '頭接到下一組的尾', 'cd', { fs: 13, acc: true }),
+    [{ sub: '三相馬達外殼上有個<b>接線盒</b>，打開是六顆螺絲。', on: 'box' },
+     { sub: '六顆 = 三組線圈的頭和尾（虛線是盒子裡的線圈）。上排是頭，三條火線 L1、L2、L3 接這裡。', on: 'coil c1 c2' },
+     { sub: '<b>Y 接</b>：一片銅片橫著把下排三個尾巴接在一起 —— 那就是中性點。', on: 'yb cy' },
+     { sub: '<b>Δ 接</b>：三片銅片直著接，每組的頭接到另一組的尾，三組圍成一圈。', on: 'db cd', off: 'yb cy' },
+     { sub: '同一台馬達，換銅片就換接法 —— Y、Δ 是摸得到的東西。', on: '' }]);
+
   /* 03 每格吃線電壓 */
   const S3 = sc('每格吃的是線電壓', 'Δ SEES LINE VOLTAGE',
     YD({ hlz: 0, k: { src: 'src', line: 'line', load: 'load', lbl: 'lbl' } }) +
@@ -149,6 +184,18 @@
      { sub: '三顆電壓加起來只要不是剛好 0，差的那一點點除以很小的電阻 —— 圈裡就有很大的<b>環流</b>。', on: 'c2 cc r1' },
      { sub: '白白發熱，所以實際的電源幾乎都接 Y。', on: '' }]);
 
+  /* 所以最常見的是 Y-Δ */
+  const D3 = sc('所以最常見：Y 電源、Δ 負載', 'THE PRACTICAL COMBO',
+    chip(160, 140, '電源 → 接 Y', '', 'h1', { fs: 16, acc: true }) +
+    chip(160, 190, 'Δ 電源會有環流、白白發熱', '', 'a1', { fs: 13 }) + chip(160, 232, '有中性點可以接地、拉中性線', '', 'a2', { fs: 13 }) +
+    chip(470, 140, '負載 → 接 Δ', '', 'h2', { fs: 16, acc: true }) +
+    chip(470, 190, '每格直接跨在兩條線上', '', 'b1', { fs: 13 }) + chip(470, 232, '加減一格不影響別格、不用中性線', '', 'b2', { fs: 13 }) +
+    T(320, 290, 'Y-Δ：課本說「最實用」的接法', { cls: 'ta', fs: 16, k: 'msg' }),
+    [{ sub: '把 Y、Δ 的優缺點放在一起看。', on: '' },
+     { sub: '電源：Δ 會有環流，Y 還有中性點可以接地 → <b>電源幾乎都接 Y</b>。', on: 'h1 a1 a2' },
+     { sub: '負載：Δ 每格直接夾兩條線，加減負載最方便 → <b>負載常接 Δ</b>。', on: 'h2 b1 b2' },
+     { sub: '所以實務上最常見的是 <b>Y-Δ</b>，也就是這一頁一開始的謎題電路。', on: 'msg' }]);
+
   /* 13 Δ-Y 的問題 */
   const DY = o => sys3(Object.assign({ src: 'D', load: 'Y', x0: 120, x1: 560, vs: ['210∠0°', '210∠−120°', '210∠120°'], z: '40 + j25' }, o));
   const S13 = sc('Δ 電源接 Y 負載', 'DELTA-WYE',
@@ -165,7 +212,8 @@
     [{ sub: '想像一個 Y 電源，它產生的<b>線電壓</b>跟原本的 Δ 完全一樣 —— 從電線看過去分不出來。', on: 'ax pab cc r1' },
      { sub: '把「√3 倍、+30°」倒過來：<b>除 √3、−30°</b>。', on: 'r2 pan' },
      { sub: '210 ÷ 1.732 = 121.2；0° − 30° = −30°。', on: '' },
-     { sub: 'V<sub>an</sub> = 121.2∠−30° V。', on: 'r3' }]);
+     { sub: 'V<sub>an</sub> = 121.2∠−30° V。', on: 'r3' },
+     { sub: '如果 Δ 電源每顆還有內阻 Z<sub>s</sub>，換成 Y 後每相變成 Z<sub>s</sub>/3 —— 跟負載換 Y 同一招。', on: '' }]);
 
   /* 15 Δ-Y 數字 */
   const S15 = sc('變回 Y-Y', 'BACK TO Y-Y',
@@ -182,8 +230,9 @@
     [{ sub: '謎題解開：電線上的電流本來就是兩格負載共用的，I<sub>a</sub> = I<sub>AB</sub> − I<sub>CA</sub>。', on: 'cc r1 r2' },
      { sub: '而且不管哪種接法，換一換都能變回 Y-Y。', on: 'r3 r4' },
      { sub: 'Δ 負載 → 除以 3；Δ 電源 → 除 √3、轉 −30°；最後都是單相等效。', on: '' },
+     { sub: '課本表 12.1 把四種接法的公式列成一張表 —— 不用死背，記住「全部換成 Y-Y」就能自己推出來。', on: '' },
      { sub: '下一頁（PART 3）：三相的功率為什麼是常數、怎麼算。', on: 'r5' }]);
 
   __Story('#story', { id: 'cir-ch12-p2', title: 'CH12 PART 2 Y-Δ、Δ-Δ、Δ-Y', after: '#yd',
-    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16] });
+    scenes: [S0, S1, S2, D2, D1, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, D3, S13, S14, S15, S16] });
 })();

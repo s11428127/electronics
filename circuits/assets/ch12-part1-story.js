@@ -89,7 +89,8 @@
     [{ sub: '線圈 a 發出一個弦波 v<sub>an</sub>。', on: 'wa la' },
      { sub: '磁鐵晚三分之一圈才掃到 b：v<sub>bn</sub> <b>晚 120°</b>。', on: 'wb lb' },
      { sub: '再晚 120° 輪到 c。', on: 'wc lc' },
-     { sub: '三個一樣大、一樣頻率，只差 120° —— 這叫<b>平衡三相電壓</b>。', on: 'c1' }]);
+     { sub: '三個一樣大、一樣頻率，只差 120° —— 這叫<b>平衡三相電壓</b>。', on: 'c1' },
+     { sub: '對照一下：如果只有兩組線圈、互相垂直擺，就差 90°，叫<b>兩相</b>系統。三相是 360° ÷ 3 = 120°。', on: '' }]);
 
   /* ═════ 06 換成相量 ═════ */
   const S6 = sc('換成三支箭頭', 'THREE PHASORS',
@@ -158,6 +159,171 @@
      { sub: '好消息：<b>每一種都能換成 Y-Y</b> 來算（Δ 換 Y 的方法在 PART 2）。', on: 'msg' },
      { sub: '所以這一頁先把 Y-Y 練熟。', on: '' }]);
 
+  /* ═════════════ 先補課：Y-Y 到底長什麼樣子（使用者 10/18：Y-Y 講得太抽象） ═════════════ */
+  const RV = window.__RV;
+  const P = (x, y) => f1(x) + ' ' + f1(y);
+  /* 一組線圈：從尾 (x1,y1) 到頭 (x2,y2)，中間一顆交流電源圓圈 */
+  const coilSeg = (x1, y1, x2, y2, r) => {
+    r = r || 11; const L = Math.hypot(x2 - x1, y2 - y1), ux = (x2 - x1) / L, uy = (y2 - y1) / L, mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+    return '<path class="ln" style="stroke-width:2" d="M' + P(x1, y1) + ' L' + P(mx - ux * r, my - uy * r) + ' M' + P(mx + ux * r, my + uy * r) + ' L' + P(x2, y2) + '"/>' + K.src(f1(mx), f1(my), r);
+  };
+  /* Y 接的三支腳：中心 (cx,cy)、長 r；角度 a 在上、b 右下、c 左下；kind = 'src' 線圈 | 'load' 電阻 */
+  const ANG = [90, 330, 210];
+  const tipOf = (cx, cy, r, i) => [cx + r * Math.cos(ANG[i] * RAD), cy - r * Math.sin(ANG[i] * RAD)];
+  const yLegs = (cx, cy, r, kind, key) => g(key, [0, 1, 2].map(i => {
+    const t = tipOf(cx, cy, r, i);
+    return kind === 'load' && RV ? RV.el('r', cx, cy, f1(t[0]), f1(t[1]), '', { L: Math.min(30, r * 0.55) }) : coilSeg(cx, cy, t[0], t[1], Math.min(11, r * 0.17));
+  }).join('') + '<circle class="acc" cx="' + cx + '" cy="' + cy + '" r="5.5"/>');
+  const heads = (cx, cy, r, names, key, o) => g(key, [0, 1, 2].map(i => {
+    const t = tipOf(cx, cy, r, i), dx = [0, 16, -16][i], dy = [-10, 18, 18][i];
+    return '<circle class="ink" cx="' + f1(t[0]) + '" cy="' + f1(t[1]) + '" r="3.6"/>' + T(f1(t[0] + dx), f1(t[1] + dy), names[i], { cls: (o && o.cls) || 'ta', fs: (o && o.fs) || 14, a: i === 1 ? 'start' : i === 2 ? 'end' : 'middle' });
+  }).join(''));
+  const dotsP = (d, key, cls) => (RV ? RV.dots(d, key, cls) : '');
+
+  /* K1 線圈有頭有尾 */
+  const K1y = [150, 205, 260];
+  const K1 = sc('先補課：每組線圈有兩個頭', 'EACH COIL HAS TWO ENDS',
+    g('cl', K1y.map((y, i) => coilSeg(170, y, 330, y, 13) + '<circle class="ink" cx="170" cy="' + y + '" r="3.6"/><circle class="ink" cx="330" cy="' + y + '" r="3.6"/>' +
+      T(160, y + 5, '尾', { cls: 'ts', fs: 13, a: 'end' }) + T(330, y - 10, '頭 ' + 'abc'[i], { cls: 'ta', fs: 13 })).join('')) +
+    T(110, 210, '發電機裡', { cls: 'ts', fs: 12.5, a: 'middle', k: 'gl' }) +
+    g('six', K1y.map(y => '<path class="ln dsh" style="fill:none" d="M330 ' + y + ' H560 M170 ' + y + ' V' + (y + 18) + ' H560"/>').join('')) +
+    chip(480, 118, '像三顆電池：各有兩端', '', 'c1', { fs: 13.5 }) +
+    chip(470, 300, '各拉兩條線出去 → 6 條電線？太浪費', '', 'c2', { fs: 13.5, acc: true }),
+    [{ sub: '先別急著看課本的圖。發電機裡有<b>三組線圈</b> a、b、c。', on: 'cl gl' },
+     { sub: '每組線圈都有兩個線頭：一個叫「頭」，一個叫「尾」—— 像一顆電池有兩端。', on: 'c1' },
+     { sub: '如果每組各拉兩條線出去，就要 <b>6 條電線</b>。電線很貴，有沒有辦法省？', on: 'six c2' }]);
+
+  /* K2 Y 接：尾巴綁在一起 */
+  const yc = [215, 205], yr = 85, ta = tipOf(yc[0], yc[1], yr, 0), tb = tipOf(yc[0], yc[1], yr, 1), tcc = tipOf(yc[0], yc[1], yr, 2);
+  const K2 = sc('Y 接：三個尾巴綁在一起', 'TIE THE TAILS → Y',
+    yLegs(yc[0], yc[1], yr, 'src', 'legs') +
+    g('nn', T(yc[0] + 14, yc[1] - 8, 'n', { cls: 'ta', fs: 16, a: 'start' })) +
+    heads(yc[0], yc[1], yr, ['a', 'b', 'c'], 'hd') +
+    g('out', '<path class="ln" style="fill:none;stroke-width:2" d="M' + P(ta[0], ta[1]) + ' H580 M' + P(tb[0], tb[1]) + ' H580 M' + P(tcc[0], tcc[1]) + ' V292 H580"/>' +
+      T(588, ta[1] + 5, 'a', { cls: 'ta', fs: 14, a: 'start' }) + T(588, tb[1] + 5, 'b', { cls: 'ta', fs: 14, a: 'start' }) + T(588, 297, 'c', { cls: 'ta', fs: 14, a: 'start' })) +
+    chip(440, 165, '三條繩子打同一個結', '那個結 = 中性點 n', 'c1', { fs: 13.5 }) +
+    chip(440, 205, '三條線（火線）', '', 'c2', { fs: 13, acc: true }),
+    [{ sub: '辦法：把三組線圈的<b>尾巴全部接在同一點</b>，畫出來像一個 Y。', on: 'legs' },
+     { sub: '就像三條繩子打同一個結。這個結叫<b>中性點 n</b>。', on: 'nn c1' },
+     { sub: '三個「頭」各拉一條電線出去：a、b、c 三條<b>火線</b>。', on: 'hd out', off: 'c1' },
+     { sub: '6 條線變成 3 條。這就是 <b>Y 接</b>（星形接）。', on: 'c2' }]);
+
+  /* K3 負載也 Y 接 */
+  const lc = [430, 205], lr = 85, la = tipOf(lc[0], lc[1], lr, 0), lb2 = tipOf(lc[0], lc[1], lr, 1), lcc = tipOf(lc[0], lc[1], lr, 2);
+  const K3 = sc('負載也可以 Y 接', 'A Y-CONNECTED LOAD',
+    g('w', '<path class="ln" style="fill:none;stroke-width:2" d="M70 ' + f1(la[1]) + ' H' + f1(la[0]) + ' M70 ' + f1(lb2[1] + 46) + ' H' + f1(lb2[0]) + ' V' + f1(lb2[1]) + ' M70 ' + f1(lcc[1]) + ' H' + f1(lcc[0]) + '"/>' +
+      T(62, la[1] + 5, 'a', { cls: 'ta', fs: 14, a: 'end' }) + T(62, lb2[1] + 51, 'b', { cls: 'ta', fs: 14, a: 'end' }) + T(62, lcc[1] + 5, 'c', { cls: 'ta', fs: 14, a: 'end' })) +
+    yLegs(lc[0], lc[1], lr, 'load', 'legs') +
+    g('nn', T(lc[0] + 14, lc[1] - 8, 'N', { cls: 'ta', fs: 16, a: 'start' })) +
+    heads(lc[0], lc[1], lr, ['A', 'B', 'C'], 'hd', { cls: 't', fs: 13 }) +
+    chip(200, 185, '三台一樣的電熱器', '一頭接火線、另一頭綁一起', 'c1', { fs: 13.5 }),
+    [{ sub: '三條火線送到工廠。', on: 'w' },
+     { sub: '工廠有三台一樣的電熱器：每台一頭接一條火線。', on: 'legs hd c1' },
+     { sub: '另一頭也全部綁在一起 —— 負載的中性點，叫 <b>N</b>（大寫）。', on: 'nn' },
+     { sub: '電源 Y、負載也 Y，合起來就叫 <b>Y-Y</b>。', on: '' }]);
+
+  /* K4 Y-Y 全貌 */
+  const sC = [140, 200], lC = [500, 200], r4 = 62;
+  const sA = tipOf(sC[0], sC[1], r4, 0), sB = tipOf(sC[0], sC[1], r4, 1), sCc = tipOf(sC[0], sC[1], r4, 2);
+  const L4 = (i) => tipOf(lC[0], lC[1], r4, i);
+  const dA = 'M' + P(sA[0], sA[1]) + ' H' + f1(L4(0)[0]);
+  const dB = 'M' + P(sB[0], sB[1]) + ' H' + f1(L4(2)[0]);
+  const dC = 'M' + P(sCc[0], sCc[1]) + ' V300 H' + f1(L4(1)[0]) + ' V' + f1(L4(1)[1]);
+  const K4 = sc('Y-Y 的全貌', 'THE WHOLE Y-Y SYSTEM',
+    yLegs(sC[0], sC[1], r4, 'src', 'src') + T(sC[0], 116, '發電機（Y）', { cls: 'ts', fs: 12.5, k: 'sl' }) +
+    g('load', [0, 1, 2].map(i => { const t = L4(i); return RV ? RV.el('r', lC[0], lC[1], f1(t[0]), f1(t[1]), '', { L: 28 }) : ''; }).join('') + '<circle class="acc" cx="' + lC[0] + '" cy="' + lC[1] + '" r="5.5"/>') +
+    T(lC[0], 116, '負載（Y）', { cls: 'ts', fs: 12.5, k: 'll' }) +
+    g('lines', '<path class="ln" style="fill:none;stroke-width:2" d="' + dA + ' ' + dB + ' ' + dC + '"/>' +
+      T(320, sA[1] - 8, '火線 a', { cls: 'tm', fs: 12 }) + T(320, sB[1] - 8, '火線 b', { cls: 'tm', fs: 12 }) + T(320, 294, '火線 c', { cls: 'tm', fs: 12 })) +
+    g('nw', '<path class="ln dsh" style="fill:none" d="M' + sC[0] + ' ' + sC[1] + ' H' + lC[0] + '"/>' + T(320, sC[1] - 8, '中性線', { cls: 'ts', fs: 12 })) +
+    dotsP(dA, 'fa', 'ac') + dotsP(dB, 'fb', 'ac') + dotsP(dC, 'fc', 'ac') +
+    T(sC[0] + 12, sC[1] - 8, 'n', { cls: 'ta', fs: 14, a: 'start', k: 'sn' }) + T(lC[0] - 12, lC[1] - 8, 'N', { cls: 'ta', fs: 14, a: 'end', k: 'ln2' }),
+    [{ sub: '把兩邊接起來：左邊發電機 Y 接，右邊負載 Y 接。', on: 'src sl load ll sn ln2' },
+     { sub: '中間三條火線：a 接 A、b 接 B、c 接 C。', on: 'lines' },
+     { sub: '電流在三條火線上來回晃（交流），三條各晚 120°。', on: 'fa fb fc' },
+     { sub: '還可以再拉一條<b>中性線</b>（虛線）把 n 接到 N。有沒有它，等一下謎題一會講。', on: 'nw' }]);
+
+  /* K5 拉直 = 課本的梯子圖 */
+  const K5 = sc('拉直，就是課本的畫法', 'SAME CIRCUIT, TEXTBOOK STYLE',
+    S3({ zl: '', z: 'Z', y: [130, 185, 240], x0: 120, x1: 520, vs: ['', '', ''], k: { src: 'src', line: 'line', load: 'load', lbl: 'lbl' } }) +
+    g('m1', '<rect class="ln" style="fill:none;stroke-width:2.4;stroke:var(--s-acc)" x="108" y="120" width="24" height="130" rx="8"/>') +
+    g('m2', '<rect class="ln" style="fill:none;stroke-width:2.4;stroke:var(--s-acc)" x="508" y="120" width="24" height="130" rx="8"/>') +
+    chip(140, 292, '左邊這條直線 = 三個尾巴綁在一起（n）', '', 'c1', { fs: 13, a: 'left' }) +
+    chip(560, 292, '= N', '', 'c2', { fs: 13, a: 'right' }),
+    [{ sub: '課本會把同一個電路<b>拉直</b>，畫成一個梯子。', on: 'src line load lbl' },
+     { sub: '左邊那條直的線，就是三個線圈的尾巴接在一起的地方：<b>中性點 n</b>。', on: 'm1 c1' },
+     { sub: '右邊那條直線是負載的中性點 N。中間三條橫線就是三條火線。', on: 'm2 c2' },
+     { sub: '看到梯子圖，腦中要能還原成兩個 Y 中間拉三條線。', on: '' }]);
+
+  /* K6 電線桿上的三相四線 */
+  const wy = [128, 150, 172], ny = 200;
+  const K6 = sc('電線桿上就看得到', 'ON THE POLE',
+    g('pole', '<rect class="ln" style="fill:var(--s-card);stroke-width:2" x="96" y="112" width="12" height="190"/><line class="ln" style="stroke-width:3" x1="78" y1="124" x2="128" y2="124"/>') +
+    g('hw', wy.map((y, i) => '<path class="ln" style="fill:none;stroke-width:2.2" d="M108 ' + y + ' Q 300 ' + (y + 14) + ' 470 ' + y + '"/>' + T(478, y + 5, '火線 ' + 'abc'[i], { cls: 'ta', fs: 12.5, a: 'start' })).join('')) +
+    g('nw', '<path class="ln dsh" style="fill:none;stroke-width:2" d="M108 ' + ny + ' Q 300 ' + (ny + 14) + ' 470 ' + ny + '"/>' + T(478, ny + 5, '中性線', { cls: 't', fs: 12.5, a: 'start' }) + '<path class="ln" style="fill:none" d="M96 ' + ny + ' H84 V286"/>' + (RV ? RV.gnd(84, 296) : '')) +
+    chip(300, 240, '火線 ↔ 中性線：220 V', '相電壓（給一般電器）', 'c1', { fs: 13.5 }) +
+    chip(300, 286, '火線 ↔ 火線：380 V', '線電壓（給三相馬達）', 'c2', { fs: 13.5, acc: true }),
+    [{ sub: '台灣大樓、工廠常見的進線：<b>三條火線 ＋ 一條中性線</b>，叫三相四線。', on: 'pole hw' },
+     { sub: '第四條就是中性線，接回變壓器的中性點，而且那裡有接地。', on: 'nw' },
+     { sub: '一條火線＋中性線：220 V。一般電器只拿一相 —— <b>單相電就是從三相裡拿一相出來</b>。', on: 'c1' },
+     { sub: '兩條火線之間：380 V，三相馬達吃這個。為什麼不是 440？下一幕。', on: 'c2' }]);
+
+  /* K7 電錶夾哪裡：相電壓 vs 線電壓 */
+  const yc7 = [190, 205], r7 = 80, a7 = tipOf(yc7[0], yc7[1], r7, 0), b7 = tipOf(yc7[0], yc7[1], r7, 1);
+  const K7 = sc('電錶夾哪裡：兩種電壓', 'PHASE vs LINE VOLTAGE',
+    yLegs(yc7[0], yc7[1], r7, 'src', 'legs') + heads(yc7[0], yc7[1], r7, ['a', 'b', 'c'], 'hd') + T(yc7[0] - 16, yc7[1] + 4, 'n', { cls: 'ta', fs: 15, a: 'end', k: 'nn' }) +
+    g('v1', '<path class="ln" style="fill:none" d="M' + P(a7[0], a7[1]) + ' H300 V164 M300 196 V205 H' + yc7[0] + '"/><circle class="ink" cx="300" cy="' + f1(a7[1]) + '" r="3.4"/>' + (RV ? RV.meter(300, 180, 'V') : '') +
+      T(324, 176, '220 V', { cls: 'ta', fs: 16, a: 'start' }) + T(324, 196, '相電壓：頭 ↔ 結', { cls: 'ts', fs: 12, a: 'start' })) +
+    g('v2', '<path class="ln" style="fill:none" d="M300 ' + f1(a7[1]) + ' H470 V229 M470 261 V' + f1(b7[1] + 28) + ' H' + f1(b7[0]) + ' V' + f1(b7[1]) + '"/>' + (RV ? RV.meter(470, 245, 'V') : '') +
+      T(494, 241, '380 V', { cls: 'ta', fs: 16, a: 'start' }) + T(494, 261, '線電壓：頭 ↔ 頭', { cls: 'ts', fs: 12, a: 'start' })) +
+    chip(400, 292, '380 = 220 × √3（不是 × 2）', '', 'c1', { fs: 13, acc: true }),
+    [{ sub: '同一個 Y 接電源，電錶可以夾兩種地方。', on: 'legs hd nn' },
+     { sub: '夾「火線 a」和「中性點 n」：量到一組線圈自己的電壓，叫<b>相電壓</b>。', on: 'v1' },
+     { sub: '夾「火線 a」和「火線 b」：中間隔了兩組線圈，叫<b>線電壓</b>。', on: 'v2' },
+     { sub: '兩組線圈的電壓差 120°，不是排成一直線，所以只有 √3 倍（1.732），不是 2 倍。謎題二會證明。', on: 'c1' }]);
+
+  /* K8 Y 接的電流只有一種 */
+  const K8 = sc('Y 接：電流只有一種', 'ONE CURRENT IN Y',
+    g('ckt', '<path class="ln" style="fill:none;stroke-width:2" d="M90 172 V200 H118 M162 200 H400 M460 200 H500 V230"/>' + K.src(140, 200, 14) + (RV ? RV.el('r', 400, 200, 460, 200, '', { L: 40 }) : '') +
+      T(140, 178, '線圈 a', { cls: 'ts', fs: 12 }) + T(280, 190, '火線 a', { cls: 'ts', fs: 12 }) + T(430, 182, '負載 A', { cls: 'ts', fs: 12 }) +
+      T(84, 168, 'n', { cls: 'ta', fs: 14, a: 'end' }) + T(506, 236, 'N', { cls: 'ta', fs: 14, a: 'start' })) +
+    dotsP('M90 200 H500', 'flow', '') +
+    chip(320, 128, '一條路走到底，中間沒有岔路', '像單線道：同一批車從頭開到尾', 'c1', { fs: 13.5 }) +
+    calc(150, 252, 340, [['Y 接：線電流 I<sub>L</sub> = 相電流 I<sub>p</sub>', 'r1', 'ta', 15]], { k: 'cc', a: 'middle' }),
+    [{ sub: '只看 a 相：線圈 a → 火線 a → 負載 A，一路接下去。', on: 'ckt' },
+     { sub: '電流從頭走到尾，中間<b>沒有岔路</b>。', on: 'flow c1' },
+     { sub: '所以電線上的電流（線電流）就是線圈、負載裡的電流（相電流）。Y 接只有一種電流。', on: 'cc r1' },
+     { sub: 'Δ 接就不一樣了，會有岔路 —— 那是 PART 2 的故事。', on: '' }]);
+
+  /* K9 Y-Y 拿來幹嘛 */
+  const K9 = sc('Y-Y 拿來幹嘛？', 'WHY USE Y-Y?',
+    chip(60, 122, '① 有中性點 → 一次給兩種電壓', '220 V 給電器、380 V 給馬達', 'c1', { fs: 14, a: 'left' }) +
+    chip(60, 172, '② 中性點接地 → 比較安全', '火線對地只有相電壓，不是線電壓', 'c2', { fs: 14, a: 'left' }) +
+    chip(60, 222, '③ 平衡時中性線沒電流', '長途輸電只拉三條線就夠', 'c3', { fs: 14, a: 'left' }) +
+    chip(60, 272, '④ 發電機幾乎都接 Y', 'Δ 電源會有環流（PART 2）', 'c4', { fs: 14, a: 'left', acc: true }),
+    [{ sub: 'Y 接有一個 Δ 沒有的東西：<b>中性點</b>。一套線同時給 220 V 和 380 V。', on: 'c1' },
+     { sub: '中性點可以接地，火線對地的電壓就只有相電壓，比較安全。', on: 'c2' },
+     { sub: '三相平衡時中性線上沒有電流，長途的高壓線乾脆只拉三條。', on: 'c3' },
+     { sub: '所以發電機、變壓器出口幾乎都是 Y。<b>Y-Y 也是所有三相題目的基準</b>：別的接法都換成它來算。', on: 'c4' }]);
+
+  /* K10 每一相串了哪些東西 */
+  const K10 = sc('每一相串了哪些東西', 'WHAT IS IN SERIES',
+    single({ x: 80, y: 132, w: 480, h: 96, v: 'V<sub>an</sub>', z: ['Z<sub>s</sub>', 'Z<sub>ℓ</sub>', 'Z<sub>L</sub>'], k: 'ckt', top: 'a', bot: 'n' }) +
+    T(160, 166, '發電機線圈本身', { cls: 'ts', fs: 12, k: 'l1' }) + T(320, 166, '電線', { cls: 'ts', fs: 12, k: 'l2' }) + T(480, 166, '負載', { cls: 'ts', fs: 12, k: 'l3' }) +
+    calc(110, 236, 420, [['Z<sub>Y</sub> = Z<sub>s</sub> + Z<sub>ℓ</sub> + Z<sub>L</sub>', 'r1', 'ta'], ['題目沒給 Z<sub>s</sub>、Z<sub>ℓ</sub> → 當成 0', 'r2', 'tm']], { k: 'cc', a: 'middle', lh: 24 }),
+    [{ sub: '把 a 相的路一段一段看：電流從線圈 a 出發。', on: 'ckt' },
+     { sub: '線圈本身有一點阻抗 Z<sub>s</sub>，電線也有 Z<sub>ℓ</sub>，最後才到負載 Z<sub>L</sub>。', on: 'l1 l2 l3' },
+     { sub: '像水從水塔出來，經過出水口、水管、水龍頭：阻力一路<b>串起來</b>。', on: 'cc r1' },
+     { sub: '題目沒給線圈、電線的阻抗，就當 0，Z<sub>Y</sub> 只剩負載。', on: 'r2' }]);
+
+  /* K11 先整理一下 */
+  const K11 = sc('先整理一下：Y-Y', 'Y-Y SO FAR',
+    calc(80, 104, 480, [['Y 接：三個尾巴接在一起 = 中性點 n、N', 'r1'], ['相電壓：火線 ↔ 中性點（220 V）', 'r2'], ['線電壓：火線 ↔ 火線（380 V = √3 倍）', 'r3', 'ta'], ['Y 接：線電流 = 相電流', 'r4'], ['每相：Z<sub>Y</sub> = Z<sub>s</sub> + Z<sub>ℓ</sub> + Z<sub>L</sub>', 'r5'], ['接下來：回到謎題的電路來算', 'r6', 'tm']], { k: 'cc', a: 'middle', lh: 27 }),
+    [{ sub: '先整理一下 Y-Y 是什麼。', on: 'cc r1' },
+     { sub: '兩種電壓：相電壓夾火線和中性點，線電壓夾兩條火線。', on: 'r2 r3' },
+     { sub: '電流只有一種；每相的阻抗串起來相加。', on: 'r4 r5' },
+     { sub: '有了這些，回到開頭那兩個謎題。', on: 'r6' }]);
+
   /* ═════ 12 Y-Y 電路 ═════ */
   const S12 = sc('Y-Y 電路', 'THE Y-Y CIRCUIT',
     S3({ k: { src: 'src', line: 'line', load: 'load', lbl: 'lbl' } }) +
@@ -216,5 +382,5 @@
      { sub: '下一頁（PART 2）：負載接成 Δ，每格吃的就是這個 √3 倍的線電壓了。', on: 'r5' }]);
 
   __Story('#story', { id: 'cir-ch12-p1', title: 'CH12 PART 1 三相電壓與 Y-Y', after: '#intro',
-    scenes: [S0, S1, S2, S3s, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16, S17] });
+    scenes: [S0, S1, S2, S3s, S4, S5, S6, S7, S8, S9, S10, S11, K1, K2, K3, K4, K5, K6, K7, K8, K9, K10, K11, S12, S13, S14, S15, S16, S17] });
 })();

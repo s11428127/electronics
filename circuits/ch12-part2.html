@@ -29,6 +29,7 @@
     <ol>
       <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
       <li><a href="#map"><i>00</i>課程地圖</a></li>
+      <li><a href="#d-real"><i>12.4</i>先補課：Δ 實際怎麼接</a></li>
       <li><a href="#yd"><i>12.4</i>平衡 Y-Δ</a></li>
       <li><a href="#dd"><i>12.5</i>平衡 Δ-Δ</a></li>
       <li><a href="#dy"><i>12.6</i>平衡 Δ-Y 與總整理</a></li>
@@ -44,8 +45,8 @@
       <p class="sub">PART 1 練熟了 Y-Y。這一頁把負載或電源換成 <button class="tm" data-t="Δ接">Δ</button>：Δ 負載每格跨在兩條線之間，吃的是<button class="tm" data-t="線電壓">線電壓</button>；線上的電流是兩格<button class="tm" data-t="相電流">相電流</button>相減，<strong>√3 倍、落後 30°</strong>。最後用 <button class="tm" data-t="Δ-Y轉換">Δ-Y 轉換</button>把三種接法全部化回 Y-Y，做成一張總整理表。</p>
       <div class="hero-meta">
         <span class="chip h">📘 課本 Example 3 題 ＋ Practice 3 題（每題都有 🎬 圖解故事）</span>
-        <span class="chip">17 個畫面的故事模式</span>
-        <span class="chip">3 個互動模組 ＋ 3 個可改數字例題</span>
+        <span class="chip">20 個畫面的故事模式（含 Δ 實物、接線盒）</span>
+        <span class="chip">4 個互動模組 ＋ 4 個可改數字例題</span>
         <span class="chip">10 題中英對照測驗</span>
       </div>
       <div class="lec-links"><a href="ch12-review.html">🧠 CH12 觀念填充總複習（80 題，不用算）</a><a href="ch12-problems.html">✏️ CH12 章末練習題（64 題）</a></div>
@@ -53,7 +54,7 @@
 
     <section class="sec" id="story-sec">
       <div class="eyebrow"><span class="part-tag">原講義 CH12</span>Story mode · 先看這段，再往下讀</div>
-      <h2>17 個畫面看懂這一頁<span class="h2-en">THE STORY IN 17 SCENES</span></h2>
+      <h2>20 個畫面看懂這一頁<span class="h2-en">THE STORY IN 20 SCENES</span></h2>
       <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。全部看完大約 8 分鐘。</p>
       <div id="story"></div>
     </section>
@@ -81,6 +82,67 @@
         </ol>
       </div>
       <p class="note key">這一頁只有一個新觀念：<b>Δ 那一側，「線」的量是「相」的量的 √3 倍、差 30°</b>。Δ 負載是電流 √3 倍；Y 電源是電壓 √3 倍。</p>
+    </section>
+
+    <!-- ══════════ 12.4 先補課：Δ 實際長怎樣（使用者 10/18） ══════════ -->
+    <section class="sec" id="d-real">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>12.4 · 先補課 · What a delta really looks like</div>
+      <h2>Δ 實際怎麼接<span class="h2-en">WHAT Δ LOOKS LIKE</span></h2>
+      <p class="lede">Δ 接就是每一台負載都直接夾兩條火線：a–b 一台、b–c 一台、c–a 一台，沒有共同的結，也不需要中性線。最好摸的實物是三相馬達的<button class="tm" data-t="接線盒">接線盒</button>：同一台馬達，換銅片就從 Y 變 Δ。</p>
+      <div class="eq">Δ：每格電壓 = 線電壓 V<sub>L</sub>　　I<sub>L</sub> = √3 I<sub>p</sub>　　同一組負載：Δ 的線電流、功率 = Y 的 3 倍</div>
+      <div class="derive">
+        <h4>同一組負載，Y 和 Δ 差在哪</h4>
+        <ol>
+          <li><span class="d-eq">Y：每格夾火線和中性點 → V<sub>格</sub> = V<sub>L</sub>/√3</span>
+            <div class="why">三個尾巴接在一起，每格只隔一組線圈的電壓。</div></li>
+          <li><span class="d-eq">Δ：每格夾兩條火線 → V<sub>格</sub> = V<sub>L</sub></span>
+            <div class="why">接線盒上三片直的銅片，把每組的頭接到下一組的尾，所以每組兩端就是兩條火線。</div></li>
+          <li><span class="d-eq">每格電流 I<sub>p</sub> = V<sub>格</sub>/|Z|：Δ 是 Y 的 √3 倍</span>
+            <div class="why">電壓大 √3 倍，阻抗一樣，電流也大 √3 倍。</div></li>
+          <li><span class="d-eq">Δ 的線電流 I<sub>L</sub> = √3 I<sub>p</sub>（角上兩格的電流相減）</span>
+            <div class="why">火線 a 接在角 A，電流在那裡分給 AB、CA 兩格，所以又多一個 √3（12.4 有完整推導）。</div></li>
+          <li><span class="d-eq hi">I<sub>L,Δ</sub> / I<sub>L,Y</sub> = √3 × √3 = 3</span>
+            <p>同一組負載接 Δ，線電流和功率都是 Y 的 3 倍。這就是大馬達「星三角啟動」的原理：先接 Y 啟動，電流只有三分之一。</p></li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>馬達接線盒：換銅片就換接法</h3><span class="spacer"></span>
+          <div class="btn-row"><button class="btn" data-tb="Y" aria-pressed="true" type="button">Y 接</button><button class="btn" data-tb="D" aria-pressed="false" type="button">Δ 接</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-tbox" aria-label="三相馬達接線盒的六個端子，Y 接時下排一片橫銅片，Δ 接時三片直銅片"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="tb-vl">線電壓 V<sub>L</sub><output for="tb-vl"></output></label>
+            <input type="range" id="tb-vl" min="100" max="480" step="10" value="380"></div>
+          <div class="ctrl"><label for="tb-z">每組線圈阻抗 |Z|<output for="tb-z"></output></label>
+            <input type="range" id="tb-z" min="5" max="100" step="1" value="38"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>每組線圈吃</dt><dd id="tb-vc" style="color:var(--accent)">—</dd></div>
+          <div><dt>線圈電流 I<sub>p</sub></dt><dd id="tb-ip">—</dd></div>
+          <div><dt>線電流 I<sub>L</sub></dt><dd id="tb-il">—</dd></div>
+          <div><dt>總視在功率</dt><dd id="tb-s">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">虛線是盒子裡的三組線圈 U、V、W。上排 U1 V1 W1 是三組線圈的頭，下排故意排成 W2 U2 V2。這樣 Y 接只要一片橫的銅片；Δ 接三片直的剛好把 U1 接 W2、V1 接 U2、W1 接 V2 —— 頭接到下一組的尾。切換看看：Δ 的線電流是 Y 的 3 倍。</p>
+
+      <div id="ex-dreal"></div>
+
+      <div class="howto">
+        <h4>分辨 Y 還是 Δ</h4>
+        <ol>
+          <li><b>找共同的結：</b>三個元件有一端接在同一點 → Y；頭尾相接圍一圈、沒有共同點 → Δ。</li>
+          <li><b>看每個元件夾哪兩點：</b>一條火線＋中性點 → Y，吃相電壓；兩條火線 → Δ，吃線電壓。</li>
+          <li><b>決定電流：</b>Y 線電流 = 相電流；Δ 線電流 = √3 × 相電流。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>Δ 實體的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> Δ 也要接中性線。<span class="o">✓ Δ 沒有中性點，三條火線就夠。</span></li>
+          <li><span class="x">✗</span> 換成 Δ 只是畫法不同，電流一樣。<span class="o">✓ 同一組負載接 Δ，線電流和功率是 Y 的 3 倍。</span></li>
+          <li><span class="x">✗</span> Δ 每格吃相電壓 V<sub>L</sub>/√3。<span class="o">✓ Δ 每格直接夾兩條火線，吃線電壓。</span></li>
+        </ul>
+      </div>
     </section>
 
     <!-- ══════════ 12.4 ══════════ -->
@@ -321,6 +383,7 @@
 <script src="../shared/schem.js"></script>
 <script src="../shared/story.js"></script>
 <script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
 <script src="assets/ch12-ex.js"></script>
 <script src="assets/ch12-ex2.js"></script>
 <script src="../shared/exbook.js"></script>
@@ -328,6 +391,7 @@
 <script src="../shared/hw.js"></script>
 <script>
 __EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'd-real', no: '12.4', name: '先補課：Δ 實際怎麼接' },
   { id: 'yd', no: '12.4', name: 'Y-Δ', count: '例 1 · 練 1' },
   { id: 'dd', no: '12.5', name: 'Δ-Δ', count: '例 1 · 練 1' },
   { id: 'dy', no: '12.6', name: 'Δ-Y 與總整理', count: '例 1 · 練 1' }

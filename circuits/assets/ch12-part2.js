@@ -30,6 +30,44 @@
   }
 
   /* ── 12.4：Y-Δ（課本 Example 12.3） ─────────────────────── */
+  /* ── 12.4 先補課：同一台馬達接 Y 或 Δ（數字 = 課本 Example 12.3） ── */
+  liveExample('#ex-dreal', {
+    title: '例題 · 同一組負載，接 Y 和接 Δ 差多少（數字取自課本 Example 12.3）',
+    ratio: 0.36, minH: 170, maxH: 230,
+    givens: [
+      { id: 'xd-vl', label: '線電壓 V<sub>L</sub>', min: 100, max: 480, step: 0.1, value: 173.2, fmt: v => v.toFixed(1) + ' V' },
+      { id: 'xd-r', label: '每格電阻', min: 1, max: 40, step: 1, value: 8, fmt: v => v + ' Ω' },
+      { id: 'xd-x', label: '每格電抗', min: -20, max: 20, step: 1, value: 4, fmt: v => jx(v) + ' Ω' }
+    ],
+    compute: g => {
+      const VL = g['xd-vl'], Z = X.c(g['xd-r'], g['xd-x']), m = X.mag(Z);
+      const IY = VL / r3 / m, Ip = VL / m, IL = r3 * Ip;
+      return { VL, Z, m, IY, Ip, IL, SY: 3 * (VL / r3) * IY, SD: 3 * VL * Ip };
+    },
+    question: (g, r) => '三相電源線電壓 ' + n2(r.VL, 1) + ' V。三格一樣的負載，每格 ' + X.rect(r.Z, 0) + ' Ω。(a) 接成 Y；(b) 接成 Δ。各求每格的電壓、每格的電流、線電流。',
+    questionEn: (g, r) => 'A three-phase source has a line voltage of ' + n2(r.VL, 1) + ' V. Three identical loads of ' + X.rect(r.Z, 0) + ' Ω each are connected (a) in Y, (b) in delta. Find the voltage across each load, the current in each load, and the line current.',
+    steps: (g, r) => [
+      { t: 'Step 1　每格阻抗的大小。', eq: '|Z| = √(' + g['xd-r'] + '² + ' + g['xd-x'] + '²) = ' + n2(r.m, 3) + ' Ω' },
+      { t: 'Step 2　(a) Y 接：每格夾火線和中性點。', note: '吃相電壓 = 線電壓 / √3；Y 接沒有岔路，線電流 = 每格的電流。', eq: 'V<sub>p</sub> = ' + n2(r.VL, 1) + ' / 1.732 = ' + n2(r.VL / r3, 1) + ' V，I<sub>L</sub> = I<sub>p</sub> = ' + n2(r.VL / r3, 1) + ' / ' + n2(r.m, 3) + ' = ' + n2(r.IY, 2) + ' A' },
+      { t: 'Step 3　(b) Δ 接：每格直接夾兩條火線。', note: '吃線電壓，所以每格的電流是 Y 接的 √3 倍。', eq: 'I<sub>p</sub> = ' + n2(r.VL, 1) + ' / ' + n2(r.m, 3) + ' = ' + n2(r.Ip, 2) + ' A' },
+      { t: 'Step 4　Δ 的線電流：兩格的電流在角上會合。', note: '節點 A：I<sub>a</sub> = I<sub>AB</sub> − I<sub>CA</sub>，兩支差 120° 相減 = √3 倍。', eq: 'I<sub>L</sub> = √3 × ' + n2(r.Ip, 2) + ' = ' + n2(r.IL, 2) + ' A' },
+      { t: 'Step 5　比一比。', eq: 'Δ 的線電流 ÷ Y 的線電流 = ' + n2(r.IL, 2) + ' / ' + n2(r.IY, 2) + ' = ' + n2(r.IL / r.IY, 2),
+        after: '同一組負載接成 Δ，線電流和功率都是 Y 接的 3 倍（電壓 √3 倍 × 電流 √3 倍）。大馬達啟動時先接 Y、轉起來再換 Δ（星三角啟動），就是用這個 3 倍把啟動電流壓到三分之一。' + (Math.abs(r.VL - 173.2) < 0.1 && g['xd-r'] === 8 && g['xd-x'] === 4 ? '這組數字就是 Example 12.3：Δ 的 19.36 A、33.54 A 對得上。' : '') }
+    ],
+    answer: (g, r) => '(a) Y：每格 ' + n2(r.VL / r3, 1) + ' V，I<sub>p</sub> = I<sub>L</sub> = ' + n2(r.IY, 2) + ' A；(b) Δ：每格 ' + n2(r.VL, 1) + ' V，I<sub>p</sub> = ' + n2(r.Ip, 2) + ' A，I<sub>L</sub> = ' + n2(r.IL, 2) + ' A',
+    draw: (ctx, w, h, g, r) => {
+      const x0 = Math.min(130, w * 0.3), x1 = w - 60, k = (x1 - x0) / Math.max(r.IL, 1e-9);
+      const rows = [['Y：線電流', r.IY, C.ink], ['Δ：每格電流', r.Ip, C['q-react']], ['Δ：線電流', r.IL, C.accent]];
+      const bh = Math.max(10, Math.min(22, h / 7));
+      rows.forEach((row, i) => {
+        const y = h * (0.24 + i * 0.27);
+        labelCJK(ctx, x0 - 8, y, row[0], row[2], 11.5, 'right', '700');
+        ctx.fillStyle = row[2]; ctx.globalAlpha = 0.85; ctx.fillRect(x0, y - bh / 2, Math.max(0, row[1] * k), bh); ctx.globalAlpha = 1;
+        labelCJK(ctx, x0 + row[1] * k + 6, y, n2(row[1], 2) + ' A', row[2], 11.5, 'left', '700');
+      });
+    }
+  });
+
   liveExample('#ex-yd', {
     title: '例題 · Y-Δ 的相電流與線電流（課本 Example 12.3）',
     ratio: 0.4, minH: 190, maxH: 250,

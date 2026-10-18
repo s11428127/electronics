@@ -31,6 +31,7 @@
       <li><a href="#map"><i>00</i>課程地圖</a></li>
       <li><a href="#intro"><i>12.1</i>為什麼要三相</a></li>
       <li><a href="#bal"><i>12.2</i>平衡三相電壓與相序</a></li>
+      <li><a href="#yy-real"><i>12.3</i>先補課：Y-Y 實際怎麼接</a></li>
       <li><a href="#yy"><i>12.3</i>平衡 Y-Y 接法</a></li>
       <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
       <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
@@ -44,8 +45,8 @@
       <p class="sub">CH11 的電路都是一顆電源。這一章換成<button class="tm" data-t="三相">三相</button>：三顆一樣的電源錯開 120° 一起工作。這一頁先搞懂三相電壓長怎樣、<button class="tm" data-t="相序">相序</button>怎麼判斷（12.2），再學最基本的 <button class="tm" data-t="Y接">Y</button>-Y 接法（12.3）—— 它是所有三相題目的終點：<strong>任何平衡三相電路，最後都化成 Y-Y 的「單相等效電路」來算</strong>。</p>
       <div class="hero-meta">
         <span class="chip h">📘 課本 Example 2 題 ＋ Practice 2 題（每題都有 🎬 圖解故事）</span>
-        <span class="chip">18 個畫面的故事模式</span>
-        <span class="chip">3 個互動模組 ＋ 4 個可改數字例題</span>
+        <span class="chip">29 個畫面的故事模式（含 11 個「Y-Y 實際怎麼接」補課畫面）</span>
+        <span class="chip">4 個互動模組 ＋ 5 個可改數字例題</span>
         <span class="chip">10 題中英對照測驗</span>
       </div>
       <div class="lec-links"><a href="ch12-review.html">🧠 CH12 觀念填充總複習（80 題，不用算）</a><a href="ch12-problems.html">✏️ CH12 章末練習題（64 題）</a></div>
@@ -53,8 +54,8 @@
 
     <section class="sec" id="story-sec">
       <div class="eyebrow"><span class="part-tag">原講義 CH12</span>Story mode · 先看這段，再往下讀</div>
-      <h2>18 個畫面看懂這一頁<span class="h2-en">THE STORY IN 18 SCENES</span></h2>
-      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。全部看完大約 8 分鐘。</p>
+      <h2>29 個畫面看懂這一頁<span class="h2-en">THE STORY IN 29 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。全部看完大約 12 分鐘。</p>
       <div id="story"></div>
     </section>
 
@@ -234,6 +235,72 @@
       </div>
     </section>
 
+    <!-- ══════════ 12.3 先補課：Y-Y 實際長怎樣（使用者 10/18） ══════════ -->
+    <section class="sec" id="yy-real">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>12.3 · 先補課 · What a Y-Y system really looks like</div>
+      <h2>Y-Y 實際怎麼接<span class="h2-en">WHAT Y-Y LOOKS LIKE</span></h2>
+      <p class="lede">發電機裡三組線圈，每組有「頭」和「尾」。把三個尾接在同一點（<button class="tm" data-t="中性點">中性點</button>），三個頭各拉一條<button class="tm" data-t="火線">火線</button>出去，就是 Y 接；負載也這樣接就是 Y-Y。台灣大樓的 <button class="tm" data-t="三相四線">三相四線</button> 220/380 V 就是它。</p>
+      <div class="eq">相電壓 V<sub>p</sub> = 火線 ↔ 中性點　　線電壓 V<sub>L</sub> = 火線 ↔ 火線 = √3 V<sub>p</sub>（220 → 380 V）　　Y 接：I<sub>L</sub> = I<sub>p</sub>　　Z<sub>Y</sub> = Z<sub>s</sub> + Z<sub>ℓ</sub> + Z<sub>L</sub></div>
+      <div class="derive">
+        <h4>從實體接線推到課本的式子</h4>
+        <ol>
+          <li><span class="d-eq">三組線圈的尾 → 接在一起 = n；三個頭 → 火線 a、b、c</span>
+            <div class="why">這樣 6 條線省成 3 條。要拿相電壓的話，再從 n 拉一條中性線（三相四線）。</div></li>
+          <li><span class="d-eq">V<sub>an</sub> = 火線 a 對 n 的電壓 = 一組線圈自己的電壓</span>
+            <div class="why">電錶夾一個頭、一個結，中間只隔一組線圈，所以叫「相」電壓。</div></li>
+          <li><span class="d-eq">V<sub>ab</sub> = V<sub>an</sub> + V<sub>nb</sub> = V<sub>an</sub> − V<sub>bn</sub></span>
+            <div class="why">夾兩個頭，中間隔兩組線圈。KVL 從 a 走到 n、再從 n 走到 b。</div></li>
+          <li><span class="d-eq">|V<sub>ab</sub>| = √3 V<sub>p</sub>：220 × 1.732 = 381 ≈ 380 V</span>
+            <div class="why">兩組線圈的電壓差 120°，不是一直線相加，所以是 √3 倍不是 2 倍（12.3 的推導有完整算法）。</div></li>
+          <li><span class="d-eq">節點 a：線圈 a 的電流只能流進火線 a　⟹　I<sub>L</sub> = I<sub>p</sub></span>
+            <div class="why">Y 接的頭上沒有岔路，KCL 一進一出，所以線電流就是相電流。</div></li>
+          <li><span class="d-eq hi">a 相一路串著：線圈 Z<sub>s</sub> → 電線 Z<sub>ℓ</sub> → 負載 Z<sub>L</sub>　⟹　Z<sub>Y</sub> = Z<sub>s</sub> + Z<sub>ℓ</sub> + Z<sub>L</sub></span>
+            <p>串聯直接相加；題目沒給 Z<sub>s</sub>、Z<sub>ℓ</sub> 就當 0。平衡時中性線沒有電流，所以拿掉它（三相三線）也照樣這樣算。</p></li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>Y-Y 接線實驗台：電錶夾哪兩點？</h3><span class="spacer"></span><button class="btn" id="yyw-neu" type="button" aria-pressed="true">中性線：接</button><button class="btn" id="yyw-play" type="button">❚❚ 暫停</button></div>
+        <div class="stage-wrap"><canvas id="cv-yyw" aria-label="Y 接發電機、三條火線、Y 接負載的實體接線圖，電流點沿火線來回晃，電錶可以夾不同的兩點"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><span class="lab">電錶夾哪兩點</span>
+            <div class="btn-row"><button class="btn" data-yyw-p="an" aria-pressed="true" type="button">a–n</button><button class="btn" data-yyw-p="bn" aria-pressed="false" type="button">b–n</button><button class="btn" data-yyw-p="AN" aria-pressed="false" type="button">A–N</button><button class="btn" data-yyw-p="ab" aria-pressed="false" type="button">a–b</button><button class="btn" data-yyw-p="bc" aria-pressed="false" type="button">b–c</button><button class="btn" data-yyw-p="ca" aria-pressed="false" type="button">c–a</button></div></div>
+          <div class="ctrl"><label for="yyw-vp">相電壓 V<sub>p</sub><output for="yyw-vp"></output></label>
+            <input type="range" id="yyw-vp" min="100" max="280" step="5" value="220"></div>
+          <div class="ctrl"><label for="yyw-r">每相負載 R<output for="yyw-r"></output></label>
+            <input type="range" id="yyw-r" min="5" max="60" step="1" value="22"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>電錶讀數</dt><dd id="yyw-v" style="color:var(--accent)">—</dd></div>
+          <div><dt>量到的是</dt><dd id="yyw-kind" style="font-size:13px">—</dd></div>
+          <div><dt>線電流 = 相電流</dt><dd id="yyw-i">—</dd></div>
+          <div><dt>中性線電流</dt><dd id="yyw-n" style="font-size:13px">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">夾一個頭、一個結（a–n、A–N）都是相電壓；夾兩個頭（a–b、b–c、c–a）都是 √3 倍的線電壓。三條火線上的點輪流晃，中性線上的點不動：三個電流加起來 = 0。把中性線拿掉，其他數字完全不變。</p>
+
+      <div id="ex-yyreal"></div>
+
+      <div class="howto">
+        <h4>看到 Y-Y 題目，先在腦中畫實體</h4>
+        <ol>
+          <li><b>把梯子圖還原：</b>左邊直線 = 電源的 n，右邊直線 = 負載的 N，中間三條 = 火線。</li>
+          <li><b>題目給的電壓是哪一種？</b>說「線電壓」或兩條線之間 → 先除 √3 變相電壓；說 V<sub>an</sub> 或「相電壓」→ 直接用。</li>
+          <li><b>每相串了什麼：</b>Z<sub>Y</sub> = Z<sub>s</sub> + Z<sub>ℓ</sub> + Z<sub>L</sub>（沒給的當 0）。</li>
+          <li><b>電流：</b>I<sub>a</sub> = V<sub>an</sub>/Z<sub>Y</sub>，Y 接的線電流就是它。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>Y-Y 實體的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> 中性線是「第四相」。<span class="o">✓ 它是三個尾巴的共同點拉出來的回程線，平衡時上面沒電流。</span></li>
+          <li><span class="x">✗</span> 兩條火線之間 = 220 + 220 = 440 V。<span class="o">✓ 兩個電壓差 120°，只有 √3 倍：380 V。</span></li>
+          <li><span class="x">✗</span> Y 接的線電流是相電流的 √3 倍。<span class="o">✓ 那是 Δ 接。Y 接一條路走到底，線電流 = 相電流。</span></li>
+          <li><span class="x">✗</span> 相電壓 = 兩條線之間的電壓。<span class="o">✓ 相電壓夾火線和中性點；兩條火線之間是線電壓。</span></li>
+        </ul>
+      </div>
+    </section>
+
     <!-- ══════════ 12.3 ══════════ -->
     <section class="sec" id="yy">
       <div class="eyebrow"><span class="part-tag">原講義 CH12</span>12.3 · Balanced Wye-Wye Connection</div>
@@ -355,6 +422,7 @@
 <script src="../shared/schem.js"></script>
 <script src="../shared/story.js"></script>
 <script src="assets/ch12-kit.js"></script>
+<script src="assets/rv-kit.js"></script>
 <script src="assets/ch12-ex.js"></script>
 <script src="assets/ch12-ex2.js"></script>
 <script src="../shared/exbook.js"></script>
@@ -364,6 +432,7 @@
 __EXB.picker(document.getElementById('sec-pick'), [
   { id: 'intro', no: '12.1', name: '為什麼要三相' },
   { id: 'bal', no: '12.2', name: '平衡電壓與相序', count: '例 1 · 練 1' },
+  { id: 'yy-real', no: '12.3', name: '先補課：Y-Y 實際怎麼接' },
   { id: 'yy', no: '12.3', name: 'Y-Y 接法', count: '例 1 · 練 1' }
 ], { key: 'ch12-part1', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
 </script>

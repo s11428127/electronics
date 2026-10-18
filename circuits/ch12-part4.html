@@ -122,7 +122,7 @@
         <ol>
           <li><b>電源：</b>三顆 VAC，ACMAG = 大小、ACPHASE = 0、−120、120（照相序）。Δ 電源每顆串 1 μΩ，再加三個 1 MΩ 接成 Y、中心接地。</li>
           <li><b>元件值：</b>有頻率 → L、C 直接填；只給阻抗 → 設 ω = 1，L = X<sub>L</sub>、C = 1/X<sub>C</sub>。</li>
-          <li><b>量測：</b>IPRINT 串在要量的支路（注意方向）、VPRINT2 跨兩點；屬性 AC = yes、MAG = yes、PHASE = yes。</li>
+          <li><b>量測：</b>IPRINT 串在要量的支路（注意方向）、VPRINT2 跨兩點；屬性 AC = yes、MAG = yes、PHASE = yes；輸出檔的 IM 是大小、IP 是相角。</li>
           <li><b>分析：</b>AC Sweep，Total Pts = 1，Start = Final = 頻率。</li>
           <li><b>驗算：</b>平衡用單相等效、不平衡用網目分析，手算對一次。</li>
         </ol>

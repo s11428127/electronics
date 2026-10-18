@@ -122,6 +122,48 @@
   });
 
   /* ── 12.3：Y-Y 線電流（課本 Example 12.2） ──────────────── */
+  /* ── 12.3 先補課：三相四線 Y-Y 接電熱器（自編練習） ──────────── */
+  liveExample('#ex-yyreal', {
+    title: '例題 · 三台 220 V 電熱器接成 Y（自編練習）',
+    ratio: 0.36, minH: 170, maxH: 230,
+    givens: [
+      { id: 'xr-vl', label: '線電壓 V<sub>L</sub>（兩條火線之間）', min: 200, max: 480, step: 5, value: 380, fmt: v => v + ' V' },
+      { id: 'xr-p', label: '電熱器額定功率（220 V 時）', min: 500, max: 5000, step: 100, value: 2000, fmt: v => v + ' W' }
+    ],
+    compute: g => {
+      const VL = g['xr-vl'], Pr = g['xr-p'], Vp = VL / Math.sqrt(3), R = 220 * 220 / Pr;
+      const I = Vp / R, P1 = Vp * Vp / R, PD = VL * VL / R;
+      return { VL, Pr, Vp, R, I, P1, PT: 3 * P1, PD, k: Vp / 220 };
+    },
+    question: (g, r) => '三相四線 Y 接電源，線電壓 ' + r.VL + ' V。三台一樣的電熱器（額定 220 V、' + r.Pr + ' W）接成 Y：每台一頭接一條火線，另一頭接中性線。求每台吃到的電壓、線電流、中性線電流和總功率。',
+    questionEn: (g, r) => 'A three-phase four-wire Y source has a line voltage of ' + r.VL + ' V. Three identical heaters (rated 220 V, ' + r.Pr + ' W) are Y-connected: each is connected between one line and the neutral. Find the voltage across each heater, the line current, the neutral current, and the total power.',
+    steps: (g, r) => [
+      { t: 'Step 1　每台接在火線和中性線之間 → 吃相電壓。', note: '火線對火線才是線電壓；Y 接的每一相夾在火線和中性點之間。', eq: 'V<sub>p</sub> = V<sub>L</sub> / √3 = ' + r.VL + ' / 1.732 = ' + n2(r.Vp, 1) + ' V' },
+      { t: 'Step 2　由額定值算電阻。', note: '額定 220 V 時吃 ' + r.Pr + ' W，P = V²/R 倒過來。', eq: 'R = 220² / ' + r.Pr + ' = ' + n2(r.R, 2) + ' Ω' },
+      { t: 'Step 3　相電流 = 線電流（Y 接一條路走到底）。', eq: 'I<sub>L</sub> = I<sub>p</sub> = ' + n2(r.Vp, 1) + ' / ' + n2(r.R, 2) + ' = ' + n2(r.I, 2) + ' A' },
+      { t: 'Step 4　中性線電流。', note: '三台一樣 → 平衡 → 三個電流一樣大、差 120°，加起來 0。', eq: 'I<sub>n</sub> = −(I<sub>a</sub> + I<sub>b</sub> + I<sub>c</sub>) = 0' },
+      { t: 'Step 5　功率。', eq: 'P<sub>每台</sub> = ' + n2(r.Vp, 1) + '² / ' + n2(r.R, 2) + ' = ' + n2(r.P1, 0) + ' W，P<sub>總</sub> = 3 × ' + n2(r.P1, 0) + ' = ' + n2(r.PT, 0) + ' W',
+        after: Math.abs(r.k - 1) <= 0.05 ? '相電壓 ' + n2(r.Vp, 0) + ' V 跟額定 220 V 幾乎一樣：220/380 V 的三相四線接 220 V 電器，Y 接剛剛好。'
+          : r.k > 1 ? '相電壓比額定高 ' + n2((r.k - 1) * 100, 0) + '%，功率變成額定的 ' + n2(r.k * r.k, 2) + ' 倍 —— 電熱器會過熱。'
+          : '相電壓只有額定的 ' + n2(r.k * 100, 0) + '%，功率只剩 ' + n2(r.k * r.k * 100, 0) + '%（功率跟電壓平方成正比），電熱器不夠熱。' },
+      { t: '對照　如果接錯：每台跨在兩條火線之間。', note: '那就變成 Δ 接，每台吃的是線電壓。', eq: 'P = ' + r.VL + '² / ' + n2(r.R, 2) + ' = ' + n2(r.PD, 0) + ' W（是 Y 接的 3 倍）',
+        after: r.VL > 240 ? '比額定大 ' + n2(r.PD / r.Pr, 1) + ' 倍，會燒掉 —— 所以夾哪兩條線很重要。' : '線電壓不高，這樣接也還在額定附近；但大樓常見的 380 V 就不行。' }
+    ],
+    answer: (g, r) => '每台 ' + n2(r.Vp, 1) + ' V；I<sub>L</sub> = I<sub>p</sub> = ' + n2(r.I, 2) + ' A；I<sub>n</sub> = 0；P<sub>總</sub> = ' + n2(r.PT, 0) + ' W',
+    draw: (ctx, w, h, g, r) => {
+      const x0 = Math.min(150, w * 0.3), x1 = w - 24, max = 480, k = (x1 - x0) / max;
+      const rows = [['線電壓 V<sub>L</sub>', r.VL, C.ink], ['相電壓 V<sub>p</sub>', r.Vp, C.accent], ['電熱器額定', 220, C['ink-3']]];
+      const bh = Math.max(10, Math.min(22, h / 7));
+      rows.forEach((row, i) => {
+        const y = h * (0.24 + i * 0.27);
+        label(ctx, x0 - 8, y, row[0], row[2], 11.5, 'right', '700');
+        ctx.fillStyle = row[2]; ctx.globalAlpha = i === 2 ? 0.35 : 0.85; ctx.fillRect(x0, y - bh / 2, Math.max(0, row[1] * k), bh); ctx.globalAlpha = 1;
+        labelCJK(ctx, x0 + row[1] * k + 6, y, n2(row[1], 0) + ' V', row[2], 11.5, 'left', '700');
+      });
+      ctx.strokeStyle = C['ink-3']; ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(x0 + 220 * k, h * 0.1); ctx.lineTo(x0 + 220 * k, h * 0.92); ctx.stroke(); ctx.setLineDash([]);
+    }
+  });
+
   liveExample('#ex-yy', {
     title: '例題 · 三線式 Y-Y 的線電流（課本 Example 12.2）',
     ratio: 0.4, minH: 190, maxH: 250,

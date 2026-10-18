@@ -254,6 +254,156 @@
   })();
 
   /* ══════════════════════════════════════════════════════════
+     ⓪ Y-Y 接線實驗台（12.3 先補課）：實體的 Y 接發電機 → 三條火線 → Y 接負載，
+        電錶可以夾不同的兩點；電流點跟著瞬時電流跑，中性線上永遠不動
+     ══════════════════════════════════════════════════════════ */
+  (function yyw() {
+    const cv = document.getElementById('cv-yyw'); if (!cv) return;
+    let Vp = 220, R = 22, probe = 'an', neu = true, wt = 0, playing = true;
+    const pos = [0, 0, 0];                       /* 每條線電流點的位移（0~1 的比例） */
+    const PR = {
+      an: ['a', 'n', '相電壓', 1], bn: ['b', 'n', '相電壓', 1], AN: ['A', 'N', '相電壓（負載這頭）', 1],
+      ab: ['a', 'b', '線電壓', Math.sqrt(3)], bc: ['b', 'c', '線電壓', Math.sqrt(3)], ca: ['c', 'a', '線電壓', Math.sqrt(3)]
+    };
+    const along = (pts, t) => {                 /* 折線上比例 t 的位置 */
+      const seg = []; let L = 0;
+      for (let i = 1; i < pts.length; i++) { const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); seg.push(d); L += d; }
+      let s = ((t % 1) + 1) % 1 * L;
+      for (let i = 0; i < seg.length; i++) { if (s <= seg[i]) { const u = seg[i] ? s / seg[i] : 0; return [lerp(pts[i][0], pts[i + 1][0], u), lerp(pts[i][1], pts[i + 1][1], u)]; } s -= seg[i]; }
+      return pts[pts.length - 1];
+    };
+    const st = Stage(cv, { ratio: 0.42, minH: 240, maxH: 330, draw(ctx, w, h, dt) {
+      if (playing) wt = (wt + dt * 70) % 360;
+      const col = PHC(), narrow = w < 520;
+      const r = Math.max(14, Math.min(h * 0.26, w * (narrow ? 0.15 : 0.12)));
+      const sx = w * 0.2, lx = w * 0.8, cy = h / 2 + 0.12 * r - 4;
+      const tip = (cx, i) => { const a = [90, 330, 210][i] * RAD; return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; };
+      const S = [tip(sx, 0), tip(sx, 1), tip(sx, 2)];
+      const Ld = [tip(lx, 0), tip(lx, 2), tip(lx, 1)];          /* A 在上、B 左下、C 右下 */
+      const yc = cy + r * 0.5 + Math.max(16, r * 0.55);
+      const lines = [[S[0], Ld[0]], [S[1], Ld[1]], [S[2], [S[2][0], yc], [Ld[2][0], yc], Ld[2]]];
+      const P = { a: S[0], b: S[1], c: S[2], n: [sx, cy], A: Ld[0], B: Ld[1], C: Ld[2], N: [lx, cy] };
+      /* 線 */
+      lines.forEach((pts, i) => {
+        ctx.strokeStyle = col[i]; ctx.lineWidth = 2; ctx.beginPath();
+        pts.forEach((p, j) => (j ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.stroke();
+      });
+      if (neu) { ctx.strokeStyle = C['ink-3']; ctx.lineWidth = 1.6; ctx.setLineDash([5, 5]); ctx.beginPath(); ctx.moveTo(sx, cy); ctx.lineTo(lx, cy); ctx.stroke(); ctx.setLineDash([]); }
+      /* 電源三組線圈（腳上一個 ~ 圈） */
+      [0, 1, 2].forEach(i => {
+        const t = S[i], mx = (sx + t[0]) / 2, my = (cy + t[1]) / 2, rr = Math.max(4, r * 0.2);
+        ctx.strokeStyle = C.ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(sx, cy); ctx.lineTo(t[0], t[1]); ctx.stroke();
+        ctx.fillStyle = C.surface; ctx.beginPath(); ctx.arc(mx, my, rr, 0, TAU); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(mx - rr * 0.55, my); ctx.quadraticCurveTo(mx - rr * 0.28, my - rr * 0.6, mx, my); ctx.quadraticCurveTo(mx + rr * 0.28, my + rr * 0.6, mx + rr * 0.55, my); ctx.stroke();
+      });
+      /* 負載三個電阻（鋸齒） */
+      [0, 1, 2].forEach(i => {
+        const t = Ld[i], dx = t[0] - lx, dy = t[1] - cy, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, nx = -uy, ny = ux;
+        ctx.strokeStyle = C.ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(lx, cy);
+        const a = 0.25, b = 0.75, n = 6;
+        ctx.lineTo(lx + dx * a, cy + dy * a);
+        for (let k = 0; k < n; k++) { const u = a + (b - a) * (k + 0.5) / n, z = (k % 2 ? 1 : -1) * Math.max(3, r * 0.1); ctx.lineTo(lx + dx * u + nx * z, cy + dy * u + ny * z); }
+        ctx.lineTo(lx + dx * b, cy + dy * b); ctx.lineTo(t[0], t[1]); ctx.stroke();
+      });
+      disc(ctx, sx, cy, 4.5, C.accent); disc(ctx, lx, cy, 4.5, C.accent);
+      /* 電流點：速度跟瞬時電流成正比（三條各晚 120°） */
+      const I = Vp / R;
+      [0, 1, 2].forEach(i => {
+        const v = Math.cos((wt - 120 * i) * RAD);
+        if (playing) pos[i] = (pos[i] + v * dt * 0.35) % 1;
+        for (let k = 0; k < 7; k++) { const p = along(lines[i], pos[i] + k / 7); disc(ctx, p[0], p[1], Math.max(1.5, Math.min(4.5, 1.5 + I * 0.12)), col[i]); }
+      });
+      /* 標籤 */
+      const lab = (p, s, dx, dy, c) => label(ctx, p[0] + dx, p[1] + dy, s, c || C.ink, 12, 'center', '700');
+      lab(S[0], 'a', -12, -4, col[0]); lab(S[1], 'b', 10, 12, col[1]); lab(S[2], 'c', -10, 12, col[2]);
+      lab(Ld[0], 'A', 0, -10, col[0]); lab(Ld[1], 'B', -10, 12, col[1]); lab(Ld[2], 'C', 10, 12, col[2]);
+      lab(P.n, 'n', -12, -8, C.accent); lab(P.N, 'N', 12, -8, C.accent);
+      labelCJK(ctx, sx, Math.min(h - 8, yc + 18), '發電機（Y）', C['ink-3'], 11, 'center');
+      labelCJK(ctx, lx, Math.min(h - 8, yc + 18), '負載（Y）', C['ink-3'], 11, 'center');
+      if (neu) labelCJK(ctx, (sx + lx) / 2, cy - 7, '中性線：點不動（I = 0）', C['ink-3'], narrow ? 9.5 : 11, 'center');
+      /* 電錶 */
+      const pr = PR[probe], p1 = P[pr[0]], p2 = P[pr[1]];
+      const mx = (p1[0] + p2[0]) / 2, my = Math.min(p1[1], p2[1]) - Math.max(18, r * 0.45);
+      const mY = Math.max(16, my);
+      ctx.strokeStyle = C.accent; ctx.lineWidth = 1.6; ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(mx, mY); ctx.lineTo(p2[0], p2[1]); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = C.surface; ctx.strokeStyle = C.accent; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(mx, mY, 12, 0, TAU); ctx.fill(); ctx.stroke();
+      label(ctx, mx, mY, 'V', C.accent, 12, 'center', '700');
+      const val = Vp * pr[3];
+      labelCJK(ctx, mx + 18, mY, val.toFixed(0) + ' V', C.accent, 13, 'left', '700');
+      const el = id => document.getElementById(id);
+      if (el('yyw-v')) el('yyw-v').textContent = val.toFixed(1) + ' V';
+      if (el('yyw-kind')) el('yyw-kind').textContent = pr[2] + (pr[3] > 1 ? '（= √3 × ' + Vp + '）' : '');
+      if (el('yyw-i')) el('yyw-i').textContent = I.toFixed(2) + ' A';
+      if (el('yyw-n')) el('yyw-n').textContent = neu ? '0 A（有接也沒電流）' : '沒接（平衡時一樣能用）';
+    } });
+    bindRange('yyw-vp', v => v + ' V', v => { Vp = v; st.redraw && st.redraw(); });
+    bindRange('yyw-r', v => v + ' Ω', v => { R = v; st.redraw && st.redraw(); });
+    document.querySelectorAll('[data-yyw-p]').forEach(b => b.addEventListener('click', () => { probe = b.dataset.yywP; document.querySelectorAll('[data-yyw-p]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); }));
+    const nb = document.getElementById('yyw-neu');
+    if (nb) nb.addEventListener('click', () => { neu = !neu; nb.setAttribute('aria-pressed', String(neu)); nb.textContent = neu ? '中性線：接' : '中性線：拿掉'; });
+    const pb = document.getElementById('yyw-play');
+    if (pb) pb.addEventListener('click', () => { playing = !playing; pb.textContent = playing ? '❚❚ 暫停' : '▶ 播放'; });
+  })();
+
+  /* ══════════════════════════════════════════════════════════
+     ⓪′ 馬達接線盒（12.4 先補課）：同一台馬達換銅片 → Y 或 Δ，看每組線圈吃多少電壓、電流
+     ══════════════════════════════════════════════════════════ */
+  (function tbox() {
+    const cv = document.getElementById('cv-tbox'); if (!cv) return;
+    let mode = 'Y', VL = 380, Z = 38;
+    const st = Stage(cv, { animate: false, ratio: 0.5, minH: 240, maxH: 330, draw(ctx, w, h) {
+      const col = PHC(), narrow = w < 480;
+      const bw = Math.min(w * (narrow ? 0.78 : 0.5), 360), bx = narrow ? (w - bw) / 2 : w * 0.06, by = h * 0.2, bh = h * 0.62;
+      const tx = [bx + bw * 0.22, bx + bw * 0.5, bx + bw * 0.78], yt = by + bh * 0.28, yb = by + bh * 0.76;
+      /* 盒子 */
+      ctx.fillStyle = C.surface; ctx.strokeStyle = C.line; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
+      /* 火線 L1～L3 */
+      tx.forEach((x, i) => {
+        ctx.strokeStyle = col[i]; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x, 6); ctx.lineTo(x, yt); ctx.stroke();
+        label(ctx, x + 6, 14, 'L' + (i + 1), col[i], 11, 'left', '700');
+      });
+      /* 盒子裡的線圈（U：U1→U2、V：V1→V2、W：W1→W2），下排排成 W2 U2 V2 */
+      const top = { U: tx[0], V: tx[1], W: tx[2] }, bot = { W: tx[0], U: tx[1], V: tx[2] };
+      ['U', 'V', 'W'].forEach((c, i) => {
+        ctx.strokeStyle = C['ink-3']; ctx.lineWidth = 1.4; ctx.setLineDash([4, 4]);
+        ctx.beginPath(); ctx.moveTo(top[c], yt); ctx.lineTo(bot[c], yb); ctx.stroke(); ctx.setLineDash([]);
+        const t = i === 0 ? 0.3 : 0.15, mx = top[c] + (bot[c] - top[c]) * t, my = yt + (yb - yt) * t + 4;
+        label(ctx, mx + (i === 2 ? -7 : 7), my, c, C['ink-3'], 11, i === 2 ? 'right' : 'left', '700');
+      });
+      /* 銅片 */
+      ctx.strokeStyle = C.accent; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.globalAlpha = 0.85;
+      ctx.beginPath();
+      if (mode === 'Y') { ctx.moveTo(tx[0], yb); ctx.lineTo(tx[2], yb); }
+      else tx.forEach(x => { ctx.moveTo(x, yt); ctx.lineTo(x, yb); });
+      ctx.stroke(); ctx.globalAlpha = 1; ctx.lineCap = 'butt';
+      /* 端子 */
+      [['U1', tx[0], yt], ['V1', tx[1], yt], ['W1', tx[2], yt], ['W2', tx[0], yb], ['U2', tx[1], yb], ['V2', tx[2], yb]].forEach(t => {
+        ctx.fillStyle = C.surface; ctx.strokeStyle = C.ink; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(t[1], t[2], 9, 0, TAU); ctx.fill(); ctx.stroke();
+        disc(ctx, t[1], t[2], 2.6, C.ink);
+        label(ctx, t[1] + 12, t[2] + (t[2] === yt ? -11 : 13), t[0], C['ink-2'], 10.5, 'left', '700');
+      });
+      /* 結果 */
+      const Vc = mode === 'Y' ? VL / Math.sqrt(3) : VL, Ip = Vc / Z, IL = mode === 'Y' ? Ip : Ip * Math.sqrt(3), S = 3 * Vc * Ip;
+      const rx = narrow ? w / 2 : bx + bw + (w - bx - bw) / 2, ry = narrow ? by + bh + 18 : h * 0.3;
+      labelCJK(ctx, rx, ry, mode === 'Y' ? 'Y 接：下排一片橫的' : 'Δ 接：三片直的', C.accent, narrow ? 12 : 14, 'center', '700');
+      if (!narrow) {
+        labelCJK(ctx, rx, ry + 26, mode === 'Y' ? '三個尾接一起 = 中性點' : '每組的頭接到下一組的尾', C['ink-2'], 11.5, 'center');
+        labelCJK(ctx, rx, ry + 52, '每組線圈吃 ' + Vc.toFixed(0) + ' V', C.ink, 13, 'center', '700');
+      }
+      const el = id => document.getElementById(id);
+      if (el('tb-vc')) el('tb-vc').textContent = Vc.toFixed(1) + ' V' + (mode === 'Y' ? '（Vₗ/√3）' : '（= Vₗ）');
+      if (el('tb-ip')) el('tb-ip').textContent = Ip.toFixed(2) + ' A';
+      if (el('tb-il')) el('tb-il').textContent = IL.toFixed(2) + ' A' + (mode === 'Y' ? '（= Iₚ）' : '（√3 Iₚ）');
+      if (el('tb-s')) el('tb-s').textContent = (S / 1000).toFixed(2) + ' kVA';
+    } });
+    bindRange('tb-vl', v => v + ' V', v => { VL = v; st.redraw(); });
+    bindRange('tb-z', v => v + ' Ω', v => { Z = v; st.redraw(); });
+    document.querySelectorAll('[data-tb]').forEach(b => b.addEventListener('click', () => { mode = b.dataset.tb; document.querySelectorAll('[data-tb]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); st.redraw(); }));
+  })();
+
+  /* ══════════════════════════════════════════════════════════
      ⑤ 四種接法 → 全部化成 Y-Y 的單相等效（12.6、表 12.1）
      ══════════════════════════════════════════════════════════ */
   (function conn() {
