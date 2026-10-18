@@ -49,6 +49,7 @@
 - 使用者說「講義字太多讀不下去，**故事的方法很適合我**」。新內容一律**故事優先**：導言、說明都寫短，一段不超過兩三句；能畫的就畫進故事或互動模組。
 - **推導已全站改成故事卡**（`shared/app.js` 最後一段）：`.derive` 每一步只露出算式＋第一句白話，長說明收進「看詳細」，按「下一步」（或點目前那張卡）才出下一張；寫筆記模式自動全部攤開。寫 `.why` 時**第一句就要是重點**（第一句會被拿來當白話，16 字以內的句子會連下一句一起顯示）。
 - 加的按鈕都是 `.dv-ui`（annot.js 的 `EXCL` 有它，不影響筆跡錨點）。
+- **電路學講義收合（使用者 10/18：要跟工數一樣字少）**：`shared/app.js` 最後一段，只套 `data-subject="circuits"` 且有 `.derive` 的講義頁 —— 可調數字例題 `.example.live` 一次一步（`ex:render` 事件讓拉滑桿重算時保留看到第幾步，答案最後才出現）；`section.sec > p`、`.note`、`.lede`、hero `.sub` 超過 70 字只露第一句＋「看詳細」。寫筆記模式全部攤開。
 
 ## 電腦版排版（10/12）
 
@@ -152,6 +153,7 @@
 - 一章一頁總複習 `<chapter>-problems.html`（不放進章節頁），題庫分幾個檔 `assets/<chapter>-probN.js` → `window.__CH11PB`（`concat`），每題 exbook `kind:'pp'`、`tag:'Problem 11.x'`／`'Review Question 11.x'`、`en` 英文原文、`fig` 用 schem.js 重畫、`steps` 逐步詳解、跟課本或題意有出入寫 `note`。
 - schem.js 10/16 新增：`dvs`／`dis`（菱形相依電壓／電流源，垂直）、`dvsh`／`dish`（水平）、`opamp(x, y, {plusTop})`、`box(x, y, w, h, [多行字])`（負載方塊）。圖要截圖拼總表檢查標籤有沒有被裁掉（`S.svg` 寬度要留給右側標籤）。
 - 新頁面加進 `mistakes.html` 的 `data-chs`、科目首頁 `.lec-links`、章節頁 hero `.lec-links`。
+- **章末題圖解詳解（使用者 10/18）**：`circuits/assets/prob-story.js` 自動把 tag 以 `Problem` 開頭的題目（Review Question 不做）做成故事：題目圖（schem 圖嵌進故事畫面）→ 每幕 1～2 步（左圖右計算卡，字幕取 `why` 第一句）→ 答案卡。題庫寫 `steps` 時 `eq` 用「；」「⇒」分段，故事才切得漂亮。
 - 現有：電路學 `ch11-problems.html`（`ch11-prob1～3.js`，86 題）、`ch12-problems.html`（`ch12-prob1～2.js`，64 題；三相電路圖用 `__CH12PB.tp({src:'Y'|'D'|'gen', load:'Y'|'D', line, neutral})`）。節標題旁有圖示＝整節都跳過（CH12 的 12.9 PSpice）。
 
 ## 電路學 CH1～CH10 複習（使用者 10/17，只有故事）
