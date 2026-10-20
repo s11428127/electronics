@@ -404,6 +404,87 @@
   })();
 
   /* ══════════════════════════════════════════════════════════
+     ⓪″ 沿迴路 aANBba 走一圈（12.6 先補課）：小人一段一段走，每段記下它的電壓項
+     ══════════════════════════════════════════════════════════ */
+  (function walk() {
+    const cv = document.getElementById('cv-walk'); if (!cv) return;
+    const SEG = [
+      { n: 'a → A', t: '0', why: '只是一段電線（沒有線路阻抗），電壓不變。' },
+      { n: 'A → N', t: '+Z<sub>Y</sub>I<sub>a</sub>', why: '穿過 a 相負載，方向跟 I<sub>a</sub> 一樣：順著電流 = 下坡，記 +ZI。' },
+      { n: 'N → B', t: '−Z<sub>Y</sub>I<sub>b</sub>', why: '穿過 b 相負載，方向跟 I<sub>b</sub> 相反：逆著電流 = 上坡，記 −ZI。' },
+      { n: 'B → b', t: '0', why: '又是電線，記 0。' },
+      { n: 'b → a', t: '−V<sub>ab</sub>', why: '穿過電源 V<sub>ab</sub>，從 − 端走到 + 端，電壓升高：記 −V。' }
+    ];
+    let k = -1, f = 1, auto = false, hold = 0;
+    const along = (pts, t) => {
+      const seg = []; let L = 0;
+      for (let i = 1; i < pts.length; i++) { const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); seg.push(d); L += d; }
+      let s = clamp(t, 0, 1) * L;
+      for (let i = 0; i < seg.length; i++) { if (s <= seg[i]) { const u = seg[i] ? s / seg[i] : 0; return [lerp(pts[i][0], pts[i + 1][0], u), lerp(pts[i][1], pts[i + 1][1], u)]; } s -= seg[i]; }
+      return pts[pts.length - 1];
+    };
+    const el = id => document.getElementById(id);
+    function info() {
+      if (el('walk-seg')) el('walk-seg').innerHTML = k < 0 ? '還沒出發' : k > 4 ? '走完一圈' : SEG[k].n;
+      if (el('walk-why')) el('walk-why').innerHTML = k < 0 ? '按「走下一段」從 a 出發。' : k > 4 ? '五段加起來 = 0：−V<sub>ab</sub> + Z<sub>Y</sub>I<sub>a</sub> − Z<sub>Y</sub>I<sub>b</sub> = 0' : SEG[k].why;
+      const done = SEG.slice(0, Math.min(k + 1, 5)).map(x => x.t).filter(t => t !== '0');
+      if (el('walk-eq')) el('walk-eq').innerHTML = (done.length ? done.join(' ').replace(/^\+/, '') : '') + (k > 4 ? ' = 0' : k >= 0 ? ' …' : '—');
+    }
+    const st = Stage(cv, { ratio: 0.46, minH: 230, maxH: 320, draw(ctx, w, h, dt) {
+      if (f < 1) f = Math.min(1, f + dt / 1.4);
+      else if (auto && k < 5) { hold += dt; if (hold > 1.2) { hold = 0; step(); } }
+      const narrow = w < 520;
+      const x0 = w * 0.07, xab = w * 0.17, xs = w * 0.25, xl = w * 0.64, xN = w * 0.86;
+      const ya = h * 0.2, yb = h * 0.5, yc = h * 0.8;
+      const P = {
+        a: [xs, ya], b: [xs, yb], A: [xl, ya], B: [xl, yb]
+      };
+      const PATH = [[[xs, ya], [xl, ya]], [[xl, ya], [xN, ya]], [[xN, ya], [xN, yb], [xl, yb]], [[xl, yb], [xs, yb]], [[xs, yb], [xab, yb], [xab, ya], [xs, ya]]];
+      /* 電路：Δ 電源（a-b、b-c 直的在 xab，c-a 長的在 x0）、三條線、Y 負載 */
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 1.8; ctx.beginPath();
+      ctx.moveTo(x0, ya); ctx.lineTo(xl, ya); ctx.moveTo(xab, yb); ctx.lineTo(xl, yb); ctx.moveTo(x0, yc); ctx.lineTo(xl, yc);
+      ctx.moveTo(x0, ya); ctx.lineTo(x0, yc); ctx.moveTo(xab, ya); ctx.lineTo(xab, yc);
+      [ya, yb, yc].forEach(y => { ctx.moveTo(xl, y); ctx.lineTo(xN, y); });
+      ctx.moveTo(xN, ya); ctx.lineTo(xN, yc); ctx.stroke();
+      const rr = Math.max(6, Math.min(13, h * 0.05));
+      const srcC = (x, y) => { ctx.fillStyle = C.surface; ctx.strokeStyle = C.ink; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(x, y, rr, 0, TAU); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x - rr * 0.55, y); ctx.quadraticCurveTo(x - rr * 0.28, y - rr * 0.6, x, y); ctx.quadraticCurveTo(x + rr * 0.28, y + rr * 0.6, x + rr * 0.55, y); ctx.stroke(); };
+      srcC(xab, (ya + yb) / 2); srcC(xab, (yb + yc) / 2); srcC(x0, (ya + yc) / 2);
+      label(ctx, xab + rr + 3, (ya + yb) / 2 - rr, '+', C['ink-2'], 11, 'left', '700');
+      label(ctx, xab + rr + 3, (ya + yb) / 2 + rr, '−', C['ink-2'], 11, 'left', '700');
+      const bw = Math.max(16, (xN - xl) * 0.42), bh = Math.max(8, rr * 0.9);
+      [ya, yb, yc].forEach(y => { ctx.fillStyle = C.surface; ctx.strokeStyle = C.ink; ctx.lineWidth = 1.6; ctx.fillRect((xl + xN) / 2 - bw / 2, y - bh / 2, bw, bh); ctx.strokeRect((xl + xN) / 2 - bw / 2, y - bh / 2, bw, bh); });
+      /* 走過的段 */
+      PATH.forEach((pts, i) => {
+        if (i > k) return;
+        ctx.strokeStyle = C.accent; ctx.globalAlpha = i === k ? 0.55 : 0.28; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.beginPath();
+        pts.forEach((p, j) => (j ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.stroke(); ctx.globalAlpha = 1; ctx.lineCap = 'butt';
+      });
+      /* 電流方向 */
+      [[ya, 'I<sub>a</sub>'], [yb, 'I<sub>b</sub>']].forEach(r => { const x = lerp(xs, xl, 0.72); arrow(ctx, x, r[0] - 10, x + Math.max(18, w * 0.05), r[0] - 10, C['q-react'], 1.8); label(ctx, x - 4, r[0] - 10, r[1], C['q-react'], 11, 'right', '700'); });
+      /* 標籤 */
+      const fs = narrow ? 11 : 12.5;
+      label(ctx, xs + 4, ya + 13, 'a', C.ink, fs, 'left', '700'); label(ctx, xs + 4, yb + 13, 'b', C.ink, fs, 'left', '700'); label(ctx, xs + 4, yc + 13, 'c', C.ink, fs, 'left', '700');
+      label(ctx, xl - 4, ya + 13, 'A', C.ink, fs, 'right', '700'); label(ctx, xl - 4, yb + 13, 'B', C.ink, fs, 'right', '700'); label(ctx, xl - 4, yc + 13, 'C', C.ink, fs, 'right', '700');
+      label(ctx, xN + 6, (ya + yb) / 2, 'N', C.accent, fs + 1, 'left', '700');
+      label(ctx, (xl + xN) / 2, ya - bh / 2 - 9, 'Z<sub>Y</sub>', C['ink-2'], 11, 'center', '700');
+      label(ctx, xab - rr - 3, (ya + yb) / 2, 'V<sub>ab</sub>', C['ink-2'], 11, 'right', '700');
+      /* 每段的電壓項 */
+      const TP = [[(xs + xl) / 2, ya + 13, 'center'], [(xl + xN) / 2, ya + bh / 2 + 12, 'center'], [(xl + xN) / 2, yb + bh / 2 + 12, 'center'], [(xs + xl) / 2, yb + 13, 'center'], [xab + rr + 16, (ya + yb) / 2, 'left']];
+      SEG.forEach((sg, i) => { if (i <= k) label(ctx, TP[i][0], TP[i][1], sg.t, C.accent, narrow ? 11 : 12.5, TP[i][2], '700'); });
+      /* 小人（走路的點） */
+      if (k >= 0 && k <= 4) { const p = along(PATH[k], f); disc(ctx, p[0], p[1], 6.5, C.accent); disc(ctx, p[0], p[1], 2.5, C.surface); }
+      else if (k < 0) disc(ctx, xs, ya, 6.5, C.accent);
+      else { disc(ctx, xs, ya, 6.5, C.accent); labelCJK(ctx, xs + 10, ya - 12, '回到 a', C.accent, 11.5, 'left', '700'); }
+    } });
+    function step() { if (k >= 5) return; k++; f = k > 4 ? 1 : 0; info(); }
+    if (el('walk-next')) el('walk-next').addEventListener('click', () => { auto = false; step(); });
+    if (el('walk-reset')) el('walk-reset').addEventListener('click', () => { auto = false; k = -1; f = 1; info(); });
+    if (el('walk-auto')) el('walk-auto').addEventListener('click', () => { if (k >= 5) { k = -1; f = 1; } auto = true; hold = 1.2; info(); });
+    info();
+  })();
+
+  /* ══════════════════════════════════════════════════════════
      ⑤ 四種接法 → 全部化成 Y-Y 的單相等效（12.6、表 12.1）
      ══════════════════════════════════════════════════════════ */
   (function conn() {

@@ -205,11 +205,83 @@
      { sub: '想用單相等效，卻發現電源那邊<b>沒有中性點 n</b>。', on: 'q' },
      { sub: '單相等效需要一個 n 當回程的地方，Δ 電源給不出來。', on: '' }]);
 
+  /* ═════ 先補課：沿迴路 aANBba 走一圈（使用者 10/20：方法一看不懂） ═════ */
+  /* L1 爬山走一圈 */
+  const L1 = sc('先補課：走一圈回到家', 'A ROUND TRIP',
+    g('path', '<path class="ln" style="fill:none;stroke-width:2.4" d="M140 235 L320 105 L500 180 Z"/>') +
+    g('home', '<path class="bgw" d="M124 237 V221 L140 209 L156 221 V237 Z"/>' + T(140, 257, '家', { cls: 't', fs: 13 })) +
+    g('up', D.arrow(170, 203, 290, 116, null, 'lna') + T(205, 145, '上坡 +120 m', { cls: 'ta', fs: 13, a: 'end' })) +
+    g('dn1', D.arrow(345, 115, 478, 171, null, 'ln') + T(430, 130, '下坡 −50 m', { cls: 't', fs: 13, a: 'start' })) +
+    g('dn2', D.arrow(470, 185, 175, 227, null, 'ln') + T(330, 227, '下坡 −70 m', { cls: 't', fs: 13 })) +
+    calc(150, 252, 340, [['+120 − 50 − 70 = 0', 'r1', 'ta', 15]], { k: 'cc', a: 'middle', lh: 22 }),
+    [{ sub: '方法一要「沿著一圈寫 KVL」。先補課：從家出發爬山，繞一圈回到家。', on: 'path home' },
+     { sub: '先上坡 120 公尺。', on: 'up' },
+     { sub: '再下坡 50 公尺、又下坡 70 公尺，回到家門口。', on: 'dn1 dn2' },
+     { sub: '回到同一個地方，高度一定一樣：上上下下<b>加起來 = 0</b>。', on: 'cc r1' },
+     { sub: '電路裡的「高度」就是電壓。繞一圈回到原點，電壓的升降加起來也是 0 —— 這就是 <b>KVL</b>。', on: '' }]);
+
+  /* L2 迴路名字怎麼讀 */
+  const LT = [['a', '電源端 a'], ['A', '負載端 A'], ['N', '負載中性點'], ['B', '負載端 B'], ['b', '電源端 b'], ['a', '回到 a']];
+  const L2 = sc('aANBba 是一條路線', 'READING THE LOOP NAME',
+    LT.map((p, i) => { const x = 95 + i * 90; return g('n' + i, '<circle class="' + (i === 2 ? 'accw' : 'bgw') + '" cx="' + x + '" cy="160" r="22"' + (i === 2 ? ' style="stroke:var(--s-acc);stroke-width:1.8"' : '') + '/>' + T(x, 167, p[0], { cls: 'ta', fs: 20 }) + T(x, 205, p[1], { cls: 'ts', fs: 11.5 }) +
+      (i ? D.arrow(x - 64, 160, x - 26, 160, null, 'ln') : '')); }).join('') +
+    chip(320, 252, '小寫 = 電源那頭，大寫 = 負載那頭', '', 'c1', { fs: 13.5 }) +
+    chip(320, 292, '12.4 的 aABbna 也是同一種讀法', '', 'c2', { fs: 13, acc: true }),
+    [{ sub: '課本寫「沿 aANBba」，其實就是<b>一條路線</b>：照字母一個一個走。', on: 'n0' },
+     { sub: '從電源的 a 出發，走電線到負載的 A。', on: 'n1' },
+     { sub: '穿過 a 相負載到中性點 N，再穿過 b 相負載到 B。', on: 'n2 n3' },
+     { sub: '走電線回到電源的 b，最後穿過電源回到 a —— 一圈。', on: 'n4 n5' },
+     { sub: '<b>小寫是電源那頭、大寫是負載那頭</b>。12.4 的 aABbna 也是這樣讀。', on: 'c1 c2' }]);
+
+  /* L3 在電路上走一圈 */
+  const seg = (key, d) => '<path class="lna" data-k="' + key + '" style="stroke-width:6;opacity:.45;fill:none" d="' + d + '"/>';
+  const L3 = sc('在電路上走一圈', 'WALK THE LOOP',
+    DY({ z: 'Z<sub>Y</sub>', k: { src: 'src', line: 'line', load: 'load', lbl: 'lbl' } }) +
+    g('cur', D.arrow(395, 128, 440, 128, null, 'lna') + T(390, 132, 'I<sub>a</sub>', { cls: 'ta', fs: 12.5, a: 'end' }) + D.arrow(395, 188, 440, 188, null, 'lna') + T(390, 192, 'I<sub>b</sub>', { cls: 'ta', fs: 12.5, a: 'end' })) +
+    seg('s1', 'M190 140 H470') + seg('s2', 'M470 140 H560') + seg('s3', 'M560 140 V200 H470') + seg('s4', 'M470 200 H190') + seg('s5', 'M190 200 H160 V140 H190') +
+    T(330, 131, '0', { cls: 'ta', fs: 14, k: 't1' }) + T(574, 136, '+Z<sub>Y</sub>I<sub>a</sub>', { cls: 'ta', fs: 13, a: 'start', k: 't2' }) +
+    T(574, 176, '−Z<sub>Y</sub>I<sub>b</sub>', { cls: 'ta', fs: 13, a: 'start', k: 't3' }) + T(330, 191, '0', { cls: 'ta', fs: 14, k: 't4' }) +
+    T(150, 128, '−V<sub>ab</sub>', { cls: 'ta', fs: 13, a: 'end', k: 't5' }) +
+    (RV ? RV.dots('M160 140 H560 V200 H160 Z', 'walk', 'slow') : '') +
+    chip(320, 296, '順著電流過阻抗 +ZI；逆著電流 −ZI；電源從 − 走到 + 記 −V', '', 'rule', { fs: 12.5, acc: true }),
+    [{ sub: '這是課本 Example 12.5 的 Δ-Y 電路。電流 I<sub>a</sub>、I<sub>b</sub> 都往右流進負載。', on: 'src lbl line load cur' },
+     { sub: 'a → A：只是一段電線，沒有阻抗，電壓不變：記 0。', on: 's1 t1 walk' },
+     { sub: 'A → N：穿過 a 相負載，方向跟 I<sub>a</sub> 一樣 —— 順著電流是「下坡」：記 +Z<sub>Y</sub>I<sub>a</sub>。', on: 's2 t2' },
+     { sub: 'N → B：穿過 b 相負載，但方向跟 I<sub>b</sub> <b>相反</b> —— 逆著電流是「上坡」：記 −Z<sub>Y</sub>I<sub>b</sub>。', on: 's3 t3' },
+     { sub: 'B → b：又是電線，記 0。', on: 's4 t4' },
+     { sub: 'b → a：穿過電源，從它的 − 端走到 + 端，電壓升高 V<sub>ab</sub>：記 −V<sub>ab</sub>。', on: 's5 t5' },
+     { sub: '規則只有三條：順著電流 +ZI、逆著電流 −ZI、電源從 − 到 + 記 −V。', on: 'rule' }]);
+
+  /* L4 把一圈加起來 */
+  const L4 = sc('一圈加起來 = 0', 'ADD IT UP',
+    calc(120, 104, 400, [['a → A：0', 'r1'], ['A → N：+Z<sub>Y</sub>I<sub>a</sub>', 'r2'], ['N → B：−Z<sub>Y</sub>I<sub>b</sub>', 'r3'], ['B → b：0　　b → a：−V<sub>ab</sub>', 'r4'],
+      ['−V<sub>ab</sub> + Z<sub>Y</sub>I<sub>a</sub> − Z<sub>Y</sub>I<sub>b</sub> = 0', 'r5', 'ta'], ['⇒ I<sub>a</sub> − I<sub>b</sub> = V<sub>ab</sub> / Z<sub>Y</sub>', 'r6', 'ta']], { k: 'cc', lh: 27 }),
+    [{ sub: '把剛剛記下的五段排起來。', on: 'cc r1 r2 r3 r4' },
+     { sub: '全部加起來 = 0：這就是講義上那一行 KVL。', on: 'r5' },
+     { sub: '移項：I<sub>a</sub> − I<sub>b</sub> = V<sub>ab</sub> / Z<sub>Y</sub>。可是有兩個未知數，怎麼辦？', on: 'r6' }]);
+
+  /* L5 兩支差 120° 的箭頭相減 */
+  const L5 = sc('又是兩支差 120° 的箭頭相減', 'SAME GEOMETRY AGAIN',
+    ph(180, 210, 66, [{ a: 0, l: 'I<sub>a</sub>', c: 'ln', k: 'pa' }, { a: -120, l: 'I<sub>b</sub>', c: 'ln', k: 'pb' }, { a: 60, m: 1, from: [246, 210], l: '−I<sub>b</sub>', c: 'ln dsh', k: 'nb', ld: [12, 30] }, { a: 30, m: 1.732, l: 'I<sub>a</sub> − I<sub>b</sub>', k: 'pab', ld: [-70, -6] }], { k: 'ax', ax: 100, noTick: true }) +
+    calc(340, 108, 280, [['平衡：I<sub>b</sub> = I<sub>a</sub>∠−120°', 'r1'], ['I<sub>a</sub> − I<sub>b</sub> = √3 I<sub>a</sub>∠30°', 'r2', 'ta'], ['I<sub>a</sub> = V<sub>ab</sub>∠−30° / (√3 Z<sub>Y</sub>)', 'r3', 'ta'], ['= 210∠−30° ÷ (1.732 × 47.17∠32°)', 'r4'], ['= 2.57∠−62° A', 'r5', 'ta', 17]], { k: 'cc', lh: 28 }),
+    [{ sub: '平衡的話，I<sub>b</sub> 就是 I<sub>a</sub> 轉 −120°，只剩一個未知數。', on: 'ax pa pb cc r1' },
+     { sub: 'I<sub>a</sub> − I<sub>b</sub>：跟 PART 1 的線電壓一模一樣的幾何 —— <b>√3 倍、轉 +30°</b>。', on: 'nb pab r2' },
+     { sub: '倒過來解出 I<sub>a</sub>：除以 √3、轉 −30°。', on: 'r3' },
+     { sub: '帶課本的數字：2.57∠−62° A。', on: 'r4 r5' }]);
+
+  /* L6 先整理一下 */
+  const L6 = sc('先整理一下：沿迴路寫 KVL', 'KVL ROUND TRIP',
+    calc(90, 106, 460, [['迴路名字 = 路線：aANBba → a→A→N→B→b→a', 'r1'], ['順著電流過阻抗 +ZI，逆著 −ZI', 'r2'], ['穿過電源從 − 到 +：−V', 'r3'], ['走完一圈加起來 = 0', 'r4', 'ta'], ['接下來：方法二更快 —— 換一個等效 Y 電源', 'r5', 'tm']], { k: 'cc', a: 'middle', lh: 28 }),
+    [{ sub: '先整理一下方法一。', on: 'cc r1' },
+     { sub: '正負號只看你走的方向跟電流、跟電源正負端的關係。', on: 'r2 r3' },
+     { sub: '走完一圈加起來 = 0，就能解出電流。', on: 'r4' },
+     { sub: '方法一要寫方程式；方法二不用寫，直接換電源。看下去。', on: 'r5' }]);
+
   /* 14 等效 Y 電源 */
   const S14 = sc('換一個「看起來一樣」的 Y 電源', 'EQUIVALENT Y SOURCE',
     ph(180, 210, 75, [{ a: 0, m: 1.2, l: 'V<sub>ab</sub>', c: 'ln', k: 'pab' }, { a: -30, m: 0.69, l: 'V<sub>an</sub>', k: 'pan' }], { k: 'ax', ax: 110 }) +
     calc(350, 120, 265, [['Y 電源：V<sub>ab</sub> = √3 V<sub>an</sub>∠+30°', 'r1', 'tm'], ['倒過來：V<sub>an</sub> = V<sub>ab</sub>/√3 ∠−30°', 'r2'], ['= 121.2∠−30° V', 'r3', 'ta']], { k: 'cc' }),
-    [{ sub: '想像一個 Y 電源，它產生的<b>線電壓</b>跟原本的 Δ 完全一樣 —— 從電線看過去分不出來。', on: 'ax pab cc r1' },
+    [{ sub: '方法二：想像一個 Y 電源，它產生的<b>線電壓</b>跟原本的 Δ 完全一樣 —— 從電線看過去分不出來。', on: 'ax pab cc r1' },
      { sub: '把「√3 倍、+30°」倒過來：<b>除 √3、−30°</b>。', on: 'r2 pan' },
      { sub: '210 ÷ 1.732 = 121.2；0° − 30° = −30°。', on: '' },
      { sub: 'V<sub>an</sub> = 121.2∠−30° V。', on: 'r3' },
@@ -234,5 +306,5 @@
      { sub: '下一頁（PART 3）：三相的功率為什麼是常數、怎麼算。', on: 'r5' }]);
 
   __Story('#story', { id: 'cir-ch12-p2', title: 'CH12 PART 2 Y-Δ、Δ-Δ、Δ-Y', after: '#yd',
-    scenes: [S0, S1, S2, D2, D1, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, D3, S13, S14, S15, S16] });
+    scenes: [S0, S1, S2, D2, D1, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, D3, S13, L1, L2, L3, L4, L5, L6, S14, S15, S16] });
 })();

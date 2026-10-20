@@ -32,6 +32,7 @@
       <li><a href="#d-real"><i>12.4</i>先補課：Δ 實際怎麼接</a></li>
       <li><a href="#yd"><i>12.4</i>平衡 Y-Δ</a></li>
       <li><a href="#dd"><i>12.5</i>平衡 Δ-Δ</a></li>
+      <li><a href="#loop-walk"><i>12.6</i>先補課：沿 aANBba 走一圈</a></li>
       <li><a href="#dy"><i>12.6</i>平衡 Δ-Y 與總整理</a></li>
       <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
       <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
@@ -45,8 +46,8 @@
       <p class="sub">PART 1 練熟了 Y-Y。這一頁把負載或電源換成 <button class="tm" data-t="Δ接">Δ</button>：Δ 負載每格跨在兩條線之間，吃的是<button class="tm" data-t="線電壓">線電壓</button>；線上的電流是兩格<button class="tm" data-t="相電流">相電流</button>相減，<strong>√3 倍、落後 30°</strong>。最後用 <button class="tm" data-t="Δ-Y轉換">Δ-Y 轉換</button>把三種接法全部化回 Y-Y，做成一張總整理表。</p>
       <div class="hero-meta">
         <span class="chip h">📘 課本 Example 3 題 ＋ Practice 3 題（每題都有 🎬 圖解故事）</span>
-        <span class="chip">20 個畫面的故事模式（含 Δ 實物、接線盒）</span>
-        <span class="chip">4 個互動模組 ＋ 4 個可改數字例題</span>
+        <span class="chip">26 個畫面的故事模式（含 Δ 實物、接線盒、沿迴路寫 KVL）</span>
+        <span class="chip">5 個互動模組 ＋ 5 個可改數字例題</span>
         <span class="chip">10 題中英對照測驗</span>
       </div>
       <div class="lec-links"><a href="ch12-review.html">🧠 CH12 觀念填充總複習（80 題，不用算）</a><a href="ch12-problems.html">✏️ CH12 章末練習題（64 題）</a></div>
@@ -54,7 +55,7 @@
 
     <section class="sec" id="story-sec">
       <div class="eyebrow"><span class="part-tag">原講義 CH12</span>Story mode · 先看這段，再往下讀</div>
-      <h2>20 個畫面看懂這一頁<span class="h2-en">THE STORY IN 20 SCENES</span></h2>
+      <h2>26 個畫面看懂這一頁<span class="h2-en">THE STORY IN 26 SCENES</span></h2>
       <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。全部看完大約 8 分鐘。</p>
       <div id="story"></div>
     </section>
@@ -275,6 +276,63 @@
       </div>
     </section>
 
+    <!-- ══════════ 12.6 先補課：沿迴路走一圈寫 KVL（使用者 10/20：aANBba 看不懂） ══════════ -->
+    <section class="sec" id="loop-walk">
+      <div class="eyebrow"><span class="part-tag">原講義 CH12</span>12.6 · 先補課 · KVL around loop aANBba</div>
+      <h2>「沿 aANBba」是什麼意思<span class="h2-en">WALKING A KVL LOOP</span></h2>
+      <p class="lede">aANBba 是一條路線：照字母走 a → A → N → B → b → 回到 a。小寫是電源那頭、大寫是負載那頭。走一圈回到原點，電壓的升降加起來 = 0，這就是 KVL。</p>
+      <div class="eq">順著電流過阻抗 +ZI　　逆著電流 −ZI　　穿過電源從 − 到 + 記 −V　　一圈加起來 = 0</div>
+      <div class="derive">
+        <h4>一段一段走 aANBba</h4>
+        <ol>
+          <li><span class="d-eq">a → A：0</span>
+            <div class="why">只是一段電線。題目沒有線路阻抗，電壓不變。</div></li>
+          <li><span class="d-eq">A → N：+Z<sub>Y</sub>I<sub>a</sub></span>
+            <div class="why">順著 I<sub>a</sub> 穿過 a 相負載。順著電流走過阻抗，電壓往下掉，所以記正的壓降。</div></li>
+          <li><span class="d-eq">N → B：−Z<sub>Y</sub>I<sub>b</sub></span>
+            <div class="why">逆著 I<sub>b</sub> 走。I<sub>b</sub> 是從 B 流到 N，我們從 N 走到 B，方向相反，壓降變號。</div></li>
+          <li><span class="d-eq">B → b：0；b → a：−V<sub>ab</sub></span>
+            <div class="why">穿過電源 V<sub>ab</sub> 從 − 端走到 + 端，電壓升高。升高就是負的壓降。</div></li>
+          <li><span class="d-eq">−V<sub>ab</sub> + Z<sub>Y</sub>I<sub>a</sub> − Z<sub>Y</sub>I<sub>b</sub> = 0　⟹　I<sub>a</sub> − I<sub>b</sub> = V<sub>ab</sub>/Z<sub>Y</sub></span>
+            <div class="why">走回出發點，高度一樣，五段加起來一定是 0。</div></li>
+          <li><span class="d-eq hi">I<sub>b</sub> = I<sub>a</sub>∠−120°　⟹　√3 I<sub>a</sub>∠30° = V<sub>ab</sub>/Z<sub>Y</sub>　⟹　I<sub>a</sub> = V<sub>ab</sub>∠−30° / (√3 Z<sub>Y</sub>)</span>
+            <p>兩支差 120° 的箭頭相減，又是 √3 倍、轉 30°。12.4 的「沿 aABbna」也是同樣的讀法和規則：a → A → B → b → n → a。</p></li>
+        </ol>
+      </div>
+
+      <div class="bench">
+        <div class="bench-head"><h3>走一圈：每段記下它的電壓</h3><span class="spacer"></span>
+          <div class="btn-row"><button class="btn solid" id="walk-next" type="button">走下一段 ▸</button><button class="btn" id="walk-auto" type="button">▶ 自動走</button><button class="btn" id="walk-reset" type="button">從頭</button></div></div>
+        <div class="stage-wrap"><canvas id="cv-walk" aria-label="Δ 電源接 Y 負載的電路，一個點沿 a、A、N、B、b 走一圈，每走一段標出那段的電壓項"></canvas></div>
+        <dl class="readout">
+          <div><dt>現在走到</dt><dd id="walk-seg" style="color:var(--accent)">—</dd></div>
+          <div><dt>為什麼記這個</dt><dd id="walk-why" style="font-size:13px">—</dd></div>
+          <div><dt>目前的 KVL</dt><dd id="walk-eq" style="font-size:13px">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">橘色箭頭是電流方向。注意 N → B 那段：我們往左走，I<sub>b</sub> 往右流，方向相反，所以是負號。</p>
+
+      <div id="ex-walk"></div>
+
+      <div class="howto">
+        <h4>沿迴路寫 KVL 的步驟</h4>
+        <ol>
+          <li><b>把字母拆成路線：</b>aANBba → a→A、A→N、N→B、B→b、b→a。</li>
+          <li><b>每段看經過什麼：</b>電線（沒阻抗記 0）、阻抗、電源。</li>
+          <li><b>決定正負：</b>過阻抗順著電流 +ZI、逆著 −ZI；過電源從 + 到 − 記 +V、從 − 到 + 記 −V。</li>
+          <li><b>全部加起來 = 0</b>，再用平衡（I<sub>b</sub> = I<sub>a</sub>∠−120°）消掉多的未知數。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>走迴路的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> 每個阻抗都寫 +ZI。<span class="o">✓ 看你走的方向：跟電流反向就是 −ZI（N → B 那段）。</span></li>
+          <li><span class="x">✗</span> 電源一律寫 +V。<span class="o">✓ 從 − 端走到 + 端是升高，記 −V。</span></li>
+          <li><span class="x">✗</span> 以為 aANBba 是某個元件的名字。<span class="o">✓ 它是路線：照字母順序走一圈。</span></li>
+        </ul>
+      </div>
+    </section>
+
     <!-- ══════════ 12.6 ══════════ -->
     <section class="sec" id="dy">
       <div class="eyebrow"><span class="part-tag">原講義 CH12</span>12.6 · Balanced Delta-Wye Connection</div>
@@ -284,7 +342,7 @@
       <div class="derive">
         <h4>方法一：KVL 沿 aANBba</h4>
         <ol>
-          <li><span class="d-eq">−V<sub>ab</sub> + Z<sub>Y</sub>I<sub>a</sub> − Z<sub>Y</sub>I<sub>b</sub> = 0　→　I<sub>a</sub> − I<sub>b</sub> = V<sub>p</sub>∠0°/Z<sub>Y</sub></span><div class="why">從 a 經過 A 相負載到 N，再經過 B 相負載（電流反向）回到 b。</div></li>
+          <li><span class="d-eq">−V<sub>ab</sub> + Z<sub>Y</sub>I<sub>a</sub> − Z<sub>Y</sub>I<sub>b</sub> = 0　→　I<sub>a</sub> − I<sub>b</sub> = V<sub>p</sub>∠0°/Z<sub>Y</sub></span><div class="why">照字母走 a → A → N → B → b → a：順著 I<sub>a</sub> 記 +，逆著 I<sub>b</sub> 記 −，穿過電源從 − 到 + 記 −V<sub>ab</sub>（上面「先補課」有動畫）。</div></li>
           <li><span class="d-eq">I<sub>b</sub> = I<sub>a</sub>∠−120°　→　I<sub>a</sub> − I<sub>b</sub> = I<sub>a</sub>(1 − 1∠−120°) = √3 I<sub>a</sub>∠30°</span><div class="why">又是「兩支差 120° 的相減」。</div></li>
           <li><span class="d-eq hi">I<sub>a</sub> = (V<sub>p</sub>/√3)∠−30° / Z<sub>Y</sub></span></li>
         </ol>
@@ -394,6 +452,7 @@ __EXB.picker(document.getElementById('sec-pick'), [
   { id: 'd-real', no: '12.4', name: '先補課：Δ 實際怎麼接' },
   { id: 'yd', no: '12.4', name: 'Y-Δ', count: '例 1 · 練 1' },
   { id: 'dd', no: '12.5', name: 'Δ-Δ', count: '例 1 · 練 1' },
+  { id: 'loop-walk', no: '12.6', name: '先補課：沿迴路走一圈' },
   { id: 'dy', no: '12.6', name: 'Δ-Y 與總整理', count: '例 1 · 練 1' }
 ], { key: 'ch12-part2', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
 </script>

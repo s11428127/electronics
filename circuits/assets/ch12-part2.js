@@ -123,6 +123,48 @@
   });
 
   /* ── 12.6：Δ-Y（課本 Example 12.5） ─────────────────────── */
+  /* ── 12.6 先補課：沿迴路 aANBba 寫 KVL（課本 Example 12.5 的數字） ── */
+  liveExample('#ex-walk', {
+    title: '例題 · 沿迴路走一圈寫 KVL 求線電流（課本 Example 12.5，方法一）',
+    ratio: 0.4, minH: 190, maxH: 250,
+    givens: [
+      { id: 'xw-v', label: 'Δ 電源 |V<sub>ab</sub>|（線電壓）', min: 100, max: 480, step: 10, value: 210, fmt: v => v + ' V' },
+      { id: 'xw-r', label: 'Y 負載每相 R', min: 1, max: 60, step: 1, value: 40, fmt: v => v + ' Ω' },
+      { id: 'xw-x', label: 'Y 負載每相 X', min: -40, max: 40, step: 1, value: 25, fmt: v => jx(v) + ' Ω' }
+    ],
+    compute: g => {
+      const Vab = X.c(g['xw-v'], 0), Z = X.c(g['xw-r'], g['xw-x']);
+      const D = X.div(Vab, Z);                       /* I_a − I_b */
+      const Ia = X.mul(D, X.p(1 / r3, -30)), Ib = rot(Ia, -120);
+      const Van = X.p(g['xw-v'] / r3, -30), Ia2 = X.div(Van, Z);
+      return { Vab, Z, D, Ia, Ib, Ia2, zang: X.ang(Z) };
+    },
+    question: (g, r) => '平衡 Δ 電源（正相序）V<sub>ab</sub> = ' + g['xw-v'] + '∠0° V，接 Y 負載每相 ' + X.rect(r.Z, 0) + ' Ω，沒有線路阻抗。沿迴路 aANBba 寫 KVL，求線電流 I<sub>a</sub>。',
+    questionEn: (g, r) => 'A balanced positive-sequence Δ source with V<sub>ab</sub> = ' + g['xw-v'] + '∠0° V feeds a Y load of ' + X.rect(r.Z, 0) + ' Ω per phase (no line impedance). Apply KVL around loop aANBba to find the line current I<sub>a</sub>.',
+    steps: (g, r) => [
+      { t: 'Step 1　讀路線：a → A → N → B → b → 回到 a。', note: '小寫 = 電源端、大寫 = 負載端、N = 負載中性點。', eq: '經過：電線、a 相負載、b 相負載、電線、電源 V<sub>ab</sub>' },
+      { t: 'Step 2　一段一段記電壓。', note: '順著電流過阻抗 +ZI；逆著電流 −ZI；電源從 − 走到 + 記 −V。', eq: '0 + Z<sub>Y</sub>I<sub>a</sub> − Z<sub>Y</sub>I<sub>b</sub> + 0 − V<sub>ab</sub> = 0' },
+      { t: 'Step 3　移項。', eq: 'I<sub>a</sub> − I<sub>b</sub> = V<sub>ab</sub> / Z<sub>Y</sub> = ' + g['xw-v'] + '∠0° ÷ ' + X.pol(r.Z, 4) + ' = ' + X.pol(r.D, 4) + ' A' },
+      { t: 'Step 4　平衡：I<sub>b</sub> = I<sub>a</sub>∠−120°。', note: '兩支差 120° 的箭頭相減 = √3 倍、轉 +30°（跟線電壓同一個幾何）。', eq: 'I<sub>a</sub> − I<sub>b</sub> = I<sub>a</sub>(1 − 1∠−120°) = √3 I<sub>a</sub>∠30°' },
+      { t: 'Step 5　解出 I<sub>a</sub>。', eq: 'I<sub>a</sub> = ' + X.pol(r.D, 4) + ' ÷ (√3∠30°) = ' + X.pol(r.Ia, 3, 2) + ' A',
+        after: Math.abs(r.zang) < 0.5 ? '負載是純電阻，I<sub>a</sub> 就落後 V<sub>ab</sub> 剛好 30°（全部來自 Δ→Y 的那 30°）。' : r.zang > 0 ? '負載偏電感：I<sub>a</sub> 比 V<sub>ab</sub> 晚了 30° + ' + n2(r.zang, 1) + '°（30° 來自線電壓和相電壓的差，其餘是負載角）。' : '負載偏電容：負載角是負的，把電流往前拉，I<sub>a</sub> 只比 V<sub>ab</sub> 晚 30° − ' + n2(-r.zang, 1) + '°。' },
+      { t: '對照　方法二（換等效 Y 電源）。', eq: 'V<sub>an</sub> = ' + g['xw-v'] + '/√3∠−30° = ' + n2(g['xw-v'] / r3, 2) + '∠−30° V，I<sub>a</sub> = V<sub>an</sub> / Z<sub>Y</sub> = ' + X.pol(r.Ia2, 3, 2) + ' A',
+        after: '兩個方法答案一樣。考試時方法二比較快；方法一用來看懂公式從哪來。' }
+    ],
+    answer: (g, r) => 'I<sub>a</sub> = ' + X.pol(r.Ia, 3, 2) + ' A（I<sub>b</sub> = ' + X.pol(r.Ib, 3, 2) + ' A）',
+    draw: (ctx, w, h, g, r) => {
+      const cx = w * 0.3, cy = h / 2, R = Math.max(10, Math.min(h / 2 - 18, w * 0.22));
+      const m = X.mag(r.D), k = R / Math.max(m, 1e-9);
+      E.axes12(ctx, cx, cy, R + 8);
+      const ia = E.vec12(ctx, cx, cy, X.mag(r.Ia) * k, X.ang(r.Ia), C.accent, 'I<sub>a</sub>', 2.4);
+      E.vec12(ctx, cx, cy, X.mag(r.Ib) * k, X.ang(r.Ib), C['q-react'], 'I<sub>b</sub>', 2);
+      E.vec12(ctx, ia[0], ia[1], X.mag(r.Ib) * k, X.ang(r.Ib) + 180, C['ink-3'], '', 1.4);
+      E.vec12(ctx, cx, cy, m * k, X.ang(r.D), C.ink, 'I<sub>a</sub> − I<sub>b</sub>', 2.2);
+      labelCJK(ctx, w * 0.62, h * 0.35, '|I<sub>a</sub> − I<sub>b</sub>| = √3 |I<sub>a</sub>|', C.ink, 12.5, 'left', '700');
+      labelCJK(ctx, w * 0.62, h * 0.35 + 24, n2(m, 2) + ' = 1.732 × ' + n2(X.mag(r.Ia), 2), C['ink-2'], 11.5, 'left');
+    }
+  });
+
   liveExample('#ex-dy', {
     title: '例題 · Δ 電源接 Y 負載（課本 Example 12.5）',
     ratio: 0.4, minH: 190, maxH: 250,
