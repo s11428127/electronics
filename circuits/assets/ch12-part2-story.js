@@ -358,7 +358,7 @@
     [{ sub: '做題目之前，先把四個名詞分清楚。', on: 'c1' },
      { sub: '電壓看電錶夾哪兩點。', on: 'c2' },
      { sub: '電流看箭頭畫在哪裡。下面每個名詞一張圖。', on: 'c3' }]);
-  const NT = TT ? [N0].concat(TT.scenes(['vp', 'vl', 'ip', 'il', 'yeq', 'dvp', 'dip', 'dil', 'cmp'])) : [];
+  const NT = TT ? [N0].concat(TT.scenes(['vp', 'vl', 'ip', 'il', 'yeq', 'dvp', 'dip', 'dil', 'cmp', 'vlead', 'ilag', 'deg30'])) : [];
   __Story('#story', { id: 'cir-ch12-p2-prob', title: 'CH12 PART 2 用三題學', after: '#yd', afterLabel: '往下自己做題目 ↓',
     scenes: NT.concat([P0], take('ex12-3', 1), [T1], take('ex12-4', 2), [T2], take('ex12-5', 3), [T3, END]) });
 })();

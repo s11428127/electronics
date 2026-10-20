@@ -157,12 +157,38 @@
         AR(110, 88, 160, 88, 'i 出去', 100, 92, 'end') + AR(160, 214, 110, 214, 'i 回來', 100, 218, 'end') +
         '<path class="lna dsh" style="fill:none" d="M420 100 V230"/>' + D.arrow(420, 200, 420, 232, null, 'lna') + '<path class="ln" d="M405 238 H435 M410 244 H430 M416 250 H424"/>' + T(432, 180, '漏到地（經過人）', { cls: 'ta', fs: 12.5, a: 'start' }) }
   };
+  /* 30° 跟著誰走（使用者 10/20：線電壓超前、線電流落後？） */
+  const arc = (cx, cy, r, a1, a2) => { const x1 = cx + r * Math.cos(a1 * RAD), y1 = cy - r * Math.sin(a1 * RAD), x2 = cx + r * Math.cos(a2 * RAD), y2 = cy - r * Math.sin(a2 * RAD);
+    return '<path class="lna" style="fill:none;stroke-width:2" d="M' + f1(x1) + ' ' + f1(y1) + ' A' + r + ' ' + r + ' 0 0 ' + (a2 > a1 ? 0 : 1) + ' ' + f1(x2) + ' ' + f1(y2) + '"/>'; };
+  const R0 = 78, O = [190, 165];
+  C.vlead = { t: '線電壓為什麼超前 30°', en: 'WHY V_L LEADS', base: 'none',
+    plain: 'V<sub>ab</sub> = V<sub>an</sub> − V<sub>bn</sub>。V<sub>bn</sub> 比 V<sub>an</sub> <b>晚</b> 120°，減掉「晚到」的那支，合起來往<b>前</b>歪 30°，長度變 √3 倍。',
+    rel: 'Y（abc）：V<sub>ab</sub> = √3 V<sub>an</sub>∠<b>+30°</b>',
+    ov: ph(O[0], O[1], R0, [{ a: 0, l: 'V<sub>an</sub>', c: 'ln' }, { a: -120, l: 'V<sub>bn</sub>（晚 120°）', c: 'ln', ld: [-6, 4] }, { a: 60, from: [O[0] + R0, O[1]], l: '−V<sub>bn</sub>', c: 'ln dsh', ld: [8, 24] }, { a: 30, m: 1.732, l: 'V<sub>ab</sub>', ld: [-46, -2] }], { ax: 100, noTick: true }) +
+      arc(O[0], O[1], 46, 0, 30) + T(O[0] + 118, O[1] - 28, '+30°', { cls: 'ta', fs: 14, a: 'start' }) +
+      T(470, 120, '減掉「晚到」的', { cls: 't', fs: 15 }) + T(470, 150, '→ 往前歪：超前 30°', { cls: 'ta', fs: 16 }) + T(470, 190, '例：V<sub>an</sub> = 100∠10°', { cls: 'tm', fs: 13 }) + T(470, 214, '→ V<sub>AB</sub> = 173.2∠40°', { cls: 'tm', fs: 13 }) };
+  C.ilag = { t: '線電流為什麼落後 30°', en: 'WHY I_L LAGS', base: 'none',
+    plain: 'Δ 負載的角 A：I<sub>a</sub> = I<sub>AB</sub> − I<sub>CA</sub>。I<sub>CA</sub> 比 I<sub>AB</sub> <b>早</b> 120°，減掉「早到」的那支，合起來往<b>後</b>歪 30°，長度變 √3 倍。',
+    rel: 'Δ（abc）：I<sub>a</sub> = √3 I<sub>AB</sub>∠<b>−30°</b>',
+    ov: ph(O[0], O[1], R0, [{ a: 0, l: 'I<sub>AB</sub>', c: 'ln' }, { a: 120, l: 'I<sub>CA</sub>（早 120°）', c: 'ln', ld: [-4, -4] }, { a: -60, from: [O[0] + R0, O[1]], l: '−I<sub>CA</sub>', c: 'ln dsh', ld: [8, -14] }, { a: -30, m: 1.732, l: 'I<sub>a</sub>', ld: [-30, 14] }], { ax: 100, noTick: true }) +
+      arc(O[0], O[1], 46, 0, -30) + T(O[0] + 118, O[1] + 36, '−30°', { cls: 'ta', fs: 14, a: 'start' }) +
+      T(470, 120, '減掉「早到」的', { cls: 't', fs: 15 }) + T(470, 150, '→ 往後歪：落後 30°', { cls: 'ta', fs: 16 }) + T(470, 190, '例：I<sub>AB</sub> = 19.36∠13.43°', { cls: 'tm', fs: 13 }) + T(470, 214, '→ I<sub>a</sub> = 33.53∠−16.57°', { cls: 'tm', fs: 13 }) };
+  C.deg30 = { t: '30° 跟著誰走', en: 'WHERE THE 30° GOES', base: 'none',
+    plain: '30° 只跟著「√3 倍」的那個量走：Y 接是電壓（超前），Δ 接是電流（落後）。另一個量線、相一樣，沒有 30°。',
+    rel: '口訣（abc）：電壓超前、電流落後，各 30°；acb 兩個都反過來',
+    ov: yIcon(250, 58, 30) + T(250, 110, 'Y 接', { cls: 't', fs: 15 }) + dIcon(470, 64, 34) + T(470, 110, 'Δ 接', { cls: 't', fs: 15 }) +
+      '<line class="ln2" x1="70" y1="126" x2="590" y2="126"/>' +
+      T(80, 160, '電壓', { cls: 'ts', fs: 13, a: 'start' }) + T(250, 152, 'V<sub>L</sub> = √3 V<sub>p</sub>', { cls: 'ta', fs: 15 }) + T(250, 174, '超前 30°', { cls: 'ta', fs: 14 }) +
+      T(470, 152, 'V<sub>L</sub> = V<sub>p</sub>', { cls: 't', fs: 15 }) + T(470, 174, '沒有 30°', { cls: 'ts', fs: 13 }) +
+      T(80, 222, '電流', { cls: 'ts', fs: 13, a: 'start' }) + T(250, 214, 'I<sub>L</sub> = I<sub>p</sub>', { cls: 't', fs: 15 }) + T(250, 236, '沒有 30°', { cls: 'ts', fs: 13 }) +
+      T(470, 214, 'I<sub>L</sub> = √3 I<sub>p</sub>', { cls: 'ta', fs: 15 }) + T(470, 236, '落後 30°', { cls: 'ta', fs: 14 }) +
+      HL(175, 136, 150, 48) + HL(395, 198, 150, 48) + T(320, 280, 'acb 相序：超前 ↔ 落後 對調', { cls: 'tm', fs: 13 }) };
   BASE.unb = () => sys3({ src: 'Y', load: 'Y', x0: 90, x1: 530, y: Y, vs: ['', '', ''], z: ['Z<sub>1</sub>', 'Z<sub>2</sub>', 'Z<sub>3</sub>'], n: true });
 
   const SETS = {
-    p1: ['fire', 'vp', 'vl', 'ip', 'il', 'yeq', 'bal', 'per', 'cmp'],
-    p2: ['vp', 'vl', 'ip', 'il', 'yeq', 'dvp', 'dip', 'dil', 'cmp', 'zy', 'dsrc'],
-    p3: ['vp', 'vl', 'ip', 'il', 'cmp', 'p1', 'ptot', 'theta', 'unb', 'wire'],
+    p1: ['fire', 'vp', 'vl', 'ip', 'il', 'yeq', 'vlead', 'deg30', 'bal', 'per', 'cmp'],
+    p2: ['vp', 'vl', 'ip', 'il', 'yeq', 'dvp', 'dip', 'dil', 'cmp', 'vlead', 'ilag', 'deg30', 'zy', 'dsrc'],
+    p3: ['vp', 'vl', 'ip', 'il', 'cmp', 'deg30', 'p1', 'ptot', 'theta', 'unb', 'wire'],
     p4: ['vl', 'il', 'fire', 'wm', 'w2', 'sp3', 'gfci']
   };
   const DEFS = '<defs><filter id="st-sh" x="-20%" y="-30%" width="140%" height="170%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity=".12"/></filter></defs>';
