@@ -235,3 +235,17 @@
       '大方向對了，回去看「線電流 = 兩個相電流相減」那個互動。',
       '先把故事模式的 √3、30° 那幾段再看一次，然後拉一拉 Example 12.3 的數字。']);
 })();
+
+/* 排列切換：題目先（預設）／觀念先。只換 body 的 class，CSS 負責排順序 */
+(function () {
+  const b = document.getElementById('pf-toggle'); if (!b) return;
+  let on = true;
+  try { on = localStorage.getItem('ee-pf-ch12p2') !== '0'; } catch (e) {}
+  const set = () => {
+    document.body.classList.toggle('prob-first', on);
+    b.setAttribute('aria-pressed', String(on));
+    b.textContent = on ? '排列：題目先 ✓（點一下改回觀念先）' : '排列：觀念先（點一下改成題目先）';
+  };
+  set();
+  b.addEventListener('click', () => { on = !on; try { localStorage.setItem('ee-pf-ch12p2', on ? '1' : '0'); } catch (e) {} set(); });
+})();

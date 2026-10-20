@@ -1303,6 +1303,23 @@ body.ann-on .example.ex-cards ol > li.dv-hide, body.ann-on .example.ex-cards .ex
 body.ann-on .example.ex-cards .ex-ans.dv-hide { display: block; }
 @media (max-width: 520px) { .ex-bar { padding-left: 14px; } }
 
+/* ===== 題目先（使用者 10/20：電路學 CH12 PART 2）：body.prob-first 的 .sec.pf 用 CSS 把課本例題排到最前面
+   只改視覺順序、不動 DOM，所以筆跡錨點不會移位 ===== */
+body.prob-first .sec.pf { display: flex; flex-direction: column; }
+body.prob-first .sec.pf > * { order: 1; }
+body.prob-first .sec.pf > .eyebrow { order: -4; }
+body.prob-first .sec.pf > h2 { order: -3; }
+body.prob-first .sec.pf > .lede { order: -2; }
+body.prob-first .sec.pf > .exbook { order: -1; margin-bottom: 26px; }
+body.prob-first .sec.pf > .exbook::before {
+  content: "📘 先看題目：照著電路圖算一遍，下面再看公式從哪來"; display: block; margin: 4px 0 10px;
+  font-size: 13.5px; font-weight: 700; color: var(--accent);
+}
+body.prob-first .sec.pf > .eq::before {
+  content: "公式從哪來 ↓"; display: block; font-size: 12px; font-weight: 700; color: var(--ink-3); margin-bottom: 6px; font-family: inherit;
+}
+body.prob-first .sec.pf > .cf-wrap { order: 2; }
+
 /* ===== 電腦版放大（tools/desktop-css.py 自動產生，不要手改） ===== */
 @media (min-width: 1200px) {
   body { font-size: 17.1px; }
@@ -1548,6 +1565,8 @@ body.ann-on .example.ex-cards .ex-ans.dv-hide { display: block; }
   .chap.mini .chap-no { font-size: 14.8px; }
   .chap.mini .chap-body b { font-size: 17.1px; }
   .pr-short { font-size: 17.1px; }
+  body.prob-first .sec.pf > .exbook::before { font-size: 15.4px; }
+  body.prob-first .sec.pf > .eq::before { font-size: 13.7px; }
 }
 @media (min-width: 1600px) {
   body { font-size: 18.6px; }
@@ -1793,5 +1812,7 @@ body.ann-on .example.ex-cards .ex-ans.dv-hide { display: block; }
   .chap.mini .chap-no { font-size: 16.1px; }
   .chap.mini .chap-body b { font-size: 18.6px; }
   .pr-short { font-size: 18.6px; }
+  body.prob-first .sec.pf > .exbook::before { font-size: 16.7px; }
+  body.prob-first .sec.pf > .eq::before { font-size: 14.9px; }
 }
 /* ===== 電腦版放大 end ===== */
