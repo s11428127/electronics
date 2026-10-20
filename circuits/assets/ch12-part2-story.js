@@ -349,6 +349,16 @@
     [{ sub: '三題排在一起。', on: 'cc r1 r2 r3' },
      { sub: '線電流要不要乘 √3，只看<b>負載</b>是不是 Δ。', on: 'r4' },
      { sub: '電源是 Δ 就先換成 Y。下面每一節也是題目先、公式後。', on: 'r5' }]);
+  /* 先把名詞弄清楚（使用者 10/20：相電壓、線電壓、電流全部搞混） */
+  const TT = window.__CH12T;
+  const N0 = sc('先把名詞弄清楚', 'FIRST, THE WORDS',
+    chip(320, 120, '相電壓、線電壓、相電流、線電流', '四個名詞，每個都看圖分', 'c1', { fs: 15, acc: true }) +
+    chip(320, 190, '電壓：電錶夾哪兩點？', '一條火線＋中性點 → 相；兩條火線 → 線', 'c2', { fs: 14 }) +
+    chip(320, 255, '電流：箭頭在哪裡？', '在一格負載上 → 相；在電線上 → 線', 'c3', { fs: 14 }),
+    [{ sub: '做題目之前，先把四個名詞分清楚。', on: 'c1' },
+     { sub: '電壓看電錶夾哪兩點。', on: 'c2' },
+     { sub: '電流看箭頭畫在哪裡。下面每個名詞一張圖。', on: 'c3' }]);
+  const NT = TT ? [N0].concat(TT.scenes(['vp', 'vl', 'ip', 'il', 'yeq', 'dvp', 'dip', 'dil', 'cmp'])) : [];
   __Story('#story', { id: 'cir-ch12-p2-prob', title: 'CH12 PART 2 用三題學', after: '#yd', afterLabel: '往下自己做題目 ↓',
-    scenes: [P0].concat(take('ex12-3', 1), [T1], take('ex12-4', 2), [T2], take('ex12-5', 3), [T3, END]) });
+    scenes: NT.concat([P0], take('ex12-3', 1), [T1], take('ex12-4', 2), [T2], take('ex12-5', 3), [T3, END]) });
 })();

@@ -202,5 +202,5 @@
      { sub: '下一頁（PART 4）：用瓦特計量三相功率、PSpice、家裡的配電。', on: 'r5' }]);
 
   __Story('#story', { id: 'cir-ch12-p3', title: 'CH12 PART 3 三相功率與不平衡', after: '#pow',
-    scenes: [S0, S1, S2, S3s, S4, S5, S6, S7, S8, S8b, S9, S10, S11, S12, S13, S14, S14b, S15] });
+    scenes: [S0, S1].concat(window.__CH12T ? window.__CH12T.scenes(['vp', 'vl', 'ip', 'il', 'p1', 'ptot']) : [], [S2, S3s, S4, S5, S6, S7, S8, S8b, S9, S10, S11, S12, S13, S14, S14b, S15]) });
 })();

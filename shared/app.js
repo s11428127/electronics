@@ -194,6 +194,7 @@
       '<h5>' + (d.zh || key) + '</h5>' +
       (d.en ? '<div class="tp-en">' + d.en + '</div>' : '') +
       '<div class="tp-plain">' + d.plain + '</div>' +
+      (window.__TERMFIG && window.__TERMFIG[key] ? '<div class="tp-fig">' + window.__TERMFIG[key]() + '</div>' : '') +
       (d.unit ? '<span class="tp-unit">' + d.unit + '</span>' : '') +
       (d.why ? '<div class="tp-why"><b>為什麼要有這個詞：</b>' + d.why + '</div>' : '');
     document.body.appendChild(pop);

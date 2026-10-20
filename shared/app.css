@@ -1320,6 +1320,23 @@ body.prob-first .sec.pf > .eq::before {
 }
 body.prob-first .sec.pf > .cf-wrap { order: 2; }
 
+/* ===== 名詞圖鑑（電路學 CH12，10/20）：名詞按鈕 → 一張電路圖標出「它是哪裡」 ===== */
+.tp-svg { --s-ink: var(--ink); --s-ink2: var(--ink-2); --s-ink3: var(--ink-3); --s-line: var(--line); --s-acc: var(--accent);
+  --s-acc-w: color-mix(in srgb, var(--accent) 12%, var(--surface)); --s-card: var(--surface);
+  width: 100%; height: auto; display: block; overflow: visible; }
+.tpic { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 14px; margin: 14px 0; }
+.tpic-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.tpic-tabs .btn { font-size: 13px; padding: 6px 10px; }
+.tpic-tabs .btn[aria-pressed="true"] { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+.tpic-body { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: center; }
+.tpic-fig { background: color-mix(in srgb, var(--surface-2) 60%, var(--surface)); border-radius: 10px; padding: 6px; min-width: 0; }
+.tpic-txt h4 { margin: 0; font-size: 19px; color: var(--accent); }
+.tpic-en { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; color: var(--ink-3); margin: 2px 0 8px; }
+.tpic-plain { margin: 0 0 10px; font-size: 15px; line-height: 1.7; }
+.tpic-rel { display: inline-block; font-weight: 700; color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); border-radius: 8px; padding: 6px 10px; font-size: 14.5px; }
+@media (max-width: 720px) { .tpic-body { grid-template-columns: minmax(0, 1fr); } .tpic { padding: 10px; } }
+.term-pop .tp-fig { margin: 8px 0 4px; background: color-mix(in srgb, var(--surface-2) 60%, var(--surface)); border-radius: 8px; padding: 4px; }
+
 /* ===== 電腦版放大（tools/desktop-css.py 自動產生，不要手改） ===== */
 @media (min-width: 1200px) {
   body { font-size: 17.1px; }
@@ -1567,6 +1584,11 @@ body.prob-first .sec.pf > .cf-wrap { order: 2; }
   .pr-short { font-size: 17.1px; }
   body.prob-first .sec.pf > .exbook::before { font-size: 15.4px; }
   body.prob-first .sec.pf > .eq::before { font-size: 13.7px; }
+  .tpic-tabs .btn { font-size: 14.8px; }
+  .tpic-txt h4 { font-size: 21.7px; }
+  .tpic-en { font-size: 12.5px; }
+  .tpic-plain { font-size: 17.1px; }
+  .tpic-rel { font-size: 16.5px; }
 }
 @media (min-width: 1600px) {
   body { font-size: 18.6px; }
@@ -1814,5 +1836,10 @@ body.prob-first .sec.pf > .cf-wrap { order: 2; }
   .pr-short { font-size: 18.6px; }
   body.prob-first .sec.pf > .exbook::before { font-size: 16.7px; }
   body.prob-first .sec.pf > .eq::before { font-size: 14.9px; }
+  .tpic-tabs .btn { font-size: 16.1px; }
+  .tpic-txt h4 { font-size: 23.6px; }
+  .tpic-en { font-size: 13.6px; }
+  .tpic-plain { font-size: 18.6px; }
+  .tpic-rel { font-size: 18.0px; }
 }
 /* ===== 電腦版放大 end ===== */
