@@ -173,6 +173,22 @@
      { sub: '加起來不是 0，多出來的只能從中性線回去：I<sub>n</sub> = −(I<sub>a</sub> + I<sub>b</sub> + I<sub>c</sub>)。', on: 'cc r1' },
      { sub: '10.06 A —— 謎題二解開：不平衡時中性線很忙，不能拿掉。', on: 'n r2 r3' }]);
 
+  /* 13b 關鍵：路口有幾條路（使用者 10/21：前面 ≠ 0、後面又 = 0？） */
+  const node = (cx, cy, four) => D.arrow(cx - 92, cy - 58, cx - 8, cy - 5, null, 'ln') + D.arrow(cx - 100, cy, cx - 9, cy, null, 'ln') + D.arrow(cx - 92, cy + 58, cx - 8, cy + 5, null, 'ln') +
+    T(cx - 98, cy - 62, 'I<sub>a</sub>', { cls: 't', fs: 13, a: 'end' }) + T(cx - 106, cy + 5, 'I<sub>b</sub>', { cls: 't', fs: 13, a: 'end' }) + T(cx - 98, cy + 72, 'I<sub>c</sub>', { cls: 't', fs: 13, a: 'end' }) +
+    '<circle class="acc" cx="' + cx + '" cy="' + cy + '" r="7"/>' + T(cx + 2, cy - 14, 'N', { cls: 'ta', fs: 14 }) +
+    (four ? '<path class="lna dsh" style="fill:none;stroke-width:2.4" d="M' + (cx + 8) + ' ' + cy + ' H' + (cx + 90) + '"/>' + D.arrow(cx + 60, cy, cx + 92, cy, null, 'lna') + T(cx + 96, cy + 5, 'I<sub>n</sub>', { cls: 'ta', fs: 14, a: 'start' }) + T(cx + 50, cy - 10, '中性線', { cls: 'ts', fs: 11 }) : '');
+  const S13b = sc('關鍵：路口有幾條路', 'HOW MANY ROADS AT N?',
+    chip(320, 106, '路口：進來多少電流，就要出去多少（KCL）', '', 'c0', { fs: 13.5 }) +
+    g('n4', node(170, 198, true) + T(170, 284, '有中性線（四線式）', { cls: 't', fs: 13.5 })) +
+    g('e4', T(170, 262, 'I<sub>a</sub> + I<sub>b</sub> + I<sub>c</sub> = −I<sub>n</sub> ≠ 0', { cls: 'ta', fs: 13.5 })) +
+    g('n3', node(480, 198, false) + T(450, 284, '沒有中性線（三線式）', { cls: 't', fs: 13.5 })) +
+    g('e3', T(450, 262, 'I<sub>a</sub> + I<sub>b</sub> + I<sub>c</sub> = 0', { cls: 'ta', fs: 13.5 })),
+    [{ sub: '前一幕說「加起來 ≠ 0」，下一幕又說「= 0」—— 差別只在 N 點有幾條路。', on: 'c0' },
+     { sub: '有中性線：N 有第四條路。三個電流加起來多出來的，從中性線走掉，所以三個加起來 ≠ 0。', on: 'n4 e4' },
+     { sub: '沒有中性線：N 只有三條路，進來的一定要從這三條出去 —— 三個加起來被 KCL <b>逼成 0</b>。', on: 'n3 e3' },
+     { sub: '那不平衡要怎麼變成 0？靠 N 點的電壓自己「浮」起來，把三個電流擠到剛好抵消。下一幕看數字。', on: '' }]);
+
   /* 14 三線式 */
   const S14 = sc('沒有中性線呢？', 'THREE-WIRE',
     sys3({ src: 'Y', load: 'Y', x0: 80, x1: 560, y: [122, 168, 214], vs: ['120∠0°', '120∠−120°', '120∠120°'], z: ['j5', '10', '−j10'], k: { src: 'src', line: 'line', load: 'load', lbl: 'lbl' } }) +
@@ -184,6 +200,16 @@
      { sub: '注意：電流沒有第四條路可以回去，所以不管平不平衡，三個線電流加起來<b>一定 = 0</b>（KCL）。', on: 'r2' }]);
 
   /* 14b 不平衡 Δ 負載 */
+  /* 14n 三線式的代價：N 浮起來（Example 12.10 的數字，程式驗算過） */
+  const S14n = sc('代價：N 點浮起來', 'THE NEUTRAL FLOATS',
+    calc(80, 104, 480, [['I<sub>a</sub> = 56.78∠0°、I<sub>b</sub> = 25.46∠135°、I<sub>c</sub> = 42.76∠−155.1° A', 'r1', 't', 13.5], ['加起來 = 0 ✓（沒有第四條路）', 'r2', 'ta'],
+      ['N 點電壓：V<sub>N</sub> = 308∠−67.1° V（本來應該是 0）', 'r3'], ['三個負載各吃：284 V、255 V、428 V', 'r4', 'ta'], ['本來每個只該吃 120 V → 電器會燒掉', 'r5', 'tm']], { k: 'cc', a: 'middle', lh: 30 }),
+    [{ sub: 'Example 12.10 解出來的三個電流：大小、角度都不一樣。', on: 'cc r1' },
+     { sub: '可是加起來真的剛好 = 0 —— KCL 逼的。', on: 'r2' },
+     { sub: '代價是 N 點不再是 0 V，而是浮到 308 V。', on: 'r3' },
+     { sub: '每個負載吃到的不再是 120 V，最大到 428 V。', on: 'r4' },
+     { sub: '所以家裡這種不平衡的負載，一定要接中性線，把 N 拉回 0 V。', on: 'r5' }]);
+
   const S14b = sc('不平衡的 Δ 負載', 'UNBALANCED DELTA',
     sys3({ src: 'Y', load: 'D', x0: 80, x1: 560, y: [122, 166, 210], vs: ['', '', ''], z: ['Z<sub>AB</sub>', 'Z<sub>BC</sub>', 'Z<sub>CA</sub>'], k: { src: 'src', line: 'line', load: 'load', lbl: 'lbl' } }) +
     calc(90, 230, 460, [['① 每格各算：I<sub>AB</sub> = V<sub>AB</sub> / Z<sub>AB</sub>（三格都算）', 'r1'], ['② 角上 KCL：I<sub>a</sub> = I<sub>AB</sub> − I<sub>CA</sub>', 'r2', 'ta']], { k: 'cc', a: 'middle', lh: 25 }),
@@ -202,5 +228,5 @@
      { sub: '下一頁（PART 4）：用瓦特計量三相功率、PSpice、家裡的配電。', on: 'r5' }]);
 
   __Story('#story', { id: 'cir-ch12-p3', title: 'CH12 PART 3 三相功率與不平衡', after: '#pow',
-    scenes: [S0, S1].concat(window.__CH12T ? window.__CH12T.scenes(['vp', 'vl', 'ip', 'il', 'p1', 'ptot']) : [], [S2, S3s, S4, S5, S6, S7, S8, S8b, S9, S10, S11, S12, S13, S14, S14b, S15]) });
+    scenes: [S0, S1].concat(window.__CH12T ? window.__CH12T.scenes(['vp', 'vl', 'ip', 'il', 'p1', 'ptot']) : [], [S2, S3s, S4, S5, S6, S7, S8, S8b, S9, S10, S11, S12, S13, S13b, S14, S14n, S14b, S15]) });
 })();
