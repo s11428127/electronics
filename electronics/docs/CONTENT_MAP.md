@@ -228,3 +228,38 @@ p.53 擴散公式正負號、Example 1.4（187 A/cm²）。
 | 04 ideal | 自編：理想模型 5 V／1 kΩ | 5 mA；0、−5 V；扣 0.7 V：4.3 mA |
 | 05 temp | TYU 1.8 | 0.450 V（同課本） |
 | 06 thermo | 課本 §1.6 Design Application | 0.5976 V、0.960 mA；0 °F 0.676 V、100 °F 0.579 V；0.620 V → 287.4 K |
+
+## CH1 PART 6（10/27，`ch1-part6.html`）＝ 原講義 PART 5（V3，投影片 1-1～1-34）
+
+網頁 PART 5 已放原講義 PART 4（V3），使用者看過不動，所以原講義 PART 5 開新頁「CH1 PART 6」。兩段故事：`#story`（小訊號，24 幕）、`#story2`（倉庫：電容、開關、二極體家族，24 幕）＋ 名詞圖鑑 `#terms-pic`（`assets/diode-terms.js` set `e16`）。
+
+| 節 | 講義 | 內容 | 例題／練習 |
+|---|---|---|---|
+| map | 1-1、1-2 | 1.3.3 SPICE vs 手算、主線 | — |
+| 01 ss | 1-2、1-3 | 直流＋小交流、符號大小寫 | 自編：0.65 V＋5 mV → 0.720 mA、36.1 Ω、±0.138 mA（精確 +0.153／−0.126） |
+| 02 rd | 1-3～1-5、1-11、1-12 | r<sub>d</sub> = V<sub>T</sub>/I<sub>DQ</sub> | 講義 1-12：105.24 μA、4.048 mA/V、247 Ω |
+| 03 dcac | 1-6～1-8、1-10 | DC／AC 拆電路、重疊 | Example 1.11：0.88 mA、4.4 V、29.5 Ω、19.9 μA、0.0995 V |
+| 04 qdes | 1-9 | Q 點設計、截止失真、非線性失真 | 自編：V<sub>PS</sub> = 1 V、0.5 sin → 截止 20.5%、需 &gt; 1.1 V |
+| 05 cap | 1-13～1-15、1-18 | 擴散 vs 接面電容 | 自編：2 mA、10 ns → C<sub>d</sub> 385 pF |
+| 06 sseq | 1-16、1-17 | r<sub>d</sub> ∥ C<sub>d</sub>（＋C<sub>j</sub>、r<sub>s</sub>） | 自編：26 Ω、192 pF → f<sub>c</sub> 31.9 MHz、10f<sub>c</sub> 2.59 Ω |
+| 07 sw | 1-22～1-27 | 開關暫態 t<sub>s</sub>、t<sub>f</sub> | 自編：5 mA／5 mA、τ 20 ns → t<sub>s</sub> ≈ 13.9 ns（τ ln(1+I<sub>F</sub>/I<sub>R</sub>)，課本延伸） |
+| 08 opto | 1-19～1-21 | 太陽能電池、光二極體、LED、光通訊 | 自編：光通訊兩端偏壓、0.1 mA、1 V；可改數字例題 LED 限流電阻 |
+| 09 sbd | 1-28～1-31 | 蕭特基 | Example 1.12：0.539 V、0.299 V |
+| 10 zd | 1-32～1-34 | 齊納 | Design Example 1.13：1.47 kΩ、16.8 mW |
+
+- 題庫：`assets/ch1-part6-ex.js`（`__CH16EX`，另匯出故事小元件 `__K16`：橫二極體、交流源、Example 1.11 電路 `c111`、少數載子倉庫 `store`、齊納電路 `zCirc`）、`assets/ch1-part6-concept.js`（`__CH16C`，name `ch16c`，80 題）。
+- 勘誤：① 1-13 Remark C<sub>j</sub> ≫ C<sub>d</sub> 應為 C<sub>d</sub> ≫ C<sub>j</sub>；② 1-27「掉落時間 t<sub>s</sub>」應為 t<sub>f</sub>（請確認）；③ 1-22 左下「逆偏切到零偏」（請確認）；④ 1-2「個」→「各」。
+
+## CH2 PART 1（10/27，`ch2-part1.html`）＝ 原講義 CH2 PART 1（V1，投影片 2-1～2-7）
+
+故事 18 幕（充電器謎題 → 複習二極體模型 → 拆充電器 → 變壓器 → 三種情況 → VTC → 波形 → PIV）；名詞圖鑑 set `e21`。
+
+| 節 | 講義 | 練習（程式驗算） |
+|---|---|---|
+| 01 psu | 2-2～2-4 | 自編：110 V、10:1、0.7 V → 155.6／15.56／14.86 V |
+| 02 xfmr | 2-5 | 自編：110→12 V rms → 9.17:1、16.97 V、16.27 V |
+| 03 hwr | 2-5、2-6 | 講義 2-6：−3／0.4／5 V（R = 1 kΩ）→ 5 V 時 4.3 mA |
+| 04 wave | 2-7 | 講義 2-7：10 sin ωt → 9.3 V、4.01°～175.99°（47.8%）、PIV 10 V |
+
+- 題庫：`assets/ch2-part1-ex.js`（`__CH21EX`，匯出變壓器小元件 `__K21`）、`assets/ch2-part1-concept.js`（`__CH21C`，name `ch21c`，32 題）。
+- 勘誤：2-6、2-7 的 V<sub>r</sub> 應為 V<sub>γ</sub>。

@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>電源供應器與半波整流</title>
+<meta name="description" content="電子學 CH2 PART 1 互動講義：直流電源供應器方塊圖（變壓器、整流、濾波、穩壓 7805）、變壓器匝數比、半波整流的三種情況、電壓轉移特性（VTC）、v_O 與 v_D 波形、PIV。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="electronics" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>CH2 PART 1</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH2 PART 1</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#terms-pic"><i>🖼</i>名詞圖鑑</a></li>
+      <li><a href="#map"><i>·</i>這段在講什麼</a></li>
+      <li><a href="#psu"><i>01</i>電源供應器方塊圖</a></li>
+      <li><a href="#xfmr"><i>02</i>變壓器匝數比</a></li>
+      <li><a href="#hwr"><i>03</i>半波整流：三種情況與 VTC</a></li>
+      <li><a href="#wave"><i>04</i>波形與 PIV</a></li>
+      <li><a href="#check"><i>!</i>講義勘誤</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 1</span>Chapter 2 · 2.1.1 · 投影片 2-1～2-7</div>
+      <h1>電源供應器與半波整流</h1>
+      <p class="sub">插座是 110 V 交流，手機要 5 V 直流。中間的充電器靠的就是 CH1 學的二極體：<strong>變壓器降壓 → 二極體整流 → 濾波 → 穩壓</strong>。這一頁先把<strong>半波整流</strong>算清楚。</p>
+      <div class="hero-meta">
+        <span class="chip">18 個畫面的故事模式</span>
+        <span class="chip">4 個互動模組</span>
+        <span class="chip">4 個可改數字例題</span>
+        <span class="chip">4 題練習（附圖解故事）</span>
+        <span class="chip">32 題觀念填充</span>
+        <span class="chip">10 題中英對照測驗</span>
+      </div>
+      <p class="note">接續 <a href="ch1-part6.html">CH1 PART 6</a>。實驗課做過的同一個電路在 <a href="../lab/rectifier.html">電子實習・整流器</a>（有示波器實測波形可以對照）。</p>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 1</span>Story mode · 先看這段，再往下讀</div>
+      <h2>18 個畫面看懂這一段<span class="h2-en">THE STORY IN 18 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回。前兩幕先<strong>複習 CH1 的二極體模型</strong>。</p>
+      <div id="story"></div>
+    </section>
+
+    <section class="sec" id="terms-pic">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 1</span>Picture glossary · 每個名詞一張圖</div>
+      <h2>名詞圖鑑：先看圖認名詞<span class="h2-en">TERMS IN PICTURES</span></h2>
+      <p class="lede">搞不清楚的名詞先來這裡點一下。內文裡的名詞按鈕點開，也會附上同一張圖。</p>
+      <div class="tpic" data-set="e21"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 1</span>Big picture · 投影片 2-2、2-3</div>
+      <h2>這一段在講什麼<span class="h2-en">THE BIG PICTURE</span></h2>
+      <p class="lede">CH2 開始用二極體<strong>做電路</strong>。第一個應用：把交流變直流（ac to dc converter）。</p>
+      <div class="derive">
+        <h4>整頁的主線</h4>
+        <ol>
+          <li><span class="d-eq">電源供應器 = 變壓器 → 整流 → 濾波 → 穩壓</span>
+            <div class="why">投影片 2-2、2-3（Fig 2.1）。整流、濾波、穩壓都是二極體電路。</div></li>
+          <li><span class="d-eq">變壓器：v<sub>S</sub>/v<sub>I</sub> = N<sub>2</sub>/N<sub>1</sub></span>
+            <div class="why">投影片 2-5。先把 110 V 降到適當大小。</div></li>
+          <li><span class="d-eq hi">半波整流：v<sub>S</sub> &gt; V<sub>γ</sub> 才 ON，v<sub>O</sub> = v<sub>S</sub> − V<sub>γ</sub>；其他時候 v<sub>O</sub> = 0</span>
+            <p>投影片 2-6、2-7：三種情況、轉移特性（VTC）、波形。二極體換成 CH1 PART 5 的定電壓降模型就能算。</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 01 -->
+    <section class="sec" id="psu">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 1</span>01 · 投影片 2-2～2-4 · Block Diagram for ac to dc Converter</div>
+      <h2>電源供應器方塊圖<span class="h2-en">BLOCK DIAGRAM OF A DC POWER SUPPLY</span></h2>
+      <p class="lede">一個充電器拆開，裡面就是四段：<strong>變壓器</strong>降壓、<strong>整流</strong>變單向、<strong>濾波</strong>弄平、<strong>穩壓</strong>穩住。每一段把波形往「一條直線」推近一步。</p>
+      <div class="eq">AC 110 V →〔變壓器〕→ 較小的交流 →〔整流〕→ 脈動直流 →〔濾波〕→ 有漣波的直流 →〔穩壓（7805）〕→ 5 V</div>
+      <div class="derive">
+        <h4>一級一級看</h4>
+        <ol>
+          <li><span class="d-eq">市電：110 V（rms）、60 Hz，峰值 110√2 ≈ 155.6 V</span>
+            <div class="why">交流：一下正一下負。電子產品要的是低壓直流。</div></li>
+          <li><span class="d-eq">變壓器：把 110 V 提升或降低到適當的交流電壓</span>
+            <div class="why">投影片 2-3。還是交流，只是大小變了（下一節）。</div></li>
+          <li><span class="d-eq">整流電路：利用二極體單向導通 ⟹ 交流變成脈動的直流</span>
+            <div class="why">分半波整流和全波整流（投影片 2-2）。這一頁講半波。</div></li>
+          <li><span class="d-eq">濾波電路：整流輸出端加一顆電容，把脈動直流變平穩</span>
+            <div class="why">電容儲存電荷，在交流波動期間放電補上（投影片 2-3）。</div></li>
+          <li><span class="d-eq hi">穩壓電路：例如 7805 線性穩壓 IC，輸出穩定 5 V（具回授控制）</span>
+            <p>CH1 PART 6 的齊納二極體也能做簡單的穩壓（Design Example 1.13）。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>點一級，看它的輸出</h3>
+          <div class="btn-row">
+            <button class="btn" type="button" data-psu="0">市電</button>
+            <button class="btn" type="button" data-psu="1">變壓器</button>
+            <button class="btn" type="button" data-psu="2">整流</button>
+            <button class="btn" type="button" data-psu="3">濾波</button>
+            <button class="btn solid" type="button" data-psu="4">穩壓</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-psu" aria-label="電源供應器五個方塊，每一級輸出的波形"></canvas></div>
+        <div class="msg" id="psu-msg"></div>
+      </div>
+      <div id="ex-psu"></div>
+      <div class="howto">
+        <h4>看方塊圖的題目</h4>
+        <ol>
+          <li>記順序：變壓器 → 整流 → 濾波 → 穩壓。</li>
+          <li>每一級的輸出波形：正弦 → 小正弦 → 駝峰 → 有漣波的直流 → 直線。</li>
+          <li>算電壓：rms × √2 → ÷ 匝數比 → − V<sub>γ</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>方塊圖的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 整流完就是直流了。<span class="o">是脈動直流</span>，方向不變但大小一直變，還要濾波。</li>
+          <li><span class="x">✗</span> 變壓器把交流變直流。<span class="o">變壓器只改大小</span>，輸出還是交流。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH21EX" data-sec="psu"></div>
+      <div class="cf-wrap" id="cf-psu">
+        <h3>🧠 觀念填充 01（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。</p>
+        <div class="hw-list" data-bank="__CH21C" data-sec="psu"></div>
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section class="sec" id="xfmr">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 1</span>02 · 投影片 2-5 · Transformer Turns Ratio</div>
+      <h2><button class="tm" data-t="變壓器">變壓器</button>與<button class="tm" data-t="匝數比">匝數比</button><span class="h2-en">TRANSFORMER TURNS RATIO</span></h2>
+      <p class="lede">一塊鐵心上繞兩組線圈。接市電的是<strong>一次側</strong>，輸出的是<strong>二次側</strong>。兩邊的電壓比 = 圈數比。</p>
+      <div class="eq">v<em>S</em> / v<em>I</em> = N<em>2</em> / N<em>1</em>　　N<em>1</em>/N<em>2</em>：匝數比（transformer turns ratio）　　市電 v<em>I</em> = 110 V（rms）/ 60 Hz</div>
+      <div class="derive">
+        <h4>匝數比怎麼用</h4>
+        <ol>
+          <li><span class="d-eq">一次側 v<sub>I</sub>：110 V（rms）、60 Hz 市電</span>
+            <div class="why">投影片 2-5：功率變壓器（power transformer）的一次側接市電。</div></li>
+          <li><span class="d-eq">v<sub>S</sub>/v<sub>I</sub> = N<sub>2</sub>/N<sub>1</sub></span>
+            <div class="why">電壓跟圈數成正比。N<sub>2</sub> &lt; N<sub>1</sub> 就降壓。</div></li>
+          <li><span class="d-eq">比的時候單位要一樣：rms 對 rms、峰值對峰值</span>
+            <div class="why">110 V 是 rms；要算整流後的峰值，記得乘 √2。</div></li>
+          <li><span class="d-eq hi">例：10:1 ⟹ v<sub>S</sub> 峰值 = 155.6/10 = 15.56 V</span>
+            <p>二次側還是交流、頻率還是 60 Hz，只是變小。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>調圈數，看二次側電壓</h3><span class="spacer"></span><span class="tag">一次側：110 V rms</span></div>
+        <div class="stage-wrap"><canvas id="cv-xf" aria-label="變壓器一次側與二次側線圈，圈數改變時二次側電壓按比例改變"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="xf-n1">一次側 N<sub>1</sub><output for="xf-n1"></output></label>
+            <input type="range" id="xf-n1" min="1" max="20" step="1" value="10"></div>
+          <div class="ctrl"><label for="xf-n2">二次側 N<sub>2</sub><output for="xf-n2"></output></label>
+            <input type="range" id="xf-n2" min="1" max="20" step="1" value="1"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>匝數比 N<sub>1</sub>:N<sub>2</sub></dt><dd id="xf-r">—</dd></div>
+          <div><dt>二次側峰值</dt><dd id="xf-v" class="e" style="font-size:14px">—</dd></div>
+        </dl>
+        <div class="msg" id="xf-msg"></div>
+      </div>
+      <div id="ex-n"></div>
+      <div class="howto">
+        <h4>匝數比題目</h4>
+        <ol>
+          <li>確認給的是 rms 還是峰值。</li>
+          <li>N<sub>1</sub>/N<sub>2</sub> = v<sub>I</sub>/v<sub>S</sub>（同單位）。</li>
+          <li>要整流後的峰值：二次側峰值 − V<sub>γ</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>變壓器的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> v<sub>S</sub>/v<sub>I</sub> = N<sub>1</sub>/N<sub>2</sub>。<span class="o">N<sub>2</sub>/N<sub>1</sub></span>：二次側電壓跟二次側圈數成正比。</li>
+          <li><span class="x">✗</span> 12 V（rms）整流後峰值 11.3 V。<span class="o">12√2 − 0.7 = 16.27 V</span>。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH21EX" data-sec="xfmr"></div>
+      <div class="cf-wrap" id="cf-xfmr">
+        <h3>🧠 觀念填充 02（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH21C" data-sec="xfmr"></div>
+      </div>
+    </section>
+
+    <!-- 03 -->
+    <section class="sec" id="hwr">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 1</span>03 · 投影片 2-5、2-6 · 2.1.1 Half-Wave Rectification · VTC</div>
+      <h2><button class="tm" data-t="半波整流">半波整流</button>：三種情況與<button class="tm" data-t="轉移特性">轉移特性</button><span class="h2-en">THREE CASES &amp; THE VTC</span></h2>
+      <p class="lede">二極體換成 CH1 的模型（r<sub>f</sub> = 0：ON 是 V<sub>γ</sub> 電池、OFF 是斷路），再看 v<sub>S</sub> 落在哪裡。<strong>只有 v<sub>S</sub> 超過 V<sub>γ</sub> 才有輸出。</strong></p>
+      <div class="eq">① v<em>S</em> &lt; 0：OFF，v<em>D</em> = v<em>S</em>，v<em>O</em> = 0　② 0 &lt; v<em>S</em> &lt; V<em>γ</em>：OFF，v<em>D</em> = v<em>S</em>，v<em>O</em> = 0　③ v<em>S</em> &gt; V<em>γ</em>：ON，v<em>D</em> = V<em>γ</em>，v<em>O</em> = v<em>S</em> − V<em>γ</em></div>
+      <div class="derive">
+        <h4>一個一個情況推</h4>
+        <ol>
+          <li><span class="d-eq">二極體換成等效模型（r<sub>f</sub> = 0）</span>
+            <div class="why">投影片 2-6 NOTE：加入二極體等效模型分析電路。</div></li>
+          <li><span class="d-eq">① v<sub>S</sub> &lt; 0 ⟹ OFF ⟹ I<sub>D</sub> = 0 ⟹ v<sub>D</sub> = v<sub>S</sub>，v<sub>O</sub> = 0</span>
+            <div class="why">逆偏。沒電流，電阻沒壓降，整個 v<sub>S</sub> 都在二極體上。</div></li>
+          <li><span class="d-eq">② 0 &lt; v<sub>S</sub> &lt; V<sub>γ</sub> ⟹ 仍 OFF ⟹ v<sub>D</sub> = v<sub>S</sub>，v<sub>O</sub> = 0</span>
+            <div class="why">正的，但還推不開門。講義這裡寫成 V<sub>r</sub>，應為 V<sub>γ</sub>（勘誤 ①）。</div></li>
+          <li><span class="d-eq">③ v<sub>S</sub> &gt; V<sub>γ</sub> ⟹ ON ⟹ v<sub>D</sub> = V<sub>γ</sub>，i<sub>D</sub> = (v<sub>S</sub> − V<sub>γ</sub>)/R</span>
+            <div class="why">二極體 = V<sub>γ</sub> 電池，剩下的電壓給 R。</div></li>
+          <li><span class="d-eq hi">v<sub>O</sub> = i<sub>D</sub>R = v<sub>S</sub> − V<sub>γ</sub>：轉移特性是一條斜率 1 的直線</span>
+            <p>把三種情況畫成 v<sub>O</sub> 對 v<sub>S</sub>（Fig 2.2(b)）：V<sub>γ</sub> 以前貼地，之後斜率 = 1。斜截式 y = mx + b：令 x = 0 得 y 截距、令 y = 0 得 x 截距 —— 這條線在 v<sub>S</sub> = V<sub>γ</sub> 碰到橫軸。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>拉 v<sub>S</sub>，看落在哪一種情況</h3><span class="spacer"></span><span class="tag">r<sub>f</sub> = 0</span></div>
+        <div class="stage-wrap"><canvas id="cv-vtc" aria-label="半波整流的電壓轉移特性，三個區域，拉動 v_S 看 v_O"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="vt-s">v<sub>S</sub><output for="vt-s"></output></label>
+            <input type="range" id="vt-s" min="-6" max="6" step="0.05" value="3"></div>
+          <div class="ctrl"><label for="vt-g">V<sub>γ</sub><output for="vt-g"></output></label>
+            <input type="range" id="vt-g" min="0.3" max="1.5" step="0.05" value="0.7"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>情況</dt><dd id="vt-c" class="e">—</dd></div>
+          <div><dt>v<sub>O</sub></dt><dd id="vt-o">—</dd></div>
+          <div><dt>v<sub>D</sub></dt><dd id="vt-d">—</dd></div>
+        </dl>
+        <div class="msg" id="vt-msg"></div>
+      </div>
+      <div id="ex-hw"></div>
+      <div class="howto">
+        <h4>三種情況的標準流程</h4>
+        <ol>
+          <li>v<sub>S</sub> 跟 0、V<sub>γ</sub> 比。</li>
+          <li>OFF：i<sub>D</sub> = 0、v<sub>O</sub> = 0、v<sub>D</sub> = v<sub>S</sub>。</li>
+          <li>ON：v<sub>D</sub> = V<sub>γ</sub>、i<sub>D</sub> = (v<sub>S</sub> − V<sub>γ</sub>)/R、v<sub>O</sub> = v<sub>S</sub> − V<sub>γ</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>三種情況的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> v<sub>S</sub> 只要是正的就導通。<span class="o">要超過 V<sub>γ</sub></span>（情況 ②）。</li>
+          <li><span class="x">✗</span> OFF 時 v<sub>D</sub> = 0。<span class="o">OFF 時 v<sub>D</sub> = v<sub>S</sub></span>；ON 時才是 V<sub>γ</sub>。</li>
+          <li><span class="x">✗</span> VTC 斜率是 1/R。<span class="o">斜率 = 1</span>，跟 R 無關。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH21EX" data-sec="hwr"></div>
+      <div class="cf-wrap" id="cf-hwr">
+        <h3>🧠 觀念填充 03（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH21C" data-sec="hwr"></div>
+      </div>
+    </section>
+
+    <!-- 04 -->
+    <section class="sec" id="wave">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 1</span>04 · 投影片 2-7 · Fig 2.3 Signals of the Half-Wave Rectifier</div>
+      <h2>波形：v<sub>O</sub>、v<sub>D</sub> 與 <button class="tm" data-t="PIV">PIV</button><span class="h2-en">WAVEFORMS &amp; PIV</span></h2>
+      <p class="lede">輸入換成弦波，每個瞬間套三種情況，就得到輸出波形：<strong>只剩正半週、比輸入矮 V<sub>γ</sub></strong>。二極體自己的電壓 v<sub>D</sub> = v<sub>S</sub> − v<sub>O</sub>，負半週會扛整個 −V<sub>M</sub>。</p>
+      <div class="eq">v<em>O</em> = max(0, v<em>S</em> − V<em>γ</em>)　　v<em>D</em> = v<em>S</em> − v<em>O</em>（ON：V<em>γ</em>；OFF：v<em>S</em>）　　PIV = V<em>M</em></div>
+      <div class="derive">
+        <h4>兩種方法畫波形</h4>
+        <ol>
+          <li><span class="d-eq">方法一：照公式，每一瞬間判斷三種情況</span>
+            <div class="why">投影片 2-7 右上那三行。</div></li>
+          <li><span class="d-eq">方法二：用 VTC，把 v<sub>S</sub> 投影到 v<sub>O</sub></span>
+            <div class="why">橫軸找到這一刻的 v<sub>S</sub>，往上碰到 VTC，讀縱軸。兩種方法結果一樣（Fig 2.3(b)）。</div></li>
+          <li><span class="d-eq">v<sub>D</sub> = v<sub>S</sub> − v<sub>O</sub>：ON 時平平卡在 V<sub>γ</sub>，OFF 時跟著 v<sub>S</sub></span>
+            <div class="why">投影片 2-7 Note，Fig 2.3(c)。</div></li>
+          <li><span class="d-eq">導通區間：V<sub>M</sub> sin ωt &gt; V<sub>γ</sub> ⟹ ωt 從 sin<sup>−1</sup>(V<sub>γ</sub>/V<sub>M</sub>) 到 180° 減它</span>
+            <div class="why">比半個週期少一點；V<sub>M</sub> 越大越接近一半。</div></li>
+          <li><span class="d-eq hi">負半週谷底：v<sub>D</sub> = −V<sub>M</sub> ⟹ 二極體的 PIV 額定要大於 V<sub>M</sub></span>
+            <p>CH1 PART 5 的 PIV 在這裡派上用場。電阻負載的半波整流，最大逆壓就是輸入峰值。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>v<sub>S</sub>、v<sub>O</sub>、v<sub>D</sub> 一起看</h3><span class="spacer"></span><span class="tag">虛線：v<sub>S</sub></span></div>
+        <div class="stage-wrap"><canvas id="cv-wave" aria-label="半波整流的輸入、輸出、二極體電壓三條波形，掃描線同步移動"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="wv-m">輸入峰值 V<sub>M</sub><output for="wv-m"></output></label>
+            <input type="range" id="wv-m" min="0.5" max="20" step="0.5" value="10"></div>
+          <div class="ctrl"><label for="wv-g">V<sub>γ</sub><output for="wv-g"></output></label>
+            <input type="range" id="wv-g" min="0.3" max="1.5" step="0.05" value="0.7"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>v<sub>O</sub> 峰值</dt><dd id="wv-pk" class="e">—</dd></div>
+          <div><dt>導通比例</dt><dd id="wv-f">—</dd></div>
+          <div><dt>PIV</dt><dd id="wv-piv">—</dd></div>
+        </dl>
+        <div class="msg" id="wv-msg"></div>
+      </div>
+      <div id="ex-wave"></div>
+      <div class="howto">
+        <h4>畫整流波形的流程</h4>
+        <ol>
+          <li>畫輸入 v<sub>S</sub>，標出 V<sub>γ</sub> 那條線。</li>
+          <li>v<sub>O</sub>：超過 V<sub>γ</sub> 的部分往下移 V<sub>γ</sub>，其他畫 0。</li>
+          <li>v<sub>D</sub> = v<sub>S</sub> − v<sub>O</sub>：ON 時 V<sub>γ</sub>、OFF 時 = v<sub>S</sub>。</li>
+          <li>標峰值 V<sub>M</sub> − V<sub>γ</sub>、PIV = V<sub>M</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>波形的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> v<sub>O</sub> 峰值 = V<sub>M</sub>。<span class="o">V<sub>M</sub> − V<sub>γ</sub></span>（理想模型才相等）。</li>
+          <li><span class="x">✗</span> 負半週 v<sub>D</sub> = 0。<span class="o">v<sub>D</sub> = v<sub>S</sub></span>，谷底 −V<sub>M</sub>。</li>
+          <li><span class="x">✗</span> PIV = V<sub>M</sub> − V<sub>γ</sub>。<span class="o">PIV = V<sub>M</sub></span>，OFF 時二極體扛全部。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH21EX" data-sec="wave"></div>
+      <div class="cf-wrap" id="cf-wave">
+        <h3>🧠 觀念填充 04（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH21C" data-sec="wave"></div>
+      </div>
+    </section>
+
+    <section class="sec" id="check">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 1</span>Errata · 講義檢查結果</div>
+      <h2>講義勘誤<span class="h2-en">ERRATA</span></h2>
+      <p class="lede">2-1～2-7 逐頁看過，觀念與公式正確，只有一個符號要統一。</p>
+      <div class="pitfall">
+        <h4>① 投影片 2-6、2-7：V<sub>r</sub> → V<sub>γ</sub></h4>
+        <ul>
+          <li>情況 2 寫成 <span class="x">0 &lt; v<sub>S</sub> &lt; V<sub>r</sub></span>、情況 3 寫成 <span class="x">v<sub>S</sub> &gt; V<sub>r</sub></span>、<span class="x">v<sub>D</sub> = V<sub>r</sub></span>。</li>
+          <li>應為 <span class="o">V<sub>γ</sub>（切入電壓 gamma）</span>，跟同一頁的 i<sub>D</sub> = (v<sub>S</sub> − V<sub>γ</sub>)/R、Fig 2.2(b) 一致。</li>
+        </ul>
+      </div>
+      <p class="note src">勘誤僅針對數學、單位與用詞正確性；若與課堂說法不同，以老師為準。PIV、導通角、7805 壓差約 2 V 為課本延伸。</p>
+    </section>
+
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 1</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <p class="lede">考卷上會出現的是右邊那欄。</p>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號/單位</code></div>
+        <div class="gl-row"><b>二極體電路</b><span>diode circuits</span><code>—</code></div>
+        <div class="gl-row"><b>交流轉直流轉換器</b><span>ac to dc converter</span><code>—</code></div>
+        <div class="gl-row"><b>直流電源供應器</b><span>dc power supply</span><code>—</code></div>
+        <div class="gl-row"><b>變壓器</b><span>(power) transformer</span><code>—</code></div>
+        <div class="gl-row"><b>一次側／二次側</b><span>primary / secondary</span><code>v_I / v_S</code></div>
+        <div class="gl-row"><b>匝數比</b><span>transformer turns ratio</span><code>N1/N2</code></div>
+        <div class="gl-row"><b>整流器</b><span>rectifier</span><code>—</code></div>
+        <div class="gl-row"><b>半波整流</b><span>half-wave rectification</span><code>—</code></div>
+        <div class="gl-row"><b>全波整流</b><span>full-wave rectification</span><code>—</code></div>
+        <div class="gl-row"><b>脈動直流</b><span>pulsating dc</span><code>—</code></div>
+        <div class="gl-row"><b>濾波器</b><span>filter</span><code>—</code></div>
+        <div class="gl-row"><b>穩壓器</b><span>voltage regulator</span><code>7805</code></div>
+        <div class="gl-row"><b>電壓轉移特性</b><span>voltage transfer characteristic (VTC)</span><code>v_O vs v_S</code></div>
+        <div class="gl-row"><b>斜率</b><span>slope</span><code>= 1</code></div>
+        <div class="gl-row"><b>切入電壓</b><span>cut-in voltage</span><code>V_γ</code></div>
+        <div class="gl-row"><b>反向峰值電壓</b><span>peak inverse voltage</span><code>PIV</code></div>
+      </div>
+    </section>
+
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 1</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">10 題，中英對照，選項順序每次打亂。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Donald A. Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4th ed.（McGraw-Hill），Chapter 2 §2.1.1，2026 Fall 課程原講義 CH2 PART 1（V1）投影片 2-1～2-7。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch1-part5-kit.js"></script>
+<script src="../shared/tpic.js"></script>
+<script src="assets/diode-terms.js"></script>
+<script src="assets/ch2-part1-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script src="assets/ch1-part6-ex.js"></script>
+<script src="assets/ch2-part1-ex.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'psu', no: '01', name: '方塊圖', count: '練 1' },
+  { id: 'xfmr', no: '02', name: '變壓器', count: '練 1' },
+  { id: 'hwr', no: '03', name: '三種情況', count: '練 1' },
+  { id: 'wave', no: '04', name: '波形與 PIV', count: '練 1' }
+], { key: 'ch2-part1', alwaysAll: ['map', 'check', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/ch2-part1.js"></script>
+<script src="assets/ch2-part1-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

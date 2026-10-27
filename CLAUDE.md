@@ -92,7 +92,7 @@
 - 同頁面加 `<body data-look="clean">` 會套用同一套乾淨外觀（標題卡 + 英文小字 `.h2-en`）。
 - SVG 文字裡的 `<`、`>` 一定要寫成 `&lt;`、`&gt;`，否則整個畫面 parse 失敗（踩過的坑）。
 - 下標用 `fx(['i','D',' = I','S'])` 這種寫法：下標後面的字要跟回基線的 tspan 放一起，空的 tspan 的 dy 不會生效。
-- 現有劇本：電子學 `ch1-part1～5-story.js`、電路學 `ch11-part1～3-story.js`、`ch12-part1～4-story.js`、工數 `laplace-story.js`、`laplace2-story.js`、`ode-story.js`、電子實習 `diode-story.js`、`rectifier-story.js`、`filter-story.js`、`zener-story.js`。
+- 現有劇本：電子學 `ch1-part1～6-story.js`（`ch1-part6-story.js` 一頁兩段：`#story`、`#story2`）、`ch2-part1-story.js`、電路學 `ch11-part1～3-story.js`、`ch12-part1～4-story.js`、工數 `laplace-story.js`、`laplace2-story.js`、`ode-story.js`、電子實習 `diode-story.js`、`rectifier-story.js`、`filter-story.js`、`zener-story.js`。
 - 版面實測（看截圖總表得到的）：標題卡蓋到約 y 92（x 200～440），兩行字幕從約 y 312 開始，最後一幕的「從頭再看／往下看」按鈕在 y 285 以下 → **內容放 y 100～305，最後一幕放到 270 為止**。
 
 ## 上課筆記（板書照片）的做法
@@ -230,6 +230,12 @@
   每項帶 t，刪除是墓碑，45 天後清掉。
 - Practice 題手寫板 = `__ANN.pad(host, 'xb-<題目 id>')`：`.ann-pad-body.ann-free`（id `ann-pad-*`）是錨點，`.ann-free` 不用進筆記模式就能寫；
   自己的小工具列（筆 ▾、螢光、擦、復原／重做、手指寫、加高、清除），高度存 `ph:<id>`。舊手寫板 localStorage `ee-pad:*` 第一次打開會搬過來然後刪掉。
+
+## 電子學名詞圖鑑（10/27 起，通用版）
+
+- `shared/tpic.js`（`__TPIC`）：`__TPIC.add(cards, sets, figs)`；cards = `{ key: { t, en, plain, rel, svg } }`（svg 是 viewBox 0 0 640 300 的內容），頁面 `<div class="tpic" data-set="e16"></div>`，故事用 `__TPIC.scenes([key…])`，第三個參數把 `terms.js` 名詞對到卡片（彈窗附圖）。
+- 電子學卡片在 `electronics/assets/diode-terms.js`（set `e16` = CH1 PART 6、`e21` = CH2 PART 1），要先載 story.js、`ch1-part5-kit.js`、`tpic.js`。新章節把新名詞加一張卡、新 set。
+- 電子學 CH1 PART 6 起照「觀念先（故事優先）」的做法，**不是**題目先（使用者 10/27：先用電子學之前的方式）；每節也有觀念填充（8 題）。
 
 ## 原講義 PART 標註
 
