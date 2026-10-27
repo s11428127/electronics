@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HW2 總複習</title>
+<meta name="description" content="電子學 HW2：二極體直流分析（設計 R 與 V_PS、負載線、片段線性模型、定電壓降模型），作業原題 3 題＋每題 10 題仿作業。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="electronics" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>HW2 總複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">HW2 總複習</div>
+    <ol>
+      <li><a href="#q1"><i>1</i>第 1 題：設計 R、V<sub>PS</sub></a></li>
+      <li><a href="#q2"><i>2</i>第 2 題：片段線性</a></li>
+      <li><a href="#q3"><i>3</i>第 3 題：定電壓降</a></li>
+      <li><a href="#cmp"><i>★</i>三題比一比</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">電子學 · Homework #2 · Due 2026/10/27</div>
+      <h1>HW2 總複習</h1>
+      <p class="sub">HW2 三題都是<strong>二極體直流分析</strong>：同一條 KVL（V<sub>PS</sub> = I<sub>D</sub>R + V<sub>D</sub>）配上不同的二極體模型。每題附 10 題仿作業，數字都由公式算出，換數字再練。</p>
+      <div class="hero-meta">
+        <span class="chip h">📝 作業原題 3 題（紫色標籤）</span>
+        <span class="chip">仿作業 30 題（灰色標籤，自編）</span>
+        <span class="chip">講解在 <a href="ch1-part5.html#load">CH1 PART 5 §04～§06</a></span>
+      </div>
+      <p class="note key">對過你寫的作業：<b>三題全部算對</b> ✓。第 2 題 V<sub>DQ</sub> = 0.6219 V、I<sub>DQ</sub> = 2.189 mA，第 3 題 2.2 mA、0.6 V。</p>
+    </div>
+
+    <section class="sec" id="q1">
+      <div class="eyebrow">CH1 PART 5 §04 · Load line</div>
+      <h2>第 1 題：一條 KVL 四種問法<span class="h2-en">HW2 · Q1</span></h2>
+      <p class="lede">V<sub>PS</sub>、R、V<sub>DQ</sub>、I<sub>DQ</sub> 四個量，知道三個就能求第四個。</p>
+      <div class="hw-list" data-bank="__HW2" data-hw="1"></div>
+    </section>
+
+    <section class="sec" id="q2">
+      <div class="eyebrow">CH1 PART 5 §04～§05 · Piecewise linear</div>
+      <h2>第 2 題：圖解法 vs 片段線性模型<span class="h2-en">HW2 · Q2</span></h2>
+      <p class="lede">斜率 1/10 的直線，就是 r<sub>f</sub> = 10 Ω 的片段線性模型。聯立解和代模型解的是同一組方程式。</p>
+      <div class="hw-list" data-bank="__HW2" data-hw="2"></div>
+    </section>
+
+    <section class="sec" id="q3">
+      <div class="eyebrow">CH1 PART 5 §06 · Constant-voltage-drop</div>
+      <h2>第 3 題：圖解法 vs 定電壓降模型<span class="h2-en">HW2 · Q3</span></h2>
+      <p class="lede">斜率 ∞ = 垂直線：導通後電壓釘在 V<sub>γ</sub>，電流交給外面的電路決定。</p>
+      <div class="hw-list" data-bank="__HW2" data-hw="3"></div>
+    </section>
+
+    <section class="sec" id="cmp">
+      <div class="eyebrow">Summary</div>
+      <h2>三題比一比<span class="h2-en">SIDE BY SIDE</span></h2>
+      <div class="glossary">
+        <div class="gl-row"><b>模型</b><span>算式</span><code>V<sub>PS</sub> = 5 V、R = 2 kΩ 的答案</code></div>
+        <div class="gl-row"><b>片段線性（r<sub>f</sub> = 10 Ω）</b><span>I<sub>D</sub> = (V<sub>PS</sub> − V<sub>γ</sub>)/(R + r<sub>f</sub>)</span><code>2.189 mA、0.622 V</code></div>
+        <div class="gl-row"><b>定電壓降（r<sub>f</sub> = 0）</b><span>I<sub>D</sub> = (V<sub>PS</sub> − V<sub>γ</sub>)/R</span><code>2.2 mA、0.6 V</code></div>
+        <div class="gl-row"><b>圖解法</b><span>負載線和曲線的交點</span><code>跟對應的模型一樣</code></div>
+      </div>
+      <p class="note">r<sub>f</sub> ≪ R 時兩個模型幾乎一樣（差 0.5%）；先判斷二極體導不導通（V<sub>PS</sub> &gt; V<sub>γ</sub>？）再代公式。</p>
+    </section>
+
+    <footer class="foot">
+      <p>題目來源：Electronics(I) Homework #2（Issued 18/10/2026）。標「作業原題」的是作業題目；標「仿作業」的是自編練習。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="assets/hw2-bank.js"></script>
+<script src="../shared/hw.js"></script>
+<script>
+/* 側欄捲動高亮 + 明暗主題切換 */
+(function () {
+  'use strict';
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } });
+  }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

@@ -38,6 +38,7 @@
       <li><a href="#cvd"><i>06</i>定電壓降＋負載線</a></li>
       <li><a href="#revb"><i>07</i>逆偏的 Q 點</a></li>
       <li><a href="#check"><i>!</i>講義勘誤</a></li>
+      <li><a href="#hw"><i>📝</i>HW1、HW2 作業</a></li>
       <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
       <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
     </ol>
@@ -145,7 +146,7 @@
 
     <!-- ══════════ 01 崩潰 ══════════ -->
     <section class="sec" id="bd">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>01 · 投影片 1-106、1-111 · 1.2.5 Breakdown Voltage</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q12">📝 HW1 第 12 題</a><span class="part-tag">原講義 PART 4（V3）</span>01 · 投影片 1-106、1-111 · 1.2.5 Breakdown Voltage</div>
       <h2><button class="tm" data-t="崩潰電壓">崩潰電壓</button>與 PIV<span class="h2-en">BREAKDOWN VOLTAGE &amp; PIV</span></h2>
       <p class="lede">逆偏越加越大，空乏區的電場越來越強。強到某個程度，<strong>共價鍵被扯斷</strong>，一下子冒出一大堆電子電洞對，逆向電流突然暴衝 —— 這就是<button class="tm" data-t="崩潰">崩潰</button>。一般二極體要避開它，所以規格會寫<button class="tm" data-t="反向峰值電壓">反向峰值電壓 PIV</button>。</p>
       <div class="eq">|v<em>R</em>| &lt; BV：i<em>D</em> ≈ −I<em>S</em>　　|v<em>R</em>| ≥ BV：逆向電流大幅增加（由外部電路限流）　　設計：最大逆壓 &lt; PIV &lt; BV</div>
@@ -204,7 +205,7 @@
 
     <!-- ══════════ 02 兩種崩潰 ══════════ -->
     <section class="sec" id="zen">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>02 · 投影片 1-107～1-110 · Avalanche &amp; Zener Breakdown</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw-q12">📝 HW1 第 12 題</a><span class="part-tag">原講義 PART 4（V3）</span>02 · 投影片 1-107～1-110 · Avalanche &amp; Zener Breakdown</div>
       <h2><button class="tm" data-t="累增崩潰">累增崩潰</button> vs <button class="tm" data-t="齊納崩潰">齊納崩潰</button><span class="h2-en">AVALANCHE VS ZENER</span></h2>
       <p class="lede">一樣是「共價鍵被打斷」，打斷的方法有兩種：<strong>撞斷</strong>（累增，像雪崩、像保齡球）和<strong>扯斷</strong>（齊納，像撕紙）。誰會發生，看摻雜 —— 摻雜決定空乏區多寬，寬度決定同樣電壓下電場多強。</p>
       <div class="eq">W ∝ √( (V<em>bi</em> + V<em>R</em>)(1/N<em>A</em> + 1/N<em>D</em>) )　　E ≈ V / W　　摻雜 ↑ ⟹ W ↓ ⟹ |BV| ↓（齊納）；摻雜 ↓ ⟹ |BV| ↑（累增）</div>
@@ -321,7 +322,7 @@
 
     <!-- ══════════ 04 圖形法 ══════════ -->
     <section class="sec" id="load">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>04 · 投影片 1-116～1-119 · 1.3.1 Iteration and Graphical Analysis</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw2-q1">📝 HW2 第 1、2 題</a><span class="part-tag">原講義 PART 4（V3）</span>04 · 投影片 1-116～1-119 · 1.3.1 Iteration and Graphical Analysis</div>
       <h2><button class="tm" data-t="圖形法">圖形法</button>：<button class="tm" data-t="負載線">負載線</button>與 Q 點<span class="h2-en">LOAD LINE &amp; Q-POINT</span></h2>
       <p class="lede">二極體自己有一條規矩（特性曲線），外面的電源和電阻也給了一條規矩（KVL）。KVL 畫出來是一條直線 —— 負載線。<strong>兩條都要滿足，答案就是交點</strong>，叫<button class="tm" data-t="工作點">Q 點</button>。用算的就是<button class="tm" data-t="疊代法">疊代法</button>。</p>
       <div class="eq">負載線：I<em>D</em> = −V<em>D</em>/R + V<em>PS</em>/R（斜率 −1/R，截距 V<em>PS</em> 與 V<em>PS</em>/R）　　Q = 負載線 ∩ 特性曲線</div>
@@ -383,7 +384,7 @@
 
     <!-- ══════════ 05 片段線性 ══════════ -->
     <section class="sec" id="pwl">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>05 · 投影片 1-120～1-122 · 1.3.2 Piecewise Linear Model</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw2-q2">📝 HW2 第 2 題</a><span class="part-tag">原講義 PART 4（V3）</span>05 · 投影片 1-120～1-122 · 1.3.2 Piecewise Linear Model</div>
       <h2><button class="tm" data-t="片段線性模型">片段線性模型</button><span class="h2-en">PIECEWISE LINEAR MODEL</span></h2>
       <p class="lede">畫圖、疊代都麻煩。最常用的做法：<strong>用兩段直線去描那條彎線</strong>。直線可以直接放進 KVL，一行解完 —— 這叫模型代入法。</p>
       <div class="eq">V<em>D</em> &lt; V<em>γ</em>：I<em>D</em> = 0（OFF）　　V<em>D</em> &gt; V<em>γ</em>：V<em>D</em> = V<em>γ</em> + I<em>D</em>r<em>f</em>（ON）　　串聯電路：I<em>D</em> = (V<em>PS</em> − V<em>γ</em>) / (R + r<em>f</em>)</div>
@@ -445,7 +446,7 @@
 
     <!-- ══════════ 06 定電壓降 + 負載線 ══════════ -->
     <section class="sec" id="cvd">
-      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>06 · 投影片 1-123～1-125 · Constant-Voltage-Drop Model &amp; Q-point</div>
+      <div class="eyebrow"><a class="hw-tag" href="#hw2-q3">📝 HW2 第 3 題</a><span class="part-tag">原講義 PART 4（V3）</span>06 · 投影片 1-123～1-125 · Constant-Voltage-Drop Model &amp; Q-point</div>
       <h2><button class="tm" data-t="定電壓降模型">定電壓降模型</button>＋負載線<span class="h2-en">CONSTANT-VOLTAGE DROP &amp; THE Q-POINT</span></h2>
       <p class="lede">再簡化一步：r<sub>f</sub> 跟 kΩ 的電阻比根本可以忽略，乾脆讓它 = 0。斜線立成垂直線，二極體導通就是一顆固定的 V<sub>γ</sub> 電池。這時 Q 點只會<strong>在 V<sub>γ</sub> 那條垂直線上上下滑</strong>。</p>
       <div class="eq">r<em>f</em> = 0（1/r<em>f</em> = ∞）：V<em>DQ</em> = V<em>γ</em>　　I<em>DQ</em> = (V<em>PS</em> − V<em>γ</em>) / R</div>
@@ -622,6 +623,15 @@
       <p class="note src">勘誤僅針對數學、單位與用詞正確性；若與課堂說法不同，以老師為準。</p>
     </section>
 
+    <!-- ══════════ 作業（10/27 加入） ══════════ -->
+    <section class="sec" id="hw">
+      <div class="eyebrow">Homework 1 第 12 題 · Homework 2 第 1～3 題</div>
+      <h2>HW1、HW2 作業題與仿題<span class="h2-en">HOMEWORK</span></h2>
+      <p class="lede">這一頁對應的<b>作業原題</b>（紫色標籤）＋每題 10 題<b>仿作業</b>（灰色標籤，自編練習）。HW2 的仿題數字都由公式算出，換數字再練。全部集中在 <a href="hw1.html">HW1 總複習</a>、<a href="hw2.html">HW2 總複習</a>。</p>
+      <div class="hw-list" data-hw="12"></div>
+      <div class="hw-list" data-bank="__HW2" data-hw="1,2,3"></div>
+    </section>
+
     <!-- ══════════ 名詞 ══════════ -->
     <section class="sec" id="glossary">
       <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>Glossary · 中英對照</div>
@@ -674,6 +684,9 @@
 <script src="../shared/schem.js"></script>
 <script src="../shared/story.js"></script>
 <script src="assets/ch1-part5-kit.js"></script>
+<script src="assets/hw1-bank.js"></script>
+<script src="assets/hw2-bank.js"></script>
+<script src="../shared/hw.js"></script>
 <script src="assets/ch1-part5-ex.js"></script>
 <script src="../shared/exbook.js"></script>
 <script>
@@ -686,7 +699,7 @@ __EXB.picker(document.getElementById('sec-pick'), [
   { id: 'pwl', no: '05', name: '片段線性', count: '例 1 · 練 1' },
   { id: 'cvd', no: '06', name: '定電壓降', count: '練 1' },
   { id: 'revb', no: '07', name: '逆偏', count: '練 1' }
-], { key: 'ch1-part5', alwaysAll: ['map', 'check', 'glossary', 'quiz-sec'] });
+], { key: 'ch1-part5', alwaysAll: ['map', 'check', 'hw', 'glossary', 'quiz-sec'] });
 </script>
 <script src="assets/ch1-part5.js"></script>
 <script src="assets/ch1-part5-story.js"></script>

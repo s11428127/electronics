@@ -80,7 +80,7 @@
       const orig = bank.items.filter(it => it.hw === n && it.kind === 'hw');
       const sims = bank.items.filter(it => it.hw === n && it.kind === 'sim');
       const grp = document.createElement('div');
-      grp.className = 'hw-group'; grp.id = 'hw-q' + n;
+      grp.className = 'hw-group'; grp.id = (bank.idp || 'hw-q') + n;   /* HW2 起用 bank.idp（'hw2-q'），避免跟 HW1 的錨點撞名 */
       orig.forEach(it => grp.appendChild(card(it, bank.name)));
       if (withSims && sims.length) {
         const d = document.createElement('details');

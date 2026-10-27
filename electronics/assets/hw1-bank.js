@@ -1,12 +1,12 @@
 /* ============================================================
    電子學 HW1（Issued 28/09/2026 · Due 17/10/2026）題庫
-   kind:'hw'  = 作業原題（第 1–10 題；第 11、12 題講義還沒教到，先不放）
+   kind:'hw'  = 作業原題（第 1–12 題；第 11、12 題 10/27 補上）
    kind:'sim' = 仿作業（自編），每題 10 題（10/4 從 5 題加到 10 題）；選項正解寫在第一個，hw.js 會打亂
    下拉選項不能放 <sup>，次方一律用 ¹⁰ 這種上標字元。
    ============================================================ */
 (function () {
   'use strict';
-  const P1 = 'ch1-part1.html', P2 = 'ch1-part2.html', P3 = 'ch1-part3.html', P4 = 'ch1-part4.html';
+  const P1 = 'ch1-part1.html', P2 = 'ch1-part2.html', P3 = 'ch1-part3.html', P4 = 'ch1-part4.html', P5 = 'ch1-part5.html';
   const S = (o, a) => ({ o, a: a || 0 });
   const F = f => ({ f });
 
@@ -28,6 +28,20 @@
     '<line x1="150" y1="55" x2="260" y2="55" stroke-width="2.5"/><text x="266" y="60" fill="currentColor" stroke="none">③</text>' +
     '<line x1="150" y1="92" x2="260" y2="92" stroke-dasharray="6 4" stroke-width="2.5"/><text x="266" y="97" fill="currentColor" stroke="none">④</text>' +
     '<text x="70" y="136" fill="currentColor" stroke="none">P-type</text><text x="140" y="136" fill="currentColor" stroke="none">x=0</text><text x="200" y="136" fill="currentColor" stroke="none">N-type</text>');
+
+  /* 第 11 題：順偏四條曲線（① 最左）、逆偏四條（① 漏電最小、崩潰最早） */
+  const FIG11A = svgBox(300, 170, '<line x1="30" y1="150" x2="290" y2="150"/><line x1="30" y1="150" x2="30" y2="10"/>' +
+    '<text x="292" y="146" fill="currentColor" stroke="none" text-anchor="end">v<tspan font-size="9" dy="3">D</tspan></text><text x="36" y="16" fill="currentColor" stroke="none">i<tspan font-size="9" dy="3">D</tspan></text>' +
+    [70, 115, 165, 215].map((x, i) => '<path d="M30 150 Q ' + (x - 10) + ' 148 ' + x + ' 20" stroke-width="2"' + (i % 2 ? ' stroke-dasharray="5 3"' : '') + '/><text x="' + x + '" y="14" fill="currentColor" stroke="none" text-anchor="middle">' + '①②③④'[i] + '</text>').join(''));
+  const FIG11B = svgBox(300, 150, '<line x1="10" y1="20" x2="290" y2="20"/><line x1="280" y1="10" x2="280" y2="140"/>' +
+    '<text x="14" y="14" fill="currentColor" stroke="none">−v<tspan font-size="9" dy="3">D</tspan></text><text x="276" y="148" fill="currentColor" stroke="none" text-anchor="end">−i<tspan font-size="9" dy="3">D</tspan></text>' +
+    [[170, 22], [130, 34], [95, 48], [50, 62]].map((p, i) => '<path d="M280 20 L' + (p[0] + 4) + ' ' + p[1] + ' L' + p[0] + ' ' + (p[1] + 6) + ' L' + p[0] + ' 130" stroke-width="2"' + (i % 2 ? ' stroke-dasharray="5 3"' : '') + '/><text x="' + p[0] + '" y="146" fill="currentColor" stroke="none" text-anchor="middle">' + '①②③④'[i] + '</text>').join(''));
+  /* 第 12 題：兩條崩潰曲線，① 在 BV2（較大）、② 在 BV1（較小） */
+  const FIG12 = svgBox(300, 170, '<line x1="10" y1="60" x2="290" y2="60"/><line x1="210" y1="160" x2="210" y2="10"/>' +
+    '<text x="288" y="76" fill="currentColor" stroke="none" text-anchor="end">v<tspan font-size="9" dy="3">D</tspan></text><text x="216" y="16" fill="currentColor" stroke="none">i<tspan font-size="9" dy="3">D</tspan></text>' +
+    '<path d="M240 10 Q 232 58 210 60 L50 64 L48 160" stroke-width="2"/><path d="M210 60 L132 63 L130 160" stroke-width="2" stroke-dasharray="5 3"/>' +
+    '<text x="48" y="54" fill="currentColor" stroke="none" text-anchor="middle">BV₂</text><text x="132" y="54" fill="currentColor" stroke="none" text-anchor="middle">BV₁</text>' +
+    '<text x="62" y="110" fill="currentColor" stroke="none">①</text><text x="144" y="110" fill="currentColor" stroke="none">②</text>');
 
   const items = [
     /* ═════════ 第 1 題：本質半導體 ═════════ */
@@ -513,6 +527,103 @@
       q: '順偏時，二極體內部的電流方向是 {0}。',
       b: [S(['由 P 流向 N', '由 N 流向 P'])],
       ex: '電洞從 P 擴散到 N（電流 P → N），電子從 N 擴散到 P（電子往 −x，電流也是 P → N），兩者同向相加。' }
+,
+
+    /* ═════════ 第 11 題：溫度效應（10/27 補上，講解在 PART 4 §05） ═════════ */
+    { id: 'h11', hw: 11, kind: 'hw', title: 'I–V 曲線的溫度效應', link: P4 + '#temp',
+      q: '關於順向偏壓，圖中①②③④的溫度關係 T1 {0} T2 {1} T3 {2} T4。溫度越高，Δi<sub>D</sub>/Δv<sub>D</sub> 越陡，電阻性 {3}。關於逆向偏壓（第二張圖），①②③④的溫度關係 T1 {4} T2 {5} T3 {6} T4。',
+      b: [S(['>', '<', '=']), S(['>', '<', '=']), S(['>', '<', '=']), S(['越低', '越高', '不變']), S(['<', '>', '=']), S(['<', '>', '=']), S(['<', '>', '='])],
+      fig: '<div style="display:flex;flex-wrap:wrap;gap:10px">' + FIG11A + FIG11B + '</div>',
+      ex: '<b>順偏</b>：溫度一高 I<sub>S</sub> 暴增，同樣的電流只要更小的電壓 → 曲線往<b>左</b>移。① 最左 → 溫度最高：T1 &gt; T2 &gt; T3 &gt; T4。同一個電壓下電流比較大、曲線比較陡，Δi/Δv 大 → 電阻性越低。<br><b>逆偏</b>：溫度越高，熱產生的少數載子越多，逆向漏電流越大；累增崩潰電壓也隨溫度升高（晶格振動讓載子比較難加速）。④ 漏電最大、崩潰電壓最大 → 溫度最高：T1 &lt; T2 &lt; T3 &lt; T4。' },
+    { id: 's11-1', hw: 11, n: 1, kind: 'sim', link: P4 + '#temp',
+      q: '固定二極體電流不變，溫度每升高 1 °C，順向電壓 v<sub>D</sub> 大約 {0}。',
+      b: [S(['下降 2 mV', '上升 2 mV', '下降 0.2 V', '不變'])],
+      ex: '溫度係數約 −2 mV/°C：溫度一高，同樣電流只要比較小的電壓。這也是二極體溫度計的原理（PART 4）。' },
+    { id: 's11-2', hw: 11, n: 2, kind: 'sim', link: P4 + '#temp',
+      q: '25 °C 時二極體 1 mA 需要 0.65 V，75 °C 時要同樣 1 mA 大約需要 {0}。',
+      b: [S(['0.55 V', '0.75 V', '0.65 V', '0.15 V'])],
+      ex: '升了 50 °C，× (−2 mV/°C) = −0.1 V → 0.65 − 0.10 = 0.55 V。' },
+    { id: 's11-3', hw: 11, n: 3, kind: 'sim', link: P4 + '#temp',
+      q: '固定 v<sub>D</sub> = 0.6 V 不變，溫度升高時二極體電流 {0}，因為 I<sub>S</sub> {1}。',
+      b: [S(['變大', '變小', '不變']), S(['隨溫度暴增', '隨溫度變小', '跟溫度無關'])],
+      ex: 'I<sub>S</sub> ∝ n<sub>i</sub>²，n<sub>i</sub> 隨溫度指數上升，所以同一個電壓下電流變大。' },
+    { id: 's11-4', hw: 11, n: 4, kind: 'sim', link: P4 + '#temp',
+      q: '課本估計 I<sub>S</sub> 每升高約 5 °C 翻倍。從 25 °C 升到 55 °C，I<sub>S</sub> 大約變成原本的 {0}。',
+      b: [S(['64 倍', '6 倍', '30 倍', '2 倍'])],
+      ex: '升 30 °C = 6 個 5 °C → 2⁶ = 64 倍。（實際逆偏漏電流因為還有空乏區產生電流，大約每 10 °C 翻倍。）' },
+    { id: 's11-5', hw: 11, n: 5, kind: 'sim', link: P4 + '#temp',
+      q: '熱電壓 V<sub>T</sub> = kT/e 在溫度升高時 {0}。',
+      b: [S(['變大', '變小', '不變'])],
+      ex: 'V<sub>T</sub> 跟絕對溫度成正比：300 K 時 0.026 V，350 K 時約 0.030 V。不過 I<sub>S</sub> 增加得更快，整體效果還是曲線往左移。' },
+    { id: 's11-6', hw: 11, n: 6, kind: 'sim', link: P4 + '#temp',
+      q: '在 i<sub>D</sub>–v<sub>D</sub> 圖上，順偏曲線隨溫度升高會往 {0} 移。',
+      b: [S(['左', '右', '上下不動'])],
+      ex: '同樣的電流需要的電壓變小 → 曲線往左（往小電壓）移。' },
+    { id: 's11-7', hw: 11, n: 7, kind: 'sim', link: P4 + '#temp',
+      q: '逆向偏壓下，溫度升高時逆向飽和電流的大小 {0}。',
+      b: [S(['變大', '變小', '不變'])],
+      ex: '逆向電流來自少數載子，溫度高 → 熱產生的電子電洞對多 → 少數載子多 → 漏電流大。' },
+    { id: 's11-8', hw: 11, n: 8, kind: 'sim', link: P4 + '#temp',
+      q: '累增崩潰電壓隨溫度升高而 {0}；齊納崩潰電壓隨溫度升高而 {1}。',
+      b: [S(['變大', '變小', '不變']), S(['變小', '變大', '不變'])],
+      ex: '累增：溫度高、晶格振動大，載子還沒加速夠就被撞散，要更大電壓才崩潰（正溫度係數）。齊納：溫度高時能隙變小，比較容易穿隧（負溫度係數）。' },
+    { id: 's11-9', hw: 11, n: 9, kind: 'sim', link: P4 + '#temp',
+      q: '英文題：As temperature increases, the forward-bias voltage required for a given diode current {0}.',
+      b: [S(['decreases', 'increases', 'remains the same'])],
+      ex: '溫度上升 → 同樣電流需要的順向電壓下降（約 2 mV/°C）。' },
+    { id: 's11-10', hw: 11, n: 10, kind: 'sim', link: P4 + '#temp',
+      q: '利用「固定電流下 v<sub>D</sub> 隨溫度線性下降」的特性，二極體可以做成 {0}。',
+      b: [S(['溫度計', '整流器', '穩壓器'])],
+      ex: '課本 1.6 Design Application：二極體溫度計，量 v<sub>D</sub> 就能反推溫度。' },
+
+    /* ═════════ 第 12 題：崩潰（10/27 補上，講解在 PART 5 §01、§02） ═════════ */
+    { id: 'h12', hw: 12, kind: 'hw', title: '崩潰電壓：累增與齊納', link: P5 + '#bd',
+      q: '加大 pn 接面逆向偏壓，空乏區電場增大，到崩潰電壓時會大量破壞 {0} 結構，產生 {1}，電場將 {2} 掃至 N 區、將 {3} 掃至 P 區，產生大量逆向電流（崩潰電流）。累增崩潰是針對 {4} 摻雜二極體，成因是 {5} 效應，需要 {6} 的逆向偏壓，是圖中曲線 {7}。齊納崩潰是針對 {8} 摻雜二極體，成因是電場破壞 {9}，需要 {10} 的逆向偏壓，是圖中曲線 {11}。',
+      b: [S(['共價鍵', '離子鍵', '凡德瓦鍵', '金屬鍵']), S(['電子電洞對', '電子', '電洞', '質子', '中子']), S(['電子', '電洞', '電子電洞對', '質子']), S(['電洞', '電子', '電子電洞對', '質子']),
+        S(['低', '高']), S(['撞擊游離（碰撞游離）', '穿隧', '熱擾動']), S(['較大', '較小']), S(['①', '②']),
+        S(['高', '低']), S(['共價鍵', '離子鍵', '凡德瓦鍵', '金屬鍵']), S(['較小', '較大']), S(['②', '①'])],
+      fig: FIG12,
+      ex: '崩潰就是電場大到把<b>共價鍵</b>扯斷，產生<b>電子電洞對</b>；逆偏電場從 N 指向 P，電子被拉到 N 區、電洞被拉到 P 區，形成很大的逆向電流。<br><b>累增</b>：低摻雜 → 空乏區寬 → 電子有足夠距離加速，撞出新的電子電洞對（撞擊游離），像雪崩越滾越多；空乏區寬、電場要很大才夠，所以 |BV| 大 → 曲線 ①（BV<sub>2</sub>）。<br><b>齊納</b>：高摻雜 → 空乏區很窄 → 不大的電壓就有很強的電場，直接把共價鍵扯斷；|BV| 小 → 曲線 ②（BV<sub>1</sub>）。' },
+    { id: 's12-1', hw: 12, n: 1, kind: 'sim', link: P5 + '#bd',
+      q: '逆偏電壓超過崩潰電壓 BV 時，逆向電流會 {0}。',
+      b: [S(['急遽增加', '維持 I<sub>S</sub>'.replace(/<sub>(.*?)<\/sub>/g, '$1'), '變成 0'])],
+      ex: '崩潰前逆向電流只有 I<sub>S</sub>（很小）；超過 BV，電場扯斷大量共價鍵，電流幾乎垂直往下衝。' },
+    { id: 's12-2', hw: 12, n: 2, kind: 'sim', link: P5 + '#zen',
+      q: '摻雜濃度越高，空乏區越 {0}，崩潰電壓 |BV| 越 {1}。',
+      b: [S(['窄', '寬']), S(['小', '大'])],
+      ex: '高摻雜 → 空乏區窄 → 同樣電壓下電場（≈ V/W）比較強 → 比較小的電壓就崩潰。' },
+    { id: 's12-3', hw: 12, n: 3, kind: 'sim', link: P5 + '#zen',
+      q: '累增崩潰的過程像「雪崩」，因為一個高速電子撞出一對電子電洞，新的電子又 {0}。',
+      b: [S(['再去撞出更多', '馬上被復合', '停在原地'])],
+      ex: '撞擊游離是連鎖反應：1 → 2 → 4 → 8…載子數量倍增，電流暴增。' },
+    { id: 's12-4', hw: 12, n: 4, kind: 'sim', link: P5 + '#zen',
+      q: '齊納崩潰之所以只需要較小的逆偏，是因為高摻雜讓空乏區很窄，電場 {0}。',
+      b: [S(['很強，可直接扯斷共價鍵', '很弱', '方向相反'])],
+      ex: '電場 ≈ V/W，W 很小時，幾伏特就能產生足以直接把價電子拉出共價鍵的電場。' },
+    { id: 's12-5', hw: 12, n: 5, kind: 'sim', link: P5 + '#zen',
+      q: '一般來說，|BV| 小於約 5 V 的崩潰主要是 {0}；大於約 7 V 的主要是 {1}。',
+      b: [S(['齊納崩潰', '累增崩潰']), S(['累增崩潰', '齊納崩潰'])],
+      ex: '課本延伸：5～7 V 之間兩種機制都有。低電壓 = 高摻雜 = 齊納；高電壓 = 低摻雜 = 累增。' },
+    { id: 's12-6', hw: 12, n: 6, kind: 'sim', link: P5 + '#bd',
+      q: '整流用的一般二極體，其 PIV（反向峰值電壓）額定要 {0} 電路中二極體承受的最大逆偏。',
+      b: [S(['大於', '小於', '等於'])],
+      ex: 'PIV 額定要比實際最大逆偏大，二極體才不會進入崩潰。半波整流時 PIV 至少要等於輸入峰值。' },
+    { id: 's12-7', hw: 12, n: 7, kind: 'sim', link: P5 + '#zen',
+      q: '齊納二極體（Zener diode）是刻意操作在 {0} 區，用來 {1}。',
+      b: [S(['逆向崩潰', '順向導通', '逆向截止']), S(['穩定電壓', '放大訊號', '整流'])],
+      ex: '崩潰區電流變化很大、電壓幾乎不變，所以齊納二極體拿來當穩壓（下一份講義 1.5.5）。' },
+    { id: 's12-8', hw: 12, n: 8, kind: 'sim', link: P5 + '#bd',
+      q: '崩潰時產生的電子電洞對中，電子被電場掃到 {0} 區，電洞被掃到 {1} 區。',
+      b: [S(['N', 'P']), S(['P', 'N'])],
+      ex: '逆偏時空乏區電場從 N 指向 P：電子（負電）逆著電場跑 → 往 N；電洞（正電）順著電場跑 → 往 P。' },
+    { id: 's12-9', hw: 12, n: 9, kind: 'sim', link: P5 + '#zen',
+      q: '英文題：Avalanche breakdown occurs in {0} doped junctions and is caused by {1}.',
+      b: [S(['lightly', 'heavily']), S(['impact ionization', 'tunneling'])],
+      ex: 'avalanche = 低摻雜（lightly doped）＋撞擊游離（impact ionization）；Zener = 高摻雜＋電場直接扯斷鍵（穿隧）。' },
+    { id: 's12-10', hw: 12, n: 10, kind: 'sim', link: P5 + '#zen',
+      q: '兩個二極體 BV<sub>1</sub> = −4 V、BV<sub>2</sub> = −60 V，摻雜比較高的是 {0}。',
+      b: [S(['BV₁ 那個', 'BV₂ 那個', '一樣'])],
+      ex: '|BV| 小 → 空乏區窄 → 摻雜高。−4 V 那個是齊納崩潰型，−60 V 是累增崩潰型。' }
   ];
 
   window.__HW1 = { name: 'HW1', items };
