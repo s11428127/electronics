@@ -10,12 +10,42 @@
   const P = 'ch1-part6.html';
   const S = o => ({ o, a: 0 });
   const items = [];
-  const NO = { ss: '01', rd: '02', dcac: '03', qdes: '04', cap: '05', sseq: '06', sw: '07', opto: '08', sbd: '09', zd: '10' };
+  const NO = { basics: '00', ss: '01', rd: '02', dcac: '03', qdes: '04', cap: '05', sseq: '06', sw: '07', opto: '08', sbd: '09', zd: '10' };
   /* C(小節, 第幾題, 標題, 中文題幹, 英文題幹, 空格, 解釋, 是否為解法題) */
   /* 題幹裡的 v_D、I_DQ 寫法 → 下標（選項不能有標籤，所以只轉題幹） */
   const sub = s => s.replace(/(^|[^A-Za-z])([A-Za-zγ])_([A-Za-z0-9]+)/g, '$1$2<sub>$3</sub>');
   const C = (sec, n, title, q, en, b, ex, how) =>
     items.push({ id: 'c16' + sec + '-' + n, kind: 'cf', sec, no: NO[sec] + '-' + n, how: !!how, link: P + '#' + sec, title, q: sub(q), en: sub(en), b, ex });
+
+
+  /* ═════════ 00 補課：讀小訊號圖（10/31） ═════════ */
+  C('basics', 1, '三塊圖', '講義 1-2 的小訊號圖：右上是 {0}，下面是 {1}，左邊是 {2}。', 'In the small-signal picture on slide 1-2, the upper right is ___, the bottom is ___, and the left is ___.',
+    [S(['二極體曲線 the diode curve', '電壓波形 the voltage waveform', '電流波形 the current waveform', '負載線 the load line']),
+     S(['電壓波形 vD(t) the voltage waveform', '電流波形 the current waveform', '負載線 the load line', '二極體曲線 the diode curve']),
+     S(['電流波形 iD(t) the current waveform', '電壓波形 the voltage waveform', '二極體曲線 the diode curve', '電路圖 the circuit'])],
+    '電壓對齊橫軸，所以畫在下面；電流對齊縱軸，所以畫在左邊。');
+  C('basics', 2, '電壓波形為什麼站著', '電壓波形畫在橫軸下面、轉 90°，是因為 {0}。', 'The voltage waveform is drawn rotated under the horizontal axis because ___.',
+    [S(['橫軸就是電壓 the horizontal axis is voltage', '時間是橫軸 time is horizontal', '比較好看 it looks nicer', '電壓是負的 the voltage is negative'])],
+    '要讓每一刻的電壓直接對到曲線上的位置，時間只好往下走。');
+  C('basics', 3, '怎麼讀電流', '某一刻的電流：從那一刻的電壓 {0} 碰到曲線，再 {1} 讀電流。', 'To read the current at an instant: from that voltage go ___ to the curve, then ___ to read the current.',
+    [S(['往上 up', '往右 right', '往下 down', '往左 left']), S(['往左 left', '往右 right', '往下 down', '往上 up'])],
+    '虛線的路徑：電壓 → 曲線上的點 → 電流。', true);
+  C('basics', 4, 'Q 點會不會動', '加了交流以後，Q 點 {0}；動的是 {1}。', 'With the ac signal added, the Q-point ___; what moves is ___.',
+    [S(['不動（直流決定）stays put', '跟著交流搬家 moves with the ac', '消失 disappears', '變成兩個 splits in two']),
+     S(['工作點在 Q 附近來回滑 the operating point sliding around Q', '整條曲線 the whole curve', '橫軸 the axis', '電源 the supply'])],
+    'Q 由直流決定；交流只讓「這一刻的點」在 Q 附近一小段來回。');
+  C('basics', 5, '用到多長', '交流越小，工作點用到的那一段曲線越 {0}，看起來越像 {1}。', 'The smaller the ac signal, the ___ the piece of curve used, and the more it looks like ___.',
+    [S(['短 shorter', '長 longer', '陡 steeper', '彎 more curved']), S(['直線 a straight line', '拋物線 a parabola', '圓 a circle', '方波 a square wave'])],
+    '像地球表面：只看家門口一小段，看起來是平的。');
+  C('basics', 6, '水龍頭比喻', '水龍頭比喻中，把手角度對應 {0}，水流對應 {1}。', 'In the tap analogy, the handle angle corresponds to ___ and the water flow to ___.',
+    [S(['電壓 vD the voltage', '電流 iD the current', '電阻 the resistance', '功率 the power']), S(['電流 iD the current', '電壓 vD the voltage', '電阻 the resistance', '頻率 the frequency'])],
+    '把手先轉到一半 = 直流；來回小小轉 = 交流；水流跟著一下多一下少。');
+  C('basics', 7, '電流晃多少由誰決定', '同樣的電壓晃動，曲線越陡的地方，電流晃得 {0}。', 'For the same voltage swing, where the curve is steeper the current swings ___.',
+    [S(['越多 more', '越少 less', '一樣 the same', '不晃 not at all'])],
+    '電流的變化 ≈ 斜率 × 電壓的變化；斜率 = 1/r<sub>d</sub>。');
+  C('basics', 8, '從圖判斷交流夠不夠小', '看電流波形：往上多的跟往下少的 {0}，表示交流夠小。', 'Looking at the current waveform, the ac is small enough when the upward and downward swings are ___.',
+    [S(['差不多 about equal', '差很多 very different', '都是 0 both zero', '方向相同 in the same direction'])],
+    '那一段幾乎是直線 → 上下對稱；彎得明顯 → 往上多、往下少（失真）。', true);
 
   /* ═════════ 01 小訊號 ═════════ */
   C('ss', 1, '直流與交流的分工',

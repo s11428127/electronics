@@ -212,7 +212,7 @@
     T(PH.X(0.3), PH.Y(0) - 12, 'OFF：貼地', { cls: 'ta', fs: 12, k: 'l1' }) + T(PH.X(0.66) + 10, PH.Y(6), '斜率 1/r<sub>f</sub>', { cls: 'ta', fs: 12, a: 'start', k: 'l2' }) +
     circ(420, 140, 120, 120, { k: 'eq', model: 'pwl', vg: 'V<sub>γ</sub>', rf: 'r<sub>f</sub>', vps: '', r: '' }) +
     chip(470, 296, 'V<sub>D</sub> = V<sub>γ</sub> + I<sub>D</sub>r<sub>f</sub>', 'V<sub>γ</sub> 約 0.6～0.7 V，r<sub>f</sub> 約數十 Ω', 'c1', { fs: 13 }),
-    [{ sub: '<b>片段線性模型</b>：拿兩段直線去描那條彎線（講義 1-120）。', on: 'cv' },
+    [{ sub: '<b>片段線性模型</b>：拿兩段直線去描那條彎線（講義 1-120）。為什麼要描？<b>直線才能直接放進 KVL</b>，一行解完。', on: 'cv' },
      { sub: '第一段：V<sub>D</sub> 小於 <b>V<sub>γ</sub></b>（切入電壓）時，貼地的水平線 —— OFF。', on: 'off l1' },
      { sub: '第二段：超過 V<sub>γ</sub> 後，一條很陡的斜線 —— ON。斜率是 1/r<sub>f</sub>。', on: 'on l2' },
      { sub: '換成電路：導通的二極體 = 一顆 <b>V<sub>γ</sub> 電池</b>串一顆<b>小電阻 r<sub>f</sub></b>。', on: 'eq' },
@@ -236,11 +236,55 @@
     LL(5, 2, 'la') + LL(5, 4, 'lb') + LL(2.5, 2, 'lc', 'ln dsh') + LL(2.5, 4, 'ld', 'ln dsh') +
     PJ.dot(0.7, 2.15, 'qa', 5.5) + PJ.dot(0.7, 1.075, 'qb', 5.5) + PJ.dot(0.7, 0.9, 'qc', 5.5) + PJ.dot(0.7, 0.45, 'qd', 5.5) +
     calc(450, 112, 160, [['A 5 V、2k：2.15', 'r1', 'ta'], ['B 5 V、4k：1.075', 'r2', 'ta'], ['C 2.5 V、2k：0.9', 'r3', 'ta'], ['D 2.5 V、4k：0.45', 'r4', 'ta']], { k: 'cc', title: 'I<sub>DQ</sub>（mA）', fs: 13 }),
-    [{ sub: '再簡化：把 r<sub>f</sub> 拿掉，斜線立成<b>垂直線</b> —— 就是<b>定電壓降模型</b>（講義 1-123）。', on: 'cv' },
+    [{ sub: '為什麼還要再簡化？r<sub>f</sub> 只有 10 Ω，跟 2 kΩ 比小到看不見 → 乾脆當 0，斜線立成<b>垂直線</b>：<b>定電壓降模型</b>（講義 1-123）。', on: 'cv' },
      { sub: 'A：5 V、2 kΩ → (5 − 0.7)/2k = <b>2.15 mA</b>。', on: 'la qa cc r1' },
      { sub: 'B：電阻加倍，負載線變平，電流減半。', on: 'lb qb r2' },
      { sub: 'C、D：電源減半，整條負載線往左下平移。', on: 'lc qc r3 ld qd r4' },
      { sub: 'Q 點只會在 0.7 V 這條線上<b>上下滑</b>。它由電源、電阻、二極體特性三個一起決定（講義 1-125）。' }]);
+
+
+  /* ════════════ 17b～17f 兩種模型差在哪、怎麼選（使用者 10/31：為啥要簡化、兩種的功用和區別） ════════════ */
+  const mini = (x, key, title, kind, l1, l2, acc) => {
+    const xr = x + 170, ym = 205;
+    let s = '<rect class="card" x="' + x + '" y="112" width="250" height="168" rx="14" filter="url(#st-sh)"/>' + T(x + 125, 140, title, { fs: 15, cls: acc ? 'ta' : 't' });
+    s += '<path class="ln" style="fill:none" d="M' + (x + 60) + ' ' + (ym - 30) + ' H' + xr + ' V' + (ym - 26) + ' M' + xr + ' ' + (ym + 30) + ' V' + (ym + 36) + ' H' + (x + 60) + '"/>';
+    if (kind === 'pwl') s += K.res(xr, ym - 26, 26, true) + '<line class="ln" x1="' + xr + '" y1="' + (ym) + '" x2="' + xr + '" y2="' + (ym + 10) + '"/>' + K.bat(xr, ym + 16) + '<line class="ln" x1="' + xr + '" y1="' + (ym + 22) + '" x2="' + xr + '" y2="' + (ym + 30) + '"/>' +
+      T(xr + 12, ym - 8, 'r<sub>f</sub>', { cls: 'ta', fs: 13, a: 'start' }) + T(xr + 22, ym + 22, 'V<sub>γ</sub>', { cls: 'ta', fs: 13, a: 'start' });
+    else s += '<line class="ln" x1="' + xr + '" y1="' + (ym - 26) + '" x2="' + xr + '" y2="' + (ym + 2) + '"/>' + K.bat(xr, ym + 8) + '<line class="ln" x1="' + xr + '" y1="' + (ym + 14) + '" x2="' + xr + '" y2="' + (ym + 30) + '"/>' + T(xr + 22, ym + 14, 'V<sub>γ</sub>', { cls: 'ta', fs: 13, a: 'start' });
+    s += T(x + 20, ym - 4, '二極體', { cls: 'ts', fs: 11, a: 'start' }) + T(x + 20, ym + 12, '換成 →', { cls: 'ts', fs: 11, a: 'start' }) +
+      T(x + 125, 262, l1, { cls: 'tm', fs: 12.5 }) + T(x + 125, 278, l2, { cls: acc ? 'ta' : 'tm', fs: 12.5 });
+    return g(key, s);
+  };
+  const S17b = sc('兩種模型，差在一顆小電阻', 'TWO MODELS',
+    mini(50, 'A', '片段線性', 'pwl', '電池 + 小電阻 r<sub>f</sub>（斜線）', '比較像真的，多算一項') +
+    mini(340, 'B', '定電壓降', 'cvd', '只有電池（垂直線）', '最好算', true),
+    [{ sub: '先整理兩種模型。<b>片段線性</b>：導通的二極體 = V<sub>γ</sub> 電池 + 一顆小電阻 r<sub>f</sub>。', on: 'A' },
+     { sub: '<b>定電壓降</b>：把那顆小電阻拿掉，只剩 V<sub>γ</sub> 電池。', on: 'B' },
+     { sub: '功用都一樣：把彎的二極體換成直線，才能用 KVL 解。差別只在<b>要不要算 r<sub>f</sub></b>。', on: '' }]);
+  const S17c = sc('比一比：Example 1.9 的數字', 'HOW DIFFERENT?',
+    calc(100, 112, 440, [['片段線性：4.4 / (2000 + 10) = 2.189 mA', 'r1'], ['定電壓降：4.4 / 2000 = 2.200 mA', 'r2', 'ta'], ['只差 0.011 mA ≈ 0.5%', 'r3', 'ta'], ['真的（疊代法）：2.19 mA', 'r4', 'tm']], { k: 'cc', fs: 15, lh: 32 }),
+    [{ sub: '同一題（5 V、2 kΩ、V<sub>γ</sub> = 0.6 V）。片段線性多算 r<sub>f</sub> = 10 Ω：<b>2.189 mA</b>。', on: 'cc r1' },
+     { sub: '定電壓降不算 r<sub>f</sub>：<b>2.200 mA</b>。', on: 'r2' },
+     { sub: '兩個只差 <b>0.5%</b>，跟真正的答案 2.19 mA 也都差不多。那 r<sub>f</sub> 何必算？', on: 'r3 r4' }]);
+  const S17d = sc('像量身高要不要算頭髮', 'LIKE HAIR ON YOUR HEAD',
+    g('p', '<rect class="ln" x="150" y="118" width="40" height="170" rx="6" style="fill:var(--s-bg2,transparent)"/><rect class="acc" x="150" y="112" width="40" height="6" rx="2"/>' +
+      T(205, 205, '身高 170 cm', { cls: 't', fs: 14, a: 'start' }) + T(205, 118, '頭髮 0.5 cm', { cls: 'ta', fs: 13, a: 'start' })) +
+    calc(370, 140, 230, [['R = 2000 Ω ↔ 身高', 'r1'], ['r<sub>f</sub> = 10 Ω ↔ 頭髮', 'r2', 'ta'], ['r<sub>f</sub> ≪ R → 拿掉看不出來', 'r3', 'ta']], { k: 'cc', fs: 14 }),
+    [{ sub: '量身高要不要把頭髮算進去？170 cm 多 0.5 cm，根本看不出來。', on: 'p' },
+     { sub: 'r<sub>f</sub> 就是那撮頭髮：10 Ω 跟 2000 Ω 的 R 比起來，小到可以忽略。', on: 'cc r1 r2' },
+     { sub: '所以只要 <b>r<sub>f</sub> ≪ R</b>，用最好算的定電壓降就夠了 —— 這就是「再簡化」的理由。', on: 'r3' }]);
+  const S17e = sc('什麼時候 r<sub>f</sub> 不能省？', 'WHEN r<sub>f</sub> MATTERS',
+    calc(100, 112, 440, [['R 很小，例如 50 Ω（假設二極體真的有 r<sub>f</sub> = 10 Ω）', 'r1', 'tm'], ['片段線性：4.4 / (50 + 10) = 73.3 mA', 'r2'], ['定電壓降：4.4 / 50 = 88.0 mA', 'r3', 'ta'], ['差 20%！', 'r4', 'ta']], { k: 'cc', fs: 15, lh: 32 }) +
+    chip(320, 282, '量螞蟻的身高，頭髮就不能不算', '差多少 ≈ r<sub>f</sub> / R', 'c1', { fs: 13, acc: true }),
+    [{ sub: '可是如果 R 很小，例如只有 50 Ω……', on: 'cc r1' },
+     { sub: '片段線性：<b>73.3 mA</b>；定電壓降：<b>88.0 mA</b>。', on: 'r2 r3' },
+     { sub: '差了 <b>20%</b>。r<sub>f</sub> 跟 R 差不多大時，就不能省 —— 像量螞蟻的身高，頭髮就要算。', on: 'r4 c1' }]);
+  const S17f = sc('先整理一下：怎麼選', 'WHICH ONE TO USE',
+    calc(90, 108, 460, [['題目有給 r<sub>f</sub> → 片段線性', 'r1'], ['沒給 r<sub>f</sub>、或 R ≫ r<sub>f</sub> → 定電壓降（最常用）', 'r2', 'ta'], ['R 跟 r<sub>f</sub> 差不多 → 一定要算 r<sub>f</sub>', 'r3'], ['要最準 → 疊代法（真的指數公式）', 'r4', 'tm'], ['誤差 ≈ r<sub>f</sub> / R', 'r5', 'ta']], { k: 'cc', fs: 15, lh: 31 }),
+    [{ sub: '先整理一下。題目有給 r<sub>f</sub>，就用片段線性。', on: 'cc r1' },
+     { sub: '沒給 r<sub>f</sub>，或電阻比 r<sub>f</sub> 大很多 → 定電壓降，最常用。', on: 'r2' },
+     { sub: '電阻小到跟 r<sub>f</sub> 差不多 → 一定要算 r<sub>f</sub>；要最準就疊代。', on: 'r3 r4' },
+     { sub: '兩個模型差多少，大約就是 <b>r<sub>f</sub> / R</b>。', on: 'r5' }]);
 
   /* ════════════ 18 逆偏 ════════════ */
   const PK = axes(260, 120, 340, 150, { v0: -5.8, v1: 1.2, i0: -2.9, i1: 1.2, vt: [[-5, '−5 V']], it: [[-2.5, '−2.5']] });
@@ -268,6 +312,6 @@
 
   window.__ch1p5Story = window.__Story('#story', {
     id: 'ch1-part5', title: 'CH1 PART 5 崩潰與二極體直流分析', after: '#map',
-    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19]
+    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S17b, S17c, S17d, S17e, S17f, S18, S19]
   });
 })();

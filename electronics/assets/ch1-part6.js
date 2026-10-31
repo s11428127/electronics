@@ -56,6 +56,65 @@
   const box = (w, h, fx0, fy0, fx1, fy1, padL) => ({ x0: Math.max(padL || 44, w * fx0), x1: w * fx1, y0: h * fy0, y1: h * fy1 });
   const wide = w => w >= 560;
 
+
+  /* ══════════════════════════════════════════════════════════
+     00 補課：完整的小訊號圖（電壓波形在下、曲線在右上、電流波形在左）
+     ══════════════════════════════════════════════════════════ */
+  function fullPic(ctx, w, h, VQ, amp, ph, IS) {
+    const iv = v => IS * (Math.exp(v / VT) - 1) * 1e3;
+    const L = Math.max(w * 0.42, 120), R = w * 0.96, T = h * 0.06, B = h * 0.5;
+    const v0 = 0.55, v1 = 0.76, i1 = Math.max(iv(VQ + amp) * 1.12, iv(VQ) * 2, 0.5);
+    const X = v => lerp(L, R, (v - v0) / (v1 - v0)), Y = i => lerp(B, T, i / i1);
+    const yv0 = B + 10, Hv = h * 0.96 - yv0, xi0 = L - 10, Wi = xi0 - w * 0.03;
+    const vAt = u => VQ + amp * Math.sin(u * 4 * Math.PI), IQ = iv(VQ);
+    /* 軸 */
+    ctx.strokeStyle = C['ink-2']; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(L, B); ctx.lineTo(R, B); ctx.moveTo(L, B); ctx.lineTo(L, T); ctx.stroke();
+    labelCJK(ctx, R, B - 10, 'v<sub>D</sub>', C['ink-3'], 11, 'right'); labelCJK(ctx, L + 6, T + 4, 'i<sub>D</sub>', C['ink-3'], 11, 'left');
+    /* 曲線 */
+    ctx.save(); ctx.beginPath(); ctx.rect(L, T - 2, R - L, B - T + 4); ctx.clip();
+    ctx.strokeStyle = C['ink-2']; ctx.lineWidth = 2.2; ctx.beginPath();
+    for (let n = 0; n <= 200; n++) { const v = v0 + (v1 - v0) * n / 200, y = Y(iv(v)); n ? ctx.lineTo(X(v), y) : ctx.moveTo(X(v), y); } ctx.stroke();
+    /* 用到的那一段 */
+    ctx.strokeStyle = C.accent; ctx.lineWidth = 6; ctx.globalAlpha = 0.45; ctx.beginPath();
+    for (let n = 0; n <= 30; n++) { const v = VQ - amp + 2 * amp * n / 30, y = Y(iv(v)); n ? ctx.lineTo(X(v), y) : ctx.moveTo(X(v), y); } ctx.stroke(); ctx.globalAlpha = 1;
+    ctx.restore();
+    /* 直流的虛線 */
+    dashLine(ctx, X(VQ), B, X(VQ), h * 0.97, C['ink-3']); dashLine(ctx, L, Y(IQ), w * 0.02, Y(IQ), C['ink-3']);
+    label(ctx, X(VQ) + 4, B + 6, 'V<sub>DQ</sub>', C['ink-3'], 10, 'left'); label(ctx, w * 0.02, Y(IQ) - 9, 'I<sub>DQ</sub>', C['ink-3'], 10, 'left');
+    /* 兩條波形 */
+    ctx.strokeStyle = C.accent; ctx.lineWidth = 2.2; ctx.beginPath();
+    for (let n = 0; n <= 160; n++) { const u = n / 160, x = X(vAt(u)), y = yv0 + u * Hv; n ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke();
+    ctx.beginPath();
+    for (let n = 0; n <= 160; n++) { const u = n / 160, x = xi0 - u * Wi, y = Y(iv(vAt(u))); n ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke();
+    labelCJK(ctx, X(VQ) + 8, h * 0.95, 'v<sub>D</sub>(t)：時間往下 ↓', C.accent, 11, 'left', '700');
+    labelCJK(ctx, w * 0.03, Math.min(B + 14, h * 0.6), '← 時間往左：i<sub>D</sub>(t)', C.accent, 11, 'left', '700');
+    /* 這一刻 */
+    const u = ph % 1, v = vAt(u), x = X(v), yv = yv0 + u * Hv, yc = Y(iv(v)), xi = xi0 - u * Wi;
+    ctx.save(); ctx.setLineDash([4, 3]); ctx.strokeStyle = C.ink; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x, yv); ctx.lineTo(x, yc); ctx.lineTo(xi, yc); ctx.stroke(); ctx.restore();
+    dot(ctx, x, yv, 5, C.ink); dot(ctx, x, yc, 6, C.accent); dot(ctx, xi, yc, 5, C.ink);
+    return { IQ, imax: iv(VQ + amp), imin: iv(VQ - amp) };
+  }
+  window.__p6.fullPic = (ctx, w, h, VQ, amp, ph) => fullPic(ctx, w, h, VQ, amp, ph, 1e-14);
+  (function basics() {
+    const cv = document.getElementById('cv-bs'); if (!cv) return;
+    let VQ = 0.677, AMP = 0.015, ph = 0, run = true;
+    Stage(cv, { ratio: w => wide(w) ? 0.62 : 1.05, minH: 320, maxH: 520, draw(ctx, w, h, dt) {
+      if (run) ph += dt * 0.12;
+      fullPic(ctx, w, h, VQ, AMP, ph, 1e-14);
+    } });
+    function msg() {
+      const iv = v => 1e-14 * Math.exp(v / VT) * 1e3, IQ = iv(VQ), up = iv(VQ + AMP) - IQ, dn = IQ - iv(VQ - AMP);
+      setHTML('bs-iq', IQ.toFixed(3) + ' mA');
+      setHTML('bs-i', '+' + up.toFixed(3) + '／−' + dn.toFixed(3) + ' mA');
+      setHTML('bs-msg', '看那條<b>虛線</b>：下面的黑點是「這一刻的電壓」，往上碰到曲線（藍點），再往左就是「這一刻的電流」。整個交流期間，藍點只在 Q 附近<b>加粗的那一段</b>來回滑。' +
+        (AMP <= 0.006 ? ' 交流很小：那一段幾乎是直的，電流波形上下對稱。' : AMP < 0.02 ? ' 那一段開始看得出彎，電流往上比往下多一點。' : ' <b>交流太大</b>：那一段明顯是彎的，電流上下差很多（失真）。'));
+    }
+    bindRange('bs-vq', x => x.toFixed(3) + ' V', x => { VQ = x; msg(); });
+    bindRange('bs-ac', x => (x * 1e3).toFixed(0) + ' mV', x => { AMP = x; msg(); });
+    const pb = document.getElementById('bs-play');
+    if (pb) pb.addEventListener('click', () => { run = !run; pb.textContent = run ? '⏸ 暫停' : '▶ 播放'; });
+  })();
+
   /* ══════════════════════════════════════════════════════════
      01 小訊號：直流上面疊一個小交流
      ══════════════════════════════════════════════════════════ */
@@ -618,6 +677,31 @@
     });
     if (unit) labelCJK(ctx, x1, h * 0.04 + 4, unit, C['ink-3'], 10, 'right');
   }
+
+
+  /* ── 00 補課：讀小訊號圖 ── */
+  liveExample('#ex-bs', {
+    title: '例題 · 從圖上讀電流：電壓最大、最小時電流多少？',
+    ratio: 0.55, minH: 240, maxH: 380,
+    givens: [
+      { id: 'xbs-v', label: '直流 V<sub>DQ</sub>', min: 0.62, max: 0.7, step: 0.001, value: 0.677, fmt: v => v.toFixed(3) + ' V' },
+      { id: 'xbs-a', label: '交流峰值', min: 1, max: 40, step: 1, value: 15, fmt: v => v.toFixed(0) + ' mV' }
+    ],
+    compute: g => {
+      const IS = 1e-14, VQ = g['xbs-v'], A = g['xbs-a'] * 1e-3, iv = v => IS * Math.exp(v / VT) * 1e3;
+      return { VQ, A, IQ: iv(VQ), imax: iv(VQ + A), imin: iv(VQ - A) };
+    },
+    question: (g, r) => '二極體 I<sub>S</sub> = 10<sup>−14</sup> A，電壓 v<sub>D</sub>(t) = <b>' + f3(r.VQ) + '</b> + <b>' + (r.A * 1e3).toFixed(0) + ' mV</b>·sin ωt。照圖上的做法（電壓往上找曲線、再往左讀電流），求電壓最大、最小那一刻的電流，以及直流電流 I<sub>DQ</sub>。',
+    questionEn: (g, r) => 'A diode (I<sub>S</sub> = 10<sup>−14</sup> A) has v<sub>D</sub>(t) = ' + f3(r.VQ) + ' + ' + (r.A * 1e3).toFixed(0) + ' mV · sin ωt. Using the curve, find the current at the maximum and minimum of the voltage, and the dc current I<sub>DQ</sub>.',
+    steps: (g, r) => [
+      { t: 'Step 1　沒有交流的時候（直流）。', note: '電壓停在 V<sub>DQ</sub>，往上碰到曲線就是 Q 點。', eq: 'I<sub>DQ</sub> = 10<sup>−14</sup> e<sup>' + f3(r.VQ) + '/0.026</sup> = ' + f3(r.IQ) + ' mA' },
+      { t: 'Step 2　電壓最大那一刻。', note: '下面的電壓波形最靠右的那一點，往上碰到曲線。', eq: 'v<sub>D</sub> = ' + f3(r.VQ + r.A) + ' V → i<sub>D</sub> = ' + f3(r.imax) + ' mA（多 ' + f3(r.imax - r.IQ) + '）' },
+      { t: 'Step 3　電壓最小那一刻。', eq: 'v<sub>D</sub> = ' + f3(r.VQ - r.A) + ' V → i<sub>D</sub> = ' + f3(r.imin) + ' mA（少 ' + f3(r.IQ - r.imin) + '）' },
+      { t: 'Step 4　看形狀。', note: (r.imax - r.IQ) / (r.IQ - r.imin) < 1.15 ? '多的和少的差不多：用到的那一段幾乎是直線 → 小訊號近似可以用。' : '往上多、往下少，差了 ' + (((r.imax - r.IQ) / (r.IQ - r.imin) - 1) * 100).toFixed(0) + '%：那一段已經看得出彎，交流不夠小。' }
+    ],
+    answer: (g, r) => 'I<sub>DQ</sub> = ' + f3(r.IQ) + ' mA；最大 ' + f3(r.imax) + ' mA、最小 ' + f3(r.imin) + ' mA',
+    draw: (ctx, w, h, g, r) => { P6.fullPic(ctx, w, h, r.VQ, r.A, 0.125); }
+  });
 
   /* ── 01 小訊號：上下晃的量一不一樣 ── */
   liveExample('#ex-ss', {

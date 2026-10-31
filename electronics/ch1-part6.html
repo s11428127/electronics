@@ -30,6 +30,7 @@
       <li><a href="#story-sec"><i>▶</i>故事一：小訊號</a></li>
       <li><a href="#terms-pic"><i>🖼</i>名詞圖鑑</a></li>
       <li><a href="#map"><i>·</i>這段在講什麼</a></li>
+      <li><a href="#basics"><i>00</i>補課：讀小訊號圖</a></li>
       <li><a href="#ss"><i>01</i>小訊號：直流＋小交流</a></li>
       <li><a href="#rd"><i>02</i>增量電阻 r<sub>d</sub></a></li>
       <li><a href="#dcac"><i>03</i>DC 分析＋AC 分析</a></li>
@@ -53,11 +54,11 @@
       <h1>小訊號分析與其他二極體</h1>
       <p class="sub">PART 5 算出了 Q 點：二極體靜靜地停在那裡。這一頁在 Q 點上<strong>疊一個很小的交流訊號</strong>，看二極體怎麼「像一顆電阻」回應它。後半段認識二極體家族：<strong>太陽能電池、光二極體、LED、蕭特基、齊納</strong>。</p>
       <div class="hero-meta">
-        <span class="chip">2 段故事模式（共 48 個畫面）</span>
-        <span class="chip">10 個互動模組</span>
-        <span class="chip">10 個可改數字例題</span>
+        <span class="chip">2 段故事模式（共 53 個畫面）</span>
+        <span class="chip">11 個互動模組</span>
+        <span class="chip">11 個可改數字例題</span>
         <span class="chip">10 題例題與練習（附圖解故事）</span>
-        <span class="chip">80 題觀念填充</span>
+        <span class="chip">88 題觀念填充</span>
         <span class="chip">13 題中英對照測驗</span>
       </div>
       <p class="note">接續 <a href="ch1-part5.html">CH1 PART 5</a>（負載線、Q 點、片段線性、定電壓降）。這一頁是老師的 <b>原講義 PART 5（V3）</b>：1.3.3 電腦模擬、1.4 小訊號、1.5 其他二極體，中間「補」了 1.2.5 的開關暫態。</p>
@@ -100,6 +101,67 @@
           <li><span class="d-eq hi">其他二極體：太陽能電池、光二極體、LED、蕭特基、齊納</span>
             <p>投影片 1-19～1-34。光進來 → 電出去（太陽能電池、光二極體）；電進去 → 光出來（LED）；金屬接 n 型 → 快又壓降小（蕭特基）；故意崩潰 → 穩壓（齊納）。</p></li>
         </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 00 補課（使用者 10/31：藍色框看不懂、跟交流什麼關係） ══════════ -->
+    <section class="sec" id="basics">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>00 · 補課 · 投影片 1-2、1-3 的圖怎麼看</div>
+      <h2>補課：交流在曲線上長什麼樣子<span class="h2-en">READING THE SMALL-SIGNAL PICTURE</span></h2>
+      <p class="lede">講義 1-2 那張圖有三塊：右上是二極體曲線，<strong>下面</strong>是電壓隨時間的波形，<strong>左邊</strong>是電流隨時間的波形。像水龍頭：把手（電壓）來回小小轉，水流（電流）就跟著變。</p>
+      <div class="eq">v<em>D</em>(t) = V<em>DQ</em> + v<em>d</em>(t)　→　每一刻往上找曲線　→　i<em>D</em>(t) = I<em>DQ</em> + i<em>d</em>(t)</div>
+      <div class="derive">
+        <h4>一張圖，三個部分</h4>
+        <ol>
+          <li><span class="d-eq">右上：二極體曲線，直流 V<sub>DQ</sub> 對到 Q 點（I<sub>DQ</sub>）</span>
+            <div class="why">沒有交流時二極體就停在這裡。例：V<sub>DQ</sub> = 0.677 V → I<sub>DQ</sub> = 2 mA（I<sub>S</sub> = 10<sup>−14</sup> A）。</div></li>
+          <li><span class="d-eq">下面：v<sub>D</sub>(t) 轉 90° 畫在橫軸下面，越往下時間越晚</span>
+            <div class="why">電壓在 V<sub>DQ</sub> 左右來回。橫軸是電壓，所以電壓波形只能「站著」畫。</div></li>
+          <li><span class="d-eq">每一刻：從電壓往上碰到曲線，再往左讀電流</span>
+            <div class="why">這就是二極體在做的事：給它這個電壓，它就給這個電流（曲線上的點）。</div></li>
+          <li><span class="d-eq">左邊：把每一刻的電流連起來 = i<sub>D</sub>(t)，在 I<sub>DQ</sub> 上下來回</span>
+            <div class="why">縱軸是電流，所以電流波形「躺著」畫在左邊，越往左時間越晚。</div></li>
+          <li><span class="d-eq hi">整段交流期間，工作點只在 Q 附近「一小段曲線」上來回滑</span>
+            <p>交流越小，那一段越短、越像直線（下一節的小訊號、第 02 節的切線 r<sub>d</sub>）。交流太大，那一段明顯彎，電流波形上下不對稱（第 04 節的失真）。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>完整的小訊號圖</h3><span class="spacer"></span><button class="btn" type="button" id="bs-play">⏸ 暫停</button></div>
+        <div class="stage-wrap"><canvas id="cv-bs" aria-label="二極體曲線在右上，電壓波形畫在橫軸下方、電流波形畫在縱軸左方，虛線連出每一刻的電壓、曲線上的點與電流"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="bs-vq">直流 V<sub>DQ</sub><output for="bs-vq"></output></label>
+            <input type="range" id="bs-vq" min="0.62" max="0.7" step="0.001" value="0.677"></div>
+          <div class="ctrl"><label for="bs-ac">交流峰值<output for="bs-ac"></output></label>
+            <input type="range" id="bs-ac" min="0.002" max="0.04" step="0.001" value="0.015"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>I<sub>DQ</sub></dt><dd id="bs-iq" class="e">—</dd></div>
+          <div><dt>電流往上／往下</dt><dd id="bs-i" style="font-size:14px">—</dd></div>
+        </dl>
+        <div class="msg" id="bs-msg"></div>
+      </div>
+      <div id="ex-bs"></div>
+      <div class="howto">
+        <h4>看懂小訊號圖的步驟</h4>
+        <ol>
+          <li>先找直流：V<sub>DQ</sub> 往上碰到曲線 = Q 點。</li>
+          <li>下面的電壓波形最右、最左那兩刻，各自往上找曲線。</li>
+          <li>往左讀出電流最大、最小 → 電流波形。</li>
+          <li>比一比往上多的、往下少的：差不多 → 小訊號 OK；差很多 → 交流太大。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>讀圖的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 下面的波形是電流。<span class="o">下面是電壓 v<sub>D</sub>(t)</span>（對齊橫軸）；左邊才是電流。</li>
+          <li><span class="x">✗</span> 交流讓 Q 點搬家。<span class="o">Q 點不動</span>（直流決定），交流只讓工作點在 Q 附近來回。</li>
+          <li><span class="x">✗</span> 電壓晃多少，電流就晃一樣比例。<span class="o">電流變化由曲線斜率決定</span>：越陡，同樣的電壓晃動，電流晃越多。</li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-basics">
+        <h3>🧠 觀念填充 00（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH16C" data-sec="basics"></div>
       </div>
     </section>
 
@@ -861,6 +923,7 @@
 <script src="../shared/exbook.js"></script>
 <script>
 __EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'basics', no: '00', name: '補課：讀小訊號圖' },
   { id: 'ss', no: '01', name: '小訊號', count: '練 1' },
   { id: 'rd', no: '02', name: '增量電阻', count: '例 1' },
   { id: 'dcac', no: '03', name: 'DC＋AC', count: '例 1' },

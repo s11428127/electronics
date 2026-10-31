@@ -95,17 +95,70 @@
      { sub: '可是你家門口看起來是<b>平的</b>。', on: 'me' },
      { sub: '因為你只看<b>一小段</b>。任何平滑的曲線，看得夠近，都像一條直線。', on: 'zm c1' }]);
 
-  /* 07 套到二極體 */
+  /* ── 完整的小訊號圖（課本 Fig 1.34 那種）：曲線在右上、v_D(t) 畫在橫軸下面（時間往下）、i_D(t) 畫在縱軸左邊（時間往左） ── */
   const IQ = 2, VQ = vq14(IQ), SL = IQ / VT;
   const PC = axes(80, 112, 280, 168, { v0: 0.55, v1: 0.75, i0: 0, i1: 6, vt: [[0.6, '0.6'], [0.7, '0.7']], it: [] });
-  const A7 = sc('二極體曲線也一樣', 'THE SAME FOR THE DIODE',
-    PC.svg + PC.curve(iv14, 0.55, 0.725, 'cv') + PC.dot(VQ, IQ, 'q', 6) + T(PC.X(VQ) - 10, PC.Y(IQ) + 4, 'Q', { cls: 'ta', fs: 14, a: 'end', k: 'ql' }) +
-    '<rect class="accw" x="' + PC.X(VQ - 0.008) + '" y="' + (PC.Y(IQ + 0.8)) + '" width="' + (PC.X(VQ + 0.008) - PC.X(VQ - 0.008)) + '" height="' + (PC.Y(IQ - 0.8) - PC.Y(IQ + 0.8)) + '" style="opacity:.6"' + K.k('box') + '/>' +
-    PC.seg(VQ - 0.025, IQ - SL * 0.025, VQ + 0.025, IQ + SL * 0.025, 'tg', 'ln', ' style="stroke-width:2.4"') +
-    calc(400, 130, 210, [['交流很小', 'r1', 'tm'], ['= 只在 Q 旁邊晃一點', 'r2', 'tm'], ['那一段 ≈ 直線（切線）', 'r3', 'ta']], { k: 'cc' }),
-    [{ sub: '回到二極體曲線，直流把它擺在 Q 點。', on: 'cv q ql' },
-     { sub: '交流很小，只在 Q 點旁邊晃這麼一點（藍色框）。', on: 'box cc r1 r2' },
-     { sub: '這一小段，跟門口的地面一樣，幾乎是<b>直的</b> —— 就是 Q 點的<b>切線</b>。', on: 'tg r3' }]);
+  function FF(amp, opt) {
+    opt = opt || {};
+    const P = axes(290, 110, 300, 110, { v0: 0.6, v1: 0.75, i0: 0, i1: 7, vt: [[VQ, 'V<sub>DQ</sub>']], it: [] });
+    const yb = 228, H = 70, xl = 278, Wl = 170;            /* v 波形：y 228～298；i 波形：x 248 往左到 108 */
+    const vAt = u => VQ + amp * Math.sin(u * 4 * Math.PI);
+    let vw = '', iw = '';
+    for (let n = 0; n <= 100; n++) { const u = n / 100; vw += (n ? ' L' : 'M') + f1(P.X(vAt(u))) + ' ' + f1(yb + u * H); iw += (n ? ' L' : 'M') + f1(xl - u * Wl) + ' ' + f1(P.Y(iv14(vAt(u)))); }
+    const pj = (u, key) => { const v = vAt(u), x = P.X(v), y = P.Y(iv14(v)), yv = yb + u * H, xi = xl - u * Wl;
+      return g(key, '<path class="ln2 dsh" style="fill:none" d="M' + f1(x) + ' ' + f1(yv) + ' V' + f1(y) + ' H' + f1(xi) + '"/><circle class="acc" cx="' + f1(x) + '" cy="' + f1(y) + '" r="4.5"/><circle class="acc" cx="' + f1(x) + '" cy="' + f1(yv) + '" r="4"/><circle class="acc" cx="' + f1(xi) + '" cy="' + f1(y) + '" r="4"/>'); };
+    let seg = '';
+    for (let n = 0; n <= 20; n++) { const v = VQ - amp + 2 * amp * n / 20; seg += (n ? ' L' : 'M') + f1(P.X(v)) + ' ' + f1(P.Y(iv14(v))); }
+    const yQ = P.Y(IQ);
+    return g('ax', P.svg + P.curve(iv14, 0.6, 0.71, null, 'ln') + '<line class="ln2" x1="' + xl + '" y1="' + yQ + '" x2="' + (xl - Wl) + '" y2="' + yQ + '" style="stroke-dasharray:3 4"/>' +
+        T(xl - Wl - 6, yQ + 4, 'I<sub>DQ</sub>', { cls: 'tm', fs: 12, a: 'end' })) +
+      g('q', P.dot(VQ, IQ, null, 6) + T(P.X(VQ) - 10, yQ - 6, 'Q', { cls: 'ta', fs: 14, a: 'end' })) +
+      path(vw, 'lna', 'vw', 'stroke-width:2.4') + g('vl', T(P.X(VQ) + amp * 2000 + 14, 290, 'v<sub>D</sub>(t)', { cls: 'ta', fs: 13, a: 'start' }) + arrow(P.X(VQ) + amp * 2000 + 30, 252, P.X(VQ) + amp * 2000 + 30, 274, null, 'ln') + T(P.X(VQ) + amp * 2000 + 38, 268, '時間', { cls: 'ts', fs: 11, a: 'start' })) +
+      path(iw, 'lna', 'iw', 'stroke-width:2.4') + g('il', T(118, yQ + 34, 'i<sub>D</sub>(t)', { cls: 'ta', fs: 13, a: 'start' }) + arrow(200, yQ + 46, 168, yQ + 46, null, 'ln') + T(214, yQ + 50, '時間', { cls: 'ts', fs: 11, a: 'start' })) +
+      pj(0.125, 'pj1') + pj(0.375, 'pj2') +
+      path(seg, 'lna', 'seg', 'stroke-width:7;opacity:.55') +
+      P.seg(VQ - 0.02, IQ - SL * 0.02, VQ + 0.03, IQ + SL * 0.03, 'tg', 'ln', ' style="stroke-width:1.8;stroke-dasharray:6 4"') +
+      T(P.X(VQ + 0.03) + 8, P.Y(IQ + SL * 0.03) + 4, '切線', { cls: 'tm', fs: 13, a: 'start', k: 'tgl' }) +
+      (opt.extra || '');
+  }
+
+  /* 補課 K1～K5（使用者 10/31：「藍色框」看不懂、跟交流什麼關係 → 畫完整的圖） */
+  const faucet = (x, key, label, A) => g(key, '<line class="ln2 dsh" x1="' + (x + 16) + '" y1="200" x2="' + (x + 214) + '" y2="200"/>' + path(wavePath(x + 16, 200, 198, A, u => Math.sin(u * 6 * Math.PI)), 'lna', null, 'stroke-width:2.4') + T(x + 115, 246, label, { cls: 'tm', fs: 12 }));
+  const K1 = sc('先補課：水龍頭的把手', 'A TAP HANDLE',
+    card(50, 112, 250, 150, 'A', T(175, 140, '把手角度（你轉的）', { fs: 15 }) + T(175, 166, '先轉到一半 = 固定的部分', { cls: 'ts', fs: 12 })) +
+    card(340, 112, 250, 150, 'B', T(465, 140, '水流（跟著變）', { fs: 15, cls: 'ta' }) + T(465, 166, '固定的水流 + 一點起伏', { cls: 'ts', fs: 12 })) +
+    faucet(60, 'wA', '來回小小轉', 10) + faucet(350, 'wB', '一下多、一下少', 16) + arrow(304, 200, 336, 200, 'ar', 'lna') +
+    chip(320, 292, '把手 = 電壓 v<sub>D</sub>　水流 = 電流 i<sub>D</sub>', '直流 = 先轉到的位置；交流 = 來回小小轉', 'c1', { fs: 13, acc: true }),
+    [{ sub: '先補課。想像水龍頭：把手先轉到一半，水穩穩地流 —— 這是<b>直流</b>。', on: 'A B' },
+     { sub: '再把把手<b>來回小小轉</b>：水流就跟著一下多、一下少 —— 這就是<b>交流</b>。', on: 'wA wB ar' },
+     { sub: '二極體一模一樣：把手是<b>電壓</b>，水流是<b>電流</b>。', on: 'c1' }]);
+  const K2 = sc('電壓隨時間長這樣', 'v<sub>D</sub>(t)',
+    arrow(90, 290, 90, 112, null, 'ln') + arrow(84, 284, 590, 284, null, 'ln') + T(98, 122, 'v<sub>D</sub>', { cls: 'tm', fs: 13, a: 'start' }) + T(586, 302, '時間 t', { cls: 'tm', fs: 12, a: 'end' }) +
+    g('dc', '<line class="ln dsh" x1="90" y1="200" x2="580" y2="200"/>' + T(100, 232, 'V<sub>DQ</sub> = 0.677 V（直流）', { cls: 't', fs: 13, a: 'start' })) +
+    path(wavePath(110, 200, 460, 36, u => Math.sin(u * 4 * Math.PI)), 'lna', 'ac', 'stroke-width:2.6') +
+    g('acl', T(380, 146, '± 15 mV（交流，畫得比較大）', { cls: 'ta', fs: 13 })),
+    [{ sub: '把二極體上的電壓畫成時間的圖：先是一條<b>直流</b>的線，0.677 V。', on: 'dc' },
+     { sub: '上面騎著一個小小的<b>交流</b>：電壓在 0.677 V 上下來回 ±15 mV。', on: 'ac acl' }]);
+  const K3 = sc('把電壓波形放到曲線下面', 'PUT v<sub>D</sub>(t) UNDER THE CURVE',
+    FF(0.015),
+    [{ sub: '右上是二極體曲線。直流 0.677 V 對到曲線上的 <b>Q 點</b>（2 mA）。', on: 'ax q' },
+     { sub: '把剛剛的電壓波形<b>轉 90°</b>，畫在橫軸下面：越往下，時間越晚。它在 V<sub>DQ</sub> 左右來回。', on: 'vw vl' }]);
+  const K4 = sc('每一刻往上找曲線 → 電流', 'READ THE CURRENT',
+    FF(0.015),
+    [{ sub: '電壓最大的那一刻：往上碰到曲線，再往左讀電流 —— 電流也最大。', on: 'ax q vw vl pj1' },
+     { sub: '電壓最小的那一刻：電流也最小。', on: 'pj2' },
+     { sub: '每一刻都這樣找，就畫出電流波形（畫在縱軸左邊，時間往左走）：電流在 2 mA 上下來回。', on: 'iw il' }]);
+  const K5 = sc('先整理一下：交流在曲線上做什麼', 'LET\'S RECAP',
+    FF(0.015),
+    [{ sub: '先整理一下：交流讓工作的那個「點」，在 Q 附近<b>一小段曲線上來回滑</b>（加粗的那段）。', on: 'ax q vw iw seg' },
+     { sub: '電壓晃一點 → 電流跟著晃一點。交流越小，用到的那一段就越短。接下來看：這一小段長什麼樣子？', on: '' }]);
+
+  /* 07 那一小段幾乎是直的 */
+  const A7 = sc('那一小段，幾乎是直的', 'THE PIECE IS ALMOST STRAIGHT',
+    FF(0.015),
+    [{ sub: '回到完整的圖：小交流只用到 Q 附近加粗的那一小段。', on: 'ax q vw iw seg' },
+     { sub: '把 Q 點的<b>切線</b>（虛線）畫上去：那一小段跟切線幾乎<b>疊在一起</b>。', on: 'tg tgl' },
+     { sub: '就像地球上的家門口：只看一小段，彎的看起來就是直的。' }]);
 
   /* 08 切線 = 電阻 */
   const A8 = sc('直線 = 電阻', 'A STRAIGHT LINE IS A RESISTOR',
@@ -212,19 +265,12 @@
      { sub: '可是在 Q 點旁邊一小段，二極體就是一顆固定的 r<sub>d</sub> —— 電路變成<b>線性</b>的，才可以加（講義 1-8）。', on: 'B' },
      { sub: '所以一切的前提：<b>交流要夠小</b>。不夠小會怎樣？', on: 'c1' }]);
 
-  /* 19 交流太大 ①：非線性 */
-  const PE = axes(70, 112, 250, 168, { v0: 0.6, v1: 0.74, i0: 0, i1: 9, vt: [[0.65, '0.65'], [0.7, '0.7']], it: [] });
-  const VQ2 = vq14(2), big = 0.03;
-  const curD = (() => { let d = ''; for (let k = 0; k <= 80; k++) { const u = k / 80, v = VQ2 + big * Math.sin(u * 4 * Math.PI), i = iv14(v); d += (k ? ' L' : 'M') + f1(370 + u * 230) + ' ' + f1(240 - (i - 2) * 14); } return d; })();
+  /* 19 交流太大 ①：非線性（同一張完整的圖，交流放大到 ±30 mV） */
   const A19 = sc('交流太大 ①：上下不對稱', 'TOO BIG: DISTORTION',
-    '<rect class="accw" x="' + PE.X(VQ2 - big) + '" y="112" width="' + (PE.X(VQ2 + big) - PE.X(VQ2 - big)) + '" height="168" style="opacity:.35"' + K.k('sw') + '/>' +
-    PE.svg + PE.curve(iv14, 0.6, 0.728, 'cv', 'ln') + PE.dot(VQ2, 2, 'q', 5.5) +
-    '<line class="ln2 dsh" x1="370" y1="240" x2="600" y2="240"' + K.k('base') + '/>' + path(curD, 'lna', 'cur', 'stroke-width:2.6') +
-    T(485, 118, '電流：往上衝得多、往下少', { cls: 'ta', fs: 13, k: 'cl' }) + g('cv2', T(604, 160, '+4.3 mA', { cls: 'ta', fs: 12, a: 'end' }) + T(604, 268, '−1.4 mA', { cls: 'tm', fs: 12, a: 'end' })) +
-    chip(470, 296, '走太遠，地面就不平了', '叫「非線性失真」', 'c1', { fs: 13 }),
-    [{ sub: '交流太大，晃的範圍就不再是「一小段」（藍色框）。', on: 'cv q sw' },
-     { sub: '曲線越往上越陡：電流往上衝得多、往下少，波形<b>不對稱</b>。', on: 'base cur cl cv2' },
-     { sub: '就像走太遠，地面就看得出是彎的。這叫<b>非線性失真</b>，r<sub>d</sub> 不能用了。', on: 'c1' }]);
+    FF(0.03, { extra: g('cv2', T(56, 124, '+4.3 mA', { cls: 'ta', fs: 12, a: 'start' }) + T(56, 214, '−1.4 mA', { cls: 'tm', fs: 12, a: 'start' })) }),
+    [{ sub: '同一張圖，把交流加大到 ±30 mV：用到的那一段變長了（加粗那段）。', on: 'ax q vw vl seg' },
+     { sub: '往上那邊曲線很陡、往下那邊很平：電流往上衝 <b>+4.3 mA</b>，往下只掉 <b>1.4 mA</b> —— <b>不對稱</b>。', on: 'pj1 pj2 iw il cv2' },
+     { sub: '走太遠，地面就看得出是彎的。這叫<b>非線性失真</b>，r<sub>d</sub> 不能用了。' }]);
 
   /* 20 交流太大 ②：截止 */
   const clipD = wavePath(80, 240, 480, 1, u => Math.max(0, 0.6 + 1.0 * Math.sin(u * 4 * Math.PI) - 0.0) * 70);
@@ -268,7 +314,7 @@
 
   window.__ch1p6Story = window.__Story('#story', {
     id: 'ch1-part6', title: 'CH1 PART 6 故事一：小訊號', after: '#map',
-    scenes: [A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22, A23]
+    scenes: [A0, A1, A2, A3, A4, A5, K1, K2, K3, K4, K5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22, A23]
   });
 
   /* ══════════════════════════ 故事二：倉庫、開關、二極體家族 ══════════════════════════ */

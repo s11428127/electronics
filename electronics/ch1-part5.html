@@ -36,6 +36,7 @@
       <li><a href="#load"><i>04</i>圖形法：負載線與 Q 點</a></li>
       <li><a href="#pwl"><i>05</i>片段線性模型</a></li>
       <li><a href="#cvd"><i>06</i>定電壓降＋負載線</a></li>
+      <li><a href="#mcmp"><i>06+</i>兩種模型怎麼選</a></li>
       <li><a href="#revb"><i>07</i>逆偏的 Q 點</a></li>
       <li><a href="#check"><i>!</i>講義勘誤</a></li>
       <li><a href="#hw"><i>📝</i>HW1、HW2 作業</a></li>
@@ -50,11 +51,11 @@
       <h1>崩潰與二極體直流分析</h1>
       <p class="sub">二極體反著推太用力會怎樣？——<strong>崩潰</strong>。順著接進電路裡電流到底多少？——指數方程式手算解不出來，要靠<strong>負載線</strong>找交點，或把彎線換成<strong>直線模型</strong>。這一頁把「懂二極體」變成「會算二極體電路」。</p>
       <div class="hero-meta">
-        <span class="chip">20 個畫面的故事模式</span>
-        <span class="chip">8 個互動模組</span>
-        <span class="chip">9 個可改數字例題</span>
+        <span class="chip">25 個畫面的故事模式</span>
+        <span class="chip">9 個互動模組</span>
+        <span class="chip">10 個可改數字例題</span>
         <span class="chip">8 題例題與練習（附圖解故事）</span>
-        <span class="chip">13 題中英對照測驗</span>
+        <span class="chip">15 題中英對照測驗</span>
       </div>
       <p class="note">接續 <a href="ch1-part4.html">CH1 PART 4</a>（順偏、I–V、理想模型、溫度）。老師的 PART 4 V3 版講義前半（1-85～1-105）跟 PART 4 網頁同一段，這一頁從 <b>複習</b>（1-89、1-93～1-97）開始，接 <b>1.2.5 崩潰</b>（1-106～1-111）和 <b>1.3 直流分析</b>（1-112～1-126）。</p>
     </div>
@@ -62,7 +63,7 @@
     <!-- ══════════ 故事模式 ══════════ -->
     <section class="sec" id="story-sec">
       <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>Story mode · 先看這段，再往下讀</div>
-      <h2>20 個畫面看懂這一段<span class="h2-en">THE STORY IN 20 SCENES</span></h2>
+      <h2>25 個畫面看懂這一段<span class="h2-en">THE STORY IN 25 SCENES</span></h2>
       <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。<strong>先建立直覺</strong>，再往下讀推導、玩互動模組、做例題。</p>
       <div id="story"></div>
     </section>
@@ -510,6 +511,66 @@
       <div class="exbook" data-bank="__CH15EX" data-sec="cvd"></div>
     </section>
 
+    <!-- ══════════ 06+ 兩種模型怎麼選（使用者 10/31：為啥要簡化、兩種的功用和區別） ══════════ -->
+    <section class="sec" id="mcmp">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>06+ · 投影片 1-120～1-123 · Piecewise Linear vs Constant-Voltage Drop</div>
+      <h2>片段線性 vs 定電壓降：差在哪、怎麼選<span class="h2-en">WHICH MODEL TO USE</span></h2>
+      <p class="lede">兩個模型的<strong>功用一樣</strong>：把彎的二極體換成直線，才能一條 KVL 解出來。<strong>差別只有一顆小電阻 r<sub>f</sub></strong>：片段線性有算它，定電壓降把它當 0。r<sub>f</sub> 跟 R 比很小時，算不算根本看不出來 —— 這就是「再簡化」的理由。</p>
+      <div class="eq">片段線性：I<em>D</em> = (V<em>PS</em> − V<em>γ</em>)/(R + r<em>f</em>)　　定電壓降：I<em>D</em> = (V<em>PS</em> − V<em>γ</em>)/R　　兩者相差 ≈ r<em>f</em>/R</div>
+      <div class="derive">
+        <h4>為什麼可以再簡化</h4>
+        <ol>
+          <li><span class="d-eq">共同目的：彎線不能直接代 KVL，換成直線才行</span>
+            <div class="why">真的指數曲線要疊代或畫圖（1-116）。換成直線，二極體就變成「電池（＋電阻）」，一條 KVL 解完。</div></li>
+          <li><span class="d-eq">片段線性：二極體 = V<sub>γ</sub> 電池 + r<sub>f</sub>（斜線）</span>
+            <div class="why">比較貼近真的曲線，代價是多算一項（1-120、1-121）。</div></li>
+          <li><span class="d-eq">定電壓降：r<sub>f</sub> = 0，二極體 = V<sub>γ</sub> 電池（垂直線）</span>
+            <div class="why">最好算。條件是 r<sub>f</sub> ≪ R（1-123）。</div></li>
+          <li><span class="d-eq">兩式相除：I<sub>定電壓降</sub>/I<sub>片段線性</sub> = (R + r<sub>f</sub>)/R = 1 + r<sub>f</sub>/R</span>
+            <div class="why">所以兩個答案只差 r<sub>f</sub>/R 這麼多。Example 1.9：10/2000 = 0.5%（2.189 vs 2.200 mA）。</div></li>
+          <li><span class="d-eq hi">R ≫ r<sub>f</sub> → 定電壓降；R 跟 r<sub>f</sub> 同等級 → 片段線性</span>
+            <p>像量身高要不要算頭髮：170 cm 的人多 0.5 cm 看不出來；量螞蟻就不行。R = 50 Ω、r<sub>f</sub> = 10 Ω 時兩者差 20%（73.3 vs 88.0 mA）。題目有給 r<sub>f</sub> 就照算。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>兩條模型線，兩個交點</h3><span class="spacer"></span><span class="tag">V<sub>γ</sub> = 0.6 V</span></div>
+        <div class="stage-wrap"><canvas id="cv-mc" aria-label="片段線性（斜線）與定電壓降（垂直線）兩種模型跟負載線的交點，調 R 看兩個交點分開"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="mc-r">電阻 R<output for="mc-r"></output></label>
+            <input type="range" id="mc-r" min="1.3" max="4" step="0.001" value="3.30103"></div>
+          <div class="ctrl"><label for="mc-v">V<sub>PS</sub><output for="mc-v"></output></label>
+            <input type="range" id="mc-v" min="1" max="10" step="0.1" value="5"></div>
+          <div class="ctrl" style="grid-column:1 / -1"><label for="mc-rf">r<sub>f</sub><output for="mc-rf"></output></label>
+            <input type="range" id="mc-rf" min="1" max="50" step="1" value="10"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>片段線性</dt><dd id="mc-p" class="e">—</dd></div>
+          <div><dt>定電壓降</dt><dd id="mc-c">—</dd></div>
+          <div><dt>相差</dt><dd id="mc-e">—</dd></div>
+        </dl>
+        <div class="msg" id="mc-msg"></div>
+      </div>
+      <div id="ex-mc"></div>
+      <div class="howto">
+        <h4>選模型的流程</h4>
+        <ol>
+          <li>題目有給 r<sub>f</sub> → 片段線性。</li>
+          <li>沒給 r<sub>f</sub> → 定電壓降（V<sub>γ</sub> 沒給用 0.7 V）。</li>
+          <li>想確認能不能省：算 r<sub>f</sub>/R，不到 1% 就放心省。</li>
+          <li>要最準（或電源很小）→ 疊代法、指數公式。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>選模型的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 定電壓降是另一種完全不同的模型。<span class="o">它就是 r<sub>f</sub> = 0 的片段線性</span>。</li>
+          <li><span class="x">✗</span> 簡化一定比較不準，所以不要用。<span class="o">R ≫ r<sub>f</sub> 時只差零點幾 %</span>，考試、設計都用它。</li>
+          <li><span class="x">✗</span> 題目給了 r<sub>f</sub> 還是用定電壓降。<span class="o">給了就照算</span>，不然答案對不上。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH15EX" data-sec="mcmp"></div>
+    </section>
+
     <!-- ══════════ 07 逆偏 ══════════ -->
     <section class="sec" id="revb">
       <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>07 · 投影片 1-126 · Reverse-Biased Diode</div>
@@ -669,7 +730,7 @@
     <section class="sec" id="quiz-sec">
       <div class="eyebrow"><span class="part-tag">原講義 PART 4（V3）</span>自我檢查</div>
       <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
-      <p class="lede">13 題，中英對照，選項順序每次打亂。題目下方那行英文就是考卷上會看到的講法。</p>
+      <p class="lede">15 題，中英對照，選項順序每次打亂。題目下方那行英文就是考卷上會看到的講法。</p>
       <div class="quiz" id="quiz"></div>
     </section>
 
@@ -698,6 +759,7 @@ __EXB.picker(document.getElementById('sec-pick'), [
   { id: 'load', no: '04', name: '負載線與 Q 點', count: '例 1 · 練 1' },
   { id: 'pwl', no: '05', name: '片段線性', count: '例 1 · 練 1' },
   { id: 'cvd', no: '06', name: '定電壓降', count: '練 1' },
+  { id: 'mcmp', no: '06+', name: '兩種模型怎麼選', count: '練 1' },
   { id: 'revb', no: '07', name: '逆偏', count: '練 1' }
 ], { key: 'ch1-part5', alwaysAll: ['map', 'check', 'hw', 'glossary', 'quiz-sec'] });
 </script>

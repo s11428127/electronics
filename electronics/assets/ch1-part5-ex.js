@@ -317,6 +317,39 @@
              { sub: '兩條交在 <b>(−5 V, 0)</b>：電流 0，5 V 全部反著落在二極體上。', on: 'q ql r3' }]),
           ansScene(['Q = (−5 V, 0 A)', '逆偏 → OFF → 電阻沒壓降'], ['答案：Q = (−5 V, 0)。'])
         ];
+      } },
+    /* ═══════════ 兩種模型怎麼選（自編，10/31） ═══════════ */
+    { id: 'p5-cmp', sec: 'mcmp', kind: 'pp', no: '', tag: '自編練習', title: '兩種模型，什麼時候算出來不一樣？',
+      q: '同一顆二極體（V<sub>γ</sub> = 0.6 V、r<sub>f</sub> = 10 Ω）接在 V<sub>PS</sub> = 5 V 的電路，(a) R = 2 kΩ、(b) R = 50 Ω。兩種情況各用片段線性與定電壓降模型求 I<sub>D</sub>，差多少 %？哪一種情況可以放心用定電壓降？',
+      en: 'A diode with V<sub>γ</sub> = 0.6 V and r<sub>f</sub> = 10 Ω is driven by V<sub>PS</sub> = 5 V through (a) R = 2 kΩ and (b) R = 50 Ω. In each case find I<sub>D</sub> with the piecewise linear and the constant-voltage-drop models, the percentage difference, and decide when the simpler model is acceptable.',
+      fig: F('5 V', 'R'), cap: '電源 — R — 二極體',
+      hint: '片段線性 I = (V<sub>PS</sub> − V<sub>γ</sub>)/(R + r<sub>f</sub>)；定電壓降 I = (V<sub>PS</sub> − V<sub>γ</sub>)/R。差 ≈ r<sub>f</sub>/R。',
+      steps: [
+        st('(a) R = 2 kΩ，片段線性。', 'I = 4.4/(2000 + 10) = 2.189 mA'),
+        st('(a) 定電壓降。', 'I = 4.4/2000 = 2.200 mA　⟹　差 0.5%', 'r<sub>f</sub>/R = 10/2000 = 0.5%：小到看不出來。'),
+        st('(b) R = 50 Ω，片段線性。', 'I = 4.4/(50 + 10) = 73.3 mA'),
+        st('(b) 定電壓降。', 'I = 4.4/50 = 88.0 mA　⟹　差 20%', 'r<sub>f</sub> 跟 R 差不多大，拿掉就差很多。'),
+        st('結論。', 'R ≫ r<sub>f</sub> → 定電壓降就夠；R 跟 r<sub>f</sub> 同等級 → 要用片段線性', '量身高可以不算頭髮；量螞蟻就不行。')
+      ],
+      ans: '(a) 2.189 vs 2.200 mA，差 0.5%，可用定電壓降；(b) 73.3 vs 88.0 mA，差 20%，要用片段線性',
+      note: '自編練習，用來說明兩種模型的差別（講義 1-122、1-123）。(b) 的電流很大，實際二極體的 r<sub>f</sub> 要看規格。',
+      story: () => {
+        const { g, T, calc, sc, circ, ansScene, D } = KK();
+        return [
+          sc('(a) R = 2 kΩ：差不多', 'R = 2 kΩ',
+            circ(60, 150, 150, 120, { k: 'cir', vps: '5 V', r: '2 kΩ', model: 'pwl', vg: '0.6 V', rf: '10 Ω' }) +
+            calc(300, 120, 310, [['片段線性：4.4/2010 = 2.189 mA', 'r1'], ['定電壓降：4.4/2000 = 2.200 mA', 'r2', 'ta'], ['差 0.5% → 用定電壓降就好', 'r3', 'ta']], { k: 'cc', fs: 14 }),
+            [{ sub: 'R = 2 kΩ。片段線性多算一顆 10 Ω：<b>2.189 mA</b>。', on: 'cir cc r1' },
+             { sub: '定電壓降不算它：<b>2.200 mA</b>。', on: 'r2' },
+             { sub: '只差 0.5% —— 10 Ω 跟 2 kΩ 比就像頭髮跟身高。', on: 'r3' }]),
+          sc('(b) R = 50 Ω：差很多', 'R = 50 Ω',
+            circ(60, 150, 150, 120, { k: 'cir', vps: '5 V', r: '50 Ω', model: 'pwl', vg: '0.6 V', rf: '10 Ω' }) +
+            calc(300, 120, 310, [['片段線性：4.4/60 = 73.3 mA', 'r1'], ['定電壓降：4.4/50 = 88.0 mA', 'r2', 'ta'], ['差 20% → r<sub>f</sub> 不能省', 'r3', 'ta']], { k: 'cc', fs: 14 }),
+            [{ sub: 'R 只有 50 Ω：片段線性 <b>73.3 mA</b>。', on: 'cir cc r1' },
+             { sub: '定電壓降 <b>88.0 mA</b>。', on: 'r2' },
+             { sub: '差 20%：r<sub>f</sub> 跟 R 差不多大，一定要算。', on: 'r3' }]),
+          ansScene(['差 ≈ r<sub>f</sub> / R', '(a) 0.5%：定電壓降 OK', '(b) 20%：要片段線性'], ['答案：R ≫ r<sub>f</sub> 才能省。'])
+        ];
       } }
   ];
 

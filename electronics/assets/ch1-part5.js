@@ -755,7 +755,21 @@
     { zh: '二極體反接（逆偏）、V<sub>PS</sub> = 5 V、R = 2 kΩ，Q 點為？（V<sub>D</sub>、I<sub>D</sub> 照原本定義）',
       en: 'With the diode reversed (reverse biased), V<sub>PS</sub> = 5 V and R = 2 kΩ, what is the Q-point (using the original sign definitions)?',
       o: [['(−5 V, 0 A)', '(−5 V, 0 A)'], ['(0 V, −2.5 mA)', '(0 V, −2.5 mA)'], ['(0.7 V, 2.15 mA)', '(0.7 V, 2.15 mA)'], ['(5 V, 0 A)', '(5 V, 0 A)']], a: 0,
-      e: '負載線截距 (−5 V, 0)、(0, −2.5 mA)，跟片段線性模型交在 OFF 段：I<sub>D</sub> = 0，整個 5 V 反著落在二極體上（投影片 1-126）。' }
+      e: '負載線截距 (−5 V, 0)、(0, −2.5 mA)，跟片段線性模型交在 OFF 段：I<sub>D</sub> = 0，整個 5 V 反著落在二極體上（投影片 1-126）。' },
+    { zh: '片段線性模型和定電壓降模型差在哪？',
+      en: 'What is the difference between the piecewise linear model and the constant-voltage-drop model?',
+      o: [['片段線性多一顆小電阻 r<sub>f</sub>；定電壓降把它當 0', 'the piecewise linear model includes a small resistance r<sub>f</sub>; the constant-voltage-drop model sets it to zero'],
+          ['定電壓降多一顆電阻', 'the constant-voltage-drop model adds a resistor'],
+          ['片段線性不用 V<sub>γ</sub>', 'the piecewise linear model has no V<sub>γ</sub>'],
+          ['兩個完全一樣', 'they are identical']], a: 0,
+      e: '投影片 1-120～1-123：兩個都把彎線換成直線，好用 KVL 解；差別只在要不要算 r<sub>f</sub>。' },
+    { zh: '什麼時候可以放心用定電壓降模型（忽略 r<sub>f</sub>）？',
+      en: 'When can r<sub>f</sub> be neglected (constant-voltage-drop model)?',
+      o: [['外接電阻 R 遠大於 r<sub>f</sub> 時', 'when the external resistance R is much larger than r<sub>f</sub>'],
+          ['R 跟 r<sub>f</sub> 差不多大時', 'when R is about the same as r<sub>f</sub>'],
+          ['電源電壓很小時', 'when the supply voltage is very small'],
+          ['任何時候都不行', 'never']], a: 0,
+      e: '兩者相差 ≈ r<sub>f</sub>/R：2 kΩ 時只差 0.5%；R = 50 Ω 時差 20%。' },
   ];
   let i = 0, score = 0, answered = false, ord = [];
   const shuffle = n => { const o = Array.from({ length: n }, (_, k) => k); for (let k = n - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [o[k], o[j]] = [o[j], o[k]]; } return o; };
@@ -836,4 +850,84 @@
     try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
   });
   try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+
+/* ============================================================
+   10/31 補：片段線性 vs 定電壓降 —— 差在哪、怎麼選（#mcmp）
+   ============================================================ */
+(function () {
+  'use strict';
+  const E = window.__EE;
+  const { C, Stage, label, labelCJK, bindRange, lerp, liveExample } = E;
+  const setHTML = (id, v) => { const el = document.getElementById(id); if (el) el.innerHTML = v; };
+  const dot = (ctx, x, y, r, col) => { ctx.beginPath(); ctx.arc(x, y, Math.max(0, r), 0, Math.PI * 2); ctx.fillStyle = col; ctx.fill(); };
+  const fmtR = r => r >= 1000 ? (r / 1000).toFixed(2) + ' kΩ' : r.toFixed(0) + ' Ω';
+  const two = (V, R, Vg, rf) => { const ip = V > Vg ? (V - Vg) / (R + rf) : 0, ic = V > Vg ? (V - Vg) / R : 0; return { ip, ic, vp: Vg + ip * rf, err: ip > 0 ? (ic / ip - 1) * 100 : 0 }; };
+
+  (function bench() {
+    const cv = document.getElementById('cv-mc'); if (!cv) return;
+    let V = 5, lgR = Math.log10(2000), RF = 10, st;
+    const VG = 0.6;
+    st = Stage(cv, { animate: false, ratio: w => w < 560 ? 0.85 : 0.46, minH: 260, maxH: 400, draw(ctx, w, h) {
+      const R = Math.pow(10, lgR), m = two(V, R, VG, RF);
+      const L = Math.max(48, w * 0.1), Rt = w * 0.96, T = h * 0.08, B = h * 0.84;
+      const v0 = 0.4, v1 = 1.1, i1 = Math.max(m.ic, 1e-6) * 1.35;
+      const X = v => lerp(L, Rt, (v - v0) / (v1 - v0)), Y = i => lerp(B, T, i / i1);
+      ctx.strokeStyle = C['ink-2']; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(L, B); ctx.lineTo(Rt, B); ctx.moveTo(L, B); ctx.lineTo(L, T); ctx.stroke();
+      labelCJK(ctx, Rt, B + 14, 'v<sub>D</sub> (V)', C['ink-3'], 11, 'right'); labelCJK(ctx, L + 6, T + 2, 'i<sub>D</sub>', C['ink-3'], 11, 'left');
+      [0.6, 0.8, 1.0].forEach(v => label(ctx, X(v), B + 12, v.toFixed(1), C['ink-3'], 10));
+      ctx.save(); ctx.beginPath(); ctx.rect(L, T, Rt - L, B - T); ctx.clip();
+      /* 負載線：i = (V − v)/R */
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.moveTo(X(v0), Y((V - v0) / R)); ctx.lineTo(X(v1), Y((V - v1) / R)); ctx.stroke();
+      /* 定電壓降：垂直線 */
+      ctx.strokeStyle = C['q-react'] || C.warn; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(X(v0), Y(0)); ctx.lineTo(X(VG), Y(0)); ctx.lineTo(X(VG), T); ctx.stroke();
+      /* 片段線性：斜率 1/rf */
+      ctx.strokeStyle = C.accent; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(X(VG), Y(0)); ctx.lineTo(X(v1), Y((v1 - VG) / Math.max(RF, 0.01))); ctx.stroke();
+      ctx.restore();
+      dot(ctx, X(VG), Y(m.ic), 6.5, C['q-react'] || C.warn); dot(ctx, X(m.vp), Y(m.ip), 6.5, C.accent);
+      labelCJK(ctx, X(VG) - 8, Y(m.ic) - 10, '定電壓降 ' + (m.ic * 1e3).toFixed(2) + ' mA', C['q-react'] || C.warn, 11.5, 'right', '700');
+      labelCJK(ctx, X(m.vp) + 10, Y(m.ip) + 14, '片段線性 ' + (m.ip * 1e3).toFixed(2) + ' mA', C.accent, 11.5, 'left', '700');
+      labelCJK(ctx, Rt - 4, T + 10, '黑線：負載線（R = ' + fmtR(R) + '）', C['ink-3'], 10.5, 'right');
+    } });
+    function msg() {
+      const R = Math.pow(10, lgR), m = two(V, R, VG, RF);
+      setHTML('mc-p', (m.ip * 1e3).toFixed(3) + ' mA'); setHTML('mc-c', (m.ic * 1e3).toFixed(3) + ' mA'); setHTML('mc-e', m.err.toFixed(1) + ' %');
+      setHTML('mc-msg', m.err < 1 ? '<b>r<sub>f</sub> ≪ R</b>（' + RF + ' Ω 對 ' + fmtR(R) + '）：兩個交點幾乎疊在一起，差不到 1% → 用最好算的<b>定電壓降</b>就夠了。'
+        : m.err < 5 ? '差 ' + m.err.toFixed(1) + '%：還算接近，題目沒給 r<sub>f</sub> 就用定電壓降；有給就照算。'
+        : '<b>差 ' + m.err.toFixed(0) + '%</b>：R 小到跟 r<sub>f</sub> 差不多，r<sub>f</sub> 不能省 → 要用<b>片段線性</b>。注意兩條模型線之間的角度：負載線越陡（R 越小），兩個交點離得越遠。');
+      st.redraw();
+    }
+    bindRange('mc-r', x => fmtR(Math.pow(10, x)), x => { lgR = x; msg(); });
+    bindRange('mc-v', x => x.toFixed(1) + ' V', x => { V = x; msg(); });
+    bindRange('mc-rf', x => x.toFixed(0) + ' Ω', x => { RF = x; msg(); });
+  })();
+
+  if (document.getElementById('ex-mc')) liveExample('#ex-mc', {
+    title: '例題 · 同一題用兩種模型算，差多少？',
+    ratio: 0.28, minH: 130, maxH: 190,
+    givens: [
+      { id: 'xm-v', label: 'V<sub>PS</sub>', min: 1, max: 12, step: 0.1, value: 5, fmt: v => v.toFixed(1) + ' V' },
+      { id: 'xm-r', label: 'R', min: 1, max: 4, step: 0.001, value: 3.30103, fmt: v => fmtR(Math.pow(10, v)) },
+      { id: 'xm-g', label: 'V<sub>γ</sub>', min: 0.5, max: 0.8, step: 0.05, value: 0.6, fmt: v => v.toFixed(2) + ' V' },
+      { id: 'xm-f', label: 'r<sub>f</sub>', min: 1, max: 50, step: 1, value: 10, fmt: v => v.toFixed(0) + ' Ω' }
+    ],
+    compute: g => { const V = g['xm-v'], R = Math.pow(10, g['xm-r']), Vg = g['xm-g'], rf = g['xm-f']; return Object.assign({ V, R, Vg, rf }, two(V, R, Vg, rf)); },
+    question: (g, r) => 'V<sub>PS</sub> = <b>' + r.V.toFixed(1) + ' V</b>、R = <b>' + fmtR(r.R) + '</b>，二極體 V<sub>γ</sub> = ' + r.Vg.toFixed(2) + ' V、r<sub>f</sub> = <b>' + r.rf + ' Ω</b>。分別用片段線性與定電壓降模型求 I<sub>D</sub>，差多少 %？這一題可以用定電壓降嗎？',
+    questionEn: (g, r) => 'With V<sub>PS</sub> = ' + r.V.toFixed(1) + ' V, R = ' + fmtR(r.R) + ', V<sub>γ</sub> = ' + r.Vg.toFixed(2) + ' V and r<sub>f</sub> = ' + r.rf + ' Ω, find I<sub>D</sub> with the piecewise linear model and with the constant-voltage-drop model. How large is the difference, and is the simpler model acceptable?',
+    steps: (g, r) => r.ip <= 0 ? [{ t: 'Step 1　V<sub>PS</sub> ≤ V<sub>γ</sub>。', note: '推不開門，二極體 OFF，兩種模型都說 I<sub>D</sub> = 0。' }] : [
+      { t: 'Step 1　片段線性：電池 + r<sub>f</sub>。', eq: 'I<sub>D</sub> = (' + r.V.toFixed(1) + ' − ' + r.Vg.toFixed(2) + ')/(' + r.R.toFixed(0) + ' + ' + r.rf + ') = ' + (r.ip * 1e3).toFixed(3) + ' mA' },
+      { t: 'Step 2　定電壓降：只有電池。', eq: 'I<sub>D</sub> = (' + r.V.toFixed(1) + ' − ' + r.Vg.toFixed(2) + ')/' + r.R.toFixed(0) + ' = ' + (r.ic * 1e3).toFixed(3) + ' mA' },
+      { t: 'Step 3　差多少。', note: '兩式相除：(R + r<sub>f</sub>)/R = 1 + r<sub>f</sub>/R，所以差 ≈ r<sub>f</sub>/R。', eq: '差 = ' + r.err.toFixed(2) + ' %（r<sub>f</sub>/R = ' + (r.rf / r.R * 100).toFixed(2) + ' %）' },
+      { t: 'Step 4　選哪個。', note: r.err < 1 ? 'r<sub>f</sub> ≪ R，差不到 1%：<b>定電壓降就夠</b>（省一項、答案幾乎一樣）。' : r.err < 5 ? '差幾 %：題目有給 r<sub>f</sub> 就照算（片段線性），沒給就用定電壓降。' : '<b>差太多</b>：R 跟 r<sub>f</sub> 差不多大，一定要用片段線性。' }
+    ],
+    answer: (g, r) => r.ip <= 0 ? 'I<sub>D</sub> = 0（OFF）' : '片段線性 ' + (r.ip * 1e3).toFixed(3) + ' mA、定電壓降 ' + (r.ic * 1e3).toFixed(3) + ' mA，差 ' + r.err.toFixed(2) + ' %',
+    draw: (ctx, w, h, g, r) => {
+      const x0 = Math.max(w * 0.3, 120), x1 = w * 0.78, mx = Math.max(r.ic, 1e-12);
+      [['片段線性', r.ip, C.accent], ['定電壓降', r.ic, C['q-react'] || C.warn]].forEach(([nm, v, col], k) => {
+        const y = h * (0.32 + k * 0.36), len = Math.max(2, (x1 - x0) * v / mx);
+        ctx.fillStyle = col; ctx.fillRect(x0, y - 9, len, 18);
+        labelCJK(ctx, x0 - 8, y, nm, col, 12, 'right', '700'); labelCJK(ctx, x0 + len + 6, y, (v * 1e3).toFixed(3) + ' mA', col, 11, 'left', '700');
+      });
+    }
+  });
 })();
