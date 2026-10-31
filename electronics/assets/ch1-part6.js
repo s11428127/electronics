@@ -210,6 +210,46 @@
     bindRange('rd-i', x => fmtA(Math.pow(10, x) * 1e-3), x => { lg = x; msg(); });
   })();
 
+
+  /* ══════════════════════════════════════════════════════════
+     02+ 補課：割線 → 切線（為什麼要微分）＋ 片段線性的 r_f 對照
+     ══════════════════════════════════════════════════════════ */
+  (function secant() {
+    const cv = document.getElementById('cv-rf'); if (!cv) return;
+    const IS = 1e-14, VG = 0.62, RF = 10; let lg = Math.log10(2), DV = 0.01, st;
+    const iv = v => IS * (Math.exp(v / VT) - 1) * 1e3;
+    st = Stage(cv, { animate: false, ratio: w => wide(w) ? 0.46 : 0.85, minH: 260, maxH: 400, draw(ctx, w, h) {
+      const IQ = Math.pow(10, lg), VQ = VT * Math.log(IQ * 1e-3 / IS), sl = IQ / VT, I2 = iv(VQ + DV), ss = (I2 - IQ) / DV;
+      const A = box(w, h, 0.1, 0.07, 0.96, 0.88);
+      const F = frame(ctx, A, { v0: 0.56, v1: 0.76, i0: 0, i1: 14, vt: [[0.6, '0.60'], [0.65, '0.65'], [0.7, '0.70'], [0.75, '0.75']], it: [[5, '5'], [10, '10']], xl: 'v<sub>D</sub> (V)', yl: 'i<sub>D</sub> (mA)' });
+      plot(ctx, F, iv, 0.56, 0.76, C['ink-2'], 2.4);
+      /* 片段線性 r_f（固定的一條斜線） */
+      ctx.save(); ctx.beginPath(); ctx.rect(F.L, F.T, F.R - F.L, F.B - F.T); ctx.clip();
+      ctx.strokeStyle = C['q-react'] || C.warn; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.moveTo(F.X(0.56), F.Y(0)); ctx.lineTo(F.X(VG), F.Y(0)); ctx.lineTo(F.X(0.76), F.Y((0.76 - VG) * 1000 / RF)); ctx.stroke();
+      /* 切線 */
+      ctx.strokeStyle = C.accent; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(F.X(VQ - IQ / sl), F.Y(0)); ctx.lineTo(F.X(VQ + (14 - IQ) / sl), F.Y(14)); ctx.stroke();
+      /* 割線（Q 到 Q + Δv） */
+      ctx.setLineDash([5, 4]); ctx.strokeStyle = C.ink; ctx.lineWidth = 1.6; ctx.beginPath();
+      ctx.moveTo(F.X(VQ - 0.02), F.Y(IQ - ss * 0.02)); ctx.lineTo(F.X(VQ + 0.04), F.Y(IQ + ss * 0.04)); ctx.stroke(); ctx.setLineDash([]);
+      ctx.restore();
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 1.2; ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.moveTo(F.X(VQ), F.Y(IQ)); ctx.lineTo(F.X(VQ + DV), F.Y(IQ)); ctx.lineTo(F.X(VQ + DV), F.Y(Math.min(14, I2))); ctx.stroke(); ctx.setLineDash([]);
+      dot(ctx, F.X(VQ), F.Y(IQ), 6, C.accent); if (I2 < 14) dot(ctx, F.X(VQ + DV), F.Y(I2), 5, C.ink);
+      labelCJK(ctx, F.L + 30, F.T + 26, '藍：Q 點切線（微分 → r<sub>d</sub>）', C.accent, 11.5, 'left', '700');
+      labelCJK(ctx, F.L + 30, F.T + 44, '黑虛線：往前一步 Δv 的斜線', C.ink, 11.5, 'left', '700');
+      labelCJK(ctx, F.L + 30, F.T + 62, '橘：片段線性（固定 r<sub>f</sub> = 10 Ω）', C['q-react'] || C.warn, 11.5, 'left', '700');
+    } });
+    function msg() {
+      const IQ = Math.pow(10, lg), VQ = VT * Math.log(IQ * 1e-3 / IS), sl = IQ / VT, ss = (iv(VQ + DV) - IQ) / DV, rd = VT / (IQ * 1e-3);
+      setHTML('rf-s', ss.toFixed(1) + ' mA/V'); setHTML('rf-t', sl.toFixed(1) + ' mA/V'); setHTML('rf-r', fmtR(rd));
+      const err = (ss / sl - 1) * 100;
+      setHTML('rf-msg', (err < 2 ? '一步只有 ' + (DV * 1e3).toFixed(1) + ' mV：虛線跟藍色切線幾乎重疊（差 ' + err.toFixed(1) + '%）—— 這就是微分在算的東西。' : '一步 ' + (DV * 1e3).toFixed(1) + ' mV 太大：虛線比切線陡 ' + err.toFixed(0) + '%（曲線已經彎上去了）。把 Δv 拉小看看。') +
+        ' 現在 r<sub>d</sub> = 26 mV ÷ ' + IQ.toFixed(2) + ' mA = ' + fmtR(rd) + '；橘線的 r<sub>f</sub> 一直是 10 Ω —— ' + (rd > 15 ? 'Q 點低，r<sub>d</sub> 比 r<sub>f</sub> 大很多。' : rd < 7 ? 'Q 點高，r<sub>d</sub> 比 r<sub>f</sub> 還小。' : '這附近兩者剛好差不多，但意義不同。'));
+      st.redraw();
+    }
+    bindRange('rf-i', x => fmtA(Math.pow(10, x) * 1e-3), x => { lg = x; msg(); });
+    bindRange('rf-d', x => (x * 1e3).toFixed(1) + ' mV', x => { DV = x; msg(); });
+  })();
+
   /* ══════════════════════════════════════════════════════════
      03 DC / AC 拆開算：Example 1.11 的電路
      ══════════════════════════════════════════════════════════ */
@@ -753,6 +793,31 @@
     ],
     answer: (g, r) => 'I<sub>DQ</sub> = ' + P6.fmtA(r.I) + '、g<sub>d</sub> = ' + (r.gd * 1e3).toFixed(3) + ' mA/V、r<sub>d</sub> = ' + P6.fmtR(r.rd),
     draw: (ctx, w, h, g, r) => logBars(ctx, w, h, [['r<sub>d</sub>', r.rd, C.accent], ['講義 247 Ω', 247, C['ink-3']]], 0, 6, 'Ω（對數）')
+  });
+
+
+  /* ── 02+ 用「往前推一小步」算斜率 ── */
+  liveExample('#ex-rf', {
+    title: '例題 · 不會微分也能算 r<sub>d</sub>：往前推一小步',
+    ratio: 0.3, minH: 140, maxH: 200,
+    givens: [
+      { id: 'xf-i', label: 'I<sub>DQ</sub>', min: 0.1, max: 10, step: 0.1, value: 2, fmt: v => v.toFixed(1) + ' mA' },
+      { id: 'xf-d', label: '一步 Δv', min: 0.1, max: 30, step: 0.1, value: 1, fmt: v => v.toFixed(1) + ' mV' }
+    ],
+    compute: g => {
+      const I = g['xf-i'], dv = g['xf-d'] * 1e-3, I2 = I * Math.exp(dv / VT), ss = (I2 - I) / dv, sl = I / VT;
+      return { I, dv, I2, ss, sl, err: (ss / sl - 1) * 100, rd: VT / (I * 1e-3), rs: 1 / ss * 1e3 };
+    },
+    question: (g, r) => '二極體停在 I<sub>DQ</sub> = <b>' + r.I.toFixed(1) + ' mA</b>（V<sub>T</sub> = 26 mV）。電壓多推 Δv = <b>' + (r.dv * 1e3).toFixed(1) + ' mV</b>，電流變多少？用 Δi/Δv 估斜率和 r<sub>d</sub>，跟微分的答案 I<sub>DQ</sub>/V<sub>T</sub> 比。',
+    questionEn: (g, r) => 'A diode is biased at I<sub>DQ</sub> = ' + r.I.toFixed(1) + ' mA. If the voltage increases by Δv = ' + (r.dv * 1e3).toFixed(1) + ' mV, find the new current, estimate the slope Δi/Δv and r<sub>d</sub>, and compare with I<sub>DQ</sub>/V<sub>T</sub>.',
+    steps: (g, r) => [
+      { t: 'Step 1　多推 Δv，電流變成幾倍？', note: '指數的加法變乘法：i = I<sub>DQ</sub> · e<sup>Δv/V<sub>T</sub></sup>。', eq: 'i = ' + r.I.toFixed(1) + ' × e<sup>' + (r.dv * 1e3).toFixed(1) + '/26</sup> = ' + r.I2.toFixed(4) + ' mA' },
+      { t: 'Step 2　斜率 ≈ Δi/Δv。', eq: '(' + r.I2.toFixed(4) + ' − ' + r.I.toFixed(1) + ') / ' + (r.dv * 1e3).toFixed(1) + ' mV = ' + r.ss.toFixed(2) + ' mA/V → r ≈ ' + r.rs.toFixed(2) + ' Ω' },
+      { t: 'Step 3　微分的答案。', note: '每多 1 mV，電流多「現在的 1/26」。', eq: 'I<sub>DQ</sub>/V<sub>T</sub> = ' + r.sl.toFixed(2) + ' mA/V → r<sub>d</sub> = 26 mV ÷ ' + r.I.toFixed(1) + ' mA = ' + r.rd.toFixed(2) + ' Ω' },
+      { t: 'Step 4　比一比。', note: r.err < 2 ? '只差 ' + r.err.toFixed(1) + '%：一步夠小，就是微分（切線）的答案。' : '差了 ' + r.err.toFixed(0) + '%：一步太大，曲線已經彎了。把 Δv 改小（例如 0.1 mV）就會對上。' }
+    ],
+    answer: (g, r) => 'Δi/Δv ≈ ' + r.ss.toFixed(2) + ' mA/V（微分：' + r.sl.toFixed(2) + '）；r<sub>d</sub> = ' + r.rd.toFixed(2) + ' Ω',
+    draw: (ctx, w, h, g, r) => bars(ctx, w, h, [['這一步的斜率', r.ss, C.ink], ['微分 I<sub>DQ</sub>/V<sub>T</sub>', r.sl, C.accent]], v => v.toFixed(1) + ' mA/V')
   });
 
   /* ── 03 Example 1.11 ── */

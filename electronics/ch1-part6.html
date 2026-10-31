@@ -33,6 +33,7 @@
       <li><a href="#basics"><i>00</i>補課：讀小訊號圖</a></li>
       <li><a href="#ss"><i>01</i>小訊號：直流＋小交流</a></li>
       <li><a href="#rd"><i>02</i>增量電阻 r<sub>d</sub></a></li>
+      <li><a href="#rdrf"><i>02+</i>為什麼微分？r<sub>d</sub> vs r<sub>f</sub></a></li>
       <li><a href="#dcac"><i>03</i>DC 分析＋AC 分析</a></li>
       <li><a href="#qdes"><i>04</i>Q 點設計與失真</a></li>
       <li><a href="#story2-sec"><i>▶</i>故事二：電容、開關、其他二極體</a></li>
@@ -54,11 +55,11 @@
       <h1>小訊號分析與其他二極體</h1>
       <p class="sub">PART 5 算出了 Q 點：二極體靜靜地停在那裡。這一頁在 Q 點上<strong>疊一個很小的交流訊號</strong>，看二極體怎麼「像一顆電阻」回應它。後半段認識二極體家族：<strong>太陽能電池、光二極體、LED、蕭特基、齊納</strong>。</p>
       <div class="hero-meta">
-        <span class="chip">2 段故事模式（共 53 個畫面）</span>
-        <span class="chip">11 個互動模組</span>
-        <span class="chip">11 個可改數字例題</span>
+        <span class="chip">2 段故事模式（共 60 個畫面）</span>
+        <span class="chip">12 個互動模組</span>
+        <span class="chip">12 個可改數字例題</span>
         <span class="chip">10 題例題與練習（附圖解故事）</span>
-        <span class="chip">88 題觀念填充</span>
+        <span class="chip">96 題觀念填充</span>
         <span class="chip">13 題中英對照測驗</span>
       </div>
       <p class="note">接續 <a href="ch1-part5.html">CH1 PART 5</a>（負載線、Q 點、片段線性、定電壓降）。這一頁是老師的 <b>原講義 PART 5（V3）</b>：1.3.3 電腦模擬、1.4 小訊號、1.5 其他二極體，中間「補」了 1.2.5 的開關暫態。</p>
@@ -285,6 +286,67 @@
         <h3>🧠 觀念填充 02（不用算，用選的）</h3>
         <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
         <div class="hw-list" data-bank="__CH16C" data-sec="rd"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 02+ 補課：為什麼要微分、r_d 和 r_f（使用者 10/31） ══════════ -->
+    <section class="sec" id="rdrf">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>02+ · 補課 · 投影片 1-4、1-11 ＋ PART 5 的 r<sub>f</sub></div>
+      <h2>補課：為什麼要微分？r<sub>d</sub> 和 r<sub>f</sub> 差在哪<span class="h2-en">WHY DIFFERENTIATE · r<sub>d</sub> VS r<sub>f</sub></span></h2>
+      <p class="lede"><strong>微分 = 某一點的斜率</strong>：在 Q 點電壓多推一小步，看電流多多少。二極體是指數，所以這個斜率剛好等於「現在的電流 ÷ 26 mV」，倒過來就是 r<sub>d</sub>。r<sub>d</sub> 是 Q 點<strong>腳下</strong>的坡度（交流用）；PART 5 的 r<sub>f</sub> 是一條線用到底的<strong>平均</strong>坡度（直流用）。</p>
+      <div class="eq">斜率 ≈ Δi/Δv（Δv → 0 就是微分）＝ I<em>DQ</em>/V<em>T</em>　　r<em>d</em> = V<em>T</em>/I<em>DQ</em>（跟 Q 點變）　　r<em>f</em>：片段線性的固定斜率（題目給）</div>
+      <div class="derive">
+        <h4>不用背微分公式也推得出來</h4>
+        <ol>
+          <li><span class="d-eq">想知道：在 Q 點，電壓多 Δv，電流多 Δi 是多少？</span>
+            <div class="why">這就是「斜率」。直線哪裡量都一樣；曲線每一點都不同，所以要指定在 Q 點量。</div></li>
+          <li><span class="d-eq">i<sub>D</sub>(V<sub>DQ</sub> + Δv) = I<sub>S</sub>e<sup>(V<sub>DQ</sub> + Δv)/V<sub>T</sub></sup> = I<sub>DQ</sub> · e<sup>Δv/V<sub>T</sub></sup></span>
+            <div class="why">指數的加法變乘法：多推 Δv，電流變成原本的 e<sup>Δv/V<sub>T</sub></sup> 倍。</div></li>
+          <li><span class="d-eq">Δv 很小：e<sup>Δv/V<sub>T</sub></sup> ≈ 1 + Δv/V<sub>T</sub> ⟹ Δi ≈ I<sub>DQ</sub> · Δv/V<sub>T</sub></span>
+            <div class="why">每多 1 mV，電流多「現在電流的 1/26」（約 3.8%）。像存款利息：存款越多，利息越多。</div></li>
+          <li><span class="d-eq">斜率 = Δi/Δv = I<sub>DQ</sub>/V<sub>T</sub>（2 mA → 76.9 mA/V）</span>
+            <div class="why">實際試：多推 10 mV → 93.8、1 mV → 78.4、0.1 mV → 77.1 mA/V，一步越小越接近 76.9。微分 = 這一步取到無限小（講義 1-11 就是在做這件事）。</div></li>
+          <li><span class="d-eq hi">r<sub>d</sub> = 1/斜率 = V<sub>T</sub>/I<sub>DQ</sub>；r<sub>f</sub> 是另一回事</span>
+            <p>r<sub>f</sub>（PART 5）：片段線性用一條斜線描整段導通曲線，斜率固定，用來找 Q 點（直流，搭配 V<sub>γ</sub> 電池）。r<sub>d</sub>：Q 點那一點的切線，只管 Q 點旁邊的小交流，而且 Q 點一換就變（0.5 mA → 52 Ω、5 mA → 5.2 Ω）。交流裡沒有 V<sub>γ</sub> 電池，因為交流只看變化，固定的 0.6 V 不會變。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>一步越小，越接近切線</h3><span class="spacer"></span><span class="tag">I<sub>S</sub> = 10<sup>−14</sup> A</span></div>
+        <div class="stage-wrap"><canvas id="cv-rf" aria-label="Q 點往前一步的割線，步伐縮小後變成切線；同時畫出片段線性模型的固定斜線 r_f"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="rf-i">工作點 I<sub>DQ</sub><output for="rf-i"></output></label>
+            <input type="range" id="rf-i" min="-0.7" max="0.8" step="0.001" value="0.30103"></div>
+          <div class="ctrl"><label for="rf-d">往前一步 Δv<output for="rf-d"></output></label>
+            <input type="range" id="rf-d" min="0.0001" max="0.03" step="0.0001" value="0.01"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>這一步的 Δi/Δv</dt><dd id="rf-s">—</dd></div>
+          <div><dt>微分 I<sub>DQ</sub>/V<sub>T</sub></dt><dd id="rf-t" class="e">—</dd></div>
+          <div><dt>r<sub>d</sub>（vs r<sub>f</sub> = 10 Ω）</dt><dd id="rf-r">—</dd></div>
+        </dl>
+        <div class="msg" id="rf-msg"></div>
+      </div>
+      <div id="ex-rf"></div>
+      <div class="howto">
+        <h4>分清楚該用哪一顆</h4>
+        <ol>
+          <li>題目在找 Q 點（直流）→ V<sub>γ</sub> 電池（有給 r<sub>f</sub> 就串上）。</li>
+          <li>題目在問小交流 → 用 Q 點電流算 r<sub>d</sub> = 26 mV ÷ I<sub>DQ</sub>。</li>
+          <li>不會微分也沒關係：r<sub>d</sub> 永遠是 26 mV 除以直流電流。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>r<sub>d</sub>、r<sub>f</sub> 的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> r<sub>d</sub> 就是 r<sub>f</sub>。<span class="o">r<sub>f</sub> 固定、直流用；r<sub>d</sub> 跟 Q 點變、交流用</span>。</li>
+          <li><span class="x">✗</span> 交流電路裡二極體 = V<sub>γ</sub> 電池 + r<sub>d</sub>。<span class="o">只有 r<sub>d</sub></span>，固定電壓的變化量是 0。</li>
+          <li><span class="x">✗</span> 斜率要拿很大的 Δv 去量才準。<span class="o">Δv 越小越準</span>（10 mV 就差了 22%）。</li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-rdrf">
+        <h3>🧠 觀念填充 02+（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH16C" data-sec="rdrf"></div>
       </div>
     </section>
 
@@ -926,6 +988,7 @@ __EXB.picker(document.getElementById('sec-pick'), [
   { id: 'basics', no: '00', name: '補課：讀小訊號圖' },
   { id: 'ss', no: '01', name: '小訊號', count: '練 1' },
   { id: 'rd', no: '02', name: '增量電阻', count: '例 1' },
+  { id: 'rdrf', no: '02+', name: '為什麼微分？r<sub>d</sub> vs r<sub>f</sub>' },
   { id: 'dcac', no: '03', name: 'DC＋AC', count: '例 1' },
   { id: 'qdes', no: '04', name: 'Q 點與失真', count: '練 1' },
   { id: 'cap', no: '05', name: '兩種電容', count: '練 1' },

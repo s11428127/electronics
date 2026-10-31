@@ -182,6 +182,36 @@
      { sub: '② 交流很小，只看 Q 點旁邊一小段，彎線可以當直線。', on: 'B' },
      { sub: '③ 所以對交流來說，二極體 = 一顆電阻 r<sub>d</sub>。這叫<b>小訊號分析</b>。接下來才上公式。', on: 'C c1' }]);
 
+  /* 補課 D1～D4（使用者 10/31：為什麼要微分？微分後為什麼變成 I_DQ / V_T？） */
+  const road = (d, key) => path(d, 'ln', key, 'stroke-width:3');
+  const D1 = sc('先補課：斜率是什麼', 'WHAT IS A SLOPE',
+    card(50, 112, 250, 160, 'A', T(175, 138, '直的坡道', { fs: 15 }) + road('M80 250 L270 170') +
+      '<path class="lna dsh" style="fill:none" d="M140 225 H200 V199"/>' + T(170, 242, '走 Δx', { cls: 'tm', fs: 12 }) + T(206, 216, '爬 Δy', { cls: 'tm', fs: 12, a: 'start' }) + T(175, 264, '哪裡量都一樣', { cls: 'ta', fs: 12 })) +
+    card(340, 112, 250, 160, 'B', T(465, 138, '彎的坡道', { fs: 15, cls: 'ta' }) + road('M370 255 C470 255 520 230 560 160') +
+      g('pt', '<circle class="acc" cx="497" cy="236" r="5"/>' + '<line class="lna" x1="457" y1="250" x2="540" y2="220" style="stroke-width:2;stroke-dasharray:5 3"/>' + T(465, 264, '每一點的坡度都不同', { cls: 'ta', fs: 12 }))) +
+    chip(320, 296, '「某一點的斜率」= 那一點的切線斜率 = 微分', '微分就是在問：在這一點，往前走一小步，爬多高？', 'c1', { fs: 13, acc: true }),
+    [{ sub: '先補課：<b>斜率</b> = 爬多高 ÷ 走多遠。直的坡道，哪裡量都一樣。', on: 'A' },
+     { sub: '彎的坡道不一樣：越往右越陡，每一點的坡度都不同。', on: 'B' },
+     { sub: '想知道「某一點」有多陡，就只看那一點、往前走<b>一小步</b>。這件事的數學名字就叫<b>微分</b>。', on: 'pt c1' }]);
+  const D2 = sc('不用微分也算得出來：多推 1 mV', 'JUST NUDGE IT',
+    calc(90, 108, 460, [['Q 點：0.677 V → 2 mA', 'r1', 'tm'], ['多推 10 mV：電流多 0.938 mA → 93.8 mA/V', 'r2'], ['多推 1 mV：電流多 0.0784 mA → 78.4 mA/V', 'r3'], ['多推 0.1 mV：電流多 0.0077 mA → 77.1 mA/V', 'r4', 'ta'], ['一步越小，越接近 76.9 mA/V', 'r5', 'ta']], { k: 'cc', fs: 15, lh: 31 }),
+    [{ sub: '回到二極體：Q 點是 0.677 V、2 mA。我們想知道「電壓多一點，電流多多少」。', on: 'cc r1' },
+     { sub: '多推 10 mV，電流多 0.938 mA：斜率約 93.8 mA/V（一步太大，曲線已經彎了）。', on: 'r2' },
+     { sub: '一步改小：1 mV → 78.4；0.1 mV → 77.1。', on: 'r3 r4' },
+     { sub: '越小越穩定，最後停在 <b>76.9 mA/V</b>。微分只是把這一步取到「無限小」。', on: 'r5' }]);
+  const D3 = sc('為什麼剛好是 I<sub>DQ</sub> ÷ 26 mV？', 'WHY I<sub>DQ</sub>/V<sub>T</sub>?',
+    card(50, 112, 250, 140, 'A', T(175, 140, '像存款的利息', { fs: 15 }) + T(175, 170, '存款越多，利息越多', { cls: 'tm', fs: 13 }) + T(175, 196, '利息 = 存款 × 利率', { cls: 'ta', fs: 13 }) + T(175, 226, '（複利 = 指數成長）', { cls: 'ts', fs: 12 })) +
+    card(340, 112, 250, 140, 'B', T(465, 140, '二極體電流', { fs: 15, cls: 'ta' }) + T(465, 170, '每多推 1 mV', { cls: 'tm', fs: 13 }) + T(465, 196, '電流多「現在的 1/26」', { cls: 'ta', fs: 13 }) + T(465, 226, '（不管現在是多少）', { cls: 'ts', fs: 12 })) +
+    chip(320, 286, '斜率 = 現在的電流 × 1/26 mV = I<sub>DQ</sub> / V<sub>T</sub>', '2 mA ÷ 26 mV = 76.9 mA/V ✓', 'c1', { fs: 14, acc: true }),
+    [{ sub: '指數有一個特性：<b>越多長越快</b>，像存款的利息 —— 存款越多，利息越多。', on: 'A' },
+     { sub: '二極體電流是 e 的次方：每多推 1 mV，電流就多「現在電流的 1/26」（約 3.8%）。', on: 'B' },
+     { sub: '所以斜率 = 現在的電流 ÷ 26 mV = <b>I<sub>DQ</sub>/V<sub>T</sub></b>。2 mA 代進去：76.9 mA/V，跟剛剛一步一步試出來的一樣。', on: 'c1' }]);
+  const D4 = sc('先整理一下：r<sub>d</sub> 怎麼來', 'LET\'S RECAP',
+    calc(110, 112, 420, [['斜率 = 那一點的 Δi/Δv（微分）', 'r1'], ['指數：斜率 = 電流 ÷ 26 mV = I<sub>DQ</sub>/V<sub>T</sub>', 'r2'], ['電阻 = 電壓 ÷ 電流 → 斜率倒過來', 'r3'], ['r<sub>d</sub> = V<sub>T</sub>/I<sub>DQ</sub>（2 mA → 13 Ω）', 'r4', 'ta']], { k: 'cc', fs: 15, lh: 32 }),
+    [{ sub: '先整理一下：微分 = 那一點的斜率 = 電壓多一點、電流多多少。', on: 'cc r1' },
+     { sub: '二極體是指數，所以斜率剛好 = 電流 ÷ 26 mV。', on: 'r2' },
+     { sub: '電阻是「電壓 ÷ 電流」，剛好是斜率倒過來：<b>r<sub>d</sub> = V<sub>T</sub>/I<sub>DQ</sub></b>。下一幕用課本的寫法再看一次。', on: 'r3 r4' }]);
+
   /* 10 r_d 公式 */
   const A10 = sc('r<sub>d</sub> 多大？', 'HOW BIG IS r<sub>d</sub>?',
     calc(100, 112, 440, [['二極體：i<sub>D</sub> = I<sub>S</sub>e<sup>v<sub>D</sub>/V<sub>T</sub></sup>', 'r1'], ['切線斜率（微分）= I<sub>DQ</sub> / V<sub>T</sub>', 'r2', 'ta'], ['r<sub>d</sub> = V<sub>T</sub> / I<sub>DQ</sub> = 26 mV ÷ I<sub>DQ</sub>', 'r3', 'ta']], { k: 'cc', fs: 16, lh: 32 }) +
@@ -211,6 +241,29 @@
      { sub: '先算 Q 點電流：<b>105.24 μA</b>。', on: 'r2' },
      { sub: '老老實實微分：g<sub>d</sub> = 4.048 mA/V，倒數 <b>247 Ω</b>。', on: 'r3' },
      { sub: '用 26 mV ÷ I<sub>DQ</sub> 一行就得到一樣的答案。考試用這個。', on: 'r4 c1' }]);
+
+  /* 補課 E1～E3（使用者 10/31：r_d 跟 PART 5 的 r_f 什麼關係？） */
+  const PF = axes(80, 112, 300, 168, { v0: 0.58, v1: 0.75, i0: 0, i1: 10, vt: [[0.62, 'V<sub>γ</sub>'], [0.7, '0.7']], it: [] });
+  const tanAt = (I, key) => { const V = vq14(I), s = I / VT, dv = Math.min(0.03, 4 / s); return g(key, PF.dot(V, I, null, 5.5) + PF.seg(V - dv, I - s * dv, V + dv, I + s * dv, null, 'lna', ' style="stroke-width:2.2;stroke-dasharray:6 3"')); };
+  const E1 = sc('r<sub>d</sub> 跟 PART 5 的 r<sub>f</sub> 一樣嗎？', 'r<sub>d</sub> VS r<sub>f</sub>',
+    PF.svg + PF.curve(iv14, 0.58, 0.725, 'cv', 'ln') +
+    g('pw', PF.seg(0.58, 0, 0.62, 0, null, 'lna', ' style="stroke-width:3.4"') + PF.seg(0.62, 0, 0.72, 10, null, 'lna', ' style="stroke-width:3.4"') + T(PF.X(0.66) - 6, PF.Y(5.5), 'r<sub>f</sub>：一條線用到底', { cls: 'ta', fs: 12.5, a: 'end' })) +
+    tanAt(0.5, 't1') + tanAt(5, 't2') +
+    calc(410, 120, 200, [['片段線性 r<sub>f</sub> = 10 Ω', 'r1', 'ta'], ['0.5 mA：r<sub>d</sub> = 52 Ω', 'r2'], ['5 mA：r<sub>d</sub> = 5.2 Ω', 'r3']], { k: 'cc', fs: 14 }),
+    [{ sub: '都是「斜率倒過來」的小電阻，可是<b>不是同一個東西</b>。先看 PART 5 的 r<sub>f</sub>：', on: 'cv' },
+     { sub: '片段線性用<b>一條斜線</b>描整段導通的曲線，斜率 1/r<sub>f</sub>，一條線用到底（這裡 10 Ω）。', on: 'pw cc r1' },
+     { sub: 'r<sub>d</sub> 是 <b>Q 點那一點的切線</b>：0.5 mA 時很平（52 Ω），5 mA 時很陡（5.2 Ω）—— 跟著 Q 點變。', on: 't1 t2 r2 r3' }]);
+  const E2 = sc('像爬山：平均坡度 vs 腳下的坡度', 'AVERAGE VS LOCAL',
+    card(50, 112, 250, 150, 'A', T(175, 140, 'r<sub>f</sub>：整條步道的平均坡度', { fs: 14 }) + T(175, 170, '算「從山腳走到哪」', { cls: 'tm', fs: 13 }) + T(175, 196, '→ 直流：找 Q 點', { cls: 'ta', fs: 13 }) + T(175, 224, '搭配 V<sub>γ</sub> 電池、題目給定', { cls: 'ts', fs: 12 })) +
+    card(340, 112, 250, 150, 'B', T(465, 140, 'r<sub>d</sub>：腳下這一步的坡度', { fs: 14, cls: 'ta' }) + T(465, 170, '算「站在這裡晃一下」', { cls: 'tm', fs: 13 }) + T(465, 196, '→ 交流：小訊號', { cls: 'ta', fs: 13 }) + T(465, 224, '= 26 mV ÷ I<sub>DQ</sub>，跟 Q 點變', { cls: 'ts', fs: 12 })),
+    [{ sub: '想成爬山。<b>r<sub>f</sub></b> 像整條步道的平均坡度：用來算「從山腳走到哪」—— 直流，找 Q 點。', on: 'A' },
+     { sub: '<b>r<sub>d</sub></b> 像你腳下這一步的坡度：用來算「站在這裡前後晃一下」—— 交流，小訊號。', on: 'B' }]);
+  const E3 = sc('先整理一下：兩顆小電阻', 'LET\'S RECAP',
+    calc(90, 112, 460, [['直流（找 Q 點）：二極體 = V<sub>γ</sub> 電池（＋ r<sub>f</sub>）', 'r1'], ['交流（Q 點旁邊晃）：二極體 = r<sub>d</sub>（沒有電池）', 'r2', 'ta'], ['r<sub>f</sub>：題目給、固定；r<sub>d</sub>：26 mV ÷ I<sub>DQ</sub>', 'r3'], ['交流只看「變化」，固定的 V<sub>γ</sub> 不會變 → 不見了', 'r4', 'tm']], { k: 'cc', fs: 15, lh: 32 }),
+    [{ sub: '先整理一下。找 Q 點（直流）：用 PART 5 的 V<sub>γ</sub> 電池（有給 r<sub>f</sub> 就加上）。', on: 'cc r1' },
+     { sub: '看 Q 點旁邊的交流：二極體只剩一顆 r<sub>d</sub>。', on: 'r2' },
+     { sub: 'r<sub>f</sub> 是題目給的固定值；r<sub>d</sub> 要用 Q 點電流算。', on: 'r3' },
+     { sub: '為什麼交流裡沒有 V<sub>γ</sub> 電池？交流只看「變化」，固定不變的 0.6 V 對變化沒有貢獻。', on: 'r4' }]);
 
   /* 13 拆開算：記帳比喻 */
   const A13 = sc('兩種電一起很亂：分開算', 'SPLIT IT',
@@ -314,7 +367,7 @@
 
   window.__ch1p6Story = window.__Story('#story', {
     id: 'ch1-part6', title: 'CH1 PART 6 故事一：小訊號', after: '#map',
-    scenes: [A0, A1, A2, A3, A4, A5, K1, K2, K3, K4, K5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22, A23]
+    scenes: [A0, A1, A2, A3, A4, A5, K1, K2, K3, K4, K5, A6, A7, A8, A9, D1, D2, D3, D4, A10, A11, A12, E1, E2, E3, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22, A23]
   });
 
   /* ══════════════════════════ 故事二：倉庫、開關、二極體家族 ══════════════════════════ */

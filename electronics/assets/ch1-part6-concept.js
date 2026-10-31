@@ -10,7 +10,7 @@
   const P = 'ch1-part6.html';
   const S = o => ({ o, a: 0 });
   const items = [];
-  const NO = { basics: '00', ss: '01', rd: '02', dcac: '03', qdes: '04', cap: '05', sseq: '06', sw: '07', opto: '08', sbd: '09', zd: '10' };
+  const NO = { basics: '00', ss: '01', rd: '02', rdrf: '02+', dcac: '03', qdes: '04', cap: '05', sseq: '06', sw: '07', opto: '08', sbd: '09', zd: '10' };
   /* C(小節, 第幾題, 標題, 中文題幹, 英文題幹, 空格, 解釋, 是否為解法題) */
   /* 題幹裡的 v_D、I_DQ 寫法 → 下標（選項不能有標籤，所以只轉題幹） */
   const sub = s => s.replace(/(^|[^A-Za-z])([A-Za-zγ])_([A-Za-z0-9]+)/g, '$1$2<sub>$3</sub>');
@@ -134,6 +134,33 @@
     'If the problem gives a circuit but not I_DQ, to find r_d you must first ___.',
     [S(['做 DC 分析求 IDQ do a dc analysis for IDQ', '做 AC 分析 do the ac analysis', '量崩潰電壓 measure the breakdown voltage', '假設 rd = 0 assume rd = 0'])],
     'r<sub>d</sub> 跟著 Q 點走，Q 點只能由直流電路決定。', true);
+
+
+  /* ═════════ 02+ 補課：為什麼要微分、r_d vs r_f（10/31） ═════════ */
+  C('rdrf', 1, '微分在問什麼', '對二極體曲線在 Q 點微分，是在問：{0}。', 'Differentiating the diode curve at Q asks: ___.',
+    [S(['在 Q 點電壓多一點點，電流多多少 how much the current changes for a tiny voltage change at Q', '曲線下的面積多大 the area under the curve', '電流的最大值 the maximum current', '崩潰電壓 the breakdown voltage'])],
+    '微分 = 某一點的斜率 = 往前一小步，爬多高。');
+  C('rdrf', 2, '一步要多小', '用 Δi/Δv 估斜率時，Δv {0} 越接近切線斜率。', 'When estimating the slope by Δi/Δv, the ___ Δv is, the closer it gets to the tangent slope.',
+    [S(['越小 smaller', '越大 larger', '剛好 26 mV exactly 26 mV', '等於 VDQ equal to VDQ'])],
+    '2 mA 時：10 mV → 93.8、1 mV → 78.4、0.1 mV → 77.1 mA/V，最後是 76.9。');
+  C('rdrf', 3, '指數的特性', '二極體每多推 1 mV，電流多出「現在電流的」{0}。', 'For every extra 1 mV, the diode current increases by ___ of its present value.',
+    [S(['約 1/26（3.8%）about 1/26', '固定 1 mA a fixed 1 mA', '一半 half', '10 倍 ten times'])],
+    '像存款利息：存款越多利息越多。所以斜率 = 電流 ÷ 26 mV。');
+  C('rdrf', 4, '斜率的結果', '在 Q 點的斜率 di/dv = {0}，所以 rd = {1}。', 'The slope at Q is ___, so rd = ___.',
+    [S(['IDQ / VT', 'VT / IDQ', 'VDQ / IDQ', 'IS / VT']), S(['VT / IDQ', 'IDQ / VT', 'VDQ / IDQ', 'rf'])],
+    '電阻 = 電壓 ÷ 電流，是斜率倒過來。');
+  C('rdrf', 5, 'r_f 是什麼', 'PART 5 片段線性模型的 rf，是 {0}。', 'The rf in the piecewise linear model of PART 5 is ___.',
+    [S(['用一條斜線描整段導通曲線的固定斜率 the fixed slope of one line drawn through the conducting region', 'Q 點的切線 the tangent at Q', '空乏區電阻 the depletion resistance', '崩潰電阻 the breakdown resistance'])],
+    '一條線用到底，題目給定，用來找 Q 點（直流）。');
+  C('rdrf', 6, 'r_d 會不會變', 'rd {0}；rf {1}。', 'rd ___; rf ___.',
+    [S(['跟著 Q 點電流變 changes with IDQ', '固定不變 is fixed', '永遠是 10 Ω is always 10 Ω', '等於 R equals R']), S(['是固定值 is a fixed value', '跟著 Q 點變 changes with Q', '永遠是 0 is always zero', '等於 VT is VT'])],
+    '0.5 mA → r<sub>d</sub> 52 Ω、5 mA → 5.2 Ω；r<sub>f</sub> 一直是題目給的那個值。');
+  C('rdrf', 7, '各用在哪', '找 Q 點（直流）用 {0}；算 Q 點旁邊的小交流用 {1}。', 'To find Q (dc) use ___; for the small ac around Q use ___.',
+    [S(['Vγ 電池（＋ rf）a Vγ battery (plus rf)', 'rd', '短路 a short', '電容 a capacitor']), S(['rd', 'Vγ 電池 a Vγ battery', 'rf', '斷路 an open'])],
+    '平均坡度（r<sub>f</sub>）算走到哪；腳下坡度（r<sub>d</sub>）算站在這裡晃一下。', true);
+  C('rdrf', 8, '交流裡的 V_γ', '交流（小訊號）電路裡二極體沒有 Vγ 電池，因為 {0}。', 'There is no Vγ battery in the ac (small-signal) circuit because ___.',
+    [S(['交流只看變化，固定電壓的變化量是 0 ac sees only changes, and a fixed voltage does not change', 'Vγ 太小 Vγ is too small', '二極體 OFF the diode is off', 'Vγ 變成 rd Vγ turns into rd'])],
+    '跟「直流電壓源在 AC 電路短路」同一個道理。');
 
   /* ═════════ 03 DC + AC ═════════ */
   C('dcac', 1, 'DC 分析時的交流源',
