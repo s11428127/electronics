@@ -462,34 +462,40 @@
     <section class="sec" id="thermo">
       <div class="eyebrow"><span class="scope-ok">11/9 考試範圍</span><span class="part-tag">原講義 PART 4</span>06 · 投影片 1-52、1-54 · 1.6 Design Application: Diode Thermometer</div>
       <h2><button class="tm" data-t="二極體溫度計">二極體溫度計</button><span class="h2-en">DIODE THERMOMETER</span></h2>
-      <p class="lede">缺點反過來就是優點：既然 v<sub>D</sub> 會隨溫度乖乖地、幾乎線性地下降，那讓二極體流<strong>固定電流</strong>、量它的電壓，就能反推溫度。課本的電路只有一顆 15 V 電源、一顆 15 kΩ 電阻和一顆二極體。</p>
-      <div class="eq">I<em>D</em> ≈ (15 − 0.6) V / 15 kΩ ≈ 1 mA（近似固定）　⟹　V<em>D</em> ≈ 1.12 − 0.522 · (T / 300) V　⟺　T = 300 · (1.12 − V<em>D</em>) / 0.522 K</div>
+      <p class="lede">上一節說：電流固定時，<strong>越熱，二極體的電壓越低</strong>。反過來用就是溫度計：<strong>量電壓 → 反推溫度</strong>。先看故事，再看公式。</p>
+      <div id="thermo-story"></div>
+
+      <div class="eq" id="thermo-eq">V<sub>D</sub> = 1.12 − 0.522 × T ÷ 300<br>T = 300 × (1.12 − V<sub>D</sub>) ÷ 0.522　（T 用 K）</div>
 
       <div class="derive">
-        <h4>Fig 1.48 那條直線怎麼來</h4>
+        <h4>五步看懂這條公式</h4>
         <ol>
           <li>
-            <span class="d-eq">I<sub>D</sub> = (15 − V<sub>D</sub>)/15k ≈ 0.96 mA，V<sub>D</sub> 只變 0.1 V，I<sub>D</sub> 只變 0.7%</span>
-            <div class="why">電源電壓遠大於 V<sub>D</sub>，所以這顆大電阻 + 大電源就是一個「近似定電流源」（投影片 1-52、1-54：I<sub>D</sub> 要保持 CONSTANT）。</div>
+            <span class="d-eq">電流固定：I<sub>D</sub> = (15 − V<sub>D</sub>) ÷ 15 kΩ ≈ 0.96 mA</span>
+            <div class="why">15 V 比 V<sub>D</sub> 大很多，所以電流幾乎不動。V<sub>D</sub> 就算掉 0.1 V，電流也只變 0.7%（投影片 1-52、1-54：I<sub>D</sub> 要保持 CONSTANT）。</div>
           </li>
           <li>
-            <span class="d-eq">V<sub>D</sub> = V<sub>T</sub>ln(I<sub>D</sub>/I<sub>S</sub>)，I<sub>S</sub> = K·T³·e<sup>−E<sub>g</sub>/kT</sup>　⟹　V<sub>D</sub> = E<sub>g</sub>/e − (kT/e)·ln(K·T³/I<sub>D</sub>)</span>
-            <div class="why">把 e<sup>−E<sub>g</sub>/kT</sup> 從 ln 裡拿出來，剛好變成常數 E<sub>g</sub>/e = 1.12 V（矽的能隙）。</div>
+            <span class="d-eq">電流固定 ⟹ V<sub>D</sub> 只跟溫度有關，而且是一條往下的直線</span>
+            <div class="why">越熱越好過，電壓越低。課本 Fig 1.48 的三個點剛好連成一條直線。</div>
           </li>
           <li>
-            <span class="d-eq">ln(K·T³/I<sub>D</sub>) 隨 T 變得很慢 ⟹ 在 300 K 附近當常數 ⟹ V<sub>D</sub> ≈ 1.12 − c·T</span>
-            <div class="why">T³ 在 ln 裡面，溫度變 20% 它才變一點點。所以 V<sub>D</sub> 對 T 幾乎是直線（Fig 1.48 的 Linear relationship）。</div>
+            <span class="d-eq">V<sub>D</sub> = 1.12 − 0.522 × T ÷ 300</span>
+            <div class="why">1.12 V 是直線的起點，等於矽的能隙，直接背。0.522 = 1.12 − 0.598，0.598 V 是 300 K（室溫）量到的電壓。</div>
           </li>
           <li>
-            <span class="d-eq">用一個量測點校正：T = 300 K 時 V<sub>D</sub> = 0.598 V ⟹ c·300 = 1.12 − 0.598 = 0.522 V</span>
-            <div class="why">這就是課本的 V<sub>D</sub> = 1.12 − 0.522(T/300)。斜率 −0.522/300 = <b>−1.74 mV/K</b>（跟上一節的 −2 mV/°C 同一個等級）。</div>
+            <span class="d-eq">斜率 = −0.522 ÷ 300 = −1.74 mV/K</span>
+            <div class="why">每熱 1 度，電壓少 1.74 mV。跟上一節的「約 −2 mV/°C」同一個等級（1 K 跟 1 °C 一樣大）。</div>
           </li>
           <li>
-            <span class="d-eq hi">驗算 Fig 1.48：T = 255.2 K（0 °F）→ 0.676 V；T = 310.8 K（100 °F）→ 0.579 V ✓</span>
-            <p>1.12 − 0.522 × 255.2/300 = 0.676；1.12 − 0.522 × 310.8/300 = 0.579。圖上三個數字全部吻合。<b>量到的電壓越小，代表溫度越高。</b></p>
+            <span class="d-eq hi">反過來：T = 300 × (1.12 − V<sub>D</sub>) ÷ 0.522</span>
+            <p>量到電壓就能算溫度，電壓越低越熱。驗算課本 Fig 1.48：<b>0.676 V → 255 K（0 °F）</b>、<b>0.598 V → 300 K（27 °C）</b>、<b>0.579 V → 311 K（100 °F）</b>。</p>
           </li>
         </ol>
       </div>
+      <details class="note">
+        <summary>課本延伸（不用背）：為什麼起點剛好是 1.12 V、為什麼是直線</summary>
+        <p>V<sub>D</sub> = V<sub>T</sub> ln(I<sub>D</sub>/I<sub>S</sub>)，而 I<sub>S</sub> ∝ T³ e<sup>−E<sub>g</sub>/kT</sup>（§05）。把 e 的那項從 ln 裡拿出來，會剩下一個常數 E<sub>g</sub>/e = 1.12 V，再減掉一項跟 T 差不多成正比的東西：V<sub>D</sub> ≈ 1.12 − c·T。T³ 躲在 ln 裡面，溫度變 20% 它才變一點點，所以看起來是直線。c 用 300 K 量到的 0.598 V 決定：c × 300 = 0.522。</p>
+      </details>
 
       <div class="bench">
         <div class="bench-head"><h3>小遊戲：讀溫度計</h3><span class="spacer"></span><span class="tag" id="th-score">答對 0 題</span></div>
@@ -655,6 +661,7 @@ __EXB.picker(document.getElementById('sec-pick'), [
 <script src="../shared/hw.js"></script>
 <script src="assets/ch1-part4.js"></script>
 <script src="assets/ch1-part4-story.js"></script>
+<script src="assets/ch1-part4-thermo-story.js"></script>
 <script src="../shared/sync.js"></script>
 <script src="../shared/annot.js"></script>
 <script src="../shared/track.js"></script>
