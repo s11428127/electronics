@@ -128,20 +128,12 @@ body.cloze main .paper :is(mark, .rd, td b, .qs b) * { color: transparent !impor
 body.cloze main .paper :is(mark, .rd, td b, .qs b).show, body.cloze main .paper :is(mark, .rd, td b, .qs b).show * { color: var(--accent) !important; }
 body.cloze main .paper :is(.lec-head, h3, .legend) :is(mark, .rd), body.cloze main .paper :is(.lec-head, h3, .legend) :is(mark, .rd) * { color: inherit !important; background: none !important; box-shadow: none; cursor: auto; }
 body.cloze main .paper h3 mark { background: var(--hl-y) !important; }
-/* copy.html：空白表格（白底，留標題、表頭、第一欄，其他變空格＋橫線，印出來自己抄） */
-body.blank-sheet main .paper { background: #fff; color: #222; }
-body.blank-sheet main .paper :is(mark, .rd) { background: none !important; color: inherit !important; }
-body.blank-sheet main .ltab th { background: #fff; color: #222; }
-body.blank-sheet main .ltab td:is(:not(:first-child), .fill), body.blank-sheet main .ltab td:is(:not(:first-child), .fill) * { color: transparent !important; background: #fff !important; }
-body.blank-sheet main .ltab.qt tr.grp td { background: #fff !important; color: #222 !important; }
-body.blank-sheet main .ltab td { height: 2.4em; }
-body.blank-sheet main .ltab.qt tr.grp td { height: auto; }
-body.blank-sheet main :is(.qs, .formula p, .deed p, .deed .sig) { color: transparent !important; background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.75em - 1px), #bbb calc(1.75em - 1px), #bbb 1.75em) !important; line-height: 1.75 !important; }
-body.blank-sheet main :is(.qs, .formula p, .deed p, .deed .sig) * { color: transparent !important; background: none !important; border-color: transparent !important; }
-body.blank-sheet main .formula, body.blank-sheet main .deed { background: #fff !important; }
-body.blank-sheet main .deed h4, body.blank-sheet main .lec-head, body.blank-sheet main h3 { color: #222; }
-body.blank-sheet main .legend, body.blank-sheet .mode-bar ~ #mode-tip { display: none; }
-body.blank-sheet main .lec-head .tag { color: #555; }
+/* copy.html：空白表格（使用者 11/1：不要任何字，只要格子） */
+body.blank-sheet main .paper { background: #fff !important; border-color: #ddd; }
+body.blank-sheet main .paper > :not(.tbl-wrap):not(.mode-bar) { display: none !important; }
+body.blank-sheet main .ltab :is(th, td), body.blank-sheet main .ltab :is(th, td) * { color: transparent !important; background: #fff !important; border-color: transparent; box-shadow: none !important; }
+body.blank-sheet main .ltab :is(th, td) { border: 1px solid #777 !important; height: 2.6em; }
+body.blank-sheet main .tbl-wrap { margin: 0 0 18px; }
 
 @media (max-width: 560px) {
   .paper { padding: 18px 14px 22px; border-radius: 10px; }
@@ -151,7 +143,7 @@ body.blank-sheet main .lec-head .tag { color: #555; }
 
 /* 列印：A4 直式，每一講從新的一頁開始 */
 @media print {
-  body.blank-sheet main :is(.qs, .formula p, .deed p, .deed .sig), body.blank-sheet main .ltab td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body.blank-sheet main .paper { break-before: auto !important; }
   @page { size: A4 portrait; margin: 13mm 12mm; }
   body { background: #fff !important; }
   .topbar, .rail, .no-print, .ann-fab, #mistakes, .trk-hero, .trk-sec, .trk-b, .trk-bar, .trk-card, .trk-mark, .trk-clears, .trk-sum, .dv-ui { display: none !important; }
