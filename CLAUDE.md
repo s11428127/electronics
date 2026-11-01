@@ -194,6 +194,7 @@
 - 主色 `#8a2b3a`（暗色 `#e58b99`），`<body data-subject="law">`。**不做故事模式**（使用者指定）。
 - `notes.html` 直立式上課筆記（照講義檔名日期，一講一張 `.paper.lec`，列印 A4 每講換頁）：只收黃色螢光 `mark.hy`、淺藍螢光 `mark.hc`、紅字 `.rd`、法條 `.law` ＋白話 `.expl`；講義沒有的用 `.add-note`。每講最後 `.exq` 自編題＋三段式長答案（依據 → 本案 → 結論，使用者說考試手寫要寫很多字）。
 - `writing.html`（`writing.js`）：和解書範本挖空、產生器（人事時地物檢查）、存證信函 20 格稿紙 `__LG.grid('事實|限期|後果')`。樣式在 `law/law.css`。
+- **考試只能看手寫筆記（使用者 11/1）**：`copy.html` 是給他抄到 iPad 的精簡版（速查表＋表格，字越少越好，`.ltab.qt`、`.qs`）；`notes.html` 是詳細版。新講義兩邊都要加（精簡版只留螢光筆／紅字／法條關鍵字＋刑度，順便補進速查表）。
 - 新講義進來照日期加一張 `.paper.lec`，更新 `law/docs/CONTENT_MAP.md`、`law/index.html` 數字。
 
 ## 學習紀錄（`shared/track.js`）

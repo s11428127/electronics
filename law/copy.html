@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>法律 · 考試用重點筆記</title>
+<meta name="description" content="法律（通識）期中考 open book 用的精簡筆記：照抄到 iPad 用。最前面是情境→法條速查表，再來各堂課的重點表格（只留螢光筆、紅字、法條關鍵字），最後是和解書範本。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="law.css">
+</head>
+<body data-subject="law">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">法律</a><span>›</span><b>考試用重點筆記</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" type="button" onclick="window.print()">🖨 列印</button>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="目錄">
+    <div class="rail-title">考試用重點筆記</div>
+    <ol>
+      <li><a href="#q-how"><i>★</i>答題公式</a></li>
+      <li><a href="#q-find"><i>🔎</i>情境 → 法條速查</a></li>
+      <li><a href="#q-time"><i>⏱</i>期限總表</a></li>
+      <li><a href="#q-civil"><i>$</i>民事賠償總表</a></li>
+      <li><a href="#c0917"><i>9/17</i>課程規範</a></li>
+      <li><a href="#c0924"><i>9/24</i>法律體系</a></li>
+      <li><a href="#c1001"><i>10/1</i>智慧財產權</a></li>
+      <li><a href="#c1008"><i>10/8</i>網路犯罪</a></li>
+      <li><a href="#c1015"><i>10/15</i>個資法</a></li>
+      <li><a href="#c1022"><i>10/22</i>性別平等</a></li>
+      <li><a href="#c1029"><i>10/29</i>存證信函、和解書</a></li>
+      <li><a href="#c-deed"><i>✍</i>和解書範本（照抄）</a></li>
+      <li><a href="notes.html"><i>📒</i>詳細版（看不懂時查）</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section class="sec paper" id="q-how">
+      <div class="lec-head"><span class="date">★</span><h2>考試用重點筆記</h2><span class="tag">照抄到 iPad・考試只能看手寫筆記</span></div>
+      <p class="qs">怎麼用：考試拿到題目 → <b>先翻「情境 → 法條速查」</b>找到條號 → 翻到那一堂看細節 → 照下面公式寫。</p>
+      <div class="legend"><span><mark class="hy">黃</mark>／<mark class="hc">藍</mark>／<b class="rd">紅</b> = 講義標的</span><span><b class="rd">告</b> = 告訴乃論　<b>公</b> = 公訴罪</span><span><span class="bu">補</span> = 講義沒有、我補的</span></div>
+      <div class="formula">
+        <p><b>答題公式（每一種責任都走一次）</b></p>
+        <p>① <b>依據</b>：依○○法第○條第○項規定：「（抄要件＋刑度）」。</p>
+        <p>② <b>本案</b>：本案中，甲……（把事實對到每個要件），<b>因此</b>符合該條規定。</p>
+        <p>③ <b>結論</b>：故甲應負……責任；屬<b>告訴乃論</b>（6 個月內提告）／<b>公訴罪</b>。</p>
+        <p>題目問「責任」→ 分 <b>刑事、民事、行政</b> 三段寫。</p>
+      </div>
+    </section>
+
+    <!-- ══════════ 速查 ══════════ -->
+    <section class="sec paper" id="q-find">
+      <div class="lec-head"><span class="date">🔎</span><h2>情境 → 法條速查</h2><span class="tag">考試先翻這頁</span></div>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th>題目出現…</th><th>法條（罪名）</th><th>刑度</th><th>告／公</th></tr>
+        <tr class="grp"><td colspan="4">網路、說話（10/8）</td></tr>
+        <tr><td>當眾罵人（髒話、沒講具體的事）</td><td>刑 309 公然侮辱</td><td>拘役或 9 千以下罰金</td><td><b class="rd">告</b></td></tr>
+        <tr><td>講一件具體的壞事毀人名譽</td><td>刑 310 Ⅰ 誹謗</td><td>1 年以下、拘役或 1.5 萬以下</td><td><b class="rd">告</b></td></tr>
+        <tr><td>網路 PO 文、文字圖畫誹謗</td><td>刑 310 Ⅱ <mark class="hc">加重誹謗</mark></td><td>2 年以下、拘役或 3 萬以下</td><td><b class="rd">告</b></td></tr>
+        <tr><td>亂說店家要倒、欠錢（信用）</td><td>刑 313 妨害信用（網路加重 ½）</td><td>2 年以下、拘役或科或併科 20 萬以下</td><td><b class="rd">告</b></td></tr>
+        <tr><td>偷拍、偷錄別人私下的活動、談話</td><td>刑 315-1 妨害秘密</td><td>3 年以下、拘役或 30 萬以下</td><td><b class="rd">告</b></td></tr>
+        <tr><td>散布、賣色情物品</td><td>刑 235 散布猥褻物品</td><td>2 年以下、拘役或科或併科 9 萬以下</td><td><b>公</b></td></tr>
+        <tr><td>偷拍性影像</td><td>刑 319-1 Ⅰ</td><td>3 年以下</td><td><b class="rd">告</b>（營利的Ⅱ、Ⅲ項 → 公）</td></tr>
+        <tr><td>強迫拍性影像</td><td>刑 319-2</td><td>5 年以下，得併科 50 萬以下</td><td><b>公</b></td></tr>
+        <tr><td>外流、散布性影像</td><td>刑 319-3 Ⅰ</td><td>5 年以下，得併科 50 萬以下</td><td><b class="rd">告</b>（Ⅱ～Ⅳ項 → 公）</td></tr>
+        <tr><td>AI 換臉、合成性影像</td><td>刑 319-4</td><td>5 年以下、拘役或科或併科 50 萬以下；營利 7 年以下</td><td><b>公</b></td></tr>
+        <tr><td>網路詐騙</td><td>刑 339-4 加重詐欺</td><td>1～7 年，得併科 100 萬以下</td><td><b>公</b></td></tr>
+        <tr><td>網路賭博</td><td>刑 266 Ⅱ</td><td>5 萬以下罰金</td><td><b>公</b></td></tr>
+        <tr><td>盜帳密登入別人電腦、帳號</td><td>刑 358 入侵電腦</td><td>3 年以下、拘役或科或併科 30 萬以下</td><td><b class="rd">告</b></td></tr>
+        <tr><td>登入後偷下載、刪改資料</td><td>刑 359</td><td>5 年以下、拘役或科或併科 60 萬以下</td><td><b class="rd">告</b></td></tr>
+        <tr><td>用程式癱瘓、干擾電腦</td><td>刑 360</td><td>3 年以下、拘役或科或併科 30 萬以下</td><td><b class="rd">告</b></td></tr>
+        <tr><td>對政府機關電腦做上面的事</td><td>刑 361（加重 ½）</td><td>358～360 的刑 × 1.5</td><td><b>公</b></td></tr>
+        <tr><td>自己寫駭客程式</td><td>刑 362</td><td>5 年以下、拘役或科或併科 60 萬以下</td><td><b>公</b></td></tr>
+        <tr class="grp"><td colspan="4">著作權（10/1）</td></tr>
+        <tr><td>盜版、掃描、複製</td><td>著 91 Ⅰ 重製</td><td>3 年以下、拘役或科或併科 75 萬以下</td><td><b class="rd">告</b>（原則）</td></tr>
+        <tr><td>盜版<b>拿去賣</b>、出租</td><td>著 91 Ⅱ</td><td>6 月～5 年，得併科 20～200 萬</td><td><b class="rd">告</b>（原則）</td></tr>
+        <tr><td>上傳網路、公開播放、改作</td><td>著 92 公開</td><td>3 年以下、拘役或科或併科 75 萬以下</td><td><b class="rd">告</b>（原則）</td></tr>
+        <tr><td>不掛作者名、亂改作品</td><td>著 93 人格權</td><td>2 年以下、拘役或科或併科 50 萬以下</td><td><b class="rd">告</b></td></tr>
+        <tr class="grp"><td colspan="4">個資（10/15）</td></tr>
+        <tr><td>違法蒐集、賣、利用個資（為了利益）</td><td>個資 41</td><td>5 年以下，得併科 100 萬以下</td><td><b>公</b></td></tr>
+        <tr><td>竄改、刪除個資檔案</td><td>個資 42</td><td>5 年以下、拘役或科或併科 100 萬以下</td><td><b class="rd">告</b>（對公務機關 → 公）</td></tr>
+        <tr><td>公務員利用職務犯上面的罪</td><td>個資 44</td><td>加重 ½</td><td>—</td></tr>
+        <tr class="grp"><td colspan="4">性平（10/22）</td></tr>
+        <tr><td>趁對方來不及反應，親、抱、摸隱私處</td><td>性騷 25 性騷擾罪</td><td>2 年以下、拘役或併科 10 萬以下</td><td><b class="rd">告</b></td></tr>
+        <tr><td>用強迫的方法猥褻</td><td>刑 224 強制猥褻</td><td>6 月～5 年</td><td><b>公</b></td></tr>
+        <tr><td>用強迫的方法性交</td><td>刑 221 強制性交</td><td>3～10 年（未遂也罰）</td><td><b>公</b></td></tr>
+        <tr class="grp"><td colspan="4"><span class="bu">補</span> 和解書常考的車禍</td></tr>
+        <tr><td>車禍撞傷人</td><td>刑 284 過失傷害</td><td>1 年以下、拘役或 10 萬以下（重傷 3 年以下…30 萬以下）</td><td><b class="rd">告</b>（刑 287）</td></tr>
+      </table></div>
+      <p class="qs">同一件事踩到好幾條：<b>一行為</b> → 從一重處斷（刑 55）；<b>數行為</b> → 一罪一罰、加起來（最多執行 30 年，刑 51）；<b>特別法優於普通法</b>（個資法 &gt; 刑法）。</p>
+    </section>
+
+    <!-- ══════════ 期限 ══════════ -->
+    <section class="sec paper" id="q-time">
+      <div class="lec-head"><span class="date">⏱</span><h2>期限總表</h2><span class="tag">「乙應注意什麼期限」</span></div>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th>什麼</th><th>期限</th><th>依據</th></tr>
+        <tr><td><mark class="hy">告訴乃論罪</mark>：被害人提告</td><td><mark class="hy"><b class="rd">知悉犯人 6 個月內</b></mark></td><td>講義 10/1（刑訴 237）</td></tr>
+        <tr><td>公訴罪：檢察官追訴</td><td>最重本刑 ≥10 年／無期／死刑 → <b>30 年</b>（致死不在此限）<br>3～10 年未滿 → <b>20 年</b>　1～3 年未滿 → <b>10 年</b><br>未滿 1 年、拘役、罰金 → <b>5 年</b></td><td>刑 80</td></tr>
+        <tr><td>民事侵權賠償</td><td>知有損害及賠償義務人 <b class="rd">2 年</b>；侵權行為起 <b>10 年</b></td><td>民 197、著 89-1</td></tr>
+        <tr><td>性騷擾申訴（一般）</td><td>知悉後 <b>2 年</b>，事發逾 <b>5 年</b>不得提</td><td>性騷 14</td></tr>
+        <tr><td>性騷擾申訴（權勢）</td><td>知悉後 <b>3 年</b>，事發逾 <b>7 年</b>不得提</td><td>性騷 14</td></tr>
+        <tr><td>存證信函催告後要起訴 <span class="bu">補</span></td><td>請求後 <b>6 個月內</b>起訴，否則時效視為不中斷</td><td>民 129、130</td></tr>
+        <tr><td>存證信函副本郵局保存</td><td><b>3 年</b></td><td>講義 10/29</td></tr>
+      </table></div>
+    </section>
+
+    <!-- ══════════ 民事 ══════════ -->
+    <section class="sec paper" id="q-civil">
+      <div class="lec-head"><span class="date">$</span><h2>民事賠償總表</h2><span class="tag">「乙可以請求什麼」</span></div>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th>賠什麼</th><th>一般</th><th>著作權</th><th>個資</th><th>性平</th></tr>
+        <tr><td>看得到的損失（醫藥費、少賺的）</td><td><b class="rd">民 184</b>：故意或過失不法侵害他人權利 → 賠</td><td>著 88（財產權）</td><td>個資 28（公務）、29（非公務）</td><td>性工 28、性騷 12</td></tr>
+        <tr><td>精神慰撫金＋回復名譽（道歉）</td><td><b class="rd">民 195</b>：身體、健康、名譽、隱私…<b>雖非財產上之損害</b>亦得請求</td><td>著 85（人格權）</td><td>個資 28、29 Ⅱ</td><td>性工 29、性騷 12</td></tr>
+        <tr><td>算不出損失時</td><td>—</td><td>法院定 <b class="rd">1～100 萬</b>（故意重大 500 萬）</td><td>每人每件 <b>500～2 萬</b>，同一事件合計最高 2 億</td><td>—</td></tr>
+      </table></div>
+      <p class="qs">著 88 Ⅱ 擇一請求：① 被害人可得預期利益的差額（民 216）　② 侵害人因侵害所得的利益。民事程序（10/22）：<b>和解 → 調解委員會調解 → 訴訟</b>。</p>
+    </section>
+
+    <!-- ══════════ 9/17 ══════════ -->
+    <section class="sec paper lec" id="c0917">
+      <div class="lec-head"><span class="date">9/17</span><h2>課程規範</h2><span class="tag">筆記完整性要包含這頁</span></div>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th>項目</th><th>比例</th><th>重點</th></tr>
+        <tr><td><mark class="hy"><b class="rd">出席率</b></mark></td><td><b class="rd">15%</b></td><td>事病假都算缺席（<mark class="hc">不用請假</mark>），公假喪假不算；遲到 10 分、早退算 0.5 次（應到 14 次）</td></tr>
+        <tr><td><mark class="hy"><b class="rd">上課筆記</b></mark></td><td><b class="rd">15%</b></td><td>① 完整性（含第一堂規範）② 口頭講解額外註記 ③ 討論、影片心得；<mark class="hy"><b class="rd">1/7 拍照 pdf（學號姓名）傳 line 群組</b></mark></td></tr>
+        <tr><td><mark class="hy"><b class="rd">個人口頭報告</b></mark></td><td><b class="rd">10%</b></td><td><mark class="hc">第 10～14 週，抽籤，<b class="rd">3 分鐘</b>＋ppt</mark>：<mark class="hy"><b class="rd">(1) 案例說明 (2) 相關法律分析 (3) 評論與感想</b></mark></td></tr>
+        <tr><td><mark class="hy">期中考</mark></td><td><b class="rd">30%</b></td><td><mark class="hy"><b class="rd">11/5</b></mark>，100 分鐘，問答題（題組），可看筆記；11/12 檢討</td></tr>
+        <tr><td><mark class="hy">期末考</mark></td><td><b class="rd">30%</b></td><td><mark class="hy"><b class="rd">12/31</b></mark>；1/14 檢討</td></tr>
+      </table></div>
+      <p class="qs"><b class="rd">缺席 5～7 次</b> → 平時成績<mark class="hy">折半</mark>；<b class="rd">8 次以上</b> → 平時 0 分（<mark class="hy">不及格</mark>）。加分：第 1 週出席 +3、第 2 週 +2、答對一次 +1、通識活動最多 2 次 4 分。</p>
+    </section>
+
+    <!-- ══════════ 9/24 ══════════ -->
+    <section class="sec paper lec" id="c0924">
+      <div class="lec-head"><span class="date">9/24</span><h2><mark class="hy">法律體系概述</mark></h2></div>
+      <h3><mark class="hy">法律層級</mark>（上層授權下層，下層不能牴觸上層）</h3>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th>層級</th><th>誰定</th><th>名稱</th><th>能罰？</th></tr>
+        <tr><td>憲法</td><td>立法院提案 → 公告半年 → 公民複決</td><td>中華民國憲法（增修條文）</td><td>—</td></tr>
+        <tr><td><mark class="hy">法律</mark></td><td>立法院</td><td><mark class="hy"><b class="rd">法、律、條例、通則</b></mark></td><td>可</td></tr>
+        <tr><td><mark class="hy"><b class="rd">地方自治法規</b></mark></td><td>地方議會</td><td><mark class="hy"><b class="rd">○○市○○自治條例</b></mark></td><td>可（<b>裁罰權</b>），只限該縣市</td></tr>
+        <tr><td><mark class="hy">命令</mark></td><td>中央及地方政府機關</td><td><mark class="hy"><b class="rd">規程、規則、細則、辦法、綱要、標準、準則</b></mark></td><td><b class="rd">不可</b></td></tr>
+      </table></div>
+      <h3><mark class="hy">概念區分</mark>：犯罪 vs 違規</h3>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th></th><th><mark class="hc">刑法</mark>（犯罪）</th><th><mark class="hc">行政法</mark>（違規、妨害公益）</th></tr>
+        <tr><td>關</td><td><mark class="hy"><b class="rd">拘役</b></mark>（另有死刑、無期、有期徒刑）</td><td><mark class="hy"><b class="rd">拘留</b></mark></td></tr>
+        <tr><td>罰錢（歸國庫）</td><td><mark class="hy"><b class="rd">罰金</b></mark></td><td><mark class="hy"><b class="rd">罰鍰</b></mark></td></tr>
+        <tr><td>收東西</td><td><mark class="hy"><b class="rd">沒收</b></mark></td><td><mark class="hy"><b class="rd">沒入</b></mark>（另有歇業、吊照、停工、拆除、公布姓名、申誡）</td></tr>
+      </table></div>
+      <p class="qs"><mark class="hc">民法</mark>：賠償<b>給受害人</b>。<mark class="hc">憲法</mark>：最高規範。<mark class="hc">民訴</mark>：三級三審、<b class="rd">上訴</b>、<b class="rd">抗告</b>、再審、支付命令、假扣押。<mark class="hc">刑訴</mark>：三級三審、<b class="rd">上訴</b>、<b class="rd">抗告</b>、羈押、拘提、通緝、搜索（人）、扣押（物）、非常上訴。</p>
+      <p class="qs"><mark class="hy">條文層次</mark>：<mark class="hy"><b class="rd">條</b></mark> → <mark class="hy"><b class="rd">項</b></mark>（分段、不標號）→ <mark class="hy"><b class="rd">款</b></mark>（一、二、）→ <mark class="hy"><b class="rd">目</b></mark>（（一）（二））。標題：編 → <b class="rd">章</b> → <b class="rd">節</b> → 款 → 目。</p>
+    </section>
+
+    <!-- ══════════ 10/1 ══════════ -->
+    <section class="sec paper lec" id="c1001">
+      <div class="lec-head"><span class="date">10/1</span><h2><mark class="hy">智慧財產權</mark></h2><span class="tag">著作權<b class="rd">不須</b>申請；專利、商標須申請</span></div>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th></th><th><mark class="hy">著作人格權</mark></th><th><mark class="hy">著作財產權</mark></th></tr>
+        <tr><td>內容</td><td><mark class="hy"><b class="rd">公開發表權、姓名表示權、禁止改作權</b></mark></td><td><mark class="hy"><b class="rd">重製權</b>；<b class="rd">公開權</b>（口述、播送、上映、演出、傳輸、展示）</mark>；<b class="rd">移轉所有權、出租</b></td></tr>
+        <tr><td>可否讓與</td><td><b class="rd">專屬</b>，不得讓與、繼承；死後視同存續</td><td>可以</td></tr>
+        <tr><td>保護期</td><td>永久</td><td>生存期間＋死後 <b class="rd">50 年</b></td></tr>
+        <tr><td>侵害：民事</td><td><mark class="hy">著 85</mark>（含精神賠償、表示姓名、回復名譽）</td><td><mark class="hy">著 88</mark>（擇一請求；1～100 萬；故意重大 500 萬）</td></tr>
+        <tr><td>侵害：刑事</td><td><mark class="hy">著 93</mark>：2 年以下…50 萬</td><td><mark class="hy">著 91</mark>（重製）、<mark class="hy">92</mark>（公開）</td></tr>
+      </table></div>
+      <p class="qs">著 5 著作種類：語文、音樂、戲劇舞蹈、美術、攝影、圖形、視聽、錄音、建築、電腦程式。著 79 <b>製版權</b>：<b class="rd">無</b>／<b class="rd">消滅</b>著作財產權的文字、美術著作，重新製版首次發行 → <b class="rd">10 年</b>。</p>
+      <h3><mark class="hy">著 65 合理使用</mark>（不構成侵害）四個基準</h3>
+      <p class="qs">① 目的：商業 or <b class="rd">非營利教育</b>　② 著作<b class="rd">性質</b>　③ 用的<b class="rd">質量、比例</b>　④ 對市場的<b class="rd">影響</b></p>
+      <h3><mark class="hy">著 91 重製</mark>（新修正刪掉光碟那項）</h3>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th>項</th><th>行為</th><th>刑度</th></tr>
+        <tr><td>Ⅰ</td><td>擅自重製</td><td>3 年以下、拘役，<mark class="hc">或科或併科</mark> 75 萬以下</td></tr>
+        <tr><td>Ⅱ</td><td><b>意圖銷售或出租</b>而重製</td><td>6 月～5 年，<mark class="hc">得併科</mark> 20～200 萬</td></tr>
+        <tr><td>舊Ⅲ</td><td>重製於光碟（新法刪除）</td><td>6 月～5 年，得併科 50～500 萬</td></tr>
+        <tr><td>末項</td><td colspan="2">僅供個人參考或合理使用 → 不構成侵害</td></tr>
+      </table></div>
+      <p class="qs"><mark class="hc">或科或併科</mark> = 關、罰可選一或都來；<mark class="hc">得併科</mark> = 一定關、可再加罰金。</p>
+      <h3><mark class="hc"><b class="rd">提告及追訴時效</b></mark></h3>
+      <p class="qs">著作權的罪原則<b class="rd">告訴乃論</b>（著 100）。新修正例外 → 公訴：91 Ⅱ 數位重製、91-1 Ⅱ 營利散布數位盜版、92 <mark class="hc">公開傳輸</mark>，且<mark class="hc">損害 100 萬以上</mark>。告訴乃論 6 個月；公訴看刑 80（見期限總表）。</p>
+      <h3><mark class="hy">良民證</mark>不記載（警察刑事紀錄證明核發條例 6）</h3>
+      <p class="qs">少年事件、受<mark class="hy"><b class="rd">緩刑</b></mark>未撤銷、只判<mark class="hy"><b class="rd">拘役</b></mark>或<mark class="hy"><b class="rd">罰金</b></mark>、免刑、免除執行、刑罰已廢除、易科罰金／社會勞動完畢 5 年內未再犯。</p>
+    </section>
+
+    <!-- ══════════ 10/8 ══════════ -->
+    <section class="sec paper lec" id="c1008">
+      <div class="lec-head"><span class="date">10/8</span><h2><mark class="hy">網路倫理與犯罪</mark></h2><span class="tag">各罪刑度見速查表</span></div>
+      <h3><mark class="hy">妨害名譽</mark>：309 vs 310</h3>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th></th><th>刑 309 <b class="rd">公然侮辱</b></th><th>刑 310 <b class="rd">誹謗</b></th></tr>
+        <tr><td>行為</td><td>當眾罵人，<b>沒講具體的事</b></td><td><b>意圖散布於眾</b>，指摘、傳述足以毀損名譽之<b>事</b>；<mark class="hc">散布文字圖畫</mark> → Ⅱ <mark class="hc"><b class="rd">加重誹謗</b></mark></td></tr>
+        <tr><td>刑度</td><td><mark class="hc">拘役</mark>或<mark class="hc">9 千以下</mark></td><td>Ⅰ 1 年…1.5 萬；Ⅱ 2 年…3 萬</td></tr>
+        <tr><td>例外</td><td>—</td><td>Ⅲ 能證明為真 → 不罰；但<mark class="hc"><b class="rd">涉於私德而與公共利益無關</b></mark>者照罰</td></tr>
+        <tr><td>告／公</td><td colspan="2"><mark class="hy"><b class="rd">告訴乃論</b></mark></td></tr>
+      </table></div>
+      <h3>其他關鍵字</h3>
+      <p class="qs">313 信用：散布流言或詐術<mark class="hc">損害他人信用</mark>，用<mark class="hc">網路</mark>加重 ½。315-1 秘密：<mark class="hc"><b class="rd">無故</b></mark>窺視竊錄<mark class="hc"><b class="rd">非公開</b></mark>活動。235：<mark class="hc">散布、播送、販賣</mark>猥褻物（<mark class="hy"><b class="rd">公訴</b></mark>）。</p>
+      <h3><mark class="hy">性影像四條</mark></h3>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th>條</th><th>行為</th><th>告／公</th></tr>
+        <tr><td>319-1</td><td><mark class="hc">無故攝錄</mark>性影像（偷拍）；Ⅱ <mark class="hc">營利供場所</mark>、Ⅲ <mark class="hc">營利散布</mark></td><td>Ⅰ 告，其餘公</td></tr>
+        <tr><td>319-2</td><td><mark class="hc">強暴脅迫恐嚇</mark>攝錄（強迫拍）</td><td>公</td></tr>
+        <tr><td>319-3</td><td>無故重製、散布性影像（外流）；偷拍來的 6 月～5 年、強迫拍來的 1～7 年；營利加重 ½</td><td>Ⅰ 告，其餘公</td></tr>
+        <tr><td>319-4</td><td>電腦合成不實性影像（深偽）</td><td>公</td></tr>
+      </table></div>
+      <h3>妨害電腦使用（358～362）</h3>
+      <p class="qs">358 入侵、359 取得刪改、360 干擾 → <b class="rd">告</b>；361 對公務機關（加重 ½）、362 製作犯罪程式 → <b>公</b>。</p>
+      <h3><mark class="hy">民事</mark></h3>
+      <p class="qs"><mark class="hy">民 184</mark> 具體損害；<mark class="hy">民 195</mark> 非財產（精神）＋回復名譽；<b class="rd">2 年</b>／10 年（民 197）。<b>罵人價目表</b>的「判賠」是<b>民事精神慰撫金</b>，跟刑事罰金不同：例「神經病」刑事無罪、民事賠 30 萬；「特殊性關係」加重誹謗＋賠 100 萬＋登報道歉。</p>
+    </section>
+
+    <!-- ══════════ 10/15 ══════════ -->
+    <section class="sec paper lec" id="c1015">
+      <div class="lec-head"><span class="date">10/15</span><h2><mark class="hy">個人隱私權</mark>（個資法）</h2></div>
+      <p class="qs"><mark class="hy">個資 2 ①</mark> 個人資料：姓名、生日、身分證號、護照、特徵、指紋、婚姻、家庭、教育、職業、病歷、醫療、基因、性生活、健檢、前科、聯絡方式、財務、社會活動…<b class="rd">直接或間接</b>能識別個人的資料。</p>
+      <p class="qs"><mark class="hy">個資 8 告知義務</mark>：① 機關名稱 ② 蒐集目的 ③ 個資類別 ④ 利用期間、地區、對象、方式 ⑤ 當事人權利 ⑥ 不提供的影響。</p>
+      <p class="qs"><mark class="hy">個資 19 非公務機關蒐集要件</mark>（符合一款即可）：① 法律明文 ② 契約關係＋安全措施 ③ 當事人自行公開 ④ 學術研究、無從識別 ⑤ <b class="rd">當事人同意</b> ⑥ 公共利益 ⑦ 一般可得來源 ⑧ 對當事人無侵害。</p>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th>責任</th><th>條</th><th>內容</th></tr>
+        <tr><td><mark class="hy">民事</mark></td><td>28（公務）、29（非公務）</td><td>賠償＋精神賠償＋回復名譽；算不出 <b class="rd">每人每件 500～2 萬</b>；同一事件合計最高 <b>2 億</b>（所涉利益更高以利益為限）</td></tr>
+        <tr><td rowspan="2"><mark class="hy">刑事</mark></td><td>41</td><td>意圖不法利益，違反 6、15、16、<b>19</b>、20 等，足生損害 → 5 年以下，得併科 100 萬</td></tr>
+        <tr><td>42</td><td>非法變更、刪除個資檔案 → 5 年以下、拘役或科或併科 100 萬</td></tr>
+        <tr><td>告／公</td><td>45</td><td>原則<b class="rd">告訴乃論</b>；<b>41 一律公訴</b>，42 對公務機關 → 公訴</td></tr>
+        <tr><td>加重</td><td>44</td><td>公務員假借職務 → 加重 ½</td></tr>
+        <tr><td><mark class="hy">行政</mark></td><td>47</td><td>非公務機關違反 6、19、20 等 → <b class="rd">5～50 萬罰鍰</b>，限期改正，不改按次罰</td></tr>
+      </table></div>
+      <h3><mark class="hy">數罪併罰</mark>（老師例題：甲盜乙密碼進電腦，複製乙的個資）</h3>
+      <p class="qs">民事：民 184、195；個資 28、29（具體損害＋精神或回復名譽）。刑事：刑 358、359＋個資 41 → 依「<b class="rd">特別法優於普通法</b>」及「<b class="rd">從重處斷</b>」→ 以<b>個資 41</b> 論處（5 年以下，得併科 100 萬）。</p>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th></th><th>一行為</th><th>數行為</th></tr>
+        <tr><td>意思</td><td>同一目的、動機、對象</td><td>不同目的、動機、對象</td></tr>
+        <tr><td>怎麼判</td><td>觸犯數罪名 → <b class="rd">從一重處斷</b>（刑 55）</td><td><b class="rd">一罪一罰</b>（累加），最高執行 30 年（刑 51）</td></tr>
+      </table></div>
+    </section>
+
+    <!-- ══════════ 10/22 ══════════ -->
+    <section class="sec paper lec" id="c1022">
+      <div class="lec-head"><span class="date">10/22</span><h2><mark class="hy">性別平等</mark></h2><span class="tag">性教、性工、性騷、跟騷法（111/6/1）</span></div>
+      <h3><mark class="hy">性騷擾定義</mark>：看場合用哪部法</h3>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th>場合</th><th>法條</th><th>申訴、處理</th></tr>
+        <tr><td>學校</td><td>性教 3</td><td>性平會調查 → 申復 → 向學校（主管機關）申訴；學生警告…退學、教職員…解聘</td></tr>
+        <tr><td>職場</td><td>性工 12</td><td>向雇主申訴 → 地方主管（勞工局）；調職、降薪…開除；公司公布姓名、行政罰</td></tr>
+        <tr><td>其他（公車、路上、網路）</td><td>性騷 2</td><td>見下面行政罰、刑事</td></tr>
+      </table></div>
+      <p class="qs">兩種型態：① <b>敵意環境</b>（不受歡迎、有性意味的言行，冒犯、影響人格尊嚴）② <b>交換條件</b>（拿分數、升遷、工作當條件）。</p>
+      <h3>友善校園（性教）</h3>
+      <p class="qs">12 安全、尊重的學習環境；13 招生<b>不得差別待遇</b>；14 教學、活動、評量、獎懲不得差別待遇；18 課程活動不得差別，國中小每學期 ≥ <b>4 小時</b>；19 教材平衡、多元；20 教師具性平意識、破除刻板印象。</p>
+      <h3>處理程序：民事、行政、刑事</h3>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th>責任</th><th>內容</th></tr>
+        <tr><td>民事</td><td>和解 → 調解委員會 → 訴訟。具體損害：民 184、性工 28、性騷 12；精神、回復名譽：民 195、性工 29、性騷 12</td></tr>
+        <tr><td>行政（性騷 27）</td><td><b>權勢</b>性騷擾 <b class="rd">6～60 萬</b>；其他 <b class="rd">1～10 萬</b>罰鍰</td></tr>
+        <tr><td>申訴期（性騷 14）</td><td>一般：知悉 2 年、事發 5 年；權勢：知悉 3 年、事發 7 年</td></tr>
+        <tr><td>刑事</td><td>性騷 25（<b>乘人不及抗拒</b>摸隱私處，<b class="rd">告</b>）；刑 224 強制猥褻、221 強制性交（<b>強暴脅迫</b>，<b>公</b>）</td></tr>
+      </table></div>
+    </section>
+
+    <!-- ══════════ 10/29 ══════════ -->
+    <section class="sec paper lec" id="c1029">
+      <div class="lec-head"><span class="date">10/29</span><h2><mark class="hy">存證信函</mark>與<mark class="hy">和解書</mark></h2></div>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th></th><th><mark class="hy">存證信函</mark></th><th><mark class="hy">和解書</mark></th></tr>
+        <tr><td><mark class="hy">使用時機</mark></td><td><mark class="hc"><b class="rd">催收</b></mark>（貨款、借貸、租金）、<mark class="hc"><b class="rd">警告</b></mark>（違約、澄清、談判）、<mark class="hc"><b class="rd">告知</b></mark>（不續約、解約、完成義務）、<mark class="hc"><b class="rd">確定時效</b></mark>（求償時效延續）</td><td>任何<b class="rd">民事糾紛</b>，雙方<b class="rd">達成和解條件</b>時；作為<mark class="hc">應遵守的契約</mark>，被害人<mark class="hc">不得再提異議、訴訟</mark></td></tr>
+        <tr><td>結構／要點</td><td>1. 事實經過　2. 限期處理　3. 未處理後果</td><td><mark class="hy">人、事、時、地、物</mark>；金額＋收執方式；放棄（撤回）告訴；雙方簽字各執一份</td></tr>
+        <tr><td>格式</td><td>每行 20 格、每頁 10 行、一格一字；一式三份；郵局存副本 3 年</td><td>見下一頁範本</td></tr>
+        <tr><td>法條</td><td>民 203：沒約定利率 → 週年 5%</td><td>民 736：當事人約定，<b>互相讓步</b>，以終止爭執或防止爭執發生之契約</td></tr>
+      </table></div>
+      <p class="qs"><b>人</b>：甲方、乙方姓名、身分證字號、住址、電話。<b>事</b>：經過＋受傷、財損。<b>時</b>：事發時間＋<b>簽約時間</b>。<b>地</b>：詳細地點。<b>物</b>：車型、車號、顏色。</p>
+      <p class="qs"><b>存證信函骨架</b>：敬啟者：台端於民國○年○月○日……（事實、金額、證據、法條）。限台端於函到○日內……。若逾期……本人將依法提出刑、民事訴訟，希勿自誤為禱！</p>
+    </section>
+
+    <!-- ══════════ 和解書範本 ══════════ -->
+    <section class="sec paper lec" id="c-deed">
+      <div class="lec-head"><span class="date">✍</span><h2>和解書範本（照抄這份）</h2><span class="tag">講義範本；【 】是考試要換成題目的內容</span></div>
+      <div class="deed">
+        <h4>和解書</h4>
+        <p>立和解書人：【甲方姓名】（以下簡稱甲方）<br><span style="padding-left:6em"></span>【乙方姓名】（以下簡稱乙方）</p>
+        <p>雙方茲因【車禍損害賠償】事件，達成和解，條件如下：</p>
+        <p class="it">一、甲方於民國【○年○月○日○午○時○分】，駕駛【車型、車號、顏色】，行經【詳細地點】，不慎撞傷乙方【人或車】，造成【受傷情況】，雙方就上開事件以新臺幣【○○元】達成和解。</p>
+        <p class="it">二、雙方簽訂本和解書時，甲方同意賠償現金新臺幣【○○元】與乙方，由乙方如數收執，清點無誤，不另立收據。</p>
+        <p class="it">三、嗣後無論任何情形，乙方或任何其他人不得再向甲方要求其他賠償，並不得再有異議及告訴等情事［若已提出告訴，則應無條件撤回告訴］。</p>
+        <p class="it">四、本和解書一式兩份，甲、乙雙方各執一份為憑。</p>
+        <p style="margin-top:14px">立和解書人：</p>
+        <div class="sig"><div>甲方：【　　】（簽名）<br>身分證字號：<br>住址：<br>聯絡電話：</div><div>乙方：【　　】（簽名）<br>身分證字號：<br>住址：<br>聯絡電話：</div></div>
+        <p class="dt">中 華 民 國 【○】 年 【○】 月 【○】 日</p>
+      </div>
+      <div class="tbl-wrap"><table class="ltab qt">
+        <tr><th>題目不是車禍、不是當場付現時，換哪裡</th><th>寫法</th></tr>
+        <tr><td>一、事件經過</td><td>「甲方於民國○年○月○日，在【地點】，【做了什麼（含物件、作品名、帳號）】，造成乙方【損害】」</td></tr>
+        <tr><td>二、匯款</td><td>甲方同意於民國○年○月○日前，將新臺幣○元匯入乙方指定之帳戶，以匯款紀錄為憑。</td></tr>
+        <tr><td>二、分期</td><td>分○期，每期新臺幣○元，於每月○日前匯入；<b>任何一期未付，視為全部到期</b>。</td></tr>
+        <tr><td>多加一條（非金錢）</td><td>刪文、公開道歉、下架、銷毀……都寫期限（例：簽訂後三日內）。</td></tr>
+        <tr><td>撤回告訴（分期時）</td><td>甲方<b>付清全部金額後</b>，乙方應無條件撤回告訴（撤回後不能再告）。</td></tr>
+      </table></div>
+      <p class="qs no-print">更多題目練習、產生器在 <a href="writing.html">和解書・存證信函練習</a>。</p>
+    </section>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script>
+(function () {
+  'use strict';
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => { es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } }); }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+})();
+</script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
