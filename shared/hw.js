@@ -21,7 +21,7 @@
     const badge = it.kind === 'hw'
       ? '<span class="hw-badge hw">📝 ' + bankName + ' 第 ' + it.hw + ' 題 · 作業原題</span>'
       : it.kind === 'cf'
-      ? '<span class="hw-badge sim">觀念填充 ' + it.no + (it.how ? ' · 解法' : ' · 觀念') + '</span>'
+      ? '<span class="hw-badge sim">觀念填充 ' + it.no + (it.calc ? ' · 計算' : it.how ? ' · 解法' : ' · 觀念') + (it.zh ? ' · EN' : '') + '</span>'
       : '<span class="hw-badge sim">仿作業 ' + it.hw + '-' + it.n + ' · 自編練習</span>';
     let html = it.q, blanks = [];
     it.b.forEach((b, i) => {
@@ -37,7 +37,7 @@
       html = html.replace('{' + i + '}', w);
     });
     el.innerHTML = '<div class="hw-head">' + badge + (it.title ? '<b>' + it.title + '</b>' : '') + '</div>' +
-      '<div class="hw-q">' + html + '</div>' + (it.en ? '<div class="q-en hw-en">' + it.en + '</div>' : '') + (it.fig ? '<div class="hw-fig">' + it.fig + '</div>' : '') +
+      '<div class="hw-q">' + html + '</div>' + (it.zh ? '<details class="hw-zh dv-ui"><summary>中文翻譯</summary><div>' + it.zh + '</div></details>' : it.en ? '<div class="q-en hw-en">' + it.en + '</div>' : '') + (it.fig ? '<div class="hw-fig">' + it.fig + '</div>' : '') +
       '<div class="hw-act"><button class="btn solid hw-check" type="button">對答案</button><button class="btn hw-reset" type="button">重做</button>' +
       (it.link ? '<a class="hw-link" href="' + it.link + '">回到講解 →</a>' : '') + '<span class="hw-score"></span></div>' +
       '<div class="hw-ans" hidden></div>';

@@ -3,6 +3,7 @@
    11/1 使用者：期中考 2（11/9）範圍 PART 4 §02 起，每一小節後面都要有填充題。
    每一小節 8 題；題目先中文，下面附英文（en）。選項正解寫第一個，hw.js 會打亂。
    下拉選項不能放 <sup>／<sub>、底線；次方用 ⁻¹⁴ 這種字元。每題考的點都在該節講義內文或陷阱框講過。
+   11/1 加碼：每節再 4 題英文觀念＋3 題計算（item 有 zh → 英文題幹先，中文收在「中文翻譯」）。
    用法：<div class="hw-list" data-bank="__CH14C" data-sec="iv"></div>
    ============================================================ */
 (function () {
@@ -87,7 +88,7 @@
   C('ideal', 6, '解題第一步', '用理想模型解電路：先假設二極體 {0}，算出 i_D {1} 才表示假設成立。', 'To solve with the ideal model, first assume the diode is ___; the assumption holds if i_D ___.',
     [S(['導通 ON', '截止 OFF', '崩潰 in breakdown', '燒壞 burnt out']), S(['＞ 0', '＜ 0', '= 0', '無限大 is infinite'])],
     '標準流程第 1、2 步。', true);
-  C('ideal', 7, '假設錯了', '假設 ON 卻算出 i_D < 0，就改假設 {0}，並檢查二極體兩端電壓 {1}。', 'If assuming ON gives i_D < 0, switch to ___ and check that the diode voltage is ___.',
+  C('ideal', 7, '假設錯了', '假設 ON 卻算出 i_D &lt; 0，就改假設 {0}，並檢查二極體兩端電壓 {1}。', 'If assuming ON gives i_D < 0, switch to ___ and check that the diode voltage is ___.',
     [S(['OFF（斷路，iD = 0）OFF (open)', '短路 a short', '崩潰 breakdown', '0.7 V 電池 a battery']), S(['＜ Vγ', '＞ Vγ', '= Vbi', '= VT'])],
     '標準流程第 3 步。', true);
   C('ideal', 8, '0.7 V 不是 V_bi', '導通電壓 V_γ ≈ 0.7 V 跟內建電位 V_bi {0}。', 'The cut-in voltage V_γ ≈ 0.7 V and the built-in potential V_bi are ___.',
@@ -145,6 +146,93 @@
   C('thermo', 8, '電流不固定的後果', '如果電流沒固定、變了 10 倍，電壓會差 60 mV，相當於溫度誤差約 {0}。', 'If the current is not held constant and changes tenfold, V_D shifts 60 mV — a temperature error of about ___.',
     [S(['30 多度 over 30 degrees', '0.1 度 0.1 degree', '3 度 3 degrees', '300 度 300 degrees'])],
     '60 mV ÷ 1.74 mV/K ≈ 34 K。陷阱框：電流不用固定 ✗。', true);
+
+  /* ═════════════════════════════════════════════════════════════
+     11/1 加碼：英文先（點「中文翻譯」才出現中文）＋計算題（下拉選數字）
+     數字全部用程式驗算過（V_T = 0.026 V、n = 1 除非另有說明）。
+     ═════════════════════════════════════════════════════════════ */
+  const E = (sec, n, title, q, zh, b, ex, kind) =>
+    items.push({ id: 'c14' + sec + '-e' + n, kind: 'cf', sec, no: NO[sec] + '-' + (8 + n), how: kind === 'how', calc: kind === 'calc', link: P + '#' + sec, title: sub(title), q: sub(q), zh: sub(zh), b, ex });
+
+  /* ── 02 ideal I–V ── */
+  E('iv', 1, 'I_S and temperature', 'The reverse saturation current I_S is proportional to {0}, so it depends strongly on temperature.', '逆向飽和電流 I_S 正比於 ___，所以它跟溫度關係很大。',
+    [S(['ni²', 'Na', 'VT', 'R'])], 'I<sub>S</sub> ∝ n<sub>i</sub>²（p<sub>n0</sub> = n<sub>i</sub>²/N<sub>d</sub>），n<sub>i</sub> 對溫度非常敏感。');
+  E('iv', 2, 'Rectifier', 'Because a pn junction conducts easily in only one direction, it behaves as a {0}.', 'pn 接面只有一個方向容易導通，所以它是一個 ___。',
+    [S(['rectifier', 'resistor', 'capacitor', 'amplifier'])], '一邊貼地、一邊往上暴衝 = 整流特性。');
+  E('iv', 3, 'n near 2', 'The emission coefficient n is close to 2 at {0} currents, where recombination in the depletion region dominates.', '在 ___ 電流時，空乏區復合的影響大，放射係數 n 接近 2。',
+    [S(['low', 'high', 'zero', 'reverse'])], '投影片 1-44 NOTE：低電流 n → 2，電流夠大擴散主導 n → 1。');
+  E('iv', 4, 'Neglect −1', 'For v_D ≫ V_T, the {0} term in i_D = I_S(e<sup>v_D/nV_T</sup> − 1) can be neglected.', '當 v_D ≫ V_T 時，i_D = I_S(e<sup>v_D/nV_T</sup> − 1) 裡的 ___ 那項可以忽略。',
+    [S(['−1', 'exponential', 'IS', 'n'])], 'v<sub>D</sub> = 0.1 V 時指數就有 47，−1 只占約 2%。');
+  E('iv', 5, 'Example 1.7 (forward)', 'I_S = 10⁻¹⁴ A, n = 1, V_T = 0.026 V. For v_D = +0.70 V, i_D ≈ {0}.', 'I_S = 10⁻¹⁴ A、n = 1、V_T = 0.026 V。v_D = +0.70 V 時，i_D ≈ ___。',
+    [S(['4.93 mA', '0.105 mA', '49.3 mA', '0.70 mA'])], '0.70/0.026 = 26.92，e<sup>26.92</sup> = 4.93 × 10<sup>11</sup>，× 10<sup>−14</sup> = 4.93 × 10<sup>−3</sup> A。', 'calc');
+  E('iv', 6, 'Slide 1-12 current', 'Same diode (I_S = 10⁻¹⁴ A). For v_D = 0.60 V, i_D ≈ {0}.', '同一顆二極體（I_S = 10⁻¹⁴ A），v_D = 0.60 V 時 i_D ≈ ___。',
+    [S(['105 μA', '10.5 μA', '1.05 mA', '4.93 mA'])], '0.6/0.026 = 23.08，e<sup>23.08</sup> ≈ 1.05 × 10<sup>10</sup> → 1.05 × 10<sup>−4</sup> A（投影片 1-12 的 105.24 μA）。只差 0.1 V，電流就差了將近 50 倍。', 'calc');
+  E('iv', 7, 'Reverse bias', 'Same diode. For v_D = −0.20 V, i_D ≈ {0}.', '同一顆二極體，v_D = −0.20 V 時 i_D ≈ ___。',
+    [S(['−10⁻¹⁴ A', '0 A exactly', '−0.2 A', '+10⁻¹⁴ A'])], 'e<sup>−7.7</sup> ≈ 0.0005，括號 ≈ −1 → i<sub>D</sub> ≈ −I<sub>S</sub>。', 'calc');
+
+  /* ── 03 60 mV per decade ── */
+  E('dec', 1, 'Unknown I_S', 'Since I_S cancels in i₂/i₁, the 60 mV rule works even when I_S is {0}.', '因為 i₂/i₁ 把 I_S 消掉了，所以就算 I_S ___，60 mV 規則照樣能用。',
+    [S(['unknown', 'zero', 'negative', 'infinite'])], 'I<sub>S</sub> 每顆都不一樣、很難量，但比值關係跟它無關。');
+  E('dec', 2, 'Not linear', 'Doubling the diode voltage does not double the current, because the current depends {0} on the voltage.', '二極體電壓加倍，電流不會只加倍，因為電流跟電壓是 ___ 關係。',
+    [S(['exponentially', 'linearly', 'quadratically', 'not at all'])], '陷阱框：電壓加倍電流加倍 ✗；加 60 mV 就 × 10。');
+  E('dec', 3, 'log₁₀ form', 'Using log₁₀ instead of ln: Δv = {0} × nV_T × log₁₀(i₂/i₁).', '改用 log₁₀ 的話：Δv = ___ × nV_T × log₁₀(i₂/i₁)。',
+    [S(['2.303', '1', '0.434', '10'])], 'ln x = 2.303 log₁₀ x，所以 2.303 × 26 mV ≈ 60 mV。');
+  E('dec', 4, 'Semilog plot', 'On a plot of log i_D versus v_D, the forward characteristic is a straight line rising one decade every {0}.', '畫 log i_D 對 v_D，順偏那段是直線，每 ___ 上升一個數量級。',
+    [S(['60 mV', '26 mV', '0.7 V', '1 V'])], 'Fig 1.18（n = 1）。');
+  E('dec', 5, '1 mA → 10 mA', 'A diode (n = 1) carries 1 mA at 0.650 V. The voltage for 10 mA is about {0}.', '一顆二極體（n = 1）在 0.650 V 時電流 1 mA。要 10 mA，電壓約 ___。',
+    [S(['0.710 V', '0.676 V', '0.650 V', '6.50 V'])], '加 0.026 × ln 10 = 0.0599 V → 0.7099 V。', 'calc');
+  E('dec', 6, '+120 mV', 'Raising v_D by 120 mV (n = 1) multiplies the current by about {0}.', 'v_D 增加 120 mV（n = 1），電流大約變成幾倍？___',
+    [S(['100', '10', '2', '1000'])], 'e<sup>0.12/0.026</sup> = e<sup>4.62</sup> ≈ 101，兩個 60 mV = 10 × 10。', 'calc');
+  E('dec', 7, '+36 mV', 'Raising v_D by 36 mV (n = 1) multiplies the current by about {0}.', 'v_D 增加 36 mV（n = 1），電流大約變幾倍？___',
+    [S(['4', '2', '1.4', '36'])], 'e<sup>36/26</sup> = e<sup>1.385</sup> ≈ 3.99（每 18 mV 翻倍，兩次 → 4 倍）。', 'calc');
+
+  /* ── 04 ideal diode model ── */
+  E('ideal', 1, 'R_R', 'In the ideal diode model, the reverse-bias resistance R_R is {0}.', '理想二極體模型中，逆偏電阻 R_R 是 ___。',
+    [S(['infinite', 'zero', 'rd', '1 kΩ'])], 'R<sub>R</sub> = V<sub>R</sub>/I<sub>R</sub>，I<sub>R</sub> → 0 所以 → ∞（開路）。');
+  E('ideal', 2, 'R_F', 'In the ideal diode model, the forward resistance R_F is {0}, so V_F = 0.', '理想二極體模型中，順偏電阻 R_F 是 ___，所以 V_F = 0。',
+    [S(['zero', 'infinite', 'rd', '26 Ω'])], '短路；電流由外部電路決定。');
+  E('ideal', 3, 'Where is the wall', 'The constant-voltage-drop model places the vertical “wall” at V_γ ≈ {0}.', '定電壓降模型把那面垂直的「牆」放在 V_γ ≈ ___。',
+    [S(['0.7 V', '0 V', '26 mV', 'Vbi'])], '牆放在 0 V 是理想二極體；放在 0.7 V 是定電壓降。');
+  E('ideal', 4, 'Negative current', 'If the assumed-ON analysis gives i_D &lt; 0, the diode is actually {0}.', '假設 ON 卻算出 i_D &lt; 0，表示二極體其實是 ___。',
+    [S(['off', 'in breakdown', 'shorted', 'saturated'])], '改成 OFF（斷路）重算，再檢查兩端電壓 &lt; V<sub>γ</sub>。', 'how');
+  E('ideal', 5, 'Ideal: 5 V, 1 kΩ', 'V_S = 5 V in series with R = 1 kΩ and a forward-biased ideal diode. I_D = {0}.', 'V_S = 5 V 串 R = 1 kΩ 和一顆順偏的理想二極體，I_D = ___。',
+    [S(['5 mA', '4.3 mA', '0 mA', '∞'])], '理想 = 短路：5 V ÷ 1 kΩ。', 'calc');
+  E('ideal', 6, '0.7 V model: 5 V vs 1 V', 'Using the 0.7 V model with R = 1 kΩ: V_S = 5 V gives {0}; V_S = 1 V gives {1}.', '用 0.7 V 模型、R = 1 kΩ：V_S = 5 V 時電流 ___；V_S = 1 V 時電流 ___。',
+    [S(['4.3 mA', '5 mA', '0.43 mA', '3.6 mA']), S(['0.3 mA', '1 mA', '0.7 mA', '1.7 mA'])], '(5 − 0.7)/1k = 4.3 mA（跟理想 5 mA 差 14%）；(1 − 0.7)/1k = 0.3 mA（理想說 1 mA，差 3 倍多）→ 電源小時一定要扣 0.7 V。', 'calc');
+  E('ideal', 7, 'Reverse source', 'V_S = −5 V (reverse) with R = 1 kΩ and an ideal diode: I_D = {0} and V_D = {1}.', 'V_S = −5 V（逆偏）、R = 1 kΩ、理想二極體：I_D = ___，V_D = ___。',
+    [S(['0', '−5 mA', '5 mA']), S(['−5 V', '0 V', '+5 V', '−0.7 V'])], 'OFF → 電流 0、電阻沒壓降，5 V 全部反著落在二極體上。', 'calc');
+
+  /* ── 05 temperature effects ── */
+  E('temp', 1, 'V_T vs T', 'V_T = kT/e increases {0} with temperature.', 'V_T = kT/e 隨溫度 ___ 增加。',
+    [S(['linearly', 'exponentially', 'not at all', 'inversely'])], 'V<sub>T</sub> ∝ T。');
+  E('temp', 2, 'I_S vs T', 'I_S increases {0} with temperature, so its effect dominates over V_T.', 'I_S 隨溫度 ___ 增加，所以它的影響贏過 V_T。',
+    [S(['exponentially', 'linearly', 'slowly', 'not at all'])], 'I<sub>S</sub> ∝ T³e<sup>−E<sub>g</sub>/kT</sup>（投影片 1-51）。');
+  E('temp', 3, 'Fixed voltage', 'At a fixed diode voltage, raising the temperature makes the current {0}.', '二極體電壓固定時，溫度升高會讓電流 ___。',
+    [S(['increase', 'decrease', 'stay the same', 'reverse'])], '曲線往左移：同一電壓電流變大。');
+  E('temp', 4, 'Germanium', 'Germanium has a much larger I_S than silicon because its band gap is {0}.', '鍺的 I_S 比矽大很多，因為它的能隙比較 ___。',
+    [S(['smaller', 'larger', 'zero', 'equal'])], '0.66 eV vs 1.12 eV → n<sub>i</sub> 大很多。');
+  E('temp', 5, '25 → 75 °C', 'At a fixed current a diode reads 0.650 V at 25 °C. Using −2 mV/°C, at 75 °C it reads {0}.', '電流固定，二極體在 25 °C 量到 0.650 V。用 −2 mV/°C，75 °C 時約 ___。',
+    [S(['0.550 V', '0.750 V', '0.600 V', '0.648 V'])], '升 50 °C × (−2 mV) = −0.1 V。', 'calc');
+  E('temp', 6, 'I_S doubling', 'If I_S doubles every 5 °C, going from 25 °C to 45 °C multiplies I_S by {0}.', '如果 I_S 每 5 °C 翻倍，從 25 °C 到 45 °C，I_S 變成幾倍？___',
+    [S(['16', '4', '8', '20'])], '20 °C = 4 次翻倍 → 2<sup>4</sup> = 16。', 'calc');
+  E('temp', 7, 'V_T at 360 K', 'With k/e = 8.62 × 10⁻⁵ V/K, V_T at 360 K is about {0}.', 'k/e = 8.62 × 10⁻⁵ V/K，360 K 時 V_T 約 ___。',
+    [S(['31.0 mV', '26.0 mV', '36.0 mV', '8.62 mV'])], '8.62 × 10<sup>−5</sup> × 360 = 0.0310 V（300 K 是 0.0259 ≈ 0.026 V）。', 'calc');
+
+  /* ── 06 diode thermometer ── */
+  E('thermo', 1, 'Constant current', 'In the thermometer circuit, the 15 V supply with the 15 kΩ resistor acts approximately as a {0}.', '溫度計電路裡，15 V 電源加 15 kΩ 電阻近似一個 ___。',
+    [S(['constant-current source', 'constant-voltage source', 'short circuit', 'capacitor'])], 'V<sub>D</sub> 變 0.1 V，I<sub>D</sub> 只變 0.7%。');
+  E('thermo', 2, 'Direction', 'As the temperature rises, the measured diode voltage {0}.', '溫度升高時，量到的二極體電壓 ___。',
+    [S(['decreases', 'increases', 'stays constant'])], '斜率 −1.74 mV/K。');
+  E('thermo', 3, 'Where 0.522 comes from', 'In V_D = 1.12 − 0.522(T/300), the 0.522 V equals {0}.', 'V_D = 1.12 − 0.522(T/300) 裡的 0.522 V 等於 ___。',
+    [S(['1.12 − 0.598, the 300 K reading', '15 V ÷ 30', '20 VT', 'the band gap'])], '300 K 時量到 0.598 V：1.12 − 0.598 = 0.522。');
+  E('thermo', 4, 'Units', 'Before using the formula, a temperature in °C must be converted to {0} by adding 273.', '用公式前，攝氏溫度要先加 273 換成 ___。',
+    [S(['kelvin', '°F', 'volts', 'mV'])], '公式裡的 T 是絕對溫度。');
+  E('thermo', 5, '0.620 V', 'The thermometer reads V_D = 0.620 V. Using V_D = 1.12 − 0.522(T/300), T ≈ {0}.', '溫度計量到 V_D = 0.620 V。用 V_D = 1.12 − 0.522(T/300)，T ≈ ___。',
+    [S(['287 K (14 °C)', '300 K (27 °C)', '311 K (38 °C)', '620 K'])], 'T = 300 × (1.12 − 0.620)/0.522 = 287.4 K = 14.2 °C（課本練習 (c)）。', 'calc');
+  E('thermo', 6, '350 K', 'At T = 350 K, the thermometer reads V_D ≈ {0}.', 'T = 350 K 時，溫度計讀到 V_D ≈ ___。',
+    [S(['0.511 V', '0.598 V', '0.609 V', '0.685 V'])], '1.12 − 0.522 × 350/300 = 1.12 − 0.609 = 0.511 V。', 'calc');
+  E('thermo', 7, 'Bias current', 'Assuming V_D ≈ 0.6 V, the thermometer current is I_D = (15 − V_D)/15 kΩ ≈ {0}.', '假設 V_D ≈ 0.6 V，溫度計電流 I_D = (15 − V_D)/15 kΩ ≈ ___。',
+    [S(['0.96 mA', '1.04 mA', '9.6 mA', '0.04 mA'])], '14.4 V ÷ 15 kΩ = 0.96 mA。', 'calc');
 
   window.__CH14C = { name: 'ch14c', items };
 })();

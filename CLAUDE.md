@@ -243,7 +243,7 @@
 
 - `shared/tpic.js`（`__TPIC`）：`__TPIC.add(cards, sets, figs)`；cards = `{ key: { t, en, plain, rel, svg } }`（svg 是 viewBox 0 0 640 300 的內容），頁面 `<div class="tpic" data-set="e16"></div>`，故事用 `__TPIC.scenes([key…])`，第三個參數把 `terms.js` 名詞對到卡片（彈窗附圖）。
 - 電子學卡片在 `electronics/assets/diode-terms.js`（set `e16` = CH1 PART 6、`e17` = CH1 PART 7、`e21` = CH2 PART 1），要先載 story.js、`ch1-part5-kit.js`、`tpic.js`。新章節把新名詞加一張卡、新 set。
-- **電子學期中考 2（11/9）**：範圍 CH1 PART 4 §02 ～ CH2 PART 1；每節都有 8 題觀念填充（`ch14c`、`ch15c`、`ch16c`、`ch21c`），總複習 `electronics/review2.html`。之後新增的電子學小節也要附 8 題觀念填充並加進總複習頁。
+- **電子學期中考 2（11/9）**：範圍 CH1 PART 4 §02 ～ CH2 PART 1；每節都有 8 題觀念填充（PART 4 每節再加 7 題「英文先＋計算」：item 寫 `zh`（中文翻譯，hw.js 收進「中文翻譯」按鈕）、`calc: true`；使用者 11/1 要求之後加碼題都英文先）（`ch14c`、`ch15c`、`ch16c`、`ch21c`），總複習 `electronics/review2.html`。之後新增的電子學小節也要附 8 題觀念填充並加進總複習頁。
 - 電子學 CH1 PART 6 起照「觀念先（故事優先）」的做法，**不是**題目先（使用者 10/27：先用電子學之前的方式）；每節也有觀念填充（8 題）。
 
 ## 原講義 PART 標註
