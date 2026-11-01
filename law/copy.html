@@ -32,7 +32,6 @@
       <li><a href="#q-find"><i>🔎</i>情境 → 法條速查</a></li>
       <li><a href="#q-time"><i>⏱</i>期限總表</a></li>
       <li><a href="#q-civil"><i>$</i>民事賠償總表</a></li>
-      <li><a href="#c0917"><i>9/17</i>課程規範</a></li>
       <li><a href="#c0924"><i>9/24</i>法律體系</a></li>
       <li><a href="#c1001"><i>10/1</i>智慧財產權</a></li>
       <li><a href="#c1008"><i>10/8</i>網路犯罪</a></li>
@@ -47,6 +46,12 @@
   <main>
     <section class="sec paper" id="q-how">
       <div class="lec-head"><span class="date">★</span><h2>考試用重點筆記</h2><span class="tag">照抄到 iPad・考試只能看手寫筆記</span></div>
+      <div class="btn-row no-print mode-bar">
+        <button class="btn" type="button" id="bt-cloze">🙈 挖空練習</button>
+        <button class="btn" type="button" id="bt-blank">📄 空白表格（自己抄）</button>
+        <button class="btn" type="button" onclick="window.print()">🖨 列印目前的樣子</button>
+      </div>
+      <p class="qs no-print" id="mode-tip">挖空練習：螢光筆、紅字、粗體變成灰格，點一下看答案。空白表格：只留標題、表頭和第一欄，其他變成白底空格＋橫線，印出來自己抄。</p>
       <p class="qs">怎麼用：考試拿到題目 → <b>先翻「情境 → 法條速查」</b>找到條號 → 翻到那一堂看細節 → 照下面公式寫。</p>
       <div class="legend"><span><mark class="hy">黃</mark>／<mark class="hc">藍</mark>／<b class="rd">紅</b> = 講義標的</span><span><b class="rd">告</b> = 告訴乃論　<b>公</b> = 公訴罪</span><span><span class="bu">補</span> = 講義沒有、我補的</span></div>
       <div class="formula">
@@ -125,20 +130,6 @@
         <tr><td>算不出損失時</td><td>—</td><td>法院定 <b class="rd">1～100 萬</b>（故意重大 500 萬）</td><td>每人每件 <b>500～2 萬</b>，同一事件合計最高 2 億</td><td>—</td></tr>
       </table></div>
       <p class="qs">著 88 Ⅱ 擇一請求：① 被害人可得預期利益的差額（民 216）　② 侵害人因侵害所得的利益。民事程序（10/22）：<b>和解 → 調解委員會調解 → 訴訟</b>。</p>
-    </section>
-
-    <!-- ══════════ 9/17 ══════════ -->
-    <section class="sec paper lec" id="c0917">
-      <div class="lec-head"><span class="date">9/17</span><h2>課程規範</h2><span class="tag">筆記完整性要包含這頁</span></div>
-      <div class="tbl-wrap"><table class="ltab qt">
-        <tr><th>項目</th><th>比例</th><th>重點</th></tr>
-        <tr><td><mark class="hy"><b class="rd">出席率</b></mark></td><td><b class="rd">15%</b></td><td>事病假都算缺席（<mark class="hc">不用請假</mark>），公假喪假不算；遲到 10 分、早退算 0.5 次（應到 14 次）</td></tr>
-        <tr><td><mark class="hy"><b class="rd">上課筆記</b></mark></td><td><b class="rd">15%</b></td><td>① 完整性（含第一堂規範）② 口頭講解額外註記 ③ 討論、影片心得；<mark class="hy"><b class="rd">1/7 拍照 pdf（學號姓名）傳 line 群組</b></mark></td></tr>
-        <tr><td><mark class="hy"><b class="rd">個人口頭報告</b></mark></td><td><b class="rd">10%</b></td><td><mark class="hc">第 10～14 週，抽籤，<b class="rd">3 分鐘</b>＋ppt</mark>：<mark class="hy"><b class="rd">(1) 案例說明 (2) 相關法律分析 (3) 評論與感想</b></mark></td></tr>
-        <tr><td><mark class="hy">期中考</mark></td><td><b class="rd">30%</b></td><td><mark class="hy"><b class="rd">11/5</b></mark>，100 分鐘，問答題（題組），可看筆記；11/12 檢討</td></tr>
-        <tr><td><mark class="hy">期末考</mark></td><td><b class="rd">30%</b></td><td><mark class="hy"><b class="rd">12/31</b></mark>；1/14 檢討</td></tr>
-      </table></div>
-      <p class="qs"><b class="rd">缺席 5～7 次</b> → 平時成績<mark class="hy">折半</mark>；<b class="rd">8 次以上</b> → 平時 0 分（<mark class="hy">不及格</mark>）。加分：第 1 週出席 +3、第 2 週 +2、答對一次 +1、通識活動最多 2 次 4 分。</p>
     </section>
 
     <!-- ══════════ 9/24 ══════════ -->
@@ -229,7 +220,7 @@
         <tr><th>責任</th><th>條</th><th>內容</th></tr>
         <tr><td><mark class="hy">民事</mark></td><td>28（公務）、29（非公務）</td><td>賠償＋精神賠償＋回復名譽；算不出 <b class="rd">每人每件 500～2 萬</b>；同一事件合計最高 <b>2 億</b>（所涉利益更高以利益為限）</td></tr>
         <tr><td rowspan="2"><mark class="hy">刑事</mark></td><td>41</td><td>意圖不法利益，違反 6、15、16、<b>19</b>、20 等，足生損害 → 5 年以下，得併科 100 萬</td></tr>
-        <tr><td>42</td><td>非法變更、刪除個資檔案 → 5 年以下、拘役或科或併科 100 萬</td></tr>
+        <tr><td class="fill">42</td><td>非法變更、刪除個資檔案 → 5 年以下、拘役或科或併科 100 萬</td></tr>
         <tr><td>告／公</td><td>45</td><td>原則<b class="rd">告訴乃論</b>；<b>41 一律公訴</b>，42 對公務機關 → 公訴</td></tr>
         <tr><td>加重</td><td>44</td><td>公務員假借職務 → 加重 ½</td></tr>
         <tr><td><mark class="hy">行政</mark></td><td>47</td><td>非公務機關違反 6、19、20 等 → <b class="rd">5～50 萬罰鍰</b>，限期改正，不改按次罰</td></tr>
@@ -324,6 +315,27 @@
   links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
   const io = new IntersectionObserver(es => { es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } }); }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
   map.forEach((a, s) => io.observe(s));
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+  const body = document.body;
+  const bc = document.getElementById('bt-cloze'), bb = document.getElementById('bt-blank');
+  const set = (cls, on) => {
+    body.classList.toggle(cls, on);
+    bc.textContent = body.classList.contains('cloze') ? '👀 全部顯示' : '🙈 挖空練習';
+    bb.textContent = body.classList.contains('blank-sheet') ? '↩ 回到完整版' : '📄 空白表格（自己抄）';
+    try { localStorage.setItem('ee-law-copy-mode', body.classList.contains('blank-sheet') ? 'blank' : body.classList.contains('cloze') ? 'cloze' : ''); } catch (e) {}
+  };
+  bc.addEventListener('click', () => { document.querySelectorAll('.show').forEach(x => x.classList.remove('show')); set('blank-sheet', false); set('cloze', !body.classList.contains('cloze')); });
+  bb.addEventListener('click', () => { set('cloze', false); set('blank-sheet', !body.classList.contains('blank-sheet')); });
+  document.querySelector('main').addEventListener('click', e => {
+    if (!body.classList.contains('cloze')) return;
+    const z = e.target.closest('mark, .rd, td b, .qs b');
+    if (z) z.classList.toggle('show');
+  });
+  try { const m = localStorage.getItem('ee-law-copy-mode'); if (m === 'cloze') set('cloze', true); if (m === 'blank') set('blank-sheet', true); } catch (e) {}
 })();
 </script>
 <script src="../shared/sync.js"></script>

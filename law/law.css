@@ -122,6 +122,27 @@ mark.hc { background: var(--hl-c); color: inherit; padding: 0 .12em; border-radi
 .qs { font-size: 14.5px; line-height: 1.75; margin: 6px 0; }
 .bu { display: inline-block; font-size: 11px; font-weight: 700; color: var(--ink-3); border: 1px solid var(--ink-3); border-radius: 5px; padding: 0 4px; vertical-align: 1px; }
 
+/* copy.html：挖空練習（螢光筆、紅字、粗體變灰格，點了才出現） */
+body.cloze main .paper mark, body.cloze main .paper .rd, body.cloze main .paper td b, body.cloze main .paper .qs b { color: transparent !important; background: var(--surface-2) !important; border-radius: 3px; cursor: pointer; box-shadow: inset 0 -2px 0 var(--accent); }
+body.cloze main .paper :is(mark, .rd, td b, .qs b) * { color: transparent !important; background: none !important; }
+body.cloze main .paper :is(mark, .rd, td b, .qs b).show, body.cloze main .paper :is(mark, .rd, td b, .qs b).show * { color: var(--accent) !important; }
+body.cloze main .paper :is(.lec-head, h3, .legend) :is(mark, .rd), body.cloze main .paper :is(.lec-head, h3, .legend) :is(mark, .rd) * { color: inherit !important; background: none !important; box-shadow: none; cursor: auto; }
+body.cloze main .paper h3 mark { background: var(--hl-y) !important; }
+/* copy.html：空白表格（白底，留標題、表頭、第一欄，其他變空格＋橫線，印出來自己抄） */
+body.blank-sheet main .paper { background: #fff; color: #222; }
+body.blank-sheet main .paper :is(mark, .rd) { background: none !important; color: inherit !important; }
+body.blank-sheet main .ltab th { background: #fff; color: #222; }
+body.blank-sheet main .ltab td:is(:not(:first-child), .fill), body.blank-sheet main .ltab td:is(:not(:first-child), .fill) * { color: transparent !important; background: #fff !important; }
+body.blank-sheet main .ltab.qt tr.grp td { background: #fff !important; color: #222 !important; }
+body.blank-sheet main .ltab td { height: 2.4em; }
+body.blank-sheet main .ltab.qt tr.grp td { height: auto; }
+body.blank-sheet main :is(.qs, .formula p, .deed p, .deed .sig) { color: transparent !important; background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.75em - 1px), #bbb calc(1.75em - 1px), #bbb 1.75em) !important; line-height: 1.75 !important; }
+body.blank-sheet main :is(.qs, .formula p, .deed p, .deed .sig) * { color: transparent !important; background: none !important; border-color: transparent !important; }
+body.blank-sheet main .formula, body.blank-sheet main .deed { background: #fff !important; }
+body.blank-sheet main .deed h4, body.blank-sheet main .lec-head, body.blank-sheet main h3 { color: #222; }
+body.blank-sheet main .legend, body.blank-sheet .mode-bar ~ #mode-tip { display: none; }
+body.blank-sheet main .lec-head .tag { color: #555; }
+
 @media (max-width: 560px) {
   .paper { padding: 18px 14px 22px; border-radius: 10px; }
   .deed { padding: 18px 14px; font-size: 14.5px; }
@@ -130,6 +151,7 @@ mark.hc { background: var(--hl-c); color: inherit; padding: 0 .12em; border-radi
 
 /* 列印：A4 直式，每一講從新的一頁開始 */
 @media print {
+  body.blank-sheet main :is(.qs, .formula p, .deed p, .deed .sig), body.blank-sheet main .ltab td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   @page { size: A4 portrait; margin: 13mm 12mm; }
   body { background: #fff !important; }
   .topbar, .rail, .no-print, .ann-fab, #mistakes, .trk-hero, .trk-sec, .trk-b, .trk-bar, .trk-card, .trk-mark, .trk-clears, .trk-sum, .dv-ui { display: none !important; }
