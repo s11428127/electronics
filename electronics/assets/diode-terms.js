@@ -1,7 +1,8 @@
 /* ============================================================
    電子學名詞圖鑑（10/27，使用者：介紹名詞都要附圖）—— CH1 PART 6（原講義 PART 5）＋ CH2 PART 1
    每個名詞一張圖（viewBox 0 0 640 300），註冊到 shared/tpic.js：
-     set 'e16'：Q 點、小訊號、r_d、DC/AC 分析、失真、C_d、C_j、小訊號等效電路、t_s、t_f、光電元件、蕭特基、齊納
+     set 'e16'（CH1 PART 6）：Q 點、小訊號、r_d、DC/AC 分析、失真
+   set 'e17'（CH1 PART 7）：C_d、C_j、小訊號等效電路、t_s、t_f、光電元件、蕭特基、齊納
      set 'e21'：電源供應器方塊圖、變壓器、半波整流、轉移特性、v_D 波形、PIV
    需要：story.js、ch1-part5-kit.js（__K15）、shared/tpic.js
    ============================================================ */
@@ -156,7 +157,8 @@
   }
 
   window.__TPIC.add(cards, {
-    e16: ['q', 'ss', 'rd', 'dcac', 'dist', 'cd', 'cj', 'sseq', 'ts', 'tf', 'solar', 'pd', 'led', 'sbd', 'zd'],
+    e16: ['q', 'ss', 'rd', 'dcac', 'dist'],
+    e17: ['cd', 'cj', 'sseq', 'ts', 'tf', 'solar', 'pd', 'led', 'sbd', 'zd'],
     e21: ['psu', 'xfmr', 'hwr', 'vtc', 'vdw', 'piv']
   }, { '工作點': 'q', '小訊號': 'ss', '增量電阻': 'rd', '交流接地': 'dcac', '失真': 'dist', '擴散電容': 'cd', '接面電容': 'cj', '儲存時間': 'ts', '掉落時間': 'tf',
     '太陽能電池': 'solar', '光二極體': 'pd', '發光二極體': 'led', '蕭特基二極體': 'sbd', '齊納電阻': 'zd', '齊納二極體': 'zd',

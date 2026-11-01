@@ -229,7 +229,9 @@ p.53 擴散公式正負號、Example 1.4（187 A/cm²）。
 | 05 temp | TYU 1.8 | 0.450 V（同課本） |
 | 06 thermo | 課本 §1.6 Design Application | 0.5976 V、0.960 mA；0 °F 0.676 V、100 °F 0.579 V；0.620 V → 287.4 K |
 
-## CH1 PART 6（10/27，`ch1-part6.html`）＝ 原講義 PART 5（V3，投影片 1-1～1-34）
+## CH1 PART 6（10/27，`ch1-part6.html`）＋ CH1 PART 7（10/31 拆出，`ch1-part7.html`）＝ 原講義 PART 5（V3，投影片 1-1～1-34）
+
+**10/31 使用者要求拆頁**：PART 6 只留前半（故事一、#basics～#qdes，投影片 1-1～1-12）；故事二與 #cap～#zd（投影片 1-13～1-34）搬到 PART 7（`ch1-part7-story.js`，story id `ch1-part7`；小節編號改成 01～06，小節 id 不變）。互動模組、例題、題庫仍共用 `ch1-part6.js`、`ch1-part6-ex.js`、`ch1-part6-concept.js`（`ch16c`）；測驗題 `p: 7` 的放 PART 7（`body[data-part="7"]`）；名詞圖鑑 set `e16`（PART 6，5 張）／`e17`（PART 7，10 張）；勘誤 ①②③ 在 PART 7、錯字那條在 PART 6。
 
 網頁 PART 5 已放原講義 PART 4（V3），使用者看過不動，所以原講義 PART 5 開新頁「CH1 PART 6」。兩段故事：`#story`（小訊號，24 幕）、`#story2`（倉庫：電容、開關、二極體家族，24 幕）＋ 名詞圖鑑 `#terms-pic`（`assets/diode-terms.js` set `e16`）。
 

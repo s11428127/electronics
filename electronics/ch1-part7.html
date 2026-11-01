@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>二極體電容、開關與其他二極體</title>
+<meta name="description" content="電子學 CH1 PART 7 互動講義：擴散電容與接面電容、小訊號等效電路、開關暫態（儲存時間、掉落時間）、太陽能電池、光二極體、LED、蕭特基二極體（Example 1.12）、齊納二極體（Design Example 1.13）。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="electronics" data-look="clean" data-part="7">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>CH1 PART 7</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH1 PART 7</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事：倉庫、開關、二極體家族</a></li>
+      <li><a href="#terms-pic"><i>🖼</i>名詞圖鑑</a></li>
+      <li><a href="#map"><i>·</i>這段在講什麼</a></li>
+      <li><a href="#cap"><i>01</i>擴散電容 vs 接面電容</a></li>
+      <li><a href="#sseq"><i>02</i>小訊號等效電路</a></li>
+      <li><a href="#sw"><i>03</i>開關暫態 t<sub>s</sub>、t<sub>f</sub></a></li>
+      <li><a href="#opto"><i>04</i>太陽能電池、光二極體、LED</a></li>
+      <li><a href="#sbd"><i>05</i>蕭特基二極體</a></li>
+      <li><a href="#zd"><i>06</i>齊納二極體</a></li>
+      <li><a href="#check"><i>!</i>講義勘誤</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+      <li><a href="ch1-part6.html"><i>←</i>上一頁 PART 6：小訊號</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>Chapter 1 · 1.4.2 · 1.5 · 補 1.2.5 · 投影片 1-13～1-34</div>
+      <h1>二極體電容、開關與其他二極體</h1>
+      <p class="sub">PART 6 把二極體看成一顆電阻 r<sub>d</sub>。可是頻率一高、開關一快，它就不只是電阻了：順偏時兩邊<strong>存了一倉庫的載子</strong>。最後認識二極體家族：<strong>太陽能電池、光二極體、LED、蕭特基、齊納</strong>。</p>
+      <div class="hero-meta">
+        <span class="chip">24 個畫面的故事模式</span>
+        <span class="chip">6 個互動模組</span>
+        <span class="chip">6 個可改數字例題</span>
+        <span class="chip">6 題例題與練習（附圖解故事）</span>
+        <span class="chip">48 題觀念填充</span>
+        <span class="chip">6 題中英對照測驗</span>
+      </div>
+      <p class="note">接續 <a href="ch1-part6.html">CH1 PART 6</a>（小訊號、r<sub>d</sub>、DC＋AC 分析）。這一頁是老師 <b>原講義 PART 5（V3）</b>的後半（投影片 1-13～1-34）：1.4.2 小訊號等效電路、1.5 其他二極體，中間「補」了 1.2.5 的開關暫態。原本放在 PART 6 下半頁，10/31 拆出來。</p>
+    </div>
+
+    <!-- ══════════ 故事 ══════════ -->
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>Story mode · 先看這段，再往下讀</div>
+      <h2>故事：倉庫、開關和二極體家族<span class="h2-en">STORY · CAPACITANCE, SWITCHING &amp; OTHER DIODES</span></h2>
+      <p class="lede">順偏時二極體兩邊「存」了一堆載子 —— 這件事同時造成<strong>電容</strong>和<strong>關不掉</strong>。最後認識五種特別的二極體。點畫面（或往左滑）前進一步。</p>
+      <div id="story"></div>
+    </section>
+
+    <!-- ══════════ 名詞圖鑑 ══════════ -->
+    <section class="sec" id="terms-pic">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>Picture glossary · 每個名詞一張圖</div>
+      <h2>名詞圖鑑：先看圖認名詞<span class="h2-en">TERMS IN PICTURES</span></h2>
+      <p class="lede">搞不清楚的名詞先來這裡點一下。每張圖都標出「它是哪裡」。</p>
+      <div class="tpic" data-set="e17"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <!-- ══════════ 導論 ══════════ -->
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>Big picture · 投影片 1-13～1-34</div>
+      <h2>這一段在講什麼<span class="h2-en">THE BIG PICTURE</span></h2>
+      <p class="lede">兩件事：<strong>(1) 倉庫</strong>——順偏時存的少數載子造成電容和開關延遲；<strong>(2) 二極體家族</strong>——同一個 pn 接面，換個用法就能發電、測光、發光、快速開關、穩壓。</p>
+      <div class="derive">
+        <h4>整頁的主線</h4>
+        <ol>
+          <li><span class="d-eq">PART 6：交流夠小 ⟹ 二極體 = 一顆電阻 r<sub>d</sub> = V<sub>T</sub>/I<sub>DQ</sub></span>
+            <div class="why">先複習。那是「低頻」的看法：載子來得及跟著電壓走。</div></li>
+          <li><span class="d-eq">頻率高 ⟹ 還要加電容（擴散 C<sub>d</sub>、接面 C<sub>j</sub>）</span>
+            <div class="why">投影片 1-13～1-18。順偏時兩邊「存」了一堆少數載子，電壓一動庫存就漲跌，這就是電容。</div></li>
+          <li><span class="d-eq">開關快 ⟹ 有儲存時間 t<sub>s</sub>、掉落時間 t<sub>f</sub></span>
+            <div class="why">投影片 1-22～1-27。同一個倉庫：關掉時庫存還在，要先倒流把它掃掉。</div></li>
+          <li><span class="d-eq hi">其他二極體：太陽能電池、光二極體、LED、蕭特基、齊納</span>
+            <p>投影片 1-19～1-34。光進來 → 電出去（太陽能電池、光二極體）；電進去 → 光出來（LED）；金屬接 n 型 → 快又壓降小（蕭特基）；故意崩潰 → 穩壓（齊納）。</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 05 電容 ══════════ -->
+    <section class="sec" id="cap">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>01 · 投影片 1-13～1-15、1-18 · Diffusion &amp; Junction Capacitance</div>
+      <h2><button class="tm" data-t="擴散電容">擴散電容</button> vs <button class="tm" data-t="接面電容">接面電容</button><span class="h2-en">DIFFUSION VS JUNCTION CAPACITANCE</span></h2>
+      <p class="lede">順偏時，電子跑到 p 區、電洞跑到 n 區，在那裡變成「多出來的少數載子」——像一間<strong>倉庫的庫存</strong>。電壓一變，庫存跟著變，這個 ΔQ/ΔV 就是擴散電容 C<sub>d</sub>。</p>
+      <div class="eq">C<em>d</em> = dQ/dV（課本：C<em>d</em> = τ<em>T</em> I<em>DQ</em> / (2V<em>T</em>)）　　順偏＋交流：C<em>d</em> ≫ C<em>j</em>　　頻率 ↑ ⟹ C<em>d</em> ↓</div>
+      <div class="derive">
+        <h4>電容從哪裡來</h4>
+        <ol>
+          <li><span class="d-eq">順偏 ⟹ 少數載子注入對面中性區 ⟹ 儲存電荷 Q</span>
+            <div class="why">投影片 1-14：注入的少數載子就像電容「板上的電荷」，暫時存在那裡。</div></li>
+          <li><span class="d-eq">v<sub>D</sub> = V<sub>D</sub> + ΔV ⟹ 少數載子濃度曲線上下動 ⟹ ±ΔQ</span>
+            <div class="why">投影片 1-13（Fig 1.37）：陰影部分就是多存或少存的電荷。電壓 ↑ 注入更多 → 像電容充電。</div></li>
+          <li><span class="d-eq">C<sub>d</sub> = ΔQ/ΔV</span>
+            <div class="why">定義跟一般電容一樣。電流越大，庫存越多，C<sub>d</sub> 越大（課本：C<sub>d</sub> ∝ I<sub>DQ</sub>）。</div></li>
+          <li><span class="d-eq">頻率 ↑ ⟹ 載子來不及進出 ⟹ dQ ↓ ⟹ C<sub>d</sub> ↓</span>
+            <div class="why">投影片 1-15：低頻時充放電跟得上，C<sub>d</sub> 完整表現；高頻時 dQ/dt 跟不上 dV/dt。</div></li>
+          <li><span class="d-eq hi">接面電容 C<sub>j</sub>：空乏區兩邊的固定電荷，任何偏壓都在</span>
+            <p>投影片 1-18：C<sub>j</sub> 在 DC、AC、順偏、逆偏都存在（PART 3 的變容二極體就是它）；C<sub>d</sub> 只在順偏＋交流時作用。順偏下 <b>C<sub>d</sub> ≫ C<sub>j</sub></b>（講義 1-13 Remark 寫成「接面電容 C<sub>j</sub> ≫ C<sub>d</sub>」，應為擴散電容，見勘誤 ①）。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>少數載子倉庫</h3><span class="spacer"></span><span class="tag">ωτ：頻率 × 載子壽命</span></div>
+        <div class="stage-wrap"><canvas id="cv-cd" aria-label="pn 接面兩側的少數載子濃度曲線隨交流電壓漲跌；頻率高時跟不上"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="cd-f">頻率 ωτ<output for="cd-f"></output></label>
+            <input type="range" id="cd-f" min="-2" max="2" step="0.05" value="-1"></div>
+          <div class="ctrl"><label for="cd-dv">交流 ΔV<output for="cd-dv"></output></label>
+            <input type="range" id="cd-dv" min="0.002" max="0.015" step="0.001" value="0.01"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>ΔQ 跟得上</dt><dd id="cd-r" class="e">—</dd></div>
+        </dl>
+        <div class="msg" id="cd-msg"></div>
+      </div>
+      <div id="ex-cd"></div>
+      <div class="howto">
+        <h4>分辨兩種電容</h4>
+        <ol>
+          <li>逆偏 → 只有 C<sub>j</sub>（空乏區）。</li>
+          <li>順偏＋交流 → C<sub>d</sub> 和 C<sub>j</sub> 都有，C<sub>d</sub> 通常大很多。</li>
+          <li>C<sub>d</sub> ∝ I<sub>DQ</sub>；頻率越高，C<sub>d</sub> 越小。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>電容的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 順偏時 C<sub>j</sub> ≫ C<sub>d</sub>。<span class="o">C<sub>d</sub> ≫ C<sub>j</sub></span>（講義 1-13 Remark 筆誤）。</li>
+          <li><span class="x">✗</span> 順偏時就沒有接面電容。<span class="o">C<sub>j</sub> 還在</span>，只是被 C<sub>d</sub> 蓋過。</li>
+          <li><span class="x">✗</span> 擴散電容的電荷在空乏區。<span class="o">在空乏區外的中性區</span>（注入的少數載子）。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH16EX" data-sec="cap"></div>
+      <div class="cf-wrap" id="cf-cap">
+        <h3>🧠 觀念填充 01（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH16C" data-sec="cap"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 06 小訊號等效電路 ══════════ -->
+    <section class="sec" id="sseq">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>02 · 投影片 1-16、1-17 · 1.4.2 Small-Signal Equivalent Circuit</div>
+      <h2>小訊號等效電路<span class="h2-en">SMALL-SIGNAL EQUIVALENT CIRCUIT</span></h2>
+      <p class="lede">把前兩節的東西拼起來：交流眼中的二極體 = <strong>r<sub>d</sub> 並聯 C<sub>d</sub></strong>。頻率低時電容像斷路，看到 r<sub>d</sub>；頻率高時電容抄捷徑，阻抗往下掉。</p>
+      <div class="eq">簡化：Y = g<em>d</em> + jωC<em>d</em>，g<em>d</em> = 1/r<em>d</em>　　完整：r<em>s</em> 串聯（r<em>d</em> ∥ C<em>d</em> ∥ C<em>j</em>）　　f<em>c</em> = 1 / (2π r<em>d</em> C)</div>
+      <div class="derive">
+        <h4>從二極體到 RC 電路</h4>
+        <ol>
+          <li><span class="d-eq">電阻那一支：g<sub>d</sub> = 1/r<sub>d</sub></span>
+            <div class="why">交流電流有一部分「穿過」二極體（第 02 節）。</div></li>
+          <li><span class="d-eq">電容那一支：jωC<sub>d</sub></span>
+            <div class="why">另一部分電流用來給庫存充放電（第 01 節）。</div></li>
+          <li><span class="d-eq">兩支並聯 ⟹ 導納相加：Y = g<sub>d</sub> + jωC<sub>d</sub></span>
+            <div class="why">投影片 1-16（Fig 1.38(a)）：電導納（admittance）Y，並聯時直接相加。</div></li>
+          <li><span class="d-eq">頻率 ↑ ⟹ ωC<sub>d</sub> ↑ ⟹ |Z| = 1/|Y| ↓</span>
+            <div class="why">講義 NOTE：擴散電容和二極體電阻形成 RC 電路，頻率增加、電容阻抗降低，二極體等效阻抗下降。</div></li>
+          <li><span class="d-eq hi">完整模型（Fig 1.38(b)）：再加 C<sub>j</sub>（並聯）和 r<sub>s</sub>（串聯）</span>
+            <p>r<sub>s</sub> 是 p、n 中性區本身的電阻。低頻時可以只用 r<sub>d</sub>；高頻（或開關）時電容不能省。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>二極體的交流阻抗 vs 頻率</h3><span class="spacer"></span><span class="tag">對數座標</span></div>
+        <div class="stage-wrap"><canvas id="cv-zin" aria-label="r_d 並聯電容的阻抗大小對頻率作圖（對數），標出轉折頻率"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="zi-i">I<sub>DQ</sub><output for="zi-i"></output></label>
+            <input type="range" id="zi-i" min="-1" max="1" step="0.02" value="0"></div>
+          <div class="ctrl"><label for="zi-t">載子壽命 τ<output for="zi-t"></output></label>
+            <input type="range" id="zi-t" min="0" max="2" step="0.02" value="1"></div>
+          <div class="ctrl" style="grid-column:1 / -1"><label for="zi-cj">C<sub>j</sub><output for="zi-cj"></output></label>
+            <input type="range" id="zi-cj" min="0" max="20" step="0.5" value="2"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>r<sub>d</sub></dt><dd id="zi-rd">—</dd></div>
+          <div><dt>C<sub>d</sub></dt><dd id="zi-cd" class="e">—</dd></div>
+          <div><dt>轉折 f<sub>c</sub></dt><dd id="zi-fc">—</dd></div>
+        </dl>
+        <div class="msg" id="zi-msg"></div>
+      </div>
+      <div id="ex-z"></div>
+      <div class="howto">
+        <h4>用小訊號等效電路</h4>
+        <ol>
+          <li>DC 求 I<sub>DQ</sub> → r<sub>d</sub>、C<sub>d</sub>。</li>
+          <li>低頻：二極體 = r<sub>d</sub>。</li>
+          <li>高頻：Y = 1/r<sub>d</sub> + jω(C<sub>d</sub> + C<sub>j</sub>)，Z = 1/Y。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>等效電路的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> r<sub>d</sub> 和 C<sub>d</sub> 串聯。<span class="o">並聯</span>：兩條路給交流電流走。</li>
+          <li><span class="x">✗</span> 並聯就把阻抗相加。<span class="o">並聯加導納</span>：Y = g<sub>d</sub> + jωC<sub>d</sub>。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH16EX" data-sec="sseq"></div>
+      <div class="cf-wrap" id="cf-sseq">
+        <h3>🧠 觀念填充 02（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH16C" data-sec="sseq"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 07 開關暫態 ══════════ -->
+    <section class="sec" id="sw">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>03 · 投影片 1-22～1-27 · 補 1.2.5 Switching Transient</div>
+      <h2>開關暫態：<button class="tm" data-t="儲存時間">儲存時間</button>與<button class="tm" data-t="掉落時間">掉落時間</button><span class="h2-en">SWITCHING TRANSIENT</span></h2>
+      <p class="lede">水龍頭關了，水管裡的水還會流一下。二極體從順偏切到逆偏也一樣：存著的少數載子還在，電流會<strong>反過來流一陣子</strong>才停。</p>
+      <div class="eq">t &lt; 0 順偏：i = I<em>F</em>　　0 &lt; t &lt; t<em>s</em>：v<em>D</em> ≈ 0、i ≈ −I<em>R</em>（掃出儲存電荷）　　t<em>s</em> &lt; t &lt; t<em>s</em> + t<em>f</em>：空乏區重建、|i| 下降　　關閉時間 &gt; 開啟時間</div>
+      <div class="derive">
+        <h4>順偏 → 逆偏，一步一步</h4>
+        <ol>
+          <li><span class="d-eq">順偏時：P 區存了多餘的電子、N 區存了多餘的電洞</span>
+            <div class="why">投影片 1-23。這就是第 01 節的「庫存」。</div></li>
+          <li><span class="d-eq">t = 0 電源反轉：載子不會瞬間消失 ⟹ 二極體仍像短路，v<sub>D</sub> ≈ 0</span>
+            <div class="why">投影片 1-24：外部電壓變了，但接面內部還沒恢復成逆偏的空乏區。</div></li>
+          <li><span class="d-eq">0 &lt; t &lt; t<sub>s</sub>：反向電壓把載子「掃出」⟹ 逆向恢復電流 ≈ −I<sub>R</sub>（幾乎固定）</span>
+            <div class="why">投影片 1-25：v<sub>D</sub> ≈ 0，所以 I<sub>R</sub> ≈ V<sub>R</sub>/R。少數載子濃度回到熱平衡值所需的時間 = 儲存時間 t<sub>s</sub>。</div></li>
+          <li><span class="d-eq">t &gt; t<sub>s</sub>：空乏區擴大、位障升到 V<sub>bi</sub> + V<sub>R</sub>，電流在 t<sub>f</sub> 內降到 0</span>
+            <div class="why">投影片 1-27：強電場擋住新的注入、掃走剩下的載子，反向電流慢慢變小 = 掉落時間 t<sub>f</sub>。</div></li>
+          <li><span class="d-eq hi">關閉時間 t<sub>s</sub> + t<sub>f</sub> &gt; 開啟時間</span>
+            <p>開啟只要把空乏區縮小、開始注入；關閉要先把庫存清掉。所以二極體當開關（例如整流）時，速度卡在關閉。注意：講義 1-27 寫「在掉落時間 t<sub>s</sub> 內」位障升高，應是 t<sub>f</sub>（勘誤 ②）。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>關掉一顆二極體</h3>
+          <div class="btn-row">
+            <button class="btn solid" type="button" data-swd="pn">pn 二極體</button>
+            <button class="btn" type="button" data-swd="sbd">蕭特基</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-sw" aria-label="電源從順偏切到逆偏：電源電壓、二極體電流、二極體電壓的波形，標出儲存時間與掉落時間"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="sw-if">順向電流 I<sub>F</sub><output for="sw-if"></output></label>
+            <input type="range" id="sw-if" min="1" max="10" step="0.5" value="5"></div>
+          <div class="ctrl"><label for="sw-ir">反向電流 I<sub>R</sub><output for="sw-ir"></output></label>
+            <input type="range" id="sw-ir" min="1" max="10" step="0.5" value="5"></div>
+          <div class="ctrl" style="grid-column:1 / -1"><label for="sw-tau">少數載子壽命 τ<output for="sw-tau"></output></label>
+            <input type="range" id="sw-tau" min="5" max="50" step="1" value="20"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>儲存時間 t<sub>s</sub></dt><dd id="sw-ts" class="e">—</dd></div>
+          <div><dt>掉落時間 t<sub>f</sub>（示意）</dt><dd id="sw-tf">—</dd></div>
+        </dl>
+        <div class="msg" id="sw-msg"></div>
+      </div>
+      <div id="ex-ts"></div>
+      <div class="howto">
+        <h4>看開關暫態的波形</h4>
+        <ol>
+          <li>順偏：I<sub>F</sub> = (V<sub>F</sub> − V<sub>γ</sub>)/R。</li>
+          <li>剛切逆偏：v<sub>D</sub> ≈ 0 → I<sub>R</sub> ≈ V<sub>R</sub>/R，維持 t<sub>s</sub>。</li>
+          <li>t<sub>s</sub> 之後：v<sub>D</sub> 往 −V<sub>R</sub> 走，電流在 t<sub>f</sub> 內歸零。</li>
+          <li>要快：用蕭特基，或加大 I<sub>R</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>開關暫態的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 一切到逆偏，電流就變 0。<span class="o">先反向流 −I<sub>R</sub> 一段 t<sub>s</sub></span>。</li>
+          <li><span class="x">✗</span> t<sub>s</sub> 期間二極體已經承受 −V<sub>R</sub>。<span class="o">v<sub>D</sub> ≈ 0</span>，電壓在 R 上。</li>
+          <li><span class="x">✗</span> 開啟比關閉慢。<span class="o">關閉比較慢</span>（要清庫存）。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH16EX" data-sec="sw"></div>
+      <div class="cf-wrap" id="cf-sw">
+        <h3>🧠 觀念填充 03（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH16C" data-sec="sw"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 08 光電 ══════════ -->
+    <section class="sec" id="opto">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>04 · 投影片 1-19～1-21 · 1.5.1～1.5.3 Solar Cell, Photodiode, LED</div>
+      <h2><button class="tm" data-t="太陽能電池">太陽能電池</button>、<button class="tm" data-t="光二極體">光二極體</button>、<button class="tm" data-t="發光二極體">LED</button><span class="h2-en">SOLAR CELL · PHOTODIODE · LED</span></h2>
+      <p class="lede">同一個 pn 接面，三種用法：<strong>光進電出</strong>來發電（太陽能電池）、<strong>光進電出</strong>來測光（光二極體，逆偏）、<strong>電進光出</strong>（LED，順偏）。</p>
+      <div class="eq">太陽能電池：光 → 空乏區產生 EHP → 電場分開 → 推動負載　　光二極體：逆偏，I<em>ph</em> ∝ 入射光　　LED：順偏 → 少數載子與多數載子復合 → 放出光子</div>
+      <div class="derive">
+        <h4>三種元件，同一個空乏區</h4>
+        <ol>
+          <li><span class="d-eq">光打進空乏區 ⟹ 產生電子電洞對（EHP）</span>
+            <div class="why">光子的能量把共價鍵打開。投影片 1-19（Fig 1.39）。</div></li>
+          <li><span class="d-eq">空乏區電場 E 把電子推到 n、電洞推到 p ⟹ 光電流</span>
+            <div class="why">太陽能電池不接電源，自己推電流給負載（發電）。材料：Si、GaAs、III-V 化合物；化合物半導體轉換效率較好。</div></li>
+          <li><span class="d-eq">光二極體：故意加逆偏，空乏區更寬、電場更強 ⟹ 光電流 ∝ 光強</span>
+            <div class="why">投影片 1-20：把光訊號變電訊號（光偵測器）。沒光時只有很小的逆向飽和電流。</div></li>
+          <li><span class="d-eq">LED：順偏 ⟹ 電子電洞擴散過空乏區 ⟹ 變成多出的少數載子</span>
+            <div class="why">投影片 1-20：在中性區跟多數載子復合（recombination），掉下來的能量用光放出來。</div></li>
+          <li><span class="d-eq hi">應用：LED + 光學腔 → 雷射二極體；LED + 光纖 + 光二極體 → 光通訊</span>
+            <p>投影片 1-21（Fig 1.40）：一端 LED 把電訊號變光、光纖傳過去、另一端逆偏的光二極體把光變回電。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>光進電出、電進光出</h3>
+          <div class="btn-row">
+            <button class="btn solid" type="button" data-op="solar">太陽能電池</button>
+            <button class="btn" type="button" data-op="pd">光二極體</button>
+            <button class="btn" type="button" data-op="led">LED</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-opto" aria-label="pn 接面動畫：照光產生電子電洞對被電場分開；LED 模式中載子復合放出光子"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="op-l">光強 <output for="op-l"></output></label>
+            <input type="range" id="op-l" min="0.1" max="1" step="0.05" value="0.6"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>電流</dt><dd id="op-i" class="e" style="font-size:15px">—</dd></div>
+        </dl>
+        <div class="msg" id="op-msg"></div>
+      </div>
+      <div id="ex-led"></div>
+      <div class="howto">
+        <h4>分辨三種光電元件</h4>
+        <ol>
+          <li>能量方向：光 → 電（太陽能電池、光二極體）；電 → 光（LED）。</li>
+          <li>偏壓：太陽能電池不加、光二極體逆偏、LED 順偏。</li>
+          <li>LED 一定要串限流電阻。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>光電元件的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 光二極體順偏。<span class="o">逆偏</span>（順偏時光電流被大順向電流蓋掉）。</li>
+          <li><span class="x">✗</span> LED 的光在空乏區產生。<span class="o">在中性區復合時放出</span>。</li>
+          <li><span class="x">✗</span> 太陽能電池要接電源。<span class="o">它本身就是電源</span>，接負載。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH16EX" data-sec="opto"></div>
+      <div class="cf-wrap" id="cf-opto">
+        <h3>🧠 觀念填充 04（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH16C" data-sec="opto"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 09 蕭特基 ══════════ -->
+    <section class="sec" id="sbd">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>05 · 投影片 1-28～1-31 · 1.5.4 Schottky Barrier Diode · Example 1.12</div>
+      <h2><button class="tm" data-t="蕭特基二極體">蕭特基二極體</button><span class="h2-en">SCHOTTKY BARRIER DIODE</span></h2>
+      <p class="lede">把 p 型換成<strong>金屬</strong>，接在中度摻雜的 n 型上。電流靠<strong>多數載子</strong>，沒有少數載子庫存 → 關得快；I<sub>S</sub> 大很多 → 同樣電流壓降小約 0.2～0.3 V。</p>
+      <div class="eq">I<em>S,SBD</em> ≫ I<em>S,pn</em> ⟹ 同電流 V<em>SBD</em> &lt; V<em>pn</em>　　ΔV = V<em>T</em> ln(I<em>S,SBD</em>/I<em>S,pn</em>)　　Example 1.12：0.539 V vs 0.299 V</div>
+      <div class="derive">
+        <h4>金屬 + n 型 = 快又省電壓</h4>
+        <ol>
+          <li><span class="d-eq">金屬接 n 型：n 型的電子流向金屬，直到費米能階對齊</span>
+            <div class="why">投影片 1-28：靠近金屬的 n 型失去電子、留下帶正電的離子 → 空乏區。</div></li>
+          <li><span class="d-eq">導通靠多數載子越過接面 ⟹ 沒有少數載子儲存 ⟹ 幾乎沒有 t<sub>s</sub></span>
+            <div class="why">投影片 1-29：電子跑進金屬還是「多數」，不會變成要被清掉的庫存。所以切換很快。</div></li>
+          <li><span class="d-eq">逆偏：金屬裡大量電子貢獻電流 ⟹ I<sub>S</sub> 遠大於 pn</span>
+            <div class="why">投影片 1-30：pn 的 I<sub>S</sub> 來自少數載子漂移（少）；蕭特基的 I<sub>S</sub> 來自金屬端的多數載子（多）。</div></li>
+          <li><span class="d-eq">V = V<sub>T</sub> ln(I/I<sub>S</sub>)：I<sub>S</sub> 大 10<sup>4</sup> 倍 ⟹ 電壓少 0.24 V</span>
+            <div class="why">Example 1.12（投影片 1-31）：1 mA 時 pn 0.539 V、蕭特基 0.299 V（Fig 1.42）。</div></li>
+          <li><span class="d-eq hi">結論：高速、壓降小，大量用在 IC 設計</span>
+            <p>代價：I<sub>S</sub> 大 → 逆偏漏電流也大。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>pn vs 蕭特基 I–V</h3>
+          <div class="btn-row">
+            <button class="btn solid" type="button" data-sby="lin">線性座標</button>
+            <button class="btn" type="button" data-sby="log">對數座標</button>
+          </div></div>
+        <div class="stage-wrap"><canvas id="cv-sbd" aria-label="pn 二極體（I_S = 1e-12 A）與蕭特基二極體（I_S = 1e-8 A）的 I–V 曲線，同電流下的電壓差"></canvas></div>
+        <div class="controls">
+          <div class="ctrl" style="grid-column:1 / -1"><label for="sb-i">電流<output for="sb-i"></output></label>
+            <input type="range" id="sb-i" min="-2" max="0.6" step="0.02" value="0"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>pn</dt><dd id="sb-vp">—</dd></div>
+          <div><dt>蕭特基</dt><dd id="sb-vs" class="e">—</dd></div>
+          <div><dt>差</dt><dd id="sb-dv">—</dd></div>
+        </dl>
+        <div class="msg" id="sb-msg"></div>
+      </div>
+      <div id="ex-112"></div>
+      <div class="howto">
+        <h4>蕭特基題目</h4>
+        <ol>
+          <li>給 I<sub>S</sub> 求電壓：V = V<sub>T</sub> ln(I/I<sub>S</sub> + 1)。</li>
+          <li>比較：I<sub>S</sub> 每差 10 倍，電壓差 60 mV。</li>
+          <li>問速度：沒有少數載子儲存 → t<sub>s</sub> ≈ 0。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>蕭特基的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 蕭特基靠少數載子。<span class="o">靠多數載子</span>，所以沒有儲存時間。</li>
+          <li><span class="x">✗</span> I<sub>S</sub> 大是缺點所以壓降大。<span class="o">I<sub>S</sub> 大 → 壓降小</span>（漏電大才是缺點）。</li>
+          <li><span class="x">✗</span> 金屬接 p 型。<span class="o">講義的結構是金屬接中度摻雜 n 型</span>。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH16EX" data-sec="sbd"></div>
+      <div class="cf-wrap" id="cf-sbd">
+        <h3>🧠 觀念填充 05（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH16C" data-sec="sbd"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 10 齊納 ══════════ -->
+    <section class="sec" id="zd">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>06 · 投影片 1-32～1-34 · 1.5.5 Zener Diode · Design Example 1.13</div>
+      <h2><button class="tm" data-t="齊納二極體">齊納二極體</button><span class="h2-en">ZENER DIODE</span></h2>
+      <p class="lede">PART 5 說過：一般二極體要避開崩潰。齊納二極體反過來，<strong>故意住在崩潰區</strong>——那裡電壓幾乎不動，拿來<button class="tm" data-t="穩壓">穩壓</button>。外接電阻負責限流。</p>
+      <div class="eq">崩潰區：V<em>Z</em> = V<em>Z0</em> + I<em>Z</em>r<em>z</em>（r<em>z</em>：幾 Ω～數十 Ω；r<em>z</em> → 0 ⟹ V<em>Z</em> = V<em>Z0</em>）　　限流：I = (V<em>PS</em> − V<em>Z</em>)/R　　P<em>Z</em> = I<em>Z</em>V<em>Z</em> ≤ 額定</div>
+      <div class="derive">
+        <h4>從崩潰曲線到穩壓電路</h4>
+        <ol>
+          <li><span class="d-eq">高摻雜 ⟹ 崩潰電壓低，崩潰區幾乎是一面垂直的牆</span>
+            <div class="why">投影片 1-32（Fig 1.43）。PART 5 的齊納崩潰：空乏區窄、電場強。</div></li>
+          <li><span class="d-eq">把那段牆用直線描：V<sub>Z</sub> = V<sub>Z0</sub> + I<sub>Z</sub>r<sub>z</sub>，斜率 1/r<sub>z</sub></span>
+            <div class="why">投影片 1-33：跟片段線性模型一樣的手法。r<sub>z</sub> 是齊納電阻（增量電阻）。</div></li>
+          <li><span class="d-eq">V<sub>Z</sub>、I<sub>Z</sub> 的方向跟一般二極體相反</span>
+            <div class="why">NOTE：齊納的 V<sub>Z</sub> 是陰極對陽極為正、I<sub>Z</sub> 從陰極流進去。寫 KVL 要用它自己的定義。</div></li>
+          <li><span class="d-eq">Design Example 1.13：R = (10 − 5.6)/3 mA = 1.47 kΩ</span>
+            <div class="why">r<sub>z</sub> = 0：齊納 = 5.6 V 電池，多出來的 4.4 V 都在 R 上。</div></li>
+          <li><span class="d-eq hi">P<sub>Z</sub> = I<sub>Z</sub>V<sub>Z</sub> = 3 mA × 5.6 V = 16.8 mW</span>
+            <p>齊納要撐得住這個功率。電源在一定範圍內變動，輸出都留在 5.6 V —— 這就是穩壓（下一章的穩壓器會正式用到）。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>電源亂動，輸出不動</h3><span class="spacer"></span><span class="tag">V<sub>Z0</sub> = 5.6 V</span></div>
+        <div class="stage-wrap"><canvas id="cv-zd" aria-label="齊納二極體崩潰區特性與負載線，Q 點卡在 5.6 V 那面牆上"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="zd-vps">V<sub>PS</sub><output for="zd-vps"></output></label>
+            <input type="range" id="zd-vps" min="0" max="20" step="0.1" value="10"></div>
+          <div class="ctrl"><label for="zd-r">R<output for="zd-r"></output></label>
+            <input type="range" id="zd-r" min="0.2" max="5" step="0.01" value="1.47"></div>
+          <div class="ctrl" style="grid-column:1 / -1"><label for="zd-rz">r<sub>z</sub><output for="zd-rz"></output></label>
+            <input type="range" id="zd-rz" min="0" max="30" step="1" value="0"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>輸出 V<sub>Z</sub></dt><dd id="zd-v" class="e">—</dd></div>
+          <div><dt>I<sub>Z</sub></dt><dd id="zd-i">—</dd></div>
+          <div><dt>P<sub>Z</sub></dt><dd id="zd-p">—</dd></div>
+        </dl>
+        <div class="msg" id="zd-msg"></div>
+      </div>
+      <div id="ex-113"></div>
+      <div class="howto">
+        <h4>齊納電路的標準流程</h4>
+        <ol>
+          <li>確認 V<sub>PS</sub> &gt; V<sub>Z</sub>（不然沒崩潰，齊納 = 斷路）。</li>
+          <li>齊納換成 V<sub>Z0</sub> 電池（串 r<sub>z</sub>）。</li>
+          <li>I = (V<sub>PS</sub> − V<sub>Z0</sub>)/(R + r<sub>z</sub>)，V<sub>Z</sub> = V<sub>Z0</sub> + Ir<sub>z</sub>。</li>
+          <li>檢查 P<sub>Z</sub> = I<sub>Z</sub>V<sub>Z</sub> ≤ 額定。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>齊納的陷阱</h4>
+        <ul>
+          <li><span class="x">✗</span> 齊納順偏接。<span class="o">逆偏接</span>，陰極接高電位。</li>
+          <li><span class="x">✗</span> 不用電阻也可以。<span class="o">一定要限流電阻</span>，不然電流暴衝燒掉。</li>
+          <li><span class="x">✗</span> V<sub>PS</sub> 變大，輸出也變大。<span class="o">輸出卡在 V<sub>Z</sub></span>，多的落在 R 上。</li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH16EX" data-sec="zd"></div>
+      <div class="cf-wrap" id="cf-zd">
+        <h3>🧠 觀念填充 06（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH16C" data-sec="zd"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 勘誤 ══════════ -->
+    <section class="sec" id="check">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>Errata · 講義檢查結果</div>
+      <h2>講義勘誤<span class="h2-en">ERRATA</span></h2>
+      <p class="lede">原講義 PART 5（V3）1-13～1-34 逐頁驗算過。<strong>Example 1.12、Design Example 1.13 的數字都正確</strong>，下面是要修正或要注意的地方（1-1～1-12 的在 <a href="ch1-part6.html#check">PART 6</a>）。</p>
+      <div class="pitfall">
+        <h4>① 投影片 1-13 Remark：「接面電容 C<sub>j</sub> ≫ C<sub>d</sub>」</h4>
+        <ul>
+          <li>講義寫：<span class="x">一般而言，在順偏＋交流信號時，接面電容 C ≫ C</span></li>
+          <li>應該是：<span class="o">擴散電容 C<sub>d</sub> ≫ 接面電容 C<sub>j</sub></span>。同一份講義 1-18 也寫「擴散電容在順偏條件下通常是主導電容」，前後要一致。</li>
+        </ul>
+      </div>
+      <div class="pitfall">
+        <h4>② 投影片 1-27：「在掉落時間 t<sub>s</sub> 內」—— 請確認</h4>
+        <ul>
+          <li>t<sub>s</sub> 是<b>儲存</b>時間，掉落時間是 <span class="o">t<sub>f</sub></span>。</li>
+          <li>內容也對不上 1-24、1-25：t<sub>s</sub> 期間 v<sub>D</sub> ≈ 0、接面還是「近短路」；位障升到 V<sub>bi</sub> + V<sub>R</sub>、空乏區電場變強是 t<sub>s</sub> <b>之後</b>（t<sub>f</sub>）的事。所以這頁應是「在掉落時間 <b>t<sub>f</sub></b> 內」。請對照老師上課說法確認。</li>
+        </ul>
+      </div>
+      <div class="pitfall">
+        <h4>③ 投影片 1-22 左下圖：「從逆偏切換到零偏」—— 請確認</h4>
+        <ul><li>這一頁講的是順偏 → 逆偏的關閉過程，圖說應為 <span class="o">從順偏切到逆偏</span>（或「從順偏切到零偏」）。若圖原本是開啟過程（turn-on），請以老師說法為準。</li></ul>
+      </div>
+      <div class="note key">
+        <b>驗算過、正確的部分：</b>
+        <ul style="margin:8px 0 0;padding-left:18px">
+          <li>1-31 Example 1.12（I<sub>S</sub> = 10<sup>−12</sup> A、10<sup>−8</sup> A，1 mA）：<b>0.539 V</b>、<b>0.299 V</b> ✓</li>
+          <li>1-34 Design Example 1.13：R = 4.4/3m = <b>1.47 kΩ</b>、P<sub>Z</sub> = <b>16.8 mW</b> ✓</li>
+        </ul>
+      </div>
+      <p class="note src">勘誤僅針對數學、單位與用詞正確性；若與課堂說法不同，以老師為準。C<sub>d</sub> = τI<sub>DQ</sub>/(2V<sub>T</sub>)、t<sub>s</sub> ≈ τ ln(1 + I<sub>F</sub>/I<sub>R</sub>) 是課本延伸，講義只講觀念。</p>
+    </section>
+
+    <!-- ══════════ 名詞 ══════════ -->
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <p class="lede">考卷上會出現的是右邊那欄。</p>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號/單位</code></div>
+        <div class="gl-row"><b>頻率響應</b><span>frequency response</span><code>—</code></div>
+        <div class="gl-row"><b>擴散電容</b><span>diffusion capacitance</span><code>C_d</code></div>
+        <div class="gl-row"><b>接面電容</b><span>junction capacitance</span><code>C_j</code></div>
+        <div class="gl-row"><b>導納</b><span>admittance</span><code>Y = g_d + jωC_d</code></div>
+        <div class="gl-row"><b>小訊號等效電路</b><span>small-signal equivalent circuit</span><code>—</code></div>
+        <div class="gl-row"><b>開關暫態</b><span>switching transient</span><code>—</code></div>
+        <div class="gl-row"><b>儲存時間</b><span>storage time</span><code>t_s</code></div>
+        <div class="gl-row"><b>掉落時間</b><span>fall time</span><code>t_f</code></div>
+        <div class="gl-row"><b>逆向恢復電流</b><span>reverse recovery current</span><code>I_R</code></div>
+        <div class="gl-row"><b>開啟／關閉時間</b><span>turn-on / turn-off time</span><code>—</code></div>
+        <div class="gl-row"><b>太陽能電池</b><span>solar cell</span><code>—</code></div>
+        <div class="gl-row"><b>光二極體</b><span>photodiode</span><code>I_ph</code></div>
+        <div class="gl-row"><b>光偵測器</b><span>photodetector</span><code>—</code></div>
+        <div class="gl-row"><b>電子電洞對</b><span>electron-hole pairs (EHPs)</span><code>—</code></div>
+        <div class="gl-row"><b>發光二極體</b><span>light-emitting diode (LED)</span><code>—</code></div>
+        <div class="gl-row"><b>復合</b><span>recombination</span><code>—</code></div>
+        <div class="gl-row"><b>雷射二極體</b><span>laser diode</span><code>—</code></div>
+        <div class="gl-row"><b>光纖</b><span>optical fiber</span><code>—</code></div>
+        <div class="gl-row"><b>蕭特基位障二極體</b><span>Schottky barrier diode (SBD)</span><code>—</code></div>
+        <div class="gl-row"><b>整流接面</b><span>rectifying junction</span><code>—</code></div>
+        <div class="gl-row"><b>齊納二極體</b><span>Zener diode</span><code>V_Z</code></div>
+        <div class="gl-row"><b>齊納電阻</b><span>Zener resistance</span><code>r_z</code></div>
+        <div class="gl-row"><b>穩壓</b><span>voltage regulation</span><code>—</code></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 測驗 ══════════ -->
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">6 題，中英對照，選項順序每次打亂。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Donald A. Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4th ed.（McGraw-Hill），Chapter 1 §1.2.5、§1.4.2、§1.5，2026 Fall 課程原講義 PART 5（V3）投影片 1-13～1-34。</p>
+      <p>互動模組為觀念示意；Example 1.12、1.13 的數值依課本公式即時計算。開關暫態的波形形狀、擴散電容的頻率衰減為示意。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch1-part5-kit.js"></script>
+<script src="../shared/tpic.js"></script>
+<script src="assets/diode-terms.js"></script>
+<script src="assets/ch1-part6-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script src="assets/ch1-part6-ex.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'cap', no: '01', name: '兩種電容', count: '練 1' },
+  { id: 'sseq', no: '02', name: '等效電路', count: '練 1' },
+  { id: 'sw', no: '03', name: '開關暫態', count: '練 1' },
+  { id: 'opto', no: '04', name: '光電元件', count: '練 1' },
+  { id: 'sbd', no: '05', name: '蕭特基', count: '例 1' },
+  { id: 'zd', no: '06', name: '齊納', count: '例 1' }
+], { key: 'ch1-part7', alwaysAll: ['map', 'check', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/ch1-part6.js"></script>
+<script src="assets/ch1-part7-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
