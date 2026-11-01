@@ -1,0 +1,140 @@
+/* ============================================================
+   法律（通識）—— 直立式上課筆記（A4 直式、可列印）與書狀練習
+   只放這一科自己的版面；設計語彙、主題色都沿用 shared/app.css
+   ============================================================ */
+:root { --hl-y: #fff36b; --hl-c: #9ff3ff; --law-red: #d0262c; --law-pur: #6b2fa0; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --hl-y: rgba(255, 226, 0, .38); --hl-c: rgba(0, 220, 255, .30); --law-red: #ff7b72; --law-pur: #c79bf2; }
+}
+:root[data-theme="dark"] { --hl-y: rgba(255, 226, 0, .38); --hl-c: rgba(0, 220, 255, .30); --law-red: #ff7b72; --law-pur: #c79bf2; }
+
+/* 一張 A4 紙 */
+.paper { max-width: 820px; margin: 0 auto 28px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px 30px 30px; box-shadow: 0 2px 10px rgba(0,0,0,.04); }
+.paper + .paper { margin-top: 0; }
+.lec-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; border-bottom: 2px solid var(--accent); padding-bottom: 8px; margin-bottom: 14px; }
+.lec-head .date { font-family: var(--mono, 'IBM Plex Mono', monospace); font-weight: 700; color: var(--accent); font-size: 15px; }
+.lec-head h2 { margin: 0; font-size: 22px; }
+.lec-head .tag { margin-left: auto; font-size: 12px; color: var(--ink-3); }
+.paper h3 { font-size: 16.5px; color: var(--law-pur); margin: 22px 0 8px; }
+.paper h3::before { content: '✽ '; }
+.paper p, .paper li { line-height: 1.85; }
+.paper ul, .paper ol { padding-left: 1.4em; margin: 6px 0; }
+
+/* 老師的標示：黃色螢光、淺藍螢光、紅字 */
+mark.hy { background: var(--hl-y); color: inherit; padding: 0 .12em; border-radius: 2px; }
+mark.hc { background: var(--hl-c); color: inherit; padding: 0 .12em; border-radius: 2px; }
+.rd { color: var(--law-red); font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--ink-2); margin: 6px 0 0; }
+.legend span { white-space: nowrap; }
+
+/* 法條框 */
+.law { border-left: 4px solid var(--accent); background: var(--surface-2); padding: 10px 14px; margin: 10px 0; border-radius: 0 10px 10px 0; }
+.law .cite { display: block; font-weight: 700; margin-bottom: 4px; }
+.law .cite .nm { color: var(--accent); }
+.law p { margin: 4px 0; }
+.law .item { padding-left: 1.6em; text-indent: -1.6em; margin: 2px 0; }
+.law .kind { display: inline-block; font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 99px; border: 1px solid currentColor; margin-top: 6px; }
+.law .kind.priv { color: var(--accent); }
+.law .kind.pub { color: var(--law-red); }
+
+/* 白話解釋 */
+.expl { margin: 6px 0 12px; padding: 8px 12px; border: 1px dashed var(--line); border-radius: 10px; font-size: 14.5px; color: var(--ink-2); }
+.expl::before { content: '白話'; display: inline-block; font-size: 11.5px; font-weight: 700; color: var(--surface); background: var(--ink-3); border-radius: 6px; padding: 0 6px; margin-right: 8px; }
+.add-note { font-size: 13px; color: var(--ink-3); }
+.add-note::before { content: '補充（講義沒有）'; display: inline-block; font-size: 11px; font-weight: 700; border: 1px solid var(--ink-3); border-radius: 6px; padding: 0 5px; margin-right: 6px; }
+
+/* 表格 */
+.ltab { width: 100%; border-collapse: collapse; margin: 8px 0 12px; font-size: 14.5px; }
+.ltab th, .ltab td { border: 1px solid var(--line); padding: 6px 8px; vertical-align: top; text-align: left; }
+.ltab th { background: var(--surface-2); }
+.tbl-wrap { overflow-x: auto; }
+
+/* 考試可能這樣問 */
+.exq { margin: 22px 0 4px; border: 2px solid var(--accent); border-radius: 12px; overflow: hidden; }
+.exq > .q { background: var(--surface-2); padding: 10px 14px; font-weight: 600; line-height: 1.8; }
+.exq > .q::before { content: '考試可能這樣問（自編練習）'; display: block; font-size: 12px; color: var(--accent); font-weight: 700; margin-bottom: 2px; }
+.exq details { padding: 0 14px 12px; }
+.exq summary { cursor: pointer; padding: 10px 0 6px; font-weight: 700; color: var(--accent); }
+.exq .ans p { margin: 6px 0; text-indent: 0; }
+.exq .ans .h { font-weight: 700; margin-top: 10px; }
+.formula { background: var(--surface-2); border-radius: 12px; padding: 12px 16px; margin: 12px 0; }
+.formula b { color: var(--accent); }
+
+/* 金字塔 */
+.pyr { display: block; max-width: 420px; width: 100%; margin: 8px auto; }
+.pyr text { fill: var(--ink); font-size: 15px; font-weight: 700; }
+.pyr .lb { fill: var(--ink-2); font-size: 13px; font-weight: 600; }
+.pyr .f1 { fill: var(--surface-2); stroke: var(--ink-2); stroke-width: 1.5; }
+.pyr .f2 { fill: var(--hl-y); stroke: var(--ink-2); stroke-width: 1.5; }
+.pyr .ar { stroke: var(--ink-2); stroke-width: 1.6; fill: none; }
+
+/* 書狀（和解書）紙 */
+.deed { font-family: 'Noto Serif TC', serif; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 26px 26px 30px; line-height: 2; font-size: 15.5px; max-width: 720px; margin: 12px auto; }
+.deed h4 { text-align: center; font-size: 22px; letter-spacing: .4em; margin: 0 0 14px; }
+.deed .it { padding-left: 2em; text-indent: -2em; }
+.deed .sig { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; margin-top: 18px; }
+.deed .dt { text-align: center; letter-spacing: .3em; margin-top: 18px; }
+.deed .blank { border-bottom: 1px solid var(--ink-3); padding: 0 .4em; color: var(--accent); }
+.deed .miss { background: var(--hl-y); color: var(--law-red); border-radius: 3px; padding: 0 .2em; }
+
+/* 存證信函：每行 20 格 */
+.grid20 { display: grid; grid-template-columns: 2.2em repeat(20, minmax(0, 1fr)); border-top: 1px solid var(--ink-3); border-left: 1px solid var(--ink-3); font-family: 'Noto Serif TC', serif; max-width: 720px; margin: 10px auto; font-size: clamp(11px, 2.6vw, 16px); }
+.grid20 > span { border-right: 1px solid var(--ink-3); border-bottom: 1px solid var(--ink-3); aspect-ratio: 1 / 1.25; display: flex; align-items: center; justify-content: center; }
+.grid20 > span.rn { font-size: .7em; color: var(--ink-3); background: var(--surface-2); }
+.grid20 > span.hd { font-size: .62em; color: var(--ink-3); background: var(--surface-2); aspect-ratio: auto; padding: 2px 0; }
+.lt-meta { max-width: 720px; margin: 8px auto; font-size: 14px; display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; }
+
+/* 產生器表單 */
+.gen { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 14px; margin: 10px 0; }
+.gen label { display: flex; flex-direction: column; gap: 4px; font-size: 13.5px; color: var(--ink-2); font-weight: 600; }
+.gen input, .gen textarea, .gen select { font: inherit; font-size: 15px; padding: 7px 9px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); width: 100%; box-sizing: border-box; }
+.gen textarea { min-height: 70px; resize: vertical; }
+.gen .wide { grid-column: 1 / -1; }
+.chk { list-style: none; padding: 0 !important; margin: 8px 0; }
+.chk li { padding: 2px 0; }
+.chk li.ok::before { content: '✓ '; color: var(--ok, #1f8a3b); font-weight: 700; }
+.chk li.no::before { content: '✗ '; color: var(--law-red); font-weight: 700; }
+
+/* 稿紙三段上色：事實經過（不上色）｜限期處理（淺藍）｜未處理後果（黃） */
+.grid20 > span.s2 { background: color-mix(in srgb, var(--hl-c) 55%, transparent); }
+.grid20 > span.s3 { background: color-mix(in srgb, var(--hl-y) 55%, transparent); }
+.lt-pg { text-align: center; font-size: 13px; color: var(--ink-3); margin: 14px 0 0; }
+.lt-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: center; font-size: 13px; margin: 6px 0; }
+.lt-legend i { font-style: normal; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); }
+.lt-legend .k2 { background: color-mix(in srgb, var(--hl-c) 55%, transparent); }
+.lt-legend .k3 { background: color-mix(in srgb, var(--hl-y) 55%, transparent); }
+.lt-cnt { text-align: center; font-size: 13.5px; color: var(--ink-2); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.btn-row .btn { font-size: 14px; }
+/* 範本挖空背誦 */
+.deed .cz { border-bottom: 2px solid var(--accent); }
+.deed.cloze .cz { color: transparent; background: var(--surface-2); border-radius: 3px; cursor: pointer; user-select: none; }
+.deed.cloze .cz.show { color: var(--accent); background: none; }
+.deed .tagx { font-family: var(--mono, monospace); font-size: 11px; font-weight: 700; color: var(--surface); background: var(--accent); border-radius: 4px; padding: 0 4px; margin: 0 2px; vertical-align: 2px; letter-spacing: 0; }
+.out-wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.self-tag { display: inline-block; font-size: 11.5px; font-weight: 700; color: var(--ink-3); border: 1px solid var(--ink-3); border-radius: 6px; padding: 0 6px; margin-left: 6px; vertical-align: 2px; }
+.lec-tag { display: inline-block; font-size: 11.5px; font-weight: 700; color: var(--accent); border: 1px solid var(--accent); border-radius: 6px; padding: 0 6px; margin-left: 6px; vertical-align: 2px; }
+
+@media (max-width: 560px) {
+  .paper { padding: 18px 14px 22px; border-radius: 10px; }
+  .deed { padding: 18px 14px; font-size: 14.5px; }
+  .deed .sig { grid-template-columns: 1fr; }
+}
+
+/* 列印：A4 直式，每一講從新的一頁開始 */
+@media print {
+  @page { size: A4 portrait; margin: 13mm 12mm; }
+  body { background: #fff !important; }
+  .topbar, .rail, .no-print, .ann-fab, #mistakes, .trk-hero, .trk-sec, .trk-b, .trk-bar, .trk-card, .trk-mark, .trk-clears, .trk-sum, .dv-ui { display: none !important; }
+  .shell { display: block !important; }
+  main { max-width: none !important; padding: 0 !important; }
+  .paper { border: none; box-shadow: none; padding: 0; max-width: none; margin: 0; }
+  .paper.lec { break-before: page; }
+  .paper.lec:first-of-type { break-before: auto; }
+  mark.hy, mark.hc, .law, .formula, .exq > .q { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .exq details { display: block; }
+  .exq details > *:not(summary) { display: block !important; }
+  .law, .expl, .deed, .grid20 { break-inside: avoid; }
+  .grid20 > span.s2, .grid20 > span.s3, .deed .tagx { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .deed.cloze .cz { color: inherit; background: none; }
+}

@@ -189,6 +189,13 @@
   做法（10/14 四份結報）：輸入框 `data-def` 放結報數字、按鈕「改回結報數據」；結果節加 `.note.key`「你的數據說了什麼」（數字錯、檔位錯、接線問題要點出來，不確定寫請確認）＋照片 `.lab-photos`（`figure > img + figcaption`，截圖類用 `img.contain`，點一下放大；照片縮到 ≤ 1200 px 放 `lab/img/`）；標題前加 `<span class="my-tag">我的</span>`。
 - canvas 的 `label`/`labelCJK` 現在也支援 `<sub>`。
 
+## 法律（`law/`，10/31 新科目）
+
+- 主色 `#8a2b3a`（暗色 `#e58b99`），`<body data-subject="law">`。**不做故事模式**（使用者指定）。
+- `notes.html` 直立式上課筆記（照講義檔名日期，一講一張 `.paper.lec`，列印 A4 每講換頁）：只收黃色螢光 `mark.hy`、淺藍螢光 `mark.hc`、紅字 `.rd`、法條 `.law` ＋白話 `.expl`；講義沒有的用 `.add-note`。每講最後 `.exq` 自編題＋三段式長答案（依據 → 本案 → 結論，使用者說考試手寫要寫很多字）。
+- `writing.html`（`writing.js`）：和解書範本挖空、產生器（人事時地物檢查）、存證信函 20 格稿紙 `__LG.grid('事實|限期|後果')`。樣式在 `law/law.css`。
+- 新講義進來照日期加一張 `.paper.lec`，更新 `law/docs/CONTENT_MAP.md`、`law/index.html` 數字。
+
 ## 學習紀錄（`shared/track.js`）
 
 - 每個章節頁、科目首頁的**最後一個 script** 放 `<script src="../shared/track.js"></script>`（新頁面也要加）。

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>法律 · 課程選單</title>
+<meta name="description" content="法律（通識）：直立式上課筆記（只收講義螢光筆、紅字、法條＋白話解釋），和解書與存證信函寫作練習。期中考 open book。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body data-subject="law">
+
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><b>法律</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="home">
+  <div class="home-hero">
+    <div class="eyebrow">Law · 法律（通識）</div>
+    <h1>法律</h1>
+    <p>這一科<b>不做故事模式</b>。只有兩樣東西：<b>直立式上課筆記</b>（講義的黃色、淺藍螢光筆、紅字和法條，每條附白話）和<b>和解書・存證信函練習</b>。兩頁都可以直接印成 A4。</p>
+  </div>
+
+  <dl class="progress">
+    <div><dt>上課筆記</dt><dd>7 <small>堂（9/17～10/29）</small></dd></div>
+    <div><dt>書狀練習</dt><dd>5 <small>題＋講義 5 範例</small></dd></div>
+    <div><dt>長答案示範</dt><dd>6 <small>題</small></dd></div>
+  </dl>
+
+  <p class="note key">📅 <b>期中考 11/5（第 8 週）</b>，100 分鐘，問答題（題組），<b>可以看上課筆記</b>。11/12 檢討考卷。</p>
+
+  <div class="chapters">
+    <a class="chap" href="notes.html">
+      <span class="chap-no">📒<em>筆記</em></span>
+      <span class="chap-body">
+        <b>上課筆記（照日期）</b>
+        <span>9/17 課程規範・9/24 法律體系・10/1 智慧財產權・10/8 網路犯罪・10/15 個資・10/22 性別平等・10/29 存證信函與和解書</span>
+        <span class="chap-tags"><i>黃色／淺藍螢光筆分開標</i><i>紅字</i><i>法條＋白話</i><i>每堂一題長答案示範</i><i>🖨 A4 直式</i></span>
+      </span>
+      <span class="chap-go">進入 →</span>
+    </a>
+    <a class="chap" href="writing.html">
+      <span class="chap-no">✍<em>書狀</em></span>
+      <span class="chap-body">
+        <b>和解書・存證信函練習</b>
+        <span>範本挖空背誦、和解書產生器（人事時地物檢查）、講義 5 個存證信函排進 20 格稿紙、存證信函產生器、自編練習、車禍綜合題</span>
+        <span class="chap-tags"><i>和解書 3 題</i><i>存證信函 2 題</i><i>綜合題 1 題</i><i>🖨 A4 直式</i></span>
+      </span>
+      <span class="chap-go">進入 →</span>
+    </a>
+  </div>
+  <p class="note src">筆記只整理講義標出來的內容；標「補充」「自編」的是我加的，不是老師的。</p>
+</div>
+<script>
+(function () {
+  var btn = document.getElementById('theme-btn');
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    var isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { var t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
