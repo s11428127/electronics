@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>期中考 2 觀念填充</title>
+<meta name="description" content="電子學期中考 2（11/9）範圍：CH1 PART 4 §02 ～ CH2 PART 1 的觀念填充題，30 小節共 240 題，下拉選單，不用計算，中英對照。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<style>.rail li.rail-grp { font-size: 11.5px; font-weight: 700; color: var(--accent); letter-spacing: .04em; margin: 12px 0 2px; list-style: none; }</style>
+</head>
+<body data-subject="electronics" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>期中考 2 觀念填充</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">期中考 2 觀念填充</div>
+    <ol>
+      <li class="rail-grp">CH1 PART 4</li>
+      <li><a href="#r-p4-iv"><i>02</i>理想 I–V 關係</a></li>
+      <li><a href="#r-p4-dec"><i>03</i>每 60 mV 變 10 倍</a></li>
+      <li><a href="#r-p4-ideal"><i>04</i>理想二極體模型</a></li>
+      <li><a href="#r-p4-temp"><i>05</i>溫度效應</a></li>
+      <li><a href="#r-p4-thermo"><i>06</i>二極體溫度計</a></li>
+      <li class="rail-grp">CH1 PART 5</li>
+      <li><a href="#r-p5-recap"><i>00</i>複習：實際曲線與簡化模型</a></li>
+      <li><a href="#r-p5-bd"><i>01</i>崩潰電壓與 PIV</a></li>
+      <li><a href="#r-p5-zen"><i>02</i>累增 vs 齊納</a></li>
+      <li><a href="#r-p5-sw"><i>03</i>理想開關與半波整流</a></li>
+      <li><a href="#r-p5-load"><i>04</i>負載線與 Q 點</a></li>
+      <li><a href="#r-p5-pwl"><i>05</i>片段線性模型</a></li>
+      <li><a href="#r-p5-cvd"><i>06</i>定電壓降模型</a></li>
+      <li><a href="#r-p5-mcmp"><i>06+</i>片段線性 vs 定電壓降</a></li>
+      <li><a href="#r-p5-revb"><i>07</i>逆偏的 Q 點</a></li>
+      <li class="rail-grp">CH1 PART 6</li>
+      <li><a href="#r-p6-basics"><i>00</i>補課：讀小訊號圖</a></li>
+      <li><a href="#r-p6-ss"><i>01</i>小訊號：直流＋小交流</a></li>
+      <li><a href="#r-p6-rd"><i>02</i>增量電阻 r<sub>d</sub></a></li>
+      <li><a href="#r-p6-rdrf"><i>02+</i>為什麼微分？r<sub>d</sub> vs r<sub>f</sub></a></li>
+      <li><a href="#r-p6-dcac"><i>03</i>DC 分析＋AC 分析</a></li>
+      <li><a href="#r-p6-qdes"><i>04</i>Q 點設計與失真</a></li>
+      <li class="rail-grp">CH1 PART 7</li>
+      <li><a href="#r-p7-cap"><i>01</i>擴散電容 vs 接面電容</a></li>
+      <li><a href="#r-p7-sseq"><i>02</i>小訊號等效電路</a></li>
+      <li><a href="#r-p7-sw"><i>03</i>開關暫態 t<sub>s</sub>、t<sub>f</sub></a></li>
+      <li><a href="#r-p7-opto"><i>04</i>太陽能電池、光二極體、LED</a></li>
+      <li><a href="#r-p7-sbd"><i>05</i>蕭特基二極體</a></li>
+      <li><a href="#r-p7-zd"><i>06</i>齊納二極體</a></li>
+      <li class="rail-grp">CH2 PART 1</li>
+      <li><a href="#r-c21-psu"><i>01</i>電源供應器方塊圖</a></li>
+      <li><a href="#r-c21-xfmr"><i>02</i>變壓器與匝數比</a></li>
+      <li><a href="#r-c21-hwr"><i>03</i>半波整流：三種情況</a></li>
+      <li><a href="#r-c21-wave"><i>04</i>波形：vO、vD 與 PIV</a></li>
+    </ol>
+  </nav>
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Midterm 2 · Concept check · 11/9</div>
+      <h1>期中考 2 觀念填充總複習</h1>
+      <p class="sub">範圍 <strong>CH1 PART 4 §02（I–V 關係）～ CH2 PART 1 半波整流</strong>，每一小節 8 題，共 30 節 240 題。<strong>全部用選的、不用計算</strong>：大部分考觀念（定義、方向、為什麼），標「解法」的考這類題目怎麼下手。題目先中文，下面附英文。跟各章節頁最後的填充題是同一份，在哪邊作答紀錄都通用。</p>
+      <div class="hero-meta">
+        <span class="chip h">✓ 11/9 期中考 2 範圍</span>
+        <span class="chip">240 題 · 自編練習</span>
+        <span class="chip">答錯自動進錯題本</span>
+      </div>
+      <div class="hw-tools-slot"></div>
+      <div class="lec-links"><a href="ch1-part4.html">CH1 PART 4</a><a href="ch1-part5.html">CH1 PART 5</a><a href="ch1-part6.html">CH1 PART 6</a><a href="ch1-part7.html">CH1 PART 7</a><a href="ch2-part1.html">CH2 PART 1</a><a href="mistakes.html">📕 錯題本</a></div>
+    </div>
+
+    <section class="sec" id="r-p4-iv">
+      <div class="eyebrow">CH1 PART 4 · 02 · 自編練習</div>
+      <h2>理想 I–V 關係<span class="h2-en">IDEAL I–V</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part4.html#iv">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH14C" data-sec="iv"></div>
+    </section>
+
+    <section class="sec" id="r-p4-dec">
+      <div class="eyebrow">CH1 PART 4 · 03 · 自編練習</div>
+      <h2>每 60 mV 變 10 倍<span class="h2-en">60 mV PER DECADE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part4.html#dec">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH14C" data-sec="dec"></div>
+    </section>
+
+    <section class="sec" id="r-p4-ideal">
+      <div class="eyebrow">CH1 PART 4 · 04 · 自編練習</div>
+      <h2>理想二極體模型<span class="h2-en">IDEAL DIODE MODEL</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part4.html#ideal">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH14C" data-sec="ideal"></div>
+    </section>
+
+    <section class="sec" id="r-p4-temp">
+      <div class="eyebrow">CH1 PART 4 · 05 · 自編練習</div>
+      <h2>溫度效應<span class="h2-en">TEMPERATURE EFFECTS</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part4.html#temp">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH14C" data-sec="temp"></div>
+    </section>
+
+    <section class="sec" id="r-p4-thermo">
+      <div class="eyebrow">CH1 PART 4 · 06 · 自編練習</div>
+      <h2>二極體溫度計<span class="h2-en">DIODE THERMOMETER</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part4.html#thermo">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH14C" data-sec="thermo"></div>
+    </section>
+
+    <section class="sec" id="r-p5-recap">
+      <div class="eyebrow">CH1 PART 5 · 00 · 自編練習</div>
+      <h2>複習：實際曲線與簡化模型<span class="h2-en">RECAP</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part5.html#recap">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH15C" data-sec="recap"></div>
+    </section>
+
+    <section class="sec" id="r-p5-bd">
+      <div class="eyebrow">CH1 PART 5 · 01 · 自編練習</div>
+      <h2>崩潰電壓與 PIV<span class="h2-en">BREAKDOWN & PIV</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part5.html#bd">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH15C" data-sec="bd"></div>
+    </section>
+
+    <section class="sec" id="r-p5-zen">
+      <div class="eyebrow">CH1 PART 5 · 02 · 自編練習</div>
+      <h2>累增 vs 齊納<span class="h2-en">AVALANCHE VS ZENER</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part5.html#zen">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH15C" data-sec="zen"></div>
+    </section>
+
+    <section class="sec" id="r-p5-sw">
+      <div class="eyebrow">CH1 PART 5 · 03 · 自編練習</div>
+      <h2>理想開關與半波整流<span class="h2-en">DIODE AS A SWITCH</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part5.html#sw">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH15C" data-sec="sw"></div>
+    </section>
+
+    <section class="sec" id="r-p5-load">
+      <div class="eyebrow">CH1 PART 5 · 04 · 自編練習</div>
+      <h2>負載線與 Q 點<span class="h2-en">LOAD LINE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part5.html#load">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH15C" data-sec="load"></div>
+    </section>
+
+    <section class="sec" id="r-p5-pwl">
+      <div class="eyebrow">CH1 PART 5 · 05 · 自編練習</div>
+      <h2>片段線性模型<span class="h2-en">PIECEWISE LINEAR</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part5.html#pwl">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH15C" data-sec="pwl"></div>
+    </section>
+
+    <section class="sec" id="r-p5-cvd">
+      <div class="eyebrow">CH1 PART 5 · 06 · 自編練習</div>
+      <h2>定電壓降模型<span class="h2-en">CONSTANT-VOLTAGE DROP</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part5.html#cvd">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH15C" data-sec="cvd"></div>
+    </section>
+
+    <section class="sec" id="r-p5-mcmp">
+      <div class="eyebrow">CH1 PART 5 · 06+ · 自編練習</div>
+      <h2>片段線性 vs 定電壓降<span class="h2-en">WHICH MODEL</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part5.html#mcmp">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH15C" data-sec="mcmp"></div>
+    </section>
+
+    <section class="sec" id="r-p5-revb">
+      <div class="eyebrow">CH1 PART 5 · 07 · 自編練習</div>
+      <h2>逆偏的 Q 點<span class="h2-en">REVERSE BIAS</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part5.html#revb">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH15C" data-sec="revb"></div>
+    </section>
+
+    <section class="sec" id="r-p6-basics">
+      <div class="eyebrow">CH1 PART 6 · 00 · 自編練習</div>
+      <h2>補課：讀小訊號圖<span class="h2-en">READING THE PICTURE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part6.html#basics">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="basics"></div>
+    </section>
+
+    <section class="sec" id="r-p6-ss">
+      <div class="eyebrow">CH1 PART 6 · 01 · 自編練習</div>
+      <h2>小訊號：直流＋小交流<span class="h2-en">SMALL SIGNAL</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part6.html#ss">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="ss"></div>
+    </section>
+
+    <section class="sec" id="r-p6-rd">
+      <div class="eyebrow">CH1 PART 6 · 02 · 自編練習</div>
+      <h2>增量電阻 r<sub>d</sub><span class="h2-en">INCREMENTAL RESISTANCE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part6.html#rd">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="rd"></div>
+    </section>
+
+    <section class="sec" id="r-p6-rdrf">
+      <div class="eyebrow">CH1 PART 6 · 02+ · 自編練習</div>
+      <h2>為什麼微分？r<sub>d</sub> vs r<sub>f</sub><span class="h2-en">WHY DIFFERENTIATE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part6.html#rdrf">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="rdrf"></div>
+    </section>
+
+    <section class="sec" id="r-p6-dcac">
+      <div class="eyebrow">CH1 PART 6 · 03 · 自編練習</div>
+      <h2>DC 分析＋AC 分析<span class="h2-en">DC + AC</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part6.html#dcac">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="dcac"></div>
+    </section>
+
+    <section class="sec" id="r-p6-qdes">
+      <div class="eyebrow">CH1 PART 6 · 04 · 自編練習</div>
+      <h2>Q 點設計與失真<span class="h2-en">Q-POINT & DISTORTION</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part6.html#qdes">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="qdes"></div>
+    </section>
+
+    <section class="sec" id="r-p7-cap">
+      <div class="eyebrow">CH1 PART 7 · 01 · 自編練習</div>
+      <h2>擴散電容 vs 接面電容<span class="h2-en">CAPACITANCE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part7.html#cap">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="cap"></div>
+    </section>
+
+    <section class="sec" id="r-p7-sseq">
+      <div class="eyebrow">CH1 PART 7 · 02 · 自編練習</div>
+      <h2>小訊號等效電路<span class="h2-en">EQUIVALENT CIRCUIT</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part7.html#sseq">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="sseq"></div>
+    </section>
+
+    <section class="sec" id="r-p7-sw">
+      <div class="eyebrow">CH1 PART 7 · 03 · 自編練習</div>
+      <h2>開關暫態 t<sub>s</sub>、t<sub>f</sub><span class="h2-en">SWITCHING</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part7.html#sw">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="sw"></div>
+    </section>
+
+    <section class="sec" id="r-p7-opto">
+      <div class="eyebrow">CH1 PART 7 · 04 · 自編練習</div>
+      <h2>太陽能電池、光二極體、LED<span class="h2-en">OPTO DEVICES</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part7.html#opto">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="opto"></div>
+    </section>
+
+    <section class="sec" id="r-p7-sbd">
+      <div class="eyebrow">CH1 PART 7 · 05 · 自編練習</div>
+      <h2>蕭特基二極體<span class="h2-en">SCHOTTKY</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part7.html#sbd">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="sbd"></div>
+    </section>
+
+    <section class="sec" id="r-p7-zd">
+      <div class="eyebrow">CH1 PART 7 · 06 · 自編練習</div>
+      <h2>齊納二極體<span class="h2-en">ZENER</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part7.html#zd">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH16C" data-sec="zd"></div>
+    </section>
+
+    <section class="sec" id="r-c21-psu">
+      <div class="eyebrow">CH2 PART 1 · 01 · 自編練習</div>
+      <h2>電源供應器方塊圖<span class="h2-en">POWER SUPPLY</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch2-part1.html#psu">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH21C" data-sec="psu"></div>
+    </section>
+
+    <section class="sec" id="r-c21-xfmr">
+      <div class="eyebrow">CH2 PART 1 · 02 · 自編練習</div>
+      <h2>變壓器與匝數比<span class="h2-en">TRANSFORMER</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch2-part1.html#xfmr">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH21C" data-sec="xfmr"></div>
+    </section>
+
+    <section class="sec" id="r-c21-hwr">
+      <div class="eyebrow">CH2 PART 1 · 03 · 自編練習</div>
+      <h2>半波整流：三種情況與轉移特性<span class="h2-en">HALF-WAVE RECTIFIER</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch2-part1.html#hwr">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH21C" data-sec="hwr"></div>
+    </section>
+
+    <section class="sec" id="r-c21-wave">
+      <div class="eyebrow">CH2 PART 1 · 04 · 自編練習</div>
+      <h2>波形：v<sub>O</sub>、v<sub>D</sub> 與 PIV<span class="h2-en">WAVEFORMS</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch2-part1.html#wave">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH21C" data-sec="wave"></div>
+    </section>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="assets/ch1-part4-concept.js"></script>
+<script src="assets/ch1-part5-concept.js"></script>
+<script src="assets/ch1-part6-concept.js"></script>
+<script src="assets/ch2-part1-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script>
+(function () {
+  'use strict';
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } });
+  }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

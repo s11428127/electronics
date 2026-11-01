@@ -48,7 +48,8 @@
       <h1>順向偏壓與二極體 I–V</h1>
       <p class="sub">PART 3 把坡墊高，電流只剩 10⁻¹⁴ A。這一段反過來<strong>把坡壓低</strong>：電流會暴衝到 mA，而且<strong>電壓每多 60 mV，電流就變 10 倍</strong>。弄懂這條指數曲線，二極體為什麼「只讓電往一個方向走」就解開了 —— 順便還能拿它來量溫度。</p>
       <div class="hero-meta">
-        <span class="chip h">⛳ 10/5 考試：只考到 §01 順向偏壓</span>
+        <span class="chip h">✓ 11/9 期中考 2 範圍：§02 起</span>
+        <span class="chip">40 題觀念填充（§02～§06）</span>
         <span class="chip">18 個畫面的故事模式</span>
         <span class="chip">6 個互動模組</span>
         <span class="chip">6 個可改數字例題</span>
@@ -168,7 +169,7 @@
 
     <!-- ══════════ 02 I–V ══════════ -->
     <section class="sec" id="iv">
-      <div class="eyebrow"><span class="scope-no">只教到公式（p.7）</span><span class="part-tag">原講義 PART 4</span>02 · 投影片 1-44、1-46、1-47 · 1.2.4 Ideal Current–Voltage Relationship</div>
+      <div class="eyebrow"><span class="scope-ok">11/9 考試範圍</span><span class="part-tag">原講義 PART 4</span>02 · 投影片 1-44、1-46、1-47 · 1.2.4 Ideal Current–Voltage Relationship</div>
       <h2>理想 I–V 關係<span class="h2-en">IDEAL CURRENT–VOLTAGE RELATIONSHIP</span></h2>
       <p class="lede">上一節得到「電流 ∝ e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1」。把比例常數叫做 I<sub>S</sub>，就是整個 CH1 最重要的一條式子。它一邊貼地、一邊往上暴衝 —— 這就是 pn 接面的<button class="tm" data-t="整流">整流</button>特性。</p>
       <div class="eq">i<em>D</em> = I<em>S</em> ( e<sup>v<em>D</em> / nV<em>T</em></sup> − 1 )　　v<em>D</em> &gt; 0.1 V：i<em>D</em> ≈ I<em>S</em>e<sup>v<em>D</em>/nV<em>T</em></sup>　　v<em>D</em> &lt; 0：i<em>D</em> ≈ −I<em>S</em></div>
@@ -244,14 +245,19 @@
         </ul>
       </div>
       <div class="exbook" data-bank="__CH14EX" data-sec="iv"></div>
+      <div class="cf-wrap" id="cf-iv">
+        <h3>🧠 觀念填充 02（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。答錯會進錯題本。</p>
+        <div class="hw-list" data-bank="__CH14C" data-sec="iv"></div>
+      </div>
     </section>
 
     <!-- ══════════ 03 60 mV ══════════ -->
-    <div class="scope-end"><b>⛳ 10/5 考試範圍到這裡</b>（原講義 PART 4 第 8 頁：順偏使多數載子跨越接面、成為少數載子、形成擴散電流）。<br>
-      上面 §02 的 i<sub>D</sub> = I<sub>S</sub>(e<sup>v<sub>D</sub>/V<sub>T</sub></sup> − 1) 老師在第 7 頁介紹過公式，但 Example 1.7 還沒教；下面 §03 以後（60 mV、理想模型、溫度、溫度計）<b>還沒教到</b>，這次不用準備。對應的作業第 11 題（溫度）、第 12 題（崩潰）也還沒教。</div>
+    <div class="scope-end"><b>⛳ 10/5 考試範圍到 §01 為止</b>（原講義 PART 4 第 8 頁）。<br>
+      <b>🎯 11/9 期中考 2：從上面 §02 I–V 關係開始</b>，§02～§06（60 mV、理想模型、溫度、溫度計）全部要考，一路到 CH2 PART 1。每節最後有 8 題觀念填充，全部集中在 <a href="review2.html">期中考 2 觀念填充總複習</a>。</div>
 
     <section class="sec" id="dec">
-      <div class="eyebrow"><span class="scope-no">還沒教到</span><span class="part-tag">原講義 PART 4</span>03 · 投影片 1-48 · Figure 1.18</div>
+      <div class="eyebrow"><span class="scope-ok">11/9 考試範圍</span><span class="part-tag">原講義 PART 4</span>03 · 投影片 1-48 · Figure 1.18</div>
       <h2>每 60 mV 變 10 倍<span class="h2-en">ONE DECADE PER 60 mV</span></h2>
       <p class="lede">指數函數的特色：<strong>電壓加一個固定量，電流就乘一個固定倍數</strong>。對二極體來說，這個「固定量」是 60 mV、「固定倍數」是 10。在對數座標上，I–V 曲線就變成一條直線（Fig 1.18）。</p>
       <div class="eq">Δv<em>D</em> = nV<em>T</em> · ln( i<em>2</em> / i<em>1</em> )　　i<em>2</em>/i<em>1</em> = 10 ⟹ Δv<em>D</em> = V<em>T</em> ln 10 ≈ 60 mV（n = 1）</div>
@@ -305,11 +311,16 @@
         </ul>
       </div>
       <div class="exbook" data-bank="__CH14EX" data-sec="dec"></div>
+      <div class="cf-wrap" id="cf-dec">
+        <h3>🧠 觀念填充 03（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。答錯會進錯題本。</p>
+        <div class="hw-list" data-bank="__CH14C" data-sec="dec"></div>
+      </div>
     </section>
 
     <!-- ══════════ 04 理想二極體 ══════════ -->
     <section class="sec" id="ideal">
-      <div class="eyebrow"><span class="scope-no">還沒教到</span><span class="part-tag">原講義 PART 4</span>04 · 投影片 1-48、1-49 · 1.2.5 pn Junction Diode</div>
+      <div class="eyebrow"><span class="scope-ok">11/9 考試範圍</span><span class="part-tag">原講義 PART 4</span>04 · 投影片 1-48、1-49 · 1.2.5 pn Junction Diode</div>
       <h2><button class="tm" data-t="理想二極體">理想二極體</button>模型<span class="h2-en">IDEAL DIODE MODEL</span></h2>
       <p class="lede">指數公式很準，但解電路時很難用（v 跟 i 糾纏在 e 的次方裡）。工程上的做法是把那條曲線<strong>簡化成開關</strong>：逆偏 = 斷路（OFF）、順偏 = 短路（ON）。再精確一點，就讓它導通時固定掉 0.7 V。</p>
       <div class="eq">v<em>D</em> &lt; 0：i<em>D</em> = 0（斷路，R<em>R</em> → ∞）　　導通：v<em>D</em> = 0（短路，R<em>F</em> = 0），i<em>D</em> 由外部電路決定</div>
@@ -373,6 +384,11 @@
         </ul>
       </div>
       <div class="exbook" data-bank="__CH14EX" data-sec="ideal"></div>
+      <div class="cf-wrap" id="cf-ideal">
+        <h3>🧠 觀念填充 04（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。答錯會進錯題本。</p>
+        <div class="hw-list" data-bank="__CH14C" data-sec="ideal"></div>
+      </div>
     </section>
 
     <!-- ══════════ 05 溫度 ══════════ -->
@@ -435,11 +451,16 @@
         </ul>
       </div>
       <div class="exbook" data-bank="__CH14EX" data-sec="temp"></div>
+      <div class="cf-wrap" id="cf-temp">
+        <h3>🧠 觀念填充 05（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。答錯會進錯題本。</p>
+        <div class="hw-list" data-bank="__CH14C" data-sec="temp"></div>
+      </div>
     </section>
 
     <!-- ══════════ 06 溫度計 ══════════ -->
     <section class="sec" id="thermo">
-      <div class="eyebrow"><span class="scope-no">還沒教到</span><span class="part-tag">原講義 PART 4</span>06 · 投影片 1-52、1-54 · 1.6 Design Application: Diode Thermometer</div>
+      <div class="eyebrow"><span class="scope-ok">11/9 考試範圍</span><span class="part-tag">原講義 PART 4</span>06 · 投影片 1-52、1-54 · 1.6 Design Application: Diode Thermometer</div>
       <h2><button class="tm" data-t="二極體溫度計">二極體溫度計</button><span class="h2-en">DIODE THERMOMETER</span></h2>
       <p class="lede">缺點反過來就是優點：既然 v<sub>D</sub> 會隨溫度乖乖地、幾乎線性地下降，那讓二極體流<strong>固定電流</strong>、量它的電壓，就能反推溫度。課本的電路只有一顆 15 V 電源、一顆 15 kΩ 電阻和一顆二極體。</p>
       <div class="eq">I<em>D</em> ≈ (15 − 0.6) V / 15 kΩ ≈ 1 mA（近似固定）　⟹　V<em>D</em> ≈ 1.12 − 0.522 · (T / 300) V　⟺　T = 300 · (1.12 − V<em>D</em>) / 0.522 K</div>
@@ -503,6 +524,11 @@
         </ul>
       </div>
       <div class="exbook" data-bank="__CH14EX" data-sec="thermo"></div>
+      <div class="cf-wrap" id="cf-thermo">
+        <h3>🧠 觀念填充 06（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。答錯會進錯題本。</p>
+        <div class="hw-list" data-bank="__CH14C" data-sec="thermo"></div>
+      </div>
     </section>
 
     <!-- ══════════ 勘誤 ══════════ -->
@@ -625,6 +651,7 @@ __EXB.picker(document.getElementById('sec-pick'), [
 ], { key: 'ch1-part4', alwaysAll: ['map', 'check', 'hw', 'glossary', 'quiz-sec'] });
 </script>
 <script src="assets/hw1-bank.js"></script>
+<script src="assets/ch1-part4-concept.js"></script>
 <script src="../shared/hw.js"></script>
 <script src="assets/ch1-part4.js"></script>
 <script src="assets/ch1-part4-story.js"></script>
