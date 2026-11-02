@@ -120,7 +120,7 @@
       idea: 'KVL 給一條式子、二極體方程式給另一條，兩條都含 V<sub>D</sub>、I<sub>D</sub>。因為有 e 的次方，沒辦法直接解 —— 先猜 V<sub>D</sub>，算 I<sub>D</sub>，再用二極體方程式反推 V<sub>D</sub>，重複到數字不再變。',
       steps: [
         st('KVL 繞一圈。', 'V<sub>PS</sub> = I<sub>D</sub>R + V<sub>D</sub>　⟹　I<sub>D</sub> = (5 − V<sub>D</sub>) / 2k', '電源電壓 = 電阻壓降 + 二極體壓降。'),
-        st('二極體方程式解成 V<sub>D</sub>。', 'V<sub>D</sub> = V<sub>T</sub> ln(I<sub>D</sub>/I<sub>S</sub>)', '順偏時 −1 可以忽略，取 ln 就把 V<sub>D</sub> 拿出來了。'),
+        st('二極體方程式解成 V<sub>D</sub>。', 'V<sub>D</sub> = V<sub>T</sub> ln(I<sub>D</sub>/I<sub>S</sub>)', '這題 V<sub>D</sub> 大約 0.6 V，遠大於 0.1 V，所以 −1 可以忽略（e<sup>0.6/0.026</sup> 約 10<sup>10</sup>，減 1 根本看不出來）。忽略後取 ln，就把 V<sub>D</sub> 拿出來了。'),
         st('第 1 次：先猜 V<sub>D</sub> = 0.6 V。', 'I<sub>D</sub> = (5 − 0.6)/2k = 2.2 mA　→　V<sub>D</sub> = 0.026 ln(2.2×10<sup>−3</sup>/10<sup>−13</sup>) = 0.6192 V', '矽二極體導通大概 0.6～0.7 V，從這裡猜起收斂最快。'),
         st('第 2 次：用 0.6192 V 再算。', 'I<sub>D</sub> = (5 − 0.6192)/2k = 2.1904 mA　→　V<sub>D</sub> = 0.6191 V', 'V<sub>D</sub> 只變了 0.0001 V —— 已經收斂。'),
         st('結論。', 'V<sub>D</sub> ≈ 0.619 V，I<sub>D</sub> ≈ 2.19 mA', '電流對 V<sub>D</sub> 很不敏感（5 V 裡只差幾 mV），所以兩三次就夠準。')
