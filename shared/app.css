@@ -430,20 +430,24 @@ body[data-subject="circuits"] { --accent: #0f7a66; }
 body[data-subject="math"] { --accent: #6a4bbc; }
 body[data-subject="lab"] { --accent: #c2571a; }
 body[data-subject="law"] { --accent: #8a2b3a; }
+body[data-subject="env"] { --accent: #3d7a2a; }
 :root:not([data-theme="light"]) body[data-subject="circuits"] { --accent: #46c2a5; }
 :root:not([data-theme="light"]) body[data-subject="math"] { --accent: #a992f0; }
 :root:not([data-theme="light"]) body[data-subject="lab"] { --accent: #f09a5e; }
 :root:not([data-theme="light"]) body[data-subject="law"] { --accent: #e58b99; }
+:root:not([data-theme="light"]) body[data-subject="env"] { --accent: #9bd47f; }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) body[data-subject="circuits"] { --accent: #0f7a66; }
   :root:not([data-theme="dark"]) body[data-subject="math"] { --accent: #6a4bbc; }
   :root:not([data-theme="dark"]) body[data-subject="lab"] { --accent: #c2571a; }
   :root:not([data-theme="dark"]) body[data-subject="law"] { --accent: #8a2b3a; }
+  :root:not([data-theme="dark"]) body[data-subject="env"] { --accent: #3d7a2a; }
 }
 :root[data-theme="dark"] body[data-subject="circuits"] { --accent: #46c2a5; }
 :root[data-theme="dark"] body[data-subject="math"] { --accent: #a992f0; }
 :root[data-theme="dark"] body[data-subject="lab"] { --accent: #f09a5e; }
 :root[data-theme="dark"] body[data-subject="law"] { --accent: #e58b99; }
+:root[data-theme="dark"] body[data-subject="env"] { --accent: #9bd47f; }
 
 /* 被 iframe 嵌入時不需要自己的頂欄 */
 .embed .topbar { display: none; }

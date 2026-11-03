@@ -197,6 +197,10 @@
 - **考試只能看手寫筆記（使用者 11/1）**：`copy.html` 是給他抄到 iPad 的精簡版（速查表＋表格，字越少越好，`.ltab.qt`、`.qs`；不放課程規範）。上面有「🙈 挖空練習」（`body.cloze`：mark／.rd／表格粗體變灰格點開）和「📄 空白表格」（`body.blank-sheet`：使用者 11/1 要求**不要任何字、只要格子**——表格以外全部隱藏，表格所有格子（含表頭、第一欄）都清空，只留框線，可列印）；`notes.html` 是詳細版。新講義兩邊都要加（精簡版只留螢光筆／紅字／法條關鍵字＋刑度，順便補進速查表）。
 - 新講義進來照日期加一張 `.paper.lec`，更新 `law/docs/CONTENT_MAP.md`、`law/index.html` 數字。
 
+## 人類與環境安全（`env/`，11/3 新通識）
+
+- 主色 `#3d7a2a`（暗 `#9bd47f`），`<body data-subject="env">`；考試不能看筆記 → 只做 `review.html` 一頁考前速讀（表格＋口訣、申論範例 `.exq`、電影《Minamata》對照、快速自測 `details`、挖空 `body.cloze`）。版面沿用 `../law/law.css`＋`env.css`。不做故事模式。
+
 ## 學習紀錄（`shared/track.js`）
 
 - 每個章節頁、科目首頁的**最後一個 script** 放 `<script src="../shared/track.js"></script>`（新頁面也要加）。
