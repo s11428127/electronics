@@ -396,7 +396,7 @@
           <li><b>DC</b>：交流源歸零，二極體換 V<sub>γ</sub>（或片段線性）模型，KVL 求 I<sub>DQ</sub>、V<sub>O</sub>。</li>
           <li>r<sub>d</sub> = V<sub>T</sub>/I<sub>DQ</sub>。</li>
           <li><b>AC</b>：直流電壓源短路，二極體換 r<sub>d</sub>，KVL 求 i<sub>d</sub>、v<sub>o</sub>。</li>
-          <li>總量 = 直流 + 交流；最後檢查 v<sub>d</sub> = i<sub>d</sub>r<sub>d</sub> ≪ 26 mV。</li>
+          <li>總量 = 直流 + 交流；最後檢查 v<sub>d</sub> = i<sub>d</sub>r<sub>d</sub> ≪ 26 mV。<b>多小才算小？</b>誤差 ≈ (v<sub>d</sub>/26 mV) ÷ 2：<b>&lt; 2.6 mV</b> 誤差約 5% 以內，放心；<b>2.6～10 mV</b> 勉強、當估計；<b>&gt; 10 mV</b> 失真明顯。</li>
         </ol>
       </div>
       <div class="pitfall">

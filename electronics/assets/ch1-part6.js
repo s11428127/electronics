@@ -383,10 +383,11 @@
       setHTML('ds-q', q.i > 1e-9 ? (q.i * 1e3).toFixed(3) + ' mA、' + q.v.toFixed(3) + ' V' : '≈ 0（OFF）');
       setHTML('ds-vd', (vd * 1e3).toFixed(2) + ' mV');
       const clip = VPS - VI < 0.5;
-      setHTML('ds-s', clip ? '截止削波' : vd > 0.01 ? '非線性失真' : '小訊號 OK');
+      setHTML('ds-s', clip ? '截止削波' : vd > 0.01 ? '非線性失真' : vd > 0.0026 ? '勉強（估計）' : '小訊號 OK');
       setHTML('ds-msg', clip ? '<b>截止失真（cutoff clipping）</b>：負半週 v<sub>i</sub> 把 V<sub>PS</sub> 整個抵消，二極體被推到 OFF，輸出被削成 0。要嘛把 V<sub>PS</sub>（Q 點）調高，要嘛把 v<sub>i</sub> 調小。'
+        : vd > 0.0026 && vd <= 0.01 ? '二極體上的交流 v<sub>d</sub> = ' + (vd * 1e3).toFixed(2) + ' mV：超過 V<sub>T</sub> 的十分之一（2.6 mV），上下開始不對稱，線性近似誤差約 ' + (vd / 0.026 / 2 * 100).toFixed(0) + '%。<b>勉強可用，結果只能當估計</b>；要更準就把 v<sub>i</sub> 調小或 R 調大。'
         : vd > 0.01 ? '二極體兩端的交流 v<sub>d</sub> = ' + (vd * 1e3).toFixed(1) + ' mV，已經跟 V<sub>T</sub> = 26 mV 比得上，r<sub>d</sub> 不是定值 → <b>非線性失真</b>（上下半週不對稱）。'
-        : '二極體上的交流 v<sub>d</sub> 只有 ' + (vd * 1e3).toFixed(2) + ' mV ≪ 26 mV：小訊號模型很準，藍線跟虛線疊在一起。Q 點也夠高，負半週不會 OFF。');
+        : '二極體上的交流 v<sub>d</sub> 只有 ' + (vd * 1e3).toFixed(2) + ' mV（&lt; 2.6 mV），誤差約 ' + (vd / 0.026 / 2 * 100).toFixed(0) + '%：小訊號模型很準，藍線跟虛線疊在一起。Q 點也夠高，負半週不會 OFF。');
       st.redraw();
     }
     bindRange('ds-vps', x => x.toFixed(1) + ' V', x => { VPS = x; msg(); });
@@ -841,7 +842,7 @@
       { t: 'Step 3　用 Q 點算 r<sub>d</sub>。', note: '交流阻抗跟直流工作點有關（講義 1-10）。', eq: 'r<sub>d</sub> = V<sub>T</sub>/I<sub>DQ</sub> = 0.026/' + f3(r.IQ) + ' mA = ' + P6.fmtR(r.rd * 1e3) },
       { t: 'Step 4　AC 分析：令 V<sub>PS</sub> = 0（交流接地），二極體換成 r<sub>d</sub>，寫 KVL。', eq: 'v<sub>i</sub> = i<sub>d</sub>(r<sub>d</sub> + R)　⟹　i<sub>d</sub> = ' + f2(r.A) + '/(' + f4(r.rd) + ' + ' + r.R.toFixed(1) + ') kΩ = ' + (r.id * 1e3).toFixed(1) + ' sin ωt μA' },
       { t: 'Step 5　交流輸出。', eq: 'v<sub>o</sub> = i<sub>d</sub>R = ' + f4(r.vo) + ' sin ωt V' },
-      { t: 'Step 6　合起來，順便檢查小訊號假設。', note: r.vd < 0.0026 ? '二極體上的交流 v<sub>d</sub> = i<sub>d</sub>r<sub>d</sub> = ' + (r.vd * 1e3).toFixed(2) + ' mV ≪ 26 mV，小訊號成立 ✓。' : '二極體上的 v<sub>d</sub> = ' + (r.vd * 1e3).toFixed(1) + ' mV，已經不算 ≪ 26 mV，結果只能當估計。',
+      { t: 'Step 6　合起來，順便檢查小訊號假設。', note: r.vd < 0.0026 ? '二極體上的交流 v<sub>d</sub> = i<sub>d</sub>r<sub>d</sub> = ' + (r.vd * 1e3).toFixed(2) + ' mV ≪ 26 mV（小於 2.6 mV，誤差約 ' + (r.vd / 0.026 / 2 * 100).toFixed(0) + '%），小訊號成立 ✓。' : r.vd <= 0.01 ? '二極體上的 v<sub>d</sub> = ' + (r.vd * 1e3).toFixed(1) + ' mV：超過 2.6 mV，誤差約 ' + (r.vd / 0.026 / 2 * 100).toFixed(0) + '%，<b>勉強可用，結果當估計</b>。' : '二極體上的 v<sub>d</sub> = ' + (r.vd * 1e3).toFixed(1) + ' mV 超過 10 mV，<b>已經不算小</b>，r<sub>d</sub> 模型不準。',
         eq: 'v<sub>O</sub>(t) = ' + f2(r.VO) + ' + ' + f4(r.vo) + ' sin ωt V' + (r.A > r.V - 0.6 ? '　⚠ 峰值 v<sub>i</sub> 大於 V<sub>PS</sub> − V<sub>γ</sub>，負半週會截止！' : '') }
     ],
     answer: (g, r) => 'I<sub>DQ</sub> = ' + f3(r.IQ) + ' mA、V<sub>O</sub> = ' + f2(r.VO) + ' V、r<sub>d</sub> = ' + P6.fmtR(r.rd * 1e3) + '、i<sub>d</sub> = ' + (r.id * 1e3).toFixed(1) + ' sin ωt μA、v<sub>o</sub> = ' + f4(r.vo) + ' sin ωt V',
@@ -877,10 +878,11 @@
       { t: 'Step 2　負半週最低點，二極體還推得開嗎？', note: '定電壓降模型：只要 V<sub>PS</sub> + v<sub>i</sub> &gt; 0.6 V 就 ON。最低點 v<sub>i</sub> = −峰值。', eq: 'V<sub>PS</sub> − V<sub>m</sub> = ' + r.V.toFixed(1) + ' − ' + f2(r.A) + ' = ' + (r.V - r.A).toFixed(2) + ' V ' + (r.clip ? '&lt;' : '&gt;') + ' 0.6 V' },
       { t: 'Step 3　二極體上的交流有多大。', note: 'AC 電路裡 r<sub>d</sub> 跟 R 分壓。', eq: 'v<sub>d</sub> = V<sub>m</sub> · r<sub>d</sub>/(r<sub>d</sub> + R) = ' + f2(r.A) + ' × ' + P6.fmtR(r.rd * 1e3) + '/(' + P6.fmtR(r.rd * 1e3) + ' + ' + r.R.toFixed(1) + ' kΩ) = ' + (r.vd * 1e3).toFixed(2) + ' mV' },
       { t: 'Step 4　判斷。', note: r.clip ? '<b>(a) 會 OFF</b>：輸出負半週被削平（截止失真）。要把 V<sub>PS</sub> 提高到大於 V<sub>m</sub> + 0.6 = ' + (r.A + 0.6).toFixed(2) + ' V。'
-        : r.vd > 0.0026 ? '(a) 不會 OFF；但 (b) v<sub>d</sub> 不算 ≪ 26 mV，會有<b>非線性失真</b>。'
+        : r.vd > 0.01 ? '(a) 不會 OFF；但 (b) v<sub>d</sub> 超過 10 mV，誤差約 ' + (r.vd / 0.026 / 2 * 100).toFixed(0) + '%，會有<b>非線性失真</b>。'
+        : r.vd > 0.0026 ? '(a) 不會 OFF；(b) v<sub>d</sub> 在 2.6～10 mV 之間，誤差約 ' + (r.vd / 0.026 / 2 * 100).toFixed(0) + '%，<b>勉強可用，結果只能當估計</b>。'
         : '(a) 不會 OFF、(b) v<sub>d</sub> ≪ 26 mV：Q 點設計 OK，小訊號模型可以用。' }
     ],
-    answer: (g, r) => (r.clip ? '(a) 會 OFF（截止削波）' : '(a) 不會 OFF') + '；(b) v<sub>d</sub> ≈ ' + (r.vd * 1e3).toFixed(2) + ' mV' + (r.vd > 0.0026 ? '（不算小）' : '（≪ 26 mV ✓）'),
+    answer: (g, r) => (r.clip ? '(a) 會 OFF（截止削波）' : '(a) 不會 OFF') + '；(b) v<sub>d</sub> ≈ ' + (r.vd * 1e3).toFixed(2) + ' mV' + (r.vd > 0.01 ? '（太大，失真）' : r.vd > 0.0026 ? '（勉強，誤差約 ' + (r.vd / 0.026 / 2 * 100).toFixed(0) + '%）' : '（< 2.6 mV ✓）'),
     draw: (ctx, w, h, g, r) => bars(ctx, w, h, [['V<sub>PS</sub> − 0.6', r.lim, C.ink], ['v<sub>i</sub> 峰值', r.A, r.clip ? C.bad : C.accent]], v => f2(v) + ' V')
   });
 
