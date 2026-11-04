@@ -1352,6 +1352,19 @@ body.prob-first .sec.pf > .cf-wrap { order: 2; }
 .hw-zh[open] summary { margin-bottom: 4px; }
 .hw-zh > div { padding: 6px 10px; border-left: 3px solid var(--line); line-height: 1.7; }
 
+/* 填充題答題回饋（使用者 11/4） */
+.hw-fb { display: inline-block; font-size: 14px; font-weight: 700; margin-left: 4px; }
+.hw-fb.ok { color: var(--ok); } .hw-fb.fix { color: var(--warn); } .hw-fb.bad { color: var(--bad); }
+.hw-fb.pop { animation: hwPop .45s cubic-bezier(.2,1.6,.4,1); }
+.hw-card.fb-ok, .hw-card.fb-fix { animation: hwGlow .9s ease-out; }
+.hw-card.fb-fix { --fb: var(--warn); } .hw-card.fb-ok { --fb: var(--ok); }
+.hw-card.fb-bad { animation: hwShake .4s ease-in-out; }
+.hw-card .hw-right { color: var(--ink); background: color-mix(in srgb, #ffd84d 55%, transparent); border-radius: 4px; padding: 0 4px; font-weight: 700; }
+@keyframes hwPop { 0% { transform: scale(.4); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes hwGlow { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--fb) 55%, transparent); } 100% { box-shadow: 0 0 0 14px transparent; } }
+@keyframes hwShake { 0%, 100% { transform: none; } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(3px); } }
+@media (prefers-reduced-motion: reduce) { .hw-card.fb-ok, .hw-card.fb-fix, .hw-card.fb-bad, .hw-fb.pop { animation: none; } }
+
 /* 老師說會考的小節標記（使用者 11/4） */
 .eyebrow:has(.memo-star) { flex-wrap: wrap; row-gap: 6px; }
 .memo-star { display: inline-block; flex-shrink: 0; max-width: 100%; font-size: 11px; font-weight: 700; color: #fff; background: #c0392b; border-radius: 99px; padding: 2px 8px; margin-right: 8px; vertical-align: 1px; letter-spacing: 0; }
@@ -1613,6 +1626,8 @@ body.prob-first .sec.pf > .cf-wrap { order: 2; }
   /* 英文先的填充題：中文翻譯收在 details（使用者 11/1） */
 .hw-zh { font-size: 15.4px; }
   .hw-zh summary { font-size: 14.2px; }
+  /* 填充題答題回饋（使用者 11/4） */
+.hw-fb { font-size: 16.0px; }
   .memo-star { font-size: 12.5px; }
 }
 @media (min-width: 1600px) {
@@ -1869,6 +1884,8 @@ body.prob-first .sec.pf > .cf-wrap { order: 2; }
   /* 英文先的填充題：中文翻譯收在 details（使用者 11/1） */
 .hw-zh { font-size: 16.7px; }
   .hw-zh summary { font-size: 15.5px; }
+  /* 填充題答題回饋（使用者 11/4） */
+.hw-fb { font-size: 17.4px; }
   .memo-star { font-size: 13.6px; }
 }
 /* ===== 電腦版放大 end ===== */

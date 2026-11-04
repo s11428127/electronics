@@ -11,6 +11,31 @@
   const shuffle = n => { const o = Array.from({ length: n }, (_, k) => k); for (let k = n - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [o[k], o[j]] = [o[j], o[k]]; } return o; };
   const strip = s => String(s).replace(/<[^>]+>/g, '');
 
+
+  /* 答題回饋（使用者 11/4）：答對閃綠＋打勾＋一句話；答錯輕晃＋正解螢光；錯過再答對＝訂正成功 */
+  const YES = ['對！', '穩', '這題你會了', '答對了', '漂亮', '沒問題'];
+  function feedback(el, ok, tot) {
+    if (!tot) return;
+    let fb = el.querySelector('.hw-fb');
+    if (!fb) { fb = document.createElement('span'); fb.className = 'hw-fb'; fb.setAttribute('role', 'status'); el.querySelector('.hw-act').appendChild(fb); }
+    const all = ok === tot, fixed = all && (el.dataset.missed === '1' || el.classList.contains('trk-wrong'));
+    if (!all) el.dataset.missed = '1';
+    el.classList.remove('fb-ok', 'fb-bad', 'fb-fix'); fb.classList.remove('pop');
+    void el.offsetWidth;
+    if (all) {
+      el.classList.add(fixed ? 'fb-fix' : 'fb-ok');
+      fb.innerHTML = fixed ? '✓ 訂正成功' : '✓ ' + YES[Math.floor(Math.random() * YES.length)];
+      fb.className = 'hw-fb ' + (fixed ? 'fix' : 'ok');
+    } else {
+      el.classList.add('fb-bad');
+      fb.innerHTML = '再看一次 ↓';
+      fb.className = 'hw-fb bad';
+      const a = el.querySelector('.hw-ans');
+      if (a && !a.hidden && a.getBoundingClientRect().bottom > innerHeight) a.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    void fb.offsetWidth; fb.classList.add('pop');
+  }
+
   function card(it, bankName) {
     const el = document.createElement('div');
     el.className = 'hw-card ' + (it.kind === 'hw' ? 'is-hw' : 'is-sim');
@@ -56,6 +81,7 @@
       el.querySelectorAll('.hw-free').forEach(f => { f.classList.add('shown'); f.innerHTML = '（' + (+f.dataset.i + 1) + '）' + blanks[+f.dataset.i].f; });
       score.textContent = tot ? '選擇題對 ' + ok + ' / ' + tot + ' 格' : '';
       ans.hidden = !it.ex; if (it.ex) ans.innerHTML = '<b>解釋：</b>' + it.ex;
+      feedback(el, ok, tot);
       if (window.__EE && window.__EE.wireTerms) window.__EE.wireTerms();
     });
     el.querySelector('.hw-reset').addEventListener('click', () => {
