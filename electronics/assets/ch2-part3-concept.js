@@ -34,7 +34,7 @@
 
   /* ═════════ 02 串聯截波 ═════════ */
   C('series', 1, '分界點', '板書的串聯截波器，分界點是 v_i = {0}。', 'The break point of the series clipper in the notes is v_i = ___.',
-    [S(['V_B − V_γ', 'V_B + V_γ', 'V_γ', 'V_B'])], '請以老師的電路圖為準。');
+    [S(['V_B − V_γ', 'V_B + V_γ', 'V_γ', 'V_B'])], '板書：剛要導通 v<sub>i</sub> − V<sub>B</sub> + V<sub>γ</sub> = 0。');
   C('series', 2, '大於分界點', 'v_i 大於分界點時，v_O = {0}。', 'Above the break point, v_O = ___.',
     [S(['0', 'v_i', 'V_B', 'V_γ'])], '板書結果。');
   C('series', 3, '小於分界點', 'v_i 小於分界點時，v_O = {0}。', 'Below the break point, v_O = ___.',
@@ -85,6 +85,31 @@
     [S(['−2V_M + V_B + V_γ', '−V_M', '−2V_M', 'V_B + V_γ'])], '');
   C('clamp', 8, '擺幅', '箝位後，輸出的峰對峰值 {0}。', 'After clamping, the peak-to-peak output ___.',
     [S(['不變，還是 2V_M stays 2V_M', '變成 V_M becomes V_M', '變成 0 becomes zero', '變成 4V_M becomes 4V_M'])], '只有平移。', true);
+
+
+  /* ═════ 11/4 加碼：老師說最重要的雙向截波（含變形）＋基本截波參考題 · 英文先＋計算 ═════ */
+  const E = (sec, n, title, q, zh, b, ex) =>
+    items.push({ id: 'c23' + sec + '-e' + n, kind: 'cf', sec, no: NO[sec] + '-' + (8 + n), calc: true, link: P + '#' + sec, title: sub(title), q: sub(q), zh: sub(zh), b: b.map(x => ({ o: x.o.map(t => t.replace(/_/g, '')), a: 0 })), ex });
+  E('bidir', 1, 'Upper limit', 'Two-way clipper with V_B1 = 3 V and V_γ1 = 0.7 V. The output cannot rise above {0}.', '雙向截波 V_B1 = 3 V、V_γ1 = 0.7 V，輸出最高只到 ___。',
+    [S(['3.7 V', '3 V', '2.3 V', '0.7 V'])], '上限 V<sub>B1</sub> + V<sub>γ1</sub>。');
+  E('bidir', 2, 'Lower limit', 'Same clipper with V_B2 = 2 V and V_γ2 = 0.7 V. The output cannot fall below {0}.', '同一個電路 V_B2 = 2 V、V_γ2 = 0.7 V，輸出最低只到 ___。',
+    [S(['−2.7 V', '−2 V', '−1.3 V', '2.7 V'])], '下限 −(V<sub>B2</sub> + V<sub>γ2</sub>)。');
+  E('bidir', 3, 'Middle region', 'Same clipper: when v_i = 1 V, v_O = {0}.', '同一個電路 v_i = 1 V 時，v_O = ___。',
+    [S(['1 V', '3.7 V', '−2.7 V', '0 V'])], '−2.7 &lt; 1 &lt; 3.7：兩顆都 off，v<sub>O</sub> = v<sub>i</sub>。');
+  E('bidir', 4, 'Both on?', 'In the two-way clipper, the case "D1 on and D2 on" {0}.', '雙向截波中「D1、D2 同時 on」這個情況 ___。',
+    [S(['cannot happen 不可能發生', 'happens when v_i = 0 在 v_i = 0 時發生', 'always happens 一直都是', 'happens at the peak 在峰值時發生'])], '板書：①（都 on）導通條件不存在。');
+  E('bidir', 5, 'Variant slope', 'In the variant with R2 (V_γ = 0), above the upper limit the VTC slope is {0}.', '多一個 R2 的變形（V_γ = 0），超過上限後 VTC 的斜率是 ___。',
+    [S(['R2/(R1 + R2)', '1', '0', 'R1/R2'])], 'v<sub>O</sub> = (v<sub>i</sub> − V<sub>B1</sub>)R<sub>2</sub>/(R<sub>1</sub>+R<sub>2</sub>) + V<sub>B1</sub>。');
+  E('bidir', 6, 'Example 2.7 at the peak', 'Example 2.7 (R1 = R2 = 10 kΩ, V_B1 = 2 V, V_γ = 0): at v_i = 6 V, v_O = {0}.', 'Example 2.7（R1 = R2 = 10 kΩ、V_B1 = 2 V、V_γ = 0）：v_i = 6 V 時 v_O = ___。',
+    [S(['4 V', '2 V', '6 V', '3 V'])], '½ × 6 + 1 = 4 V。');
+  E('bidir', 7, 'Example 2.7 negative', 'Example 2.7 (V_B2 = 4 V, V_γ = 0): at v_i = −6 V, v_O = {0}.', 'Example 2.7（V_B2 = 4 V、V_γ = 0）：v_i = −6 V 時 v_O = ___。',
+    [S(['−4 V', '−6 V', '−2 V', '−3 V'])], 'v<sub>i</sub> &lt; −4：D<sub>2</sub> 通，釘在 −4 V（下面那支沒有 R<sub>2</sub>）。');
+  E('shunt', 1, 'Basic clipper value', 'Shunt clipper with V_B = 4 V, V_γ = 0.7 V and v_i = 10 sin ωt. The maximum of v_O is {0}.', '並聯截波 V_B = 4 V、V_γ = 0.7 V、v_i = 10 sin ωt，v_O 最大值是 ___。',
+    [S(['4.7 V', '10 V', '4 V', '3.3 V'])], '門檻 V<sub>B</sub> + V<sub>γ</sub>，超過就被釘住。');
+  E('shunt', 2, 'Reference ①', 'In reference circuit ① (diode reversed), V_B = 2 V and V_γ = 0.7 V. The output cannot fall below {0}.', '參考 ①（二極體反接）V_B = 2 V、V_γ = 0.7 V，輸出不會低於 ___。',
+    [S(['1.3 V', '2.7 V', '2 V', '−1.3 V'])], 'v<sub>i</sub> &lt; V<sub>B</sub> − V<sub>γ</sub> 時 v<sub>O</sub> = V<sub>B</sub> − V<sub>γ</sub> = 1.3 V。');
+  E('series', 1, 'Series clipper value', 'Series clipper with V_B = 4 V, V_γ = 0.7 V. When v_i = −5 V, v_O = {0}.', '串聯截波 V_B = 4 V、V_γ = 0.7 V，v_i = −5 V 時 v_O = ___。',
+    [S(['−8.3 V', '0 V', '−5 V', '−1.7 V'])], 'v<sub>i</sub> &lt; 3.3：v<sub>O</sub> = v<sub>i</sub> − (V<sub>B</sub> − V<sub>γ</sub>) = −5 − 3.3。');
 
   window.__CH23C = { name: 'ch23c', items };
 })();

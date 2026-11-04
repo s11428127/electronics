@@ -51,17 +51,16 @@
   const items = [
     /* ═══════════ 方塊圖（自編） ═══════════ */
     { id: 'c21-psu', sec: 'psu', kind: 'pp', no: '', tag: '自編練習', title: '從插座到 5 V：每一級多少伏',
-      q: '一個電源供應器：市電 110 V（rms）→ 匝數比 N<sub>1</sub>:N<sub>2</sub> = 10:1 的變壓器 → 半波整流（V<sub>γ</sub> = 0.7 V）→ 濾波 → 7805（輸出 5 V，輸入至少要約 7 V）。(a) 市電峰值；(b) 二次側峰值；(c) 整流輸出峰值；(d) 峰值夠 7805 用嗎？',
-      en: 'A supply: 110 V (rms) line → 10:1 transformer → half-wave rectifier (V<sub>γ</sub> = 0.7 V) → filter → 7805 (5 V output, needs about 7 V input). Find (a) the line peak, (b) the secondary peak, (c) the rectified peak, and (d) whether the peak is enough for the 7805.',
+      q: '一個電源供應器：市電 110 V（rms）→ 匝數比 N<sub>1</sub>:N<sub>2</sub> = 10:1 的變壓器 → 半波整流（V<sub>γ</sub> = 0.7 V）→ 濾波 → 7805（輸出 5 V）。(a) 市電峰值；(b) 二次側峰值；(c) 整流輸出峰值。',
+      en: 'A supply: 110 V (rms) line → 10:1 transformer → half-wave rectifier (V<sub>γ</sub> = 0.7 V) → filter → 7805 (5 V output). Find (a) the line peak, (b) the secondary peak, (c) the rectified peak.',
       hint: '先把 rms 換成峰值（× √2），再除以匝數比，再扣 0.7 V。',
       steps: [
         st('(a) 市電峰值。', '110 × √2 = 155.6 V', '110 V 是有效值。'),
         st('(b) 變壓器降壓。', 'V<sub>S</sub> = 155.6 / 10 = 15.56 V', 'v<sub>S</sub>/v<sub>I</sub> = N<sub>2</sub>/N<sub>1</sub>（講義 2-5）。'),
         st('(c) 半波整流。', 'V<sub>O,peak</sub> = 15.56 − 0.7 = 14.86 V', 'ON 時二極體吃掉 V<sub>γ</sub>。'),
-        st('(d) 比 7 V。', '14.86 V &gt; 7 V ✓', '峰值夠。輸出是脈動的，谷底會掉到 0，所以中間一定要有濾波電容撐住（下一份講義）。')
       ],
-      ans: '(a) 155.6 V (b) 15.56 V (c) 14.86 V (d) 峰值夠（但要靠濾波撐住谷底）',
-      note: '自編練習；7805 的「至少約 7 V」是常見的壓差規格（約 2 V），講義只說它把輸入穩成 5 V。',
+      ans: '(a) 155.6 V (b) 15.56 V (c) 14.86 V',
+      note: '自編練習。',
       story: () => {
         const { g, T, calc, sc, sine, ansScene, D } = KK();
         const box = (x, key, a, b) => g(key, '<rect class="card" x="' + x + '" y="130" width="100" height="70" rx="10" filter="url(#st-sh)"/>' + T(x + 50, 160, a, { fs: 14, cls: 'ta' }) + T(x + 50, 184, b, { cls: 'tm', fs: 12 }));
@@ -73,8 +72,8 @@
             [{ sub: '市電 110 V 是 rms，峰值 = 110 × √2 = <b>155.6 V</b>。', on: 'b1' },
              { sub: '變壓器 10:1：峰值變成 <b>15.56 V</b>。', on: 'ar b2' },
              { sub: '半波整流再扣 0.7 V：<b>14.86 V</b>。', on: 'b3 cc r1' },
-             { sub: '比 7805 需要的 7 V 大，峰值夠。谷底靠濾波撐住，最後 7805 穩成 5 V。', on: 'b4 b5' }]),
-          ansScene(['整流峰值 14.86 V ≥ 7 V', '市電 155.6 V、二次側 15.56 V'], ['答案：14.86 V，夠 7805 用（谷底要靠濾波）。'])
+             { sub: '這還是一顆一顆的駝峰，後面再濾波、7805 穩成 5 V。', on: 'b4 b5' }]),
+          ansScene(['整流峰值 14.86 V', '市電 155.6 V、二次側 15.56 V'], ['答案：整流輸出峰值 14.86 V。'])
         ];
       } },
 
@@ -140,18 +139,17 @@
 
     /* ═══════════ 波形（講義 2-7） ═══════════ */
     { id: 'c21-wave', sec: 'wave', kind: 'pp', no: '', tag: '講義 2-7', title: '畫 v<sub>O</sub>、v<sub>D</sub> 波形',
-      q: '半波整流，v<sub>S</sub> = 10 sin ωt V，V<sub>γ</sub> = 0.7 V（r<sub>f</sub> = 0）。(a) 畫出 v<sub>O</sub>、v<sub>D</sub> 波形；(b) v<sub>O</sub> 峰值；(c) 每週期導通的角度範圍；(d) 二極體承受的最大逆向電壓。',
-      en: 'For a half-wave rectifier with v<sub>S</sub> = 10 sin ωt V and V<sub>γ</sub> = 0.7 V, (a) sketch v<sub>O</sub> and v<sub>D</sub>, (b) find the peak of v<sub>O</sub>, (c) find the conduction interval, and (d) find the peak inverse voltage across the diode.',
+      q: '半波整流，v<sub>S</sub> = 10 sin ωt V，V<sub>γ</sub> = 0.7 V（r<sub>f</sub> = 0）。(a) 畫出 v<sub>O</sub>、v<sub>D</sub> 波形；(b) v<sub>O</sub> 峰值；(c) 二極體承受的最大逆向電壓（PIV）。',
+      en: 'For a half-wave rectifier with v<sub>S</sub> = 10 sin ωt V and V<sub>γ</sub> = 0.7 V, (a) sketch v<sub>O</sub> and v<sub>D</sub>, (b) find the peak of v<sub>O</sub>, and (c) find the peak inverse voltage across the diode.',
       fig: F22, cap: 'Fig 2.3：輸入弦波',
       hint: '方法一用公式（三種情況），方法二用 VTC 把 v<sub>S</sub> 投影到 v<sub>O</sub>。v<sub>D</sub> = v<sub>S</sub> − v<sub>O</sub>。',
       steps: [
         st('(a) v<sub>O</sub>：只留超過 0.7 V 的部分，再往下移 0.7 V。', 'v<sub>O</sub> = v<sub>S</sub> − 0.7（v<sub>S</sub> &gt; 0.7）；其他時候 0', 'Fig 2.3(b)：一顆一顆的駝峰。'),
         st('(a) v<sub>D</sub> = v<sub>S</sub> − v<sub>O</sub>。', 'ON：v<sub>D</sub> = 0.7 V（平的）；OFF：v<sub>D</sub> = v<sub>S</sub>（跟著輸入走，包含整個負半週）', 'Fig 2.3(c)。'),
         st('(b) 峰值。', 'v<sub>O,max</sub> = 10 − 0.7 = 9.3 V'),
-        st('(c) 導通區間。', 'sin ωt = 0.07 ⟹ ωt = 4.01°～175.99°（約 47.8% 的時間）', '比半週期少一點點。'),
-        st('(d) 最大逆向電壓。', 'v<sub>D,min</sub> = −10 V ⟹ PIV = 10 V', '負半週谷底，二極體 OFF，承受整個 −10 V。')
+        st('(c) 最大逆向電壓。', 'v<sub>D,min</sub> = −10 V ⟹ PIV = 10 V', '負半週谷底，二極體 OFF，承受整個 −10 V。')
       ],
-      ans: '(b) 9.3 V (c) 4.01°～175.99°（約 47.8%）(d) 10 V；v<sub>D</sub>：ON 時 0.7 V、OFF 時 = v<sub>S</sub>',
+      ans: '(b) 9.3 V (c) PIV = 10 V；v<sub>D</sub>：ON 時 0.7 V、OFF 時 = v<sub>S</sub>',
       story: () => {
         const { g, T, calc, sc, sine, ansScene, D } = KK();
         const vsD = (ym, A) => sine(80, ym, 480, A, { cls: 'ln dsh', k: null });
@@ -169,7 +167,7 @@
             T(140, 186, '0.7 V', { cls: 'ta', fs: 13, k: 'l1' }) + T(257, 282, '−10 V = PIV', { cls: 'ta', fs: 13, k: 'l2' }),
             [{ sub: '二極體電壓 = 輸入 − 輸出。ON 時卡在 <b>0.7 V</b>（平的那段）。', on: 'in vd l1' },
              { sub: 'OFF 時沒電流，v<sub>D</sub> = v<sub>S</sub>：整個負半週都在二極體上，谷底 <b>−10 V</b>。', on: 'l2' }]),
-          ansScene(['v<sub>O</sub> 峰值 9.3 V', '導通 4.01°～175.99°', 'PIV = 10 V'], ['答案：峰值 9.3 V、PIV 10 V。'])
+          ansScene(['v<sub>O</sub> 峰值 9.3 V', 'PIV = 10 V'], ['答案：峰值 9.3 V、PIV 10 V。'])
         ];
       } }
   ];

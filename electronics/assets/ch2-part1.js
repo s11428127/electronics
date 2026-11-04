@@ -185,7 +185,6 @@
       const th = Math.asin(Math.min(1, VG / VM)) * 180 / Math.PI;
       setHTML('wv-pk', (VM - VG).toFixed(2) + ' V');
       setHTML('wv-piv', VM.toFixed(1) + ' V');
-      setHTML('wv-f', VM > VG ? ((180 - 2 * th) / 360 * 100).toFixed(1) + ' %' : '0 %');
       setHTML('wv-msg', VM <= VG ? '輸入峰值還不到 V<sub>γ</sub>，二極體從頭到尾 OFF，沒有輸出。'
         : '虛線是 v<sub>S</sub>。ON 的時候 v<sub>O</sub> = v<sub>S</sub> − V<sub>γ</sub>、v<sub>D</sub> 卡在 V<sub>γ</sub>；OFF 的時候 v<sub>O</sub> = 0、v<sub>D</sub> = v<sub>S</sub>。隨時都有 <b>v<sub>D</sub> = v<sub>S</sub> − v<sub>O</sub></b>。負半週谷底二極體承受 −' + VM.toFixed(1) + ' V（PIV）。' +
           (VM < 5 ? ' 輸入小，V<sub>γ</sub> 吃掉的比例很明顯。' : ''));
@@ -215,7 +214,7 @@
 
   /* ── 01 從 110 V 到 5 V ── */
   liveExample('#ex-psu', {
-    title: '例題 · 匝數比選多少，7805 才有得穩？（自編）',
+    title: '例題 · 市電一路降到整流輸出（自編）',
     ratio: 0.3, minH: 140, maxH: 200,
     givens: [
       { id: 'xp-n', label: '匝數比 N<sub>1</sub>/N<sub>2</sub>', min: 4, max: 30, step: 0.5, value: 10, fmt: v => v.toFixed(1) + ' : 1' },
@@ -223,18 +222,17 @@
     ],
     compute: g => {
       const n = g['xp-n'], Vg = g['xp-g'], VI = 110 * Math.SQRT2, VS = VI / n, VO = VS - Vg;
-      return { n, Vg, VI, VS, VO, ok: VO >= 7 };
+      return { n, Vg, VI, VS, VO };
     },
-    question: (g, r) => '市電 110 V（rms），經匝數比 N<sub>1</sub>:N<sub>2</sub> = <b>' + f1(r.n) + ' : 1</b> 的變壓器降壓，再用一顆二極體（V<sub>γ</sub> = ' + f2(r.Vg) + ' V）半波整流。求二次側峰值 V<sub>S</sub> 與整流輸出峰值。後面接 7805 穩壓 IC（輸入要比 5 V 高約 2 V，也就是至少 7 V），峰值夠不夠？',
-    questionEn: (g, r) => 'The 110 V (rms) line is stepped down by a transformer with N<sub>1</sub>:N<sub>2</sub> = ' + f1(r.n) + ':1 and half-wave rectified by a diode with V<sub>γ</sub> = ' + f2(r.Vg) + ' V. Find the secondary peak voltage and the peak output, and check whether the peak exceeds the 7 V needed by a 7805 regulator.',
+    question: (g, r) => '市電 110 V（rms），經匝數比 N<sub>1</sub>:N<sub>2</sub> = <b>' + f1(r.n) + ' : 1</b> 的變壓器降壓，再用一顆二極體（V<sub>γ</sub> = ' + f2(r.Vg) + ' V）半波整流。求市電峰值、二次側峰值 V<sub>S</sub> 與整流輸出峰值。',
+    questionEn: (g, r) => 'The 110 V (rms) line is stepped down by a transformer with N<sub>1</sub>:N<sub>2</sub> = ' + f1(r.n) + ':1 and half-wave rectified by a diode with V<sub>γ</sub> = ' + f2(r.Vg) + ' V. Find the line peak, the secondary peak voltage and the peak output.',
     steps: (g, r) => [
       { t: 'Step 1　rms 換峰值。', note: '110 V 是有效值，弦波峰值要乘 √2。', eq: 'V<sub>I,peak</sub> = 110√2 = ' + f1(r.VI) + ' V' },
       { t: 'Step 2　匝數比。', note: 'v<sub>S</sub>/v<sub>I</sub> = N<sub>2</sub>/N<sub>1</sub>（講義 2-5）。', eq: 'V<sub>S</sub> = ' + f1(r.VI) + ' / ' + f1(r.n) + ' = ' + f2(r.VS) + ' V' },
-      { t: 'Step 3　整流輸出峰值。', note: 'ON 時 v<sub>O</sub> = v<sub>S</sub> − V<sub>γ</sub>。', eq: 'V<sub>O,peak</sub> = ' + f2(r.VS) + ' − ' + f2(r.Vg) + ' = ' + f2(r.VO) + ' V' },
-      { t: 'Step 4　夠不夠 7805 用？', note: r.ok ? '峰值 ' + f2(r.VO) + ' V ≥ 7 V：至少峰值夠（還要靠濾波電容撐住谷底，下一份講義）。' : '峰值只有 ' + f2(r.VO) + ' V &lt; 7 V：不夠，匝數比要小一點（少降一點壓）。' }
+      { t: 'Step 3　整流輸出峰值。', note: 'ON 時 v<sub>O</sub> = v<sub>S</sub> − V<sub>γ</sub>。' + (r.VS < 3 ? '二次側很小時，V<sub>γ</sub> 吃掉的比例很明顯。' : ''), eq: 'V<sub>O,peak</sub> = ' + f2(r.VS) + ' − ' + f2(r.Vg) + ' = ' + f2(r.VO) + ' V' }
     ],
-    answer: (g, r) => 'V<sub>S</sub> = ' + f2(r.VS) + ' V、V<sub>O,peak</sub> = ' + f2(r.VO) + ' V（' + (r.ok ? '≥ 7 V，夠' : '&lt; 7 V，不夠') + '）',
-    draw: (ctx, w, h, g, r) => bars(ctx, w, h, [['二次側 V<sub>S</sub>', r.VS, C.ink], ['整流峰值', r.VO, r.ok ? C.accent : C.bad], ['7805 需要', 7, C['ink-3']]], v => f2(v) + ' V')
+    answer: (g, r) => 'V<sub>I,peak</sub> = ' + f1(r.VI) + ' V、V<sub>S</sub> = ' + f2(r.VS) + ' V、V<sub>O,peak</sub> = ' + f2(r.VO) + ' V',
+    draw: (ctx, w, h, g, r) => bars(ctx, w, h, [['市電峰值', r.VI, C['ink-3']], ['二次側 V<sub>S</sub>', r.VS, C.ink], ['整流峰值', r.VO, C.accent]], v => f2(v) + ' V')
   });
 
   /* ── 02 匝數比設計 ── */
@@ -281,22 +279,21 @@
 
   /* ── 04 波形與 PIV ── */
   liveExample('#ex-wave', {
-    title: '例題 · 弦波輸入：輸出峰值、導通多久、PIV',
+    title: '例題 · 弦波輸入：輸出峰值與 PIV',
     ratio: 0.3, minH: 140, maxH: 200,
     givens: [
       { id: 'xw-m', label: 'v<sub>S</sub> 峰值 V<sub>M</sub>', min: 1, max: 40, step: 0.5, value: 12, fmt: v => v.toFixed(1) + ' V' },
       { id: 'xw-g', label: 'V<sub>γ</sub>', min: 0.5, max: 0.8, step: 0.05, value: 0.7, fmt: v => v.toFixed(2) + ' V' }
     ],
-    compute: g => { const M = g['xw-m'], Vg = g['xw-g'], th = Math.asin(Math.min(1, Vg / M)) * 180 / Math.PI; return { M, Vg, th, pk: M - Vg, frac: (180 - 2 * th) / 360 }; },
-    question: (g, r) => '半波整流，v<sub>S</sub> = <b>' + f1(r.M) + ' sin ωt</b> V，V<sub>γ</sub> = ' + f2(r.Vg) + ' V（r<sub>f</sub> = 0）。求 (a) v<sub>O</sub> 峰值；(b) 二極體在一週期中導通的角度範圍與比例；(c) 二極體承受的最大逆向電壓（PIV）。',
-    questionEn: (g, r) => 'A half-wave rectifier has v<sub>S</sub> = ' + f1(r.M) + ' sin ωt V and V<sub>γ</sub> = ' + f2(r.Vg) + ' V. Find (a) the peak output voltage, (b) the conduction interval and fraction of each period, and (c) the peak inverse voltage across the diode.',
+    compute: g => { const M = g['xw-m'], Vg = g['xw-g']; return { M, Vg, pk: M - Vg }; },
+    question: (g, r) => '半波整流，v<sub>S</sub> = <b>' + f1(r.M) + ' sin ωt</b> V，V<sub>γ</sub> = ' + f2(r.Vg) + ' V（r<sub>f</sub> = 0）。求 (a) v<sub>O</sub> 峰值；(b) 二極體承受的最大逆向電壓（PIV）；(c) 畫 v<sub>O</sub> 波形。',
+    questionEn: (g, r) => 'A half-wave rectifier has v<sub>S</sub> = ' + f1(r.M) + ' sin ωt V and V<sub>γ</sub> = ' + f2(r.Vg) + ' V. Find (a) the peak output voltage, (b) the peak inverse voltage across the diode, and (c) sketch v<sub>O</sub>.',
     steps: (g, r) => [
-      { t: 'Step 1　(a) 峰值。', eq: 'v<sub>O,max</sub> = V<sub>M</sub> − V<sub>γ</sub> = ' + f2(r.pk) + ' V' },
-      { t: 'Step 2　(b) 什麼時候開始導通。', note: 'v<sub>S</sub> 要超過 V<sub>γ</sub>：V<sub>M</sub> sin ωt = V<sub>γ</sub>。', eq: 'ωt<sub>1</sub> = sin<sup>−1</sup>(' + f2(r.Vg) + '/' + f1(r.M) + ') = ' + f2(r.th) + '°，到 180° − ' + f2(r.th) + '° = ' + f2(180 - r.th) + '° 結束' },
-      { t: 'Step 3　比例。', eq: '(180 − 2 × ' + f2(r.th) + ')/360 = ' + (r.frac * 100).toFixed(1) + ' %', note: r.M < 5 ? 'V<sub>M</sub> 小，V<sub>γ</sub> 讓導通時間明顯少於一半。' : '接近 50%，因為 V<sub>γ</sub> 比 V<sub>M</sub> 小很多。' },
-      { t: 'Step 4　(c) PIV。', note: '負半週 OFF：v<sub>D</sub> = v<sub>S</sub>，谷底是 −V<sub>M</sub>（講義 2-7 Fig 2.3(c)）。', eq: 'PIV = V<sub>M</sub> = ' + f1(r.M) + ' V' }
+      { t: 'Step 1　(a) 峰值。', note: 'ON 時 v<sub>O</sub> = v<sub>S</sub> − V<sub>γ</sub>，峰值發生在 v<sub>S</sub> = V<sub>M</sub>。', eq: 'v<sub>O,max</sub> = V<sub>M</sub> − V<sub>γ</sub> = ' + f2(r.pk) + ' V' },
+      { t: 'Step 2　(b) PIV。', note: '負半週 OFF：v<sub>D</sub> = v<sub>S</sub>，谷底是 −V<sub>M</sub>（講義 2-7 Fig 2.3(c)）。', eq: 'PIV = V<sub>M</sub> = ' + f1(r.M) + ' V' },
+      { t: 'Step 3　(c) 波形。', note: r.M < 3 ? 'V<sub>M</sub> 小，扣掉 V<sub>γ</sub> 後駝峰變得很矮、很窄。' : '超過 V<sub>γ</sub> 的部分往下移 V<sub>γ</sub>，其他時候 0：一顆一顆的駝峰。' }
     ],
-    answer: (g, r) => '(a) ' + f2(r.pk) + ' V (b) ' + f2(r.th) + '°～' + f2(180 - r.th) + '°，約 ' + (r.frac * 100).toFixed(1) + '% (c) PIV = ' + f1(r.M) + ' V',
+    answer: (g, r) => '(a) ' + f2(r.pk) + ' V (b) PIV = ' + f1(r.M) + ' V',
     draw: (ctx, w, h, g, r) => {
       const x0 = Math.max(40, w * 0.08), x1 = w * 0.96, ym = h * 0.5, A = h * 0.38 / r.M;
       ctx.strokeStyle = C['ink-3']; ctx.setLineDash([4, 4]); ctx.lineWidth = 1.2; ctx.beginPath();

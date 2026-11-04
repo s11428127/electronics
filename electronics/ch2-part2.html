@@ -49,8 +49,8 @@
         <span class="chip">10 個畫面的故事模式</span>
         <span class="chip">4 個互動模組</span>
         <span class="chip">4 個可改數字例題</span>
-        <span class="chip">5 題練習</span>
-        <span class="chip">32 題觀念填充</span>
+        <span class="chip">7 題練習</span>
+        <span class="chip">38 題觀念填充（橋式加碼 6 題英文計算）</span>
         <span class="chip">10 題中英對照測驗</span>
       </div>
       <p class="note">接續 <a href="ch2-part1.html">CH2 PART 1</a>。來源是老師的上課板書掃描（手寫），公式都重新推過；看不清楚的地方在「講義檢查」節列出，請你確認。</p>
@@ -157,7 +157,7 @@
       <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>02 · 板書 10/28 · 2.1.2 Full-Wave · Center-Tapped</div>
       <h2>中間抽頭<button class="tm" data-t="全波整流">全波整流</button><span class="h2-en">CENTER-TAPPED FULL-WAVE RECTIFIER</span></h2>
       <p class="lede">半波丟掉整個負半週。全波用<strong>次級線圈的中間抽頭</strong>，上下兩半邊各接一顆二極體，輪流上班，負半週也能用。</p>
-      <div class="eq">v<em>O</em> = |v<em>S</em>| − V<em>γ</em>　　死區 |v<em>S</em>| &lt; V<em>γ</em>　　PIV = 2V<em>m</em> − V<em>γ</em></div>
+      <div class="eq">v<em>O</em> = |v<em>S</em>| − V<em>γ</em>　　不導通區 |v<em>S</em>| &lt; V<em>γ</em>　　PIV = 2V<em>m</em> − V<em>γ</em></div>
       <div class="derive">
         <h4>一步一步推</h4>
         <ol>
@@ -169,7 +169,7 @@
             <div class="why">下半邊此時的極性是對的，電流從負載同一方向流過。</div></li>
           <li><span class="d-eq">v<sub>O</sub> = −v<sub>S</sub> − V<sub>γ</sub> = |v<sub>S</sub>| − V<sub>γ</sub></span>
             <div class="why">此時 v<sub>S</sub> 是負的，加負號翻成正。</div></li>
-          <li><span class="d-eq">⇒ v<sub>O</sub> = |v<sub>S</sub>| − V<sub>γ</sub>，死區 |v<sub>S</sub>| &lt; V<sub>γ</sub></span>
+          <li><span class="d-eq">⇒ v<sub>O</sub> = |v<sub>S</sub>| − V<sub>γ</sub>，不導通區 |v<sub>S</sub>| &lt; V<sub>γ</sub></span>
             <div class="why">兩顆都還推不開的時候輸出為 0。</div></li>
           <li><span class="d-eq">PIV：看 OFF 那一顆。陰極 = v<sub>O</sub> = V<sub>m</sub> − V<sub>γ</sub>，陽極 = −V<sub>m</sub></span>
             <div class="why">兩邊相差：(V<sub>m</sub> − V<sub>γ</sub>) + V<sub>m</sub>。</div></li>
@@ -178,8 +178,8 @@
         </ol>
       </div>
       <div class="bench">
-        <div class="bench-head"><h3>拉 V<sub>M</sub>、V<sub>γ</sub>，看輸出與死區</h3><span class="spacer"></span><span class="tag">每瞬間 1 顆導通</span></div>
-        <div class="stage-wrap"><canvas id="cv-fwc" aria-label="中間抽頭全波整流的輸入與輸出波形，死區用淺色標出"></canvas></div>
+        <div class="bench-head"><h3>拉 V<sub>M</sub>、V<sub>γ</sub>，看輸出與不導通區</h3><span class="spacer"></span><span class="tag">每瞬間 1 顆導通</span></div>
+        <div class="stage-wrap"><canvas id="cv-fwc" aria-label="中間抽頭全波整流的輸入與輸出波形，不導通區用淺色標出"></canvas></div>
         <div class="controls">
           <div class="ctrl"><label for="fc-m">每半邊峰值 V<sub>M</sub><output for="fc-m"></output></label>
             <input type="range" id="fc-m" min="0.5" max="20" step="0.5" value="10"></div>
@@ -188,7 +188,7 @@
         </div>
         <dl class="readout">
           <div><dt>輸出峰值</dt><dd id="fc-pk" class="e">—</dd></div>
-          <div><dt>死區</dt><dd id="fc-dz">—</dd></div>
+          <div><dt>不導通區</dt><dd id="fc-dz">—</dd></div>
           <div><dt>PIV</dt><dd id="fc-piv">—</dd></div>
         </dl>
         <div class="msg" id="fc-msg"></div>
@@ -206,7 +206,7 @@
         <h4>常見錯誤</h4>
         <ul>
           <li><span class="x">✗</span> PIV = V<sub>m</sub>（跟半波一樣）。 <span class="o">中間抽頭是 2V<sub>m</sub> − V<sub>γ</sub>。</span></li>
-          <li><span class="x">✗</span> 輸出頻率跟輸入一樣。 <span class="o">全波輸出是輸入的 2 倍。</span></li>
+          <li><span class="x">✗</span> 負半週兩顆都不通。 <span class="o">負半週換另一顆導通：−v<sub>S</sub> − V<sub>γ</sub> &gt; 0（板書）。</span></li>
           <li><span class="x">✗</span> V<sub>m</sub> 是整個次級的峰值。 <span class="o">這裡 V<sub>m</sub> 是「每半邊」的峰值。</span></li>
         </ul>
       </div>
@@ -220,30 +220,34 @@
 
     <!-- 03 -->
     <section class="sec" id="brg">
-      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>03 · 板書 10/28、11/3 · 2.1.2 Full-Wave · Bridge</div>
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span><span class="memo-star">★ 老師說會考（第 4 題）</span> 03 · 板書 10/28、11/3 · 2.1.2 Full-Wave · Bridge</div>
       <h2>橋式全波整流<span class="h2-en">BRIDGE FULL-WAVE RECTIFIER</span></h2>
       <p class="lede">不要抽頭，改用<strong>四顆二極體接成橋</strong>。電流一進一出，每次經過兩顆，所以多吃一個 V<sub>γ</sub>，但耐壓要求變一半。</p>
-      <div class="eq">v<em>O</em> = |v<em>S</em>| − 2V<em>γ</em>　　死區 |v<em>S</em>| &lt; 2V<em>γ</em>　　PIV = V<em>m</em> − V<em>γ</em></div>
+      <div class="eq">導通條件 |v<em>S</em>| &gt; 2V<em>γ</em>　　i<em>L</em> = (|v<em>S</em>| − 2V<em>γ</em>)/R　　v<em>O</em> = |v<em>S</em>| − 2V<em>γ</em>（不導通時 0）　　PIV = V<em>m</em> − V<em>γ</em></div>
       <div class="derive">
-        <h4>一步一步推</h4>
+        <h4>照 10/28 板書一步一步推</h4>
         <ol>
-          <li><span class="d-eq">正半週：電流從橋的一個角進、經過一顆二極體、穿過負載、再經過對角那顆回去</span>
-            <div class="why">兩顆串聯在電流路徑上。</div></li>
-          <li><span class="d-eq">v<sub>O</sub> = v<sub>S</sub> − V<sub>γ</sub> − V<sub>γ</sub> = v<sub>S</sub> − 2V<sub>γ</sub></span>
-            <div class="why">每顆吃一個 V<sub>γ</sub>。</div></li>
-          <li><span class="d-eq">負半週：換另一對導通，電流流過負載的方向不變</span>
-            <div class="why">所以 v<sub>O</sub> = −v<sub>S</sub> − 2V<sub>γ</sub>。</div></li>
-          <li><span class="d-eq">⇒ v<sub>O</sub> = |v<sub>S</sub>| − 2V<sub>γ</sub>，死區 |v<sub>S</sub>| &lt; 2V<sub>γ</sub></span>
-            <div class="why">要先爬過兩個 V<sub>γ</sub>。</div></li>
-          <li><span class="d-eq">PIV：OFF 的那顆，一邊接在輸出（約 V<sub>m</sub> − 2V<sub>γ</sub>）、另一邊接在次級的低端（約 −V<sub>m</sub> 附近）</span>
-            <div class="why">整理起來是 V<sub>m</sub> − V<sub>γ</sub>（板書結論，數值請以老師為準）。</div></li>
-          <li><span class="d-eq hi">⇒ PIV = V<sub>m</sub> − V<sub>γ</sub></span>
-            <div class="why">比中間抽頭（2V<sub>m</sub> − V<sub>γ</sub>）小約一半。</div></li>
+          <li><span class="d-eq">正半週（v<sub>S</sub> &gt; 0）：一對二極體導通，各換成 V<sub>γ</sub> 電池；KVL：v<sub>S</sub> − V<sub>γ</sub> − i<sub>L</sub>R − V<sub>γ</sub> = 0</span>
+            <div class="why">電流一進一出，路上有兩顆二極體（板書假設兩顆相同）。</div></li>
+          <li><span class="d-eq">剛要導通：i<sub>L</sub> = 0 ⇒ v<sub>S</sub> − 2V<sub>γ</sub> = 0 ⇒ 導通條件 v<sub>S</sub> &gt; 2V<sub>γ</sub></span>
+            <div class="why">跟半波一樣的招：令電流 = 0，找出臨界電壓。</div></li>
+          <li><span class="d-eq">v<sub>S</sub> &gt; 2V<sub>γ</sub>：i<sub>L</sub> = (v<sub>S</sub> − 2V<sub>γ</sub>)/R，v<sub>O</sub> = i<sub>L</sub>R = v<sub>S</sub> − 2V<sub>γ</sub>；v<sub>S</sub> ≤ 2V<sub>γ</sub>：i<sub>L</sub> = 0，v<sub>O</sub> = 0</span>
+            <div class="why">板書 In Summary 正半週三行。</div></li>
+          <li><span class="d-eq">負半週（v<sub>S</sub> &lt; 0）：另一對導通；KVL：−v<sub>S</sub> − V<sub>γ</sub> − i<sub>L</sub>R − V<sub>γ</sub> = 0</span>
+            <div class="why">電流流過 R 的方向跟正半週一樣，所以 v<sub>O</sub> 還是正的。</div></li>
+          <li><span class="d-eq">−v<sub>S</sub> &gt; 2V<sub>γ</sub>：i<sub>L</sub> = (−v<sub>S</sub> − 2V<sub>γ</sub>)/R，v<sub>O</sub> = −v<sub>S</sub> − 2V<sub>γ</sub>；否則 0</span>
+            <div class="why">板書 In Summary 負半週三行。兩半週合起來就是 v<sub>O</sub> = |v<sub>S</sub>| − 2V<sub>γ</sub>。</div></li>
+          <li><span class="d-eq">VTC：−2V<sub>γ</sub> &lt; v<sub>S</sub> &lt; 2V<sub>γ</sub> 平在 0；右邊斜率 +1、左邊斜率 −1（V 字形）</span>
+            <div class="why">板書「電壓轉移特性曲線」：轉折點在 ±2V<sub>γ</sub>。</div></li>
+          <li><span class="d-eq">波形：每半週一顆駝峰，峰值 V<sub>m</sub> − 2V<sub>γ</sub></span>
+            <div class="why">板書「輸出波形」：正半週一對導通、負半週另一對導通。</div></li>
+          <li><span class="d-eq hi">PIV（11/3 板書）：OFF 的那顆一端在 V<sub>m</sub> − V<sub>γ</sub>、另一端在 0 ⇒ PIV = (V<sub>m</sub> − V<sub>γ</sub>) − 0 = V<sub>m</sub> − V<sub>γ</sub></span>
+            <p>峰值瞬間：輸入 V<sub>m</sub> 扣掉導通那顆的 V<sub>γ</sub>，就是關著那顆陰極的電壓；另一端接地。負半週另一對同理。比中間抽頭（2V<sub>m</sub> − V<sub>γ</sub>）小約一半。</p></li>
         </ol>
       </div>
       <div class="bench">
-        <div class="bench-head"><h3>拉 V<sub>M</sub>、V<sub>γ</sub>，看輸出與死區</h3><span class="spacer"></span><span class="tag">每瞬間 2 顆導通</span></div>
-        <div class="stage-wrap"><canvas id="cv-brg" aria-label="橋式全波整流的輸入與輸出波形，死區用淺色標出"></canvas></div>
+        <div class="bench-head"><h3>拉 V<sub>M</sub>、V<sub>γ</sub>，看輸出與不導通區</h3><span class="spacer"></span><span class="tag">每瞬間 2 顆導通</span></div>
+        <div class="stage-wrap"><canvas id="cv-brg" aria-label="橋式全波整流的輸入與輸出波形，不導通區用淺色標出"></canvas></div>
         <div class="controls">
           <div class="ctrl"><label for="bg-m">次級峰值 V<sub>M</sub><output for="bg-m"></output></label>
             <input type="range" id="bg-m" min="0.5" max="20" step="0.5" value="10"></div>
@@ -252,7 +256,7 @@
         </div>
         <dl class="readout">
           <div><dt>輸出峰值</dt><dd id="bg-pk" class="e">—</dd></div>
-          <div><dt>死區</dt><dd id="bg-dz">—</dd></div>
+          <div><dt>不導通區</dt><dd id="bg-dz">—</dd></div>
           <div><dt>PIV</dt><dd id="bg-piv">—</dd></div>
         </dl>
         <div class="msg" id="bg-msg"></div>
@@ -367,7 +371,7 @@
         <div class="gl-row"><b>中間抽頭全波整流器</b><span>center-tapped full-wave rectifier</span><code>—</code></div>
         <div class="gl-row"><b>橋式整流器</b><span>bridge rectifier</span><code>—</code></div>
         <div class="gl-row"><b>導通角</b><span>conduction angle</span><code>ωt1, ωt2</code></div>
-        <div class="gl-row"><b>死區</b><span>dead zone</span><code>|v_S| &lt; nV_γ</code></div>
+        <div class="gl-row"><b>不導通區</b><span>dead zone</span><code>|v_S| &lt; nV_γ</code></div>
         <div class="gl-row"><b>反向峰值電壓</b><span>peak inverse voltage</span><code>PIV</code></div>
         <div class="gl-row"><b>匝數比</b><span>turns ratio</span><code>N1/N2</code></div>
         <div class="gl-row"><b>有效值</b><span>rms value</span><code>V_m/√2</code></div>
@@ -400,7 +404,7 @@
 __EXB.picker(document.getElementById('sec-pick'), [
   { id: 'chg', no: '01', name: '電池充電器', count: '練 2' },
   { id: 'fwc', no: '02', name: '中間抽頭', count: '練 1' },
-  { id: 'brg', no: '03', name: '橋式', count: '練 1' },
+  { id: 'brg', no: '03', name: '★ 橋式', count: '練 3' },
   { id: 'cmp', no: '04', name: '比較與設計', count: '練 1' }
 ], { key: 'ch2-part2', alwaysAll: ['map', 'check', 'glossary', 'quiz-sec'] });
 </script>

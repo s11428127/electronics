@@ -30,26 +30,49 @@
         st('比較。', '41.1 % &gt; 32.4 %', '電池電壓越低，門檻越低，二極體越早通、越晚關。')
       ],
       ans: '15.96°～164.04°，41.1 %（比 12 V 的 32.4 % 長）', note: '自編練習，程式驗算。' },
-    { id: 'c22-fwc1', sec: 'fwc', kind: 'pp', no: '', tag: '自編練習', title: '中間抽頭：輸出峰值、PIV、死區',
+    { id: 'c22-fwc1', sec: 'fwc', kind: 'pp', no: '', tag: '自編練習', title: '中間抽頭：輸出峰值、PIV、不導通區',
       q: '中間抽頭全波整流，上下每半邊次級峰值都是 15 V，V<sub>γ</sub> = 0.7 V。求 v<sub>O</sub> 峰值、每顆二極體 PIV，以及輸出為 0 的 |v<sub>S</sub>| 範圍。',
       en: 'A center-tapped full-wave rectifier has 15 V peak on each half of the secondary and V<sub>γ</sub> = 0.7 V. Find the peak output, the diode PIV, and the range of |v<sub>S</sub>| where the output is zero.',
       hint: '每個瞬間只有一顆通：輸出 = |v<sub>S</sub>| − V<sub>γ</sub>。',
       steps: [
         st('輸出峰值。', 'V<sub>O,peak</sub> = 15 − 0.7 = 14.3 V', '只扣 1 個 V<sub>γ</sub>。'),
         st('PIV。', 'PIV = 2V<sub>m</sub> − V<sub>γ</sub> = 30 − 0.7 = 29.3 V', ''),
-        st('死區。', '|v<sub>S</sub>| &lt; 0.7 V', '還沒爬過 V<sub>γ</sub> 時兩顆都不通。')
+        st('不導通區。', '|v<sub>S</sub>| &lt; 0.7 V', '還沒爬過 V<sub>γ</sub> 時兩顆都不通。')
       ],
-      ans: '14.3 V；PIV 29.3 V；死區 |v<sub>S</sub>| &lt; 0.7 V', note: '自編練習，公式為板書 PIV = 2V<sub>m</sub> − V<sub>γ</sub>。' },
-    { id: 'c22-brg1', sec: 'brg', kind: 'pp', no: '', tag: '自編練習', title: '橋式：輸出峰值、PIV、死區',
-      q: '橋式全波整流，次級峰值 15 V，V<sub>γ</sub> = 0.7 V。求 v<sub>O</sub> 峰值、每顆二極體 PIV，以及死區範圍。',
+      ans: '14.3 V；PIV 29.3 V；不導通區 |v<sub>S</sub>| &lt; 0.7 V', note: '自編練習，公式為板書 PIV = 2V<sub>m</sub> − V<sub>γ</sub>。' },
+    { id: 'c22-brg1', sec: 'brg', kind: 'pp', no: '', tag: '自編練習', title: '橋式：輸出峰值、PIV、不導通區',
+      q: '橋式全波整流，次級峰值 15 V，V<sub>γ</sub> = 0.7 V。求 v<sub>O</sub> 峰值、每顆二極體 PIV，以及不導通區範圍。',
       en: 'A bridge full-wave rectifier has a 15 V secondary peak and V<sub>γ</sub> = 0.7 V. Find the peak output, the diode PIV, and the dead zone.',
       hint: '電流經過兩顆二極體。',
       steps: [
         st('輸出峰值。', 'V<sub>O,peak</sub> = 15 − 2(0.7) = 13.6 V', '一進一出，扣 2 個 V<sub>γ</sub>。'),
         st('PIV。', 'PIV = V<sub>m</sub> − V<sub>γ</sub> = 14.3 V', ''),
-        st('死區。', '|v<sub>S</sub>| &lt; 1.4 V', '')
+        st('不導通區。', '|v<sub>S</sub>| &lt; 1.4 V', '')
       ],
-      ans: '13.6 V；PIV 14.3 V；死區 |v<sub>S</sub>| &lt; 1.4 V', note: '自編練習，公式為板書。' },
+      ans: '13.6 V；PIV 14.3 V；不導通區 |v<sub>S</sub>| &lt; 1.4 V', note: '自編練習，公式為板書。' },
+    { id: 'c22-brg2', sec: 'brg', kind: 'pp', no: '', tag: '自編練習（照 10/28 板書）', title: '橋式：三個瞬間的 i<sub>L</sub>、v<sub>O</sub>',
+      q: 'Bridge rectifier: v<sub>S</sub> = 15 sin ωt V, V<sub>γ</sub> = 0.7 V, R = 1 kΩ. (a) State the conduction conditions. (b) Find i<sub>L</sub> and v<sub>O</sub> when v<sub>S</sub> = 10 V, 1 V and −10 V. (c) Find the peak i<sub>L</sub>, peak v<sub>O</sub> and the PIV.',
+      en: '<details class="hw-zh dv-ui"><summary>中文翻譯</summary><div>橋式整流 v<sub>S</sub> = 15 sin ωt V、V<sub>γ</sub> = 0.7 V、R = 1 kΩ。(a) 寫出導通條件 (b) v<sub>S</sub> = 10 V、1 V、−10 V 時的 i<sub>L</sub>、v<sub>O</sub> (c) i<sub>L</sub>、v<sub>O</sub> 峰值與 PIV。</div></details>',
+      hint: '正半週 v<sub>S</sub> &gt; 2V<sub>γ</sub>；負半週 −v<sub>S</sub> &gt; 2V<sub>γ</sub>。',
+      steps: [
+        st('(a) 導通條件。', 'v<sub>S</sub> &gt; 1.4 V（正半週那對）或 −v<sub>S</sub> &gt; 1.4 V（負半週那對）', '剛導通 i<sub>L</sub> = 0 ⇒ |v<sub>S</sub>| = 2V<sub>γ</sub>。'),
+        st('(b) v<sub>S</sub> = 10 V。', 'i<sub>L</sub> = (10 − 1.4)/1k = 8.6 mA，v<sub>O</sub> = 8.6 V', ''),
+        st('(b) v<sub>S</sub> = 1 V。', '1 &lt; 1.4 ⇒ i<sub>L</sub> = 0，v<sub>O</sub> = 0', '不導通。'),
+        st('(b) v<sub>S</sub> = −10 V。', 'i<sub>L</sub> = (10 − 1.4)/1k = 8.6 mA，v<sub>O</sub> = 8.6 V', '負半週另一對導通，v<sub>O</sub> 還是正的。'),
+        st('(c) 峰值與 PIV。', 'i<sub>L,max</sub> = 13.6 mA，v<sub>O,max</sub> = 13.6 V；PIV = 15 − 0.7 = 14.3 V', '')
+      ],
+      ans: '(b) 8.6 mA／8.6 V、0／0、8.6 mA／8.6 V (c) 13.6 mA、13.6 V、PIV 14.3 V', note: '自編練習，只用板書的公式。' },
+    { id: 'c22-brg3', sec: 'brg', kind: 'pp', no: '', tag: '自編練習（照 10/28 板書）', title: '畫橋式的 VTC',
+      q: 'For a bridge rectifier with V<sub>γ</sub> = 0.6 V, sketch the voltage transfer characteristic (v<sub>O</sub> vs v<sub>S</sub>). Give the break points, the slopes, and v<sub>O</sub> at v<sub>S</sub> = −5 V.',
+      en: '<details class="hw-zh dv-ui"><summary>中文翻譯</summary><div>橋式整流 V<sub>γ</sub> = 0.6 V，畫電壓轉移特性（v<sub>O</sub> 對 v<sub>S</sub>）。標出轉折點、斜率，並求 v<sub>S</sub> = −5 V 時的 v<sub>O</sub>。</div></details>',
+      hint: '三段：左邊 −v<sub>S</sub> − 2V<sub>γ</sub>、中間 0、右邊 v<sub>S</sub> − 2V<sub>γ</sub>。',
+      steps: [
+        st('轉折點。', 'v<sub>S</sub> = ±2V<sub>γ</sub> = ±1.2 V', ''),
+        st('右段。', 'v<sub>O</sub> = v<sub>S</sub> − 1.2，斜率 +1', ''),
+        st('中段。', '−1.2 &lt; v<sub>S</sub> &lt; 1.2：v<sub>O</sub> = 0', ''),
+        st('左段。', 'v<sub>O</sub> = −v<sub>S</sub> − 1.2，斜率 −1；v<sub>S</sub> = −5 V ⇒ v<sub>O</sub> = 3.8 V', '')
+      ],
+      ans: '轉折 ±1.2 V，斜率 ±1（V 字形），v<sub>S</sub> = −5 V 時 v<sub>O</sub> = 3.8 V', note: '自編練習。' },
     { id: 'c22-cmp1', sec: 'cmp', kind: 'pp', no: 'Example 2.2', tag: 'Example 2.2', title: '中間抽頭與橋式：次級電壓、匝數比、PIV',
       q: '市電 120 V（rms），要整流出峰值 9 V 的輸出，V<sub>γ</sub> = 0.7 V。分別用中間抽頭與橋式全波整流，求 (a) 次級最大電壓；(b) 次級 rms；(c) 匝數比 N<sub>1</sub>/N<sub>2</sub>；(d) 每顆二極體 PIV。',
       en: 'The line voltage is 120 V (rms) and a 9 V peak output is needed with V<sub>γ</sub> = 0.7 V. For a center-tapped and a bridge full-wave rectifier, find (a) the maximum secondary voltage, (b) its rms value, (c) the turns ratio N<sub>1</sub>/N<sub>2</sub>, (d) the PIV of each diode.',

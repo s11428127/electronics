@@ -49,11 +49,11 @@
         <span class="chip">9 個畫面的故事模式</span>
         <span class="chip">4 個互動模組</span>
         <span class="chip">4 個可改數字例題</span>
-        <span class="chip">4 題練習</span>
-        <span class="chip">32 題觀念填充</span>
+        <span class="chip">6 題練習</span>
+        <span class="chip">42 題觀念填充（雙向截波加碼）</span>
         <span class="chip">10 題中英對照測驗</span>
       </div>
-      <p class="note">接續 <a href="ch2-part2.html">CH2 PART 2</a>。來源是老師的上課板書掃描（手寫），公式都重新推過；手寫看不清楚的地方在「講義檢查」節列出，請你確認。</p>
+      <p class="note">接續 <a href="ch2-part2.html">CH2 PART 2</a>。來源是老師的上課板書掃描（手寫），公式都重新推過；電路極性與 Example 2.7 的數字都對過老師的板書檔。</p>
     </div>
 
     <section class="sec" id="story-sec">
@@ -84,7 +84,7 @@
 
     <!-- 01 -->
     <section class="sec" id="shunt">
-      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 3</span>01 · 板書 · Clipper 截波器 · Parallel</div>
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 3</span><span class="memo-star">✓ 老師說會考：基本截波</span> 01 · 板書 · Clipper 截波器 · Parallel</div>
       <h2>並聯截波器<span class="h2-en">SHUNT (PARALLEL) CLIPPER</span></h2>
       <p class="lede">訊號太大，超過某個電壓的部分要<strong>削掉</strong>。並聯截波器用<strong>二極體加電池</strong>當門檻：輸入超過它，二極體導通、輸出被釘住。</p>
       <div class="eq"><em>v<sub>i</sub></em> &gt; V<em>B</em> + V<em>γ</em>：v<em>O</em> = V<em>B</em> + V<em>γ</em>　　否則：v<em>O</em> = v<em>i</em></div>
@@ -101,6 +101,10 @@
             <div class="why">斷路，電阻沒壓降。</div></li>
           <li><span class="d-eq hi">⇒ 正峰被削成平頂，其餘照原樣</span>
             <div class="why"> 板書的結論：v<sub>O</sub> = V<sub>B</sub> + V<sub>γ</sub>（導通）／v<sub>i</sub>（不導通）。</div></li>
+          <li><span class="d-eq">參考 ①（二極體反過來）：v<sub>i</sub> &lt; V<sub>B</sub> − V<sub>γ</sub> ⇒ D 通，v<sub>O</sub> = V<sub>B</sub> − V<sub>γ</sub>；v<sub>i</sub> ≥ V<sub>B</sub> − V<sub>γ</sub> ⇒ D 不通，v<sub>O</sub> = v<sub>i</sub></span>
+            <div class="why">板書「同理可推」：這次削掉的是<b>底部</b>，輸出不會低於 V<sub>B</sub> − V<sub>γ</sub>。</div></li>
+          <li><span class="d-eq">參考 ②（電池反過來）：v<sub>i</sub> &gt; V<sub>γ</sub> − V<sub>B</sub> ⇒ D 通，v<sub>O</sub> = V<sub>γ</sub> − V<sub>B</sub>；其他時候 v<sub>O</sub> = v<sub>i</sub></span>
+            <div class="why">板書 Note：V<sub>γ</sub> − V<sub>B</sub> 一般小於 0，所以輸出幾乎被釘在 0 以下。</div></li>
         </ol>
       </div>
       <div class="bench">
@@ -149,19 +153,21 @@
 
     <!-- 02 -->
     <section class="sec" id="series">
-      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 3</span>02 · 板書 · Clipper 截波器 · Series</div>
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 3</span><span class="memo-star">✓ 基本截波</span> 02 · 板書 · Clipper 截波器 · Series</div>
       <h2>串聯截波器<span class="h2-en">SERIES CLIPPER</span></h2>
       <p class="lede">二極體改成<strong>串在訊號路徑上</strong>。輸入大於某個分界點，輸出變 0；小於分界點，輸出是輸入<strong>平移</strong>一個分界點。</p>
       <div class="eq">v<em>i</em> &gt; V<em>B</em> − V<em>γ</em>：v<em>O</em> = 0　　v<em>i</em> &lt; V<em>B</em> − V<em>γ</em>：v<em>O</em> = v<em>i</em> − (V<em>B</em> − V<em>γ</em>)</div>
       <div class="derive">
         <h4>一步一步推</h4>
         <ol>
-          <li><span class="d-eq">找分界點：二極體剛好導通的 v<sub>i</sub> = V<sub>B</sub> − V<sub>γ</sub></span>
-            <div class="why">板書的結果。電路圖的接法請照老師原圖（我讀不清手寫極性）。</div></li>
-          <li><span class="d-eq">v<sub>i</sub> &gt; V<sub>B</sub> − V<sub>γ</sub>：v<sub>O</sub> = 0</span>
-            <div class="why">板書。</div></li>
-          <li><span class="d-eq">v<sub>i</sub> &lt; V<sub>B</sub> − V<sub>γ</sub>：v<sub>O</sub> = v<sub>i</sub> − (V<sub>B</sub> − V<sub>γ</sub>)</span>
-            <div class="why">輸出 = 輸入減掉分界點，整個波形被平移。</div></li>
+          <li><span class="d-eq">電路：v<sub>i</sub> → 電池 V<sub>B</sub>（+ 在左）→ D<sub>1</sub>（陽極在右、陰極在左）→ 輸出接 R 到地</span>
+            <div class="why">二極體串在訊號路徑上；能導通的方向是電流從 R 往上流回 v<sub>i</sub>（板書黃色箭頭 I<sub>R</sub>）。</div></li>
+          <li><span class="d-eq">剛要導通（I<sub>R</sub> = 0）：v<sub>i</sub> − V<sub>B</sub> + V<sub>γ</sub> − I<sub>R</sub>R = 0 ⇒ v<sub>i</sub> = V<sub>B</sub> − V<sub>γ</sub></span>
+            <div class="why">板書：順 loop 或逆 loop 的 KVL 選一種就好，兩種答案一樣。</div></li>
+          <li><span class="d-eq">v<sub>i</sub> &gt; V<sub>B</sub> − V<sub>γ</sub>：D<sub>1</sub> 不通 ⇒ v<sub>O</sub> = 0</span>
+            <div class="why">斷路，R 上沒有電流。</div></li>
+          <li><span class="d-eq">v<sub>i</sub> &lt; V<sub>B</sub> − V<sub>γ</sub>：D<sub>1</sub> 通 ⇒ v<sub>O</sub> = −I<sub>R</sub>R = −(−v<sub>i</sub> − V<sub>γ</sub> + V<sub>B</sub>) = v<sub>i</sub> − (V<sub>B</sub> − V<sub>γ</sub>)</span>
+            <div class="why">板書：I<sub>R</sub> 方向跟 v<sub>O</sub> 的正負號相反，所以前面有負號。輸出 = 輸入降 (V<sub>B</sub> − V<sub>γ</sub>)，只取 0 V 以下的部分。</div></li>
           <li><span class="d-eq hi">⇒ 最大值 0；最小值 = −V<sub>M</sub> − (V<sub>B</sub> − V<sub>γ</sub>)</span>
             <div class="why">最小值發生在 v<sub>i</sub> = −V<sub>M</sub>。</div></li>
         </ol>
@@ -196,7 +202,7 @@
       <div class="pitfall">
         <h4>常見錯誤</h4>
         <ul>
-          <li><span class="x">✗</span> 分界點跟並聯一樣是 V<sub>B</sub> + V<sub>γ</sub>。 <span class="o">板書串聯的分界點是 V<sub>B</sub> − V<sub>γ</sub>（請以老師電路圖為準）。</span></li>
+          <li><span class="x">✗</span> 分界點跟並聯一樣是 V<sub>B</sub> + V<sub>γ</sub>。 <span class="o">串聯的分界點是 V<sub>B</sub> − V<sub>γ</sub>（電池和二極體方向相反，V<sub>γ</sub> 變成減）。</span></li>
           <li><span class="x">✗</span> 串聯的輸出在截平那段是 V<sub>B</sub>。 <span class="o">板書是 0。</span></li>
         </ul>
       </div>
@@ -210,23 +216,29 @@
 
     <!-- 03 -->
     <section class="sec" id="bidir">
-      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 3</span>03 · 板書 · Example 2.7 · Two-Way Clipper</div>
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 3</span><span class="memo-star">★ 老師說最重要：雙向截波＋變形</span> 03 · 板書 · Example 2.7 · Two-Way Clipper</div>
       <h2>雙向截波器<span class="h2-en">TWO-WAY CLIPPER</span></h2>
       <p class="lede">上面一顆管<strong>上限</strong>，下面一顆管<strong>下限</strong>，頭尾一起削。中間兩顆都 OFF，輸出照著輸入走。有 R<sub>2</sub> 的版本，超過上限的部分用<strong>分壓</strong>留下一部分。</p>
       <div class="eq">上限 V<em>B1</em> + V<em>γ1</em>　　下限 −(V<em>B2</em> + V<em>γ2</em>)　　中間 v<em>O</em> = v<em>i</em>　　超過上限：v<em>O</em> = (v<em>i</em> − V<em>γ1</em> − V<em>B1</em>)·R<em>2</em>/(R<em>1</em>+R<em>2</em>) + V<em>γ1</em> + V<em>B1</em></div>
       <div class="derive">
-        <h4>一步一步推</h4>
+        <h4>照板書一步一步推</h4>
         <ol>
-          <li><span class="d-eq">v<sub>i</sub> &gt; V<sub>B1</sub> + V<sub>γ1</sub>：上面那顆 ON</span>
-            <div class="why">板書用 V<sub>γ1</sub>、V<sub>B1</sub> 標上面那顆。</div></li>
-          <li><span class="d-eq">R<sub>1</sub>、R<sub>2</sub> 串聯，二極體 + 電池那條路把中間點「墊高」到 V<sub>γ1</sub> + V<sub>B1</sub></span>
-            <div class="why">輸入超過的部分 (v<sub>i</sub> − V<sub>γ1</sub> − V<sub>B1</sub>) 落在 R<sub>1</sub> + R<sub>2</sub> 上。</div></li>
-          <li><span class="d-eq">輸出取 R<sub>2</sub> 的那一份：v<sub>O</sub> = (v<sub>i</sub> − V<sub>γ1</sub> − V<sub>B1</sub>)·R<sub>2</sub>/(R<sub>1</sub>+R<sub>2</sub>) + V<sub>γ1</sub> + V<sub>B1</sub></span>
-            <div class="why">分壓公式，再加回墊高的準位。</div></li>
-          <li><span class="d-eq">v<sub>i</sub> &lt; −(V<sub>B2</sub> + V<sub>γ2</sub>)：下面那顆 ON ⇒ v<sub>O</sub> = −(V<sub>B2</sub> + V<sub>γ2</sub>)</span>
-            <div class="why">直接釘住。</div></li>
-          <li><span class="d-eq hi">Example 2.7（V<sub>γ</sub> = 0，R<sub>1</sub> = R<sub>2</sub>，V<sub>B1</sub> = 2 V、V<sub>B2</sub> = 4 V）：上方 v<sub>O</sub> = ½v<sub>i</sub> + 1，下方 −4 V</span>
-            <div class="why">R<sub>2</sub>/(R<sub>1</sub>+R<sub>2</sub>) = ½；數字是我讀手寫的，請確認。</div></li>
+          <li><span class="d-eq">電路：R 串在輸入；輸出端並兩條支路：D<sub>1</sub> 串 V<sub>B1</sub>（管上限）、D<sub>2</sub> 串 V<sub>B2</sub>（管下限）</span>
+            <div class="why">兩顆二極體方向相反，一顆擋正、一顆擋負。</div></li>
+          <li><span class="d-eq">列 D<sub>1</sub>、D<sub>2</sub> 四種組合：① 都 on ② D<sub>1</sub> off、D<sub>2</sub> on ③ D<sub>1</sub> on、D<sub>2</sub> off ④ 都 off</span>
+            <div class="why">板書的 2 × 2 表格。① 不可能：D<sub>1</sub> 要 v<sub>i</sub> 很正、D<sub>2</sub> 要 v<sub>i</sub> 很負，不會同時成立。</div></li>
+          <li><span class="d-eq">只看 D<sub>1</sub>，剛要導通（I<sub>R</sub> ≈ 0）：v<sub>i</sub> − V<sub>γ1</sub> − V<sub>B1</sub> = 0 ⇒ v<sub>i</sub> &gt; V<sub>B1</sub> + V<sub>γ1</sub> 時 D<sub>1</sub> 通，v<sub>O</sub> = V<sub>B1</sub> + V<sub>γ1</sub></span>
+            <div class="why">跟基本並聯截波一樣：輸出被釘在上限。</div></li>
+          <li><span class="d-eq">只看 D<sub>2</sub>：v<sub>i</sub> + V<sub>γ2</sub> + V<sub>B2</sub> = 0 ⇒ v<sub>i</sub> &lt; −(V<sub>B2</sub> + V<sub>γ2</sub>) 時 D<sub>2</sub> 通，v<sub>O</sub> = −(V<sub>B2</sub> + V<sub>γ2</sub>)</span>
+            <div class="why">輸出被釘在下限。</div></li>
+          <li><span class="d-eq">都 off：−(V<sub>B2</sub> + V<sub>γ2</sub>) &lt; v<sub>i</sub> &lt; V<sub>B1</sub> + V<sub>γ1</sub> ⇒ v<sub>O</sub> = v<sub>i</sub></span>
+            <div class="why">板書 In Summary 的三行；VTC 是中間斜率 1、兩邊平的。</div></li>
+          <li><span class="d-eq">變形（D<sub>1</sub> 支路多串一個 R<sub>2</sub>，板書 V<sub>γ1</sub> = V<sub>γ2</sub> = 0）：D<sub>1</sub> 通時 I<sub>R1</sub> = (v<sub>i</sub> − V<sub>γ1</sub> − V<sub>B1</sub>)/(R<sub>1</sub> + R<sub>2</sub>)</span>
+            <div class="why">電流同時流過 R<sub>1</sub> 和 R<sub>2</sub>。</div></li>
+          <li><span class="d-eq">v<sub>O</sub> = I<sub>R1</sub>R<sub>2</sub> + V<sub>γ1</sub> + V<sub>B1</sub> = (v<sub>i</sub> − V<sub>γ1</sub> − V<sub>B1</sub>)R<sub>2</sub>/(R<sub>1</sub> + R<sub>2</sub>) + V<sub>γ1</sub> + V<sub>B1</sub></span>
+            <div class="why">輸出 = R<sub>2</sub> 上的壓降 + 電池 + 二極體。上限那段不再是平的，斜率變成 R<sub>2</sub>/(R<sub>1</sub> + R<sub>2</sub>)。</div></li>
+          <li><span class="d-eq hi">Example 2.7（R<sub>1</sub> = R<sub>2</sub> = 10 kΩ、V<sub>B1</sub> = 2 V、V<sub>B2</sub> = 4 V、v<sub>i</sub>(max) = 6 V）：v<sub>i</sub> &gt; 2 ⇒ v<sub>O</sub> = ½v<sub>i</sub> + 1；v<sub>i</sub> &lt; −4 ⇒ −4 V；中間 v<sub>O</sub> = v<sub>i</sub></span>
+            <p>板書原題：(v<sub>i</sub> − 2)/20k × 10k + 2 = ½v<sub>i</sub> + 1，最大 4 V、最小 −4 V。</p></li>
         </ol>
       </div>
       <div class="bench">
@@ -278,7 +290,7 @@
 
     <!-- 04 -->
     <section class="sec" id="clamp">
-      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 3</span>04 · 板書 · Clamper 箝位器</div>
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 3</span><span class="scope-no">考試清單沒列，看觀念就好</span> 04 · 板書 · Clamper 箝位器</div>
       <h2>箝位器<span class="h2-en">CLAMPER</span></h2>
       <p class="lede">不削頭，<strong>整個波形上下平移</strong>。靠一顆電容把峰值「記住」：二極體只在剛開始幫電容充電，之後電容被鎖住，輸出 = 輸入 − 電容電壓。</p>
       <div class="eq">V<em>C</em> = V<em>M</em> − V<em>B</em> − V<em>γ</em>　　v<em>O</em> = v<em>i</em> − (V<em>M</em> − V<em>B</em> − V<em>γ</em>)　　最大 V<em>B</em> + V<em>γ</em>　　最小 −2V<em>M</em> + V<em>B</em> + V<em>γ</em></div>
@@ -343,16 +355,16 @@
     <section class="sec" id="check">
       <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 3</span>Errata · 講義檢查結果</div>
       <h2>講義檢查<span class="h2-en">CHECKING THE NOTES</span></h2>
-      <p class="lede">公式用 KVL 與二極體定電壓降模型重新推過。以下幾處是手寫、電路圖看不清楚，<strong>請你對照老師原圖確認</strong>。</p>
+      <p class="lede">30 頁板書（並聯、參考兩種變形、串聯、雙向、雙向變形 Example 2.7、箝位器）逐頁對過，公式用 KVL 重推，沒有發現錯誤。</p>
       <div class="pitfall">
-        <h4>請你確認</h4>
+        <h4>對照結果</h4>
         <ul>
-          <li><span class="x">?</span> 「參考」那幾頁的並聯截波器變形（V<sub>B</sub> − V<sub>γ</sub>、V<sub>γ</sub> − V<sub>B</sub>）因為電池與二極體的極性看不清楚，我沒有收進來。</li>
-          <li><span class="x">?</span> 串聯截波器的分界點 V<sub>B</sub> − V<sub>γ</sub> 與「大於時 v<sub>O</sub> = 0」我照板書寫，極性請以原圖為準。</li>
-          <li><span class="x">?</span> Example 2.7：R<sub>1</sub> = R<sub>2</sub> = 10 kΩ、V<sub>B1</sub> = 2 V、V<sub>B2</sub> = 4 V、v<sub>i</sub> 峰值 6 V 是我讀出來的數字。</li>
+          <li><span class="o">✓</span> 並聯 V<sub>B</sub> + V<sub>γ</sub>、參考 ① V<sub>B</sub> − V<sub>γ</sub>、參考 ② V<sub>γ</sub> − V<sub>B</sub>：都跟板書一致。</li>
+          <li><span class="o">✓</span> 串聯：v<sub>O</sub> = v<sub>i</sub> − (V<sub>B</sub> − V<sub>γ</sub>)（v<sub>i</sub> &lt; V<sub>B</sub> − V<sub>γ</sub>），其他 0。</li>
+          <li><span class="o">✓</span> Example 2.7：R<sub>1</sub> = R<sub>2</sub> = 10 kΩ、V<sub>γ1</sub> = V<sub>γ2</sub> = 0、V<sub>B1</sub> = 2 V、V<sub>B2</sub> = 4 V、v<sub>i</sub>(max) = 6 V ⇒ v<sub>O</sub> = ½v<sub>i</sub> + 1（v<sub>i</sub> &gt; 2）、−4 V（v<sub>i</sub> &lt; −4）、v<sub>i</sub>（中間）。</li>
         </ul>
       </div>
-      <p class="note src">勘誤僅針對數學、單位與用詞；若與課堂說法不同，以老師為準。</p>
+      <p class="note src">若與課堂說法不同，以老師為準。</p>
     </section>
 
     <section class="sec" id="glossary">
@@ -398,9 +410,9 @@
 <script src="../shared/exbook.js"></script>
 <script>
 __EXB.picker(document.getElementById('sec-pick'), [
-  { id: 'shunt', no: '01', name: '並聯截波', count: '練 1' },
+  { id: 'shunt', no: '01', name: '並聯截波', count: '練 2' },
   { id: 'series', no: '02', name: '串聯截波', count: '練 1' },
-  { id: 'bidir', no: '03', name: '雙向截波', count: '練 1' },
+  { id: 'bidir', no: '03', name: '★ 雙向截波', count: '練 2' },
   { id: 'clamp', no: '04', name: '箝位器', count: '練 1' }
 ], { key: 'ch2-part3', alwaysAll: ['map', 'check', 'glossary', 'quiz-sec'] });
 </script>

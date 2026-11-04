@@ -81,8 +81,8 @@
     [S(['跟著 vS 走 follows vS', '卡在 Vγ stays at Vγ', '是 0 is zero', '是 vO equals vO']), S(['−VM', '−Vγ', '0', '−2VM'])], '二極體 OFF，整個輸入都在它身上。');
   C('wave', 6, 'PIV', '半波整流（電阻負載）二極體的 PIV 至少要大於 {0}。', 'The diode PIV in a half-wave rectifier (resistive load) must exceed ___.',
     [S(['VM（輸入峰值）the input peak VM', 'Vγ', 'VM − Vγ', 'VM/2'])], 'CH1 PART 5：最大逆壓 &lt; PIV 才安全。', true);
-  C('wave', 7, '導通多久', '因為要超過 Vγ 才導通，每週期導通的時間 {0} 半個週期。', 'Since conduction starts only above Vγ, the conduction time is ___ half a period.',
-    [S(['略少於 slightly less than', '剛好 exactly', '多於 more than', '兩倍 twice'])], '從 sin<sup>−1</sup>(V<sub>γ</sub>/V<sub>M</sub>) 到 180° 減它。');
+  C('wave', 7, '負半週的輸出', '半波整流在負半週時，v_O = {0}。', 'In the negative half-cycle of a half-wave rectifier, v_O = ___.',
+    [S(['0', 'vS', 'vS − Vγ', '−VM'])], '二極體逆偏 OFF，沒有電流，電阻上沒有壓降（講義 2-4 Summary）。');
   C('wave', 8, '方法二怎麼做', '用 VTC 畫波形：把每個時刻的 vS 在橫軸找到，{0}。', 'Using the VTC: locate each instant\'s vS on the horizontal axis and ___.',
     [S(['往上碰到 VTC 曲線，讀縱軸的 vO go up to the VTC and read vO', '讀斜率 read the slope', '取平均 take the average', '乘以 R multiply by R'])], '講義 2-7 的「方法二」箭頭：投影。', true);
 

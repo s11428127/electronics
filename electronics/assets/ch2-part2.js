@@ -76,7 +76,7 @@
         else trace(ctx, x0, x1, ym, A, f[1], f[2], 2.2);
         const yv = ym - A * f[1](ph); dot(ctx, lerp(x0, x1, ph), yv, 5, f[2]);
       });
-      /* 死區：|v_S| < nVγ 的地方塗淺色 */
+      /* 不導通區：|v_S| < nVγ 的地方塗淺色 */
       const dz = Math.asin(Math.min(1, nDiode * VG / VM)) / (2 * TAU);
       for (let c = 0; c <= 4; c++) { const zc = c * 0.25, xa = lerp(x0, x1, Math.max(0, zc - dz)), xb = lerp(x0, x1, Math.min(1, zc + dz)); ctx.fillStyle = 'rgba(180,120,40,0.18)'; ctx.fillRect(xa, h * 0.5, xb - xa, h * 0.46); }
       ctx.strokeStyle = C.accent; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(lerp(x0, x1, ph), h * 0.03); ctx.lineTo(lerp(x0, x1, ph), h * 0.96); ctx.stroke();
@@ -88,7 +88,7 @@
       setHTML(p + '-piv', piv.toFixed(2) + ' V');
       setHTML(p + '-msg', VM <= nDiode * VG ? '輸入峰值不到 ' + nDiode + ' 個 V<sub>γ</sub>，完全沒輸出。' :
         (nDiode === 1 ? '每一瞬間<b>只有一顆</b>二極體導通（上半或下半），所以只吃 1 個 V<sub>γ</sub>：v<sub>O</sub> = |v<sub>S</sub>| − V<sub>γ</sub>。' : '每一瞬間電流<b>經過兩顆</b>二極體（一進一出），所以吃 2 個 V<sub>γ</sub>：v<sub>O</sub> = |v<sub>S</sub>| − 2V<sub>γ</sub>。') +
-        ' 淺色帶是「死區」：|v<sub>S</sub>| 還沒爬過 ' + (nDiode * VG).toFixed(2) + ' V 時輸出是 0。輸出的頻率是輸入的 2 倍。');
+        ' 淺色帶是「不導通區」：|v<sub>S</sub>| 還沒爬過 ' + (nDiode * VG).toFixed(2) + ' V 時輸出是 0。');
     }
     bindRange(p + '-m', x => x.toFixed(1) + ' V', x => { VM = x; msg(); });
     bindRange(p + '-g', x => x.toFixed(2) + ' V', x => { VG = x; msg(); });
@@ -192,14 +192,14 @@
       { id: 'e3-g', label: 'V<sub>γ</sub>', min: 0.5, max: 0.8, step: 0.1, value: 0.7, fmt: v => f1(v) + ' V' }
     ],
     compute: g => { const M = g['e3-m'], Vg = g['e3-g']; return { M, Vg, pk: M - 2 * Vg, piv: M - Vg, dz: 2 * Vg }; },
-    question: (g, r) => '橋式全波整流，次級峰值 V<sub>M</sub> = <b>' + f1(r.M) + ' V</b>，V<sub>γ</sub> = ' + f1(r.Vg) + ' V。求 v<sub>O</sub> 峰值、死區範圍、每顆二極體的 PIV。',
+    question: (g, r) => '橋式全波整流，次級峰值 V<sub>M</sub> = <b>' + f1(r.M) + ' V</b>，V<sub>γ</sub> = ' + f1(r.Vg) + ' V。求 v<sub>O</sub> 峰值、不導通區範圍、每顆二極體的 PIV。',
     questionEn: (g, r) => 'A bridge full-wave rectifier has a secondary peak of ' + f1(r.M) + ' V and V<sub>γ</sub> = ' + f1(r.Vg) + ' V. Find the peak output, the dead zone, and the PIV of each diode.',
     steps: (g, r) => [
       { t: 'Step 1　電流走過幾顆。', note: '一進一出：每個瞬間有兩顆二極體串在電流路徑上。', eq: 'v<sub>O</sub> = |v<sub>S</sub>| − 2V<sub>γ</sub>' },
-      { t: 'Step 2　輸出峰值與死區。', note: '|v<sub>S</sub>| 要先爬過 2V<sub>γ</sub> 才有輸出。', eq: 'V<sub>O,peak</sub> = ' + f1(r.M) + ' − ' + f1(2 * r.Vg) + ' = ' + f2(r.pk) + ' V；死區 |v<sub>S</sub>| &lt; ' + f1(r.dz) + ' V' },
+      { t: 'Step 2　輸出峰值與不導通區。', note: '|v<sub>S</sub>| 要先爬過 2V<sub>γ</sub> 才有輸出。', eq: 'V<sub>O,peak</sub> = ' + f1(r.M) + ' − ' + f1(2 * r.Vg) + ' = ' + f2(r.pk) + ' V；不導通區 |v<sub>S</sub>| &lt; ' + f1(r.dz) + ' V' },
       { t: 'Step 3　PIV。', note: '關著的那顆，一邊接輸出 (+V<sub>M</sub> − 2V<sub>γ</sub>) 附近，另一邊被二次側拉到 −V<sub>M</sub>，扣掉旁邊導通那顆的 V<sub>γ</sub>。', eq: 'PIV = V<sub>M</sub> − V<sub>γ</sub> = ' + f2(r.piv) + ' V' }
     ],
-    answer: (g, r) => 'v<sub>O</sub> 峰值 ' + f2(r.pk) + ' V；死區 ±' + f1(r.dz) + ' V；PIV = ' + f2(r.piv) + ' V',
+    answer: (g, r) => 'v<sub>O</sub> 峰值 ' + f2(r.pk) + ' V；不導通區 ±' + f1(r.dz) + ' V；PIV = ' + f2(r.piv) + ' V',
     draw: (ctx, w, h, g, r) => bars(ctx, w, h, [['次級 V<sub>M</sub>', r.M, C.ink], ['輸出峰值', r.pk, C.accent], ['PIV', r.piv, C['q-react'] || C.warn]], v => f2(v) + ' V')
   });
 
@@ -260,10 +260,10 @@ window.__c2.quiz([
   { zh: '橋式相較於中間抽頭的優點，下列何者「不是」？', en: 'Which is NOT an advantage of the bridge over the center-tapped rectifier?',
     o: [['用的二極體比較少', 'it uses fewer diodes'], ['次級圈數只要一半', 'half as many secondary turns'], ['整個次級線圈都用到', 'the whole secondary winding is used'], ['二極體的 PIV 比較低', 'a lower diode PIV']], a: 0,
     e: '橋式要 4 顆二極體，中間抽頭只要 2 顆；其他三項都是橋式的優點。' },
-  { zh: '全波整流輸出的頻率是輸入的幾倍？', en: 'The output frequency of a full-wave rectifier is how many times the input frequency?',
-    o: [['2 倍', 'twice'], ['1 倍', 'the same'], ['1/2 倍', 'half'], ['4 倍', 'four times']], a: 0,
-    e: '負半週被翻到正的，每個週期出現兩個駝峰。' },
-  { zh: '橋式全波的「死區」寬度是？', en: 'The dead zone of a bridge rectifier is?',
-    o: [['|v<sub>S</sub>| &lt; 2V<sub>γ</sub>', '|v<sub>S</sub>| &lt; 2V<sub>γ</sub>'], ['|v<sub>S</sub>| &lt; V<sub>γ</sub>', '|v<sub>S</sub>| &lt; V<sub>γ</sub>'], ['|v<sub>S</sub>| &lt; 4V<sub>γ</sub>', '|v<sub>S</sub>| &lt; 4V<sub>γ</sub>'], ['沒有死區', 'no dead zone']], a: 0,
-    e: '要先爬過兩個 V<sub>γ</sub>，輸出才開始。中間抽頭的死區是 ±V<sub>γ</sub>。' }
+  { zh: '橋式整流在負半週，二極體導通的條件是？', en: 'In the negative half-cycle of a bridge rectifier, the diodes conduct when?',
+    o: [['−v<sub>S</sub> &gt; 2V<sub>γ</sub>', '−v<sub>S</sub> &gt; 2V<sub>γ</sub>'], ['−v<sub>S</sub> &gt; V<sub>γ</sub>', '−v<sub>S</sub> &gt; V<sub>γ</sub>'], ['v<sub>S</sub> &gt; 2V<sub>γ</sub>', 'v<sub>S</sub> &gt; 2V<sub>γ</sub>'], ['永遠導通', 'always']], a: 0,
+    e: '板書負半週：−v<sub>S</sub> − V<sub>γ</sub> − i<sub>L</sub>R − V<sub>γ</sub> = 0，剛導通 i<sub>L</sub> = 0 ⇒ −v<sub>S</sub> = 2V<sub>γ</sub>。' },
+  { zh: '橋式全波的「不導通區」寬度是？', en: 'The dead zone of a bridge rectifier is?',
+    o: [['|v<sub>S</sub>| &lt; 2V<sub>γ</sub>', '|v<sub>S</sub>| &lt; 2V<sub>γ</sub>'], ['|v<sub>S</sub>| &lt; V<sub>γ</sub>', '|v<sub>S</sub>| &lt; V<sub>γ</sub>'], ['|v<sub>S</sub>| &lt; 4V<sub>γ</sub>', '|v<sub>S</sub>| &lt; 4V<sub>γ</sub>'], ['沒有不導通區', 'no dead zone']], a: 0,
+    e: '要先爬過兩個 V<sub>γ</sub>，輸出才開始。中間抽頭的不導通區是 ±V<sub>γ</sub>。' }
 ], '全波整流通了。下一份講義：截波器與箝位器。', '答錯的回去玩 §02、§03 的全波模組，注意 V<sub>γ</sub> 吃幾個、PIV 看誰。');

@@ -166,7 +166,7 @@
   });
 
   liveExample('#ex-bd', {
-    title: '例題 2.7 · 雙向截波器（板書，請確認數字）',
+    title: '例題 2.7 · 雙向截波器變形（板書原題）',
     ratio: 0.3, minH: 140, maxH: 200,
     givens: [
       { id: 'c-m', label: 'v<sub>i</sub> 峰值', min: 1, max: 12, step: 0.5, value: 6, fmt: v => f1(v) + ' V' },

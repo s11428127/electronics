@@ -36,12 +36,12 @@
     [S(['|v_S| − V_γ', '|v_S| − 2V_γ', 'v_S − V_γ', '|v_S|'])], '每瞬間只有一顆二極體導通。');
   C('fwc', 2, '導通順序', '中間抽頭電路中，正半週與負半週 {0}。', 'In the center-tapped circuit, the two half-cycles use ___.',
     [S(['由不同的二極體導通 different diodes', '由同一顆二極體導通 the same diode', '兩顆同時導通 both diodes at once', '都不導通 no diode'])], '上半邊與下半邊輪流。');
-  C('fwc', 3, '死區', '中間抽頭的死區是 {0}。', 'The dead zone of the center-tapped rectifier is ___.',
-    [S(['|v_S| 小於 V_γ |v_S| below V_γ', '|v_S| 小於 2V_γ |v_S| below 2V_γ', '沒有死區 none', '|v_S| 大於 V_γ |v_S| above V_γ'])], '兩顆都還推不開。');
+  C('fwc', 3, '不導通區', '中間抽頭的不導通區是 {0}。', 'The dead zone of the center-tapped rectifier is ___.',
+    [S(['|v_S| 小於 V_γ |v_S| below V_γ', '|v_S| 小於 2V_γ |v_S| below 2V_γ', '沒有不導通區 none', '|v_S| 大於 V_γ |v_S| above V_γ'])], '兩顆都還推不開。');
   C('fwc', 4, 'PIV', '中間抽頭每顆二極體的 PIV 是 {0}。', 'The PIV of each diode is ___.',
     [S(['2V_m − V_γ', 'V_m − V_γ', 'V_m', 'V_γ'])], '關著的邊 −V_m，導通邊輸出 V_m − V_γ。');
-  C('fwc', 5, '頻率', '全波整流輸出的頻率是輸入的 {0}。', 'The output frequency is ___ the input frequency.',
-    [S(['2 倍 twice', '1 倍 the same as', '一半 half of', '4 倍 four times'])], '負半週翻正，每週期兩顆駝峰。');
+  C('fwc', 5, '負半週誰通', '中間抽頭在負半週（v_S < 0），導通條件是 {0}。', 'In the negative half-cycle of the center-tapped rectifier, the conduction condition is ___.',
+    [S(['−vS − Vγ > 0', 'vS − Vγ > 0', '−vS − 2Vγ > 0', 'vS > 0'])], '板書負半週：−v<sub>S</sub> − V<sub>γ</sub> − v<sub>O</sub> = 0，剛導通時 v<sub>O</sub> = 0。');
   C('fwc', 6, '峰值', '輸出峰值 V_O,peak = {0}。', 'The peak output is ___.',
     [S(['V_m − V_γ', 'V_m − 2V_γ', 'V_m', '2V_m − V_γ'])], '只扣一個 V_γ。');
   C('fwc', 7, '次級線圈', '中間抽頭電路的次級線圈需要 {0}。', 'The center-tapped secondary needs ___.',
@@ -54,7 +54,7 @@
     [S(['|v_S| − 2V_γ', '|v_S| − V_γ', '|v_S| − 4V_γ', '|v_S|'])], '電流一進一出，經過兩顆。');
   C('brg', 2, '二極體數', '橋式整流需要 {0}。', 'A bridge rectifier needs ___.',
     [S(['4 顆二極體 four diodes', '2 顆二極體 two diodes', '1 顆二極體 one diode', '8 顆二極體 eight diodes'])], '四顆接成橋。');
-  C('brg', 3, '死區', '橋式的死區是 {0}。', 'The bridge dead zone is ___.',
+  C('brg', 3, '不導通區', '橋式的不導通區是 {0}。', 'The bridge dead zone is ___.',
     [S(['|v_S| 小於 2V_γ |v_S| below 2V_γ', '|v_S| 小於 V_γ |v_S| below V_γ', '沒有 none', '|v_S| 大於 2V_γ |v_S| above 2V_γ'])], '要爬過兩個 V_γ。');
   C('brg', 4, 'PIV', '橋式每顆二極體的 PIV 是 {0}。', 'The bridge diode PIV is ___.',
     [S(['V_m − V_γ', '2V_m − V_γ', '2V_m', 'V_m − 2V_γ'])], '比中間抽頭小約一半。');
@@ -84,6 +84,23 @@
     [S(['中間抽頭 center-tapped', '橋式 bridge', '兩個都不行 neither', '兩個一樣多 both use the same'])], '中間抽頭只要 2 顆，缺點是 PIV 較高、次級要抽頭。');
   C('cmp', 8, '看到什麼想到什麼', '題目要「算變壓器次級」時，第一個動作是 {0}。', 'To size the transformer secondary, the first step is ___.',
     [S(['判斷電流路徑經過幾顆二極體 count the diodes in the current path', '先算 PIV compute the PIV first', '先畫波形 draw the waveform first', '先算頻率 find the frequency'])], '幾顆決定扣幾個 V_γ。', true);
+
+
+  /* ═════ 11/4 加碼：橋式（老師說會考第 4 題）英文先＋計算 ═════ */
+  const E = (sec, n, title, q, zh, b, ex) =>
+    items.push({ id: 'c22' + sec + '-e' + n, kind: 'cf', sec, no: NO[sec] + '-' + (8 + n), calc: true, link: P + '#' + sec, title: sub(title), q: sub(q), zh: sub(zh), b: b.map(x => ({ o: x.o.map(t => t.replace(/_/g, '')), a: 0 })), ex });
+  E('brg', 1, 'Turn-on condition', 'In a bridge rectifier with V_γ = 0.7 V, the diodes start to conduct when |v_S| exceeds {0}.', '橋式整流 V_γ = 0.7 V，|v_S| 超過 ___ 二極體才開始導通。',
+    [S(['1.4 V', '0.7 V', '0 V', '2.8 V'])], '剛導通 i<sub>L</sub> = 0：v<sub>S</sub> − 2V<sub>γ</sub> = 0 ⇒ 1.4 V。');
+  E('brg', 2, 'Peak output', 'V_M = 12 V and V_γ = 0.7 V. The peak output of the bridge rectifier is {0}.', 'V_M = 12 V、V_γ = 0.7 V，橋式輸出峰值是 ___。',
+    [S(['10.6 V', '11.3 V', '12 V', '9.9 V'])], 'V<sub>m</sub> − 2V<sub>γ</sub> = 12 − 1.4。');
+  E('brg', 3, 'PIV', 'V_M = 12 V and V_γ = 0.7 V. The PIV of each bridge diode is {0}.', 'V_M = 12 V、V_γ = 0.7 V，橋式每顆 PIV = ___。',
+    [S(['11.3 V', '10.6 V', '23.3 V', '12 V'])], 'PIV = V<sub>m</sub> − V<sub>γ</sub>（11/3 板書）。');
+  E('brg', 4, 'Load current', 'R = 2 kΩ, V_γ = 0.7 V. When v_S = −8 V, the load current i_L = {0}.', 'R = 2 kΩ、V_γ = 0.7 V，v_S = −8 V 時 i_L = ___。',
+    [S(['3.3 mA', '0 mA', '4 mA', '3.65 mA'])], '負半週 −v<sub>S</sub> &gt; 2V<sub>γ</sub>：i<sub>L</sub> = (8 − 1.4)/2k = 3.3 mA。');
+  E('brg', 5, 'Inside the gap', 'V_γ = 0.7 V. When v_S = 1 V, the output v_O = {0}.', 'V_γ = 0.7 V，v_S = 1 V 時 v_O = ___。',
+    [S(['0 V', '0.3 V', '1 V', '−0.4 V'])], '1 V &lt; 2V<sub>γ</sub> = 1.4 V，還不導通。');
+  E('brg', 6, 'VTC slope', 'On the VTC of the bridge rectifier, the slope for v_S < −2V_γ is {0}.', '橋式 VTC 在 v_S < −2V_γ 那一段的斜率是 ___。',
+    [S(['−1', '+1', '0', '1/R'])], 'v<sub>O</sub> = −v<sub>S</sub> − 2V<sub>γ</sub>，對 v<sub>S</sub> 的斜率是 −1（V 字形左半邊）。');
 
   window.__CH22C = { name: 'ch22c', items };
 })();

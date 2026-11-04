@@ -115,7 +115,7 @@
         st('v<sub>S</sub> ≥ V<sub>γ</sub>: D<sub>1</sub> on, D<sub>2</sub> off.', 'v<sub>O</sub> = v<sub>S</sub> − V<sub>γ</sub>，i<sub>L</sub> = (v<sub>S</sub> − V<sub>γ</sub>)/R', ''),
         st('|v<sub>S</sub>| &lt; V<sub>γ</sub>: both off.', 'v<sub>O</sub> = 0', ''),
         st('−v<sub>S</sub> ≥ V<sub>γ</sub>: D<sub>2</sub> on, D<sub>1</sub> off.', 'v<sub>O</sub> = −v<sub>S</sub> − V<sub>γ</sub>', ''),
-        st('(2)(3) VTC and waveform.', 'v<sub>O</sub> = |v<sub>S</sub>| − V<sub>γ</sub>；peak V<sub>M</sub> − V<sub>γ</sub>；output frequency doubles', ''),
+        st('(2)(3) VTC and waveform.', 'v<sub>O</sub> = |v<sub>S</sub>| − V<sub>γ</sub>；peak V<sub>M</sub> − V<sub>γ</sub>', ''),
         st('(4) PIV.', 'PIV = V<sub>M</sub> + (V<sub>M</sub> − V<sub>γ</sub>) = 2V<sub>M</sub> − V<sub>γ</sub>', '關著那顆：一端 −V<sub>M</sub>、一端是輸出峰值。')
       ],
       ans: 'v<sub>O</sub> = |v<sub>S</sub>| − V<sub>γ</sub>；PIV = 2V<sub>M</sub> − V<sub>γ</sub>', note: '自解；推導格式照 10/28 板書的橋式。' },
