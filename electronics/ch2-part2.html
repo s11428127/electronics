@@ -41,7 +41,7 @@
 
   <main>
     <div class="hero">
-      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>Chapter 2 · 2.1 · 板書 11/2、11/3（Example 2.1、2.2）</div>
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>Chapter 2 · 2.1 · 板書 10/28、11/3（Example 2.1、2.2）</div>
       <h1>全波整流與電池充電器</h1>
       <p class="sub">半波整流丟掉整個負半週。這一頁先看<strong>半波推電池</strong>（導通區間變短），再看<strong>中間抽頭</strong>與<strong>橋式</strong>兩種全波整流：差在<strong>吃幾個 V<sub>γ</sub></strong>、PIV 多大。</p>
       <div class="hero-meta">
@@ -84,7 +84,7 @@
 
     <!-- 01 -->
     <section class="sec" id="chg">
-      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>01 · 板書 11/2 · 電池充電器 · Battery Charger</div>
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>01 · 板書 · 電池充電器 · Battery Charger</div>
       <h2>電池充電器：<button class="tm" data-t="半波整流">半波整流</button>推電池<span class="h2-en">BATTERY CHARGER</span></h2>
       <p class="lede">二極體後面不是電阻、而是一顆<strong>電池</strong>。電源要先推過「電池 + 二極體」的門檻，二極體才通 —— 導通的時間會比半個週期還短。</p>
       <div class="eq">v<em>S</em> &gt; V<em>B</em> + V<em>γ</em> 才導通　　i<em>D</em> = (v<em>S</em> − V<em>γ</em> − V<em>B</em>)/R　　ωt<em>1</em> = sin<sup>−1</sup>[(V<em>B</em>+V<em>γ</em>)/V<em>M</em>]，ωt<em>2</em> = 180° − ωt<em>1</em>　　PIV = V<em>B</em> + V<em>M</em></div>
@@ -154,7 +154,7 @@
 
     <!-- 02 -->
     <section class="sec" id="fwc">
-      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>02 · 板書 11/3 · 2.1.2 Full-Wave · Center-Tapped</div>
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>02 · 板書 10/28 · 2.1.2 Full-Wave · Center-Tapped</div>
       <h2>中間抽頭<button class="tm" data-t="全波整流">全波整流</button><span class="h2-en">CENTER-TAPPED FULL-WAVE RECTIFIER</span></h2>
       <p class="lede">半波丟掉整個負半週。全波用<strong>次級線圈的中間抽頭</strong>，上下兩半邊各接一顆二極體，輪流上班，負半週也能用。</p>
       <div class="eq">v<em>O</em> = |v<em>S</em>| − V<em>γ</em>　　死區 |v<em>S</em>| &lt; V<em>γ</em>　　PIV = 2V<em>m</em> − V<em>γ</em></div>
@@ -220,7 +220,7 @@
 
     <!-- 03 -->
     <section class="sec" id="brg">
-      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>03 · 板書 11/3 · 2.1.2 Full-Wave · Bridge</div>
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>03 · 板書 10/28、11/3 · 2.1.2 Full-Wave · Bridge</div>
       <h2>橋式全波整流<span class="h2-en">BRIDGE FULL-WAVE RECTIFIER</span></h2>
       <p class="lede">不要抽頭，改用<strong>四顆二極體接成橋</strong>。電流一進一出，每次經過兩顆，所以多吃一個 V<sub>γ</sub>，但耐壓要求變一半。</p>
       <div class="eq">v<em>O</em> = |v<em>S</em>| − 2V<em>γ</em>　　死區 |v<em>S</em>| &lt; 2V<em>γ</em>　　PIV = V<em>m</em> − V<em>γ</em></div>
@@ -284,7 +284,7 @@
 
     <!-- 04 -->
     <section class="sec" id="cmp">
-      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>04 · 板書 11/3 · 比較與設計 · Example 2.2</div>
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>04 · 板書 · 比較與設計 · Example 2.2</div>
       <h2>中間抽頭 vs 橋式：比較與設計<span class="h2-en">COMPARISON &amp; DESIGN</span></h2>
       <p class="lede">同樣要一個輸出電壓，兩種電路各需要多大的次級電壓、多少匝數比、多高的耐壓？<strong>先看電流經過幾顆二極體</strong>，再往下算。</p>
       <div class="eq">次級峰值：中間抽頭 V<em>O</em> + V<em>γ</em>；橋式 V<em>O</em> + 2V<em>γ</em>　　N<em>1</em>/N<em>2</em> = 市電峰值 / 次級峰值　　rms = 峰值/√2</div>
@@ -382,7 +382,7 @@
     </section>
 
     <footer class="foot">
-      <p>教材依據：Donald A. Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4th ed.（McGraw-Hill），Chapter 2 §2.1，2026 Fall 課程上課板書（11/2、11/3）。</p>
+      <p>教材依據：Donald A. Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4th ed.（McGraw-Hill），Chapter 2 §2.1，2026 Fall 課程上課板書（10/28、11/3）。</p>
     </footer>
   </main>
 </div>

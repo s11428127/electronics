@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>期中考 2 衝刺</title>
+<meta name="description" content="電子學期中考 2（11/9）衝刺：老師公布的六類計算題（英文題目、逐步解）與七類選擇題（全英文，中文翻譯收起來），含 HW2、HW3、10/21～11/3 板書。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="electronics" data-look="clean" data-trk-sec="0">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>期中考 2 衝刺</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">期中考 2 衝刺</div>
+    <ol>
+      <li><a href="#plan"><i>!</i>老師說考什麼</a></li>
+      <li><a href="#k1"><i>1</i>順偏求 Q：作圖法／方程</a></li>
+      <li><a href="#k2"><i>2</i>★ AC + DC 分析</a></li>
+      <li><a href="#k3"><i>3</i>崩潰區（Zener）分析</a></li>
+      <li><a href="#k4"><i>4</i>★ 全波整流（橋式）分析</a></li>
+      <li><a href="#k5"><i>5</i>截波電路分析：基本 ✓、</a></li>
+      <li><a href="#k6"><i>6</i>HW 計算題</a></li>
+      <li><a href="#cfwd"><i>A</i>順偏：擴散、少數載子、溫</a></li>
+      <li><a href="#cbrk"><i>B</i>齊納崩潰（撕）vs 累增</a></li>
+      <li><a href="#cq"><i>C</i>工作點的選擇、會不會失真</a></li>
+      <li><a href="#ccd"><i>D</i>擴散電容</a></li>
+      <li><a href="#coth"><i>E</i>其他二極體：太陽能、光二</a></li>
+      <li><a href="#crr"><i>F</i>反向恢復電流（切換暫態）</a></li>
+      <li><a href="#hw3c"><i>H</i>HW3 選擇題</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Midterm 2 · 11/9 · 老師 11/4 課堂公布的重點</div>
+      <h1>期中考 2 衝刺</h1>
+      <p class="sub"><strong>整張考卷全英文。</strong>這頁照老師說的考題順序排：六類計算題、七類選擇題。題目英文在前，看不懂再按「中文翻譯」。</p>
+      <div class="hero-meta">
+        <span class="chip h">✓ 11/9 期中考 2</span>
+        <span class="chip">13 題計算（逐步解）</span>
+        <span class="chip">84 題英文選擇</span>
+        <span class="chip">答錯自動進錯題本</span>
+      </div>
+      <div class="hw-tools-slot"></div>
+      <div class="lec-links"><a href="review2.html">🧠 觀念填充總複習（339 題）</a><a href="hw2.html">📝 HW2</a><a href="hw3.html">📝 HW3</a><a href="mistakes.html">📕 錯題本</a></div>
+    </div>
+
+    <section class="sec" id="plan">
+      <div class="eyebrow">Exam plan · 老師手寫的清單</div>
+      <h2>老師說考什麼<span class="h2-en">WHAT WILL BE ON THE EXAM</span></h2>
+      <div class="derive">
+        <h4>計算題</h4>
+        <ol>
+          <li><span class="d-eq">① 順偏求解 → 兩種模型（作圖法／方程式 ★、Model 代入法）</span><div class="why">Ex 1-7 ＋ 板書（HW2 第 2、3 題）。</div></li>
+          <li><span class="d-eq hi">② ★ AC + DC 分析並求波形</span><div class="why">Ex 1.11 ＋ 板書，HW 也有（HW3 第 2 題）。</div></li>
+          <li><span class="d-eq">③ 崩潰區（Zener）分析，考慮 r<sub>z</sub></span><div class="why">Ex 1.13 ＋ 板書。</div></li>
+          <li><span class="d-eq hi">④ ★ 全波整流（橋式）分析</span><div class="why">10/28 板書。</div></li>
+          <li><span class="d-eq">⑤ 截波電路：基本 ✓、雙向 ★、變型 ✓</span><div class="why">11/3 板書。</div></li>
+          <li><span class="d-eq">⑥ HW 計算題</span><div class="why">HW2、HW3。</div></li>
+        </ol>
+      </div>
+      <div class="howto">
+        <h4>選擇題（全英文）</h4>
+        <ol>
+          <li>順偏：擴散、少數載子、和溫度的關係</li>
+          <li>齊納崩潰（撕的）vs 累增崩潰（撞的）</li>
+          <li>工作點的選擇、會不會失真</li>
+          <li>擴散電容</li>
+          <li>其他二極體：太陽能、光二極體、LED、蕭特基怎麼工作</li>
+          <li>反向恢復電流</li>
+          <li>HW 的選擇題（HW3 PART1、PART2）</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="sec" id="k1">
+      <div class="eyebrow">Calculation 1</div>
+      <h2>計算題 1　順偏求 Q：作圖法／方程式 vs Model 代入法<span class="h2-en">FORWARD BIAS · Q-POINT</span></h2>
+      <p class="lede">老師：「Ex 1-7 ＋ 板書」，兩種模型都要會，方程式那條打星號。就是 HW2 第 2、3 題。</p>
+      <div class="lec-links"><a href="ch1-part5.html">CH1 PART 5 負載線</a><a href="hw2.html">HW2 總複習</a></div>
+      <div class="exbook" data-bank="__MT2EX" data-sec="k1"></div>
+    </section>
+
+    <section class="sec" id="k2">
+      <div class="eyebrow">Calculation 2</div>
+      <h2>計算題 2　★ AC + DC 分析並畫波形<span class="h2-en">AC + DC ANALYSIS</span></h2>
+      <p class="lede">老師：「Ex 1.11 ＋ 板書，HW 也有」。先代入模型做 DC，再做 AC，最後相加畫波形。</p>
+      <div class="lec-links"><a href="ch1-part6.html">CH1 PART 6 小訊號</a></div>
+      <div class="exbook" data-bank="__MT2EX" data-sec="k2"></div>
+    </section>
+
+    <section class="sec" id="k3">
+      <div class="eyebrow">Calculation 3</div>
+      <h2>計算題 3　崩潰區（Zener）分析，考慮 r<sub>z</sub><span class="h2-en">ZENER BREAKDOWN</span></h2>
+      <p class="lede">老師：「Ex 1.13 ＋ 板書，考慮 r<sub>z</sub>」。板書三種延伸：r<sub>z</sub> = 10 Ω 重做、作圖法、給 V<sub>PS</sub> 和 R 求 (V<sub>Z</sub>, I<sub>Z</sub>)。</p>
+      <div class="lec-links"><a href="ch1-part7.html">CH1 PART 7 齊納</a></div>
+      <div class="exbook" data-bank="__MT2EX" data-sec="k3"></div>
+    </section>
+
+    <section class="sec" id="k4">
+      <div class="eyebrow">Calculation 4</div>
+      <h2>計算題 4　★ 全波整流（橋式）分析<span class="h2-en">FULL-WAVE BRIDGE RECTIFIER</span></h2>
+      <p class="lede">老師：「10/28 板書」：導通條件、v<sub>O</sub>、i<sub>L</sub>、VTC、v<sub>O</sub> 波形、PIV 分析。</p>
+      <div class="lec-links"><a href="ch2-part2.html">CH2 PART 2 全波整流</a></div>
+      <div class="exbook" data-bank="__MT2EX" data-sec="k4"></div>
+    </section>
+
+    <section class="sec" id="k5">
+      <div class="eyebrow">Calculation 5</div>
+      <h2>計算題 5　截波電路分析：基本 ✓、雙向 ★、變型 ✓<span class="h2-en">CLIPPERS</span></h2>
+      <p class="lede">老師：「板書」，雙向截波打星號（最重要）。截波板書你之後會再給，到了我再補完。</p>
+      <div class="lec-links"><a href="ch2-part3.html">CH2 PART 3 截波</a><a href="ch2-part3.html#bidir">雙向截波 Example 2.7</a></div>
+      <div class="exbook" data-bank="__MT2EX" data-sec="k5"></div>
+    </section>
+
+    <section class="sec" id="k6">
+      <div class="eyebrow">Calculation 6</div>
+      <h2>計算題 6　HW 計算題<span class="h2-en">HOMEWORK PROBLEMS</span></h2>
+      <p class="lede">HW2 第 1～3 題、HW3 第 1～7 題。上面已經放了 HW2-2、2-3、HW3-2、5、7；這裡是 HW3 剩下的計算題。</p>
+      <div class="lec-links"><a href="hw2.html">HW2 總複習</a><a href="hw3.html">HW3 總複習</a></div>
+      <div class="exbook" data-bank="__MT2EX" data-sec="k6"></div>
+    </section>
+
+    <section class="sec" id="cfwd">
+      <div class="eyebrow">Multiple choice A · 英文先</div>
+      <h2>選擇 A　順偏：擴散、少數載子、溫度<span class="h2-en">FORWARD BIAS · TEMPERATURE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part4.html">講解</a>。</p>
+      <div class="hw-list" data-bank="__MT2C" data-sec="cfwd"></div>
+    </section>
+
+    <section class="sec" id="cbrk">
+      <div class="eyebrow">Multiple choice B · 英文先</div>
+      <h2>選擇 B　齊納崩潰（撕）vs 累增崩潰（撞）<span class="h2-en">ZENER VS AVALANCHE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part7.html">講解</a>。</p>
+      <div class="hw-list" data-bank="__MT2C" data-sec="cbrk"></div>
+    </section>
+
+    <section class="sec" id="cq">
+      <div class="eyebrow">Multiple choice C · 英文先</div>
+      <h2>選擇 C　工作點的選擇、會不會失真<span class="h2-en">Q-POINT · DISTORTION</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part6.html">講解</a>。</p>
+      <div class="hw-list" data-bank="__MT2C" data-sec="cq"></div>
+    </section>
+
+    <section class="sec" id="ccd">
+      <div class="eyebrow">Multiple choice D · 英文先</div>
+      <h2>選擇 D　擴散電容<span class="h2-en">DIFFUSION CAPACITANCE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part7.html">講解</a>。</p>
+      <div class="hw-list" data-bank="__MT2C" data-sec="ccd"></div>
+    </section>
+
+    <section class="sec" id="coth">
+      <div class="eyebrow">Multiple choice E · 英文先</div>
+      <h2>選擇 E　其他二極體：太陽能、光二極體、LED、蕭特基<span class="h2-en">OTHER DIODE TYPES</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part7.html">講解</a>。</p>
+      <div class="hw-list" data-bank="__MT2C" data-sec="coth"></div>
+    </section>
+
+    <section class="sec" id="crr">
+      <div class="eyebrow">Multiple choice F · 英文先</div>
+      <h2>選擇 F　反向恢復電流（切換暫態）<span class="h2-en">REVERSE RECOVERY</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch1-part7.html">講解</a>。</p>
+      <div class="hw-list" data-bank="__MT2C" data-sec="crr"></div>
+    </section>
+
+    <section class="sec" id="hw3c">
+      <div class="eyebrow">HW3 · 不用交但會考</div>
+      <h2>HW3 選擇題<span class="h2-en">HW3 MULTIPLE CHOICE</span></h2>
+      <p class="lede">PART1 22 題有老師答案；PART2 14 題老師沒附答案，是我解的（標「自解」，請確認）。</p>
+      <h3>PART1</h3>
+      <div class="hw-list" data-bank="__MT2C" data-sec="hw3a"></div>
+      <h3>PART2</h3>
+      <div class="hw-list" data-bank="__MT2C" data-sec="hw3b"></div>
+    </section>
+
+    <footer class="foot"><p>依老師 11/4 課堂公布的考試重點整理；計算題數值都用程式驗算（electronics/docs/MIDTERM2.md）。</p></footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="assets/mt2-choice.js"></script>
+<script src="../shared/hw.js"></script>
+<script src="assets/mt2-calc.js"></script>
+<script src="../shared/exbook.js"></script>
+<script src="assets/ch2-common.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

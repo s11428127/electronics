@@ -252,7 +252,7 @@
 
 - **電子學 CH2 PART 2、3（11/4，期中考 2 範圍延伸）**：使用者給手寫板書掃描（整流器、截波／箝位）。`ch2-part2.html`（電池充電器、中間抽頭、橋式、比較）與 `ch2-part3.html`（並聯／串聯／雙向截波、箝位器），共用 `assets/ch2-common.js`（`__c2.quiz`、`__c2.tools`）。手寫看不清的地方寫在頁面「講義檢查」請使用者確認，不要斷言；練習沒有圖解故事。總複習 `review2.html` 現為 339 題。
 
-- **期中考 2 考試重點（使用者 11/4 口述，一定要記住）**：寫在 `electronics/docs/MIDTERM2.md`（6 類計算題＋7 類選擇題、整張考卷全英文）。做電子學期中考 2 相關的任何東西前先讀它。
+- **期中考 2 考試重點（使用者 11/4 口述，一定要記住）**：寫在 `electronics/docs/MIDTERM2.md`（6 類計算題＋7 類選擇題、整張考卷全英文）。做電子學期中考 2 相關的任何東西前先讀它。衝刺頁 `electronics/midterm2.html`（計算 `assets/mt2-calc.js` → `__MT2EX`、英文先選擇 `assets/mt2-choice.js` → `__MT2C` name `mt2c`）＋ `hw3.html`（同兩份題庫的 HW3 子集 `__HW3EX`、`__HW3C`）。截波板書使用者之後會給 → 補進 `k5`。
 
 ## 原講義 PART 標註
 
