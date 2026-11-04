@@ -52,8 +52,8 @@
         <span class="chip h">✓ 11/9 期中考 2 範圍</span>
         <span class="chip">24 個畫面的故事模式</span>
         <span class="chip">6 個互動模組</span>
-        <span class="chip">6 個可改數字例題</span>
-        <span class="chip">6 題例題與練習（附圖解故事）</span>
+        <span class="chip">2 個可改數字例題（Ex 1.12、1.13）</span>
+        <span class="chip">2 題課本例題（附圖解故事）</span>
         <span class="chip">48 題觀念填充</span>
         <span class="chip">6 題中英對照測驗</span>
       </div>
@@ -103,7 +103,7 @@
       <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>01 · 投影片 1-13～1-15、1-18 · Diffusion &amp; Junction Capacitance</div>
       <h2><button class="tm" data-t="擴散電容">擴散電容</button> vs <button class="tm" data-t="接面電容">接面電容</button><span class="h2-en">DIFFUSION VS JUNCTION CAPACITANCE</span></h2>
       <p class="lede">順偏時，電子跑到 p 區、電洞跑到 n 區，在那裡變成「多出來的少數載子」——像一間<strong>倉庫的庫存</strong>。電壓一變，庫存跟著變，這個 ΔQ/ΔV 就是擴散電容 C<sub>d</sub>。</p>
-      <div class="eq">C<em>d</em> = dQ/dV（課本：C<em>d</em> = τ<em>T</em> I<em>DQ</em> / (2V<em>T</em>)）　　順偏＋交流：C<em>d</em> ≫ C<em>j</em>　　頻率 ↑ ⟹ C<em>d</em> ↓</div>
+      <div class="eq">C<em>d</em> = dQ/dV　　順偏＋交流：C<em>d</em> ≫ C<em>j</em>　　頻率 ↑ ⟹ C<em>d</em> ↓</div>
       <div class="derive">
         <h4>電容從哪裡來</h4>
         <ol>
@@ -112,7 +112,7 @@
           <li><span class="d-eq">v<sub>D</sub> = V<sub>D</sub> + ΔV ⟹ 少數載子濃度曲線上下動 ⟹ ±ΔQ</span>
             <div class="why">投影片 1-13（Fig 1.37）：陰影部分就是多存或少存的電荷。電壓 ↑ 注入更多 → 像電容充電。</div></li>
           <li><span class="d-eq">C<sub>d</sub> = ΔQ/ΔV</span>
-            <div class="why">定義跟一般電容一樣。電流越大，庫存越多，C<sub>d</sub> 越大（課本：C<sub>d</sub> ∝ I<sub>DQ</sub>）。</div></li>
+            <div class="why">定義跟一般電容一樣：電壓變一點，儲存電荷跟著變多少。</div></li>
           <li><span class="d-eq">頻率 ↑ ⟹ 載子來不及進出 ⟹ dQ ↓ ⟹ C<sub>d</sub> ↓</span>
             <div class="why">投影片 1-15：低頻時充放電跟得上，C<sub>d</sub> 完整表現；高頻時 dQ/dt 跟不上 dV/dt。</div></li>
           <li><span class="d-eq hi">接面電容 C<sub>j</sub>：空乏區兩邊的固定電荷，任何偏壓都在</span>
@@ -133,13 +133,12 @@
         </dl>
         <div class="msg" id="cd-msg"></div>
       </div>
-      <div id="ex-cd"></div>
       <div class="howto">
         <h4>分辨兩種電容</h4>
         <ol>
           <li>逆偏 → 只有 C<sub>j</sub>（空乏區）。</li>
           <li>順偏＋交流 → C<sub>d</sub> 和 C<sub>j</sub> 都有，C<sub>d</sub> 通常大很多。</li>
-          <li>C<sub>d</sub> ∝ I<sub>DQ</sub>；頻率越高，C<sub>d</sub> 越小。</li>
+          <li>頻率越高，少數載子來不及進出，C<sub>d</sub> 越小。</li>
         </ol>
       </div>
       <div class="pitfall">
@@ -150,7 +149,6 @@
           <li><span class="x">✗</span> 擴散電容的電荷在空乏區。<span class="o">在空乏區外的中性區</span>（注入的少數載子）。</li>
         </ul>
       </div>
-      <div class="exbook" data-bank="__CH16EX" data-sec="cap"></div>
       <div class="cf-wrap" id="cf-cap">
         <h3>🧠 觀念填充 01（不用算，用選的）</h3>
         <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
@@ -163,7 +161,7 @@
       <div class="eyebrow"><span class="part-tag">原講義 PART 5</span>02 · 投影片 1-16、1-17 · 1.4.2 Small-Signal Equivalent Circuit</div>
       <h2>小訊號等效電路<span class="h2-en">SMALL-SIGNAL EQUIVALENT CIRCUIT</span></h2>
       <p class="lede">把前兩節的東西拼起來：交流眼中的二極體 = <strong>r<sub>d</sub> 並聯 C<sub>d</sub></strong>。頻率低時電容像斷路，看到 r<sub>d</sub>；頻率高時電容抄捷徑，阻抗往下掉。</p>
-      <div class="eq">簡化：Y = g<em>d</em> + jωC<em>d</em>，g<em>d</em> = 1/r<em>d</em>　　完整：r<em>s</em> 串聯（r<em>d</em> ∥ C<em>d</em> ∥ C<em>j</em>）　　f<em>c</em> = 1 / (2π r<em>d</em> C)</div>
+      <div class="eq">簡化：Y = g<em>d</em> + jωC<em>d</em>，g<em>d</em> = 1/r<em>d</em>　　完整：r<em>s</em> 串聯（r<em>d</em> ∥ C<em>d</em> ∥ C<em>j</em>）</div>
       <div class="derive">
         <h4>從二極體到 RC 電路</h4>
         <ol>
@@ -190,20 +188,15 @@
           <div class="ctrl" style="grid-column:1 / -1"><label for="zi-cj">C<sub>j</sub><output for="zi-cj"></output></label>
             <input type="range" id="zi-cj" min="0" max="20" step="0.5" value="2"></div>
         </div>
-        <dl class="readout">
-          <div><dt>r<sub>d</sub></dt><dd id="zi-rd">—</dd></div>
-          <div><dt>C<sub>d</sub></dt><dd id="zi-cd" class="e">—</dd></div>
-          <div><dt>轉折 f<sub>c</sub></dt><dd id="zi-fc">—</dd></div>
-        </dl>
         <div class="msg" id="zi-msg"></div>
       </div>
-      <div id="ex-z"></div>
       <div class="howto">
         <h4>用小訊號等效電路</h4>
         <ol>
-          <li>DC 求 I<sub>DQ</sub> → r<sub>d</sub>、C<sub>d</sub>。</li>
-          <li>低頻：二極體 = r<sub>d</sub>。</li>
-          <li>高頻：Y = 1/r<sub>d</sub> + jω(C<sub>d</sub> + C<sub>j</sub>)，Z = 1/Y。</li>
+          <li>簡化模型：r<sub>d</sub> 並聯 C<sub>d</sub>，並聯加導納 Y = g<sub>d</sub> + jωC<sub>d</sub>。</li>
+          <li>頻率低：電容那一支幾乎沒電流，看到的就是 r<sub>d</sub>。</li>
+          <li>頻率高：電容阻抗變小，二極體等效阻抗下降。</li>
+          <li>完整模型：再加 C<sub>j</sub>（並聯）和中性區電阻 r<sub>s</sub>（串聯）。</li>
         </ol>
       </div>
       <div class="pitfall">
@@ -213,7 +206,6 @@
           <li><span class="x">✗</span> 並聯就把阻抗相加。<span class="o">並聯加導納</span>：Y = g<sub>d</sub> + jωC<sub>d</sub>。</li>
         </ul>
       </div>
-      <div class="exbook" data-bank="__CH16EX" data-sec="sseq"></div>
       <div class="cf-wrap" id="cf-sseq">
         <h3>🧠 觀念填充 02（不用算，用選的）</h3>
         <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
@@ -257,20 +249,15 @@
           <div class="ctrl" style="grid-column:1 / -1"><label for="sw-tau">少數載子壽命 τ<output for="sw-tau"></output></label>
             <input type="range" id="sw-tau" min="5" max="50" step="1" value="20"></div>
         </div>
-        <dl class="readout">
-          <div><dt>儲存時間 t<sub>s</sub></dt><dd id="sw-ts" class="e">—</dd></div>
-          <div><dt>掉落時間 t<sub>f</sub>（示意）</dt><dd id="sw-tf">—</dd></div>
-        </dl>
         <div class="msg" id="sw-msg"></div>
       </div>
-      <div id="ex-ts"></div>
       <div class="howto">
         <h4>看開關暫態的波形</h4>
         <ol>
           <li>順偏：I<sub>F</sub> = (V<sub>F</sub> − V<sub>γ</sub>)/R。</li>
           <li>剛切逆偏：v<sub>D</sub> ≈ 0 → I<sub>R</sub> ≈ V<sub>R</sub>/R，維持 t<sub>s</sub>。</li>
           <li>t<sub>s</sub> 之後：v<sub>D</sub> 往 −V<sub>R</sub> 走，電流在 t<sub>f</sub> 內歸零。</li>
-          <li>要快：用蕭特基，或加大 I<sub>R</sub>。</li>
+          <li>要快：用蕭特基（沒有少數載子儲存，見第 05 節）。</li>
         </ol>
       </div>
       <div class="pitfall">
@@ -281,7 +268,6 @@
           <li><span class="x">✗</span> 開啟比關閉慢。<span class="o">關閉比較慢</span>（要清庫存）。</li>
         </ul>
       </div>
-      <div class="exbook" data-bank="__CH16EX" data-sec="sw"></div>
       <div class="cf-wrap" id="cf-sw">
         <h3>🧠 觀念填充 03（不用算，用選的）</h3>
         <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
@@ -327,13 +313,11 @@
         </dl>
         <div class="msg" id="op-msg"></div>
       </div>
-      <div id="ex-led"></div>
       <div class="howto">
         <h4>分辨三種光電元件</h4>
         <ol>
           <li>能量方向：光 → 電（太陽能電池、光二極體）；電 → 光（LED）。</li>
           <li>偏壓：太陽能電池不加、光二極體逆偏、LED 順偏。</li>
-          <li>LED 一定要串限流電阻。</li>
         </ol>
       </div>
       <div class="pitfall">
@@ -344,7 +328,6 @@
           <li><span class="x">✗</span> 太陽能電池要接電源。<span class="o">它本身就是電源</span>，接負載。</li>
         </ul>
       </div>
-      <div class="exbook" data-bank="__CH16EX" data-sec="opto"></div>
       <div class="cf-wrap" id="cf-opto">
         <h3>🧠 觀念填充 04（不用算，用選的）</h3>
         <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
@@ -511,7 +494,7 @@
           <li>1-34 Design Example 1.13：R = 4.4/3m = <b>1.47 kΩ</b>、P<sub>Z</sub> = <b>16.8 mW</b> ✓</li>
         </ul>
       </div>
-      <p class="note src">勘誤僅針對數學、單位與用詞正確性；若與課堂說法不同，以老師為準。C<sub>d</sub> = τI<sub>DQ</sub>/(2V<sub>T</sub>)、t<sub>s</sub> ≈ τ ln(1 + I<sub>F</sub>/I<sub>R</sub>) 是課本延伸，講義只講觀念。</p>
+      <p class="note src">勘誤僅針對數學、單位與用詞正確性；若與課堂說法不同，以老師為準。01～04 節講義只講觀念、沒有計算公式，所以這幾節不放計算題（使用者 11/4）。</p>
     </section>
 
     <!-- ══════════ 名詞 ══════════ -->
@@ -574,10 +557,10 @@
 <script src="../shared/exbook.js"></script>
 <script>
 __EXB.picker(document.getElementById('sec-pick'), [
-  { id: 'cap', no: '01', name: '兩種電容', count: '練 1' },
-  { id: 'sseq', no: '02', name: '等效電路', count: '練 1' },
-  { id: 'sw', no: '03', name: '開關暫態', count: '練 1' },
-  { id: 'opto', no: '04', name: '光電元件', count: '練 1' },
+  { id: 'cap', no: '01', name: '兩種電容', count: '觀念' },
+  { id: 'sseq', no: '02', name: '等效電路', count: '觀念' },
+  { id: 'sw', no: '03', name: '開關暫態', count: '觀念' },
+  { id: 'opto', no: '04', name: '光電元件', count: '觀念' },
   { id: 'sbd', no: '05', name: '蕭特基', count: '例 1' },
   { id: 'zd', no: '06', name: '齊納', count: '例 1' }
 ], { key: 'ch1-part7', alwaysAll: ['map', 'check', 'glossary', 'quiz-sec'] });

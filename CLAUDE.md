@@ -248,6 +248,7 @@
 - `shared/tpic.js`（`__TPIC`）：`__TPIC.add(cards, sets, figs)`；cards = `{ key: { t, en, plain, rel, svg } }`（svg 是 viewBox 0 0 640 300 的內容），頁面 `<div class="tpic" data-set="e16"></div>`，故事用 `__TPIC.scenes([key…])`，第三個參數把 `terms.js` 名詞對到卡片（彈窗附圖）。
 - 電子學卡片在 `electronics/assets/diode-terms.js`（set `e16` = CH1 PART 6、`e17` = CH1 PART 7、`e21` = CH2 PART 1），要先載 story.js、`ch1-part5-kit.js`、`tpic.js`。新章節把新名詞加一張卡、新 set。
 - **電子學期中考 2（11/9）**：範圍 CH1 PART 4 §02 ～ CH2 PART 1；每節都有 8 題觀念填充（PART 4 每節再加 7 題「英文先＋計算」：item 寫 `zh`（中文翻譯，hw.js 收進「中文翻譯」按鈕）、`calc: true`；使用者 11/1 要求之後加碼題都英文先）（`ch14c`、`ch15c`、`ch16c`、`ch21c`），總複習 `electronics/review2.html`。之後新增的電子學小節也要附 8 題觀念填充並加進總複習頁。
+- **講義沒給公式就不算（使用者 11/4）**：講義只講觀念、沒有計算公式的小節（例：CH1 PART 7 的 01～04 節：兩種電容、小訊號等效電路、開關暫態、光電元件）**不放自編計算題、不放課本延伸公式**（例 C<sub>d</sub> = τI/(2V<sub>T</sub>)、f<sub>c</sub>、t<sub>s</sub> 公式、LED 限流），故事和互動也不要編數字；只考觀念。新內容先對照講義原文確認有沒有那條公式再寫。
 - 電子學 CH1 PART 6 起照「觀念先（故事優先）」的做法，**不是**題目先（使用者 10/27：先用電子學之前的方式）；每節也有觀念填充（8 題）。
 
 - **電子學 CH2 PART 2、3（11/4，期中考 2 範圍延伸）**：使用者給手寫板書掃描（整流器、截波／箝位）。`ch2-part2.html`（電池充電器、中間抽頭、橋式、比較）與 `ch2-part3.html`（並聯／串聯／雙向截波、箝位器），共用 `assets/ch2-common.js`（`__c2.quiz`、`__c2.tools`）。手寫看不清的地方寫在頁面「講義檢查」請使用者確認，不要斷言；練習沒有圖解故事。總複習 `review2.html` 現為 339 題。

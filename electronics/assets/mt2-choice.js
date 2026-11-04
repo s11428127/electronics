@@ -40,10 +40,10 @@
     ['impact ionization: accelerated carriers collide and create more pairs 撞擊游離（撞出更多電子電洞對）', 'tunneling 穿隧', 'recombination 復合', 'diffusion 擴散'], '「撞的」：連鎖反應。');
   M('cbrk', 'Doping', 'Zener breakdown occurs in {0} junctions.', '齊納崩潰發生在 ___ 的接面。',
     ['heavily doped 重摻雜', 'lightly doped 輕摻雜', 'undoped 未摻雜', 'metal 金屬'], '重摻雜 → 空乏區窄 → 電場大。');
-  M('cbrk', 'Voltage range', 'Zener breakdown usually dominates for breakdown voltages {0}.', '齊納崩潰通常主導 ___ 的崩潰電壓。',
-    ['below about 5 V 小於約 5 V', 'above about 50 V 大於約 50 V', 'exactly 0.7 V 剛好 0.7 V', 'in forward bias 順偏時'], '高崩潰電壓多半是累增。');
-  M('cbrk', 'Temperature coefficient', 'The breakdown voltage of avalanche breakdown {0} with temperature.', '累增崩潰電壓隨溫度 ___。',
-    ['increases 上升（正溫度係數）', 'decreases 下降', 'does not change 不變', 'oscillates 震盪'], '溫度高、晶格振動大，載子較難加速到足夠能量；齊納則是負溫度係數。');
+  M('cbrk', 'Doping and BV', 'A heavily doped diode needs a {0} reverse voltage to break down.', '高摻雜的二極體，產生崩潰所需的逆向偏壓比較 ___。',
+    ['lower 低', 'higher 高', 'zero 為零', 'forward 順向'], '講義：高摻雜 → 空乏區窄、電場強 → 崩潰電壓低；低摻雜崩潰電壓高。');
+  M('cbrk', 'Avalanche doping', 'Avalanche breakdown occurs mainly in {0} junctions.', '累增崩潰主要發生在 ___ 的接面。',
+    ['lightly doped 低摻雜', 'heavily doped 高摻雜', 'metal–semiconductor 金屬半導體', 'forward-biased 順偏'], '講義：累增崩潰（低摻雜），少數載子穿越空乏區被加速、撞斷共價鍵，1 個變 2 個、4 個、8 個……');
   M('cbrk', 'Zener in use', 'A Zener diode used as a regulator operates in {0}.', '齊納當穩壓用時工作在 ___。',
     ['the reverse breakdown region 逆向崩潰區', 'forward bias 順偏', 'cutoff with zero current 零電流截止', 'saturation 飽和'], '崩潰區電壓幾乎固定。');
   M('cbrk', 'Zener resistance', 'The Zener resistance r<sub>z</sub> is {0} of the I–V curve in breakdown.', '齊納電阻 r<sub>z</sub> 是崩潰區 I–V 曲線 ___。',
@@ -76,8 +76,8 @@
     ['the change of stored minority-carrier charge in the neutral regions 中性區少數載子儲存電荷的變化', 'the width change of the depletion region 空乏區寬度變化', 'the metal contacts 金屬接點', 'avalanche 累增'], 'C<sub>d</sub> = dQ/dV<sub>D</sub>。');
   M('ccd', 'Junction vs diffusion', 'Junction capacitance C<sub>j</sub> is associated with {0}.', '接面電容 C<sub>j</sub> 跟 ___ 有關。',
     ['the depletion region charge (dominant in reverse bias) 空乏區電荷（逆偏為主）', 'stored minority carriers 儲存的少數載子', 'the load resistor 負載電阻', 'photons 光子'], '兩種電容要分清楚。');
-  M('ccd', 'Proportional', 'Diffusion capacitance is approximately proportional to {0}.', '擴散電容約正比於 ___。',
-    ['the dc forward current IDQ 直流順向電流', 'the reverse voltage 逆向電壓', 'the area of the metal 金屬面積', 'frequency 頻率'], 'C<sub>d</sub> ≈ τI<sub>DQ</sub>/(2V<sub>T</sub>)。');
+  M('ccd', 'Low frequency', 'At low frequency, the minority carriers {0}, so the diffusion capacitance is fully present.', '低頻時，少數載子 ___，所以擴散電容完整表現出來。',
+    ['have enough time to follow the voltage change 有足夠時間跟上電壓變化', 'cannot move at all 完全不能動', 'disappear 消失', 'become majority carriers 變成多數載子'], '講義 1.4.1：低頻時充放電跟得上（V↑Q↑、V↓Q↓）；高頻時 dQ 變小，C<sub>d</sub> 變小。');
   M('ccd', 'DC only', 'For a purely dc analysis, the diode capacitances {0}.', '只有直流時，二極體電容 ___。',
     ['need not be considered 不需要考慮', 'must be considered 一定要考慮', 'become short circuits 變短路', 'double 加倍'], 'HW3 第 1 題：直流時電容開路。');
   M('ccd', 'High frequency', 'At high frequency, diffusion capacitance {0}.', '高頻時，擴散電容會 ___。',
@@ -96,8 +96,8 @@
     ['reverse bias 逆偏', 'forward bias 順偏', 'breakdown 崩潰', 'oscillation 震盪'], '光電流就是逆向電流變大。');
   M('coth', 'LED', 'An LED emits light because {0}.', 'LED 發光是因為 ___。',
     ['electrons and holes recombine and release energy as photons 電子電洞復合放出光子', 'it absorbs photons 吸收光子', 'of thermal radiation 熱輻射', 'of tunneling 穿隧'], '要順偏。');
-  M('coth', 'LED material', 'LEDs are usually made from {0}.', 'LED 通常用 ___ 做。',
-    ['direct-bandgap compound semiconductors such as GaAs 直接能隙化合物半導體（GaAs）', 'silicon only 只有矽', 'copper 銅', 'glass 玻璃'], '矽是間接能隙，不太會發光。');
+  M('coth', 'Laser diode', 'An LED plus an optical cavity forms {0}.', 'LED 加上光學腔，就變成 ___。',
+    ['a laser diode 雷射二極體', 'a solar cell 太陽能電池', 'a photodiode 光二極體', 'a Zener diode 齊納二極體'], '講義 1.5：光在腔裡來回反射放大，產生受激放射。');
   M('coth', 'Schottky structure', 'A Schottky diode is formed by a junction between {0}.', '蕭特基二極體是 ___ 形成的接面。',
     ['a metal and a semiconductor 金屬與半導體', 'two semiconductors 兩種半導體', 'a semiconductor and an insulator 半導體與絕緣體', 'two metals 兩種金屬'], 'HW3 PART1 第 14 題。');
   M('coth', 'Schottky advantage', 'Compared with a pn diode, a Schottky diode has {0}.', '跟 PN 二極體比，蕭特基 ___。',

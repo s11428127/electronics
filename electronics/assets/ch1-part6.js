@@ -459,15 +459,15 @@
       if (fc > 1e3 && fc < 1e10) {
         dashLine(ctx, F.X(fc), F.T, F.X(fc), F.B, C['ink-3']);
         dot(ctx, F.X(fc), F.Y(rd / Math.SQRT2), 5.5, C.accent);
-        labelCJK(ctx, F.X(fc) + 6, F.T + 12, 'f<sub>c</sub> = ' + fmtF(fc), C.accent, 11.5, 'left', '700');
+        labelCJK(ctx, F.X(fc) + 6, F.T + 12, '從這裡開始往下掉', C.accent, 11.5, 'left', '700');
       }
-      labelCJK(ctx, F.L + 8, F.Y(Math.min(rd, 900)) - 12, '低頻：|Z| = r<sub>d</sub> = ' + fmtR(rd), C.ink, 11.5, 'left', '700');
+      labelCJK(ctx, F.L + 8, F.Y(Math.min(rd, 900)) - 12, '低頻：|Z| ≈ r<sub>d</sub>', C.ink, 11.5, 'left', '700');
       labelCJK(ctx, F.R - 4, F.B - 12, '高頻：電容把它「短路」', C['ink-3'], 11, 'right');
     } });
     function msg() {
       const I = Math.pow(10, lI) * 1e-3, tau = Math.pow(10, lT) * 1e-9, rd = VT / I, Cd = tau * I / (2 * VT), fc = 1 / (TAU * rd * (Cd + CJ));
       setHTML('zi-rd', fmtR(rd)); setHTML('zi-cd', fmtC(Cd)); setHTML('zi-fc', fmtF(fc));
-      setHTML('zi-msg', 'Y = 1/r<sub>d</sub> + jωC：頻率低時電容像斷路，看到的就是 r<sub>d</sub>；過了 f<sub>c</sub> 電容的阻抗 1/(ωC) 比 r<sub>d</sub> 小，交流從電容「抄捷徑」，|Z| 一路往下掉。' +
+      setHTML('zi-msg', 'Y = 1/r<sub>d</sub> + jωC：頻率低時電容像斷路，看到的就是 r<sub>d</sub>；頻率一高，電容那一支的阻抗變得比 r<sub>d</sub> 小，交流從電容「抄捷徑」，|Z| 一路往下掉。' +
         (Cd > 5 * CJ ? '這個電流下 <b>C<sub>d</sub> ≫ C<sub>j</sub></b>，順偏主角是擴散電容。' : '電流小，C<sub>d</sub> 不大，C<sub>j</sub> 也要算進去。'));
       st.redraw();
     }
@@ -533,8 +533,7 @@
       setHTML('sw-ts', sbd ? '≈ 0' : m.ts.toFixed(1) + ' ns');
       setHTML('sw-tf', m.tf.toFixed(1) + ' ns');
       setHTML('sw-msg', sbd ? '<b>蕭特基二極體</b>：電流靠多數載子，沒有少數載子「庫存」→ 幾乎沒有 t<sub>s</sub>，一切就關（§09）。'
-        : '順偏時塞滿了少數載子。一切到逆偏，這些載子還在，二極體像短路，電流<b>反過來</b>流（−I<sub>R</sub>）把它們掃出去 —— 這段是 <b>t<sub>s</sub></b>。掃完了空乏區才重建，電流在 <b>t<sub>f</sub></b> 內掉回 0。' +
-          (IF > IR * 1.5 ? ' I<sub>F</sub> 大（庫存多）、I<sub>R</sub> 小（掃得慢）→ t<sub>s</sub> 長。' : IR > IF * 1.5 ? ' I<sub>R</sub> 大，掃得快 → t<sub>s</sub> 短。' : ''));
+        : '順偏時塞滿了少數載子。一切到逆偏，這些載子還在，二極體像短路，電流<b>反過來</b>流（−I<sub>R</sub>）把它們掃出去 —— 這段是 <b>t<sub>s</sub></b>。掃完了空乏區才重建，電流在 <b>t<sub>f</sub></b> 內掉回 0。' );
     }
     bindRange('sw-if', x => x.toFixed(1) + ' mA', x => { IF = x; msg(); });
     bindRange('sw-ir', x => x.toFixed(1) + ' mA', x => { IR = x; msg(); });

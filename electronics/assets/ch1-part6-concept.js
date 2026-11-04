@@ -279,10 +279,10 @@
     [S(['擴散電容 Cd', '接面電容 Cj', 'rd', 'VT']), S(['接面電容 Cj', '擴散電容 Cd', 'rs', 'IS'])],
     '沒有庫存就沒有 C<sub>d</sub>；空乏區的 C<sub>j</sub> 還在（PART 3 的變容二極體）。');
   C('cap', 7, 'C_d 跟電流',
-    '課本式子 Cd = τ·IDQ/(2VT)：IDQ 越大，Cd 越 {0}。',
-    'From Cd = τ·IDQ/(2VT), a larger IDQ gives a ___ Cd.',
-    [S(['大 larger', '小 smaller', '不變 unchanged', '負 negative'])],
-    '電流越大，注入越多，庫存越多。', true);
+    '擴散電容的 Q，是兩邊中性區「過量少數載子」的 {0}。',
+    'The Q of the diffusion capacitance is the ___ of the excess minority carriers in the two neutral regions.',
+    [S(['總儲存電荷 total stored charge', '空乏區固定電荷 fixed depletion charge', '金屬電荷 metal charge', '多數載子 majority carriers'])],
+    '講義：C<sub>d</sub> 的 Q 就是兩邊中性區過量少數載子的總儲存電荷，它的變化量就是 dQ。', true);
   C('cap', 8, '分辨題型',
     '題目問「逆偏的二極體電容」，要用 {0}；問「順偏高頻」，主要考慮 {1}。',
     'For "capacitance of a reverse-biased diode" use ___; for "forward bias at high frequency" mainly consider ___.',
@@ -316,20 +316,20 @@
     [S(['中性區電阻 rs the neutral-region resistance rs', '崩潰電壓 BV', '光電流 Iph', '熱電壓 VT'])],
     '講義 1-16：C<sub>j</sub> 並聯、r<sub>s</sub>（p、n 中性區的電阻）串聯。');
   C('sseq', 6, '轉折點',
-    '電阻那一支和電容那一支一樣大（1/rd = ωC）時的頻率，叫 {0}。',
-    'The frequency at which 1/rd = ωC is called the ___.',
-    [S(['轉折頻率 corner frequency', '共振頻率 resonant frequency', '截止電壓 cutoff voltage', '儲存時間 storage time'])],
-    'f<sub>c</sub> = 1/(2πr<sub>d</sub>C)，這時 |Z| = r<sub>d</sub>/√2。', true);
+    '講義 NOTE：擴散電容和二極體電阻組成一個 {0} 電路。',
+    'The notes say the diffusion capacitance and the diode resistance form an ___ circuit.',
+    [S(['RC', 'RL', 'LC', '純電阻 purely resistive'])],
+    '充放電時間常數：頻率增加，電容阻抗降低，二極體等效阻抗下降。', true);
   C('sseq', 7, '什麼時候可以只用 rd',
     '低頻的小訊號題目（例如 Example 1.11），二極體可以只用 {0} 代表。',
     'In low-frequency small-signal problems (e.g. Example 1.11), the diode can be modeled by ___ alone.',
     [S(['rd', 'Cd', 'Cj', 'rs 和 Cj rs and Cj'])],
     '電容只有高頻（或開關）才要考慮。', true);
   C('sseq', 8, '求阻抗的流程',
-    '求高頻時的二極體阻抗：先 DC 求 IDQ → 算 rd、Cd → {0} → 取倒數。',
-    'To find the diode impedance at high frequency: dc for IDQ → rd and Cd → ___ → take the reciprocal.',
-    [S(['Y = 1/rd + jωC 相加 add the admittances', '把 rd 和 1/(ωC) 直接相加 add rd and 1/(ωC)', '只算 Cd only Cd', '只算 rd only rd'])],
-    '並聯先加導納，再倒過來變阻抗。', true);
+    '二極體當開關或在高頻工作時，小訊號模型裡的電容 {0} 忽略。',
+    'When the diode switches or works at high frequency, the capacitances in the small-signal model ___ be ignored.',
+    [S(['不能 cannot', '可以 can', '一定要 must', '只在逆偏時要 only in reverse bias should'])],
+    '頻率高時電容那一支的阻抗變小，影響最大。', true);
 
   /* ═════════ 07 開關暫態 ═════════ */
   C('sw', 1, '剛切到逆偏',
@@ -365,8 +365,8 @@
   C('sw', 7, '怎麼關得快',
     '想讓二極體關得快，可以 {0}。',
     'To make a diode turn off faster, you can ___.',
-    [S(['加大反向電流 IR，或改用蕭特基 increase IR or use a Schottky diode', '加大順向電流 IF increase IF', '降低反向電壓 reduce VR', '加大少數載子壽命 increase the lifetime'])],
-    '掃得越用力越快；蕭特基沒有少數載子庫存。', true);
+    [S(['改用沒有少數載子儲存的蕭特基 use a Schottky diode', '加大順向電流 IF increase IF', '多存一點少數載子 store more minority carriers', '加一顆電容 add a capacitor'])],
+    '蕭特基靠多數載子導電，沒有少數載子庫存，幾乎沒有儲存時間（講義 1.5.4）。', true);
   C('sw', 8, '讀波形',
     '看開關波形題目：電流先 +IF，切換後先 {0} 一段 ts，再在 tf 內歸零。',
     'Reading the switching waveform: current is +IF, then after switching it ___ for ts, then decays to zero in tf.',
