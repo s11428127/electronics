@@ -78,7 +78,7 @@
       svg: (() => swWave('ts'))() },
     tf: { t: '掉落時間 t<sub>f</sub>', en: 'FALL TIME', plain: '少數載子快清完時，空乏區開始恢復，反向電流從 −I<sub>R</sub> 慢慢降到 0（課本取降到 0.1 I<sub>R</sub>）。', rel: '關閉時間 = t<sub>s</sub> + t<sub>f</sub>（通常比導通時間長）',
       svg: (() => swWave('tf'))() },
-    solar: { t: '太陽能電池', en: 'SOLAR CELL', plain: '光打在空乏區產生電子電洞對，內建電場把電子推到 N、電洞推到 P，形成光電流，直接推動負載 R<sub>L</sub>。不用外加電源。', rel: '光 → 電；材料：Si、GaAs、III-V 化合物',
+    solar: { t: '太陽能電池', en: 'SOLAR CELL', plain: '光打在空乏區產生電子電洞對，內建電場把電子推到 N、電洞推到 P，<b>P 端堆正電（+）、N 端堆負電（−）</b>，像一顆電池：外面的電流從 P 流出、經過 R<sub>L</sub>、流回 N（電子方向剛好相反）。不用外加電源。', rel: '光 → 電；材料：Si、GaAs、III-V 化合物',
       svg: (() => pnPic('solar'))() },
     pd: { t: '光二極體', en: 'PHOTODIODE', plain: '原理跟太陽能電池一樣，但加<b>逆偏</b>：空乏區更寬、電場更強，光產生的電子電洞對被快速掃出。光越強，電流越大。', rel: '光 → 電（感測器）；I<sub>ph</sub> ∝ 入射光強度',
       svg: (() => pnPic('pd'))() },
@@ -145,12 +145,13 @@
     if (kind === 'led') s += [270, 320, 370].map(x => wavy(x, 70, true)).join('') + T(320, 40, '放出光', { cls: 'ta', fs: 13 });
     else s += [280, 320, 360].map(x => wavy(x - 20, 30, false)).join('') + T(410, 40, '光打進空乏區', { cls: 'ta', fs: 13, a: 'start' });
     s += '<path class="ln" style="fill:none" d="M150 120 H110 V240 H530 V120 H490"/>';
-    if (kind === 'solar') s += '<path class="ln" style="fill:none" d="M300 240 L306 232 L314 248 L322 232 L330 248 L336 240"/>' + T(318, 270, 'R<sub>L</sub>（負載）', { cls: 't', fs: 13 }) + D.arrow(420, 232, 380, 232, null, 'lna') + T(400, 224, 'I<sub>ph</sub>', { cls: 'ta', fs: 13 });
+    if (kind === 'solar') s += '<path class="ln" style="fill:none" d="M300 240 L306 232 L314 248 L322 232 L330 248 L336 240"/>' + T(318, 270, 'R<sub>L</sub>（負載）', { cls: 't', fs: 13 }) + D.arrow(380, 232, 430, 232, null, 'lna') + T(405, 224, 'I（外部，p → R<sub>L</sub> → n）', { cls: 'ta', fs: 12, a: 'start' }) +
+      T(132, 112, '+', { cls: 'ta', fs: 20 }) + T(508, 112, '−', { cls: 'ta', fs: 20 }) + T(220, 148, '電洞 ← ', { cls: 'tm', fs: 11 }) + T(420, 148, '→ 電子', { cls: 'tm', fs: 11 });
     else {
       const rev = kind === 'pd';
       s += '<line class="ln" x1="' + (rev ? 330 : 310) + '" y1="226" x2="' + (rev ? 330 : 310) + '" y2="254" style="stroke-width:2"/><line class="ln" x1="' + (rev ? 310 : 330) + '" y1="232" x2="' + (rev ? 310 : 330) + '" y2="248" style="stroke-width:3.4"/>' +
         '<rect x="312" y="230" width="16" height="20" style="fill:var(--s-card)"/>' + T(320, 276, rev ? '逆偏（p 接負）' : '順偏（p 接正）', { cls: 'ta', fs: 13 });
-      if (rev) s += D.arrow(420, 232, 380, 232, null, 'lna') + T(400, 224, 'I<sub>ph</sub>', { cls: 'ta', fs: 13 });
+      if (rev) s += D.arrow(380, 232, 430, 232, null, 'lna') + T(440, 224, 'I<sub>ph</sub>', { cls: 'ta', fs: 13, a: 'start' });
       else s += D.arrow(200, 232, 250, 232, null, 'lna') + T(225, 224, 'I<sub>D</sub>', { cls: 'ta', fs: 13 });
     }
     return s;
