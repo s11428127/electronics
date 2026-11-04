@@ -142,7 +142,7 @@
     let s = '<rect class="card" x="150" y="80" width="140" height="80" rx="4" style="stroke:var(--s-ink);stroke-width:1.6"/><rect class="accw" x="290" y="80" width="60" height="80"/><rect class="card" x="350" y="80" width="140" height="80" rx="4" style="stroke:var(--s-ink);stroke-width:1.6"/>' +
       T(220, 126, 'p', { cls: 't', fs: 20 }) + T(420, 126, 'n', { cls: 't', fs: 20 }) + T(320, 176, '空乏區', { cls: 'ts', fs: 11 });
     const wavy = (x, y, up) => { let d = 'M' + x + ' ' + y; for (let i = 0; i < 6; i++) d += ' q 4 ' + (up ? -5 : 5) + ' 8 0'; return '<path class="lna" style="fill:none;stroke-width:2" d="' + d + '" transform="rotate(' + (up ? -60 : 60) + ' ' + x + ' ' + y + ')"/>'; };
-    if (kind === 'led') s += [270, 320, 370].map(x => wavy(x, 70, true)).join('') + T(320, 40, '放出光', { cls: 'ta', fs: 13 });
+    if (kind === 'led') s += [270, 320, 370].map(x => wavy(x, 70, true)).join('') + T(410, 44, '放出光', { cls: 'ta', fs: 13, a: 'start' });
     else s += [280, 320, 360].map(x => wavy(x - 20, 30, false)).join('') + T(410, 40, '光打進空乏區', { cls: 'ta', fs: 13, a: 'start' });
     s += '<path class="ln" style="fill:none" d="M150 120 H110 V240 H530 V120 H490"/>';
     if (kind === 'solar') s += '<path class="ln" style="fill:none" d="M300 240 L306 232 L314 248 L322 232 L330 248 L336 240"/>' + T(318, 270, 'R<sub>L</sub>（負載）', { cls: 't', fs: 13 }) + D.arrow(380, 232, 430, 232, null, 'lna') + T(405, 224, 'I（外部，p → R<sub>L</sub> → n）', { cls: 'ta', fs: 12, a: 'start' }) +
@@ -150,9 +150,9 @@
     else {
       const rev = kind === 'pd';
       s += '<line class="ln" x1="' + (rev ? 330 : 310) + '" y1="226" x2="' + (rev ? 330 : 310) + '" y2="254" style="stroke-width:2"/><line class="ln" x1="' + (rev ? 310 : 330) + '" y1="232" x2="' + (rev ? 310 : 330) + '" y2="248" style="stroke-width:3.4"/>' +
-        '<rect x="312" y="230" width="16" height="20" style="fill:var(--s-card)"/>' + T(320, 276, rev ? '逆偏（p 接負）' : '順偏（p 接正）', { cls: 'ta', fs: 13 });
+        '<rect x="312" y="230" width="16" height="20" style="fill:var(--s-card)"/>' + T(rev ? 342 : 298, 222, rev ? '+' : '+', { cls: 't', fs: 13 }) + T(rev ? 298 : 342, 222, '−', { cls: 't', fs: 13 }) + T(320, 276, rev ? '逆偏（p 接負）' : '順偏（p 接正）', { cls: 'ta', fs: 13 });
       if (rev) s += D.arrow(380, 232, 430, 232, null, 'lna') + T(440, 224, 'I<sub>ph</sub>', { cls: 'ta', fs: 13, a: 'start' });
-      else s += D.arrow(200, 232, 250, 232, null, 'lna') + T(225, 224, 'I<sub>D</sub>', { cls: 'ta', fs: 13 });
+      else s += D.arrow(260, 232, 200, 232, null, 'lna') + T(230, 224, 'I<sub>D</sub>', { cls: 'ta', fs: 13 }) + T(132, 112, '+', { cls: 'ta', fs: 20 }) + T(508, 112, '−', { cls: 'ta', fs: 20 });
     }
     return s;
   }
