@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>全波整流與電池充電器</title>
+<meta name="description" content="電子學 CH2 PART 2 互動講義：電池充電器（半波整流推電池）、中間抽頭全波整流、橋式全波整流、PIV 與匝數比設計（Example 2.1、2.2）。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="electronics" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電子學</a><span>›</span><b>CH2 PART 2</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH2 PART 2</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>·</i>這段在講什麼</a></li>
+      <li><a href="#chg"><i>01</i>電池充電器</a></li>
+      <li><a href="#fwc"><i>02</i>中間抽頭全波</a></li>
+      <li><a href="#brg"><i>03</i>橋式全波</a></li>
+      <li><a href="#cmp"><i>04</i>比較與設計</a></li>
+      <li><a href="#check"><i>!</i>講義檢查</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>Chapter 2 · 2.1 · 板書 11/2、11/3（Example 2.1、2.2）</div>
+      <h1>全波整流與電池充電器</h1>
+      <p class="sub">半波整流丟掉整個負半週。這一頁先看<strong>半波推電池</strong>（導通區間變短），再看<strong>中間抽頭</strong>與<strong>橋式</strong>兩種全波整流：差在<strong>吃幾個 V<sub>γ</sub></strong>、PIV 多大。</p>
+      <div class="hero-meta">
+        <span class="chip h">✓ 11/9 期中考 2 範圍</span>
+        <span class="chip">10 個畫面的故事模式</span>
+        <span class="chip">4 個互動模組</span>
+        <span class="chip">4 個可改數字例題</span>
+        <span class="chip">5 題練習</span>
+        <span class="chip">32 題觀念填充</span>
+        <span class="chip">10 題中英對照測驗</span>
+      </div>
+      <p class="note">接續 <a href="ch2-part1.html">CH2 PART 1</a>。來源是老師的上課板書掃描（手寫），公式都重新推過；看不清楚的地方在「講義檢查」節列出，請你確認。</p>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>Story mode · 先看這段，再往下讀</div>
+      <h2>10 個畫面看懂這一段<span class="h2-en">THE STORY IN 10 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>Big picture</div>
+      <h2>這一段在講什麼<span class="h2-en">THE BIG PICTURE</span></h2>
+      <p class="lede">整流器的三種長相，差別只在<strong>電流路徑上有幾顆二極體</strong>、<strong>關著的那顆扛多少壓</strong>。</p>
+      <div class="derive">
+        <h4>整頁的主線</h4>
+        <ol>
+          <li><span class="d-eq">半波推電池：v<sub>S</sub> &gt; V<sub>B</sub> + V<sub>γ</sub>，PIV = V<sub>B</sub> + V<sub>M</sub></span>
+            <div class="why">Example 2.1。</div></li>
+          <li><span class="d-eq">中間抽頭：v<sub>O</sub> = |v<sub>S</sub>| − V<sub>γ</sub>，PIV = 2V<sub>m</sub> − V<sub>γ</sub></span>
+            <div class="why">1 顆在路徑上。</div></li>
+          <li><span class="d-eq hi">橋式：v<sub>O</sub> = |v<sub>S</sub>| − 2V<sub>γ</sub>，PIV = V<sub>m</sub> − V<sub>γ</sub></span>
+            <div class="why">2 顆在路徑上。</div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 01 -->
+    <section class="sec" id="chg">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>01 · 板書 11/2 · 電池充電器 · Battery Charger</div>
+      <h2>電池充電器：<button class="tm" data-t="半波整流">半波整流</button>推電池<span class="h2-en">BATTERY CHARGER</span></h2>
+      <p class="lede">二極體後面不是電阻、而是一顆<strong>電池</strong>。電源要先推過「電池 + 二極體」的門檻，二極體才通 —— 導通的時間會比半個週期還短。</p>
+      <div class="eq">v<em>S</em> &gt; V<em>B</em> + V<em>γ</em> 才導通　　i<em>D</em> = (v<em>S</em> − V<em>γ</em> − V<em>B</em>)/R　　ωt<em>1</em> = sin<sup>−1</sup>[(V<em>B</em>+V<em>γ</em>)/V<em>M</em>]，ωt<em>2</em> = 180° − ωt<em>1</em>　　PIV = V<em>B</em> + V<em>M</em></div>
+      <div class="derive">
+        <h4>一步一步推</h4>
+        <ol>
+          <li><span class="d-eq">電路：v<sub>S</sub> → 二極體 → R → 電池 V<sub>B</sub> → 回到電源</span>
+            <div class="why">電池方向是「被充電」：電流流進它的正極，所以它會擋住電流。</div></li>
+          <li><span class="d-eq">KVL（剛要導通的瞬間，i<sub>D</sub> = 0）：v<sub>S</sub> − V<sub>γ</sub> − 0·R − V<sub>B</sub> = 0</span>
+            <div class="why">剛導通時電流還是 0，電阻沒壓降。</div></li>
+          <li><span class="d-eq">⇒ 導通條件 v<sub>S</sub> &gt; V<sub>B</sub> + V<sub>γ</sub></span>
+            <div class="why">比普通半波整流（只要 &gt; V<sub>γ</sub>）多一個 V<sub>B</sub>。</div></li>
+          <li><span class="d-eq">導通後：i<sub>D</sub> = (v<sub>S</sub> − V<sub>γ</sub> − V<sub>B</sub>)/R</span>
+            <div class="why">電阻分到「剩下」的電壓。</div></li>
+          <li><span class="d-eq">起始角：V<sub>M</sub> sin ωt<sub>1</sub> = V<sub>B</sub> + V<sub>γ</sub> ⇒ ωt<sub>1</sub> = sin<sup>−1</sup>[(V<sub>B</sub>+V<sub>γ</sub>)/V<sub>M</sub>]</span>
+            <div class="why">把 v<sub>S</sub> = V<sub>M</sub> sin ωt 代進導通條件取等號。</div></li>
+          <li><span class="d-eq">結束角：ωt<sub>2</sub> = 180° − ωt<sub>1</sub>；導通比例 = (ωt<sub>2</sub> − ωt<sub>1</sub>)/360°</span>
+            <div class="why">sin 左右對稱。</div></li>
+          <li><span class="d-eq hi">PIV = V<sub>B</sub> + V<sub>M</sub></span>
+            <div class="why">負半週谷底：電源 −V<sub>M</sub>、電池 +V<sub>B</sub> 同向疊加。</div></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>拉電池和電源，看導通區間</h3><span class="spacer"></span><span class="tag">R = 100 Ω</span></div>
+        <div class="stage-wrap"><canvas id="cv-chg" aria-label="電池充電器的輸入波形、導通門檻與二極體電流"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="cg-m">電源峰值 V<sub>M</sub><output for="cg-m"></output></label>
+            <input type="range" id="cg-m" min="5" max="40" step="1" value="24"></div>
+          <div class="ctrl"><label for="cg-b">電池 V<sub>B</sub><output for="cg-b"></output></label>
+            <input type="range" id="cg-b" min="0" max="30" step="0.5" value="12"></div>
+          <div class="ctrl"><label for="cg-g">V<sub>γ</sub><output for="cg-g"></output></label>
+            <input type="range" id="cg-g" min="0.3" max="1" step="0.05" value="0.6"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>導通角</dt><dd id="cg-a" class="e">—</dd></div>
+          <div><dt>導通比例</dt><dd id="cg-f">—</dd></div>
+          <div><dt>最大電流</dt><dd id="cg-i">—</dd></div>
+          <div><dt>PIV</dt><dd id="cg-p">—</dd></div>
+        </dl>
+        <div class="msg" id="cg-msg"></div>
+      </div>
+      <div id="ex-chg"></div>
+      <div class="howto">
+        <h4>解題步驟</h4>
+        <ol>
+          <li>列出導通條件：v<sub>S</sub> &gt; V<sub>B</sub> + V<sub>γ</sub>。</li>
+          <li>最大電流在 v<sub>S</sub> = V<sub>M</sub>。</li>
+          <li>角度用 sin<sup>−1</sup>，結束角 = 180° − 起始角。</li>
+          <li>PIV = V<sub>B</sub> + V<sub>M</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 導通條件寫成 v<sub>S</sub> &gt; V<sub>γ</sub>。 <span class="o">要加上 V<sub>B</sub>。</span></li>
+          <li><span class="x">✗</span> PIV = V<sub>M</sub>。 <span class="o">有電池時 PIV = V<sub>B</sub> + V<sub>M</sub>。</span></li>
+          <li><span class="x">✗</span> 起始角算成 sin<sup>−1</sup>(V<sub>B</sub>/V<sub>M</sub>)。 <span class="o">要連 V<sub>γ</sub> 一起：(V<sub>B</sub>+V<sub>γ</sub>)/V<sub>M</sub>。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH22EX" data-sec="chg"></div>
+      <div class="cf-wrap" id="cf-chg">
+        <h3>🧠 觀念填充 01（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。</p>
+        <div class="hw-list" data-bank="__CH22C" data-sec="chg"></div>
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section class="sec" id="fwc">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>02 · 板書 11/3 · 2.1.2 Full-Wave · Center-Tapped</div>
+      <h2>中間抽頭<button class="tm" data-t="全波整流">全波整流</button><span class="h2-en">CENTER-TAPPED FULL-WAVE RECTIFIER</span></h2>
+      <p class="lede">半波丟掉整個負半週。全波用<strong>次級線圈的中間抽頭</strong>，上下兩半邊各接一顆二極體，輪流上班，負半週也能用。</p>
+      <div class="eq">v<em>O</em> = |v<em>S</em>| − V<em>γ</em>　　死區 |v<em>S</em>| &lt; V<em>γ</em>　　PIV = 2V<em>m</em> − V<em>γ</em></div>
+      <div class="derive">
+        <h4>一步一步推</h4>
+        <ol>
+          <li><span class="d-eq">正半週：上面的二極體 ON、下面 OFF</span>
+            <div class="why">上半邊的電壓讓電流走上面那條路。</div></li>
+          <li><span class="d-eq">v<sub>O</sub> = v<sub>S</sub> − V<sub>γ</sub></span>
+            <div class="why">跟半波一樣，只經過一顆二極體。</div></li>
+          <li><span class="d-eq">負半週：換下面的二極體 ON、上面 OFF</span>
+            <div class="why">下半邊此時的極性是對的，電流從負載同一方向流過。</div></li>
+          <li><span class="d-eq">v<sub>O</sub> = −v<sub>S</sub> − V<sub>γ</sub> = |v<sub>S</sub>| − V<sub>γ</sub></span>
+            <div class="why">此時 v<sub>S</sub> 是負的，加負號翻成正。</div></li>
+          <li><span class="d-eq">⇒ v<sub>O</sub> = |v<sub>S</sub>| − V<sub>γ</sub>，死區 |v<sub>S</sub>| &lt; V<sub>γ</sub></span>
+            <div class="why">兩顆都還推不開的時候輸出為 0。</div></li>
+          <li><span class="d-eq">PIV：看 OFF 那一顆。陰極 = v<sub>O</sub> = V<sub>m</sub> − V<sub>γ</sub>，陽極 = −V<sub>m</sub></span>
+            <div class="why">兩邊相差：(V<sub>m</sub> − V<sub>γ</sub>) + V<sub>m</sub>。</div></li>
+          <li><span class="d-eq hi">⇒ PIV = 2V<sub>m</sub> − V<sub>γ</sub></span>
+            <div class="why">中間抽頭的缺點：二極體要耐兩倍的壓。</div></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>拉 V<sub>M</sub>、V<sub>γ</sub>，看輸出與死區</h3><span class="spacer"></span><span class="tag">每瞬間 1 顆導通</span></div>
+        <div class="stage-wrap"><canvas id="cv-fwc" aria-label="中間抽頭全波整流的輸入與輸出波形，死區用淺色標出"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="fc-m">每半邊峰值 V<sub>M</sub><output for="fc-m"></output></label>
+            <input type="range" id="fc-m" min="0.5" max="20" step="0.5" value="10"></div>
+          <div class="ctrl"><label for="fc-g">V<sub>γ</sub><output for="fc-g"></output></label>
+            <input type="range" id="fc-g" min="0.3" max="1.5" step="0.05" value="0.7"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>輸出峰值</dt><dd id="fc-pk" class="e">—</dd></div>
+          <div><dt>死區</dt><dd id="fc-dz">—</dd></div>
+          <div><dt>PIV</dt><dd id="fc-piv">—</dd></div>
+        </dl>
+        <div class="msg" id="fc-msg"></div>
+      </div>
+      <div id="ex-fwc"></div>
+      <div class="howto">
+        <h4>解題步驟</h4>
+        <ol>
+          <li>判斷電流路徑上有幾顆二極體（這裡 1 顆）。</li>
+          <li>v<sub>O</sub> = |v<sub>S</sub>| − V<sub>γ</sub>。</li>
+          <li>PIV = 2V<sub>m</sub> − V<sub>γ</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> PIV = V<sub>m</sub>（跟半波一樣）。 <span class="o">中間抽頭是 2V<sub>m</sub> − V<sub>γ</sub>。</span></li>
+          <li><span class="x">✗</span> 輸出頻率跟輸入一樣。 <span class="o">全波輸出是輸入的 2 倍。</span></li>
+          <li><span class="x">✗</span> V<sub>m</sub> 是整個次級的峰值。 <span class="o">這裡 V<sub>m</sub> 是「每半邊」的峰值。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH22EX" data-sec="fwc"></div>
+      <div class="cf-wrap" id="cf-fwc">
+        <h3>🧠 觀念填充 02（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。</p>
+        <div class="hw-list" data-bank="__CH22C" data-sec="fwc"></div>
+      </div>
+    </section>
+
+    <!-- 03 -->
+    <section class="sec" id="brg">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>03 · 板書 11/3 · 2.1.2 Full-Wave · Bridge</div>
+      <h2>橋式全波整流<span class="h2-en">BRIDGE FULL-WAVE RECTIFIER</span></h2>
+      <p class="lede">不要抽頭，改用<strong>四顆二極體接成橋</strong>。電流一進一出，每次經過兩顆，所以多吃一個 V<sub>γ</sub>，但耐壓要求變一半。</p>
+      <div class="eq">v<em>O</em> = |v<em>S</em>| − 2V<em>γ</em>　　死區 |v<em>S</em>| &lt; 2V<em>γ</em>　　PIV = V<em>m</em> − V<em>γ</em></div>
+      <div class="derive">
+        <h4>一步一步推</h4>
+        <ol>
+          <li><span class="d-eq">正半週：電流從橋的一個角進、經過一顆二極體、穿過負載、再經過對角那顆回去</span>
+            <div class="why">兩顆串聯在電流路徑上。</div></li>
+          <li><span class="d-eq">v<sub>O</sub> = v<sub>S</sub> − V<sub>γ</sub> − V<sub>γ</sub> = v<sub>S</sub> − 2V<sub>γ</sub></span>
+            <div class="why">每顆吃一個 V<sub>γ</sub>。</div></li>
+          <li><span class="d-eq">負半週：換另一對導通，電流流過負載的方向不變</span>
+            <div class="why">所以 v<sub>O</sub> = −v<sub>S</sub> − 2V<sub>γ</sub>。</div></li>
+          <li><span class="d-eq">⇒ v<sub>O</sub> = |v<sub>S</sub>| − 2V<sub>γ</sub>，死區 |v<sub>S</sub>| &lt; 2V<sub>γ</sub></span>
+            <div class="why">要先爬過兩個 V<sub>γ</sub>。</div></li>
+          <li><span class="d-eq">PIV：OFF 的那顆，一邊接在輸出（約 V<sub>m</sub> − 2V<sub>γ</sub>）、另一邊接在次級的低端（約 −V<sub>m</sub> 附近）</span>
+            <div class="why">整理起來是 V<sub>m</sub> − V<sub>γ</sub>（板書結論，數值請以老師為準）。</div></li>
+          <li><span class="d-eq hi">⇒ PIV = V<sub>m</sub> − V<sub>γ</sub></span>
+            <div class="why">比中間抽頭（2V<sub>m</sub> − V<sub>γ</sub>）小約一半。</div></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>拉 V<sub>M</sub>、V<sub>γ</sub>，看輸出與死區</h3><span class="spacer"></span><span class="tag">每瞬間 2 顆導通</span></div>
+        <div class="stage-wrap"><canvas id="cv-brg" aria-label="橋式全波整流的輸入與輸出波形，死區用淺色標出"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="bg-m">次級峰值 V<sub>M</sub><output for="bg-m"></output></label>
+            <input type="range" id="bg-m" min="0.5" max="20" step="0.5" value="10"></div>
+          <div class="ctrl"><label for="bg-g">V<sub>γ</sub><output for="bg-g"></output></label>
+            <input type="range" id="bg-g" min="0.3" max="1.5" step="0.05" value="0.7"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>輸出峰值</dt><dd id="bg-pk" class="e">—</dd></div>
+          <div><dt>死區</dt><dd id="bg-dz">—</dd></div>
+          <div><dt>PIV</dt><dd id="bg-piv">—</dd></div>
+        </dl>
+        <div class="msg" id="bg-msg"></div>
+      </div>
+      <div id="ex-brg"></div>
+      <div class="howto">
+        <h4>解題步驟</h4>
+        <ol>
+          <li>電流路徑上有幾顆二極體（這裡 2 顆）。</li>
+          <li>v<sub>O</sub> = |v<sub>S</sub>| − 2V<sub>γ</sub>。</li>
+          <li>PIV = V<sub>m</sub> − V<sub>γ</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 橋式只扣 V<sub>γ</sub>。 <span class="o">要扣兩個：2V<sub>γ</sub>。</span></li>
+          <li><span class="x">✗</span> 橋式 PIV = 2V<sub>m</sub> − V<sub>γ</sub>。 <span class="o">那是中間抽頭；橋式是 V<sub>m</sub> − V<sub>γ</sub>。</span></li>
+          <li><span class="x">✗</span> 橋式要 2 顆二極體。 <span class="o">要 4 顆。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH22EX" data-sec="brg"></div>
+      <div class="cf-wrap" id="cf-brg">
+        <h3>🧠 觀念填充 03（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。</p>
+        <div class="hw-list" data-bank="__CH22C" data-sec="brg"></div>
+      </div>
+    </section>
+
+    <!-- 04 -->
+    <section class="sec" id="cmp">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>04 · 板書 11/3 · 比較與設計 · Example 2.2</div>
+      <h2>中間抽頭 vs 橋式：比較與設計<span class="h2-en">COMPARISON &amp; DESIGN</span></h2>
+      <p class="lede">同樣要一個輸出電壓，兩種電路各需要多大的次級電壓、多少匝數比、多高的耐壓？<strong>先看電流經過幾顆二極體</strong>，再往下算。</p>
+      <div class="eq">次級峰值：中間抽頭 V<em>O</em> + V<em>γ</em>；橋式 V<em>O</em> + 2V<em>γ</em>　　N<em>1</em>/N<em>2</em> = 市電峰值 / 次級峰值　　rms = 峰值/√2</div>
+      <div class="derive">
+        <h4>一步一步推</h4>
+        <ol>
+          <li><span class="d-eq">輸出峰值 = 次級峰值 − 路徑上的 V<sub>γ</sub></span>
+            <div class="why">中間抽頭 1 顆、橋式 2 顆。</div></li>
+          <li><span class="d-eq">⇒ 次級峰值 = V<sub>O</sub> + V<sub>γ</sub>（中間抽頭）／V<sub>O</sub> + 2V<sub>γ</sub>（橋式）</span>
+            <div class="why">反過來推，設計時用這個方向。</div></li>
+          <li><span class="d-eq">rms = 峰值/√2</span>
+            <div class="why">變壓器規格常用 rms。</div></li>
+          <li><span class="d-eq">匝數比 N<sub>1</sub>/N<sub>2</sub> = 120√2 / 次級峰值</span>
+            <div class="why">市電 rms 先換成峰值。</div></li>
+          <li><span class="d-eq">PIV：2V<sub>m</sub> − V<sub>γ</sub>（中間抽頭）／V<sub>m</sub> − V<sub>γ</sub>（橋式）</span>
+            <div class="why">把次級峰值代進去。</div></li>
+          <li><span class="d-eq hi">結論：橋式次級圈數只要一半、整個次級線圈都用到、PIV 低；代價是 4 顆二極體</span>
+            <div class="why">板書第二頁的比較。</div></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>同樣輸出，兩種電路要多少</h3><span class="spacer"></span><span class="tag">Example 2.2</span></div>
+        <div class="stage-wrap"><canvas id="cv-cmp" aria-label="中間抽頭與橋式的次級峰值與 PIV 長條圖"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="cp-o">要的輸出峰值 V<sub>O</sub><output for="cp-o"></output></label>
+            <input type="range" id="cp-o" min="3" max="30" step="0.5" value="9"></div>
+          <div class="ctrl"><label for="cp-g">V<sub>γ</sub><output for="cp-g"></output></label>
+            <input type="range" id="cp-g" min="0.3" max="1" step="0.05" value="0.7"></div>
+        </div>
+        <div class="msg" id="cp-msg"></div>
+      </div>
+      <div id="ex-cmp"></div>
+      <div class="howto">
+        <h4>解題步驟</h4>
+        <ol>
+          <li>決定用哪一種（幾顆在路徑上）。</li>
+          <li>次級峰值 = 輸出峰值 + 損失。</li>
+          <li>rms、匝數比、PIV 依序算。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>常見錯誤</h4>
+        <ul>
+          <li><span class="x">✗</span> 匝數比用 rms 除以峰值。 <span class="o">同單位：120√2 = 169.7 V 對次級峰值。</span></li>
+          <li><span class="x">✗</span> 橋式 PIV 比較大。 <span class="o">橋式 PIV 比較小（約一半）。</span></li>
+          <li><span class="x">✗</span> 中間抽頭的 N<sub>2</sub> 是整個次級。 <span class="o">取「半邊」的圈數來算。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH22EX" data-sec="cmp"></div>
+      <div class="cf-wrap" id="cf-cmp">
+        <h3>🧠 觀念填充 04（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。</p>
+        <div class="hw-list" data-bank="__CH22C" data-sec="cmp"></div>
+      </div>
+    </section>
+
+    <section class="sec" id="check">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>Errata · 講義檢查結果</div>
+      <h2>講義檢查<span class="h2-en">CHECKING THE NOTES</span></h2>
+      <p class="lede">公式全部重新推過，Example 2.1、2.2 的數字用程式驗算一致，沒有發現錯誤。</p>
+      <div class="pitfall">
+        <h4>請你確認的地方（手寫看不清楚）</h4>
+        <ul>
+          <li><span class="x">?</span> 橋式 PIV 板書寫 V<sub>m</sub> − V<sub>γ</sub>，我照這個寫（課本值）。若老師有寫成別的，以老師為準。</li>
+          <li><span class="x">?</span> Example 2.2 表格中，中間抽頭的匝數比是用「半邊次級」算的（17.5）。請確認課堂上也是這樣。</li>
+        </ul>
+      </div>
+      <p class="note src">勘誤僅針對數學、單位與用詞；若與課堂說法不同，以老師為準。</p>
+    </section>
+
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <p class="lede">考卷上會出現的是右邊那欄。</p>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號/單位</code></div>
+        <div class="gl-row"><b>電池充電器</b><span>battery charger</span><code>V_B</code></div>
+        <div class="gl-row"><b>全波整流</b><span>full-wave rectification</span><code>—</code></div>
+        <div class="gl-row"><b>中間抽頭</b><span>center tap</span><code>—</code></div>
+        <div class="gl-row"><b>中間抽頭全波整流器</b><span>center-tapped full-wave rectifier</span><code>—</code></div>
+        <div class="gl-row"><b>橋式整流器</b><span>bridge rectifier</span><code>—</code></div>
+        <div class="gl-row"><b>導通角</b><span>conduction angle</span><code>ωt1, ωt2</code></div>
+        <div class="gl-row"><b>死區</b><span>dead zone</span><code>|v_S| &lt; nV_γ</code></div>
+        <div class="gl-row"><b>反向峰值電壓</b><span>peak inverse voltage</span><code>PIV</code></div>
+        <div class="gl-row"><b>匝數比</b><span>turns ratio</span><code>N1/N2</code></div>
+        <div class="gl-row"><b>有效值</b><span>rms value</span><code>V_m/√2</code></div>
+      </div>
+    </section>
+
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">原講義 CH2 PART 2</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">10 題，中英對照，選項順序每次打亂。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Donald A. Neamen, <em>Microelectronics: Circuit Analysis and Design</em>, 4th ed.（McGraw-Hill），Chapter 2 §2.1，2026 Fall 課程上課板書（11/2、11/3）。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch1-part5-kit.js"></script>
+<script src="assets/ch2-common.js"></script>
+<script src="assets/ch2-part2-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script src="assets/ch2-part2-ex.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'chg', no: '01', name: '電池充電器', count: '練 2' },
+  { id: 'fwc', no: '02', name: '中間抽頭', count: '練 1' },
+  { id: 'brg', no: '03', name: '橋式', count: '練 1' },
+  { id: 'cmp', no: '04', name: '比較與設計', count: '練 1' }
+], { key: 'ch2-part2', alwaysAll: ['map', 'check', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/ch2-part2.js"></script>
+<script src="assets/ch2-part2-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
