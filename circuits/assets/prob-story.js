@@ -9,7 +9,7 @@
    ============================================================ */
 (function () {
   'use strict';
-  const BANKS = ['__CH11PB', '__CH12PB'];
+  const BANKS = ['__CH11PB', '__CH12PB', '__CH13PB', '__CH14PB'];
   const K = () => window.__K12;
 
   /* SVG 文字：只留 <sub>、<sup>，其他標籤拿掉 */

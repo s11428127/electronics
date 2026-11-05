@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH13 章末練習題</title>
+<meta name="description" content="電路學 CH13 互感電路章末練習題：Review Questions 與 Problems（跳過 e⁷d、ML、PSpice 題），每題中英題目、重畫電路圖、手寫板、逐步詳解，答案用程式驗算。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH13 章末練習題</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH13 章末練習題</div>
+    <ol>
+      <li><a href="#prq"><i>RQ</i>Review Questions</a></li>
+      <li><a href="#p132"><i>13.2</i>互感</a></li>
+      <li><a href="#p133"><i>13.3</i>耦合電路的能量</a></li>
+      <li><a href="#p134"><i>13.4</i>線性變壓器</a></li>
+      <li><a href="#p135"><i>13.5</i>理想變壓器</a></li>
+      <li><a href="#p136"><i>13.6</i>理想自耦變壓器</a></li>
+      <li><a href="#p137"><i>13.7</i>三相變壓器</a></li>
+      <li><a href="#p139"><i>13.9</i>應用</a></li>
+      <li><a href="#pcp"><i>綜合</i>綜合題</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Chapter 13 · End-of-chapter problems</div>
+      <h1>CH13 章末練習題</h1>
+      <p class="sub">課本第 13 章章末的 Review Questions 和 Problems，<strong>跳過標 e⁷d、＃ML、小筆電圖示的題目</strong>（13.8 PSpice 整節跳過）。每題先中文、下面附英文原文；電路圖重畫；先自己在手寫板上算，再看提示、答案、逐步詳解，按「算對了／算錯了」會記進錯題本。</p>
+      <div class="hero-meta">
+        <span class="chip h">Review 10 題 ＋ Problems 33 題</span>
+        <span class="chip">答案都用程式驗算</span>
+        <span class="chip">沒特別說明都是 rms</span>
+      </div>
+      <div class="lec-links"><a href="ch14-problems.html">CH14 章末題（到 14.3）</a><a href="ch12-problems.html">CH12 章末題</a><a href="ch11-problems.html">CH11 章末題</a></div>
+    </div>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="prq">
+      <div class="eyebrow">Review Questions · 課本章末題</div>
+      <h2>Review Questions<span class="h2-en">REVIEW QUESTIONS</span></h2>
+      <p class="lede">10 題選擇題（課本附答案）。</p>
+      <div class="exbook" data-bank="__CH13PB" data-sec="rq"></div>
+    </section>
+
+    <section class="sec" id="p132">
+      <div class="eyebrow">Section 13.2 · 課本章末題</div>
+      <h2>互感<span class="h2-en">MUTUAL INDUCTANCE</span></h2>
+      <p class="lede">9 題。打點規則、串並聯等效、戴維寧／諾頓、T 型等效。</p>
+      <div class="exbook" data-bank="__CH13PB" data-sec="13.2"></div>
+    </section>
+
+    <section class="sec" id="p133">
+      <div class="eyebrow">Section 13.3 · 課本章末題</div>
+      <h2>耦合電路的能量<span class="h2-en">ENERGY IN A COUPLED CIRCUIT</span></h2>
+      <p class="lede">1 題（這節其他題都有 ML 圖示）。三個線圈兩兩耦合。</p>
+      <div class="exbook" data-bank="__CH13PB" data-sec="13.3"></div>
+    </section>
+
+    <section class="sec" id="p134">
+      <div class="eyebrow">Section 13.4 · 課本章末題</div>
+      <h2>線性變壓器<span class="h2-en">LINEAR TRANSFORMERS</span></h2>
+      <p class="lede">3 題。反射阻抗、T 型等效。</p>
+      <div class="exbook" data-bank="__CH13PB" data-sec="13.4"></div>
+    </section>
+
+    <section class="sec" id="p135">
+      <div class="eyebrow">Section 13.5 · 課本章末題</div>
+      <h2>理想變壓器<span class="h2-en">IDEAL TRANSFORMERS</span></h2>
+      <p class="lede">6 題。點決定正負號、反射阻抗 Z<sub>L</sub>/n<sup>2</sup>。</p>
+      <div class="exbook" data-bank="__CH13PB" data-sec="13.5"></div>
+    </section>
+
+    <section class="sec" id="p136">
+      <div class="eyebrow">Section 13.6 · 課本章末題</div>
+      <h2>理想自耦變壓器<span class="h2-en">IDEAL AUTOTRANSFORMERS</span></h2>
+      <p class="lede">2 題。</p>
+      <div class="exbook" data-bank="__CH13PB" data-sec="13.6"></div>
+    </section>
+
+    <section class="sec" id="p137">
+      <div class="eyebrow">Section 13.7 · 課本章末題</div>
+      <h2>三相變壓器<span class="h2-en">THREE-PHASE TRANSFORMERS</span></h2>
+      <p class="lede">2 題。Δ 側線圈電壓 = 線電壓、Y 側 = 線電壓/√3。</p>
+      <div class="exbook" data-bank="__CH13PB" data-sec="13.7"></div>
+    </section>
+
+    <section class="sec" id="p139">
+      <div class="eyebrow">Section 13.9 · 課本章末題</div>
+      <h2>應用<span class="h2-en">APPLICATIONS</span></h2>
+      <p class="lede">7 題。阻抗匹配、配電變壓器的額定。</p>
+      <div class="exbook" data-bank="__CH13PB" data-sec="13.9"></div>
+    </section>
+
+    <section class="sec" id="pcp">
+      <div class="eyebrow">Comprehensive Problems · 課本章末題</div>
+      <h2>綜合題<span class="h2-en">COMPREHENSIVE PROBLEMS</span></h2>
+      <p class="lede">3 題。</p>
+      <div class="exbook" data-bank="__CH13PB" data-sec="cp"></div>
+    </section>
+
+    <footer class="foot">
+      <p>題目出處：Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 13 章末題（使用者 11/5 提供）。使用者 11/5 決定照舊規則跳過有 ＃ML 圖示的題目。有做：13.1、3、4、5、6、12、14、15、19、22、29、30、32、36、37、39、40、44、60、67、71、74、75、85、86、88～95（13.87、13.96 是 e⁷d）。跳過：e⁷d 13.2、13.21、13.31、13.34、13.38、13.48、13.52、13.54、13.66、13.69、13.72、13.76、13.77、13.87、13.96；ML 13.7～13.11、13.13、13.16～13.18、13.20、13.23～13.28、13.33、13.35、13.41～13.43、13.45～13.47、13.49～13.51、13.53、13.55～13.59、13.61～13.65、13.68、13.70、13.73；13.8 PSpice 整節 13.78～13.84。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="assets/ch13-kit.js"></script>
+<script src="assets/ch13-prob.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/prob-story.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [{"id": "prq", "no": "RQ", "name": "Review Questions", "count": "10 題"}, {"id": "p132", "no": "13.2", "name": "互感", "count": "9 題"}, {"id": "p133", "no": "13.3", "name": "耦合電路的能量", "count": "1 題"}, {"id": "p134", "no": "13.4", "name": "線性變壓器", "count": "3 題"}, {"id": "p135", "no": "13.5", "name": "理想變壓器", "count": "6 題"}, {"id": "p136", "no": "13.6", "name": "理想自耦變壓器", "count": "2 題"}, {"id": "p137", "no": "13.7", "name": "三相變壓器", "count": "2 題"}, {"id": "p139", "no": "13.9", "name": "應用", "count": "7 題"}, {"id": "pcp", "no": "綜合", "name": "綜合題", "count": "3 題"}], { key: 'ch13-problems' });
+(function () {
+  'use strict';
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } });
+  }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

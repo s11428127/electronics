@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CH14 章末練習題（到 14.3）</title>
+<meta name="description" content="電路學 CH14 頻率響應章末練習題（期中考範圍到 14.3）：轉移函數與分貝，每題中英題目、重畫電路圖、逐步詳解。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH14 章末練習題（到 14.3）</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH14 章末練習題（到 14.3）</div>
+    <ol>
+      <li><a href="#prq"><i>RQ</i>Review Question</a></li>
+      <li><a href="#p142"><i>14.2</i>轉移函數</a></li>
+      <li><a href="#p143"><i>14.3</i>分貝刻度</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Chapter 14 · End-of-chapter problems</div>
+      <h1>CH14 章末練習題（到 14.3）</h1>
+      <p class="sub">期中考範圍到 14.3，所以只收 14.2 轉移函數、14.3 分貝刻度的章末題（跳過 e⁷d 14.2、14.8）。</p>
+      <div class="hero-meta">
+        <span class="chip h">Review 1 題 ＋ Problems 6 題</span>
+        <span class="chip">考試範圍到 14.3</span>
+        <span class="chip">sympy 驗算</span>
+      </div>
+      <div class="lec-links"><a href="ch13-problems.html">CH13 章末題</a><a href="ch12-problems.html">CH12 章末題</a><a href="ch11-problems.html">CH11 章末題</a></div>
+    </div>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="prq">
+      <div class="eyebrow">Review Questions · 課本章末題</div>
+      <h2>Review Question<span class="h2-en">REVIEW QUESTION</span></h2>
+      <p class="lede">只有 RQ 14.1 在範圍內（其他是波德圖、共振）。</p>
+      <div class="exbook" data-bank="__CH14PB" data-sec="rq"></div>
+    </section>
+
+    <section class="sec" id="p142">
+      <div class="eyebrow">Section 14.2 · 課本章末題</div>
+      <h2>轉移函數<span class="h2-en">TRANSFER FUNCTION</span></h2>
+      <p class="lede">5 題。分壓、分流，寫成 s 的有理式。</p>
+      <div class="exbook" data-bank="__CH14PB" data-sec="14.2"></div>
+    </section>
+
+    <section class="sec" id="p143">
+      <div class="eyebrow">Section 14.3 · 課本章末題</div>
+      <h2>分貝刻度<span class="h2-en">THE DECIBEL SCALE</span></h2>
+      <p class="lede">1 題。H<sub>dB</sub> = 20 log<sub>10</sub>|H|。</p>
+      <div class="exbook" data-bank="__CH14PB" data-sec="14.3"></div>
+    </section>
+
+    <footer class="foot">
+      <p>題目出處：Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 14 章末題（使用者 11/5 提供）。考試範圍到 14.3；跳過 e⁷d 14.2、14.8。</p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="assets/ch13-kit.js"></script>
+<script src="assets/ch14-prob.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/prob-story.js"></script>
+<script src="../shared/exbook.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [{"id": "prq", "no": "RQ", "name": "Review Question", "count": "1 題"}, {"id": "p142", "no": "14.2", "name": "轉移函數", "count": "5 題"}, {"id": "p143", "no": "14.3", "name": "分貝刻度", "count": "1 題"}], { key: 'ch14-problems' });
+(function () {
+  'use strict';
+  const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));
+  const map = new Map();
+  links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { links.forEach(l => l.classList.remove('on')); map.get(en.target).classList.add('on'); } });
+  }, { rootMargin: '-84px 0px -62% 0px', threshold: 0 });
+  map.forEach((a, s) => io.observe(s));
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { const t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
