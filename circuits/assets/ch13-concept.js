@@ -1,0 +1,103 @@
+/* ============================================================
+   電路學 CH13／CH14 觀念填充題（自編練習，不用計算）
+   每一小節 8 題：13.2～13.7、13.9（13.8 PSpice 不做）、14.2、14.3。題目先中文，下面附英文。
+   選項正解寫在第一個，hw.js 會打亂。下拉選項不能放 <sup>、底線。
+   用法：<div class="hw-list" data-bank="__CH13C" data-sec="13.2"></div>
+   ============================================================ */
+(function () {
+  'use strict';
+  const P1 = 'ch13-part1.html', P2 = 'ch13-part2.html', P3 = 'ch13-part3.html', P4 = 'ch14-part1.html';
+  const S = o => ({ o, a: 0 });
+  const items = [];
+  const C = (sec, n, link, title, q, en, b, ex, how) =>
+    items.push({ id: 'c' + sec.replace('.', '') + '-' + n, kind: 'cf', sec, no: sec + '-' + n, how: !!how, link, title, q, en, b, ex });
+
+  /* ═════════ 13.2 互感 ═════════ */
+  const L2 = P1 + '#mut';
+  C('13.2', 1, L2, '互感的定義',
+    '一個線圈的 {0} 在鄰近線圈感應出電壓的能力，叫互感，單位是 {1}。',
+    'Mutual inductance is the ability of one inductor to induce a voltage across a neighboring inductor by its ___; it is measured in ___.',
+    [S(['電流變化 changing current', '固定電流 constant current', '電阻 resistance', '電荷 charge']), S(['亨利 henrys (H)', '法拉 farads (F)', '歐姆 ohms', '韋伯 webers'])],
+    'v₂ = M di₁/dt：要電流「在變」才有感應電壓，M 跟 L 一樣用亨利。');
+  C('13.2', 2, L2, '直流時',
+    '兩個耦合線圈接直流電源，電流穩定後，互感電壓 {0}。',
+    'When coupled coils are driven by a dc source, after the current settles the mutual voltage is ___.',
+    [S(['為零 zero', '最大 maximum', '等於電源電壓 equal to the source voltage', '無限大 infinite'])],
+    '直流穩態 di/dt = 0，所以 M di/dt = 0。課本：互感只在電路由「時變」電源驅動時存在。');
+  C('13.2', 3, L2, '打點規則（一）',
+    '電流從線圈 1 有點的那端流進，線圈 2 互感電壓的參考極性在線圈 2 有點那端是 {0}。',
+    'If a current enters the dotted terminal of one coil, the reference polarity of the mutual voltage in the second coil is ___ at the dotted terminal of the second coil.',
+    [S(['正 positive', '負 negative', '零 zero', '不一定 undetermined'])],
+    '課本的打點規則原文：enters the dotted terminal → positive at the dotted terminal。');
+  C('13.2', 4, L2, '打點規則（二）',
+    '電流從線圈 1 有點的那端流出，線圈 2 有點那端的互感電壓參考極性是 {0}。',
+    'If a current leaves the dotted terminal of one coil, the reference polarity of the mutual voltage in the second coil is ___ at its dotted terminal.',
+    [S(['負 negative', '正 positive', '零 zero', '跟電流大小有關 dependent on the current magnitude'])],
+    '流出點 → 對方點端為負。實際用法：兩個電流同進同出點取 +M，一進一出取 −M。');
+  C('13.2', 5, L2, '點代表什麼',
+    '電路圖上的點是用來代替畫出線圈的 {0}，由題目給定。',
+    'The dots on a schematic replace drawing the ___ of the coils; they are given in the problem.',
+    [S(['實際繞線方向 actual winding direction', '電阻值 resistance', '匝數 number of turns', '電流大小 current magnitude'])],
+    '互感電壓的極性取決於兩個線圈怎麼繞（冷次定律＋右手定則），電路圖畫不出來，就用點表示。');
+  C('13.2', 6, L2, '串聯加成',
+    '兩個耦合線圈串聯，電流都從點流進（串聯加成），總電感 L = {0}。',
+    'For two coupled coils in series-aiding connection, the total inductance is L = ___.',
+    [S(['L1 + L2 + 2M', 'L1 + L2 − 2M', 'L1 + L2 + M', 'L1 + L2'])],
+    '每個線圈多一個 +M di/dt，兩個線圈合計多 2M。', true);
+  C('13.2', 7, L2, '串聯相消',
+    '兩個耦合線圈串聯，一個從點流進、一個從點流出（串聯相消），總電感 L = {0}。',
+    'For series-opposing connection, L = ___.',
+    [S(['L1 + L2 − 2M', 'L1 + L2 + 2M', 'L1 − L2', '2M'])],
+    '互感項變負：L = L₁ + L₂ − 2M。', true);
+  C('13.2', 8, L2, '解法：相依電壓源',
+    '分析有互感的電路時，課本建議把互感項看成 {0}，先寫大小 jωMI，再用打點規則決定 {1}。',
+    'When analyzing coupled circuits, the text suggests modeling the mutual term as a ___ of value jωMI, and then using the dot convention to fix its ___.',
+    [S(['相依電壓源 dependent voltage source', '獨立電流源 independent current source', '電阻 resistor', '短路 short circuit']), S(['極性（正負號）polarity', '頻率 frequency', '大小 magnitude', '相位 phase angle'])],
+    '課本圖 13.8：把「大小」和「正負號」拆成兩個步驟，比較不會錯。', true);
+
+  /* ═════════ 13.3 耦合電路的能量 ═════════ */
+  const L3 = P1 + '#energy';
+  C('13.3', 1, L3, '耦合線圈的能量',
+    '耦合線圈儲存的能量 w = ½L1 i1² + ½L2 i2² ± M i1 i2；兩個電流同進同出點時互感項取 {0}，一進一出取 {1}。',
+    'The energy stored in coupled coils is w = ½L1 i1² + ½L2 i2² ± M i1 i2; the mutual term is ___ when both currents enter (or leave) the dotted terminals, and ___ otherwise.',
+    [S(['+（正）positive', '−（負）negative', '0', '不一定 undetermined']), S(['−（負）negative', '+（正）positive', '0', '不一定 undetermined'])],
+    '多出來的 M i₁ i₂ 是兩個磁場互相加強（或抵消）的部分，正負號跟電路的互感項一樣用打點規則。');
+  C('13.3', 2, L3, 'M 的上限',
+    '互感 M 不能大於 {0}，因為被動電路儲存的能量不能 {1}。',
+    'M cannot exceed ___, because the energy stored in a passive circuit cannot be ___.',
+    [S(['√(L1 L2)（幾何平均）the geometric mean √(L1L2)', 'L1 + L2', '(L1 + L2)/2', 'L1 L2']), S(['是負的 negative', '是正的 positive', '是零 zero', '變化 changing'])],
+    '把 ½L₁i₁² + ½L₂i₂² − M i₁i₂ ≥ 0 配方，得 M ≤ √(L₁L₂)。');
+  C('13.3', 3, L3, '耦合係數',
+    '耦合係數 k = {0}，範圍是 {1}。',
+    'The coupling coefficient k = ___, with ___.',
+    [S(['M / √(L1 L2)', 'M / (L1 + L2)', 'L1 / L2', 'M · L1 · L2']), S(['0 ≤ k ≤ 1', '−1 ≤ k ≤ 1', 'k ≥ 1', '0 ≤ k ≤ ∞'])],
+    'k 表示 M 離上限 √(L₁L₂) 有多近。');
+  C('13.3', 4, L3, 'k 的物理意義',
+    'k 是一個線圈發出的磁通中，有多少比例 {0}。',
+    'k is the fraction of the total flux emanating from one coil that ___.',
+    [S(['穿過另一個線圈 links the other coil', '變成熱 turns into heat', '回到電源 returns to the source', '被鐵心吸收 is absorbed by the core'])],
+    'k = φ₂₁/φ₁：全部磁通都穿過對方時 k = 1（完美耦合）。');
+  C('13.3', 5, L3, '鬆耦合、緊耦合',
+    'k {0} 0.5 稱為鬆耦合；k {1} 0.5 稱為緊耦合。',
+    'Coils are loosely coupled when k ___ 0.5 and tightly coupled when k ___ 0.5.',
+    [S(['小於 less than', '大於 greater than', '等於 equal to', '無關 unrelated to']), S(['大於 greater than', '小於 less than', '等於 equal to', '無關 unrelated to'])],
+    '課本：k &lt; 0.5 loosely coupled、k &gt; 0.5 tightly coupled。');
+  C('13.3', 6, L3, '哪一種是緊耦合',
+    '收音機用的空心變壓器通常是 {0}；電力系統用的鐵心變壓器通常是 {1}。',
+    'Air-core transformers in radio circuits are usually ___ coupled, while iron-core transformers in power systems are ___ coupled.',
+    [S(['鬆耦合 loosely', '緊耦合 tightly', '完全不耦合 not', '負耦合 negatively']), S(['緊耦合 tightly', '鬆耦合 loosely', '不耦合 not', '負耦合 negatively'])],
+    '鐵心把磁通集中起來，幾乎全部穿過兩個線圈。');
+  C('13.3', 7, L3, '算能量要什麼',
+    '要算某一時刻耦合線圈的能量，必須用該時刻的 {0}。',
+    'To compute the stored energy at a given instant, you must use the ___ at that instant.',
+    [S(['瞬時電流 instantaneous currents', '相量 phasors', '有效值 rms values', '平均值 average values'])],
+    'Example 13.3：先在頻域解出相量，再換回時域 i(t)，代入 t = 1 s。', true);
+  C('13.3', 8, L3, '能量題的步驟',
+    '耦合電路能量題的順序是：先 {0}，再換回時域代入時間，最後用打點規則決定 M i1 i2 的正負。',
+    'For energy problems: first ___, then convert back to the time domain at the given t, then use the dot convention for the sign of M i1 i2.',
+    [S(['在頻域解出 I1、I2 solve for the phasors I1 and I2', '直接代 t solve with t directly', '算 k 就好 only find k', '取有效值 take rms values'])],
+    '照 Example 13.3 的流程。', true);
+
+  window.__CH13C = window.__CH13C || { name: 'ch13c', items: [] };
+  window.__CH13C.items = window.__CH13C.items.concat(items);
+})();

@@ -9,7 +9,7 @@
    ============================================================ */
 (function () {
   'use strict';
-  const BANKS = ['__CH11PB', '__CH12PB', '__CH13PB', '__CH14PB'];
+  const BANKS = ['__CH11PB', '__CH12PB', '__CH13PB', '__CH14PB', '__CH13EX', '__CH14EX'];
   const K = () => window.__K12;
 
   /* SVG 文字：只留 <sub>、<sup>，其他標籤拿掉 */
@@ -148,7 +148,8 @@
     const bank = window[b];
     if (!bank || !bank.items) return;
     bank.items.forEach(it => {
-      if (it.story || !/^Problem/.test(it.tag || '')) return;
+      if (it.story || !(bank.autoAll || /^Problem/.test(it.tag || ''))) return;
+      if (!it.tag) it.tag = (it.kind === 'ex' ? 'Example ' : 'Practice Problem ') + it.no;
       it.story = () => build(it);
     });
   });

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>互感與打點規則</title>
+<meta name="description" content="電路學 CH13 PART 1：互感 M、打點規則、串聯加成與相消、耦合線圈的能量與耦合係數 k。故事模式＋推導＋打點規則練習機＋可改數字的課本例題。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH13 PART 1</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH13 PART 1</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>課程地圖</a></li>
+      <li><a href="#mut"><i>13.2</i>互感與打點規則</a></li>
+      <li><a href="#energy"><i>13.3</i>耦合電路的能量</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>Chapter 13 · Part 1 · 課本 p.554–565</div>
+      <h1>互感與打點規則</h1>
+      <p class="sub">兩個線圈沒有電線相連，一個線圈的電流在變，另一個線圈就會冒出電壓 —— 這就是<button class="tm" data-t="互感">互感</button>。這一頁學它的正負號怎麼判斷（<button class="tm" data-t="打點規則">打點規則</button>），以及兩個線圈一起存了多少能量（<button class="tm" data-t="耦合係數">耦合係數</button> k）。</p>
+      <div class="hero-meta">
+        <span class="chip h">✓ 考試範圍（期中考到 14.3）</span>
+        <span class="chip">17 個畫面的故事模式</span>
+        <span class="chip">📘 課本 Example 3 題 ＋ Practice 3 題（每題都有 🎬 圖解故事）</span>
+        <span class="chip">2 個互動模組 ＋ 2 個可改數字例題</span>
+        <span class="chip">觀念填充 16 題 ＋ 10 題測驗</span>
+      </div>
+      <div class="lec-links"><a href="ch13-problems.html">✏️ CH13 章末練習題（43 題）</a><a href="ch13-review.html">🧠 CH13～14 觀念填充總複習</a></div>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>Story mode · 先看這段，再往下讀</div>
+      <h2>17 個畫面看懂互感<span class="h2-en">THE STORY IN 17 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>Course map</div>
+      <h2>期中考範圍：CH11 到 14.3<span class="h2-en">COURSE MAP</span></h2>
+      <p class="lede"><b>這一頁是 CH13 的第 1 頁</b>。CH13 把 CH6 的電感「兩個一組」來用；CH14 開頭的轉移函數則是 CH9～CH10 相量的延伸。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>13.1–13.3</code><b>互感、打點規則、能量 <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>13.4–13.5</code><b><a href="ch13-part2.html">線性變壓器、理想變壓器</a> <span style="color:var(--ink-3);font-weight:400">PART 2</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>13.6–13.9</code><b><a href="ch13-part3.html">自耦變壓器、三相變壓器、應用</a> <span style="color:var(--ink-3);font-weight:400">PART 3</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>14.1–14.3</code><b><a href="ch14-part1.html">轉移函數、分貝</a> <span style="color:var(--ink-3);font-weight:400">CH14 PART 1（考到這裡）</span></b><span class="dot"></span></div>
+      </div>
+      <div class="derive">
+        <h4>先複習 CH6、CH9 的電感（這一頁直接拿來用）</h4>
+        <ol>
+          <li><span class="d-eq">v = L di/dt</span><div class="why">電流在變才有電壓；直流穩態電感像短路。</div></li>
+          <li><span class="d-eq">w = ½ L i<sup>2</sup></span><div class="why">電感把能量存在磁場裡。</div></li>
+          <li><span class="d-eq">頻域：V = jωL I</span><div class="why">d/dt 換成 jω，電感阻抗 jωL。</div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 13.2 ══════════ -->
+    <section class="sec" id="mut">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>13.1–13.2 · Mutual Inductance</div>
+      <h2>互感與打點規則<span class="h2-en">MUTUAL INDUCTANCE</span></h2>
+      <p class="lede">線圈 1 的電流 i<sub>1</sub> 在變，它的<button class="tm" data-t="磁通">磁通</button>有一部分穿過線圈 2，線圈 2 就感應出電壓 v<sub>2</sub> = M di<sub>1</sub>/dt。M 一定是正的，但這個電壓的 + 在哪一端，要看兩個線圈怎麼繞 —— 電路圖用「點」代替。</p>
+      <div class="eq">v<sub>2</sub> = M di<sub>1</sub>/dt　·　v<sub>1</sub> = L<sub>1</sub> di<sub>1</sub>/dt ± M di<sub>2</sub>/dt　·　串聯 L = L<sub>1</sub> + L<sub>2</sub> ± 2M　·　頻域 V<sub>1</sub> = jωL<sub>1</sub>I<sub>1</sub> ± jωM I<sub>2</sub></div>
+      <div class="derive">
+        <h4>互感電壓從哪來</h4>
+        <ol>
+          <li><span class="d-eq">v<sub>1</sub> = N<sub>1</sub> dφ<sub>1</sub>/dt = N<sub>1</sub>(dφ<sub>1</sub>/di<sub>1</sub>)(di<sub>1</sub>/dt) = L<sub>1</sub> di<sub>1</sub>/dt</span><div class="why">法拉第定律：磁通在變，線圈兩端就有電壓。自感 L<sub>1</sub> = N<sub>1</sub> dφ<sub>1</sub>/di<sub>1</sub>。</div></li>
+          <li><span class="d-eq">φ<sub>1</sub> = φ<sub>11</sub> + φ<sub>12</sub></span><div class="why">線圈 1 的磁通一部分只繞自己（φ<sub>11</sub>，漏磁），一部分穿過線圈 2（φ<sub>12</sub>）。</div></li>
+          <li><span class="d-eq">v<sub>2</sub> = N<sub>2</sub> dφ<sub>12</sub>/dt = N<sub>2</sub>(dφ<sub>12</sub>/di<sub>1</sub>)(di<sub>1</sub>/dt) = M<sub>21</sub> di<sub>1</sub>/dt</span><div class="why">穿過線圈 2 的那部分在線圈 2 感應電壓，比例常數就是互感。</div></li>
+          <li><span class="d-eq hi">M<sub>12</sub> = M<sub>21</sub> = M</span><p>反過來由 i<sub>2</sub> 在線圈 1 感應電壓也是同一個 M（13.3 用能量證明）。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>打點規則與正負號</h4>
+        <ol>
+          <li><span class="d-eq">電流從線圈 1 的點流進 ⟹ 線圈 2 的點端為 +</span><div class="why">課本原文：enters the dotted terminal → positive at the dotted terminal of the second coil。</div></li>
+          <li><span class="d-eq">電流從線圈 1 的點流出 ⟹ 線圈 2 的點端為 −</span><div class="why">方向反過來，極性跟著反。</div></li>
+          <li><span class="d-eq hi">兩個電流同進同出點 ⟹ +M；一進一出 ⟹ −M</span><p>實際解題就用這一句。每個線圈的電壓 = 自感項（照被動符號）＋ 互感項（照這一句）。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>串聯加成與相消</h4>
+        <ol>
+          <li><span class="d-eq">v = (L<sub>1</sub> di/dt + M di/dt) + (L<sub>2</sub> di/dt + M di/dt)</span><div class="why">同一個 i 依序流過兩個線圈，都從點流進：每個線圈多一個 +M di/dt。</div></li>
+          <li><span class="d-eq hi">加成：L = L<sub>1</sub> + L<sub>2</sub> + 2M　相消：L = L<sub>1</sub> + L<sub>2</sub> − 2M</span><p>相消時一進一出，兩個互感項都變負（式 13.18、13.19）。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>打點規則練習機</h3><span class="spacer"></span><button class="btn" id="dot-d2" type="button">線圈 2 的點：上</button><button class="btn" id="dot-i1" type="button">i₁：流進上端</button><button class="btn" id="dot-i2" type="button">i₂：流進上端</button></div>
+        <div class="stage-wrap"><canvas id="cv-dot" aria-label="兩個耦合線圈的點與電流方向"></canvas></div>
+        <dl class="readout">
+          <div><dt>互感項</dt><dd id="dot-sign" style="color:var(--accent)">—</dd></div>
+          <div><dt>線圈 1</dt><dd id="dot-v1">—</dd></div>
+          <div><dt>線圈 2</dt><dd id="dot-v2">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">線圈 1 的點固定在上面。按按鈕改線圈 2 的點、或兩個電流的方向，看互感項怎麼變號。v<sub>1</sub>、v<sub>2</sub> 都量「上 +、下 −」；電流從上端流出時，自感項也會帶負號（被動符號規則）。</p>
+      <div id="ex-131"></div>
+      <div class="howto">
+        <h4>有互感的電路怎麼解</h4>
+        <ol>
+          <li><b>換成頻域：</b>L → jωL、M → jωM。</li>
+          <li><b>選網目電流</b>（通常都順時針），標出每個線圈「流過它的電流」。</li>
+          <li><b>判斷正負：</b>看兩個線圈的電流是同進同出點（+jωM）還是一進一出（−jωM）。不確定就照課本圖 13.8，把互感項畫成相依電壓源再決定極性。</li>
+          <li><b>寫 KVL：</b>每個線圈的壓降 = jωL × 自己的電流 ± jωM × 對方的電流。</li>
+          <li><b>解聯立</b>（代入法或克拉瑪）。共用支路上的線圈，電流是兩個網目電流相減（Example 13.2）。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>互感的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> 看到 M 就一律加上去。<span class="o">✓ 先看點：同進同出 +、一進一出 −。</span></li>
+          <li><span class="x">✗</span> 互感項乘自己的電流（jωM I<sub>1</sub> 寫在線圈 1）。<span class="o">✓ 線圈 1 上的互感電壓是由「對方」的電流 I<sub>2</sub> 產生的。</span></li>
+          <li><span class="x">✗</span> 共用支路的線圈互感用網目電流 I<sub>1</sub>。<span class="o">✓ 要用流過那個線圈的實際電流（例如 I<sub>1</sub> − I<sub>2</sub>）。</span></li>
+          <li><span class="x">✗</span> 以為直流電路也有互感電壓。<span class="o">✓ 直流穩態 di/dt = 0，沒有互感電壓。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH13EX" data-sec="13.2"></div>
+      <div class="cf-wrap" id="cf-13-2">
+        <h3>🧠 觀念填充 13.2（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。全部集中在 <a href="ch13-review.html">CH13～14 觀念填充總複習</a>。</p>
+        <div class="hw-list" data-bank="__CH13C" data-sec="13.2"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 13.3 ══════════ -->
+    <section class="sec" id="energy">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>13.3 · Energy in a Coupled Circuit</div>
+      <h2>耦合電路的能量<span class="h2-en">ENERGY IN A COUPLED CIRCUIT</span></h2>
+      <p class="lede">兩個耦合線圈存的能量，比兩個獨立電感多一項 ±M i<sub>1</sub>i<sub>2</sub>。因為線圈不會自己生出能量，總能量一定 ≥ 0，由此推出 M 最大只能是 √(L<sub>1</sub>L<sub>2</sub>)，再用<button class="tm" data-t="耦合係數">耦合係數</button> k 表示「離上限多近」。</p>
+      <div class="eq">w = ½L<sub>1</sub>i<sub>1</sub><sup>2</sup> + ½L<sub>2</sub>i<sub>2</sub><sup>2</sup> ± M i<sub>1</sub>i<sub>2</sub>　·　M ≤ √(L<sub>1</sub>L<sub>2</sub>)　·　k = M/√(L<sub>1</sub>L<sub>2</sub>)，0 ≤ k ≤ 1</div>
+      <div class="derive">
+        <h4>能量公式</h4>
+        <ol>
+          <li><span class="d-eq">w<sub>1</sub> = ∫ L<sub>1</sub>i<sub>1</sub> di<sub>1</sub> = ½L<sub>1</sub>I<sub>1</sub><sup>2</sup></span><div class="why">先讓 i<sub>1</sub> 從 0 升到 I<sub>1</sub>、i<sub>2</sub> 保持 0：只有線圈 1 吃功率。</div></li>
+          <li><span class="d-eq">w<sub>2</sub> = M<sub>12</sub>I<sub>1</sub>I<sub>2</sub> + ½L<sub>2</sub>I<sub>2</sub><sup>2</sup></span><div class="why">再讓 i<sub>2</sub> 升到 I<sub>2</sub>：線圈 1 上多了互感電壓 M<sub>12</sub> di<sub>2</sub>/dt，電流是 I<sub>1</sub>。</div></li>
+          <li><span class="d-eq">w = ½L<sub>1</sub>I<sub>1</sub><sup>2</sup> + ½L<sub>2</sub>I<sub>2</sub><sup>2</sup> + M<sub>12</sub>I<sub>1</sub>I<sub>2</sub></span><div class="why">兩段加起來。</div></li>
+          <li><span class="d-eq">先升 i<sub>2</sub> 再升 i<sub>1</sub> ⟹ 互感項是 M<sub>21</sub>I<sub>1</sub>I<sub>2</sub>；最後能量要一樣 ⟹ M<sub>12</sub> = M<sub>21</sub></span><div class="why">能量只跟最後狀態有關，跟順序無關。</div></li>
+          <li><span class="d-eq hi">w = ½L<sub>1</sub>i<sub>1</sub><sup>2</sup> + ½L<sub>2</sub>i<sub>2</sub><sup>2</sup> ± M i<sub>1</sub>i<sub>2</sub></span><p>同進同出點取 +，一進一出取 −。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>為什麼 M ≤ √(L<sub>1</sub>L<sub>2</sub>)</h4>
+        <ol>
+          <li><span class="d-eq">½L<sub>1</sub>i<sub>1</sub><sup>2</sup> + ½L<sub>2</sub>i<sub>2</sub><sup>2</sup> − M i<sub>1</sub>i<sub>2</sub> ≥ 0</span><div class="why">被動電路存的能量不能是負的；取最壞的負號。</div></li>
+          <li><span class="d-eq">= ½(i<sub>1</sub>√L<sub>1</sub> − i<sub>2</sub>√L<sub>2</sub>)<sup>2</sup> + i<sub>1</sub>i<sub>2</sub>(√(L<sub>1</sub>L<sub>2</sub>) − M) ≥ 0</span><div class="why">配方：加減 i<sub>1</sub>i<sub>2</sub>√(L<sub>1</sub>L<sub>2</sub>)。</div></li>
+          <li><span class="d-eq hi">平方項最小是 0 ⟹ √(L<sub>1</sub>L<sub>2</sub>) − M ≥ 0</span><p>所以 M 不能超過兩個自感的幾何平均。k = M/√(L<sub>1</sub>L<sub>2</sub>) 就落在 0～1 之間；k = φ<sub>21</sub>/φ<sub>2</sub> 是磁通穿過對方的比例。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>能量的三項：互感項可正可負</h3><span class="spacer"></span><button class="btn" id="en-sign" type="button">互感項：+（同進同出）</button></div>
+        <div class="stage-wrap"><canvas id="cv-en" aria-label="耦合線圈能量的三項長條"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="en-l1">L<sub>1</sub><output for="en-l1"></output></label><input type="range" id="en-l1" min="1" max="10" step="0.5" value="5"></div>
+          <div class="ctrl"><label for="en-l2">L<sub>2</sub><output for="en-l2"></output></label><input type="range" id="en-l2" min="1" max="10" step="0.5" value="4"></div>
+          <div class="ctrl"><label for="en-k">耦合係數 k<output for="en-k"></output></label><input type="range" id="en-k" min="0" max="1" step="0.01" value="0.56"></div>
+          <div class="ctrl"><label for="en-i1">i<sub>1</sub><output for="en-i1"></output></label><input type="range" id="en-i1" min="-5" max="5" step="0.1" value="3"></div>
+          <div class="ctrl"><label for="en-i2">i<sub>2</sub><output for="en-i2"></output></label><input type="range" id="en-i2" min="-5" max="5" step="0.1" value="-2"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>M = k√(L<sub>1</sub>L<sub>2</sub>)</dt><dd id="en-m">—</dd></div>
+          <div><dt>總能量 w</dt><dd id="en-w" style="color:var(--accent)">—</dd></div>
+          <div><dt>重點</dt><dd id="en-min">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">把 k 拉到 1、互感項設成 −，再調 i<sub>1</sub>、i<sub>2</sub>：總能量最低剛好碰到 0，永遠不會變負 —— 這就是 M ≤ √(L<sub>1</sub>L<sub>2</sub>) 的意思。</p>
+      <div id="ex-133"></div>
+      <div class="howto">
+        <h4>能量題的標準流程（Example 13.3）</h4>
+        <ol>
+          <li><b>k：</b>直接 <code>k = M/√(L<sub>1</sub>L<sub>2</sub>)</code>。</li>
+          <li><b>換頻域</b>，用 13.2 的方法解出 I<sub>1</sub>、I<sub>2</sub>。</li>
+          <li><b>換回時域</b>，代入題目給的時間 t（注意 ωt 是弧度，換成角度再加相角）。</li>
+          <li><b>決定互感項正負：</b>兩個電流（照你解出來的方向）同進同出點取 +，一進一出取 −。</li>
+          <li><b>代公式</b> w = ½L<sub>1</sub>i<sub>1</sub><sup>2</sup> + ½L<sub>2</sub>i<sub>2</sub><sup>2</sup> ± M i<sub>1</sub>i<sub>2</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>能量的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> 用相量的大小（或有效值）直接代進 ½Li<sup>2</sup>。<span class="o">✓ 要用那個瞬間的 i(t)。</span></li>
+          <li><span class="x">✗</span> 4t 在 t = 1 s 時當成 4°。<span class="o">✓ 4 rad = 229.2°。</span></li>
+          <li><span class="x">✗</span> 算出 k &gt; 1。<span class="o">✓ 不可能，回去檢查 M 或 L 有沒有抄錯。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH13EX" data-sec="13.3"></div>
+      <div class="cf-wrap" id="cf-13-3">
+        <h3>🧠 觀念填充 13.3（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH13C" data-sec="13.3"></div>
+      </div>
+    </section>
+
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號</code></div>
+        <div class="gl-row"><b>磁耦合</b><span>magnetically coupled</span><code>—</code></div>
+        <div class="gl-row"><b>磁通</b><span>magnetic flux</span><code>φ</code></div>
+        <div class="gl-row"><b>自感</b><span>self-inductance</span><code>L</code></div>
+        <div class="gl-row"><b>互感</b><span>mutual inductance</span><code>M</code></div>
+        <div class="gl-row"><b>互感電壓</b><span>mutual voltage</span><code>M di/dt</code></div>
+        <div class="gl-row"><b>打點規則</b><span>dot convention</span><code>•</code></div>
+        <div class="gl-row"><b>串聯加成／相消</b><span>series-aiding / series-opposing</span><code>L₁ + L₂ ± 2M</code></div>
+        <div class="gl-row"><b>耦合係數</b><span>coupling coefficient</span><code>k = M/√(L₁L₂)</code></div>
+        <div class="gl-row"><b>緊耦合／鬆耦合</b><span>tightly / loosely coupled</span><code>k &gt; 0.5 / k &lt; 0.5</code></div>
+        <div class="gl-row"><b>完美耦合</b><span>perfectly coupled</span><code>k = 1</code></div>
+        <div class="gl-row"><b>冷次定律</b><span>Lenz's law</span><code>—</code></div>
+      </div>
+    </section>
+
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">10 題，中英對照。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 13，13.1–13.3（使用者 11/5 提供）。</p>
+      <p><a href="ch12-part4.html">← CH12 PART 4</a>　｜　<a href="index.html">回電路學首頁</a>　｜　<a href="ch13-part2.html">PART 2 變壓器 →</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/ch13-kit.js"></script>
+<script src="assets/ch13-skit.js"></script>
+<script src="assets/ch13-ex.js"></script>
+<script src="assets/prob-story.js"></script>
+<script src="../shared/exbook.js"></script>
+<script src="assets/ch13-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'mut', no: '13.2', name: '互感與打點規則', count: '例 2 · 練 2' },
+  { id: 'energy', no: '13.3', name: '耦合電路的能量', count: '例 1 · 練 1' }
+], { key: 'ch13-part1', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/ch12.js"></script>
+<script src="assets/ch13-part1.js"></script>
+<script src="assets/ch13-part1-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
