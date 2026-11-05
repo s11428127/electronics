@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>轉移函數與分貝</title>
+<meta name="description" content="電路學 CH14 PART 1（期中考範圍到 14.3）：頻率響應、轉移函數的四種形式、零點與極點、分貝刻度。故事模式＋推導＋頻率掃描與 dB 換算互動＋可改數字的課本例題。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH14 PART 1</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH14 PART 1</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>課程地圖</a></li>
+      <li><a href="#tf"><i>14.2</i>轉移函數</a></li>
+      <li><a href="#db"><i>14.3</i>分貝刻度</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH14</span>Chapter 14 · Part 1 · 課本 p.611–616</div>
+      <h1>轉移函數與分貝</h1>
+      <p class="sub">CH9～CH13 都只用一個頻率；CH14 開始讓頻率動起來，看電路的<button class="tm" data-t="頻率響應">頻率響應</button>。工具是<button class="tm" data-t="轉移函數">轉移函數</button> H(ω) = 輸出 ÷ 輸入，它的形狀由<button class="tm" data-t="零點">零點</button>和<button class="tm" data-t="極點">極點</button>決定（14.2）；數字差太多時改用<button class="tm" data-t="分貝">分貝</button>（14.3）。<b>期中考範圍到 14.3 為止。</b></p>
+      <div class="hero-meta">
+        <span class="chip h">✓ 考試範圍（到 14.3）</span>
+        <span class="chip">17 個畫面的故事模式</span>
+        <span class="chip">📘 課本 Example 2 題 ＋ Practice 2 題（每題都有 🎬 圖解故事）</span>
+        <span class="chip">2 個互動模組 ＋ 3 個可改數字例題</span>
+        <span class="chip">觀念填充 16 題 ＋ 10 題測驗</span>
+      </div>
+      <div class="lec-links"><a href="ch14-problems.html">✏️ CH14 章末練習題（到 14.3，7 題）</a><a href="ch13-review.html">🧠 CH13～14 觀念填充總複習</a></div>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">課本 CH14</span>Story mode · 先看這段，再往下讀</div>
+      <h2>17 個畫面看懂轉移函數與分貝<span class="h2-en">THE STORY IN 17 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">課本 CH14</span>Course map</div>
+      <h2>CH14 只考到 14.3<span class="h2-en">COURSE MAP</span></h2>
+      <p class="lede">14.1 引言併在 14.2 這一節。14.4 以後（波德圖、共振、濾波器）這次不考，之後再做。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>13.1–13.9</code><b><a href="ch13-part1.html">CH13 磁耦合電路</a> <span style="color:var(--ink-3);font-weight:400">PART 1～3</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>14.1–14.2</code><b>頻率響應、轉移函數、零點與極點 <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>14.3</code><b>分貝刻度 <span style="color:var(--ink-3);font-weight:400">← 這一頁（考到這裡）</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>14.4–14.12</code><b>波德圖、共振、濾波器… <span style="color:var(--ink-3);font-weight:400">這次不考</span></b><span class="dot"></span></div>
+      </div>
+      <div class="derive">
+        <h4>先複習 CH9 的阻抗（這一頁直接拿來用）</h4>
+        <ol>
+          <li><span class="d-eq">Z<sub>R</sub> = R、Z<sub>L</sub> = jωL、Z<sub>C</sub> = 1/jωC</span><div class="why">L、C 的阻抗都跟 ω 有關。</div></li>
+          <li><span class="d-eq">分壓 V<sub>o</sub> = V<sub>s</sub> · Z<sub>2</sub>/(Z<sub>1</sub> + Z<sub>2</sub>)、分流 I<sub>o</sub> = I<sub>s</sub> · Z<sub>1</sub>/(Z<sub>1</sub> + Z<sub>2</sub>)</span><div class="why">求轉移函數最常用的兩招。</div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 14.2 ══════════ -->
+    <section class="sec" id="tf">
+      <div class="eyebrow"><span class="part-tag">課本 CH14</span>14.1–14.2 · Transfer Function</div>
+      <h2>轉移函數<span class="h2-en">TRANSFER FUNCTION</span></h2>
+      <p class="lede">輸入的弦波大小固定、改變頻率，看輸出怎麼變，就是頻率響應。把它寫成一個函數：H(ω) = 輸出相量 ÷ 輸入相量。寫成分子 ÷ 分母後，分子的根叫零點（H = 0）、分母的根叫極點（H → ∞）。</p>
+      <div class="eq">H(ω) = Y(ω)/X(ω) = N(ω)/D(ω)　·　電壓增益 V<sub>o</sub>/V<sub>i</sub>、電流增益 I<sub>o</sub>/I<sub>i</sub>、轉移阻抗 V<sub>o</sub>/I<sub>i</sub>、轉移導納 I<sub>o</sub>/V<sub>i</sub>　·　N = 0 → 零點、D = 0 → 極點</div>
+      <div class="derive">
+        <h4>Example 14.1：RC 電路的頻率響應</h4>
+        <ol>
+          <li><span class="d-eq">H(ω) = (1/jωC)/(R + 1/jωC)</span><div class="why">換成頻域，輸出在電容上，分壓。</div></li>
+          <li><span class="d-eq">= 1/(1 + jωRC) = 1/(1 + jω/ω<sub>0</sub>)，ω<sub>0</sub> = 1/RC</span><div class="why">分子分母同乘 jωC。</div></li>
+          <li><span class="d-eq">H = 1/√(1 + (ω/ω<sub>0</sub>)<sup>2</sup>)、φ = −tan<sup>−1</sup>(ω/ω<sub>0</sub>)</span><div class="why">複數的大小、角度（式 9.18e）。</div></li>
+          <li><span class="d-eq hi">ω = 0：1、0°；ω = ω<sub>0</sub>：0.707、−45°；ω → ∞：0、−90°</span><p>低頻通過、高頻擋掉：低通。RL 電路輸出在 L 上（Practice 14.1）剛好相反：高通。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>零點與極點（Example 14.2）</h4>
+        <ol>
+          <li><span class="d-eq">I<sub>o</sub> = (4 + j2ω)/(4 + j2ω + 1/j0.5ω) · I<sub>i</sub></span><div class="why">分流：I<sub>o</sub> 走電容，比例 = 另一支 ÷ 總和。</div></li>
+          <li><span class="d-eq">令 s = jω：I<sub>o</sub>/I<sub>i</sub> = s(s + 2)/(s<sup>2</sup> + 2s + 1)</span><div class="why">暫時把 jω 換成 s，避免複數代數；分子分母同乘 j0.5ω。</div></li>
+          <li><span class="d-eq hi">零點：s(s + 2) = 0 ⟹ 0、−2；極點：(s + 1)<sup>2</sup> = 0 ⟹ −1（二重）</span><p>零點讓 H = 0、極點讓 H → ∞。14.4 波德圖就是用零點、極點一段一段畫。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>頻率掃描：|H| 和 φ 怎麼跟著 ω 變</h3><span class="spacer"></span><button class="btn" id="sw-kind" type="button">電路：RC，輸出在 C（Example 14.1）</button></div>
+        <div class="stage-wrap"><canvas id="cv-sweep" aria-label="RC 與 RL 電路的頻率響應"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="sw-l">頻率 ω（對數）<output for="sw-l"></output></label><input type="range" id="sw-l" min="-2" max="2" step="0.02" value="0"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>ω</dt><dd id="sw-w">—</dd></div>
+          <div><dt>|H|</dt><dd id="sw-h" style="color:var(--accent)">—</dd></div>
+          <div><dt>φ</dt><dd id="sw-p">—</dd></div>
+          <div><dt>|H| 的分貝（14.3）</dt><dd id="sw-db">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">橫軸用對數（0.01ω<sub>0</sub> 到 100ω<sub>0</sub>），每一格差 10 倍。拉到 ω<sub>0</sub>：|H| = 0.707、−45°、−3 dB；切換成 RL 看高通長什麼樣。</p>
+      <div id="ex-141"></div>
+      <div id="ex-142"></div>
+      <div class="howto">
+        <h4>轉移函數題的標準流程</h4>
+        <ol>
+          <li><b>看要哪一種：</b>輸出、輸入分別是電壓還是電流（電壓增益、電流增益、轉移阻抗、轉移導納）。</li>
+          <li><b>換成頻域：</b>R、jωL、1/jωC；為了好算，直接寫 sL、1/sC。</li>
+          <li><b>用分壓、分流（或網目、節點）</b>求出輸出 ÷ 輸入。</li>
+          <li><b>整理成 N(s)/D(s)</b>：分子分母同乘，讓兩邊都是多項式，約分到最簡。</li>
+          <li><b>零點、極點：</b>N = 0、D = 0 的根。要頻率響應就代 s = jω，求大小和相位。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>轉移函數的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> H = 輸入 ÷ 輸出。<span class="o">✓ 輸出 ÷ 輸入。</span></li>
+          <li><span class="x">✗</span> 零點、極點搞反。<span class="o">✓ 分子（零點）→ H = 0；分母（極點）→ H = ∞。</span></li>
+          <li><span class="x">✗</span> 沒約分就找零點極點。<span class="o">✓ 課本式 14.3：先把共同因式約掉。</span></li>
+          <li><span class="x">✗</span> 相位只寫分子的角度。<span class="o">✓ φ = 分子角度 − 分母角度（RL：90° − tan<sup>−1</sup>(ω/ω<sub>0</sub>)）。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH14EX" data-sec="14.2"></div>
+      <div class="cf-wrap" id="cf-14-2">
+        <h3>🧠 觀念填充 14.2（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。全部集中在 <a href="ch13-review.html">CH13～14 觀念填充總複習</a>。</p>
+        <div class="hw-list" data-bank="__CH13C" data-sec="14.2"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 14.3 ══════════ -->
+    <section class="sec" id="db">
+      <div class="eyebrow"><span class="part-tag">課本 CH14</span>14.3 · The Decibel Scale</div>
+      <h2>分貝刻度<span class="h2-en">THE DECIBEL SCALE</span></h2>
+      <p class="lede">頻率響應的數字常常差好幾個數量級，用對數比較好畫、好比較，而且串接時乘法變加法。功率比用 10 log，電壓、電流比用 20 log（因為功率跟電壓平方成正比）。</p>
+      <div class="eq">G = log<sub>10</sub>(P<sub>2</sub>/P<sub>1</sub>)（貝爾）　·　G<sub>dB</sub> = 10 log<sub>10</sub>(P<sub>2</sub>/P<sub>1</sub>)　·　G<sub>dB</sub> = 20 log<sub>10</sub>(V<sub>2</sub>/V<sub>1</sub>) = 20 log<sub>10</sub>(I<sub>2</sub>/I<sub>1</sub>)</div>
+      <div class="derive">
+        <h4>為什麼電壓要乘 20</h4>
+        <ol>
+          <li><span class="d-eq">G<sub>dB</sub> = 10 log<sub>10</sub>(P<sub>2</sub>/P<sub>1</sub>)</span><div class="why">分貝是貝爾的 1/10（式 14.5）。</div></li>
+          <li><span class="d-eq">P<sub>1</sub> = V<sub>1</sub><sup>2</sup>/R<sub>1</sub>、P<sub>2</sub> = V<sub>2</sub><sup>2</sup>/R<sub>2</sub></span><div class="why">課本圖 14.8：輸入電阻 R<sub>1</sub>、負載 R<sub>2</sub>（同一個 0.5 係數會約掉）。</div></li>
+          <li><span class="d-eq">G<sub>dB</sub> = 20 log<sub>10</sub>(V<sub>2</sub>/V<sub>1</sub>) − 10 log<sub>10</sub>(R<sub>2</sub>/R<sub>1</sub>)</span><div class="why">log 的性質：平方提到前面變 2 倍、相除變相減（式 14.9）。</div></li>
+          <li><span class="d-eq hi">R<sub>1</sub> = R<sub>2</sub> ⟹ G<sub>dB</sub> = 20 log<sub>10</sub>(V<sub>2</sub>/V<sub>1</sub>)</span><p>電流同理。分貝是「同一種量」的比，所以用在電壓增益、電流增益，不直接用在轉移阻抗、導納。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>幾個一定要記的值</h4>
+        <ol>
+          <li><span class="d-eq">P<sub>2</sub> = 2P<sub>1</sub> ⟹ 10 log 2 ≈ 3 dB；P<sub>2</sub> = 0.5P<sub>1</sub> ⟹ ≈ −3 dB</span><div class="why">倒數的對數 = 負的對數（式 14.6、14.7）。</div></li>
+          <li><span class="d-eq">電壓 ×10 = 20 dB、×100 = 40 dB、×1 = 0 dB</span><div class="why">20 log 10 = 20。</div></li>
+          <li><span class="d-eq hi">電壓 × 1/√2（0.707）= −3 dB</span><p>就是 Example 14.1 的 ω<sub>0</sub>：功率剛好剩一半。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>倍數 ↔ 分貝換算尺</h3><span class="spacer"></span><button class="btn" id="db-kind" type="button">換算：電壓、電流比（× 20）</button></div>
+        <div class="stage-wrap"><canvas id="cv-db" aria-label="倍數與分貝的對應"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="db-l">比值（對數）<output for="db-l"></output></label><input type="range" id="db-l" min="-3" max="3" step="0.01" value="1"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>比值</dt><dd id="db-r">—</dd></div>
+          <div><dt>分貝</dt><dd id="db-v" style="color:var(--accent)">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">上面的刻度每格差 10 倍，下面的 dB 每格一樣加 20（電壓）或 10（功率）—— 對數把「乘」變成「加」。</p>
+      <div id="ex-db"></div>
+      <div class="howto">
+        <h4>分貝題的標準流程</h4>
+        <ol>
+          <li><b>先分清楚</b>是功率比（× 10）還是電壓、電流比（× 20）。</li>
+          <li><b>倍數 → dB：</b>G<sub>dB</sub> = 20 log<sub>10</sub>|H|（電壓）。</li>
+          <li><b>dB → 倍數：</b>|H| = 10<sup>H<sub>dB</sub>/20</sup>（Problem 14.7）。</li>
+          <li><b>串接：</b>總 dB = 各級 dB 相加。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>分貝的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> 電壓比也用 10 log。<span class="o">✓ 電壓、電流用 20 log；功率才用 10 log。</span></li>
+          <li><span class="x">✗</span> 負的 dB 以為是負的增益（輸出反相）。<span class="o">✓ 負 dB 只是比 1 小（衰減），跟相位無關。</span></li>
+          <li><span class="x">✗</span> −3 dB 當成電壓剩一半。<span class="o">✓ −3 dB 是功率剩一半、電壓剩 0.707；電壓剩一半是 −6 dB。</span></li>
+        </ul>
+      </div>
+      <p class="note">14.3 課本沒有例題，練習在 <a href="ch14-problems.html">CH14 章末題 Problem 14.7</a>。</p>
+      <div class="cf-wrap" id="cf-14-3">
+        <h3>🧠 觀念填充 14.3（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH13C" data-sec="14.3"></div>
+      </div>
+      <div class="scope-end">⛳ <b>期中考範圍到這裡（14.3）</b>。14.4 波德圖以後這次不考。</div>
+    </section>
+
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">課本 CH14</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號</code></div>
+        <div class="gl-row"><b>頻率響應</b><span>frequency response</span><code>H(ω)</code></div>
+        <div class="gl-row"><b>轉移函數（網路函數）</b><span>transfer (network) function</span><code>H(ω) = Y/X</code></div>
+        <div class="gl-row"><b>電壓增益</b><span>voltage gain</span><code>V<sub>o</sub>/V<sub>i</sub></code></div>
+        <div class="gl-row"><b>電流增益</b><span>current gain</span><code>I<sub>o</sub>/I<sub>i</sub></code></div>
+        <div class="gl-row"><b>轉移阻抗</b><span>transfer impedance</span><code>V<sub>o</sub>/I<sub>i</sub></code></div>
+        <div class="gl-row"><b>轉移導納</b><span>transfer admittance</span><code>I<sub>o</sub>/V<sub>i</sub></code></div>
+        <div class="gl-row"><b>零點</b><span>zero</span><code>N(s) = 0</code></div>
+        <div class="gl-row"><b>極點（二重極點）</b><span>pole (repeated / double pole)</span><code>D(s) = 0</code></div>
+        <div class="gl-row"><b>貝爾</b><span>bel</span><code>log₁₀(P₂/P₁)</code></div>
+        <div class="gl-row"><b>分貝</b><span>decibel</span><code>dB</code></div>
+        <div class="gl-row"><b>增益</b><span>gain</span><code>G</code></div>
+      </div>
+    </section>
+
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">課本 CH14</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">10 題，中英對照。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 14，14.1–14.3（使用者 11/5 提供；期中考範圍到 14.3）。</p>
+      <p><a href="ch13-part3.html">← CH13 PART 3</a>　｜　<a href="index.html">回電路學首頁</a>　｜　<a href="ch14-problems.html">CH14 章末題 →</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/ch13-kit.js"></script>
+<script src="assets/ch13-skit.js"></script>
+<script src="assets/ch14-ex.js"></script>
+<script src="assets/prob-story.js"></script>
+<script src="../shared/exbook.js"></script>
+<script src="assets/ch13-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'tf', no: '14.2', name: '轉移函數', count: '例 2 · 練 2' },
+  { id: 'db', no: '14.3', name: '分貝刻度', count: '觀念 8 題' }
+], { key: 'ch14-part1', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/ch12.js"></script>
+<script src="assets/ch14-part1.js"></script>
+<script src="assets/ch14-part1-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>

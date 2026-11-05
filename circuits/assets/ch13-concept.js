@@ -313,6 +313,92 @@
     [S(['變小 smaller', '變大 larger', '不變 unchanged', '變成直流 dc']), S(['變小 smaller', '變大 larger', '不變 unchanged', '變成負的 negative'])],
     '課本：100 kVA 用 1000 V 要 100 A，用 10000 V 只要 10 A。這也是發電用交流的主要原因之一。');
 
+  /* ═════════ 14.2 轉移函數（CH14 考到 14.3） ═════════ */
+  const L42 = P4 + '#tf';
+  C('14.2', 1, L42, '頻率響應',
+    '電路的頻率響應是：輸入的 {0} 固定、改變 {1}，看電路的反應怎麼變。',
+    'The frequency response of a circuit is obtained by keeping the ___ of a sinusoidal source constant and varying its ___.',
+    [S(['振幅 amplitude', '頻率 frequency', '相位 phase', '電阻 resistance']), S(['頻率 frequency', '振幅 amplitude', '電阻 resistance', '時間常數 time constant'])],
+    '課本 14.1：the variation in its behavior with change in signal frequency。');
+  C('14.2', 2, L42, '轉移函數的定義',
+    '轉移函數 H(ω) 是 {0} 相量對 {1} 相量的比，跟頻率有關。',
+    'The transfer function H(ω) is the frequency-dependent ratio of a phasor ___ to a phasor ___.',
+    [S(['輸出 output', '輸入 input', '電源內阻 source resistance', '功率 power']), S(['輸入 input', '輸出 output', '負載 load', '雜訊 noise'])],
+    'H(ω) = Y(ω)/X(ω)，假設初始條件為零。');
+  C('14.2', 3, L42, '四種轉移函數',
+    'V<sub>o</sub>/V<sub>i</sub> 叫電壓增益，I<sub>o</sub>/I<sub>i</sub> 叫電流增益，V<sub>o</sub>/I<sub>i</sub> 叫 {0}，I<sub>o</sub>/V<sub>i</sub> 叫 {1}。',
+    'V<sub>o</sub>/I<sub>i</sub> is called the transfer ___ and I<sub>o</sub>/V<sub>i</sub> the transfer ___.',
+    [S(['轉移阻抗 impedance', '轉移導納 admittance', '電壓增益 voltage gain', '電流增益 current gain']), S(['轉移導納 admittance', '轉移阻抗 impedance', '電壓增益 voltage gain', '功率增益 power gain'])],
+    '式 14.2a～d。電壓除電流是阻抗、電流除電壓是導納。');
+  C('14.2', 4, L42, '怎麼求 H(ω)',
+    '求轉移函數的第一步是把 R、L、C 換成 {0}，再用分壓、分流、網目等方法。',
+    'To find H(ω), first replace R, L, C by their ___, then use any circuit technique.',
+    [S(['阻抗 R、jωL、1/jωC impedances R, jωL, 1/jωC', '時域方程 time-domain equations', '電導 conductances only', '拉氏轉換表 Laplace tables'])],
+    '跟 CH9、CH10 的相量分析一樣。', true);
+  C('14.2', 5, L42, '零點',
+    '讓分子 N(ω) = 0 的值叫 {0}，這時 H 等於 {1}。',
+    'The roots of the numerator N(ω) = 0 are the ___ of H, where H becomes ___.',
+    [S(['零點 zeros', '極點 poles', '轉折點 corners', '共振點 resonances']), S(['0', '無限大 infinite', '1', '−1'])],
+    'Example 14.2：s(s + 2) = 0 → 零點 0、−2。');
+  C('14.2', 6, L42, '極點',
+    '讓分母 D(ω) = 0 的值叫 {0}，這時 H 變成 {1}。',
+    'The roots of the denominator D(ω) = 0 are the ___ of H, where H becomes ___.',
+    [S(['極點 poles', '零點 zeros', '頻寬 bandwidths', '增益 gains']), S(['無限大 infinite', '0', '1', '0.707'])],
+    'Example 14.2：(s + 1)² = 0 → 二重極點 −1。');
+  C('14.2', 7, L42, '為什麼換成 s',
+    '算 H(ω) 時暫時把 jω 換成 {0}，是為了 {1}，最後再換回 jω。',
+    'It is expedient to replace jω temporarily with ___ to avoid ___, and replace it back at the end.',
+    [S(['s', 'ω', 'j', 'f']), S(['複雜的複數代數 complex algebra', '單位換算 unit conversion', '負數 negative numbers', '畫圖 plotting'])],
+    '課本 14.2 的建議：寫成 s 的多項式比較好因式分解。', true);
+  C('14.2', 8, L42, 'RC 低通在 ω<sub>0</sub>',
+    'Example 14.1 的 RC 電路 H = 1/(1 + jωRC)，在 ω = ω<sub>0</sub> = 1/RC 時 |H| = {0}、相位 = {1}。',
+    'For H = 1/(1 + jωRC), at ω = ω<sub>0</sub> = 1/RC, |H| = ___ and the phase is ___.',
+    [S(['1/√2 ≈ 0.707', '1', '0.5', '0']), S(['−45°', '−90°', '0°', '45°'])],
+    '1 + j1 的大小是 √2、角度 45°，倒數就是 0.707∠−45°。', true);
+
+  /* ═════════ 14.3 分貝刻度 ═════════ */
+  const L43 = P4 + '#db';
+  C('14.3', 1, L43, '貝爾',
+    '貝爾（bel）原本是用來量兩個 {0} 的比：G = log10(P2/P1)。',
+    'The bel is used to measure the ratio of two levels of ___: G = log10(P2/P1).',
+    [S(['功率 power', '電壓 voltage', '頻率 frequency', '電阻 resistance'])],
+    '以電話發明人貝爾（Alexander Graham Bell）命名。');
+  C('14.3', 2, L43, '分貝',
+    '分貝是貝爾的 {0}：功率增益 G<sub>dB</sub> = {1} log10(P2/P1)。',
+    'The decibel is ___ of a bel: G<sub>dB</sub> = ___ log10(P2/P1).',
+    [S(['十分之一 one tenth', '十倍 ten times', '一百倍 a hundred times', '一半 half']), S(['10', '20', '1', '100'])],
+    '式 14.5。');
+  C('14.3', 3, L43, '功率兩倍',
+    '功率變成兩倍大約是 {0}；變成一半大約是 {1}。',
+    'Doubling the power is about ___, and halving it is about ___.',
+    [S(['3 dB', '6 dB', '2 dB', '20 dB']), S(['−3 dB', '−6 dB', '0.5 dB', '−20 dB'])],
+    '10 log 2 ≈ 3、10 log 0.5 ≈ −3：倒數的對數就是負號。');
+  C('14.3', 4, L43, '電壓用 20',
+    '電壓或電流的比換成分貝要乘 {0}，因為功率跟電壓的 {1} 成正比。',
+    'For voltage or current ratios the factor is ___, because power is proportional to the ___ of voltage.',
+    [S(['20', '10', '2', '100']), S(['平方 square', '平方根 square root', '倒數 reciprocal', '對數 logarithm'])],
+    'P = V²/R：10 log (V₂²/V₁²) = 20 log (V₂/V₁)（R₁ = R₂ 時）。', true);
+  C('14.3', 5, L43, '0 dB',
+    '增益 0 dB 代表 {0}。',
+    'A gain of 0 dB means ___.',
+    [S(['輸出 = 輸入（比值 1）output equals input', '輸出為零 zero output', '輸出無限大 infinite output', '相位 0° zero phase'])],
+    'log 1 = 0。');
+  C('14.3', 6, L43, '20 dB 是幾倍',
+    '電壓增益 20 dB 是 {0} 倍；40 dB 是 {1} 倍。',
+    'A voltage gain of 20 dB is ___ times; 40 dB is ___ times.',
+    [S(['10', '20', '100', '2']), S(['100', '40', '1000', '20'])],
+    '每 20 dB 乘 10。Problem 14.7(c)：104.7 dB ≈ 1.718 × 10⁵。', true);
+  C('14.3', 7, L43, '對數的好處',
+    '用對數（dB）的好處之一：串接系統的總增益，在 dB 上是各級增益 {0}。',
+    'One advantage of logarithms: the total gain of cascaded stages in dB is the ___ of the individual gains.',
+    [S(['相加 sum', '相乘 product', '平均 average', '最大值 maximum'])],
+    'log P₁P₂ = log P₁ + log P₂。這也是波德圖（14.4）好用的原因。');
+  C('14.3', 8, L43, '分貝適用的對象',
+    '分貝是「同一種量」的比，所以適合表示 {0}，不適合直接用在轉移阻抗、轉移導納。',
+    'The decibel expresses a ratio of like quantities, so it applies to ___, not to transfer impedance or admittance.',
+    [S(['電壓增益、電流增益 voltage and current gains', '轉移阻抗 transfer impedance', '轉移導納 transfer admittance', '電阻值 resistances'])],
+    '課本 14.3 的提醒：式 14.2a、b 可以，14.2c、d 不行。');
+
   window.__CH13C = window.__CH13C || { name: 'ch13c', items: [] };
   window.__CH13C.items = window.__CH13C.items.concat(items);
 })();

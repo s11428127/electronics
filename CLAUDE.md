@@ -160,6 +160,13 @@
 - **章末題圖解詳解（使用者 10/18）**：`circuits/assets/prob-story.js` 自動把 tag 以 `Problem` 開頭的題目（Review Question 不做）做成故事：題目圖（schem 圖嵌進故事畫面）→ 每幕 1～2 步（左圖右計算卡，字幕取 `why` 第一句）→ 答案卡。題庫寫 `steps` 時 `eq` 用「；」「⇒」分段，故事才切得漂亮。
 - 現有：電路學 `ch11-problems.html`（`ch11-prob1～3.js`，86 題）、`ch12-problems.html`（`ch12-prob1～2.js`，64 題；三相電路圖用 `__CH12PB.tp({src:'Y'|'D'|'gen', load:'Y'|'D', line, neutral})`）。節標題旁有圖示＝整節都跳過（CH12 的 12.9 PSpice）。
 
+## 電路學期中考（使用者 11/5：考到 14.3，比較會考章末 Problems）
+
+- 範圍 CH11 ～ 14.3。CH13 做三頁講義 `ch13-part1～3.html` ＋ `ch13-problems.html`（43 題）＋ `ch13-review.html`（CH13～14 觀念填充 72 題，`__CH13C` name `ch13c`）；CH14 做 `ch14-part1.html`（14.1～14.3，含 `.scope-end`「⛳ 考到這裡」）＋ `ch14-problems.html`（7 題）。詳細見 `circuits/docs/CONTENT_MAP.md`。
+- 互感、變壓器電路圖用 `circuits/assets/ch13-kit.js`（`__K13.xf(x, y1, y2, {d1, d2, M, n, l1, l2})` 一組耦合線圈，`n` 有值就畫鐵心；`arcM`、`arc2` 互感弧）；故事用 `ch13-skit.js`（`__S13`）。點的位置一定要放大原圖確認再畫。
+- 例題圖解故事：bank 設 `autoAll: true`，`prob-story.js` 會替 Example／Practice 全部自動產生（CH13EX、CH14EX）。
+- 章末題照舊規則：e⁷d、＃ML、小筆電圖示的不做（使用者 11/5 再確認一次，即使 ML 題很多）。
+
 ## 電路學 CH1～CH10 複習（使用者 10/17，只有故事）
 
 - 使用者給課本 CH1～CH10 原書章節，要「複習」：**只有故事 ＋ 總結卡**，不要題目、不要講義內容、不要推導節。篇幅比 CH11、12 短，但每章開頭要講「這章要幹嘛」。
