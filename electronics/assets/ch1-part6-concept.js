@@ -493,7 +493,7 @@
     '齊納的 VZ、IZ 定義跟一般二極體 {0}：IZ 從 {1} 流進去。',
     'The VZ and IZ references of a Zener are ___ those of an ordinary diode: IZ enters at the ___.',
     [S(['相反 opposite to', '一樣 the same as', '無關 unrelated to', '垂直 perpendicular to']), S(['陰極 cathode', '陽極 anode', '金屬端 metal side', '中間 middle'])],
-    '講義 1-33 NOTE：定義與二極體不同，要注意。', true);
+    '齊納是故意<b>逆偏</b>用的：電路裡陰極接高電位（經 R 接 V<sub>PS</sub> 的 +）、陽極接地，崩潰後電流從陰極流進、陽極流出——跟一般二極體順偏（陽極進、陰極出）剛好反過來。所以講義把 V<sub>Z</sub> 的 + 定在陰極、I<sub>Z</sub> 定成從陰極流進，算出來的 V<sub>Z</sub> = 5.6 V、I<sub>Z</sub> = 3 mA 才是正數（講義 1-33 NOTE）。', true);
   C('zd', 8, 'Design Example 1.13 的流程',
     'Design Example 1.13 求 R 的做法：把齊納換成 {0}，再用 R = (VPS − VZ)/I。',
     'In Design Example 1.13, replace the Zener by ___ and then use R = (VPS − VZ)/I.',
