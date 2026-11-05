@@ -93,15 +93,30 @@
      { sub: '中間串一個 100 Ω 限制電流、一顆二極體（V<sub>γ</sub> = 0.6 V）。', on: 'r3 r4' },
      { sub: '問題：二極體什麼時候才會通？', on: '' }]);
 
+  /* 11/5 使用者：電池在半波整流裡是要幹嘛？→ 先講「它是被充電的那個」 */
+  const S4b = sc('電池在這裡幹嘛？', 'WHAT IS THE BATTERY FOR?',
+    chg('c', false) + '<g data-k="ring"><circle class="lna dsh" cx="300" cy="200" r="28" style="fill:none;stroke-width:2"/></g>' +
+    chip(480, 150, '電池 = 要被充電的東西', '不是來幫忙供電的', 'c1', { fs: 13 }) +
+    chip(480, 235, '整個電路只為一件事', '把這顆電池充飽', 'c2', { fs: 13, acc: true }),
+    [{ sub: '先問一個問題：這顆電池在電路裡是幹嘛的？', on: 'c' },
+     { sub: '它<b>不是</b>來幫忙供電的。', on: 'ring c1' },
+     { sub: '它就是<b>要被充電的那個東西</b>：整個電路只為了把它充飽。', on: 'c2' }]);
+
   const S5 = sc('比喻：往水塔裡抽水', 'ANALOGY: WATER TOWER',
     g('tw', '<rect class="bgw" x="420" y="150" width="90" height="130" rx="6"/><rect class="accw" x="422" y="215" width="86" height="63"/>' + T(465, 205, '水位 12 V', { cls: 'ta', fs: 12 }) + T(465, 300, '電池 = 水塔', { cls: 't', fs: 13 })) +
     g('pump', '<circle class="bgw" cx="150" cy="240" r="34"/>' + T(150, 245, '抽水機', { cls: 't', fs: 12 }) + T(150, 300, '電源 = 抽水機', { cls: 't', fs: 13 })) +
     g('pipe', W('M184 240 H300 M330 240 H420') + '<path class="accw" style="stroke:var(--s-ink);stroke-width:2" d="M300 226 L300 254 L328 240 Z"/>' + T(315, 215, '單向閥', { cls: 'tm', fs: 12 })) +
-    T(320, 130, '水壓要高過 12 V + 推開閥的 0.6 V', { cls: 'ta', fs: 15, k: 'th' }),
+    T(320, 130, '水壓要高過 12 V + 推開閥的 0.6 V', { cls: 'ta', fs: 15, k: 'th' }) +
+    g('rr', '<rect class="accw" style="stroke:var(--s-ink);stroke-width:1.6" x="222" y="233" width="40" height="14" rx="3"/>' + T(242, 270, '電阻 = 水管縮小', { cls: 'tm', fs: 12 })) +
+    g('bk', '<path class="lna dsh" style="fill:none;stroke-width:2" d="M412 196 H344"/><path class="acc" d="M344 189 L332 196 L344 203 Z"/>' + T(380, 182, '想倒流', { cls: 'ta', fs: 12 })) +
+    g('bkx', T(318, 203, '✗', { cls: 'ta', fs: 20 }) + T(300, 182, '被閥擋住', { cls: 't', fs: 12, a: 'end' })),
     [{ sub: '把電池想成一座<b>水塔</b>，裡面已經有 12 V 的水位。', on: 'tw' },
      { sub: '電源是抽水機，二極體是一道單向閥。', on: 'pump pipe' },
      { sub: '抽水機的壓力要先高過水位 12 V，再多 0.6 V 推開閥，水才流得進去。', on: 'th' },
-     { sub: '所以門檻是 12 + 0.6 = <b>12.6 V</b>。', on: '' }]);
+     { sub: '所以門檻是 12 + 0.6 = <b>12.6 V</b>。', on: '' },
+     { sub: '電阻就是把水管縮小一點，水才不會一次衝太猛。', on: 'rr' },
+     { sub: '電源比 12 V 低的時候呢？水塔反而比較高，水想<b>倒流</b>回去。', on: 'bk' },
+     { sub: '單向閥（二極體）把它擋住：電池的電不會跑回電源。', on: 'bkx' }]);
 
   const S6 = sc('只有一小段時間在充電', 'CONDUCTION WINDOW',
     chg('c', true) + flow('M60 184 V140 H120 M160 140 H206 M234 140 H300 V185 M300 215 V260 H60 V216', 'fp') + st(220, 166, true, 'on') +
@@ -135,6 +150,19 @@
     { sub: '藍線是 v<sub>D</sub>：掉到 0 以下的那幾段（塗色），就是二極體被反向拉開、OFF 的時候。', on: 'pvd' },
     { sub: '電源掉到谷底那一瞬間，兩端距離最遠：12 − (−24) = 36 V。', on: 'pbr' },
     { sub: '藍線最低點的深度就是 <b>PIV = 36 V</b>：二極體最多要扛的反向電壓。', on: 'ppk' }]);
+
+  /* 11/5：為什麼一定要二極體 */
+  const noD = 'M60 184 V140 H120 M160 140 H300 V185 M300 215 V260 H60 V216';
+  const S8c = sc('為什麼一定要二極體？', 'WHY THE DIODE?',
+    g('c', vac(60, 200, '', '24 sin ωt') + W(noD) + res(140, 140, false, '', '100 Ω') + bat(300, 200, true, '', '12 V')) +
+    T(230, 125, '二極體拿掉', { cls: 'ta', fs: 12, k: 'nd' }) +
+    flow('M300 185 V140 H160 M120 140 H60 V184 M60 216 V260 H300 V215', 'fb') +
+    chip(490, 130, '拿掉二極體、換成導線', '電源比 12 V 低的時候…', 'c1', { fs: 13 }) +
+    chip(490, 200, '電池反過來放電', '充了又漏光', 'c2', { fs: 13 }) +
+    chip(490, 270, '二極體 = 單向閥', '只准充、不准漏', 'c3', { fs: 13, acc: true }),
+    [{ sub: '如果把二極體拿掉，換成一條導線會怎樣？', on: 'c nd c1' },
+     { sub: '電源比 12 V 低的時候，電池反過來把電灌回電源：<b>充了又漏光</b>。', on: 'fb c2' },
+     { sub: '所以二極體就是那道單向閥：只准充、不准漏。', on: 'c3' }]);
 
   const S9 = sc('先整理一下', 'SO FAR',
     calc(110, 118, 420, [['二極體 = 單向門，只讓正半週過', 'r1', 't', 15], ['半波：負半週輸出 0，浪費一半', 'r2', 't', 15], ['充電器：電源 &gt; 電池 + V<sub>γ</sub> 才導通', 'r3', 't', 15], ['不導通時看 PIV：二極體要扛的最大逆向電壓', 'r4', 'tm', 14]], { k: 'cc', lh: 38 }),
@@ -248,6 +276,6 @@
 
   window.__ch2p2Story = window.__Story('#story', {
     id: 'ch2p2v2', title: 'CH2 PART 2 整流電路', after: '#map',
-    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S8b, S9, S10, S11, S12, S13, S14, S14b, S15, S16, S17, S18, S18b, S19, S20]
+    scenes: [S0, S1, S2, S3, S4, S4b, S5, S6, S7, S8, S8b, S8c, S9, S10, S11, S12, S13, S14, S14b, S15, S16, S17, S18, S18b, S19, S20]
   });
 })();

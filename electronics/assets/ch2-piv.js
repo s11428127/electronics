@@ -139,6 +139,19 @@
       f.innerHTML = '<div>' + html + '</div><figcaption>' + cap + '</figcaption>';
       after.parentNode.insertBefore(f, after.nextSibling);
     };
+    /* 11/5 使用者：電池在這裡幹嘛？（白話版，放在導言後面） */
+    const cs = document.getElementById('chg'), lede = cs && cs.querySelector(':scope > .lede');
+    if (lede && !cs.querySelector('.bat-plain')) {
+      const n = document.createElement('div'); n.className = 'note key piv-fig bat-plain';
+      n.innerHTML = '<b>白話：電池在這裡幹嘛？</b>它<b>不是</b>來幫忙供電的，它就是<b>要被充電的那個東西</b>，整個電路只為了把它充飽。' +
+        '<br>想成用抽水機把水打進水塔：<b>交流電源</b>＝忽強忽弱的抽水機（+24 ↔ −24）；<b>電池</b>＝水塔，水位固定 12 V；<b>二極體</b>＝單向閥，只讓水往水塔流；<b>電阻</b>＝把水管縮小，水不會一次衝太猛。' +
+        '<ol style="margin:.5em 0 .3em 1.2em;padding:0">' +
+        '<li><b>電源 &gt; 12 + V<sub>γ</sub></b>：抽水機壓力比水塔高 → 二極體通，電流灌進電池（充電）。</li>' +
+        '<li><b>電源比 12 V 低</b>（含整個負半週）：水塔反而比較高，水想倒流 → 二極體擋住，電池的電不會跑回電源。</li>' +
+        '<li><b>最壞那一瞬間</b>：電源 −24、電池還頂在 +12，二極體夾中間：12 − (−24) = <b>36 V</b>（PIV）。</li></ol>' +
+        '為什麼一定要二極體？沒有它，電源低的時候電池會反過來放電，充了又漏光。為什麼電流只有一小段？電源要超過 12.6 V 才推得動，只有峰值附近那段在充電。';
+      lede.parentNode.insertBefore(n, lede.nextSibling);
+    }
     place('chg', page('chg'), '📉 PIV 波形：充電器的二極體兩端電壓（Example 2.1 的數字）');
     place('fwc', page('ct'), '📉 PIV 波形：中間抽頭關著的那顆（V<sub>m</sub> = 15 V）');
     place('brg', page('br'), '📉 PIV 波形：橋式關著的那顆（板書數字 V<sub>m</sub> = 15 V）');
