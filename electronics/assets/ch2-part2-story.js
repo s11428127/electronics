@@ -9,6 +9,7 @@
 (function () {
   'use strict';
   if (!window.__Story || !window.__K15 || !window.__C2S) return;
+  const PV = window.__C2PIV;
   const K = window.__K15, D = K.D, Q = window.__C2S;
   const { g, T, calc, sc } = K;
   const { chip } = D;
@@ -125,6 +126,16 @@
      { sub: '電源在谷底是 −24 V，另一邊電池還頂著 12 V，兩個加起來。', on: 'cc r1 r2 r3' },
      { sub: 'PIV = 36 V：買二極體要買耐得住 36 V 以上的。', on: 'r4' }]);
 
+
+  /* PIV 看波形（11/5 使用者：PIV 到底是什麼 → 畫圖） */
+  const pivScene = (kind, t, en, subs) => sc(t, en, (kind === 'chg' ? chg('c', false) : kind === 'ct' ? CT('c', false, false) : BR('c', false, false)).replace('<g', '<g transform="translate(-10,0) scale(0.92)"') + PV.story(kind, { x: 345, y: 108, w: 260, h: 190 }), subs);
+  const S8b = pivScene('chg', '看波形：PIV 就是最低點', 'PIV ON A GRAPH', [
+    { sub: '把二極體兩端的電壓 v<sub>D</sub> = 陽極 − 陰極 畫成波形。先畫座標：0 V 是下面那條線。', on: 'c pax' },
+    { sub: '虛線是電源（±24 V），實線是電池那一端：一條固定在 +12 V 的水平線。', on: 'pvs pca' },
+    { sub: '藍線是 v<sub>D</sub>：掉到 0 以下的那幾段（塗色），就是二極體被反向拉開、OFF 的時候。', on: 'pvd' },
+    { sub: '電源掉到谷底那一瞬間，兩端距離最遠：12 − (−24) = 36 V。', on: 'pbr' },
+    { sub: '藍線最低點的深度就是 <b>PIV = 36 V</b>：二極體最多要扛的反向電壓。', on: 'ppk' }]);
+
   const S9 = sc('先整理一下', 'SO FAR',
     calc(110, 118, 420, [['二極體 = 單向門，只讓正半週過', 'r1', 't', 15], ['半波：負半週輸出 0，浪費一半', 'r2', 't', 15], ['充電器：電源 &gt; 電池 + V<sub>γ</sub> 才導通', 'r3', 't', 15], ['不導通時看 PIV：二極體要扛的最大逆向電壓', 'r4', 'tm', 14]], { k: 'cc', lh: 38 }),
     [{ sub: '先整理一下到這裡的三件事。', on: 'cc r1' },
@@ -172,6 +183,13 @@
      { sub: '關著的那顆最慘：一邊是自己那半線圈的谷底，一邊是輸出的峰值。', on: 'r3' },
      { sub: '加起來 PIV = 2V<sub>m</sub> − V<sub>γ</sub>，大約是峰值的兩倍。', on: 'r4' }]);
 
+
+  const S14b = pivScene('ct', '看波形：中間抽頭的 PIV', 'CENTER-TAP PIV ON A GRAPH', [
+    { sub: '一樣畫關著那顆 D<sub>2</sub> 的兩端電壓（V<sub>m</sub> = 15 V、V<sub>γ</sub> = 0.7 V，中間抽頭當 0 V）。', on: 'c pax pvs' },
+    { sub: '虛線是 D<sub>2</sub> 的陽極（下半線圈 −v<sub>S</sub>），實線是陰極（輸出，永遠 ≥ 0）。', on: 'pan pca' },
+    { sub: '一個往下、一個往上，離得最遠時差 15 + 14.3 = 29.3 V。', on: 'pvd pbr' },
+    { sub: '<b>PIV = 2V<sub>m</sub> − V<sub>γ</sub> = 29.3 V</b>：跨整個次級，大約兩個峰值。', on: 'ppk' }]);
+
   /* ── 15 橋式：實物 ── */
   const S15 = sc('接法二：橋式（考試第 4 題）', 'BRIDGE RECTIFIER',
     g('chip', '<rect class="bgw" x="110" y="150" width="120" height="100" rx="8"/>' + T(170, 195, '橋式整流', { cls: 't', fs: 14 }) + T(170, 218, '（四顆二極體）', { cls: 'ts', fs: 11 }) +
@@ -205,6 +223,13 @@
      { sub: '關著的有<b>兩顆</b>，每一顆都是「電源峰值 V<sub>m</sub> 扣掉旁邊一顆 ON 的 V<sub>γ</sub>」：PIV = V<sub>m</sub> − V<sub>γ</sub>。', on: 'r3' },
      { sub: '套板書的數字：15 V 峰值 → 輸出 13.6 V、PIV 14.3 V。', on: 'r4' }]);
 
+
+  const S18b = pivScene('br', '看波形：橋式的 PIV', 'BRIDGE PIV ON A GRAPH', [
+    { sub: '畫關著的 D<sub>3</sub>（D<sub>4</sub> 一樣）。照 11/3 板書，右角當 0 V。', on: 'c pax pvs' },
+    { sub: '虛線是陽極（右角 0 V），實線是陰極（上角 = v<sub>S</sub> − V<sub>γ</sub>）。', on: 'pan pca' },
+    { sub: '正半週峰值時兩端差 14.3 − 0 = 14.3 V。', on: 'pvd pbr' },
+    { sub: '<b>PIV = V<sub>m</sub> − V<sub>γ</sub> = 14.3 V</b>：只跨一個 v<sub>S</sub>，是中間抽頭的一半。', on: 'ppk' }]);
+
   const S19 = sc('兩種全波比一比', 'COMPARE',
     calc(80, 108, 480, [['　　　　　中間抽頭　｜　橋式', 'r0', 'ts', 13], ['輸出峰值　V<sub>m</sub> − V<sub>γ</sub>　｜　V<sub>m</sub> − 2V<sub>γ</sub>', 'r1', 't', 14], ['不導通區　±V<sub>γ</sub>　｜　±2V<sub>γ</sub>', 'r2', 't', 14], ['PIV　2V<sub>m</sub> − V<sub>γ</sub>　｜　V<sub>m</sub> − V<sub>γ</sub>', 'r3', 'ta', 14], ['二極體　2 顆（要抽頭）｜　4 顆', 'r4', 't', 14], ['Example 2.2（輸出 9 V）PIV：18.7 V ｜ 9.7 V', 'r5', 'tm', 13]], { k: 'cc', lh: 32 }),
     [{ sub: '把兩種全波放在一起比。', on: 'cc r0' },
@@ -223,6 +248,6 @@
 
   window.__ch2p2Story = window.__Story('#story', {
     id: 'ch2p2v2', title: 'CH2 PART 2 整流電路', after: '#map',
-    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20]
+    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S8b, S9, S10, S11, S12, S13, S14, S14b, S15, S16, S17, S18, S18b, S19, S20]
   });
 })();
