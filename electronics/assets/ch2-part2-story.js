@@ -166,7 +166,7 @@
      { sub: '流過 R 的方向沒變 → 負半週也變成正的山丘。', on: 'ax out' }]);
 
   const S14 = sc('中間抽頭：輸出和 PIV', 'CENTER-TAP RESULTS',
-    calc(100, 112, 440, [['每瞬間只有一顆 ON：v<sub>O</sub> = |v<sub>S</sub>| − V<sub>γ</sub>', 'r1', 't', 15], ['|v<sub>S</sub>| &lt; V<sub>γ</sub> 時兩顆都 OFF（不導通區）', 'r2', 't', 14], ['關著那顆被兩半線圈一起拉：', 'r3', 'tm', 14], ['PIV = 2V<sub>m</sub> − V<sub>γ</sub>', 'r4', 'ta', 17]], { k: 'cc', lh: 38 }),
+    calc(100, 112, 440, [['每瞬間只有一顆 ON：v<sub>O</sub> = |v<sub>S</sub>| − V<sub>γ</sub>', 'r1', 't', 15], ['|v<sub>S</sub>| &lt; V<sub>γ</sub> 時兩顆都 OFF（不導通區）', 'r2', 't', 14], ['關著那顆跨過整個次級（兩半線圈）：', 'r3', 'tm', 14], ['PIV = 2V<sub>m</sub> − V<sub>γ</sub>', 'r4', 'ta', 17]], { k: 'cc', lh: 38 }),
     [{ sub: '電流每次只經過<b>一顆</b>二極體，所以輸出 = |v<sub>S</sub>| 扣一個 V<sub>γ</sub>。', on: 'cc r1' },
      { sub: '電源還很小（|v<sub>S</sub>| &lt; V<sub>γ</sub>）時，兩顆都推不開 → 輸出 0。', on: 'r2' },
      { sub: '關著的那顆最慘：一邊是自己那半線圈的谷底，一邊是輸出的峰值。', on: 'r3' },
@@ -199,10 +199,10 @@
      { sub: '流過 R 的方向沒變 → 兩個半週都是正的山丘。', on: 'ax out' }]);
 
   const S18 = sc('橋式：每次經過兩顆', 'BRIDGE RESULTS',
-    calc(90, 108, 460, [['電流一進一出經過兩顆：v<sub>O</sub> = |v<sub>S</sub>| − 2V<sub>γ</sub>', 'r1', 't', 15], ['不導通區：|v<sub>S</sub>| &lt; 2V<sub>γ</sub>', 'r2', 't', 15], ['關著那顆只扛一個峰值：PIV = V<sub>m</sub> − V<sub>γ</sub>', 'r3', 'ta', 15], ['板書：V<sub>m</sub> = 15 V ⟹ 峰值 13.6 V、PIV 14.3 V、|v<sub>S</sub>| &lt; 1.4 V 時 0', 'r4', 'tm', 13]], { k: 'cc', lh: 38 }),
+    calc(90, 108, 460, [['電流一進一出經過兩顆：v<sub>O</sub> = |v<sub>S</sub>| − 2V<sub>γ</sub>', 'r1', 't', 15], ['不導通區：|v<sub>S</sub>| &lt; 2V<sub>γ</sub>', 'r2', 't', 15], ['關著的兩顆，每顆都扛：PIV = V<sub>m</sub> − V<sub>γ</sub>', 'r3', 'ta', 15], ['板書：V<sub>m</sub> = 15 V ⟹ 峰值 13.6 V、PIV 14.3 V、|v<sub>S</sub>| &lt; 1.4 V 時 0', 'r4', 'tm', 13]], { k: 'cc', lh: 38 }),
     [{ sub: '回頭看路線：電流每次都要經過<b>兩顆</b> ON 的二極體，所以扣兩個 V<sub>γ</sub>。', on: 'cc r1' },
      { sub: '電源小於 2V<sub>γ</sub> 時推不開兩顆 → 輸出 0。', on: 'r2' },
-     { sub: '關著的那顆只被一個峰值拉著（另一顆 ON 的只差 V<sub>γ</sub>）：PIV = V<sub>m</sub> − V<sub>γ</sub>。', on: 'r3' },
+     { sub: '關著的有<b>兩顆</b>，每一顆都是「電源峰值 V<sub>m</sub> 扣掉旁邊一顆 ON 的 V<sub>γ</sub>」：PIV = V<sub>m</sub> − V<sub>γ</sub>。', on: 'r3' },
      { sub: '套板書的數字：15 V 峰值 → 輸出 13.6 V、PIV 14.3 V。', on: 'r4' }]);
 
   const S19 = sc('兩種全波比一比', 'COMPARE',
