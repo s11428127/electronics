@@ -98,6 +98,92 @@
     [S(['在頻域解出 I1、I2 solve for the phasors I1 and I2', '直接代 t solve with t directly', '算 k 就好 only find k', '取有效值 take rms values'])],
     '照 Example 13.3 的流程。', true);
 
+  /* ═════════ 13.4 線性變壓器 ═════════ */
+  const L4 = P2 + '#lin';
+  C('13.4', 1, L4, '一次側、二次側',
+    '直接接電源的線圈叫 {0}，接負載的線圈叫 {1}。',
+    'The coil directly connected to the voltage source is the ___ winding; the coil connected to the load is the ___ winding.',
+    [S(['一次側 primary', '二次側 secondary', '中性 neutral', '自耦 auto']), S(['二次側 secondary', '一次側 primary', '回授 feedback', '鐵心 core'])],
+    '課本圖 13.19：左邊 primary、右邊 secondary。');
+  C('13.4', 2, L4, '什麼叫線性',
+    '線圈繞在 {0} 固定的材料（空氣、塑膠、木頭）上，稱為線性變壓器，又常叫 {1}。',
+    'A transformer is linear if the coils are wound on a material whose ___ is constant; such transformers are often called ___ transformers.',
+    [S(['磁導率 magnetic permeability', '電阻率 resistivity', '介電常數 permittivity', '溫度 temperature']), S(['空心 air-core', '鐵心 iron-core', '理想 ideal', '自耦 auto'])],
+    '磁通跟電流成正比 → 線性。收音機、電視裡常用。');
+  C('13.4', 3, L4, '反射阻抗',
+    '線性變壓器從一次側看進去：Z<sub>in</sub> = R1 + jωL1 + {0}，第二項叫反射阻抗。',
+    'For a linear transformer, Z<sub>in</sub> = R1 + jωL1 + ___; the second term is the reflected impedance.',
+    [S(['ω²M² / (R2 + jωL2 + ZL)', 'ωM / (R2 + jωL2 + ZL)', 'ZL / n²', 'jωM'])],
+    '式 13.41：二次側的總阻抗 Z₂₂ 越小，反射回來的越大。', true);
+  C('13.4', 4, L4, '點的位置',
+    '線性變壓器的輸入阻抗 {0} 點的位置影響，因為公式裡是 {1}。',
+    'The input impedance of a linear transformer is ___ by the location of the dots, because it contains ___.',
+    [S(['不受 not affected', '會受 affected', '只受一次側 only affected on the primary', '完全由 entirely determined']), S(['M²', 'M', '−M', '2M'])],
+    'M 換成 −M 結果一樣（課本式 13.42 下方的說明）。');
+  C('13.4', 5, L4, 'T 型等效',
+    '兩個電流都流進點時，T 型等效的三支電感是：L<sub>a</sub> = {0}、L<sub>b</sub> = L2 − M、L<sub>c</sub> = M。',
+    'For the T-equivalent (both currents entering the dots): L<sub>a</sub> = ___, L<sub>b</sub> = L2 − M, L<sub>c</sub> = M.',
+    [S(['L1 − M', 'L1 + M', 'M', 'L1 L2 − M²'])],
+    '式 13.46。換掉互感之後，就只剩一般的電感。', true);
+  C('13.4', 6, L4, 'Π 型等效',
+    'Π 型等效的三支電感分子都是 {0}。',
+    'In the Π-equivalent, all three inductances have the same numerator ___.',
+    [S(['L1 L2 − M²', 'L1 + L2', 'M²', 'L1 − M'])],
+    '式 13.48：L<sub>A</sub> = (L₁L₂ − M²)/(L₂ − M)、L<sub>B</sub> = …/(L₁ − M)、L<sub>C</sub> = …/M。', true);
+  C('13.4', 7, L4, '點反過來時',
+    '套 T 型或 Π 型等效時，如果點或電流方向跟標準圖不同，要把 M 換成 {0}；這時等效電路裡可能出現 {1} 的電感。',
+    'If the dots or current directions differ from the standard figure, replace M by ___; the equivalent may then contain a ___ inductance.',
+    [S(['−M', '2M', 'M²', '0']), S(['負值 negative', '無限大 infinite', '零 zero', '虛數 imaginary'])],
+    'Example 13.6：L<sub>c</sub> = −1 H，物理上做不出來，但數學上仍成立。');
+  C('13.4', 8, L4, '為什麼要等效',
+    '把耦合線圈換成 T 或 Π 等效的好處是：等效電路 {0}，可以直接用一般的網目、節點分析。',
+    'Replacing coupled coils with a T or Π equivalent is convenient because the equivalent has ___.',
+    [S(['沒有互感 no mutual inductance', '沒有電感 no inductors', '只有電阻 only resistors', '比較少節點 fewer nodes'])],
+    '不用再管點和互感的正負號。', true);
+
+  /* ═════════ 13.5 理想變壓器 ═════════ */
+  const L5 = P2 + '#ideal';
+  C('13.5', 1, L5, '理想變壓器的條件',
+    '理想變壓器：線圈電抗 {0}、耦合係數 k = {1}、線圈沒有損失。',
+    'An ideal transformer has coils with very ___ reactances, a coupling coefficient k = ___, and lossless coils.',
+    [S(['非常大 large (L → ∞)', '非常小 small', '等於零 zero', '負的 negative']), S(['1', '0', '0.5', '∞'])],
+    '課本三個條件：L₁、L₂、M → ∞；k = 1；R₁ = R₂ = 0。');
+  C('13.5', 2, L5, '電壓比',
+    '理想變壓器 V2/V1 = N2/N1 = n，n 叫 {0}。',
+    'For an ideal transformer, V2/V1 = N2/N1 = n, where n is the ___.',
+    [S(['匝數比 turns ratio', '耦合係數 coupling coefficient', '功率因數 power factor', '效率 efficiency'])],
+    '同一個磁通穿過兩個線圈，每一匝的電壓一樣，所以電壓比 = 匝數比。');
+  C('13.5', 3, L5, '電流比',
+    '理想變壓器的電流比 I2/I1 = {0}，跟電壓比剛好相反。',
+    'For an ideal transformer, I2/I1 = ___, the inverse of the voltage ratio.',
+    [S(['1/n', 'n', 'n²', '1'])],
+    '不吃功率：V₁I₁* = V₂I₂*。電壓升幾倍，電流就降幾倍。');
+  C('13.5', 4, L5, '升壓、降壓、隔離',
+    'n > 1 是 {0} 變壓器；n < 1 是降壓變壓器；n = 1 通常叫 {1} 變壓器。',
+    'n > 1 gives a ___ transformer, n < 1 a step-down transformer, and n = 1 is generally called an ___ transformer.',
+    [S(['升壓 step-up', '降壓 step-down', '自耦 auto', '三相 three-phase']), S(['隔離 isolation', '匹配 matching', '自耦 auto', '線性 linear'])],
+    '額定寫成 V₁/V₂，例如 2400/120 V 就是降壓。');
+  C('13.5', 5, L5, '電壓的正負號',
+    'V1、V2 的 + 都在點那端（或都不在點），用 {0}；否則用 −n。',
+    'If V1 and V2 are both positive (or both negative) at the dotted terminals, use ___; otherwise use −n.',
+    [S(['+n', '−n', '1/n', 'n²'])],
+    '課本兩條規則的第一條。', true);
+  C('13.5', 6, L5, '電流的正負號',
+    'I1、I2 都流進點（或都流出點）時，電流關係式用 {0}。',
+    'If I1 and I2 both enter (or both leave) the dotted terminals, use ___ in the current relation.',
+    [S(['−n', '+n', 'n²', '1'])],
+    '跟電壓那條「剛好相反」，最容易背錯。Example 13.8：兩個都流出點 → I₂ = −I₁/n。', true);
+  C('13.5', 7, L5, '反射阻抗（理想）',
+    '理想變壓器從一次側看到的輸入阻抗 Z<sub>in</sub> = {0}。',
+    'The input impedance of an ideal transformer seen from the primary is Z<sub>in</sub> = ___.',
+    [S(['ZL / n²', 'n² ZL', 'ZL / n', 'n ZL'])],
+    '式 13.60：負載被「反射」到一次側，除以 n²。阻抗匹配就靠這個。', true);
+  C('13.5', 8, L5, '什麼時候不能反射',
+    '用反射消去變壓器，只適用於一、二次側之間 {0} 的電路；否則要用網目或節點分析。',
+    'Eliminating the transformer by reflection only works when there are ___ between the primary and secondary windings.',
+    [S(['沒有外部連線 no external connections', '有共用電阻 shared resistors', '有中性線 a neutral wire', '有電容 capacitors'])],
+    'Example 13.9：30 Ω 把兩邊連在一起，只能網目分析＋變壓器兩條關係式。', true);
+
   window.__CH13C = window.__CH13C || { name: 'ch13c', items: [] };
   window.__CH13C.items = window.__CH13C.items.concat(items);
 })();
