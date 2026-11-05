@@ -184,6 +184,135 @@
     [S(['沒有外部連線 no external connections', '有共用電阻 shared resistors', '有中性線 a neutral wire', '有電容 capacitors'])],
     'Example 13.9：30 Ω 把兩邊連在一起，只能網目分析＋變壓器兩條關係式。', true);
 
+  /* ═════════ 13.6 理想自耦變壓器 ═════════ */
+  const L6 = P3 + '#auto';
+  C('13.6', 1, L6, '自耦變壓器是什麼',
+    '自耦變壓器只有 {0}，中間有一個 {1} 把一次側和二次側分開。',
+    'An autotransformer has a single continuous ___ with a connection point called a ___.',
+    [S(['一個連續的繞組 single winding', '兩個獨立繞組 two separate windings', '三個繞組 three windings', '沒有繞組 no winding']), S(['抽頭 tap', '鐵心 core', '點 dot', '中性點 neutral'])],
+    '抽頭常常可以調，就能得到可變的輸出電壓。');
+  C('13.6', 2, L6, '優點',
+    '跟同樣大小的兩繞組變壓器比，自耦變壓器能傳 {0} 的視在功率，而且 {1}。',
+    'Compared with a two-winding transformer, an autotransformer can transfer ___ apparent power and is ___.',
+    [S(['更大 larger', '更小 smaller', '一樣 the same', '零 zero']), S(['更小、更輕 smaller and lighter', '更大、更重 larger and heavier', '比較貴 more expensive', '比較吵 noisier'])],
+    'Example 13.10：同一組線圈改接成自耦，額定從 48 VA 變 1008 VA。');
+  C('13.6', 3, L6, '缺點',
+    '自耦變壓器最大的缺點是失去了 {0}。',
+    'The major disadvantage of the autotransformer is the loss of ___.',
+    [S(['電氣隔離 electrical isolation', '效率 efficiency', '升壓能力 step-up ability', '交流特性 ac behavior'])],
+    '一、二次側共用一個繞組，有導線直接相連。');
+  C('13.6', 4, L6, '耦合方式',
+    '自耦變壓器的一、二次側不只 {0} 耦合，還有 {1} 耦合。',
+    'The primary and secondary of an autotransformer are coupled not only ___ but also ___.',
+    [S(['磁 magnetically', '電容 capacitively', '光 optically', '機械 mechanically']), S(['導電（直接相連）conductively', '光學 optically', '無線 wirelessly', '熱 thermally'])],
+    '課本：not only coupled magnetically but also coupled conductively。');
+  C('13.6', 5, L6, '降壓接法',
+    '降壓自耦變壓器：輸入跨在整個繞組（N1 + N2），輸出跨在 N2，V1/V2 = {0}。',
+    'For a step-down autotransformer, V1/V2 = ___.',
+    [S(['(N1 + N2)/N2', 'N1/(N1 + N2)', 'N2/N1', 'N1/N2'])],
+    '式 13.63。', true);
+  C('13.6', 6, L6, '升壓接法',
+    '升壓自耦變壓器：輸入跨在 N1，輸出跨在整個繞組，V1/V2 = {0}。',
+    'For a step-up autotransformer, V1/V2 = ___.',
+    [S(['N1/(N1 + N2)', '(N1 + N2)/N2', 'N2/N1', '1'])],
+    '式 13.67：Example 13.11 的 80/200。', true);
+  C('13.6', 7, L6, '電流比',
+    '理想自耦變壓器兩邊複功率相等，所以電流比 I1/I2 = {0}。',
+    'Since the complex power is the same on both sides, I1/I2 = ___.',
+    [S(['V2/V1', 'V1/V2', '1', '(V1/V2)²'])],
+    'S₁ = V₁I₁* = V₂I₂* = S₂。', true);
+  C('13.6', 8, L6, '抽頭的電流',
+    '自耦變壓器抽頭那段共用繞組上的電流 I<sub>o</sub> 用 {0} 求。',
+    'The current I<sub>o</sub> in the common part of the winding is found from ___ at the tap.',
+    [S(['抽頭的 KCL（I1 + Io = I2）KCL at the tap', '歐姆定律 Ohm’s law', '打點規則 the dot convention', '能量守恆 energy only'])],
+    'Example 13.11：I<sub>o</sub> = I₂ − I₁ = 45∠173.13° A。', true);
+
+  /* ═════════ 13.7 三相變壓器 ═════════ */
+  const L7 = P3 + '#three';
+  C('13.7', 1, L7, '兩種做法',
+    '三相變壓器可以用 {0} 組成「變壓器組」，或用一個專門的三相變壓器；同樣 kVA 時後者 {1}。',
+    'Three-phase transformation can use three ___ forming a bank, or a special three-phase transformer, which for the same kVA is ___.',
+    [S(['三個單相變壓器 single-phase transformers', '三個電容 capacitors', '一個自耦變壓器 one autotransformer', '六個電阻 resistors']), S(['更小、更便宜 smaller and cheaper', '更大 larger', '更貴 more expensive', '更危險 more dangerous'])],
+    '用三個單相變壓器時，三個的匝數比 n 必須一樣才平衡。');
+  C('13.7', 2, L7, '四種接法',
+    '三相變壓器的四種標準接法是：Y-Y、{0}、Y-Δ、Δ-Y。',
+    'The four standard connections are Y-Y, ___, Y-Δ, and Δ-Y.',
+    [S(['Δ-Δ', 'Y-N', 'T-Π', 'Δ-N'])],
+    '一次、二次各自可以 Y 或 Δ。');
+  C('13.7', 3, L7, '總功率',
+    '不管哪一種接法，總視在功率都是 S<sub>T</sub> = {0}。',
+    'For any connection, the total apparent power is S<sub>T</sub> = ___.',
+    [S(['√3 VL IL', '3 VL IL', 'VL IL', 'VL IL / √3'])],
+    '式 13.69a，跟 CH12 一樣，一次側、二次側都成立。', true);
+  C('13.7', 4, L7, 'Y-Y、Δ-Δ',
+    'Y-Y 或 Δ-Δ 接法：二次側線電壓 V<sub>Ls</sub> = {0}。',
+    'For Y-Y or Δ-Δ connections, V<sub>Ls</sub> = ___.',
+    [S(['n VLp', '√3 n VLp', 'n VLp / √3', 'VLp / n'])],
+    '兩邊接法一樣，線電壓比就是每相的匝數比。', true);
+  C('13.7', 5, L7, 'Y-Δ',
+    'Y-Δ 接法：V<sub>Ls</sub> = {0}。',
+    'For the Y-Δ connection, V<sub>Ls</sub> = ___.',
+    [S(['n VLp / √3', 'n VLp', '√3 n VLp', 'VLp / (n√3)'])],
+    'Y 側每相只有 V<sub>Lp</sub>/√3，Δ 側線電壓 = 相電壓 → 多一個 1/√3。', true);
+  C('13.7', 6, L7, 'Δ-Y',
+    'Δ-Y 接法：V<sub>Ls</sub> = {0}。',
+    'For the Δ-Y connection, V<sub>Ls</sub> = ___.',
+    [S(['√3 n VLp', 'n VLp', 'n VLp / √3', 'VLp'])],
+    'Δ 側每相 = V<sub>Lp</sub>，Y 側線電壓 = √3 × 相電壓。', true);
+  C('13.7', 7, L7, '開三角',
+    'Δ-Δ 接法的特點：拆掉一個變壓器維修時，剩下兩個形成 {0}，還能供應較低容量的三相電。',
+    'A unique feature of Δ-Δ: if one transformer is removed, the other two form an ___ that still supplies three-phase voltages at a reduced level.',
+    [S(['開三角 open delta', '星形 wye', '自耦 autotransformer', '短路 short circuit'])],
+    '課本 13.7 的說明。');
+  C('13.7', 8, L7, '每個變壓器的額定',
+    '平衡負載、理想變壓器時，三相變壓器組裡每一個變壓器的 kVA 額定 = {0}。',
+    'For a balanced load with ideal transformers, each transformer in the bank is rated at ___.',
+    [S(['總視在功率的 1/3 one third of ST', '總視在功率 ST', '√3 倍總功率 √3 ST', '總功率 ÷ √3 ST/√3'])],
+    'Example 13.12：42/3 = 14 kVA。', true);
+
+  /* ═════════ 13.9 應用 ═════════ */
+  const L9 = P3 + '#app';
+  C('13.9', 1, L9, '三大應用',
+    '課本介紹變壓器的三個重要應用：隔離元件、{0}、電力配電系統。',
+    'The three important applications discussed are isolation device, ___, and power distribution system.',
+    [S(['匹配元件 matching device', '整流元件 rectifying device', '儲能元件 storage device', '振盪器 oscillator'])],
+    '13.9.1、13.9.2、13.9.3。');
+  C('13.9', 2, L9, '電氣隔離',
+    '兩個裝置之間沒有 {0} 就叫電氣隔離；變壓器靠 {1} 傳能量，所以能隔離。',
+    'Electrical isolation exists when there is no ___ between two devices; a transformer transfers energy by ___.',
+    [S(['實體導線連接 physical connection', '磁場 magnetic field', '電壓 voltage', '頻率 frequency']), S(['磁耦合 magnetic coupling', '導線 wires', '電容 capacitors', '光 light'])],
+    '整流電路前面加變壓器：降壓＋隔離，減少觸電風險。');
+  C('13.9', 3, L9, '擋掉直流',
+    '放大器兩級之間用變壓器耦合，是為了不讓前一級的 {0} 影響下一級的偏壓。',
+    'A transformer coupling two amplifier stages prevents the ___ of one stage from affecting the bias of the next.',
+    [S(['直流電壓 dc voltage', '交流訊號 ac signal', '頻率 frequency', '雜訊 noise'])],
+    '只有交流訊號能透過磁耦合傳過去（Example 13.15）。');
+  C('13.9', 4, L9, '隔離變壓器的 n',
+    '只為了隔離用的變壓器，匝數比 n = {0}。',
+    'When the sole purpose of a transformer is isolation, n = ___.',
+    [S(['1', '0', '∞', '0.5'])],
+    '電壓不變，只是兩邊沒有導線相連。');
+  C('13.9', 5, L9, '量高壓',
+    '量 13.2 kV 線路電壓時，用變壓器 {0} 再量，再用匝數比換回原來的電壓。',
+    'To measure a 13.2-kV line voltage, a transformer is used to ___ before measuring, then the turns ratio gives the line voltage.',
+    [S(['降壓到安全值並隔離 step down to a safe level and isolate', '升壓 step up', '整流 rectify', '濾波 filter'])],
+    'Practice 13.15：13200/120 = 110。');
+  C('13.9', 6, L9, '阻抗匹配條件',
+    '用理想變壓器做最大功率匹配，條件是 R<sub>s</sub> = {0}。',
+    'For maximum power transfer through an ideal transformer, R<sub>s</sub> = ___.',
+    [S(['RL / n²', 'n² RL', 'RL / n', 'RL'])],
+    '式 13.73：讓反射回來的負載等於電源內阻。', true);
+  C('13.9', 7, L9, '升壓還是降壓',
+    'R<sub>s</sub> > R<sub>L</sub>（例如擴大機接喇叭）時，匹配要用 {0} 變壓器。',
+    'When R<sub>s</sub> > R<sub>L</sub>, the matching transformer must be ___.',
+    [S(['降壓（n ＜ 1）step-down', '升壓（n ＞ 1）step-up', '隔離（n = 1）isolation', '自耦 auto'])],
+    'n² = R<sub>L</sub>/R<sub>s</sub> &lt; 1。Example 13.16：n = 0.25。', true);
+  C('13.9', 8, L9, '為什麼高壓輸電',
+    '同樣功率用高電壓輸電，電流 {0}，線路的 I²R 損失 {1}。',
+    'Transmitting the same power at a higher voltage makes the current ___ and the I²R line loss ___.',
+    [S(['變小 smaller', '變大 larger', '不變 unchanged', '變成直流 dc']), S(['變小 smaller', '變大 larger', '不變 unchanged', '變成負的 negative'])],
+    '課本：100 kVA 用 1000 V 要 100 A，用 10000 V 只要 10 A。這也是發電用交流的主要原因之一。');
+
   window.__CH13C = window.__CH13C || { name: 'ch13c', items: [] };
   window.__CH13C.items = window.__CH13C.items.concat(items);
 })();

@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>自耦、三相變壓器與應用</title>
+<meta name="description" content="電路學 CH13 PART 3：理想自耦變壓器（降壓、升壓、抽頭電流）、三相變壓器四種接法、變壓器的應用（隔離、阻抗匹配、配電）。故事模式＋推導＋互動模組＋可改數字的課本例題。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+</head>
+<body data-subject="circuits" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>CH13 PART 3</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">CH13 PART 3</div>
+    <ol>
+      <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
+      <li><a href="#map"><i>00</i>課程地圖</a></li>
+      <li><a href="#auto"><i>13.6</i>理想自耦變壓器</a></li>
+      <li><a href="#three"><i>13.7</i>三相變壓器</a></li>
+      <li><a href="#app"><i>13.9</i>應用</a></li>
+      <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
+      <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>Chapter 13 · Part 3 · 課本 p.579–594</div>
+      <h1>自耦變壓器、三相變壓器與應用</h1>
+      <p class="sub">PART 2 的理想變壓器拿去用：<button class="tm" data-t="自耦變壓器">自耦變壓器</button>只有一個線圈加一個抽頭，又小又能傳大功率，但沒有<button class="tm" data-t="電氣隔離">電氣隔離</button>（13.6）；三相系統用四種 Y／Δ 接法變壓（13.7）；最後是三個應用：隔離、<button class="tm" data-t="阻抗匹配">阻抗匹配</button>、配電（13.9）。13.8 PSpice 這一頁不收。</p>
+      <div class="hero-meta">
+        <span class="chip h">✓ 考試範圍（期中考到 14.3）</span>
+        <span class="chip">17 個畫面的故事模式</span>
+        <span class="chip">📘 課本 Example 6 題 ＋ Practice 6 題（每題都有 🎬 圖解故事）</span>
+        <span class="chip">3 個互動模組 ＋ 3 個可改數字例題</span>
+        <span class="chip">觀念填充 24 題 ＋ 10 題測驗</span>
+      </div>
+      <div class="lec-links"><a href="ch13-problems.html">✏️ CH13 章末練習題（43 題）</a><a href="ch13-review.html">🧠 CH13～14 觀念填充總複習</a></div>
+    </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>Story mode · 先看這段，再往下讀</div>
+      <h2>17 個畫面看懂自耦、三相與應用<span class="h2-en">THE STORY IN 17 SCENES</span></h2>
+      <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。</p>
+      <div id="story"></div>
+    </section>
+
+    <div class="sec-pick" id="sec-pick"></div>
+
+    <section class="sec" id="map">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>Course map</div>
+      <h2>CH13 第 3 頁<span class="h2-en">COURSE MAP</span></h2>
+      <p class="lede"><b>這一頁是 CH13 的第 3 頁</b>。13.8（用 PSpice 分析耦合電路）是軟體操作，章末題也全部跳過，這裡不收。</p>
+      <div class="outline">
+        <div class="outline-row done"><code>13.1–13.3</code><b><a href="ch13-part1.html">互感、打點規則、能量</a> <span style="color:var(--ink-3);font-weight:400">PART 1</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>13.4–13.5</code><b><a href="ch13-part2.html">線性變壓器、理想變壓器</a> <span style="color:var(--ink-3);font-weight:400">PART 2</span></b><span class="dot"></span></div>
+        <div class="outline-row done"><code>13.6–13.9</code><b>自耦變壓器、三相變壓器、應用 <span style="color:var(--ink-3);font-weight:400">← 這一頁</span></b><span class="dot"></span></div>
+        <div class="outline-row"><code>14.1–14.3</code><b><a href="ch14-part1.html">轉移函數、分貝</a> <span style="color:var(--ink-3);font-weight:400">CH14 PART 1（考到這裡）</span></b><span class="dot"></span></div>
+      </div>
+      <div class="derive">
+        <h4>先複習 PART 2 的理想變壓器</h4>
+        <ol>
+          <li><span class="d-eq">V<sub>2</sub>/V<sub>1</sub> = n、I<sub>2</sub>/I<sub>1</sub> = 1/n、S<sub>1</sub> = S<sub>2</sub></span><div class="why">電壓乘 n、電流除 n、不吃功率。</div></li>
+          <li><span class="d-eq">Z<sub>in</sub> = Z<sub>L</sub>/n<sup>2</sup></span><div class="why">反射阻抗。</div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════ 13.6 ══════════ -->
+    <section class="sec" id="auto">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>13.6 · Ideal Autotransformers</div>
+      <h2>理想自耦變壓器<span class="h2-en">IDEAL AUTOTRANSFORMERS</span></h2>
+      <p class="lede">自耦變壓器只有一個連續的繞組，中間拉一個抽頭。一、二次側不只磁耦合、還用導線直接相連，所以能傳更大的視在功率、體積更小，但失去電氣隔離。</p>
+      <div class="eq">降壓：V<sub>1</sub>/V<sub>2</sub> = (N<sub>1</sub> + N<sub>2</sub>)/N<sub>2</sub>　·　升壓：V<sub>1</sub>/V<sub>2</sub> = N<sub>1</sub>/(N<sub>1</sub> + N<sub>2</sub>)　·　I<sub>1</sub>/I<sub>2</sub> = V<sub>2</sub>/V<sub>1</sub>　·　抽頭：I<sub>1</sub> + I<sub>o</sub> = I<sub>2</sub></div>
+      <div class="derive">
+        <h4>電壓比、電流比</h4>
+        <ol>
+          <li><span class="d-eq">V<sub>1</sub>/(N<sub>1</sub> + N<sub>2</sub>) = V<sub>2</sub>/N<sub>2</sub></span><div class="why">降壓接法（圖 13.42a）：輸入跨全部匝數、輸出跨 N<sub>2</sub>，每一匝的電壓一樣。</div></li>
+          <li><span class="d-eq">V<sub>1</sub>/V<sub>2</sub> = (N<sub>1</sub> + N<sub>2</sub>)/N<sub>2</sub> = 1 + N<sub>1</sub>/N<sub>2</sub></span><div class="why">式 13.63。</div></li>
+          <li><span class="d-eq">S<sub>1</sub> = V<sub>1</sub>I<sub>1</sub>* = V<sub>2</sub>I<sub>2</sub>* = S<sub>2</sub> ⟹ I<sub>1</sub>/I<sub>2</sub> = V<sub>2</sub>/V<sub>1</sub></span><div class="why">理想 → 沒有損失（式 13.64、13.65）。</div></li>
+          <li><span class="d-eq hi">升壓（圖 13.42b）：V<sub>1</sub>/V<sub>2</sub> = N<sub>1</sub>/(N<sub>1</sub> + N<sub>2</sub>)、I<sub>1</sub>/I<sub>2</sub> = 1 + N<sub>2</sub>/N<sub>1</sub></span><p>輸入跨 N<sub>1</sub>、輸出跨全部。共用那段的電流用抽頭 KCL 求。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>抽頭位置與功率分配</h3><span class="spacer"></span><button class="btn" id="au-mode" type="button">接法：降壓（輸出跨在抽頭那段）</button></div>
+        <div class="stage-wrap"><canvas id="cv-auto" aria-label="自耦變壓器的電壓、電流與功率"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="au-a">抽頭比例<output for="au-a"></output></label><input type="range" id="au-a" min="0.1" max="0.95" step="0.05" value="0.4"></div><div class="ctrl"><label for="au-s">負載 S<output for="au-s"></output></label><input type="range" id="au-s" min="1000" max="10000" step="500" value="5000"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>V<sub>2</sub></dt><dd id="au-v2">—</dd></div>
+          <div><dt>共用段電流 I<sub>o</sub></dt><dd id="au-io">—</dd></div>
+          <div><dt>經過磁通「變壓」的比例</dt><dd id="au-frac" style="color:var(--accent)">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">V<sub>1</sub> = 400 V（Problem 13.67 的數字）。抽頭比例越接近 100%（輸出越接近輸入），經過磁通的功率越少 —— 這就是自耦變壓器能傳大功率的原因。紅色那條就是「真正需要變壓器出力」的部分。</p>
+      <div id="ex-1311"></div>
+      <div class="howto">
+        <h4>自耦變壓器題的標準流程</h4>
+        <ol>
+          <li><b>看接法：</b>輸出跨一段 → 降壓；輸入跨一段 → 升壓。標出 N<sub>1</sub>、N<sub>2</sub>。</li>
+          <li><b>電壓：</b>每一匝電壓一樣，直接比匝數。</li>
+          <li><b>電流：</b>理想 → I<sub>1</sub>/I<sub>2</sub> = V<sub>2</sub>/V<sub>1</sub>（或功率 ÷ 電壓）。</li>
+          <li><b>共用段：</b>抽頭 KCL：I<sub>o</sub> = I<sub>2</sub> − I<sub>1</sub>（照圖上的方向）。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>自耦變壓器的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> 升壓、降壓用同一個式子。<span class="o">✓ 先看輸入、輸出各跨在哪幾匝。</span></li>
+          <li><span class="x">✗</span> 共用段的電流當成 I<sub>1</sub> 或 I<sub>2</sub>。<span class="o">✓ 用抽頭 KCL，是兩個的差。</span></li>
+          <li><span class="x">✗</span> 以為自耦變壓器也有隔離。<span class="o">✓ 兩邊有導線相連，沒有隔離。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH13EX" data-sec="13.6"></div>
+      <div class="cf-wrap" id="cf-13-6">
+        <h3>🧠 觀念填充 13.6（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。全部集中在 <a href="ch13-review.html">CH13～14 觀念填充總複習</a>。</p>
+        <div class="hw-list" data-bank="__CH13C" data-sec="13.6"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 13.7 ══════════ -->
+    <section class="sec" id="three">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>13.7 · Three-Phase Transformers</div>
+      <h2>三相變壓器<span class="h2-en">THREE-PHASE TRANSFORMERS</span></h2>
+      <p class="lede">三相升降壓用三個單相變壓器（變壓器組）或一個三相變壓器。一次、二次側各自接 Y 或 Δ：四種接法。接法相同時線電壓比就是 n；Y、Δ 混接時多一個 √3。不管哪一種，S<sub>T</sub> = √3 V<sub>L</sub>I<sub>L</sub>，一次側 = 二次側。</p>
+      <div class="eq">S<sub>T</sub> = √3 V<sub>L</sub>I<sub>L</sub>　·　Y-Y、Δ-Δ：V<sub>Ls</sub> = nV<sub>Lp</sub>、I<sub>Ls</sub> = I<sub>Lp</sub>/n　·　Y-Δ：V<sub>Ls</sub> = nV<sub>Lp</sub>/√3、I<sub>Ls</sub> = √3 I<sub>Lp</sub>/n　·　Δ-Y：V<sub>Ls</sub> = √3 nV<sub>Lp</sub>、I<sub>Ls</sub> = I<sub>Lp</sub>/(√3 n)</div>
+      <div class="derive">
+        <h4>為什麼 Y-Δ 會多一個 √3</h4>
+        <ol>
+          <li><span class="d-eq">每個單相變壓器：線圈電壓比 = n</span><div class="why">三個變壓器的 n 一樣。</div></li>
+          <li><span class="d-eq">一次側 Y：每個線圈的電壓 = V<sub>Lp</sub>/√3</span><div class="why">CH12：Y 接的相電壓是線電壓的 1/√3。</div></li>
+          <li><span class="d-eq">二次側 Δ：每個線圈的電壓 = n V<sub>Lp</sub>/√3 = V<sub>Ls</sub></span><div class="why">Δ 接的相電壓就是線電壓。</div></li>
+          <li><span class="d-eq hi">V<sub>Ls</sub> = nV<sub>Lp</sub>/√3；功率守恆 ⟹ I<sub>Ls</sub> = √3 I<sub>Lp</sub>/n</span><p>Δ-Y 反過來：V<sub>Ls</sub> = √3 nV<sub>Lp</sub>。Δ-Δ 還有一個特點：拆掉一個變壓器，剩兩個成為「開三角」還能供電。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>四種接法的線電壓、線電流</h3><span class="spacer"></span><button class="btn" data-3ph="YY" type="button" aria-pressed="false">Y-Y</button><button class="btn" data-3ph="DD" type="button" aria-pressed="false">Δ-Δ</button><button class="btn" data-3ph="YD" type="button" aria-pressed="true">Y-Δ</button><button class="btn" data-3ph="DY" type="button" aria-pressed="false">Δ-Y</button></div>
+        <div class="stage-wrap"><canvas id="cv-3ph" aria-label="三相變壓器一次、二次側的線電壓與線電流"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="t3-n">匝數比 n<output for="t3-n"></output></label><input type="range" id="t3-n" min="0.5" max="10" step="0.5" value="5"></div><div class="ctrl"><label for="t3-v">一次側線電壓 V<sub>Lp</sub><output for="t3-v"></output></label><input type="range" id="t3-v" min="50" max="500" step="1" value="83"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>這種接法</dt><dd id="t3-f" style="color:var(--accent)">—</dd></div>
+          <div><dt>每個變壓器（42 kVA ÷ 3）</dt><dd id="t3-each">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">負載固定 42 kVA（Example 13.12）。切換接法看二次側線電壓怎麼變；不管哪一種，√3 V<sub>Lp</sub>I<sub>Lp</sub> = √3 V<sub>Ls</sub>I<sub>Ls</sub>。</p>
+      <div id="ex-1312"></div>
+      <div class="howto">
+        <h4>三相變壓器題的標準流程</h4>
+        <ol>
+          <li><b>判斷接法：</b>看一次、二次側的線圈是接成 Y（一端接在一起）還是 Δ（接在兩條線之間）。</li>
+          <li><b>總功率：</b>S<sub>T</sub> = √3 V<sub>L</sub>I<sub>L</sub>（P = S cos θ）先求出已知那一側的線電流。</li>
+          <li><b>換到另一側：</b>套這種接法的 V<sub>L</sub>、I<sub>L</sub> 關係式。</li>
+          <li><b>每個變壓器：</b>S<sub>T</sub>/3，或「相電壓 × 相電流」檢查。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>三相變壓器的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> Y-Δ 也直接 V<sub>Ls</sub> = nV<sub>Lp</sub>。<span class="o">✓ Y、Δ 混接要多一個 √3。</span></li>
+          <li><span class="x">✗</span> 匝數比用線電壓比。<span class="o">✓ 匝數比是「每個線圈」的電壓比（Problem 13.75）。</span></li>
+          <li><span class="x">✗</span> 每個變壓器的額定用 S<sub>T</sub>。<span class="o">✓ 平衡時三個平分：S<sub>T</sub>/3。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH13EX" data-sec="13.7"></div>
+      <div class="cf-wrap" id="cf-13-7">
+        <h3>🧠 觀念填充 13.7（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH13C" data-sec="13.7"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 13.9 ══════════ -->
+    <section class="sec" id="app">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>13.9 · Applications</div>
+      <h2>變壓器的應用<span class="h2-en">APPLICATIONS</span></h2>
+      <p class="lede">三個應用：<b>隔離</b>（兩邊沒導線，只讓交流過、擋掉直流、量高壓時保護電錶）、<b>匹配</b>（讓反射回來的負載等於電源內阻，拿到最大功率）、<b>配電</b>（升壓輸電讓電流變小、線損 I<sup>2</sup>R 變小，到家門口再降壓）。</p>
+      <div class="eq">匹配：R<sub>s</sub> = R<sub>L</sub>/n<sup>2</sup>　·　R<sub>s</sub> &gt; R<sub>L</sub> 用降壓（n &lt; 1）　·　同功率 S = VI：V 大 10 倍 → I 小 10 倍 → I<sup>2</sup>R 小 100 倍</div>
+      <div class="derive">
+        <h4>匹配的條件</h4>
+        <ol>
+          <li><span class="d-eq">最大功率：負載電阻 = 電源內阻</span><div class="why">CH4 的最大功率傳輸定理。</div></li>
+          <li><span class="d-eq">理想變壓器把負載反射成 R<sub>L</sub>/n<sup>2</sup></span><div class="why">式 13.60。</div></li>
+          <li><span class="d-eq hi">R<sub>s</sub> = R<sub>L</sub>/n<sup>2</sup> ⟹ n = √(R<sub>L</sub>/R<sub>s</sub>)</span><p>式 13.73。擴大機（幾 kΩ）接喇叭（幾 Ω）要降壓。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>為什麼要高壓輸電</h4>
+        <ol>
+          <li><span class="d-eq">I = S/V</span><div class="why">同樣送 100 kVA：1000 V 要 100 A、10000 V 只要 10 A。</div></li>
+          <li><span class="d-eq">P<sub>loss</sub> = I<sup>2</sup>R</span><div class="why">線路電阻固定時，損失跟電流平方成正比。</div></li>
+          <li><span class="d-eq hi">電壓 × 10 ⟹ 損失 ÷ 100</span><p>電線也可以細一點。變壓器能方便地升降交流電壓，是發電用交流的主要原因之一。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>輸電電壓與線損</h3></div>
+        <div class="stage-wrap"><canvas id="cv-line" aria-label="輸電電壓對線電流與線損的影響"></canvas></div>
+        <div class="controls">
+          <div class="ctrl"><label for="ln-lv">輸電電壓<output for="ln-lv"></output></label><input type="range" id="ln-lv" min="2.5" max="5" step="0.05" value="3"></div><div class="ctrl"><label for="ln-r">線路電阻 R<output for="ln-r"></output></label><input type="range" id="ln-r" min="0.5" max="5" step="0.5" value="2"></div>
+        </div>
+        <dl class="readout">
+          <div><dt>輸電電壓</dt><dd id="ln-v">—</dd></div>
+          <div><dt>線損佔送出功率</dt><dd id="ln-pct" style="color:var(--accent)">—</dd></div>
+        </dl>
+      </div>
+      <p class="note">送 100 kVA（課本 13.9.3 的例子），線路電阻自己調。把電壓從 1 kV 拉到 10 kV，線損剛好少 100 倍。</p>
+      <div id="ex-1316"></div>
+      <div class="howto">
+        <h4>應用題的標準流程</h4>
+        <ol>
+          <li><b>隔離／直流＋交流：</b>疊加，直流部分在二次側是 0，交流照 n 算。</li>
+          <li><b>匹配：</b>n<sup>2</sup> = R<sub>L</sub>/R<sub>s</sub>；匹配後一次側電壓 = 電源電壓的一半。</li>
+          <li><b>額定、配電：</b>S = V<sub>1</sub>I<sub>1</sub> = V<sub>2</sub>I<sub>2</sub>；匝數 N<sub>p</sub>/N<sub>s</sub> = V<sub>p</sub>/V<sub>s</sub>。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>應用題的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> 匹配時 n<sup>2</sup> = R<sub>s</sub>/R<sub>L</sub>。<span class="o">✓ n<sup>2</sup> = R<sub>L</sub>/R<sub>s</sub>（Example 13.16：12/192）。</span></li>
+          <li><span class="x">✗</span> 直流也乘 n 傳過去。<span class="o">✓ 直流在二次側是 0（Example 13.15）。</span></li>
+          <li><span class="x">✗</span> 以為高壓輸電是為了「電壓大比較有力」。<span class="o">✓ 是為了電流小、I<sup>2</sup>R 損失小。</span></li>
+        </ul>
+      </div>
+      <div class="exbook" data-bank="__CH13EX" data-sec="13.9"></div>
+      <div class="cf-wrap" id="cf-13-9">
+        <h3>🧠 觀念填充 13.9（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。</p>
+        <div class="hw-list" data-bank="__CH13C" data-sec="13.9"></div>
+      </div>
+    </section>
+
+    <section class="sec" id="glossary">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>Glossary · 中英對照</div>
+      <h2>名詞中英對照表<span class="h2-en">GLOSSARY</span></h2>
+      <div class="glossary">
+        <div class="gl-row"><b>中文</b><span>English</span><code>符號</code></div>
+        <div class="gl-row"><b>自耦變壓器</b><span>autotransformer</span><code>—</code></div>
+        <div class="gl-row"><b>抽頭</b><span>tap</span><code>—</code></div>
+        <div class="gl-row"><b>電氣隔離</b><span>electrical isolation</span><code>—</code></div>
+        <div class="gl-row"><b>導電耦合</b><span>conductively coupled</span><code>—</code></div>
+        <div class="gl-row"><b>變壓器組</b><span>transformer bank</span><code>—</code></div>
+        <div class="gl-row"><b>開三角</b><span>open delta</span><code>—</code></div>
+        <div class="gl-row"><b>隔離變壓器</b><span>isolation transformer</span><code>n = 1</code></div>
+        <div class="gl-row"><b>阻抗匹配</b><span>impedance matching</span><code>R<sub>s</sub> = R<sub>L</sub>/n²</code></div>
+        <div class="gl-row"><b>配電系統</b><span>power distribution system</span><code>—</code></div>
+        <div class="gl-row"><b>配電變壓器</b><span>distribution transformer</span><code>—</code></div>
+        <div class="gl-row"><b>電力網</b><span>power grid</span><code>—</code></div>
+      </div>
+    </section>
+
+    <section class="sec" id="quiz-sec">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span>自我檢查</div>
+      <h2>觀念小測驗<span class="h2-en">QUIZ · 中英對照</span></h2>
+      <p class="lede">10 題，中英對照。</p>
+      <div class="quiz" id="quiz"></div>
+    </section>
+
+    <footer class="foot">
+      <p>教材依據：Alexander &amp; Sadiku, <em>Fundamentals of Electric Circuits</em>, Chapter 13，13.6–13.9（使用者 11/5 提供；13.8 PSpice 不收）。</p>
+      <p><a href="ch13-part2.html">← PART 2 變壓器</a>　｜　<a href="index.html">回電路學首頁</a>　｜　<a href="ch14-part1.html">CH14 PART 1 轉移函數 →</a></p>
+    </footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ch12-kit.js"></script>
+<script src="assets/ch13-kit.js"></script>
+<script src="assets/ch13-skit.js"></script>
+<script src="assets/ch13-ex.js"></script>
+<script src="assets/ch13-ex2.js"></script>
+<script src="assets/ch13-ex3.js"></script>
+<script src="assets/prob-story.js"></script>
+<script src="../shared/exbook.js"></script>
+<script src="assets/ch13-concept.js"></script>
+<script src="../shared/hw.js"></script>
+<script>
+__EXB.picker(document.getElementById('sec-pick'), [
+  { id: 'auto', no: '13.6', name: '理想自耦變壓器', count: '例 2 · 練 2' },
+  { id: 'three', no: '13.7', name: '三相變壓器', count: '例 1 · 練 1' },
+  { id: 'app', no: '13.9', name: '應用', count: '例 3 · 練 3' }
+], { key: 'ch13-part3', alwaysAll: ['map', 'glossary', 'quiz-sec'] });
+</script>
+<script src="assets/ch12.js"></script>
+<script src="assets/ch13-part3.js"></script>
+<script src="assets/ch13-part3-story.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
