@@ -23,6 +23,10 @@
   /* 只畫條件成立的那幾段 */
   const seg = (fn, ok, key) => { let d = '', pen = false; for (let i = 0; i <= 160; i++) { const u = i / 160, v = fn(u); if (ok(v)) { d += (pen ? ' L' : ' M') + (PX + u * PW).toFixed(1) + ' ' + vy(v).toFixed(1); pen = true; } else pen = false; }
     return '<path class="lna" style="fill:none;stroke-width:2.6" data-k="' + key + '" d="' + d.trim() + '"/>'; };
+  /* 依輸入 v_i 的條件畫輸出的那幾段（11/6） */
+  const segU = (out, ok, key, m) => { m = m || VM; let d = '', pen = false; for (let i = 0; i <= 160; i++) { const u = i / 160, vi = m * sin2(u); if (ok(vi)) { d += (pen ? ' L' : ' M') + (PX + u * PW).toFixed(1) + ' ' + vy(out(vi)).toFixed(1); pen = true; } else pen = false; }
+    return '<path class="lna" style="fill:none;stroke-width:2.8" data-k="' + key + '" d="' + d.trim() + '"/>'; };
+  const sm = (svg) => svg.replace('<g', '<g transform="translate(-8,6) scale(0.92)"');
   /* 水平電池（長線 = +） */
   const hbat = (x, y, plusLeft, lab) => {
     const a = plusLeft ? -5 : 5;
@@ -147,6 +151,19 @@
      { sub: '要推得動，v<sub>i</sub> 必須低於分界點 V<sub>B</sub> − V<sub>γ</sub>。', on: 'r2' },
      { sub: 'ON 時輸出 = 輸入往下<b>平移</b> V<sub>B</sub> − V<sub>γ</sub>；其他時候是 0。', on: 'r3 r4' }]);
 
+  /* 11/6 使用者：多一點波形 */
+  const S11b = sc('串聯截波：看波形', 'SERIES CLIPPER ON A GRAPH',
+    sm(SE('c', false)) + panel('ax') + vin('in') + hline(PX, PX + PW, vy(2.3), 'th', '2.3 V') +
+    wave(PX, PY, PW, PA / VM, u => VM * sin2(u) - 2.3, 'sh', 'ln2 dsh') +
+    segU(() => 0, v => v >= 2.3, 'o0') + segU(v => v - 2.3, v => v < 2.3, 'o1') +
+    g('mn', '<circle class="acc" cx="' + (PX + 0.375 * PW) + '" cy="' + vy(-12.3) + '" r="5"/>' + T(PX + 0.375 * PW + 10, vy(-12.3) + 5, '−12.3 V', { cls: 'ta', fs: 13, a: 'start' })) +
+    T(PX + PW / 2, 112, 'V<sub>B</sub> = 3 V、V<sub>γ</sub> = 0.7 V', { cls: 'ts', fs: 11, k: 'n' }),
+    [{ sub: '用 V<sub>B</sub> = 3 V、V<sub>γ</sub> = 0.7 V 來畫：分界點 = 3 − 0.7 = <b>2.3 V</b>。', on: 'c ax in th n' },
+     { sub: '輸入在 2.3 V 以上：D OFF、整條路斷掉，輸出貼在 <b>0</b>。', on: 'o0' },
+     { sub: '先把輸入整條往下搬 2.3 V（細虛線）。', on: 'sh' },
+     { sub: '輸入低於 2.3 V：D ON，輸出就走那條搬下來的線。', on: 'o1' },
+     { sub: '最低點在輸入谷底：−10 − 2.3 = <b>−12.3 V</b>。輸出永遠 ≤ 0。', on: 'mn' }]);
+
   /* ── 雙向截波 ── */
   const S12 = sc('雙向截波：上下各一個溢洪道', 'TWO-LEVEL CLIPPER',
     BD('c', false, false) + chip(500, 150, 'D<sub>1</sub>、V<sub>B1</sub> 管上限', '尖端朝下 → 削上面', 'c1', { fs: 13 }) +
@@ -156,10 +173,13 @@
      { sub: '右邊 D<sub>2</sub> 尖端朝上、V<sub>B2</sub> 反接，管<b>下限</b>。', on: 'c2' }]);
 
   const S13 = sc('四種情況，其實只有三種', 'FOUR CASES → THREE',
-    calc(100, 112, 440, [['D<sub>1</sub> OFF、D<sub>2</sub> OFF：v<sub>O</sub> = v<sub>i</sub>（中間那段）', 'r1', 't', 14], ['D<sub>1</sub> ON、D<sub>2</sub> OFF：v<sub>O</sub> = V<sub>B1</sub> + V<sub>γ</sub>（上限）', 'r2', 't', 14], ['D<sub>1</sub> OFF、D<sub>2</sub> ON：v<sub>O</sub> = −(V<sub>B2</sub> + V<sub>γ</sub>)（下限）', 'r3', 't', 14], ['兩顆都 ON：不可能（輸出不能同時又高又低）', 'r4', 'ta', 14]], { k: 'cc', lh: 38 }),
-    [{ sub: '兩顆二極體，各有 ON、OFF，看起來有四種組合。', on: 'cc r1' },
-     { sub: '輸入太高：只有 D<sub>1</sub> ON，輸出被釘在上限。', on: 'r2' },
-     { sub: '輸入太低：只有 D<sub>2</sub> ON，輸出被釘在下限。', on: 'r3' },
+    calc(20, 112, 340, [['都 OFF：v<sub>O</sub> = v<sub>i</sub>（中間）', 'r1', 't', 14], ['D<sub>1</sub> ON：v<sub>O</sub> = 上限 V<sub>B1</sub> + V<sub>γ</sub>', 'r2', 't', 14], ['D<sub>2</sub> ON：v<sub>O</sub> = 下限 −(V<sub>B2</sub> + V<sub>γ</sub>)', 'r3', 't', 14], ['兩顆都 ON：不可能', 'r4', 'ta', 14]], { k: 'cc', lh: 38 }) +
+    panel('ax') + vin('in', 6) + hline(PX, PX + PW, vy(2), 't1', '上限') + hline(PX, PX + PW, vy(-4), 't2', '下限') +
+    segU(v => v, v => v <= 2 && v >= -4, 'oM', 6) + segU(() => 2, v => v > 2, 'oT', 6) + segU(() => -4, v => v < -4, 'oB', 6) +
+    T(PX + 0.125 * PW, vy(6) - 10, 'D<sub>1</sub> ON', { cls: 'ta', fs: 12, k: 'l1' }) + T(PX + 0.375 * PW, vy(-6) + 20, 'D<sub>2</sub> ON', { cls: 'ta', fs: 12, k: 'l2' }),
+    [{ sub: '兩顆二極體，各有 ON、OFF，看起來有四種組合。先看中間：兩顆都 OFF，輸出跟著輸入走。', on: 'cc r1 ax in t1 t2 oM' },
+     { sub: '輸入太高：只有 D<sub>1</sub> ON，輸出被釘在上限（波形頭被削平）。', on: 'r2 oT l1' },
+     { sub: '輸入太低：只有 D<sub>2</sub> ON，輸出被釘在下限（波形腳被削平）。', on: 'r3 oB l2' },
      { sub: '兩顆同時 ON 不可能 —— 所以只要分三區寫。', on: 'r4' }]);
 
   const S14 = sc('Example 2.7：上下限', 'EXAMPLE 2.7',
@@ -169,6 +189,22 @@
      { sub: '上限：輸出最多 2 V。', on: 't1' },
      { sub: '下限：輸出最低 −4 V。', on: 't2' },
      { sub: '中間那段照著輸入走 —— 波形頭尾都被削平。', on: 'out' }]);
+
+  /* VTC：橫軸 v_i、縱軸 v_O（板書 In Summary 的 VTC） */
+  const vx = v => 330 + v * 22, vv = v => 205 - v * 20;
+  const vl = (pts, key, cls) => '<path class="' + (cls || 'lna') + '" style="fill:none;stroke-width:3"' + (key ? ' data-k="' + key + '"' : '') + ' d="M' + pts.map(q => vx(q[0]) + ' ' + vv(q[1])).join(' L') + '"/>';
+  const S14b = sc('換個角度：輸入進去、輸出出來', 'VOLTAGE TRANSFER CURVE',
+    g('ax', '<path class="ln2" style="fill:none" d="M' + vx(-6.8) + ' 205 H' + vx(6.8) + ' M330 ' + vv(5) + ' V' + vv(-5) + '"/>' + T(vx(6.8) + 6, 209, 'v<sub>i</sub>', { cls: 't', fs: 13, a: 'start' }) + T(338, vv(5) + 4, 'v<sub>O</sub>', { cls: 't', fs: 13, a: 'start' }) +
+      [-6, -4, -2, 2, 4, 6].map(v => T(vx(v), 222, String(v), { cls: 'ts', fs: 10 })).join('') + T(322, vv(2) + 4, '2', { cls: 'ts', fs: 10, a: 'end' }) + T(322, vv(-4) + 4, '−4', { cls: 'ts', fs: 10, a: 'end' })) +
+    vl([[-4, -4], [2, 2]], 'm') + T(vx(-1.2), vv(0.6) - 10, '斜率 1：v<sub>O</sub> = v<sub>i</sub>', { cls: 't', fs: 12, a: 'end', k: 'ml' }) +
+    vl([[2, 2], [6.3, 2]], 't') + T(vx(4.2), vv(2) + 20, 'D<sub>1</sub> ON：2 V', { cls: 'ta', fs: 12, k: 'tl' }) +
+    vl([[-6.3, -4], [-4, -4]], 'b') + T(vx(-5.2), vv(-4) - 10, 'D<sub>2</sub> ON：−4 V', { cls: 'ta', fs: 12, k: 'bl' }) +
+    vl([[2, 2], [6.3, 4.15]], 'r2', 'ln dsh') + T(vx(4.4), vv(4.2) - 6, '有 R<sub>2</sub>：斜率 ½', { cls: 'tm', fs: 12, k: 'r2l' }),
+    [{ sub: '不畫時間，改畫「v<sub>i</sub> 放進去，v<sub>O</sub> 出來多少」：這張叫 <b>VTC</b>。', on: 'ax' },
+     { sub: '中間兩顆都 OFF：輸出 = 輸入，是一條斜率 1 的線。', on: 'm ml' },
+     { sub: 'v<sub>i</sub> 超過 2：D<sub>1</sub> ON，輸出平平地停在 2。', on: 't tl' },
+     { sub: 'v<sub>i</sub> 低於 −4：D<sub>2</sub> ON，輸出平平地停在 −4。', on: 'b bl' },
+     { sub: '多串 R<sub>2</sub> 的版本：上面那段不再是平的，斜率變 ½（虛線）。', on: 'r2 r2l' }]);
 
   const S15 = sc('加了 R₂：上面不再是平的', 'WITH R2: A SLOPE',
     calc(380, 115, 230, [['D<sub>1</sub> 那條路多串一個 R<sub>2</sub>', 'r1', 't', 13], ['ON 時 R<sub>1</sub>、R<sub>2</sub> 分壓：', 'r2', 'tm', 13], ['v<sub>O</sub> = (v<sub>i</sub> − 2)·½ + 2', 'r3', 'ta', 14], ['= ½v<sub>i</sub> + 1', 'r4', 'ta', 14], ['峰值 6 V → 輸出 4 V', 'r5', 't', 13]], { k: 'cc', lh: 30 }) +
@@ -213,6 +249,6 @@
 
   window.__ch2p3Story = window.__Story('#story', {
     id: 'ch2p3v2', title: 'CH2 PART 3 截波與箝位', after: '#map',
-    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19]
+    scenes: [S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S11b, S12, S13, S14, S14b, S15, S16, S17, S18, S19]
   });
 })();
