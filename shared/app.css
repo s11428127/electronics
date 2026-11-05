@@ -1352,6 +1352,15 @@ body.prob-first .sec.pf > .cf-wrap { order: 2; }
 .hw-zh[open] summary { margin-bottom: 4px; }
 .hw-zh > div { padding: 6px 10px; border-left: 3px solid var(--line); line-height: 1.7; }
 
+/* CH2 電路圖（使用者 11/5） */
+.c2f-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 12px 0; }
+.c2f-row .schem-box { margin: 0; flex: 1 1 260px; max-width: 360px; }
+.c2f-row .schem-box > div { width: 100%; text-align: center; }
+.c2f-row .schem-box svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+.c2f-q { text-align: center; color: var(--ink); }
+.c2f-q svg { max-width: min(100%, 300px); height: auto; }
+.c2f-q.two { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+
 /* 填充題答題回饋（使用者 11/4） */
 .hw-fb { display: inline-block; font-size: 14px; font-weight: 700; margin-left: 4px; }
 .hw-fb.ok { color: var(--ok); } .hw-fb.fix { color: var(--warn); } .hw-fb.bad { color: var(--bad); }
