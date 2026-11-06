@@ -36,7 +36,48 @@
     void fb.offsetWidth; fb.classList.add('pop');
   }
 
+  /* 11/6 使用者：段考選擇、填充題用中文（老師說只有計算題英文）→ 英文先的填充題（有 zh）改成中文先：
+     題幹用 zh（___ 換成空格），選項只留中文那一半，英文原文收進「English」。___ 數量對不上就照舊英文先。 */
+  const CJK = /[\u3400-\u9fff\u3000-\u303f\uff00-\uffef]/;
+  const STOP = /^(is|in|it|if|ice|the|and|for|or|on|of|to|a|an)$/i;
+  const EN2ZH = { 'amplifier': '放大器', 'capacitor': '電容', 'constant-current source': '定電流源', 'constant-voltage source': '定電壓源',
+    'decrease': '減少', 'decreases': '減少', 'equal': '相等', 'exponential': '指數', 'exponentially': '指數地', 'high': '高', 'in breakdown': '崩潰',
+    'increase': '增加', 'increases': '增加', 'infinite': '無限大', 'inversely': '成反比', 'kelvin': '克氏溫度（K）', 'larger': '大', 'linearly': '線性地',
+    'low': '低', 'negative': '負的', 'not at all': '完全不會', 'off': 'OFF（截止）', 'quadratically': '平方關係', 'rectifier': '整流器', 'resistor': '電阻',
+    'reverse': '逆向', 'saturated': '飽和', 'short circuit': '短路', 'shorted': '短路', 'slowly': '緩慢地', 'smaller': '小', 'stay the same': '不變',
+    'stays constant': '不變', 'the band gap': '能隙', 'unknown': '未知', 'volts': '伏特', 'zero': '零', '0 A exactly': '剛好 0 A',
+    '1.12 − 0.598, the 300 K reading': '1.12 − 0.598（300 K 的讀數）' };
+  const zhOpt = s => {
+    if (!CJK.test(s)) {
+      const k = String(s).trim();
+      if (EN2ZH[k]) return EN2ZH[k];
+      return k.replace(/(\d)( ?[mμ]?V)? to (\d)/g, '$1$2～$3').replace(/^(\w+) and (\w+)$/, '$1 和 $2');
+    }
+    const t = String(s).split(' '); let i = t.findIndex(x => CJK.test(x));
+    if (i <= 0) return s;
+    /* 中文那半前面的符號（r_d、N、1/r_d、V_T）要一起留：往前最多收一個 */
+    const prev = t[i - 1];
+    if ((/^[0-9./]*[A-Z][A-Za-z0-9]{0,3}$/.test(prev) || /^[0-9./]*(r|v|i)[A-Za-z]{1,2}$/.test(prev)) && !STOP.test(prev)) i--;
+    return t.slice(i).join(' ');
+  };
+  function zhFirst(it) {
+    if (it.kind !== 'cf' || !it.zh) return it;
+    const parts = String(it.zh).split(/_{3,}|＿{2,}/);
+    let q;
+    if (parts.length - 1 === it.b.length) q = parts.map((p, i) => p + (i < it.b.length ? '{' + i + '}' : '')).join('');
+    else if (parts.length === 1 && it.b.length === 1) q = it.zh + ' {0}';   /* 中文是問句（HW3 選擇題）：選單接在後面 */
+    else return it;
+    const en = String(it.q).replace(/\{\d+\}/g, '___');
+    q = q.replace(/([A-Za-z])_([A-Za-z0-9]{1,3})/g, '$1<sub>$2</sub>');
+    /* 標題是英文的就不顯示（題幹已經是中文）；「來源 · 英文標題」只留來源 */
+    let title = it.title || '';
+    if (!CJK.test(title)) title = '';
+    else { const seg = title.split(' · '); if (seg.length > 1 && !CJK.test(seg[seg.length - 1])) title = seg.slice(0, -1).join(' · '); }
+    return Object.assign({}, it, { q, title, zh: null, en: null, enFold: en, b: it.b.map(b => b.o ? Object.assign({}, b, { o: b.o.map(zhOpt) }) : b) });
+  }
+
   function card(it, bankName) {
+    it = zhFirst(it);
     const el = document.createElement('div');
     el.className = 'hw-card ' + (it.kind === 'hw' ? 'is-hw' : 'is-sim');
     el.id = 'hw-' + it.id;
@@ -62,7 +103,7 @@
       html = html.replace('{' + i + '}', w);
     });
     el.innerHTML = '<div class="hw-head">' + badge + (it.title ? '<b>' + it.title + '</b>' : '') + '</div>' +
-      '<div class="hw-q">' + html + '</div>' + (it.zh ? '<details class="hw-zh dv-ui"><summary>中文翻譯</summary><div>' + it.zh + '</div></details>' : it.en ? '<div class="q-en hw-en">' + it.en + '</div>' : '') + (it.fig ? '<div class="hw-fig">' + it.fig + '</div>' : '') +
+      '<div class="hw-q">' + html + '</div>' + (it.zh ? '<details class="hw-zh dv-ui"><summary>中文翻譯</summary><div>' + it.zh + '</div></details>' : it.en ? '<div class="q-en hw-en">' + it.en + '</div>' : it.enFold ? '<details class="hw-zh dv-ui"><summary>English</summary><div>' + it.enFold + '</div></details>' : '') + (it.fig ? '<div class="hw-fig">' + it.fig + '</div>' : '') +
       '<div class="hw-act"><button class="btn solid hw-check" type="button">對答案</button><button class="btn hw-reset" type="button">重做</button>' +
       (it.link ? '<a class="hw-link" href="' + it.link + '">回到講解 →</a>' : '') + '<span class="hw-score"></span></div>' +
       '<div class="hw-ans" hidden></div>';
