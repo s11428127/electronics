@@ -1398,6 +1398,9 @@ body.prob-first .sec.pf > .cf-wrap { order: 2; }
 .cr-out .fut { opacity: .25; }
 @media (max-width: 520px) { .cr-in { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cr-cell.b { border-left: 0; padding-left: 0; order: 2; } .cr-cell input { width: 52px; } }
 
+/* 例題步驟的長算式換行，不要被切掉（使用者 11/8） */
+.xb-steps .d-eq { white-space: normal; overflow-wrap: anywhere; }
+
 /* ===== 電腦版放大（tools/desktop-css.py 自動產生，不要手改） ===== */
 @media (min-width: 1200px) {
   body { font-size: 17.1px; }
