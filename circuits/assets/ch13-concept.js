@@ -55,6 +55,49 @@
     [S(['相依電壓源 dependent voltage source', '獨立電流源 independent current source', '電阻 resistor', '短路 short circuit']), S(['極性（正負號）polarity', '頻率 frequency', '大小 magnitude', '相位 phase angle'])],
     '課本圖 13.8：把「大小」和「正負號」拆成兩個步驟，比較不會錯。', true);
 
+  /* ═════════ 補課：克拉瑪法則（使用者 11/7） ═════════ */
+  const LC = P1 + '#cramer';
+  C('cramer', 1, LC, 'Δ 怎麼算',
+    '二元聯立方程式的係數行列式 Δ = {0}。',
+    'For two simultaneous equations, the determinant of the coefficient matrix is Δ = ___.',
+    [S(['a11 a22 − a12 a21', 'a11 a22 + a12 a21', 'a11 a12 − a21 a22', 'a11 + a22'])],
+    '左上 × 右下 − 右上 × 左下，中間永遠是減號。');
+  C('cramer', 2, LC, 'Δ1 換哪一行',
+    '求 I₁ 時，Δ₁ 是把係數矩陣的 {0} 換成右邊的常數。',
+    'To find I₁, Δ₁ is formed by replacing ___ of the coefficient matrix with the constants.',
+    [S(['第 1 行（I₁ 的係數）the first column (coefficients of I₁)', '第 2 行 the second column', '第 1 列 the first row', '整個矩陣 the whole matrix'])],
+    '要求誰，就換掉誰的係數那一行。', 1);
+  C('cramer', 3, LC, '答案',
+    '用克拉瑪法則，I₁ = {0}。',
+    'By Cramer’s rule, I₁ = ___.',
+    [S(['Δ₁ / Δ', 'Δ / Δ₁', 'Δ₁ × Δ', 'Δ₁ − Δ'])],
+    'Δ 是分母，Δ 算錯兩個電流會一起錯。');
+  C('cramer', 4, LC, 'j 的平方',
+    '(−j8)(−j8) = {0}。',
+    '(−j8)(−j8) = ___.',
+    [S(['−64', '+64', '−j64', '+j64'])],
+    '(−j)(−j) = j² = −1，所以 64 × (−1) = −64。Example 13.2 的 Δ 就是減掉這個 −64，變成 +64。');
+  C('cramer', 5, LC, '複數除法',
+    '兩個複數相除最快的方法是先換成 {0}，再 {1}。',
+    'The easiest way to divide two complex numbers is to convert them to ___ and then ___.',
+    [S(['極座標 polar form', '直角座標 rectangular form', '分數 fractions', '指數 exponent']), S(['大小相除、角度相減 divide magnitudes, subtract angles', '大小相乘、角度相加 multiply magnitudes, add angles', '實部除實部 divide real parts', '虛部除虛部 divide imaginary parts'])],
+    'A∠α ÷ B∠β = (A/B)∠(α − β)。', 1);
+  C('cramer', 6, LC, 'Δ = 0',
+    '如果 Δ = 0，表示這組方程式 {0}。',
+    'If Δ = 0, the set of equations ___.',
+    [S(['沒有唯一解 has no unique solution', '解都是 0 has only the zero solution', '一定有解 always has a solution', '電流無限小 gives infinitesimal currents'])],
+    '兩條方程式其實是同一條（或互相矛盾），電路分析遇到通常是寫錯式子。');
+  C('cramer', 7, LC, '整理成標準型',
+    '用克拉瑪法則之前，要先把每條方程式整理成 {0}。',
+    'Before applying Cramer’s rule, each equation must be arranged so that ___.',
+    [S(['未知數在左、常數在右 unknowns on the left, constants on the right', '常數在左 constants on the left', '全部移到左邊等於 0 everything on the left equal to zero', '只留一個未知數 only one unknown remains'])],
+    '例：−100 + (4 + j3)I₁ − j8I₂ = 0 要寫成 (4 + j3)I₁ − j8I₂ = 100。', 1);
+  C('cramer', 8, LC, '負號跟著走',
+    'Example 13.2 的網目 2 方程式 0 = −j8I₁ + (5 + j18)I₂，填矩陣時 a₂₁ = {0}。',
+    'For the mesh-2 equation 0 = −j8I₁ + (5 + j18)I₂ of Example 13.2, the entry a₂₁ = ___.',
+    [S(['−j8', 'j8', '8', '5 + j18'])],
+    '係數連同正負號一起填；把 −j8 填成 j8，Δ 就會錯。');
+
   /* ═════════ 13.3 耦合電路的能量 ═════════ */
   const L3 = P1 + '#energy';
   C('13.3', 1, L3, '耦合線圈的能量',

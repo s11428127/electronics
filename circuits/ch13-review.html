@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CH13～14 觀念填充</title>
-<meta name="description" content="電路學 CH13 磁耦合電路（13.2～13.7、13.9）與 CH14 到 14.3 的觀念填充總複習，每節 8 題、共 72 題，中英對照、不用計算。">
+<meta name="description" content="電路學 CH13 磁耦合電路（13.2～13.7、13.9）與 CH14 到 14.3 的觀念填充總複習，每節 8 題、共 80 題，中英對照、不用計算。">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,9 +42,9 @@
     <div class="hero">
       <div class="eyebrow">Chapters 13–14 · Concept check</div>
       <h1>CH13～14 觀念填充總複習</h1>
-      <p class="sub">CH13 磁耦合電路（13.2～13.7、13.9；13.8 PSpice 不收）＋ CH14 到 14.3，每一小節 8 題，共 72 題。<strong>全部用選的、不用計算</strong>：大部分考觀念與知識，標「解法」的考這類題目該怎麼下手。題目先中文，下面附英文。</p>
+      <p class="sub">CH13 磁耦合電路（13.2～13.7、13.9；13.8 PSpice 不收）＋ CH14 到 14.3，每一小節 8 題，共 80 題。<strong>全部用選的、不用計算</strong>：大部分考觀念與知識，標「解法」的考這類題目該怎麼下手。題目先中文，下面附英文。</p>
       <div class="hero-meta">
-        <span class="chip h">72 題 · 自編練習</span>
+        <span class="chip h">80 題 · 自編練習</span>
         <span class="chip">✓ 期中考範圍</span>
         <span class="chip">答錯自動進錯題本</span>
       </div>
@@ -59,6 +59,13 @@
       <h2>互感與打點規則<span class="h2-en">MUTUAL INDUCTANCE</span></h2>
       <p class="lede">8 題。忘了就回去看 <a href="ch13-part1.html#mut">講解</a>。</p>
       <div class="hw-list" data-bank="__CH13C" data-sec="13.2"></div>
+    </section>
+
+    <section class="sec" id="rcr">
+      <div class="eyebrow">補課 · 自編練習</div>
+      <h2>克拉瑪法則<span class="h2-en">CRAMER'S RULE</span></h2>
+      <p class="lede">8 題。忘了就回去看 <a href="ch13-part1.html#cramer">講解</a>。</p>
+      <div class="hw-list" data-bank="__CH13C" data-sec="cramer"></div>
     </section>
 
     <section class="sec" id="r133">
@@ -128,7 +135,7 @@
 <script src="../shared/hw.js"></script>
 <script src="../shared/exbook.js"></script>
 <script>
-__EXB.picker(document.getElementById('sec-pick'), [{"id": "r132", "no": "13.2", "name": "互感與打點規則", "count": "8 題"}, {"id": "r133", "no": "13.3", "name": "耦合電路的能量", "count": "8 題"}, {"id": "r134", "no": "13.4", "name": "線性變壓器", "count": "8 題"}, {"id": "r135", "no": "13.5", "name": "理想變壓器", "count": "8 題"}, {"id": "r136", "no": "13.6", "name": "理想自耦變壓器", "count": "8 題"}, {"id": "r137", "no": "13.7", "name": "三相變壓器", "count": "8 題"}, {"id": "r139", "no": "13.9", "name": "應用", "count": "8 題"}, {"id": "r142", "no": "14.2", "name": "轉移函數", "count": "8 題"}, {"id": "r143", "no": "14.3", "name": "分貝刻度", "count": "8 題"}], { key: 'ch13-review' });
+__EXB.picker(document.getElementById('sec-pick'), [{"id": "r132", "no": "13.2", "name": "互感與打點規則", "count": "8 題"}, {"id": "rcr", "no": "補", "name": "克拉瑪法則", "count": "8 題"}, {"id": "r133", "no": "13.3", "name": "耦合電路的能量", "count": "8 題"}, {"id": "r134", "no": "13.4", "name": "線性變壓器", "count": "8 題"}, {"id": "r135", "no": "13.5", "name": "理想變壓器", "count": "8 題"}, {"id": "r136", "no": "13.6", "name": "理想自耦變壓器", "count": "8 題"}, {"id": "r137", "no": "13.7", "name": "三相變壓器", "count": "8 題"}, {"id": "r139", "no": "13.9", "name": "應用", "count": "8 題"}, {"id": "r142", "no": "14.2", "name": "轉移函數", "count": "8 題"}, {"id": "r143", "no": "14.3", "name": "分貝刻度", "count": "8 題"}], { key: 'ch13-review' });
 (function () {
   'use strict';
   const links = Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]'));

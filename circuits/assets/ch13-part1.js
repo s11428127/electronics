@@ -142,6 +142,111 @@
     }
   });
 
+
+  /* ══════ 補課：克拉瑪法則（使用者 11/7） ══════ */
+  const nf = x => String(+(+x).toPrecision(4)).replace('-', '−');
+  const fz = z => { const re = Math.abs(z.re) < 1e-9 ? 0 : z.re, im = Math.abs(z.im) < 1e-9 ? 0 : z.im;
+    if (!im) return nf(re); if (!re) return (im < 0 ? '−j' : 'j') + nf(Math.abs(im));
+    return nf(re) + (im < 0 ? ' − j' : ' + j') + nf(Math.abs(im)); };
+  const pz = z => '(' + fz(z) + ')';
+  const mulS = (a, b) => { const p = X.mul(a, b);
+    const jj = Math.abs(a.im) > 1e-9 && Math.abs(b.im) > 1e-9 ? '　〔j² 項：' + nf(a.im * b.im) + ' j² = ' + nf(-a.im * b.im) + '〕' : '';
+    return pz(a) + pz(b) + ' = ' + fz(p) + jj; };
+  const polS = z => X.mag(z) < 1e-12 ? '0' : nf(X.mag(z)) + '∠' + nf(Math.abs(X.ang(z)) < 1e-9 ? 0 : X.ang(z)) + '°';
+  const cramer = M => {
+    const [a11, a12, b1, a21, a22, b2] = M;
+    const m = X.mul(a11, a22), x = X.mul(a12, a21), D = X.sub(m, x);
+    const D1 = X.sub(X.mul(b1, a22), X.mul(a12, b2)), D2 = X.sub(X.mul(a11, b2), X.mul(b1, a21));
+    const ok = X.mag(D) > 1e-12;
+    return { a11, a12, b1, a21, a22, b2, m, x, D, D1, D2, ok, I1: ok ? X.div(D1, D) : null, I2: ok ? X.div(D2, D) : null };
+  };
+
+  (function cramerToy() {
+    const inBox = document.getElementById('cr-in'); if (!inBox) return;
+    const mat = document.getElementById('cr-mat'), out = document.getElementById('cr-out'), stepL = document.getElementById('cr-step');
+    const NAMES = ['a₁₁', 'a₁₂', 'b₁', 'a₂₁', 'a₂₂', 'b₂'];
+    const PRE = {
+      p1: [[4, 3], [0, -8], [100, 0], [0, -8], [5, 18], [0, 0]],
+      p2: [[0, 1], [0, -3], [12, 0], [0, -3], [12, 6], [0, 0]],
+      p3: [[2, 0], [3, 0], [8, 0], [1, 0], [-1, 0], [-1, 0]]
+    };
+    let V = PRE.p1.map(v => v.slice()), step = 0;
+    const N = 8;
+    inBox.innerHTML = NAMES.map((n, i) => '<label class="cr-cell' + (i % 3 === 2 ? ' b' : '') + '"><b>' + n + '</b><input type="number" step="any" data-i="' + i + '" data-p="0" aria-label="' + n + ' 實部">+ j<input type="number" step="any" data-i="' + i + '" data-p="1" aria-label="' + n + ' 虛部"></label>').join('');
+    const fill = () => inBox.querySelectorAll('input').forEach(el => { el.value = V[+el.dataset.i][+el.dataset.p]; });
+    inBox.addEventListener('input', e => { const el = e.target; if (!el.dataset) return; const v = parseFloat(el.value); V[+el.dataset.i][+el.dataset.p] = isFinite(v) ? v : 0; draw(); });
+    const grid = (cells, hl) => '<div class="cr-grid">' + cells.map((c, i) => '<span class="' + (hl[i] || '') + '">' + c + '</span>').join('') + '</div>';
+    function draw() {
+      const Z = V.map(v => X.c(v[0], v[1])), r = cramer(Z);
+      const A = [r.a11, r.a12, r.a21, r.a22].map(fz), B = [fz(r.b1), fz(r.b2)];
+      let cells = A, hl = [], lab = '係數矩陣';
+      if (step === 1) hl = ['hm', '', '', 'hm'];
+      if (step === 2) hl = ['', 'hx', 'hx', ''];
+      if (step === 3) hl = ['hm', 'hx', 'hx', 'hm'];
+      if (step === 4) { cells = [B[0], A[1], B[1], A[3]]; hl = ['hm hb', 'hx', 'hx hb', 'hm']; lab = 'Δ₁：第 1 行換成常數'; }
+      if (step === 5) { cells = [A[0], B[0], A[2], B[1]]; hl = ['hm', 'hx hb', 'hx', 'hm hb']; lab = 'Δ₂：第 2 行換成常數'; }
+      mat.innerHTML = '<span class="cr-lab">' + lab + '</span>' + grid(cells, hl) + (step < 4 ? '<span class="cr-lab">×　[I₁ ; I₂] = [' + B[0] + ' ; ' + B[1] + ']</span>' : '');
+      const L = [
+        '① 標準型：(' + A[0] + ')I₁ + (' + A[1] + ')I₂ = ' + B[0] + '；(' + A[2] + ')I₁ + (' + A[3] + ')I₂ = ' + B[1],
+        '② 主對角（綠）：a₁₁ × a₂₂ = ' + mulS(r.a11, r.a22),
+        '③ 另一條（橘）：a₁₂ × a₂₁ = ' + mulS(r.a12, r.a21),
+        '④ Δ = ' + pz(r.m) + ' − ' + pz(r.x) + ' = ' + fz(r.D) + (r.ok ? '' : '　→ Δ = 0，沒有唯一解'),
+        '⑤ Δ₁ = b₁a₂₂ − a₁₂b₂ = ' + fz(X.mul(r.b1, r.a22)) + ' − ' + pz(X.mul(r.a12, r.b2)) + ' = ' + fz(r.D1),
+        '⑥ Δ₂ = a₁₁b₂ − b₁a₂₁ = ' + fz(X.mul(r.a11, r.b2)) + ' − ' + pz(X.mul(r.b1, r.a21)) + ' = ' + fz(r.D2),
+        '⑦ I₁ = Δ₁/Δ = ' + polS(r.D1) + ' ÷ ' + polS(r.D) + ' = ' + (r.ok ? polS(r.I1) + '　（大小相除、角度相減）' : '—'),
+        '⑧ I₂ = Δ₂/Δ = ' + polS(r.D2) + ' ÷ ' + polS(r.D) + ' = ' + (r.ok ? polS(r.I2) : '—')
+      ];
+      out.innerHTML = L.map((t, i) => '<div class="' + (i === step ? 'now' : i > step ? 'fut' : '') + '">' + t + '</div>').join('');
+      stepL.textContent = '第 ' + (step + 1) + ' / ' + N + ' 步';
+    }
+    const go = k => { step = Math.max(0, Math.min(N - 1, k)); draw(); };
+    document.getElementById('cr-next').addEventListener('click', () => go(step + 1));
+    document.getElementById('cr-all').addEventListener('click', () => go(N - 1));
+    document.getElementById('cr-back').addEventListener('click', () => go(0));
+    ['p1', 'p2', 'p3'].forEach(k => document.getElementById('cr-' + k).addEventListener('click', () => { V = PRE[k].map(v => v.slice()); fill(); go(0); }));
+    fill(); draw();
+  })();
+
+  /* ── 例題：Example 13.2 的聯立方程式，改數字看 Δ 怎麼變 ── */
+  liveExample('#ex-cr', {
+    title: '例題 · 用克拉瑪法則解 Example 13.2 的網目方程式',
+    ratio: 0.3, minH: 150, maxH: 200,
+    givens: [
+      { id: 'cr-v', label: '電源 V', min: 10, max: 200, step: 10, value: 100, fmt: v => v + '∠0° V' },
+      { id: 'cr-r1', label: '左邊電阻 R<sub>1</sub>', min: 0, max: 20, step: 1, value: 4, fmt: v => v + ' Ω' },
+      { id: 'cr-r2', label: '右邊電阻 R<sub>2</sub>', min: 0, max: 20, step: 1, value: 5, fmt: v => v + ' Ω' },
+      { id: 'cr-m', label: '互感 jωM', min: 0, max: 6, step: 0.5, value: 2, fmt: v => 'j' + v + ' Ω' }
+    ],
+    compute: g => {
+      const V = g['cr-v'], R1 = g['cr-r1'], R2 = g['cr-r2'], XM = g['cr-m'];
+      const a11 = X.c(R1, -3 + 6), a12 = X.c(0, -(6 + XM)), a22 = X.c(R2, 6 + 8 + 2 * XM);
+      const r = cramer([a11, a12, X.c(V, 0), a12, a22, X.c(0, 0)]);
+      return Object.assign(r, { V, R1, R2, XM });
+    },
+    question: (g, r) => 'Example 13.2 的電路改成：電源 ' + r.V + '∠0° V、左邊 ' + r.R1 + ' Ω、右邊 ' + r.R2 + ' Ω、互感 j' + r.XM + ' Ω（j6、j8、−j3 不變）。網目方程式整理後是 (' + fz(r.a11) + ')I<sub>1</sub> + (' + fz(r.a12) + ')I<sub>2</sub> = ' + r.V + '、(' + fz(r.a21) + ')I<sub>1</sub> + (' + fz(r.a22) + ')I<sub>2</sub> = 0。用克拉瑪法則求 I<sub>1</sub>、I<sub>2</sub>。',
+    questionEn: (g, r) => 'The mesh equations of Example 13.2 (modified) are (' + fz(r.a11) + ')I<sub>1</sub> + (' + fz(r.a12) + ')I<sub>2</sub> = ' + r.V + ' and (' + fz(r.a21) + ')I<sub>1</sub> + (' + fz(r.a22) + ')I<sub>2</sub> = 0. Use Cramer\'s rule to find I<sub>1</sub> and I<sub>2</sub>.',
+    steps: (g, r) => [
+      { t: 'Step 1　填係數。', note: '負號跟著係數一起填。a<sub>12</sub> = a<sub>21</sub> = −j(6 + ' + r.XM + ')：共用支路的 j6 加上互感。', eq: 'a<sub>11</sub> = ' + fz(r.a11) + '、a<sub>12</sub> = a<sub>21</sub> = ' + fz(r.a12) + '、a<sub>22</sub> = ' + fz(r.a22) + '、b<sub>1</sub> = ' + r.V + '、b<sub>2</sub> = 0' },
+      { t: 'Step 2　Δ = a<sub>11</sub>a<sub>22</sub> − a<sub>12</sub>a<sub>21</sub>。', note: 'a<sub>12</sub>a<sub>21</sub> 是兩個純虛數相乘：j × j = −1，所以是負的。', eq: mulS(r.a11, r.a22) + '；' + mulS(r.a12, r.a21) + '；Δ = ' + pz(r.m) + ' − ' + pz(r.x) + ' = ' + fz(r.D) },
+      { t: 'Step 3　Δ<sub>1</sub>：第 1 行換成 [' + r.V + '; 0]。', note: 'b<sub>2</sub> = 0，所以 a<sub>12</sub>b<sub>2</sub> 那項直接是 0。', eq: 'Δ<sub>1</sub> = ' + r.V + ' × ' + pz(r.a22) + ' − 0 = ' + fz(r.D1) },
+      { t: 'Step 4　Δ<sub>2</sub>：第 2 行換成 [' + r.V + '; 0]。', eq: 'Δ<sub>2</sub> = 0 − ' + r.V + ' × ' + pz(r.a21) + ' = ' + fz(r.D2) },
+      { t: 'Step 5　換極座標再相除。', eq: 'I<sub>1</sub> = ' + polS(r.D1) + ' ÷ ' + polS(r.D) + ' = ' + (r.ok ? polS(r.I1) : '—') + ' A；I<sub>2</sub> = ' + polS(r.D2) + ' ÷ ' + polS(r.D) + ' = ' + (r.ok ? polS(r.I2) : '—') + ' A',
+        after: !r.ok ? 'Δ = 0：這組數字讓兩條方程式等價，沒有唯一解。'
+          : (r.V === 100 && r.R1 === 4 && r.R2 === 5 && r.XM === 2) ? '跟課本答案一樣：I<sub>1</sub> = 20.3∠3.5° A、I<sub>2</sub> = 8.693∠19° A。'
+          : r.XM === 0 ? 'M = 0 時 a<sub>12</sub> 還是 −j6：兩個網目仍靠共用支路的 j6 連在一起，所以 I<sub>2</sub> 不是 0。'
+          : '|Δ| 越小，電流越大；Δ 是分母，算錯 Δ 兩個答案會一起錯。' }
+    ],
+    answer: (g, r) => r.ok ? 'I<sub>1</sub> = ' + polS(r.I1) + ' A；I<sub>2</sub> = ' + polS(r.I2) + ' A' : '無唯一解（Δ = 0）',
+    draw: (ctx, w, h, g, r) => {
+      if (!r.ok) return;
+      const m1 = X.mag(r.I1), m2 = X.mag(r.I2), mx = Math.max(m1, m2, 1e-9), x0 = 70, L = w - x0 - 90;
+      labelCJK(ctx, 10, h * 0.35 + 5, '|I₁|', C.ink, 13, 'left', '700'); labelCJK(ctx, 10, h * 0.7 + 5, '|I₂|', C.accent, 13, 'left', '700');
+      ctx.fillStyle = C.ink; ctx.fillRect(x0, h * 0.35 - 9, Math.max(0, m1 / mx * L), 18); ctx.fillStyle = C.accent; ctx.fillRect(x0, h * 0.7 - 9, Math.max(0, m2 / mx * L), 18);
+      label(ctx, x0 + m1 / mx * L + 6, h * 0.35 + 5, X.g(m1, 4) + ' A', C.ink, 12, 'left', '700');
+      label(ctx, x0 + m2 / mx * L + 6, h * 0.7 + 5, X.g(m2, 4) + ' A', C.accent, 12, 'left', '700');
+    }
+  });
+
   /* ── Example 13.3 ── */
   liveExample('#ex-133', {
     title: '例題 · 耦合係數與 t 時刻的能量（課本 Example 13.3）',

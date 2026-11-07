@@ -1380,6 +1380,24 @@ body.prob-first .sec.pf > .cf-wrap { order: 2; }
 :root[data-theme="dark"] .memo-star { background: #e06a5c; color: #1b1b1b; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .memo-star { background: #e06a5c; color: #1b1b1b; } }
 
+/* 克拉瑪法則計算機（電路學 CH13 PART 1 補課，11/7） */
+.cr-in { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px 14px; }
+.cr-cell { display: flex; align-items: center; gap: 3px; font-family: var(--font-mono); font-size: 13px; color: var(--ink-2); white-space: nowrap; min-width: 0; }
+.cr-cell b { min-width: 24px; color: var(--ink); }
+.cr-cell input { width: 44px; min-width: 0; padding: 3px 4px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); font: inherit; }
+.cr-cell.b { border-left: 2px dashed var(--line); padding-left: 8px; }
+.cr-mat { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: center; padding: 14px; }
+.cr-grid { display: grid; grid-template-columns: repeat(2, auto); gap: 6px 14px; padding: 8px 12px; border-left: 2px solid var(--ink-2); border-right: 2px solid var(--ink-2); border-radius: 6px; font-family: var(--font-mono); font-size: 14px; }
+.cr-grid span { padding: 4px 8px; border-radius: 6px; transition: background .25s, color .25s; }
+.cr-grid span.hm { background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--ink); font-weight: 700; }
+.cr-grid span.hx { background: color-mix(in srgb, var(--warn) 26%, transparent); color: var(--ink); font-weight: 700; }
+.cr-grid span.hb { outline: 2px dashed var(--ok); }
+.cr-lab { font-family: var(--font-mono); font-size: 13px; color: var(--ink-3); }
+.cr-out { padding: 4px 16px 14px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.9; color: var(--ink-2); }
+.cr-out .now { color: var(--ink); font-weight: 700; }
+.cr-out .fut { opacity: .25; }
+@media (max-width: 520px) { .cr-in { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cr-cell.b { border-left: 0; padding-left: 0; order: 2; } .cr-cell input { width: 52px; } }
+
 /* ===== 電腦版放大（tools/desktop-css.py 自動產生，不要手改） ===== */
 @media (min-width: 1200px) {
   body { font-size: 17.1px; }
@@ -1638,6 +1656,10 @@ body.prob-first .sec.pf > .cf-wrap { order: 2; }
   /* 填充題答題回饋（使用者 11/4） */
 .hw-fb { font-size: 16.0px; }
   .memo-star { font-size: 12.5px; }
+  .cr-cell { font-size: 14.8px; }
+  .cr-grid { font-size: 16.0px; }
+  .cr-lab { font-size: 14.8px; }
+  .cr-out { font-size: 15.4px; }
 }
 @media (min-width: 1600px) {
   body { font-size: 18.6px; }
@@ -1896,5 +1918,9 @@ body.prob-first .sec.pf > .cf-wrap { order: 2; }
   /* 填充題答題回饋（使用者 11/4） */
 .hw-fb { font-size: 17.4px; }
   .memo-star { font-size: 13.6px; }
+  .cr-cell { font-size: 16.1px; }
+  .cr-grid { font-size: 17.4px; }
+  .cr-lab { font-size: 16.1px; }
+  .cr-out { font-size: 16.7px; }
 }
 /* ===== 電腦版放大 end ===== */

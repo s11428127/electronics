@@ -30,6 +30,7 @@
       <li><a href="#story-sec"><i>▶</i>故事模式（先看這個）</a></li>
       <li><a href="#map"><i>00</i>課程地圖</a></li>
       <li><a href="#mut"><i>13.2</i>互感與打點規則</a></li>
+      <li><a href="#cramer"><i>補</i>補課：克拉瑪法則</a></li>
       <li><a href="#energy"><i>13.3</i>耦合電路的能量</a></li>
       <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
       <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
@@ -145,6 +146,70 @@
         <h3>🧠 觀念填充 13.2（不用算，用選的）</h3>
         <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。全部集中在 <a href="ch13-review.html">CH13～14 觀念填充總複習</a>。</p>
         <div class="hw-list" data-bank="__CH13C" data-sec="13.2"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 補課：克拉瑪法則（使用者 11/7：前面單元沒學好，含 j 的聯立方程式） ══════════ -->
+    <section class="sec" id="cramer">
+      <div class="eyebrow"><span class="part-tag">補課</span>解網目方程式 · Cramer's Rule</div>
+      <h2>補課：<button class="tm" data-t="克拉瑪法則">克拉瑪法則</button>解含 j 的聯立方程式<span class="h2-en">CRAMER'S RULE</span></h2>
+      <p class="lede">網目分析寫完，最後都剩兩條聯立方程式，係數還帶 j。克拉瑪法則把「解聯立」變成固定流程：算三個<button class="tm" data-t="行列式">行列式</button>、相除，不用消去、不用猜。</p>
+      <div class="eq">a<sub>11</sub>I<sub>1</sub> + a<sub>12</sub>I<sub>2</sub> = b<sub>1</sub>，a<sub>21</sub>I<sub>1</sub> + a<sub>22</sub>I<sub>2</sub> = b<sub>2</sub>　⟹　Δ = a<sub>11</sub>a<sub>22</sub> − a<sub>12</sub>a<sub>21</sub>　·　Δ<sub>1</sub> = b<sub>1</sub>a<sub>22</sub> − a<sub>12</sub>b<sub>2</sub>　·　Δ<sub>2</sub> = a<sub>11</sub>b<sub>2</sub> − b<sub>1</sub>a<sub>21</sub>　·　I<sub>1</sub> = Δ<sub>1</sub>/Δ，I<sub>2</sub> = Δ<sub>2</sub>/Δ</div>
+      <div class="derive">
+        <h4>公式怎麼來（2 × 2）</h4>
+        <ol>
+          <li><span class="d-eq">a<sub>11</sub>I<sub>1</sub> + a<sub>12</sub>I<sub>2</sub> = b<sub>1</sub>　…①<br>a<sub>21</sub>I<sub>1</sub> + a<sub>22</sub>I<sub>2</sub> = b<sub>2</sub>　…②</span><div class="why">先整理成標準型。未知數照順序排在左邊，常數（電源）全部移到右邊。</div></li>
+          <li><span class="d-eq">① × a<sub>22</sub> − ② × a<sub>12</sub>：(a<sub>11</sub>a<sub>22</sub> − a<sub>12</sub>a<sub>21</sub>)I<sub>1</sub> = b<sub>1</sub>a<sub>22</sub> − a<sub>12</sub>b<sub>2</sub></span><div class="why">目的是把 I<sub>2</sub> 消掉。兩式的 I<sub>2</sub> 係數都變成 a<sub>12</sub>a<sub>22</sub>，相減就沒了。</div></li>
+          <li><span class="d-eq">Δ = a<sub>11</sub>a<sub>22</sub> − a<sub>12</sub>a<sub>21</sub>（左上 × 右下 − 右上 × 左下）</span><div class="why">I<sub>1</sub> 前面那一坨有名字，叫係數矩陣的行列式。口訣：主對角線乘起來，減掉另一條對角線。</div></li>
+          <li><span class="d-eq">Δ<sub>1</sub> = b<sub>1</sub>a<sub>22</sub> − a<sub>12</sub>b<sub>2</sub>：把第 1 行換成常數 [b<sub>1</sub>; b<sub>2</sub>]</span><div class="why">右邊那坨也是行列式。要求 I<sub>1</sub>，就把 I<sub>1</sub> 那一行（a<sub>11</sub>、a<sub>21</sub>）換成常數，照樣交叉相乘。</div></li>
+          <li><span class="d-eq">Δ<sub>2</sub> = a<sub>11</sub>b<sub>2</sub> − b<sub>1</sub>a<sub>21</sub>：把第 2 行換成常數</span><div class="why">同一招消掉 I<sub>1</sub> 會得到 Δ · I<sub>2</sub> = Δ<sub>2</sub>。要求誰，就換掉誰那一行。</div></li>
+          <li><span class="d-eq hi">I<sub>1</sub> = Δ<sub>1</sub>/Δ，I<sub>2</sub> = Δ<sub>2</sub>/Δ</span><p>Δ = 0 表示兩條方程式其實是同一條，沒有唯一解（電路圖抄錯了，回去檢查）。</p></li>
+        </ol>
+      </div>
+      <div class="derive">
+        <h4>有 j 的時候：只多兩個規則</h4>
+        <ol>
+          <li><span class="d-eq">乘法：(a + jb)(c + jd) = ac + jad + jbc + j<sup>2</sup>bd = (ac − bd) + j(ad + bc)</span><div class="why">跟國中的分配律一樣展開。唯一要記的是 j<sup>2</sup> = −1，所以 bd 那項變號、跑到實部。</div></li>
+          <li><span class="d-eq">例：(−j8)(−j8) = 64 j<sup>2</sup> = −64</span><div class="why">最常算錯的一項。兩個純虛數相乘，答案是負的實數。</div></li>
+          <li><span class="d-eq">除法：換成極座標，A∠α ÷ B∠β = (A/B)∠(α − β)</span><div class="why">直角座標硬除要乘共軛，很容易錯。換成大小與角度，大小相除、角度相減，一步就好。</div></li>
+          <li><span class="d-eq">換極座標：a + jb → √(a<sup>2</sup> + b<sup>2</sup>)∠tan<sup>−1</sup>(b/a)</span><div class="why">a &lt; 0 時角度要加 180°（點在左半平面）。計算機用 Pol( ) 或 ∠ 鍵最保險。</div></li>
+          <li><span class="d-eq hi">Example 13.2：Δ = (4 + j3)(5 + j18) − (−j8)(−j8) = (−34 + j87) − (−64) = 30 + j87</span><p>(4 + j3)(5 + j18) = 20 + j72 + j15 + j<sup>2</sup>54 = (20 − 54) + j87；再減掉 −64，等於加 64。</p></li>
+        </ol>
+      </div>
+      <div class="bench">
+        <div class="bench-head"><h3>克拉瑪計算機：一步一步看交叉相乘</h3><span class="spacer"></span><button class="btn" id="cr-p1" type="button">Example 13.2</button><button class="btn" id="cr-p2" type="button">Example 13.1</button><button class="btn" id="cr-p3" type="button">實數練習</button></div>
+        <div class="cr-in" id="cr-in"></div>
+        <div class="cr-mat" id="cr-mat"></div>
+        <div class="cr-out" id="cr-out"></div>
+        <div class="bench-head"><button class="btn solid" id="cr-next" type="button">下一步 ▸</button><button class="btn" id="cr-all" type="button">全部展開</button><button class="btn" id="cr-back" type="button">從頭</button><span class="spacer"></span><span class="tag" id="cr-step">第 1 步</span></div>
+      </div>
+      <p class="note">上面每一格都能改（左邊實部、右邊 j 的係數）。按「下一步」，矩陣裡正在相乘的兩格會亮起來：綠底是主對角線，橘底是另一條對角線，虛線框是換進去的常數。</p>
+      <div id="ex-cr"></div>
+      <div class="howto">
+        <h4>拿到兩條含 j 的方程式怎麼解</h4>
+        <ol>
+          <li><b>整理成標準型：</b>I<sub>1</sub> 項、I<sub>2</sub> 項在左，電源在右；同一個未知數的係數先合併（例：4 − j3 + j6 = 4 + j3）。</li>
+          <li><b>填係數：</b>a<sub>11</sub>、a<sub>12</sub>、a<sub>21</sub>、a<sub>22</sub>、b<sub>1</sub>、b<sub>2</sub>，<b>負號跟著係數走</b>。</li>
+          <li><b>算 Δ：</b>左上 × 右下 − 右上 × 左下，每個乘積先展開，j<sup>2</sup> 換成 −1。</li>
+          <li><b>算 Δ<sub>1</sub>、Δ<sub>2</sub>：</b>要求誰就把誰那一行換成常數。常數有 0 的話，那個乘積直接是 0。</li>
+          <li><b>相除：</b>Δ、Δ<sub>1</sub>、Δ<sub>2</sub> 都換成極座標，大小相除、角度相減。</li>
+          <li><b>驗算：</b>把 I<sub>1</sub>、I<sub>2</sub> 代回其中一條方程式，左右要相等。</li>
+        </ol>
+      </div>
+      <div class="pitfall">
+        <h4>克拉瑪法則的坑</h4>
+        <ul>
+          <li><span class="x">✗</span> (−j8)(−j8) = +64。<span class="o">✓ j × j = j<sup>2</sup> = −1，所以是 −64；Δ 裡「減掉 −64」變成 +64。</span></li>
+          <li><span class="x">✗</span> 把 −j8 填成 j8（負號丟掉）。<span class="o">✓ 係數連同正負號一起填進矩陣。</span></li>
+          <li><span class="x">✗</span> 交叉相乘寫成 a<sub>11</sub>a<sub>22</sub> + a<sub>12</sub>a<sub>21</sub>。<span class="o">✓ 中間永遠是減號。</span></li>
+          <li><span class="x">✗</span> 求 I<sub>1</sub> 卻把第 2 行換成常數。<span class="o">✓ 求 I<sub>1</sub> 換第 1 行（I<sub>1</sub> 的係數那一行）。</span></li>
+          <li><span class="x">✗</span> 直角座標直接「實部除實部、虛部除虛部」。<span class="o">✓ 除法一律換極座標：大小相除、角度相減。</span></li>
+        </ul>
+      </div>
+      <div class="cf-wrap" id="cf-13-cr">
+        <h3>🧠 觀念填充：克拉瑪法則（不用算，用選的）</h3>
+        <p>每格從下拉選單挑一個，按「對答案」看解釋。題目下面附英文。</p>
+        <div class="hw-list" data-bank="__CH13C" data-sec="cramer"></div>
       </div>
     </section>
 
