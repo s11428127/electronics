@@ -498,6 +498,7 @@
   ];
 
   window.__CH13PB = window.__CH13PB || { book: 'Alexander & Sadiku', items: [] };
+  window.__CH13PB.enFirst = true;   /* 11/7：題目英文先、中文收進「中文翻譯」 */
   window.__CH13PB.items = window.__CH13PB.items.concat(items);
   window.__CH13PB.F = F;
 })();

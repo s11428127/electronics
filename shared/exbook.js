@@ -29,13 +29,20 @@
     if (!box.hidden) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  function card(it) {
+  /* enFirst（電路學章末題，使用者 11/7）：題目英文在前，中文收進「中文翻譯」（跟電子學作業一樣） */
+  function card(it, enFirst) {
     const el = document.createElement('article');
     el.className = 'xb-card ' + (it.kind === 'ex' ? 'is-ex' : 'is-pp');
     el.id = 'xb-' + it.id;
     const tag = it.tag ? '<span class="xb-tag ' + (it.kind === 'ex' ? 'ex' : 'pp') + '">' + it.tag + '</span>' : it.kind === 'ex' ? '<span class="xb-tag ex">Example ' + it.no + '</span>' : '<span class="xb-tag pp">Practice Problem ' + it.no + '</span>';
     const head = '<header class="xb-head">' + tag + (it.title ? '<b>' + it.title + '</b>' : '') + '</header>' +
-      '<div class="xb-q">' + it.q + (it.en ? '<div class="q-en">' + it.en + '</div>' : '') + '</div>' + (it.fig ? '<figure class="xb-fig">' + it.fig + (it.cap ? '<figcaption>' + it.cap + '</figcaption>' : '') + '</figure>' : '');
+      (enFirst && it.en ? (() => {
+          /* 選項清單（Review Question 的 a. b. c.）不收起來，留在英文下面 */
+          const lists = (String(it.q).match(/<(ol|ul)\b[\s\S]*?<\/\1>/g) || []).join('');
+          const zhq = lists && !/<(ol|ul)\b/.test(it.en) ? String(it.q).replace(/<(ol|ul)\b[\s\S]*?<\/\1>/g, '') : it.q;
+          return '<div class="xb-q">' + it.en + (/<(ol|ul)\b/.test(it.en) ? '' : lists) + '<details class="hw-zh dv-ui"><summary>中文翻譯</summary><div>' + zhq + '</div></details></div>';
+        })()
+        : '<div class="xb-q">' + it.q + (it.en ? '<div class="q-en">' + it.en + '</div>' : '') + '</div>') + (it.fig ? '<figure class="xb-fig">' + it.fig + (it.cap ? '<figcaption>' + it.cap + '</figcaption>' : '') + '</figure>' : '');
     const steps = '<ol class="xb-steps">' + it.steps.map((s, i) => stepHTML(s, i)).join('') + '</ol>';
     if (it.kind === 'ex') {
       el.innerHTML = head +
@@ -88,7 +95,7 @@
     const items = bank.items.filter(it => it.sec === host.dataset.sec);
     const nEx = items.filter(i => i.kind === 'ex').length, nPp = items.length - nEx;
     host.innerHTML = '<div class="xb-title"><span>📘 課本例題與練習</span><small>Example ' + nEx + ' 題 · Practice Problem ' + nPp + ' 題</small></div>';
-    items.forEach(it => host.appendChild(card(it)));
+    items.forEach(it => host.appendChild(card(it, bank.enFirst || host.dataset.enFirst === '1')));
     if (window.__EE && window.__EE.wireTerms) window.__EE.wireTerms();
   }
 

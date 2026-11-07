@@ -159,6 +159,7 @@
 - schem.js 10/16 新增：`dvs`／`dis`（菱形相依電壓／電流源，垂直）、`dvsh`／`dish`（水平）、`opamp(x, y, {plusTop})`、`box(x, y, w, h, [多行字])`（負載方塊）。圖要截圖拼總表檢查標籤有沒有被裁掉（`S.svg` 寬度要留給右側標籤）。
 - 新頁面加進 `mistakes.html` 的 `data-chs`、科目首頁 `.lec-links`、章節頁 hero `.lec-links`。
 - **章末題圖解詳解（使用者 10/18）**：`circuits/assets/prob-story.js` 自動把 tag 以 `Problem` 開頭的題目（Review Question 不做）做成故事：題目圖（schem 圖嵌進故事畫面）→ 每幕 1～2 步（左圖右計算卡，字幕取 `why` 第一句）→ 答案卡。題庫寫 `steps` 時 `eq` 用「；」「⇒」分段，故事才切得漂亮。
+- **章末題英文先（使用者 11/7）**：題庫設 `enFirst: true`（`exbook.js`），卡片題目顯示 `en`、中文 `q` 收進「中文翻譯」，`q` 裡的選項清單（`<ol>`）留在英文下面。CH11～14 的 `__CH1xPB` 都已設。
 - 現有：電路學 `ch11-problems.html`（`ch11-prob1～3.js`，86 題）、`ch12-problems.html`（`ch12-prob1～2.js`，64 題；三相電路圖用 `__CH12PB.tp({src:'Y'|'D'|'gen', load:'Y'|'D', line, neutral})`）。節標題旁有圖示＝整節都跳過（CH12 的 12.9 PSpice）。
 
 ## 電路學期中考（使用者 11/5：考到 14.3，比較會考章末 Problems）

@@ -95,5 +95,6 @@
       ans: '(a) 1.006　(b) 0.4898　(c) 1.718 × 10<sup>5</sup>' })
   ];
   window.__CH14PB = window.__CH14PB || { book: 'Alexander & Sadiku', items: [] };
+  window.__CH14PB.enFirst = true;   /* 11/7：題目英文先、中文收進「中文翻譯」 */
   window.__CH14PB.items = window.__CH14PB.items.concat(items);
 })();
