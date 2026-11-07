@@ -1401,6 +1401,10 @@ body.prob-first .sec.pf > .cf-wrap { order: 2; }
 /* 例題步驟的長算式換行，不要被切掉（使用者 11/8） */
 .xb-steps .d-eq { white-space: normal; overflow-wrap: anywhere; }
 
+.xb-figs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.xb-figs .xb-fig { flex: 1 1 220px; }
+.xb-steps .why .xb-fig, .xb-idea .xb-fig, .xb-note .xb-fig { margin: 8px auto 2px; }
+
 /* ===== 電腦版放大（tools/desktop-css.py 自動產生，不要手改） ===== */
 @media (min-width: 1200px) {
   body { font-size: 17.1px; }
