@@ -211,6 +211,10 @@
 
 - 主色 `#3d7a2a`（暗 `#9bd47f`），`<body data-subject="env">`；考試不能看筆記 → 只做 `review.html` 一頁考前速讀（表格＋口訣、申論範例 `.exq`、電影《Minamata》對照、快速自測 `details`、挖空 `body.cloze`）。版面沿用 `../law/law.css`＋`env.css`。不做故事模式。
 
+## 英文（`english/`，11/8 新科目）
+
+- 主色 `#1f6f9a`（暗 `#7cc4ea`），`<body data-subject="english">`。不做故事模式。期中考 `review.html`：題庫 `assets/mid-bank.js`（`__ENG1` name `eng-mid1`，hw.js 卡片）＝老師單字表英英定義（雙向）＋課本練習（照 answer key）＋課文原句挖空。資料在 `english/docs/`（EXAM、VOCAB、KEYS）；課本照片不放進 repo。
+
 ## 電動車（`ev/`，11/5 新課，還沒做頁面）
 
 - **考試重點寫在 `ev/docs/EXAM.md`（使用者 11/5 口述，一定要記住）**：選擇題＋問答題；問答題考分類與英文縮寫、優點、系統架構圖、電力轉換設備、「四項」物理意義、弗萊明左右手與安培定律、發電原理、油電車混合程度分類、串並聯架構圖、充電→電池→馬達效率計算、電力線內阻與電壓、電池串並聯；3 題常識選擇（成本最高的部分）。等使用者給照片再做頁面。

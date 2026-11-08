@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>英文</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body data-subject="english">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置"><a href="../index.html">主頁</a><span>›</span><b>英文</b></nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+<div class="home">
+  <div class="home-hero">
+    <div class="eyebrow">English · Reading Explorer 4</div>
+    <h1>英文</h1>
+    <p>期中考：選擇 60%、單字定義 30%、課外閱讀 10%。範圍 Unit 1、Unit 2、Unit 3 Reading 1。</p>
+  </div>
+  <div class="chapters">
+    <a class="chap" href="review.html">
+      <span class="chap-no">⭐<em>11/9</em></span>
+      <span class="chap-body">
+        <b>期中考複習</b>
+        <span>老師單字表英英定義 · 課本練習（answer key）· 課文原句挖空 · 五篇課文重點</span>
+      </span>
+      <span class="chap-go">進入 →</span>
+    </a>
+  </div>
+</div>
+<script>
+(function () {
+  var btn = document.getElementById('theme-btn');
+  btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    var isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { var t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
