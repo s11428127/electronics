@@ -1,0 +1,22 @@
+# 英文（閱讀）期中考 —— 使用者 11/8 傳的資料（先記著，還沒做頁面）
+
+## 考試資訊（投影片 Midterm exam (class 2)）
+- 1. Multiple choice questions 60%（有些題目從課文句子中出題）
+- 2. Word definition 30%（課本單字跟英文解釋）
+- 3. Additional reading 10%（課文相關）
+- 範圍：Unit 1 + Unit 2 + Unit 3 Reading 1（單字表、課本答案放在 ilearning 當週公告）
+- 11/9 13:10 到教室門口；考試 13:20～14:20；13:50 後才可交卷（交卷出場後不能再入場）
+- 帶藍黑筆、鉛筆、立可白、橡皮擦，不能跟隔壁借
+
+## 已收到的課本照片（Unit 3 Food and Health，原圖在 session uploads，未放進 repo——網站是公開的）
+- p.43 Unit 3 封面、Warm Up 兩題
+- p.44 3A Before You Read（bacteria、immune systems、sanitary、foodborne 配對；Predicting）
+- p.45、p.47 3A 課文 How Safe Is Our Food?（段落 A～J；紅字單字：contaminated、integral、digestion、confine、determine、infected、nationwide、compulsory、optimistic、feasible）
+- p.46 照片頁（E. coli）
+- p.48 Reading Comprehension A（5 題選擇）、B（T/F/NG 5 題）
+- p.49 Reading Skill：Cause and Effect（A 5 句、B 配對 5 題）、Critical Thinking
+- p.50 Vocabulary Practice A（6 個定義）、B（4 題）、C（-wide）
+- p.51 3B Before You Read；p.52、53、54、55 3B 課文 The Battle for Biotech（段落 A～K；紅字：revolution、nutritional、notwithstanding、traits、conventional、modified、allergic、alternative、deficiency、diminish）
+- p.56 3B Reading Comprehension A（5 題）、B（配對 3 題）
+- 注意：考試範圍只到 Unit 3 Reading 1（3A）；3B 照片也有收，可能不考，做之前問使用者。
+- 還沒收到：Unit 1、Unit 2、ilearning 單字表、課本答案。
