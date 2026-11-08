@@ -19,4 +19,11 @@
 - p.51 3B Before You Read；p.52、53、54、55 3B 課文 The Battle for Biotech（段落 A～K；紅字：revolution、nutritional、notwithstanding、traits、conventional、modified、allergic、alternative、deficiency、diminish）
 - p.56 3B Reading Comprehension A（5 題）、B（配對 3 題）
 - 注意：考試範圍只到 Unit 3 Reading 1（3A）；3B 照片也有收，可能不考，做之前問使用者。
-- 還沒收到：Unit 1、Unit 2、ilearning 單字表、課本答案。
+- 11/8 第二批：Unit 1 Images of Life（p.7～21）
+  - p.7 封面 Warm Up；p.8 1A Before You Read（photojournalist、amateur、document；Skimming）
+  - p.9～11 1A 課文 The Visual Village（段落 A～L；紅字：tremendous、obsessed、dramatic、instantly、embrace、represent、controversy、relevant、democracy、profound）；使用者手寫註解（aspiring、equals、unguarded、course、shifting、altered、numb…）
+  - p.12 1A Reading Comprehension A（5 題）、B（段落配對 5 題）；p.13 Reading Skill 多義字（A 6 題、B 4 題）；p.14 Vocabulary Practice A（5 格）、B（6 題）、C（-tic）
+  - p.15 1B Before You Read（small talk、put at ease、hooked、by some miracle、top-notch；使用者已連線）
+  - p.16～19 1B 課文 My Journey in Photographs（Annie Griffiths，段落 A～J；紅字：tuition、teamwork、expectations、project、sincere、overcame、thus、turned out、portraits、enriches）
+  - p.20 1B Reading Comprehension A（5 題）、B（多義字 6 題）；p.21 Reading Skill Scanning（A 5 題、B 簡答）
+- 還沒收到：Unit 2、Unit 1 的 1B p.18 以外缺頁（無）、ilearning 單字表、課本答案。
