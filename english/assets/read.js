@@ -2,9 +2,7 @@
 (function () {
   'use strict';
   const host = document.getElementById('rd-host'), R = window.__ENGREAD || [];
-  let h = '<section class="sec rd-sec" id="r1A"><div class="eyebrow">Unit 1A</div><h2>The Visual Village<span class="h2-en">1A</span></h2>' +
-    '<div class="rd-gist">大意（依單字與練習推回來）：手機相機讓人人都能拍照、立刻（instantly）分享，攝影變得像民主（democracy）一樣人人有份；但濾鏡（filter）、隱私、照片被到處轉傳也帶來爭議（controversy）。</div>' +
-    '<p class="note">1A 課文那幾頁（p.9～12）的照片這個對話裡看不到，所以這篇只有大意。要逐段整理，把 p.9～12 再拍一次給我。</p></section>';
+  let h = '';
   R.forEach(r => {
     h += '<section class="sec rd-sec" id="' + r.id + '"><div class="eyebrow">Unit ' + r.unit + (r.by ? ' · by ' + r.by : '') + '</div><h2>' + r.title + '<span class="h2-en">' + r.zh + '</span></h2>' +
       '<div class="rd-gist"><b>一句話大意：</b>' + r.gist + '</div>' +

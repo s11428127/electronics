@@ -43,6 +43,20 @@
   const R = (sec, title, q, o, ex) => add(sec, title, q, o, ex);
 
   /* 1A：Reading Skill／Vocabulary（p.13–14） */
+  R('k1A', 'Before You Read A-1', '"to record in written or photographic form" = {0}', ['document', 'amateur', 'photojournalist']);
+  R('k1A', 'Before You Read A-2', '"working without being paid; not professional" = {0}', ['amateur', 'document', 'photojournalist']);
+  R('k1A', 'Before You Read A-3', '"a reporter who shares news using images" = {0}', ['photojournalist', 'amateur', 'document']);
+  R('k1A', 'Before You Read B · Skimming', 'Skim paragraphs A–B. The passage is mainly about how {0}', ['smartphones and apps have allowed anyone to be a photographer', 'the quality of smartphone photos is usually not very good', "many photojournalists don't approve of amateur photography"], '課文快讀 A～B 段。');
+  R('k1A', 'Comprehension A1 · Main idea', 'Why are there fewer memorable photographs today? {0}', ['because there are so many good images these days', 'because photo quality has gone down', 'because magazines no longer publish photos', 'because people do not look at photos carefully'], 'Para D。正解照課本；另外三個選項是我補的（課本原選項請對照 p.12）。');
+  R('k1A', 'Comprehension A2 · Detail', 'According to the writer, which images matter most today? {0}', ['images that are important to people and can be shared quickly', 'high-quality images of dramatic events', 'traditional images that reflect reality', 'images that are altered to improve our sense of reality'], 'Para E。');
+  R('k1A', 'Comprehension A3 · Purpose', 'Why does the writer put "improved" in quotation marks in paragraph F? {0}', ['to show that the writer feels it is questionable whether the picture is truly improved', 'to show it is the exact word from another source', 'to stress that the picture is greatly improved', 'because the reader may not understand the word'], 'Para F。');
+  R('k1A', 'Comprehension A4 · Inference', 'Who is the author criticizing in paragraph J? {0}', ['government leaders', 'citizen journalists', 'Big Brother', 'people who alter photos'], 'Para J：keep leaders honest、harder for governments to hide。');
+  R('k1A', 'Comprehension A5 · Paraphrase', '"those who produce poetry and those who make shopping lists" means {0}', ['some people will use it for everyday things, others for more creative things', 'it will be useful for shopping and poetry', 'it will be better because of the variety', 'it has limitations compared to written language'], 'Para K。');
+  R('k1A', 'Comprehension B · Para A', 'Main idea of paragraph A: {0}', ['Anyone can be an amateur photographer now.', 'More photojournalists are taking smartphone images and uploading them to social media.', 'For big news stories, amateurs often share the first images.', 'Altering photos with apps can mislead people about serious events such as wars.', 'The effect of the increasing number of photographs is still uncertain.']);
+  R('k1A', 'Comprehension B · Para C', 'Main idea of paragraph C: {0}', ['More photojournalists are taking smartphone images and uploading them to social media.', 'Anyone can be an amateur photographer now.', 'For big news stories, amateurs often share the first images.', 'Altering photos with apps can mislead people about serious events such as wars.', 'The effect of the increasing number of photographs is still uncertain.']);
+  R('k1A', 'Comprehension B · Para E', 'Main idea of paragraph E: {0}', ['For big news stories, amateurs often share the first images.', 'Anyone can be an amateur photographer now.', 'More photojournalists are taking smartphone images and uploading them to social media.', 'Altering photos with apps can mislead people about serious events such as wars.', 'The effect of the increasing number of photographs is still uncertain.']);
+  R('k1A', 'Comprehension B · Para G', 'Main idea of paragraph G: {0}', ['Altering photos with apps can mislead people about serious events such as wars.', 'Anyone can be an amateur photographer now.', 'More photojournalists are taking smartphone images and uploading them to social media.', 'For big news stories, amateurs often share the first images.', 'The effect of the increasing number of photographs is still uncertain.']);
+  R('k1A', 'Comprehension B · Para L', 'Main idea of paragraph L: {0}', ['The effect of the increasing number of photographs is still uncertain.', 'Anyone can be an amateur photographer now.', 'More photojournalists are taking smartphone images and uploading them to social media.', 'For big news stories, amateurs often share the first images.', 'Altering photos with apps can mislead people about serious events such as wars.']);
   R('k1A', 'Reading Skill A · age', 'age (para A–D) means {0}', ['a period in history', 'how old someone is']);
   R('k1A', 'Reading Skill A · pretty', 'pretty means {0}', ['quite', 'attractive']);
   R('k1A', 'Reading Skill A · appetite', 'appetite means {0}', ['a strong desire', 'physical hunger']);
@@ -64,8 +78,10 @@
   R('k1A', 'Vocabulary B-4', 'If the ideas in an old book are relevant today, they {0} matter.', ['still', 'no longer']);
   R('k1A', 'Vocabulary B-5', 'If you feel a tremendous amount of pressure, you feel {0} of pressure.', ['a lot', 'a little bit']);
   R('k1A', 'Vocabulary B-6', 'Something that is profound is felt or experienced very {0}.', ['strongly', 'briefly']);
-  R('k1A', 'Word forms -tic', 'In the 20th century, many countries held their first {0} elections.', ['democratic', 'athletic', 'genetic', 'dramatic']);
-  R('k1A', 'Word forms -tic', "A person's athletic ability may be partly affected by {0} factors.", ['genetic', 'democratic', 'dramatic', 'athletic']);
+  R('k1A', 'Vocabulary C-2', 'In the 20th century, many countries held their first {0} elections.', ['democratic', 'athletic', 'genetic', 'dramatic']);
+  R('k1A', 'Vocabulary C-1a', "A person's {0} ability may be partly affected by genetic factors.", ['athletic', 'democratic', 'dramatic', 'genetic']);
+  R('k1A', 'Vocabulary C-1b', "A person's athletic ability may be partly affected by {0} factors.", ['genetic', 'democratic', 'dramatic', 'athletic']);
+  R('k1A', 'Vocabulary C-3', 'In 2011, Amy Weston took a(n) {0} photo of a woman leaping to safety from a burning building.', ['dramatic', 'genetic', 'democratic', 'athletic']);
 
   /* 1B（p.15、20–22） */
   R('k1B', 'Before You Read', 'small talk = {0}', ['light conversation', 'make people feel comfortable', 'addicted; obsessed', 'amazingly; surprisingly']);

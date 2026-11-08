@@ -1,9 +1,49 @@
 /* ============================================================
    英文期中考：課文快讀資料（使用者 11/8：「課文都沒看過，幫我整理課文，可以快速看過去；老師有出的地方標注」）
    每段：重點原句（紅字 = 課本紅字單字，用 <b>）＋ 中文白話 ＋ 考點標籤（課本練習／答案卷有出的題）
-   只放每段重點句，不整篇照抄；1A 課文照片這個對話看不到，先空著
+   只放每段重點句，不整篇照抄；1A 照片 11/8 補給
    ============================================================ */
 window.__ENGREAD = [
+  { id: 'r1A', unit: '1A', title: 'The Visual Village', zh: '影像村（人人都是攝影師）', by: '',
+    gist: '手機讓每個人都變成攝影師、立刻分享 → 好處：新聞第一手畫面、讓政府藏不住（對民主好）；壞處：照片能修、能加濾鏡，不一定是真的 → 結果會怎樣還不知道，但改變已經回不去了。',
+    paras: [
+      { p: 'A', en: 'Not long ago, <b>aspiring</b> photographers needed high-tech cameras … Now we are all amateur photographers. The quality of smartphone photos nearly equals that of digital cameras.',
+        zh: '以前想當攝影師（aspiring）要買很貴的相機；現在每個人都是業餘攝影師（amateur），手機拍出來的品質幾乎跟數位相機一樣。',
+        tags: ['RC B：A 段 = e（現在人人都能當業餘攝影師）', 'Reading Skill A：age = a period in history（數位時代，不是年紀）', 'Before You Read B：A～B 段大意 = b（手機和 app 讓任何人都能當攝影師）'] },
+      { p: 'B', en: 'We have a <b>tremendous</b> appetite for images. We are <b>obsessed</b> with documenting everyday moments … Instead of keeping scrapbooks, we share, like, and comment.',
+        zh: '我們超級（tremendous）愛看照片，著迷（obsessed）於記錄生活每一刻；以前貼剪貼簿（scrapbook），現在是分享、按讚、留言。',
+        tags: ['Reading Skill A：appetite = a strong desire（不是肚子餓）', 'Reading Skill A：pretty = quite', 'Before You Read A：document = 用文字或照片記錄'] },
+      { p: 'C', en: 'Photojournalists use cell phones because of their near <b>invisibility</b>, which makes it easier to capture <b>unguarded</b> moments. They act as their own publishers through Instagram … from New York to Lagos in a second.',
+        zh: '連專業攝影記者（photojournalist）都改用手機：手機不顯眼，比較拍得到人沒防備（unguarded）的樣子；他們用 Instagram 自己當出版者，一秒就從紐約傳到拉哥斯。',
+        tags: ['RC B：C 段 = a（越來越多攝影記者用手機拍、上傳社群）', 'Reading Skill A：act = to behave（當作）', 'Reading Skill A：second = a 60th of a minute（一秒）', 'Reading Skill B：capture = 拍下（NASA 拍行星那句）'] },
+      { p: 'D', en: 'Magazines once published unforgettable photos that changed public opinion and even the course of history. … There are fewer memorable images today because there are so many.',
+        zh: '以前雜誌上的經典照片能改變輿論、甚至改變歷史走向；現在難忘的照片反而變少，因為照片太多了。',
+        tags: ['RC A1 主旨：為什麼難忘的照片變少 = d（現在好照片太多了）', 'Reading Skill A：course = the direction（歷史的走向）'] },
+      { p: 'E', en: 'Cameras everywhere are transforming how <b>dramatic</b> events are covered. Ordinary citizens provide the first news images … quality matters less than what is <b>instantly</b> shared.',
+        zh: '到處都有相機，大事件的報導方式變了：第一張新聞照通常是路人拍的；畫質不重要，重要的是能不能馬上（instantly）分享。',
+        tags: ['RC A2 細節：最重要的照片 = a（對人重要、能很快分享的照片）', 'RC B：E 段 = c（大新聞的第一張照片是業餘者分享的）'] },
+      { p: 'F', en: 'As people <b>embrace</b> photography, citizen journalists … standards are shifting. Photos were once trusted to accurately <b>represent</b> reality. Now images can be altered so the naked eye never notices — an "improved" picture of reality.',
+        zh: '大家熱烈擁抱（embrace）攝影、出現公民記者，標準在變：以前照片被相信能忠實呈現（represent）現實；現在照片可以修到肉眼看不出來，變成「改良版」的現實，觀眾只能相信媒體或攝影師。',
+        tags: ['RC A3 目的：「improved」加引號 = c（作者懷疑這真的算改良嗎）'] },
+      { p: 'G', en: 'Accuracy is trickier with camera apps such as Flickr and Instagram … filters can make photos look colored, brightened, faded, scratched, or antique. Photos covering wars … have created powerful images but also <b>controversy</b>.',
+        zh: '手機 app 的濾鏡（filter）讓照片可以變色、變亮、刷淡、刮痕、做舊（antique），真實性更難說；用 app 拍戰爭的照片很震撼，但也引起爭議（controversy）：批評者擔心做舊的照片把戰爭浪漫化。',
+        tags: ['RC B：G 段 = d（用 app 修圖可能誤導人對戰爭等嚴肅事件的看法）', 'Reading Skill B：cover = 報導（媒體報導選舉那句）'] },
+      { p: 'H', en: 'Photography is more <b>subjective</b> than we assume. Every photo is the result of a series of decisions: where to stand, which lens to use, what to leave in or out of the frame.',
+        zh: '攝影其實比我們以為的主觀（subjective）：每張照片都是一連串決定——站哪裡、用哪顆鏡頭、框裡要放什麼。那加濾鏡就比較不真嗎？',
+        tags: ['Reading Skill B：series = 一連串（unusual series of events 那句）', 'Reading Skill B：frame = 畫面框（camera frame 那句）', 'Critical Thinking：濾鏡的優缺點'] },
+      { p: 'I', en: 'The digital-age experiment makes it easier to tell our own stories. The media get stuck on the same stories — elections, governments, wars, disasters — and miss less dramatic but <b>relevant</b> images of daily life.',
+        zh: '數位時代讓我們更容易說自己的故事；媒體老是卡在（get stuck on）選舉、政府、戰爭、災難，漏掉不那麼戲劇化但跟生活有關（relevant）的畫面。',
+        tags: [] },
+      { p: 'J', en: 'More photographs might be good for <b>democracy</b>. Hundreds of millions of citizen journalists keep leaders honest … it is harder for governments to hide their actions. Big Brother isn\'t the only one watching.',
+        zh: '照片多可能對民主（democracy）有好處：幾億個公民記者盯著，領導人不敢亂來，人民能讓外界看到自己面對的困境（up against），政府更難藏。不是只有老大哥在監視人民，人民也在看政府。',
+        tags: ['RC A4 推論：作者在批評誰 = b（政府領導人）', 'Big Brother = 歐威爾《1984》裡監視人民的政府'] },
+      { p: 'K', en: 'Our obsession with documentation and constant connection could lead to <b>radical</b> change — a universal visual language used by "those who produce poetry and those who make shopping lists."',
+        zh: '這股記錄＋隨時連線的狂熱可能帶來徹底（radical）的改變：一種全世界通用的影像語言，寫詩的人用、寫購物清單的人也用。',
+        tags: ['RC A5 換句話說：poetry／shopping lists = d（有人拿來記日常小事，有人拿來創作）'] },
+      { p: 'L', en: 'It is unclear whether this will lead to a public that better appreciates images, or whether it will numb us to their <b>profound</b> effects. The change is irreversible. … help us see what we have in common rather than what sets us apart.',
+        zh: '不知道這會讓大家更懂得欣賞照片，還是讓我們對照片深遠（profound）的影響麻木（numb）；但改變回不去了。作者希望照片讓我們看見彼此的共同點（have in common），而不是差異。',
+        tags: ['RC B：L 段 = b（照片越來越多，影響還不確定）'] }
+    ] },
   { id: 'r1B', unit: '1B', title: 'My Journey in Photographs', zh: '我的攝影之旅（Annie Griffiths 自述）', by: 'Annie Griffiths',
     gist: '攝影師回顧自己：當服務生學會看人 → 小報社學會獨立採訪、耐心傾聽 → 一通電話進了國家地理 → 世界各地拍照，最大的收穫是「認識一個人，就不可能恨那一群人」。',
     paras: [
