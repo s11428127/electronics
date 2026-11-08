@@ -7,7 +7,7 @@
     h += '<section class="sec rd-sec" id="' + r.id + '"><div class="eyebrow">Unit ' + r.unit + (r.by ? ' · by ' + r.by : '') + '</div><h2>' + r.title + '<span class="h2-en">' + r.zh + '</span></h2>' +
       '<div class="rd-gist"><b>一句話大意：</b>' + r.gist + '</div>' +
       r.paras.map(p => '<div class="rd-p"><div class="no">' + p.p + '</div><div class="en">' + p.en + '</div><div class="zh">' + p.zh + '</div>' +
-        (p.tags.length ? '<div class="tags">' + p.tags.map(t => '<span>📝 ' + t + '</span>').join('') + '</div>' : '<div></div>') + '</div>').join('') + '</section>';
+        (p.tags.length ? '<div class="tags">' + p.tags.map(t => /^✏️/.test(t) ? '<span class="my">' + t + '</span>' : '<span>📝 ' + t + '</span>').join('') + '</div>' : '<div></div>') + '</div>').join('') + '</section>';
   });
   if (host) host.innerHTML = h;
   const tg = (id, cls, a, b) => { const el = document.getElementById(id); if (!el) return; el.addEventListener('click', () => { const on = document.body.classList.toggle(cls); el.textContent = on ? b : a; }); };
