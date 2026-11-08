@@ -32,4 +32,5 @@
   - p.27～28 2A 課文 Living Light（段落 A～G＋框 Stars of the Sea；紅字：flashing、astonishing、invisible、descend、factors、layers、predators、transparent、disturbed、countless）；p.29 四種發光生物圖；p.30 圖表 Lightness of Being（Defense／Offense／Reproduction）
   - p.31 2A Reading Comprehension A（5 題）、B（T/F/NG 5 題）；p.32 Reading Skill Concept Map（7 空）；p.33 Vocabulary Practice（A 4 格、B 6 題、C -scend）
   - p.34 2B Before You Read；p.35～37 2B 課文 Feathers of Love（段落 A～M；紅字：noble、commences、bouncing、absurd、prominently、evolution、harsher、undergone、rituals、breeding）
-- 還沒收到：2B 的 Reading Comprehension／Reading Skill／Vocabulary Practice（p.38 之後）、ilearning 單字表、課本答案。
+- 11/8 第四批：p.38 2B Reading Comprehension（A 5 題、B 多義字 5 題）；p.39 Reading Skill 譬喻（simile／metaphor／personification，A 5 題、B 5 題）；p.40 Vocabulary Practice（A 4 格、B 6 定義、C -ility）；p.41～42 Video Jellyfish（invertebrate、clone、revert、venomous；While You Watch）、Vocabulary Review（2A／2B 各 10 字）；Unit 3A 的 p.43～50 再傳一次（含 p.49 Cause and Effect、p.50 Vocabulary Practice）
+- 現在範圍內頁面都齊了（Unit 1、Unit 2、Unit 3A）。還沒收到：ilearning 單字表、課本答案（沒有就自己解）。
