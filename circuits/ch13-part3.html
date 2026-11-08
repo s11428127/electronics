@@ -31,7 +31,7 @@
       <li><a href="#map"><i>00</i>課程地圖</a></li>
       <li><a href="#auto"><i>13.6</i>理想自耦變壓器</a></li>
       <li><a href="#three"><i>13.7</i>三相變壓器</a></li>
-      <li><a href="#app"><i>13.9</i>應用</a></li>
+      <li><a href="#app"><i>13.9</i>應用<em class="rail-skip">不考</em></a></li>
       <li><a href="#glossary"><i>★</i>名詞中英對照</a></li>
       <li><a href="#quiz-sec"><i>✓</i>觀念小測驗</a></li>
     </ol>
@@ -44,7 +44,7 @@
       <p class="sub">PART 2 的理想變壓器拿去用：<button class="tm" data-t="自耦變壓器">自耦變壓器</button>只有一個線圈加一個抽頭，又小又能傳大功率，但沒有<button class="tm" data-t="電氣隔離">電氣隔離</button>（13.6）；三相系統用四種 Y／Δ 接法變壓（13.7）；最後是三個應用：隔離、<button class="tm" data-t="阻抗匹配">阻抗匹配</button>、配電（13.9）。13.8 PSpice 這一頁不收。</p>
       <div class="hero-meta">
         <span class="chip h">✓ 考試範圍（期中考到 14.3）</span>
-        <span class="chip">17 個畫面的故事模式</span>
+        <span class="chip">18 個畫面的故事模式</span>
         <span class="chip">📘 課本 Example 6 題 ＋ Practice 6 題（每題都有 🎬 圖解故事）</span>
         <span class="chip">3 個互動模組 ＋ 3 個可改數字例題</span>
         <span class="chip">觀念填充 24 題 ＋ 10 題測驗</span>
@@ -54,7 +54,7 @@
 
     <section class="sec" id="story-sec">
       <div class="eyebrow"><span class="part-tag">課本 CH13</span>Story mode · 先看這段，再往下讀</div>
-      <h2>17 個畫面看懂自耦、三相與應用<span class="h2-en">THE STORY IN 17 SCENES</span></h2>
+      <h2>18 個畫面看懂自耦、三相與應用<span class="h2-en">THE STORY IN 18 SCENES</span></h2>
       <p class="lede">點畫面（或往左滑）前進一步，點左邊四分之一退回一步；也可以按「自動播放」。</p>
       <div id="story"></div>
     </section>
@@ -188,8 +188,8 @@
     </section>
 
     <!-- ══════════ 13.9 ══════════ -->
-    <section class="sec" id="app">
-      <div class="eyebrow"><span class="part-tag">課本 CH13</span>13.9 · Applications</div>
+    <section class="sec skip-sec" id="app">
+      <div class="eyebrow"><span class="part-tag">課本 CH13</span><span class="scope-no">⛔ 不考，不用看</span>13.9 · Applications</div>
       <h2>變壓器的應用<span class="h2-en">APPLICATIONS</span></h2>
       <p class="lede">三個應用：<b>隔離</b>（兩邊沒導線，只讓交流過、擋掉直流、量高壓時保護電錶）、<b>匹配</b>（讓反射回來的負載等於電源內阻，拿到最大功率）、<b>配電</b>（升壓輸電讓電流變小、線損 I<sup>2</sup>R 變小，到家門口再降壓）。</p>
       <div class="eq">匹配：R<sub>s</sub> = R<sub>L</sub>/n<sup>2</sup>　·　R<sub>s</sub> &gt; R<sub>L</sub> 用降壓（n &lt; 1）　·　同功率 S = VI：V 大 10 倍 → I 小 10 倍 → I<sup>2</sup>R 小 100 倍</div>

@@ -168,6 +168,7 @@
 - 互感、變壓器電路圖用 `circuits/assets/ch13-kit.js`（`__K13.xf(x, y1, y2, {d1, d2, M, n, l1, l2})` 一組耦合線圈，`n` 有值就畫鐵心；`arcM`、`arc2` 互感弧）；故事用 `ch13-skit.js`（`__S13`）。點的位置一定要放大原圖確認再畫。
 - 例題圖解故事：bank 設 `autoAll: true`，`prob-story.js` 會替 Example／Practice 全部自動產生（CH13EX、CH14EX）。
 - 章末題照舊規則：e⁷d、＃ML、小筆電圖示的不做（使用者 11/5 再確認一次，即使 ML 題很多）。
+- **不考的節（使用者 11/8）：12.9、12.10、13.8、13.9 不考、不用看、練習不用寫**。做法：`<section class="sec skip-sec">`（CSS `::before` 橫幅＋內容變淡，不動 DOM、筆跡不移位）、eyebrow 加 `<span class="scope-no">⛔ 不考，不用看</span>`、側欄連結加 `<em class="rail-skip">不考</em>`；已標：`ch12-part4`（整頁，hero 有 `.skip-chip`）、`ch12-problems #p1210`、`ch12-review #r129 #r1210`、`ch13-part3 #app`（故事在 Example 13.12 後插「⛳ 考試範圍到這裡」）、`ch13-problems #p139`、`ch13-review #r139`。13.8 本來就沒做。
 
 ## 電路學 CH1～CH10 複習（使用者 10/17，只有故事）
 
