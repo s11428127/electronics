@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>英文課文快讀</title>
+<meta name="description" content="英文期中考：課文逐段快讀（重點原句＋中文白話＋課本有出題的地方）與單字卡。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<style>
+.rd-sec .rd-gist { background: color-mix(in srgb, var(--accent) 8%, var(--surface)); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 10px 14px; margin: 10px 0 14px; color: var(--ink); }
+.rd-p { display: grid; grid-template-columns: 34px 1fr; gap: 4px 12px; padding: 12px 0; border-top: 1px solid var(--line-soft); }
+.rd-p > .no { grid-row: span 3; width: 30px; height: 30px; border-radius: 8px; background: var(--ink); color: var(--surface); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+.rd-p .en { font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.65; color: var(--ink); }
+.rd-p .en b { color: #c0392b; }
+:root[data-theme="dark"] .rd-p .en b { color: #ff8a7a; }
+.rd-p .zh { font-size: 15px; line-height: 1.7; color: var(--ink-2); }
+.rd-p .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.rd-p .tags span { font-size: 12.5px; font-weight: 600; padding: 2px 9px; border-radius: 99px; background: color-mix(in srgb, #e0a100 18%, var(--surface)); color: var(--ink); border: 1px solid color-mix(in srgb, #e0a100 45%, transparent); }
+body.hide-en .rd-p .en, body.hide-zh .rd-p .zh { display: none; }
+.rd-tools { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
+.fc-bar { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
+.fc-bar .btn.on { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+.fc-card { perspective: 1200px; cursor: pointer; user-select: none; max-width: 560px; margin: 0 auto; }
+.fc-in { position: relative; min-height: 220px; transition: transform .45s; transform-style: preserve-3d; }
+.fc-card.flip .fc-in { transform: rotateY(180deg); }
+.fc-f, .fc-b { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 18px; border: 1px solid var(--line); background: var(--surface); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 18px 20px; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,.06); }
+.fc-b { transform: rotateY(180deg); background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+.fc-f .w { font-family: Georgia, serif; font-size: 34px; font-weight: 700; color: var(--ink); }
+.fc-f .u, .fc-b .u { font-size: 12px; color: var(--ink-3); margin-top: 8px; }
+.fc-b .d { font-family: Georgia, serif; font-size: 19px; line-height: 1.5; color: var(--ink); }
+.fc-b .z { font-size: 17px; margin-top: 10px; color: var(--accent); font-weight: 700; }
+.fc-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 14px 0 4px; }
+.fc-prog { text-align: center; font-size: 13px; color: var(--ink-3); }
+@media (max-width: 520px) { .rd-p { grid-template-columns: 1fr; } .rd-p > .no { grid-row: auto; } .fc-f .w { font-size: 28px; } }
+</style>
+</head>
+<body data-subject="english" data-look="clean" data-trk-sec="0">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">英文</a><span>›</span><b>課文快讀＋單字卡</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+<div class="shell">
+  <nav class="rail" aria-label="目錄">
+    <div class="rail-title">課文快讀</div>
+    <ol>
+      <li><a href="#how"><i>★</i>怎麼看</a></li>
+      <li><a href="#r1A"><i>1A</i>The Visual Village</a></li>
+      <li><a href="#r1B"><i>1B</i>My Journey in Photographs</a></li>
+      <li><a href="#r2A"><i>2A</i>Living Light</a></li>
+      <li><a href="#r2B"><i>2B</i>Feathers of Love</a></li>
+      <li><a href="#r3A"><i>3A</i>How Safe Is Our Food?</a></li>
+      <li><a href="#cards"><i>🃏</i>單字卡</a></li>
+    </ol>
+  </nav>
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Reading Explorer 4 · 考前快讀</div>
+      <h1>課文快讀＋單字卡</h1>
+      <p class="sub">沒看過課文就從這裡開始：每篇先看<b>一句話大意</b>，再一段一段看<b>重點原句</b>（紅字＝課本單字）和<b>中文白話</b>。<b>黃色標籤</b>＝課本練習／老師答案卷有出題的地方，最可能考。</p>
+      <div class="rd-tools"><button class="btn" id="tg-en" type="button">只看中文</button><button class="btn" id="tg-zh" type="button">只看英文</button><a class="btn" href="review.html">看完去做題目 →</a></div>
+    </div>
+    <section class="sec" id="how">
+      <div class="eyebrow">How to use</div>
+      <h2>建議順序<span class="h2-en">PLAN</span></h2>
+      <div class="glossary">
+        <div class="gl-row"><b>1. 快讀（約 40 分）</b><span>每篇：大意 → 每段中文 → 掃一眼英文紅字</span><code>黃色標籤的段落多看一次</code></div>
+        <div class="gl-row"><b>2. 單字卡（約 30 分）</b><span>50 個紅字先背，再背補充字</span><code>單字定義佔 30%</code></div>
+        <div class="gl-row"><b>3. 做題目</b><span><a href="review.html">期中考複習頁</a>：課本練習 → 課文原句挖空</span><code>題目都對得回這頁的段落</code></div>
+      </div>
+    </section>
+    <div id="rd-host"></div>
+    <section class="sec" id="cards">
+      <div class="eyebrow">Flashcards</div>
+      <h2>單字卡<span class="h2-en">FLASHCARDS</span></h2>
+      <p class="lede">點卡片翻面看英文定義（老師單字表原文）和中文。按「不熟」的會留在「只看不熟」裡。</p>
+      <div class="fc-bar" id="fc-units"></div>
+      <div class="fc-bar"><button class="btn" id="fc-dir" type="button">正面：英文單字</button><button class="btn" id="fc-shuf" type="button">🔀 打亂</button><button class="btn" id="fc-weak" type="button">只看不熟</button></div>
+      <div class="fc-card" id="fc-card"><div class="fc-in"><div class="fc-f"></div><div class="fc-b"></div></div></div>
+      <div class="fc-nav"><button class="btn" id="fc-prev" type="button">◀ 上一張</button><button class="btn" id="fc-bad" type="button">😵 不熟</button><button class="btn solid" id="fc-ok" type="button">✓ 會了</button><button class="btn" id="fc-next" type="button">下一張 ▶</button></div>
+      <div class="fc-prog" id="fc-prog"></div>
+    </section>
+    <footer class="foot"><p>每段只放重點原句（不是全文）；中文白話與標籤是自編整理。考點標籤依課本練習與老師 answer key。</p></footer>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="assets/mid-bank.js"></script>
+<script src="assets/read-data.js"></script>
+<script src="assets/read.js"></script>
+<script>
+(function () {
+  var btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    var isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+  try { var t = localStorage.getItem('ee-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
