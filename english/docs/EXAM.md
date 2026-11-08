@@ -26,4 +26,10 @@
   - p.15 1B Before You Read（small talk、put at ease、hooked、by some miracle、top-notch；使用者已連線）
   - p.16～19 1B 課文 My Journey in Photographs（Annie Griffiths，段落 A～J；紅字：tuition、teamwork、expectations、project、sincere、overcame、thus、turned out、portraits、enriches）
   - p.20 1B Reading Comprehension A（5 題）、B（多義字 6 題）；p.21 Reading Skill Scanning（A 5 題、B 簡答）
-- 還沒收到：Unit 2、Unit 1 的 1B p.18 以外缺頁（無）、ilearning 單字表、課本答案。
+- 11/8 第三批：
+  - Unit 1 收尾：p.22 1B Vocabulary Practice（A 5 格、B 6 個定義、C thus 同義字網）；p.23～24 Video A Photographer's Life（Before You Watch 6 空、While You Watch 4 題）、Vocabulary Review（Reading A／B 各 10 字）
+  - Unit 2 Natural Attraction：p.25 封面；p.26 2A Before You Read（bioluminescence）
+  - p.27～28 2A 課文 Living Light（段落 A～G＋框 Stars of the Sea；紅字：flashing、astonishing、invisible、descend、factors、layers、predators、transparent、disturbed、countless）；p.29 四種發光生物圖；p.30 圖表 Lightness of Being（Defense／Offense／Reproduction）
+  - p.31 2A Reading Comprehension A（5 題）、B（T/F/NG 5 題）；p.32 Reading Skill Concept Map（7 空）；p.33 Vocabulary Practice（A 4 格、B 6 題、C -scend）
+  - p.34 2B Before You Read；p.35～37 2B 課文 Feathers of Love（段落 A～M；紅字：noble、commences、bouncing、absurd、prominently、evolution、harsher、undergone、rituals、breeding）
+- 還沒收到：2B 的 Reading Comprehension／Reading Skill／Vocabulary Practice（p.38 之後）、ilearning 單字表、課本答案。
