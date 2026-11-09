@@ -210,7 +210,7 @@
 
 ## 人類與環境安全（`env/`，11/3 新通識）
 
-- 主色 `#3d7a2a`（暗 `#9bd47f`），`<body data-subject="env">`；考試不能看筆記 → 只做 `review.html` 一頁考前速讀（表格＋口訣、申論範例 `.exq`、電影《Minamata》對照、快速自測 `details`、挖空 `body.cloze`）。版面沿用 `../law/law.css`＋`env.css`。不做故事模式。
+- 主色 `#3d7a2a`（暗 `#9bd47f`），`<body data-subject="env">`；考試不能看筆記 → 只做 `review.html` 一頁考前速讀（表格＋口訣、申論範例 `.exq`、電影《Minamata》對照、快速自測 `details`、挖空 `body.cloze`）。版面沿用 `../law/law.css`＋`env.css`。不做故事模式。**每節最後有 8 題選擇填充（使用者 11/10）**：`env/assets/review-cf.js`（`__ENVCF` name `env-cf`，sec＝section id，hw.js），共 80 題，只考該節寫過的內容。
 
 ## 英文（`english/`，11/8 新科目）
 
