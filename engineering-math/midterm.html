@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>工數期中考衝刺</title>
+<meta name="description" content="工程數學期中考：其他班考古題（基本題 4 題、進階題 3 題）逐步詳解，五種題型的工具箱與朋友小抄勘誤。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<style>
+.kit { width: 100%; border-collapse: collapse; font-size: 15px; }
+.kit th, .kit td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+.kit th { background: color-mix(in srgb, var(--accent) 10%, var(--surface)); white-space: nowrap; }
+.kit-wrap { overflow-x: auto; }
+.xb-fig .schem { margin: 0 auto; }
+</style>
+</head>
+<body data-subject="math" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">工程數學</a><span>›</span><b>期中考衝刺</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">工數期中考</div>
+    <ol>
+      <li><a href="#map"><i>00</i>整張考卷只有五種題</a></li>
+      <li><a href="#kit"><i>✎</i>工具箱（小抄原料）</a></li>
+      <li><a href="#t1"><i>01</i>ℒ 正轉換</a></li>
+      <li><a href="#t2"><i>02</i>ℒ⁻¹ 反轉換</a></li>
+      <li><a href="#t3"><i>03</i>用 ℒ 解微分方程</a></li>
+      <li><a href="#t4"><i>04</i>用 ℒ 解 RLC 電路</a></li>
+      <li><a href="#t5"><i>05</i>摺積 f ∗ g</a></li>
+      <li><a href="#fix"><i>!</i>朋友筆記勘誤</a></li>
+    </ol>
+  </nav>
+
+  <main class="main">
+    <div class="hero">
+      <div class="eyebrow">Engineering Mathematics · Midterm</div>
+      <h1>工數期中考衝刺</h1>
+      <p class="sub">考古題（其他班）13 小題，一題一張卡，按「看下一步」一步一步打開。建議順序：先看 00 和工具箱，再照 01 → 05 走；每題先自己想下一步要幹嘛，再按。</p>
+      <div class="hero-meta">
+        <span class="chip h">11/12（三）19:00</span>
+        <span class="chip">基本題 65%＋進階題 45%</span>
+        <span class="chip">可帶小抄</span>
+        <span class="chip">答案都用程式驗算過</span>
+      </div>
+    </div>
+
+    <section class="sec" id="map">
+      <div class="eyebrow">Overview</div>
+      <h2>整張考卷只有五種題<span class="h2-en">FIVE QUESTION TYPES</span></h2>
+      <p class="lede">基本題、進階題是同樣五種，進階題只是多了「位移」和「配方」。③ 和 ④ 算到最後都會變成 ②，所以 ② 練最多。</p>
+      <div class="kit-wrap"><table class="kit">
+        <tr><th>題型</th><th>基本題</th><th>進階題</th><th>拿到題目先做什麼</th></tr>
+        <tr><td>① ℒ 正轉換</td><td>一-1</td><td>一-1</td><td>拆開 → 查表 → 有 e<sup>at</sup> 就 s 換 s − a；有 u(t − a) 就乘 e<sup>−as</sup></td></tr>
+        <tr><td>② ℒ<sup>−1</sup> 反轉換</td><td>一-2</td><td>一-2</td><td>分母能分解 → 部分分式；不能 → 配方、分子湊成同一個括號 → 查表</td></tr>
+        <tr><td>③ 解 ODE</td><td>二</td><td>二</td><td>兩邊取 ℒ、代初值 → 解出 Y(s) → 走 ②</td></tr>
+        <tr><td>④ RLC 電路</td><td>三</td><td>三-1</td><td>元件換成 s 域（L 串 Li₀、C 串 v₀/s）→ KVL → 解出 I(s) → 走 ②</td></tr>
+        <tr><td>⑤ 摺積</td><td>四</td><td>三-2</td><td>翻一個、滑過去，分「進場、全重疊、離場」三段</td></tr>
+      </table></div>
+    </section>
+
+    <section class="sec" id="kit">
+      <div class="eyebrow">Toolkit · 你朋友筆記的 (1)～(8)＋補充</div>
+      <h2>工具箱<span class="h2-en">THE CHEAT-SHEET INGREDIENTS</span></h2>
+      <p class="lede">考試會用到的全部公式。小抄等你看懂題目再寫，到時候就照這張抄。</p>
+      <div class="kit-wrap"><table class="kit">
+        <tr><th>f(t)</th><th>F(s)</th><th>f(t)</th><th>F(s)</th></tr>
+        <tr><td>u(t) 或 1</td><td>1/s</td><td>δ(t)</td><td>1</td></tr>
+        <tr><td>e<sup>at</sup></td><td>1/(s − a)</td><td>t<sup>n</sup></td><td>n!/s<sup>n+1</sup></td></tr>
+        <tr><td>cos ωt</td><td>s/(s² + ω²)</td><td>sin ωt</td><td>ω/(s² + ω²)</td></tr>
+        <tr><td>cosh at</td><td>s/(s² − a²)</td><td>sinh at</td><td>a/(s² − a²)</td></tr>
+      </table></div>
+      <div class="kit-wrap" style="margin-top:12px"><table class="kit">
+        <tr><th>工具</th><th>寫法</th><th>白話</th></tr>
+        <tr><td>第一位移</td><td>e<sup>at</sup>f(t) ⟷ F(s − a)</td><td>t 那邊乘 e<sup>at</sup>，s 那邊把 s 換成 s − a</td></tr>
+        <tr><td>第二位移</td><td>f(t − a)u(t − a) ⟷ e<sup>−as</sup>F(s)</td><td>t 那邊往右挪 a，s 那邊乘 e<sup>−as</sup></td></tr>
+        <tr><td>微分</td><td>ℒ(y′) = sY − y(0)<br>ℒ(y″) = s²Y − s y(0) − y′(0)</td><td>解 ODE 用；初值直接代進去</td></tr>
+        <tr><td>電感 L</td><td>sL·I − L i₀</td><td>s 域：sL 串一顆 Li₀ 的電壓源</td></tr>
+        <tr><td>電容 C</td><td>I/(sC) + v₀/s</td><td>s 域：1/(sC) 串一顆 v₀/s 的電壓源</td></tr>
+        <tr><td>直流電源</td><td>V → V/s</td><td>常數要除以 s</td></tr>
+        <tr><td>部分分式<br>（補）</td><td>(ps + q)/((s − a)(s − b)) = A/(s − a) + B/(s − b)</td><td>遮蓋法：求 A 就蓋住 (s − a)，剩下的代 s = a</td></tr>
+        <tr><td>重根（補）</td><td>(s + 4)/(s + 1)² = 1/(s + 1) + 3/(s + 1)²</td><td>分子湊成 (s + 1)；1/(s + a)² → t e<sup>−at</sup></td></tr>
+        <tr><td>配方（補）</td><td>s² + bs + c = (s + b/2)² + (c − b²/4)</td><td>後面是正 → cos、sin；是負 → cosh、sinh</td></tr>
+        <tr><td>摺積</td><td>f ∗ g = ∫₀<sup>t</sup> f(τ) g(t − τ) dτ</td><td>兩方塊 → 梯形：高 = 高×高×短邊；轉折點 = 短邊、長邊、兩邊和</td></tr>
+      </table></div>
+    </section>
+
+    <section class="sec" id="t1">
+      <div class="eyebrow">Type ① · 基本題一-1、進階題一-1</div>
+      <h2>ℒ 正轉換<span class="h2-en">LAPLACE TRANSFORM</span></h2>
+      <p class="lede">純查表。基本題只要表；進階題多了兩種位移，分清楚「乘 e<sup>at</sup>」和「後面跟著 u(t − a)」就好。</p>
+      <div class="exbook" data-bank="__EMMID" data-sec="t1"></div>
+    </section>
+
+    <section class="sec" id="t2">
+      <div class="eyebrow">Type ② · 基本題一-2、進階題一-2</div>
+      <h2>ℒ<sup>−1</sup> 反轉換<span class="h2-en">INVERSE TRANSFORM</span></h2>
+      <p class="lede">反過來查表。卡關的地方永遠是分母：先試著分解，不行就配方，再把分子湊成跟括號一樣。</p>
+      <div class="exbook" data-bank="__EMMID" data-sec="t2"></div>
+    </section>
+
+    <section class="sec" id="t3">
+      <div class="eyebrow">Type ③ · 基本題二、進階題二</div>
+      <h2>用 ℒ 解微分方程<span class="h2-en">SOLVING ODEs</span></h2>
+      <p class="lede">固定五步：取 ℒ → 代初值 → 解出 Y(s) → 部分分式或配方 → 反轉換。最後代 t = 0 驗初值。</p>
+      <div class="exbook" data-bank="__EMMID" data-sec="t3"></div>
+    </section>
+
+    <section class="sec" id="t4">
+      <div class="eyebrow">Type ④ · 基本題三、進階題三-1</div>
+      <h2>用 ℒ 解 RLC 電路<span class="h2-en">RLC CIRCUITS</span></h2>
+      <p class="lede">把每個元件換成 s 域，電感、電容的初值變成一顆小電池，然後就是一條 KVL。</p>
+      <div class="exbook" data-bank="__EMMID" data-sec="t4"></div>
+    </section>
+
+    <section class="sec" id="t5">
+      <div class="eyebrow">Type ⑤ · 基本題四、進階題三-2</div>
+      <h2>摺積 f ∗ g<span class="h2-en">CONVOLUTION</span></h2>
+      <p class="lede">把 g 翻過來從左邊滑進 f，每個時刻的重疊面積就是答案。方塊碰方塊，答案永遠是斜坡、平台、下坡。</p>
+      <div class="exbook" data-bank="__EMMID" data-sec="t5"></div>
+    </section>
+
+    <section class="sec" id="fix">
+      <div class="eyebrow">Check · 朋友的筆記與考卷上的手寫</div>
+      <h2>勘誤<span class="h2-en">CORRECTIONS</span></h2>
+      <ul>
+        <li><span class="x">✗</span> 考卷進階一-2 旁邊寫 s² − 2s − 4 = (s − 1)² − 3　<span class="o">✓</span> (s − 1)² − 5</li>
+        <li><span class="x">✗</span> 考卷進階一-2 旁邊寫 s² + 4s + 8 = (s + 1)² + 4　<span class="o">✓</span> (s + 2)² + 4，分子 2s + 1 = 2(s + 2) − 3</li>
+        <li><span class="x">✗</span> 朋友筆記摺積例 2：g(t − τ) 左邊界寫 −5 − t　<span class="o">✓</span> t − 5</li>
+        <li>朋友筆記 (1)～(8) 的其他公式、摺積例 1～4 的數字（30、18、60 − 6t、48 − 6t）都驗算過，是對的。</li>
+        <li>請確認：基本一-2 第一項是 1/4 還是 1/s（看不太清楚）。1/4 → ¼δ(t)；1/s → u(t)。</li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/schem.js"></script>
+<script src="assets/mid-ex.js"></script>
+<script src="../shared/exbook.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
