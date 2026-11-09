@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
 <style>
 .kit { width: 100%; border-collapse: collapse; font-size: 15px; }
 .kit th, .kit td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
@@ -33,6 +34,7 @@
   <nav class="rail" aria-label="章節導覽">
     <div class="rail-title">工數期中考</div>
     <ol>
+      <li><a href="#story-sec"><i>▶</i>故事：這張考卷在幹嘛</a></li>
       <li><a href="#map"><i>00</i>整張考卷只有五種題</a></li>
       <li><a href="#kit"><i>✎</i>工具箱（小抄原料）</a></li>
       <li><a href="#t1"><i>01</i>ℒ 正轉換</a></li>
@@ -48,7 +50,7 @@
     <div class="hero">
       <div class="eyebrow">Engineering Mathematics · Midterm</div>
       <h1>工數期中考衝刺</h1>
-      <p class="sub">考古題（其他班）13 小題，一題一張卡，按「看下一步」一步一步打開。建議順序：先看 00 和工具箱，再照 01 → 05 走；每題先自己想下一步要幹嘛，再按。</p>
+      <p class="sub">考古題（其他班）13 小題，一題一張卡，按「看下一步」一步一步打開。建議順序：先看故事，再看 00 和工具箱，再照 01 → 05 走；每題先自己想下一步要幹嘛，再按。</p>
       <div class="hero-meta">
         <span class="chip h">11/12（三）19:00</span>
         <span class="chip">基本題 65%＋進階題 45%</span>
@@ -56,6 +58,13 @@
         <span class="chip">答案都用程式驗算過</span>
       </div>
     </div>
+
+    <section class="sec" id="story-sec">
+      <div class="eyebrow">Story mode · 先看這段</div>
+      <h2>17 個畫面看懂整張考卷<span class="h2-en">WHAT THE EXAM IS ABOUT</span></h2>
+      <p class="lede">點畫面前進、點左邊四分之一退回，也可以自動播放。看完再往下做題目。</p>
+      <div id="story"></div>
+    </section>
 
     <section class="sec" id="map">
       <div class="eyebrow">Overview</div>
@@ -151,6 +160,8 @@
 <script src="../shared/schem.js"></script>
 <script src="assets/mid-ex.js"></script>
 <script src="../shared/exbook.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/mid-story.js"></script>
 <script src="../shared/sync.js"></script>
 <script src="../shared/annot.js"></script>
 <script src="../shared/track.js"></script>
