@@ -142,6 +142,7 @@ QC   = Q1 − Q2 = P(tan θ1 − tan θ2)；C = QC / (ω V²rms)
 | `ch13-review.html` | CH13～14 觀念填充 80 題（含 11/7 補課「克拉瑪法則」8 題，sec `cramer`）（`assets/ch13-concept.js` → `__CH13C`，name `ch13c`） | | | | |
 | `ch13-problems.html` | RQ 13.1–13.10 ＋ Problems 33 題（`assets/ch13-prob.js` → `__CH13PB`） | | | | |
 | `ch14-problems.html` | RQ 14.1 ＋ Problems 14.1、14.3–14.7（`assets/ch14-prob.js` → `__CH14PB`） | | | | |
+| `midterm.html` | 期中考模擬卷（11/10）：10 回 × 4 題，CH11～14.3 各一題，只收有電路圖的 Example／Practice／章末題（`assets/mid-mock.js` → `__CMID`，固定種子分配） | | | | |
 
 - 畫圖工具：`assets/ch13-kit.js`（`__K13`：schem 用的耦合線圈 `xf`、`coil`、打點 `dt`、互感弧 `arcM`／`arc2`、電流箭頭 `ia`／`iv`、極性 `pm`）、`assets/ch13-skit.js`（`__S13`：故事用的線圈、鐵心、繞線）。
 - 例題的 🎬 圖解故事：`prob-story.js` 的 `BANKS` 加了 `__CH13EX`、`__CH14EX`，bank 設 `autoAll: true` 時 Example／Practice 全部自動產生。
