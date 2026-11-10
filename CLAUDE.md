@@ -211,7 +211,7 @@
 
 ## 人類與環境安全（`env/`，11/3 新通識）
 
-- 主色 `#3d7a2a`（暗 `#9bd47f`），`<body data-subject="env">`；考試不能看筆記 → 只做 `review.html` 一頁考前速讀（表格＋口訣、申論範例 `.exq`、電影《Minamata》對照、快速自測 `details`、挖空 `body.cloze`）。版面沿用 `../law/law.css`＋`env.css`。不做故事模式。**每節最後有 8 題選擇填充（使用者 11/10）**：`env/assets/review-cf.js`（`__ENVCF` name `env-cf`，sec＝section id，hw.js），共 80 題，只考該節寫過的內容。`env/essay.html` 申論生存包（使用者 11/10 說內容太難記）：五張骨架卡（口訣＋畫面）＋萬用灌水句＋組裝示範（螢光＝要背、灰字＝灌水）＋電影心得五段大綱；每張卡下面有選擇填充（`env/assets/essay-cf.js` → `__ENVES` name `env-es`，sec k1～k5、film，41 題）。`env/mock.html` 模擬考（`assets/mock.js`）：每份＝題一（五種申論題隨機抽）＋題二電影，整篇範例答案關鍵字挖空 `[[正解|干擾…]]`，選的／打字（給首字）、挖空一半／大部分／全部，成績存 localStorage `ee-env-mock`。
+- 主色 `#3d7a2a`（暗 `#9bd47f`），`<body data-subject="env">`；考試不能看筆記 → 只做 `review.html` 一頁考前速讀（表格＋口訣、申論範例 `.exq`、電影《Minamata》對照、快速自測 `details`、挖空 `body.cloze`）。版面沿用 `../law/law.css`＋`env.css`。不做故事模式。**每節最後有 8 題選擇填充（使用者 11/10）**：`env/assets/review-cf.js`（`__ENVCF` name `env-cf`，sec＝section id，hw.js），共 80 題，只考該節寫過的內容。`env/essay.html` 申論生存包（使用者 11/10 說內容太難記）：五張骨架卡（口訣＋畫面）＋萬用灌水句＋組裝示範（螢光＝要背、灰字＝灌水）＋電影心得五段大綱；每張卡下面有選擇填充（`env/assets/essay-cf.js` → `__ENVES` name `env-es`，sec k1～k5、film，49 題；卡 3 含傳統 vs 非傳統「來源→手段→危害」表）。`env/mock.html` 模擬考（`assets/mock.js`）：每份＝題一（五種申論題隨機抽）＋題二電影，整篇範例答案關鍵字挖空 `[[正解|干擾…]]`，選的／打字（給首字）、挖空一半／大部分／全部，成績存 localStorage `ee-env-mock`。
 
 ## 英文（`english/`，11/8 新科目）
 
