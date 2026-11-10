@@ -114,6 +114,7 @@
       HL(arRaw(40, 160, 40 + LL + LZ * Math.cos(31.04 * Math.PI / 180), 160 - LZ * Math.sin(31.04 * Math.PI / 180))), note(60, 70, 'V_g = 1941∠27.17° V', 'start'), txt(165, 186, '相量相加，不能把大小直接加', 'middle', 11)] },
     { w: 330, h: 207, p: [note(165, 70, '發電機端線電壓 = √3 × 1941', 'middle', 15), note(165, 100, '= 3363 V ≈ 3.36 kV', 'middle', 15), txt(165, 140, '負載才 440 V：線路壓降很大', 'middle', 12)] }] };
 
+  D.h = { spe, delta, star, tri3, mini, tp, F };
   [w121, w128, w1218, w1224, w1231, w1254, w1270, w1245].forEach((w, i) => { D.types[i].wk = w; });
   D.bank = '__CH12PB';
 })();

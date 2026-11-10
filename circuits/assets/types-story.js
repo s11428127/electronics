@@ -5,6 +5,8 @@
    每個 type = { n, en, sec, ex, key, look, ask, f: [[公式, 字幕]], s: [[步驟, 字幕]], trap: [✗, ✓, 字幕],
                 wk: { id: 題庫 id, figs: [題目圖, 第1步圖, 第2步圖…] } }   ← wk 由 chN-tyfig.js 補上
    figs 的每一張 = { w, h, p: [schem 零件字串…] }；null／缺 → 沿用上一張；figs[0] 缺 → 用題庫原本的 fig。
+   v3（同日）：使用者要「先用講義 Example（寫過的）複習，講義沒有的題型才用章末題」：type.wks = [{ bank: '__CH11EX', id, figs, fm: [每步用到的公式], more: '講義再練…' }]（chN-tyex.js 補上）；
+   舊的章末題 wk 用 __TY.attach(bank, wks) 搬進那一題卡片的「🎬 圖解詳解」（__TY.probStory）。
    每個題型 4 幕：題目（圖＋題幹）→ 公式 → 例題一步一步（每步換圖）→ 寫法步驟＋最常錯。
    畫圖小工具 window.__TY（HL 主色、DIM 變淡、loop 網目箭頭、ar 電流箭頭、xm 打叉、box 虛線框、note 主色字、thev 戴維寧等效…）
    ============================================================ */
@@ -73,55 +75,76 @@
       '" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="schem">' + inner + '</svg></g>';
   }
 
+  const tagOf = it => it.tag || ((it.kind === 'ex' ? 'Example ' : 'Practice ') + it.no);
+  /* 題目幕：左圖右題幹 */
+  function qScene(it, f0, title, en, tag, ask, s1, more) {
+    const blocks = [[tag, 12.5, 'ts'], [it.q, 13.5]];
+    if (ask) blocks.push(['要你求：' + ask, 13, 'ta']);
+    const c = card(350, 100, 274, blocks, 'qc');
+    const q = strip(it.q).replace(/<[^>]+>/g, '');
+    return sc(title, en, (f0 ? figIn(f0, 12, 98, 330, 210, 'qf') : '') + c.svg,
+      [{ sub: s1, on: 'qf' }, { sub: '題目：' + q.slice(0, 46) + (q.length > 46 ? '…' : ''), on: 'qc' }].concat(more ? [{ sub: more }] : []));
+  }
+  function fScene(t) {
+    return sc(t.n + '：要背的公式', 'KEY FORMULAS',
+      rows(60, 100, 520, t.f.map((r, j) => [r[0], 'f' + j, j === 0 ? 'ta' : 't', 15.5]), { lh: Math.min(36, 190 / t.f.length), title: '公式' }),
+      t.f.map((r, j) => ({ sub: r[1], on: 'f' + j })));
+  }
+  /* 一步一步：每步換圖（figs[j+1]），右邊計算卡；fm[j] = 這一步用到的公式 */
+  function stepScene(it, figs, f0, tag, fm) {
+    let svg = '', steps = [], lastKey = null;
+    it.steps.forEach((s, j) => {
+      const fg = figs[j + 1] || null, fkey = fg ? 'sf' + j : null;
+      if (fg) svg += figIn(fg, 12, 98, 330, 210, fkey);
+      const title = strip(s.t).replace(/^Step\s*\d+\s*/, '').replace(/<[^>]+>/g, '') || '（接著算）';
+      const bl = [['第 ' + (j + 1) + ' / ' + it.steps.length + ' 步', 12, 'ts'], [title, 14.5, 'ta'], [s.eq, 13.5]];
+      if (fm[j]) bl.push(['📐 ' + fm[j], 12.5, 'ts']);
+      svg += card(350, 100, 274, bl, 'sc' + j).svg;
+      const why = strip(s.why || '').replace(/<[^>]+>/g, '').split(/(?<=[。；])/)[0];
+      const on = 'sc' + j + (fkey ? ' ' + fkey : '') + (j === 0 && !fkey && f0 ? ' sf0b' : '');
+      const off = (j > 0 ? 'sc' + (j - 1) : '') + (fkey && lastKey ? ' ' + lastKey : '');
+      steps.push({ sub: (title + (why ? '　' + why : '')).slice(0, 70), on, off: off.trim() || undefined });
+      if (fkey) lastKey = fkey; else if (j === 0 && f0) lastKey = 'sf0b';
+    });
+    if (!figs[1] && f0) svg = figIn(f0, 12, 98, 330, 210, 'sf0b') + svg;
+    return sc('例題：' + tag + ' 一步一步', 'WORKED EXAMPLE', svg, steps);
+  }
+  /* 章末題卡片的「🎬 圖解詳解」：題目 → 每步換圖 → 答案 */
+  function probStory(it, wk) {
+    const figs = (wk.figs || []).slice(), f0 = figs[0] || it.fig || null, tag = tagOf(it);
+    const out = [qScene(it, f0, tag, 'PROBLEM', tag, '', '先看電路圖。', '')];
+    if (it.steps && it.steps.length) out.push(stepScene(it, figs, f0, tag, wk.fm || []));
+    if (it.ans) out.push(sc('答案', 'ANSWER', card(90, 120, 460, [['答案　ANSWER', 12.5, 'ts'], [it.ans, 15.5, 'ta']], 'ans').svg, [{ sub: '答案。', on: 'ans' }]));
+    return out;
+  }
+
   function build(def) {
     const TY = def.types, scenes = [], B = window[def.bank];
     const n = TY.length, lh = n > 6 ? 25 : 30;
     scenes.push(sc(def.ch + ' 會考哪幾種題', 'QUESTION TYPES',
       rows(70, 100, 500, TY.map((t, i) => [(i + 1) + '. ' + t.n + '（' + t.sec + '）', 'm' + i, 't', 14.5]), { lh, title: '這一章的題型' }),
       [{ sub: def.intro || (def.ch + ' 的章末題，拆開來只有這 ' + n + ' 種。'), on: TY.map((_, i) => 'm' + i).slice(0, Math.ceil(n / 2)).join(' ') },
-       { sub: '每一種都配一題真的章末題：先看電路圖，再一步一步解，每一步都有自己的圖。', on: TY.map((_, i) => 'm' + i).join(' ') }]));
+       { sub: '每一種先複習講義裡你寫過的 Example；講義沒有的才用章末題。每一步都有自己的圖。', on: TY.map((_, i) => 'm' + i).join(' ') }]));
     TY.forEach((t, i) => {
       const no = '題型 ' + (i + 1) + '：';
-      const wk = t.wk || {}, it = B && wk.id ? B.items.find(x => x.id === wk.id) : null;
-      const figs = (wk.figs || []).slice();
-      const f0 = figs[0] || (it && it.fig) || null;
-      const tag = it ? it.tag.replace('Problem ', 'Problem ') : ('Problem ' + t.ex[0]);
-      /* 1 題目 */
-      if (it) {
-        const c = card(350, 100, 274, [[tag, 12.5, 'ts'], [it.q, 13.5], ['要你求：' + t.ask, 13, 'ta']], 'qc');
-        scenes.push(sc(no + t.n, t.en,
-          (f0 ? figIn(f0, 12, 98, 330, 210, 'qf') : '') + c.svg,
-          [{ sub: '第 ' + (i + 1) + ' 種：' + t.n + '。拿真的章末題 ' + tag.replace('Problem ', '') + ' 來看。', on: 'qf' },
-           { sub: '題目：' + strip(it.q).replace(/<[^>]+>/g, '').slice(0, 46) + (strip(it.q).length > 46 ? '…' : ''), on: 'qc' },
-           { sub: '同類題還有：' + t.ex.join('、') + '。它要你求的是：' + t.ask + '。' }]));
-      } else {
+      const wks = t.wks || (t.wk ? [t.wk] : []);
+      let first = true;
+      wks.forEach((wk, wi) => {
+        const BB = window[wk.bank || def.bank], it = BB && wk.id ? BB.items.find(x => x.id === wk.id) : null;
+        if (!it) return;
+        const figs = (wk.figs || []).slice(), f0 = figs[0] || it.fig || null, tag = tagOf(it), isEx = !/^Problem/.test(tag);
+        const more = (wk.more ? '講義再練：' + wk.more + '。' : '') + '章末同類：' + t.ex.join('、') + '。';
+        const s1 = wi > 0 ? '再看一題：' + tag + '。' : isEx ? '第 ' + (i + 1) + ' 種：' + t.n + '。先複習講義的 ' + tag + '（你寫過的）。' : '第 ' + (i + 1) + ' 種：' + t.n + '。講義沒有這型的例題，拿章末 ' + tag + ' 來看。';
+        scenes.push(qScene(it, f0, wi > 0 ? t.n + '：' + tag : no + t.n, t.en, tag, t.ask, s1, more));
+        if (first) { scenes.push(fScene(t)); first = false; }
+        if (it.steps && it.steps.length) scenes.push(stepScene(it, figs, f0, tag, wk.fm || []));
+      });
+      if (first) {
         scenes.push(sc(no + t.n, t.en,
           rows(70, 100, 500, t.look.map((l, j) => [l, 'l' + j, 't', 14.5]), { lh: 28, title: '題目長這樣', k: 'lk' }) +
           D.chip(320, 118 + 30 + t.look.length * 28 + 34, '要你求：' + t.ask, '同類題：' + t.ex.join('、'), 'ask', { fs: 14, acc: true }),
           [{ sub: '第 ' + (i + 1) + ' 種：' + t.n + '。', on: 'lk ' + t.look.map((_, j) => 'l' + j).join(' ') }, { sub: '它要你求的是：' + t.ask + '。', on: 'ask' }]));
-      }
-      /* 2 公式 */
-      scenes.push(sc(t.n + '：要背的公式', 'KEY FORMULAS',
-        rows(60, 100, 520, t.f.map((r, j) => [r[0], 'f' + j, j === 0 ? 'ta' : 't', 15.5]), { lh: Math.min(36, 190 / t.f.length), title: '公式' }),
-        t.f.map((r, j) => ({ sub: r[1], on: 'f' + j }))));
-      /* 3 例題一步一步（每步一張圖） */
-      if (it && it.steps && it.steps.length) {
-        let svg = '', steps = [], lastFig = f0, lastKey = null;
-        it.steps.forEach((s, j) => {
-          const fg = figs[j + 1] || null, fkey = fg ? 'sf' + j : null;
-          if (fg) svg += figIn(fg, 12, 98, 330, 210, fkey);
-          const title = strip(s.t).replace(/^Step\s*\d+\s*/, '').replace(/<[^>]+>/g, '');
-          const c = card(350, 100, 274, [['第 ' + (j + 1) + ' / ' + it.steps.length + ' 步', 12, 'ts'], [title, 14.5, 'ta'], [s.eq, 13.5]], 'sc' + j);
-          svg += c.svg;
-          const why = strip(s.why || '').replace(/<[^>]+>/g, '').split(/(?<=[。；])/)[0];
-          const on = 'sc' + j + (fkey ? ' ' + fkey : '') + (j === 0 && !fkey && f0 ? ' sf0b' : '');
-          const off = (j > 0 ? 'sc' + (j - 1) : '') + (fkey && lastKey ? ' ' + lastKey : '');
-          steps.push({ sub: (title + (why ? '　' + why : '')).slice(0, 70), on, off: off.trim() || undefined });
-          if (fkey) lastKey = fkey;
-          else if (j === 0 && f0) lastKey = 'sf0b';
-        });
-        if (!figs[1] && f0) svg = figIn(f0, 12, 98, 330, 210, 'sf0b') + svg;
-        scenes.push(sc('例題：' + tag + ' 一步一步', 'WORKED EXAMPLE', svg, steps));
+        scenes.push(fScene(t));
       }
       /* 4 寫法 */
       const sl = t.s.length, slh = Math.min(30, 150 / sl);
@@ -195,6 +218,9 @@
         S.t((x0 + x1) / 2 - 8, (y0 + y1) / 2 + (Q >= 0 ? -6 : 14), lab[2], 'end', ' font-size="11.5"') + (lab[3] ? S.t(x0 + 26, y0 + (Q >= 0 ? -5 : 14), lab[3], 'start', ' font-size="11"') : '');
     }
   };
+  TY.probStory = probStory;
+  /* 把舊的章末題 wk 掛到那一題卡片的故事上 */
+  TY.attach = (bank, wks) => { const B = window[bank]; if (!B) return; wks.forEach(w => { const it = B.items.find(x => x.id === w.id); if (it) it.story = () => probStory(it, w); }); };
   window.__TY = TY;
 
   window.__TypesStory = function (sel, def) {
