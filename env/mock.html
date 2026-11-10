@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>模擬考</title>
+<meta name="description" content="人類與環境安全模擬考：題一申論＋題二電影心得，整篇挖空填寫，可以一直換新的一份。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../law/law.css">
+<link rel="stylesheet" href="env.css">
+<style>
+.mk-bar { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin: 10px 0; font-size: 14px; }
+.mk-bar .mk-no { margin-left: auto; color: var(--ink-3); }
+.mk-opt.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.mk-part { border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; margin: 12px 0; background: var(--surface); }
+.mk-q { font-weight: 700; margin-bottom: 8px; line-height: 1.7; }
+.mk-q b { color: var(--accent); }
+.mk-p { line-height: 2.3; margin: 8px 0; font-size: 15.5px; }
+.mk-given { color: var(--accent); }
+.mk-b { font: inherit; font-size: 14.5px; max-width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 2px 6px; background: var(--surface-2); color: var(--ink); }
+select.mk-b { max-width: min(100%, 26em); }
+.mk-b.ok { border-color: #2f8a3f; background: color-mix(in srgb, #2f8a3f 14%, var(--surface)); }
+.mk-b.bad { border-color: #c0392b; background: color-mix(in srgb, #c0392b 14%, var(--surface)); }
+.mk-fix { color: #c0392b; font-weight: 700; margin: 0 4px; }
+.mk-res { margin: 8px 0; font-size: 15px; line-height: 1.7; }
+.mk-hist { font-size: 13px; color: var(--ink-3); line-height: 1.9; }
+.mk-hist span { display: inline-block; border: 1px solid var(--line); border-radius: 99px; padding: 0 8px; margin: 0 4px; }
+</style>
+</head>
+<body data-subject="env" data-trk-sec="0">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">人類與環境安全</a><span>›</span><b>模擬考</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+<div class="shell">
+  <main>
+    <section class="sec paper" id="mock">
+      <div class="lec-head"><span class="date">考</span><h2>模擬考：寫完整的兩題</h2><span class="tag">自編範例答案，關鍵字挖空</span></div>
+      <p class="qs">每一份＝<b>題一</b>（五種申論題隨機抽一種）＋<b>題二</b>（電影《Minamata》）。整篇答案照考試的寫法排好，<b>關鍵字挖空讓你填</b>，選項都長得很像，要真的背起來才選得對。</p>
+      <p class="qs">建議：先用「選的＋一半」寫幾份 → 換「大部分」→ 再換「打字」。打字模式會給第一個字當提示，標點和「、與」不用打對。藍字是沒挖空的關鍵字，也要一起唸。</p>
+      <div id="mock-host"></div>
+      <p class="qs">骨架和萬用句在 <a href="essay.html">申論生存包</a>；完整資料在 <a href="review.html">考前複習</a>。電影細節依一般資料整理，跟上課看到的不一樣以課堂為準。</p>
+    </section>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="assets/mock.js"></script>
+<script>
+(function () {
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    try { localStorage.setItem('ee-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+  });
+})();
+</script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
