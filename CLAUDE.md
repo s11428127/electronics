@@ -166,7 +166,7 @@
 
 ## 電路學期中考（使用者 11/5：考到 14.3，比較會考章末 Problems）
 
-- **期中考模擬卷 `circuits/midterm.html`（使用者 11/10）**：一回 4 題（CH11、12、13、14 各一），10 回；`assets/mid-mock.js` 從各章 PB＋EX 題庫自動挑**有電路圖**的題（圖裡要有電阻／線圈／電容／阻抗方塊的筆畫，波形、相量圖、純文字不收；不考的節和 14.3 之後、Review Question 不收），固定種子分配，卡片一律當 Practice、英文先。題庫或回數改了，挑出來的題會跟著變。
+- **期中考模擬卷 `circuits/midterm.html`（使用者 11/10，11/11 改版）**：只出課本**章末 Problems**（Review Question、講義 Example／Practice 都不出），一回 4 題（CH11、12、13、14 各一），10 回；`assets/mid-mock.js` 照 `chN-types.js` 的題型順序輪流出（第 r 回出第 (r−1) mod n 型，同型第二輪換下一題），10 回輪完每種題型都練到；不考的節排除。頁面要載 `types-story.js`＋`chN-types.js`＋`chN-tyfig.js`，有題型故事圖解的章末題會掛到卡片「🎬 圖解詳解」。考試 11/11（三）10:10，範圍到 14.3 The Decibel Scale。
 - 範圍 CH11 ～ 14.3。CH13 做三頁講義 `ch13-part1～3.html` ＋ `ch13-problems.html`（43 題）＋ `ch13-review.html`（CH13～14 觀念填充 72 題，`__CH13C` name `ch13c`）；CH14 做 `ch14-part1.html`（14.1～14.3，含 `.scope-end`「⛳ 考到這裡」）＋ `ch14-problems.html`（7 題）。詳細見 `circuits/docs/CONTENT_MAP.md`。
 - 互感、變壓器電路圖用 `circuits/assets/ch13-kit.js`（`__K13.xf(x, y1, y2, {d1, d2, M, n, l1, l2})` 一組耦合線圈，`n` 有值就畫鐵心；`arcM`、`arc2` 互感弧）；故事用 `ch13-skit.js`（`__S13`）。點的位置一定要放大原圖確認再畫。
 - 例題圖解故事：bank 設 `autoAll: true`，`prob-story.js` 會替 Example／Practice 全部自動產生（CH13EX、CH14EX）。
