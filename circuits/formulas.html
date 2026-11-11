@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>期中考公式總複習</title>
+<meta name="description" content="電路學期中考 CH11～14.3 公式總複習：每種題型的公式、一句話重點、最常錯，考前快速刷。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../shared/app.css">
+<style>
+.fx-ch{margin:18px 0 6px;font-size:1.25rem}
+.fx-card{border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:10px 0;background:var(--surface)}
+.fx-card h3{margin:0 0 6px;font-size:1.02rem;color:var(--accent)}
+.fx-card h3 small{color:var(--muted);font-weight:500;margin-left:6px}
+.fx-f{margin:4px 0;font-size:1.02rem;font-weight:600;overflow-wrap:anywhere}
+.fx-f span{display:block;font-weight:400;font-size:.86rem;color:var(--muted)}
+.fx-key{margin-top:6px;font-size:.92rem}
+.fx-trap{margin-top:4px;font-size:.88rem;color:var(--muted)}
+</style>
+</head>
+<body data-subject="circuits" data-trk-sec="0">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電路學</a><span>›</span><b>公式總複習</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+<div class="shell">
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Formula sheet · CH11 ～ 14.3</div>
+      <h1>期中考公式總複習</h1>
+      <p class="sub">每種題型：公式 → 一句話重點 → 最常錯。從上往下滑一遍就好。</p>
+      <div class="lec-links"><a href="midterm.html">📝 模擬卷</a><a href="ch11-problems.html">CH11 題型故事</a><a href="ch12-problems.html">CH12</a><a href="ch13-problems.html">CH13</a><a href="ch14-problems.html">CH14</a></div>
+    </div>
+    <div id="fx"></div>
+  </main>
+</div>
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="assets/ch11-types.js"></script>
+<script src="assets/ch12-types.js"></script>
+<script src="assets/ch13-types.js"></script>
+<script src="assets/ch14-types.js"></script>
+<script>
+(function () {
+  var NAME = { 11: 'CH11 交流功率', 12: 'CH12 三相電路', 13: 'CH13 磁耦合', 14: 'CH14 頻率響應（到 14.3）' };
+  var SKIP = /^(12\.9|12\.10|13\.8|13\.9)/;
+  var h = '';
+  [11, 12, 13, 14].forEach(function (c) {
+    var D = window['__TYPES' + c]; if (!D) return;
+    h += '<h2 class="fx-ch">' + NAME[c] + '</h2>';
+    D.types.forEach(function (t) {
+      if (SKIP.test(String(t.sec))) return;
+      h += '<div class="fx-card"><h3>' + t.n + '<small>' + t.sec + '</small></h3>' +
+        t.f.map(function (r) { return '<div class="fx-f">' + r[0] + '<span>' + r[1] + '</span></div>'; }).join('') +
+        '<div class="fx-key">🔑 ' + t.key + '</div>' +
+        (t.trap ? '<div class="fx-trap">' + t.trap[0] + '　' + t.trap[1] + '：' + t.trap[2] + '</div>' : '') + '</div>';
+    });
+  });
+  document.getElementById('fx').innerHTML = h;
+})();
+</script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
