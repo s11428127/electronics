@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>電動車期中考重點</title>
+<meta name="description" content="電動車期中考：老師說會考的 12 個重點，每個重點一段故事＋照講義的重點整理＋選擇填充。">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/app.css">
+<link rel="stylesheet" href="../shared/story.css">
+<style>
+.ev-card{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;background:var(--surface)}
+.ev-card h3{margin:0 0 8px;font-size:1rem}
+.ev-notes{margin:0;padding-left:1.2em} .ev-notes li{margin:6px 0;line-height:1.6}
+.ev-tbl{border-collapse:collapse;width:100%;font-size:.9rem;margin:6px 0} .ev-tbl th,.ev-tbl td{border:1px solid var(--line);padding:4px 6px;text-align:center}
+.ev-small{font-size:.85rem;color:var(--muted);margin:2px 0 8px}
+.ev-miss{border-left:4px solid var(--accent);padding:8px 12px;background:var(--surface);border-radius:6px;font-size:.95rem}
+</style>
+</head>
+<body data-subject="ev" data-look="clean">
+<div class="topbar">
+  <div class="topbar-in">
+    <nav class="crumbs" aria-label="所在位置">
+      <a href="../index.html">主頁</a><span>›</span><a href="index.html">電動車</a><span>›</span><b>期中考重點</b>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-btn" type="button" aria-label="切換明暗主題">明 / 暗</button>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="章節導覽">
+    <div class="rail-title">電動車期中考</div>
+    <ol>
+      <li><a href="#k1"><i>1</i>電動車的分類＋英文縮寫</a></li>
+      <li><a href="#k2"><i>2</i>電動車的優點</a></li>
+      <li><a href="#k3"><i>3</i>電動車的架構圖</a></li>
+      <li><a href="#k4"><i>4</i>電動車的電力轉換設備</a></li>
+      <li><a href="#k5"><i>5</i>電動車的四象限控制、物理意義</a></li>
+      <li><a href="#k6"><i>6</i>定律：弗萊明左右手、安培定律</a></li>
+      <li><a href="#k7"><i>7</i>電動機跟發電機的原理</a></li>
+      <li><a href="#k8"><i>8</i>油電車分哪幾種、原理</a></li>
+      <li><a href="#k9"><i>9</i>串並聯架構圖</a></li>
+      <li><a href="#k10"><i>10</i>效率</a></li>
+      <li><a href="#k11"><i>11</i>電力線的內阻、高壓低壓、損失差異</a></li>
+      <li><a href="#k12"><i>12</i>電池組什麼時候串聯、並聯</a></li>
+      <li><a href="#k13"><i>＋</i>一般常識（選擇題）</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Electric &amp; Hybrid Vehicles · Midterm</div>
+      <h1>電動車期中考重點</h1>
+      <p class="sub">照老師說會考的 12 個重點排，內容只從上課講義 CH01～CH04 出。每個重點：先看故事 → 看重點整理 → 寫選擇填充。</p>
+      <div class="hero-meta">
+        <span class="chip h">12 個考試重點</span>
+        <span class="chip">每段故事＋選擇填充</span>
+        <span class="chip">⚠ 四象限控制：講義沒有，等你傳</span>
+      </div>
+      <div class="hw-tools-slot"></div>
+    </div>
+
+    <section class="sec" id="k1">
+      <div class="eyebrow">重點 1 · CH01 表 1.1、CH04 4.2.2、4.2.4</div>
+      <h2>電動車的分類＋英文縮寫<span class="h2-en">CLASSIFICATION</span></h2>
+      <div id="st-k1" data-title="電動車的分類＋英文縮寫"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<ul class="ev-notes">
+<li><b>依動力來源（表 1.1）</b>：EV／ECV 電動車、可充電式電動車；<b>BEV</b> 純電動車（Battery EV）；<b>PHEV／PHV</b> 插電式混合動力電動車（Plug-In Hybrid EV）；<b>E-REV</b>（EVRE、RE-EV）增程型電動車（Extended-Range EV）；<b>HEV</b> 混合動力電動車（全／一般／並聯／標準混合動力）。</li>
+<li><b>依混合程度（4.2.2）</b>：啟停系統（stop/start）、中度混合動力（mild hybrid）、重度混合動力（strong hybrid）、插電式混合動力（plug-in hybrid）。表 1.1 另有「輕度混合動力」（Stop/Start＋再生煞車充 12 V 電池）。</li>
+<li><b>依連結方式（4.2.4）</b>：串聯式（series）、並聯式（parallel）、功率分配式（power split）；再細分 7 種（見重點 9）。</li>
+<li><b>其他名稱</b>：AFV 替代燃料車輛、ICE 內燃機引擎、小型電動四輪車、電動機車；里程焦慮（range anxiety）。</li>
+</ul></div>
+      <div class="cf-wrap" id="cf-k1"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k1"></div></div>
+    </section>
+
+    <section class="sec" id="k2">
+      <div class="eyebrow">重點 2 · CH01 1.1.3、1.3.2、表 1.3</div>
+      <h2>電動車的優點<span class="h2-en">ADVANTAGES</span></h2>
+      <div id="st-k2" data-title="電動車的優點"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<ul class="ev-notes">
+<li><b>BEV 優點（1.1.3）</b>：零廢氣排放、安靜駕駛、走走停停的交通更節能舒適、重心低、居家充電；容易駕馭、平順安靜、加速佳。</li>
+<li><b>回答疑懼（1.3.2）</b>：馬達可即時產生 100% 扭矩；電能轉機械能效率 ＞ 75%；長期總成本較低；碰撞測試一樣嚴格；多在家或公司充電；多在夜晚離峰充電。</li>
+<li><b>成本（表 1.3，第一年）</b>：BEV 8,995 英鎊 ＜ ICE 9,760 英鎊；燃料 140 vs 1,140 英鎊。</li>
+</ul></div>
+      <div class="cf-wrap" id="cf-k2"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k2"></div></div>
+    </section>
+
+    <section class="sec" id="k3">
+      <div class="eyebrow">重點 3 · CH04 圖 4.7、4.3.2</div>
+      <h2>電動車的架構圖<span class="h2-en">SYSTEM LAYOUT</span></h2>
+      <div id="st-k3" data-title="電動車的架構圖"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<ul class="ev-notes">
+<li><b>主線</b>：充電站／電網 → 車載充電器 → 高壓電池 → 驅動控制 → 馬達 → 變速箱 → 車輪。</li>
+<li><b>支線</b>：高壓電池 → DC/DC 轉換器 → 12/24 V 低電壓電池（燈號及其他系統）。</li>
+<li><b>輸入</b>：節氣門控制、煞車 → 驅動控制。</li>
+<li><b>主要元件</b>：電池、BMS、馬達、繼電器、控制單元（PCU）、充電器、充電座、絕緣偵測、逆變器、電門／鑰匙開關、駕駛顯示面板。</li>
+</ul></div>
+      <div class="cf-wrap" id="cf-k3"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k3"></div></div>
+    </section>
+
+    <section class="sec" id="k4">
+      <div class="eyebrow">重點 4 · CH04 4.3.2、4.4.7、4.6.1；CH03 3.2.2</div>
+      <h2>電動車的電力轉換設備<span class="h2-en">POWER CONVERSION</span></h2>
+      <div id="st-k4" data-title="電動車的電力轉換設備"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<ul class="ev-notes">
+<li><b>逆變器</b>：電池 DC → 驅動馬達的 AC；再生煞車時反向運作（AC → DC，當整流器）充電池。</li>
+<li><b>DC-DC 轉換器</b>：直流某一電壓 → 另一電壓（高壓電池 → 12/24 V）。</li>
+<li><b>車載充電器</b>：電網 → 高壓電池（圖 4.7）。</li>
+<li><b>控制單元 PCU</b>：控制逆變器，回應駕駛的煞車、加速訊號。</li>
+<li><b>開關元件</b>：IGBT（高效率、快速切換）、MOSFET（逆變器切換裝置，只需極小電流）；切換訊號經脈寬調變。</li>
+</ul></div>
+      <div class="cf-wrap" id="cf-k4"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k4"></div></div>
+    </section>
+
+    <section class="sec" id="k5">
+      <div class="eyebrow">重點 5 · ⚠ 講義檔案沒有</div>
+      <h2>電動車的四象限控制、物理意義<span class="h2-en">FOUR-QUADRANT</span></h2>
+      <p class="ev-miss">⚠ 你給的 4 份講義（CH01～CH04，CH02 傳了兩份一樣的）裡找不到「四象限控制」這部分。你說「等等給照片」，那份講義或照片傳給我之後，我再照講義做故事和填充題，不自己編。</p>
+    </section>
+
+    <section class="sec" id="k6">
+      <div class="eyebrow">重點 6 · CH03 3.1.13</div>
+      <h2>定律：弗萊明左右手、安培定律<span class="h2-en">LAWS</span></h2>
+      <div id="st-k6" data-title="定律：弗萊明左右手、安培定律"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<ul class="ev-notes">
+<li><b>弗萊明定律</b>：食指 = 磁場方向、中指 = 電流方向、拇指 = 導線運動方向；<b>左手定則用於馬達，右手定則用於發電機</b>。</li>
+<li><b>安培定律</b>：於一封閉迴路中，各線段導線長度與該線段方向磁場強度乘積之和，等於此迴路所包圍之各電流大小與磁導率之乘積。</li>
+<li>歐姆（電流與電壓成正比）、楞次（感應電流方向與磁通變化相反）、法拉第（磁場改變 → 感應電動勢）、克希荷夫（流入 = 流出；迴路電位升降和 = 0）。</li>
+</ul></div>
+      <div class="cf-wrap" id="cf-k6"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k6"></div></div>
+    </section>
+
+    <section class="sec" id="k7">
+      <div class="eyebrow">重點 7 · CH03 3.1.9～3.1.12；CH04 4.2.1、4.2.3</div>
+      <h2>電動機跟發電機的原理<span class="h2-en">MOTOR & GENERATOR</span></h2>
+      <div id="st-k7" data-title="電動機跟發電機的原理"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<ul class="ev-notes">
+<li><b>馬達</b>：電能 → 機械能；利用兩磁場間交互作用（電流通過導體形成磁場）。</li>
+<li><b>發電機</b>：機械能 → 電能；導體切割磁力線產生感應電壓，方向取決於磁場與運動方向，大小與切割速度成正比。</li>
+<li>兩者基本作用原理相同；電流的磁效應是繼電器、馬達、發電機的基本原理。</li>
+<li><b>電動車發電</b>：煞車時馬達轉變成發電機（再生煞車／KERS），逆變器反向把 AC 變 DC 存進電池。</li>
+</ul></div>
+      <div class="cf-wrap" id="cf-k7"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k7"></div></div>
+    </section>
+
+    <section class="sec" id="k8">
+      <div class="eyebrow">重點 8 · CH04 4.2.1～4.2.3、表 4.1；CH01 表 1.1</div>
+      <h2>油電車分哪幾種、原理<span class="h2-en">HYBRID TYPES</span></h2>
+      <div id="st-k8" data-title="油電車分哪幾種、原理"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<table class="ev-tbl"><tr><th>分類</th><th>怠速熄火</th><th>再生煞車</th><th>電動輔助</th><th>僅電動驅動</th><th>插座充電</th></tr>
+<tr><td>啟停系統</td><td>✓</td><td>✓</td><td></td><td></td><td></td></tr>
+<tr><td>中度混合</td><td>✓</td><td>✓</td><td>✓</td><td>△</td><td></td></tr>
+<tr><td>重度混合</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td></td></tr>
+<tr><td>插電式混合</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr></table>
+<p class="ev-small">△：48 V 中度混合可用 48 V 電池純電低速行駛（表 4.1）。</p>
+<ul class="ev-notes">
+<li><b>目的</b>：降低燃料消耗（及 CO₂）、降低廢氣排放、提高扭矩與功率；煞車時馬達變發電機回收能量。</li>
+<li><b>啟停</b>：靜止時熄火、踩加速踏板自動啟動；減速時交流發電機輸出提高，增強煞車並再生。<b>中度</b>：主要靠引擎，不能單獨用電池（48 V 例外）。<b>重度</b>：電池＋引擎共同驅動，不插電。<b>插電</b>：純電 16～48 km，用完轉全混合。</li>
+<li><b>運轉模式</b>：啟動、加速、巡航、減速、怠速。</li>
+</ul></div>
+      <div class="cf-wrap" id="cf-k8"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k8"></div></div>
+    </section>
+
+    <section class="sec" id="k9">
+      <div class="eyebrow">重點 9 · CH04 4.2.4、圖 4.22～4.29</div>
+      <h2>串並聯架構圖<span class="h2-en">SERIES / PARALLEL</span></h2>
+      <div id="st-k9" data-title="串並聯架構圖"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<ul class="ev-notes">
+<li><b>串聯式</b>：燃料 → 引擎 → 發電機 →（電池）→ 電動馬達 → 變速箱 → 車輪；引擎只發電，馬達驅動車輛。屬重度。</li>
+<li><b>並聯式</b>：引擎與馬達都可驅動車輛（燃料 → 引擎 → 變速箱；電池 → 馬達／發電機 → 變速箱）。大多數現行混合動力車採用。</li>
+<li><b>功率分配式</b>：引擎 → 行星齒輪 → 發電機、電動馬達 → 變速箱；結合兩者優點但結構複雜。屬重度。</li>
+<li><b>七種細分</b>：單離合器並聯（中度）、雙離合器並聯（重度）、雙離合器變速箱並聯、分軸並聯（重度）、串聯（重度）、串聯－並聯（混聯，串聯的延伸）、功率分配（重度）。</li>
+</ul></div>
+      <div class="cf-wrap" id="cf-k9"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k9"></div></div>
+    </section>
+
+    <section class="sec" id="k10">
+      <div class="eyebrow">重點 10 · CH04 4.2.8、圖 4.36；CH01 1.3.2</div>
+      <h2>效率<span class="h2-en">EFFICIENCY</span></h2>
+      <div id="st-k10" data-title="效率"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<ul class="ev-notes">
+<li><b>定義</b>：效率 η = 有用功 ÷ 總能量消耗，以百分比表示。</li>
+<li><b>多階段</b>：總效率 = 各階段效率相乘；反推某階段 = 總效率 ÷ 其他階段相乘。</li>
+<li><b>圖 4.36</b>：P0 皮帶輔助 0.95～0.98；機械傳動 0.97～0.99；變速箱 0.92～0.97；輪胎 0.90～0.95。</li>
+<li>電動車電能 → 機械能效率 ＞ 75%。</li>
+</ul>
+<p class="ev-miss">⚠ 你說考題有「充電 → 電池 → 馬達」的示意圖，那張圖不在這 4 份講義檔案裡。這裡先教相乘的算法；有那張圖再傳給我，我照圖出題。</p></div>
+      <div class="cf-wrap" id="cf-k10"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k10"></div></div>
+    </section>
+
+    <section class="sec" id="k11">
+      <div class="eyebrow">重點 11 · CH04 圖 4.37；CH03 3.1.7</div>
+      <h2>電力線的內阻、高壓低壓、損失差異<span class="h2-en">LINE LOSS</span></h2>
+      <div id="st-k11" data-title="電力線的內阻、高壓低壓、損失差異"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<ul class="ev-notes">
+<li><b>I = P ÷ V</b>：同功率，電壓越高，電流越小。</li>
+<li><b>線損 = I²R</b>：30 kW、3 mΩ：48 V → 625 A → 約 1,172 W；350 V → 85.7 A → 約 22 W（圖 4.37）。</li>
+<li>電阻越大損失越大；導體電阻：長度越長越大、截面積越大越小、看材質（電阻率）、溫度越高越大。</li>
+</ul></div>
+      <div class="cf-wrap" id="cf-k11"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k11"></div></div>
+    </section>
+
+    <section class="sec" id="k12">
+      <div class="eyebrow">重點 12 · CH04 圖 4.38；CH03 3.1.8</div>
+      <h2>電池組什麼時候串聯、並聯<span class="h2-en">SERIES / PARALLEL CELLS</span></h2>
+      <div id="st-k12" data-title="電池組什麼時候串聯、並聯"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<ul class="ev-notes">
+<li><b>串聯</b>：電流相同、總電壓 = 各電壓之和 → 要<b>高電壓</b>就串（圖 4.38：串起來 350 V）。</li>
+<li><b>並聯</b>：電壓相等、總電流 = 各支路電流之和 → 要<b>大電流（容量）</b>就並（圖 4.38：並起來 48 V）。</li>
+</ul></div>
+      <div class="cf-wrap" id="cf-k12"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k12"></div></div>
+    </section>
+
+    <section class="sec" id="k13">
+      <div class="eyebrow">重點 ＋ · CH01 表 1.3、1.2</div>
+      <h2>一般常識（選擇題）<span class="h2-en">GENERAL FACTS</span></h2>
+      <div id="st-k13" data-title="一般常識（選擇題）"></div>
+      <div class="ev-card"><h3>📌 重點整理（照講義）</h3>
+<ul class="ev-notes">
+<li>表 1.3：第一年總計 ICE 9,760／BEV 8,995／PHEV 9,760 英鎊；燃料 1,140／140／570 英鎊。</li>
+<li>ELV 95%；2019 Q3 ECV 占 3.1%（+51.8%）；自駕等級 0～5；WLTP 三等級；LCA 生產、使用、再循環。</li>
+</ul>
+<p class="ev-miss">⚠ 「電動車成本最高的部分是什麼、佔多少」講義檔案裡沒有寫。上課如果有講，告訴我答案，我補進來。</p></div>
+      <div class="cf-wrap" id="cf-k13"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k13"></div></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="../shared/app.js"></script>
+<script src="../shared/terms.js"></script>
+<script src="../shared/story.js"></script>
+<script src="assets/ev-story.js"></script>
+<script src="assets/ev-cf.js"></script>
+<script src="../shared/hw.js"></script>
+<script src="../shared/sync.js"></script>
+<script src="../shared/annot.js"></script>
+<script src="../shared/track.js"></script>
+</body>
+</html>
