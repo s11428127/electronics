@@ -69,7 +69,7 @@ body.cloze .mc-ans b.show, body.cloze .mc-k.show{color:var(--accent);background:
       <div class="hero-meta">
         <span class="chip h">12 個考試重點</span>
         <span class="chip">每段故事＋選擇填充</span>
-        <span class="chip">⚠ 四象限控制：講義沒有，等你傳</span>
+        <span class="chip">四象限控制：照 11/11 板書</span>
       </div>
       <div class="lec-links"><button class="btn" id="cloze-btn" type="button">🙈 挖空練習（藍字變空格，點一下看答案）</button></div>
       <div class="hw-tools-slot"></div>
@@ -136,9 +136,18 @@ body.cloze .mc-ans b.show, body.cloze .mc-k.show{color:var(--accent);background:
     </section>
 
     <section class="sec" id="k5">
-      <div class="eyebrow">重點 5 · ⚠ 講義檔案沒有</div>
+      <div class="eyebrow">重點 5 · 11/11 板書</div>
       <h2>電動車的四象限控制、物理意義<span class="h2-en">FOUR-QUADRANT</span></h2>
-      <p class="ev-miss">⚠ 你給的 4 份講義（CH01～CH04，CH02 傳了兩份一樣的）裡找不到「四象限控制」這部分。你說「等等給照片」，那份講義或照片傳給我之後，我再照講義做故事和填充題，不自己編。</p>
+      <div id="st-k5" data-title="電動車的四象限控制、物理意義"></div>
+      <div class="mc"><div class="mc-h">⚡ 速背卡</div><div class="mc-k">口訣：同號驅動、異號發電</div><ul class="mc-l"><li>橫軸 ω 轉速（rpm）、縱軸 T 轉矩；P = T × ω</li><li>一：ω＋、T＋ → P＋ → 前進驅動（馬達）</li><li>四：ω＋、T− → P− → 前進煞車（發電、再生煞車）</li><li>三：ω−、T− → P＋ → 倒車驅動（馬達）</li><li>二：ω−、T＋ → P− → 倒車煞車（發電）</li><li>P＋＝馬達耗電（電 → 機械）；P−＝發電回充（機械 → 電）</li></ul><div class="mc-ans"><div class="mc-t">✍️ 考卷這樣寫（藍字要背、灰字可以自己瞎掰）</div><p>（先畫十字：橫軸<b>轉速 ω</b>、縱軸<b>轉矩 T</b>）功率 <b>P = T × ω</b>。<b>第一象限</b> ω＋T＋，P＋，<b>前進驅動</b>；<b>第四象限</b> ω＋T−，P−，<b>前進再生煞車</b>；<b>第三象限</b> ω−T−，P＋，<b>倒車驅動</b>；<b>第二象限</b> ω−T＋，P−，<b>倒車煞車</b>。物理意義：<b>P 為正時馬達耗電驅動車輛</b>，<b>P 為負時馬達變發電機，把動能轉成電能回充電池</b>。<i>因此電動車可以在四個象限靈活運轉，提高能源效率。</i></p></div></div>
+      <details class="ev-card ev-src"><summary>📖 看講義原文整理（比較詳細）</summary>
+<ul class="ev-notes">
+<li><b>板書</b>：橫軸 ω（轉速，rpm）、縱軸 T（轉矩）；P = T × ω。</li>
+<li>右上 ω⁺、T⁺ → P = T⁺ × ω⁺ → <b>P⁺</b>；右下 ω⁺、T⁻ → P = T⁻ × ω⁺ → <b>P⁻</b>（老師圈起來）；左下 ω⁻、T⁻ → P = T⁻ × ω⁻ → <b>P⁺</b>。</li>
+<li>左上（ω⁻、T⁺ → P⁻，倒車煞車）板書沒寫完，是照同一條 P = T × ω 推出來的，請對照上課筆記確認。</li>
+<li>物理意義：P⁺ 馬達驅動（耗電）；P⁻ 發電（再生煞車回充）。</li>
+</ul></details>
+      <div class="cf-wrap" id="cf-k5"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k5"></div></div>
     </section>
 
     <section class="sec" id="k6">
@@ -209,7 +218,7 @@ body.cloze .mc-ans b.show, body.cloze .mc-k.show{color:var(--accent);background:
       <div class="eyebrow">重點 10 · CH04 4.2.8、圖 4.36；CH01 1.3.2</div>
       <h2>效率<span class="h2-en">EFFICIENCY</span></h2>
       <div id="st-k10" data-title="效率"></div>
-      <div class="mc"><div class="mc-h">⚡ 速背卡</div><div class="mc-k">口訣：效率一段一段「乘」</div><ul class="mc-l"><li>η（效率）＝ 有用功 ÷ 總能量</li><li>總效率 ＝ η₁ × η₂ × η₃ …（不是相加）</li><li>求某一段 ＝ 總效率 ÷ 其他段相乘</li><li>剩下能量 ＝ 輸入 × 總效率</li><li>自編練習：充電 90% × 電池 95% × 馬達 90% ≈ 77%</li></ul><div class="mc-ans"><div class="mc-t">✍️ 考卷這樣寫（藍字要背、灰字可以自己瞎掰）</div><p>效率 <b>η ＝ 有用功 ÷ 總能量</b>。能量從充電、電池到馬達要經過好幾段，<b>總效率等於每一段效率相乘</b>。<i>例如三段分別 90%、95%、90%，總效率約 0.9 × 0.95 × 0.9 ≈ 77%。</i></p></div></div>
+      <div class="mc"><div class="mc-h">⚡ 速背卡</div><div class="mc-k">口訣：效率一段一段「乘」</div><ul class="mc-l"><li>η（效率）＝ 有用功 ÷ 總能量</li><li>總效率 ＝ η₁ × η₂ × η₃ …（不是相加）</li><li>求某一段 ＝ 總效率 ÷ 其他段相乘</li><li>剩下能量 ＝ 輸入 × 總效率</li><li>自編練習：充電 92% × 電池 95% × 逆變器 97% × 馬達 93% ≈ 78.8%</li><li>反推：總 80%、充電 90%、馬達 95% → 電池 ≈ 93.6%</li></ul><div class="mc-ans"><div class="mc-t">✍️ 考卷這樣寫（藍字要背、灰字可以自己瞎掰）</div><p>效率 <b>η ＝ 有用功 ÷ 總能量</b>。能量從充電、電池到馬達要經過好幾段，<b>總效率等於每一段效率相乘</b>。例如充電 92%、電池 95%、逆變器 97%、馬達 93%，<b>總效率 ≈ 0.92 × 0.95 × 0.97 × 0.93 ≈ 78.8%</b>；<i>電網送 100 kWh，最後只有約 78.8 kWh 推動車子，其餘變成熱損失。</i></p></div></div>
       <details class="ev-card ev-src"><summary>📖 看講義原文整理（比較詳細）</summary>
 <ul class="ev-notes">
 <li><b>定義</b>：效率 η = 有用功 ÷ 總能量消耗，以百分比表示。</li>
@@ -217,7 +226,7 @@ body.cloze .mc-ans b.show, body.cloze .mc-k.show{color:var(--accent);background:
 <li><b>圖 4.36</b>：P0 皮帶輔助 0.95～0.98；機械傳動 0.97～0.99；變速箱 0.92～0.97；輪胎 0.90～0.95。</li>
 <li>電動車電能 → 機械能效率 ＞ 75%。</li>
 </ul>
-<p class="ev-miss">⚠ 你說考題有「充電 → 電池 → 馬達」的示意圖，那張圖不在這 4 份講義檔案裡。這裡先教相乘的算法；有那張圖再傳給我，我照圖出題。</p></details>
+<p class="ev-small">效率題的數字是自編的（使用者說可以自己編），考試數字以題目為準。</p></details>
       <div class="cf-wrap" id="cf-k10"><h3>✏️ 選擇填充：這段記住了嗎</h3><div class="hw-list" data-bank="__EVCF" data-sec="k10"></div></div>
     </section>
 
