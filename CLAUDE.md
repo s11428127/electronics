@@ -93,7 +93,7 @@
 - SVG 文字裡的 `<`、`>` 一定要寫成 `&lt;`、`&gt;`，否則整個畫面 parse 失敗（踩過的坑）。
 - 下標用 `fx(['i','D',' = I','S'])` 這種寫法：下標後面的字要跟回基線的 tspan 放一起，空的 tspan 的 dy 不會生效。
 - 現有劇本：電子學 `ch1-part1～7-story.js`、`ch1-part4-thermo-story.js`（§06 溫度計補課，11/1）（PART 6 原本一頁兩段，10/31 使用者要求把故事二和後半講義拆成 `ch1-part7.html`；共用 `ch1-part6.js`／`-ex.js`／`-concept.js`，測驗題 `p: 7` 給 PART 7）、`ch2-part1-story.js`、電路學 `ch11-part1～3-story.js`、`ch12-part1～4-story.js`、工數 `laplace-story.js`、`laplace2-story.js`、`ode-story.js`、電子實習 `diode-story.js`、`rectifier-story.js`、`filter-story.js`、`zener-story.js`、電子學期中考 2 重點 `mt2-story.js`（midterm2.html 開頭，14 幕，11/9）。
-- 工數期中考（11/12 週三 19:00，可帶小抄）：`engineering-math/midterm.html`＝其他班考古題 13 小題逐步詳解（`assets/mid-ex.js` → `__EMMID`，五種題型 t1～t5，sympy 驗算）＋開頭故事 `assets/mid-story.js`（17 幕：翻譯機 t 世界↔s 世界、字典、兩種位移、拆開／配方、ODE、電路換裝、摺積火車過月台）＋工具箱＋朋友筆記勘誤。使用者說「看懂題目後再寫小抄」。
+- 工數期中考（11/12 週三 19:00，可帶小抄）：`engineering-math/midterm.html`＝其他班考古題 13 小題逐步詳解（`assets/mid-ex.js` → `__EMMID`，五種題型 t1～t5，sympy 驗算）＋開頭故事 `assets/mid-story.js`（17 幕：翻譯機 t 世界↔s 世界、字典、兩種位移、拆開／配方、ODE、電路換裝、摺積火車過月台）＋工具箱＋朋友筆記勘誤。使用者說「看懂題目後再寫小抄」。**摺積詳細版故事（使用者 11/11：摺積看不懂）**：`assets/conv-story.js`（20 幕，`#conv-story` 在 `#t5` 前）：火車過月台 → 公式每個符號 → 翻、滑、量重疊 → 考古題四-1、四-2、三-2 一段一段走（每段標左界／右界）→ 上下限萬用法（下限取兩個左端較右者、上限取兩個右端較左者）→ 最常錯 → 速記。
 - 版面實測（看截圖總表得到的）：標題卡蓋到約 y 92（x 200～440），兩行字幕從約 y 312 開始，最後一幕的「從頭再看／往下看」按鈕在 y 285 以下 → **內容放 y 100～305，最後一幕放到 270 為止**。
 
 ## 上課筆記（板書照片）的做法
