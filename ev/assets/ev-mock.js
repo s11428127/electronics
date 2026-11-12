@@ -119,12 +119,18 @@
       s += tx(320, 222, '原理一樣、方向相反；導線切割磁力線 → 感應電壓', 's');
       return svg(232, s);
     },
+    regen: function () {
+      var T = ['車輪|動能', '馬達|變發電機', '逆變器|交流 → 直流', '高壓電池|充電'], s = '';
+      T.forEach(function (t, i) { var x = 10 + i * 160; s += bx(x, 30, 140, 56, t, i === 1 || i === 2 ? 'a' : ''); if (i) s += ar(x - 18, 58, x - 2, 58); });
+      s += tx(320, 120, '踩煞車：本來變成熱浪費的能量 → 變電存回電池（KERS 動能回收）', 'b') + tx(320, 146, '逆變器平常 直流 → 交流，煞車時反過來', 's');
+      return svg(160, s);
+    },
     adv: function () { return tiles([['🚭', '零廢氣'], ['🤫', '安靜'], ['🚦', '塞車省'], ['⬇️', '重心低'], ['🏠', '在家充'], ['💪', '起步 100% 扭矩'], ['⚙️', '效率 ＞ 75%'], ['💰', '長期便宜']]); },
     common: function () { return tiles([['💰', '第一年 BEV 最便宜'], ['⛽', '燃料 140 vs 1,140 英鎊'], ['♻️', 'ELV 95% 回收'], ['🤖', '自駕 0～5'], ['⚡', '高壓 ＞ 60 V DC']]); }
   };
 
   /* ---------- 題目 ---------- */
-  var Q = [
+  var Q = window.__EVMK_Q || [
     /* 畫圖題 */
     { id: 'd1', t: 'draw', no: 3, q: '畫出電動車的系統架構圖（從電網一路畫到車輪，含低壓系統）。', fig: 'arch',
       chk: ['電網 → 車載充電器 → 高壓電池', '高壓電池 → 驅動控制 → 馬達 → 變速箱 → 車輪', '高壓電池 → DC/DC → 12/24 V 低壓電池', '油門、煞車訊號 → 驅動控制'] },
@@ -217,7 +223,7 @@
   function lsGet(k) { try { return localStorage.getItem(LS + k) || ''; } catch (e) { return ''; } }
   function lsSet(k, v) { try { localStorage.setItem(LS + k, v); } catch (e) {} }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-  function figs(it) { return '<div class="mk-fig">' + F[it.fig]() + (it.fig2 ? F[it.fig2]() : '') + '</div>'; }
+  function figs(it) { return '<div class="mk-fig">' + (it.fig ? F[it.fig]() : '') + (it.fig2 ? F[it.fig2]() : '') + (it.tl ? tiles(it.tl) : '') + '</div>'; }
   var TAG = { draw: '✏️ 畫圖', write: '⌨️ 寫字／打字', calc: '🧮 計算', mc: '☑️ 選擇' };
   var REF = '<a class="mk-ref" href="review.html#k' + '{n}' + '">回重點 {n} 複習</a>';
 
@@ -276,7 +282,7 @@
         var ex = '';
         if (it.t === 'write') ex = kwCheck(it, el.querySelector('.mk-ta').value);
         if (it.t === 'calc') {
-          var v = parseFloat(el.querySelector('.mk-in').value), ok = isFinite(v) && Math.abs(v - it.v) <= Math.abs(it.v) * 0.01 + 0.05;
+          var v = parseFloat(el.querySelector('.mk-in').value), ok = isFinite(v) && Math.abs(v - it.v) <= Math.abs(it.v) * 0.01 + 0.005;
           ex = '<div class="mk-res ' + (isFinite(v) ? (ok ? 'y' : 'n') : '') + '">' + (isFinite(v) ? (ok ? '✓ 對了！' : '✗ 再看一下，') : '') + '答案 ≈ <b>' + it.v + ' ' + it.unit + '</b></div>';
           el.classList.toggle('mk-right', ok); el.classList.toggle('mk-wrong', isFinite(v) && !ok);
         }
